@@ -1,4 +1,4 @@
-from scripts.import_packets import import_packets_wiki
+from scripts.import_java_packets import import_packets_wiki
 
 
 def test_packet_counts():
