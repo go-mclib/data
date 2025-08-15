@@ -96,7 +96,14 @@ def normalize_notes(text: str) -> str:
     return "\n".join(normalized_lines).strip()
 
 
-def normalize_field_type(raw_type: str) -> str:
+def normalize_field_type(raw_type: str, target_format: str = "json") -> str:
+    """
+    Normalize field types from wiki format.
+
+    Args:
+        raw_type: Raw type string from wiki
+        target_format: Output format - "json" for intermediate format, "go" for Go types
+    """
     if not raw_type:
         return ""
 
@@ -106,32 +113,94 @@ def normalize_field_type(raw_type: str) -> str:
     t = re.sub(r"\b[Ee]nums?\b", "", t).strip()
     t = re.sub(r"\s{2,}", " ", t).strip()
 
-    # Prefixed Array (N) of Type -> PrefixedTypeArray(N)
     def _prefixed_array_repl(match: re.Match) -> str:
         size = match.group(1)
         elem_type = match.group(2)
         return f"Prefixed{elem_type}Array({size})"
 
-    t = re.sub(r"\bPrefixed\s+Array\s*\(\s*([0-9]+)\s*\)\s+of\s+([A-Za-z0-9]+)\b", _prefixed_array_repl, t)
-
-    # Prefixed Array of Type -> PrefixedTypeArray
+    t = re.sub(
+        r"\bPrefixed\s+Array\s*\(\s*([0-9]+)\s*\)\s+of\s+([A-Za-z0-9]+)\b",
+        _prefixed_array_repl,
+        t,
+    )
     t = re.sub(r"\bPrefixed\s+Array\s+of\s+([A-Za-z0-9]+)\b", r"Prefixed\1Array", t)
 
-    # Array (N) of Type -> TypeArray(N)
     def _array_size_of_repl(match: re.Match) -> str:
         size = match.group(1)
         elem_type = match.group(2)
         return f"{elem_type}Array({size})"
 
-    t = re.sub(r"\bArray\s*\(\s*([0-9]+)\s*\)\s+of\s+([A-Za-z0-9]+)\b", _array_size_of_repl, t)
-
-    # Array of Type -> TypeArray
+    t = re.sub(
+        r"\bArray\s*\(\s*([0-9]+)\s*\)\s+of\s+([A-Za-z0-9]+)\b", _array_size_of_repl, t
+    )
     t = re.sub(r"\bArray\s+of\s+([A-Za-z0-9]+)\b", r"\1Array", t)
 
     # remove all spaces
     t = re.sub(r"\s+", "", t)
 
+    if target_format == "go":
+        t = transform_to_go_type(t)
+
     return t
+
+
+def transform_to_go_type(field_type: str) -> str:
+    """Transform normalized field type to Go format with ns. prefix."""
+    # but keep them for special handling if needed
+    size_match = re.match(r"^(.+?)\((\d+)\)$", field_type)
+    if size_match:
+        base_type = size_match.group(1)
+        field_type = base_type
+    base_type = field_type.replace("-", "").replace("/", "")
+
+    if not base_type:
+        return "ns.Unknown // FIXME"
+    if base_type == "Namespace":
+        return "ns.Identifier"
+    prefixed_optional_match = re.match(r"^PrefixedOptional(.+)$", base_type)
+    if prefixed_optional_match:
+        inner_type = prefixed_optional_match.group(1)
+        inner_go_type = transform_to_go_type(inner_type)
+        if inner_go_type.startswith("ns."):
+            inner_go_type = inner_go_type[3:]
+        return f"ns.PrefixedOptional[ns.{inner_go_type}]"
+    optional_match = re.match(r"^Optional(.+)$", base_type)
+    if optional_match:
+        inner_type = optional_match.group(1)
+        inner_go_type = transform_to_go_type(inner_type)
+        if inner_go_type.startswith("ns."):
+            inner_go_type = inner_go_type[3:]
+        return f"ns.Optional[ns.{inner_go_type}]"
+    prefixed_array_size_match = re.match(r"^Prefixed(.+)Array\(\d+\)$", base_type)
+    if prefixed_array_size_match:
+        inner_type = prefixed_array_size_match.group(1)
+        inner_go_type = transform_to_go_type(inner_type)
+        if inner_go_type.startswith("ns."):
+            inner_go_type = inner_go_type[3:]
+        return f"ns.PrefixedArray[ns.{inner_go_type}]"
+    array_size_match = re.match(r"^(.+)Array\(\d+\)$", base_type)
+    if array_size_match:
+        inner_type = array_size_match.group(1)
+        inner_go_type = transform_to_go_type(inner_type)
+        if inner_go_type.startswith("ns."):
+            inner_go_type = inner_go_type[3:]
+        return f"ns.Array[ns.{inner_go_type}]"
+    prefixed_array_match = re.match(r"^Prefixed(.+)Array$", base_type)
+    if prefixed_array_match:
+        inner_type = prefixed_array_match.group(1)
+        inner_go_type = transform_to_go_type(inner_type)
+        if inner_go_type.startswith("ns."):
+            inner_go_type = inner_go_type[3:]
+        return f"ns.PrefixedArray[ns.{inner_go_type}]"
+    array_match = re.match(r"^(.+)Array$", base_type)
+    if array_match:
+        inner_type = array_match.group(1)
+        inner_go_type = transform_to_go_type(inner_type)
+        if inner_go_type.startswith("ns."):
+            inner_go_type = inner_go_type[3:]
+        return f"ns.Array[ns.{inner_go_type}]"
+    return f"ns.{base_type}"
+
 
 def import_packets_wiki() -> dict:
     """
@@ -293,6 +362,9 @@ def import_packets_wiki() -> dict:
                 current_packet_name = None
                 continue
 
+            rowspan_field = None  # track field with rowspan
+            rowspan_count = 0  # track remaining rows for rowspan
+
             for row in rows[1:]:  # skip header row
                 if not isinstance(row, Tag):
                     continue
@@ -347,51 +419,141 @@ def import_packets_wiki() -> dict:
                             if hasattr(cells[4], "get_text")
                             else ""
                         )
-                        field_type = normalize_field_type(field_type)
                         field_notes = (
                             cells[5].get_text(" ", strip=True)
                             if hasattr(cells[5], "get_text")
                             else ""
                         )
                         field_notes = normalize_notes(field_notes)
-                        if (
-                            field_name and field_type
-                        ):  # only add if we have actual field data
+                        has_rowspan = (
+                            cells[3].get("rowspan")
+                            if hasattr(cells[3], "get")
+                            else None
+                        )
+                        is_array_field = "array" in field_notes.lower()
+
+                        if has_rowspan and is_array_field:
+                            try:
+                                rowspan_count = (
+                                    int(str(has_rowspan)) - 1
+                                )  # -1 because this row counts as one
+                            except (ValueError, TypeError):
+                                rowspan_count = 0
+                            rowspan_field = {
+                                "name": field_name,
+                                "type": field_type,  # this might be the first element type
+                                "notes": field_notes,
+                                "is_array": True,
+                                "element_types": [],
+                            }
+                            if len(cells) > 6:
+                                for extra_cell in cells[6:]:
+                                    extra_type = (
+                                        extra_cell.get_text(" ", strip=True)
+                                        if hasattr(extra_cell, "get_text")
+                                        else ""
+                                    )
+                                    if extra_type and extra_type.strip():
+                                        rowspan_field["element_types"].append(
+                                            normalize_field_type(extra_type)
+                                        )
+                            elif field_type:
+                                rowspan_field["element_types"].append(
+                                    normalize_field_type(field_type)
+                                )
+                        elif field_name and field_type:
+                            normalized_type = normalize_field_type(field_type)
+                            go_type = transform_to_go_type(normalized_type)
                             fields.append(
                                 {
                                     "name": field_name,
-                                    "type": field_type,
+                                    "type": go_type,
                                     "notes": field_notes,
                                 }
                             )
 
-                # subsequent rows with just field data (3 cells)
+                # subsequent rows (could be array elements if we have a rowspan field)
                 elif len(cells) == 3 and packet_id:
-                    field_name = (
-                        cells[0].get_text(" ", strip=True)
-                        if hasattr(cells[0], "get_text")
-                        else ""
-                    )
-                    field_type = (
-                        cells[1].get_text(" ", strip=True)
-                        if hasattr(cells[1], "get_text")
-                        else ""
-                    )
-                    field_type = normalize_field_type(field_type)
-                    field_notes = (
-                        cells[2].get_text(" ", strip=True)
-                        if hasattr(cells[2], "get_text")
-                        else ""
-                    )
-                    field_notes = normalize_notes(field_notes)
-                    if field_name and field_type:
-                        fields.append(
-                            {
-                                "name": field_name,
-                                "type": field_type,
-                                "notes": field_notes,
-                            }
+                    # 1. Array element rows (if rowspan_field is active)
+                    # 2. Regular field rows (3 cells: name, type, notes)
+
+                    if rowspan_field and rowspan_count > 0:
+                        element_type = (
+                            cells[1].get_text(" ", strip=True)
+                            if hasattr(cells[1], "get_text")
+                            else ""
                         )
+                        if element_type:
+                            rowspan_field["element_types"].append(
+                                normalize_field_type(element_type)
+                            )
+                        rowspan_count -= 1
+                        if rowspan_count == 0:
+                            if rowspan_field["element_types"]:
+                                unique_types = set(rowspan_field["element_types"])
+                                if len(unique_types) == 1:
+                                    element_type = list(unique_types)[0]
+                                    if (
+                                        "prefixed array"
+                                        in rowspan_field["notes"].lower()
+                                    ):
+                                        base_type = f"Prefixed{element_type}Array"
+                                    else:
+                                        base_type = f"{element_type}Array"
+                                    final_type = transform_to_go_type(base_type)
+                                else:
+                                    if (
+                                        "prefixed array"
+                                        in rowspan_field["notes"].lower()
+                                    ):
+                                        final_type = "ns.PrefixedArray /* FIXME: mixed element types */"
+                                    else:
+                                        final_type = (
+                                            "ns.Array /* FIXME: mixed element types */"
+                                        )
+                            else:
+                                if "prefixed array" in rowspan_field["notes"].lower():
+                                    final_type = "ns.PrefixedArray"
+                                else:
+                                    final_type = "ns.Array"
+
+                            fields.append(
+                                {
+                                    "name": rowspan_field["name"],
+                                    "type": final_type,
+                                    "notes": rowspan_field["notes"],
+                                }
+                            )
+                            rowspan_field = None
+                        continue
+                    else:
+                        field_name = (
+                            cells[0].get_text(" ", strip=True)
+                            if hasattr(cells[0], "get_text")
+                            else ""
+                        )
+                        field_type = (
+                            cells[1].get_text(" ", strip=True)
+                            if hasattr(cells[1], "get_text")
+                            else ""
+                        )
+                        field_notes = (
+                            cells[2].get_text(" ", strip=True)
+                            if hasattr(cells[2], "get_text")
+                            else ""
+                        )
+                        field_notes = normalize_notes(field_notes)
+
+                        if field_name and field_type:
+                            normalized_type = normalize_field_type(field_type)
+                            go_type = transform_to_go_type(normalized_type)
+                            fields.append(
+                                {
+                                    "name": field_name,
+                                    "type": go_type,
+                                    "notes": field_notes,
+                                }
+                            )
 
             # collect any surrounding paragraph notes for this packet table
             packet_notes = extract_surrounding_paragraphs_text(element)
