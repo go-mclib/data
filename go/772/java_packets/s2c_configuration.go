@@ -206,7 +206,7 @@ var S2CSelectKnownPacks = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x0E)
 
 type S2CSelectKnownPacksData struct {
 	// Prefixed Array
-	KnownPacks ns.PrefixedArray[ns.String]
+	KnownPacks []ns.String // TODO: actually PrefixedArray
 }
 
 // S2CCustomReportDetailsConfiguration represents "Custom Report Details (configuration)".
