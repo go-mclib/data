@@ -145,9 +145,9 @@ type C2SChatSessionUpdateData struct {
 	//
 	SessionId ns.UUID
 	// A byte array of an X.509-encoded public key.
-	PublicKey ns.PrefixedArray[ns.Byte]
+	PublicKey ns.PrefixedByteArray
 	// The signature consists of the player UUID, the key expiration timestamp, and the public key data. These values are hashed using SHA-1 and signed using Mojang's private RSA key.
-	KeySignature ns.PrefixedArray[ns.Byte]
+	KeySignature ns.PrefixedByteArray
 }
 
 // C2SChunkBatchReceived represents "Chunk Batch Received".
