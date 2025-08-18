@@ -869,7 +869,7 @@ type S2CMapItemDataData struct {
 	// Map coordinates: -128 for highest, +127 for lowest
 	Z ns.Byte
 	// 0-15
-	Direction ns.Byte
+	Direction   ns.Byte
 	DisplayName ns.PrefixedOptional[ns.TextComponent]
 	// Only if Columns is more than 0; number of rows updated
 	Rows ns.Optional[ns.UnsignedByte]
@@ -1139,24 +1139,34 @@ type S2CPlayerAbilitiesData struct {
 var S2CPlayerChat = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3A)
 
 type S2CPlayerChatData struct {
-	// VarInt
-	Header ns.VarInt
+	GlobalIndex ns.VarInt
 	// Used by the vanilla client for the disableChat launch option. Setting both longs to 0 will always display the message regardless of the setting.
 	Sender ns.UUID
 	//
 	Index ns.VarInt
 	// Cryptography, the signature consists of the Sender UUID, Session UUID from the Player Session packet, Index, Salt, Timestamp in epoch seconds, the length of the original chat content, the original content itself, the length of Previous Messages, and all of the Previous message signatures. These values are hashed with SHA-256 and signed using the RSA cryptosystem. Modifying any of these values in the packet will cause this signature to fail. This buffer is always 256 bytes long and it is not length-prefixed.
 	MessageSignatureBytes ns.PrefixedOptional[ns.Array[ns.Byte]]
+	// Raw (optionally) signed sent message content. This is used as the content parameter when formatting the message on the client.
+	Message ns.String
 	// Represents the time the message was signed as milliseconds since the epoch , used to check if the message was received within 2 minutes of it being sent.
 	Timestamp ns.Long
 	// Cryptography, used for validating the message signature.
 	Salt ns.Long
 	// The previous message's signature. Contains the same type of data as Message Signature bytes (256 bytes) above. Not length-prefxied.
-	Signature ns.Optional[ns.Array[ns.Byte]]
+	SignatureData ns.PrefixedArray[struct {
+		// The message Id + 1, used for validating message signature. The next field is present only when value of this field is equal to 0.
+		MessageID ns.VarInt
+		// The previous message's signature. Contains the same type of data as Message Signature bytes (256 bytes) above. Not length-prefxied.
+		Signature ns.Optional[ns.ByteArray]
+	}]
+	// The original message content, before filtering.
+	UnsignedContent ns.PrefixedOptional[ns.TextComponent]
 	// If the message has been filtered
 	FilterType ns.VarInt
 	// Only present if the Filter Type is Partially Filtered. Specifies the indexes at which characters in the original message string should be replaced with the # symbol (i.e. filtered) by the vanilla client
 	FilterTypeBits ns.Optional[ns.BitSet]
+	// Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an inline definition. 
+	ChatType ns.Or[ns.Identifier, ns.ChatType]
 	// The name of the one sending the message, usually the sender's display name. This is used as the sender parameter when formatting the message on the client.
 	SenderName ns.TextComponent
 	// The name of the one receiving the message, usually the receiver's display name. This is used as the target parameter when formatting the message on the client.
@@ -2226,7 +2236,7 @@ type S2CUpdateAdvancementsData struct {
 	Value ns.ByteArray // TODO: Advancement
 	// The identifiers of the advancements that should be removed.
 	Identifiers ns.PrefixedArray[ns.Identifier]
-	//Value ns.ByteArray // TODO: AdvancementProgress
+	// Value ns.ByteArray // TODO: AdvancementProgress
 	ShowAdvancements ns.Boolean
 }
 
