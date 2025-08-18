@@ -434,7 +434,7 @@ type S2CCustomPayloadPlayData struct {
 	// Name of the plugin channel used to send the data.
 	Channel ns.Identifier
 	// Any data. The length of this array must be inferred from the packet length.
-	Data ns.Array[ns.Byte]
+	Data ns.ByteArray
 }
 
 // S2CDamageEvent represents "Damage Event".
@@ -482,7 +482,7 @@ type S2CDeleteChatData struct {
 	// The message Id + 1, used for validating message signature. The next field is present only when value of this field is equal to 0.
 	MessageId ns.VarInt
 	// The previous message's signature. Always 256 bytes and not length-prefixed.
-	Signature ns.Optional[ns.Array[ns.Byte]]
+	Signature ns.Optional[ns.ByteArray]
 }
 
 // S2CDisconnectPlay represents "Disconnect (play)".
@@ -1145,7 +1145,7 @@ type S2CPlayerChatData struct {
 	//
 	Index ns.VarInt
 	// Cryptography, the signature consists of the Sender UUID, Session UUID from the Player Session packet, Index, Salt, Timestamp in epoch seconds, the length of the original chat content, the original content itself, the length of Previous Messages, and all of the Previous message signatures. These values are hashed with SHA-256 and signed using the RSA cryptosystem. Modifying any of these values in the packet will cause this signature to fail. This buffer is always 256 bytes long and it is not length-prefixed.
-	MessageSignatureBytes ns.PrefixedOptional[ns.Array[ns.Byte]]
+	MessageSignatureBytes ns.PrefixedOptional[ns.ByteArray]
 	// Raw (optionally) signed sent message content. This is used as the content parameter when formatting the message on the client.
 	Message ns.String
 	// Represents the time the message was signed as milliseconds since the epoch , used to check if the message was received within 2 minutes of it being sent.

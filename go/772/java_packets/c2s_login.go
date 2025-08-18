@@ -40,7 +40,7 @@ type C2SCustomQueryAnswerData struct {
 	// Should match ID from server.
 	MessageId ns.VarInt
 	// Any data, depending on the channel. The length of this array must be inferred from the packet length. Only present if the client understood the request.
-	Data ns.PrefixedOptional[ns.Array[ns.Byte]]
+	Data ns.PrefixedOptional[ns.ByteArray]
 }
 
 // C2SLoginAcknowledged represents "Login Acknowledged".
