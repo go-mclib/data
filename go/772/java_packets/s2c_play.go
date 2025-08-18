@@ -1165,7 +1165,7 @@ type S2CPlayerChatData struct {
 	FilterType ns.VarInt
 	// Only present if the Filter Type is Partially Filtered. Specifies the indexes at which characters in the original message string should be replaced with the # symbol (i.e. filtered) by the vanilla client
 	FilterTypeBits ns.Optional[ns.BitSet]
-	// Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an inline definition. 
+	// Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an inline definition.
 	ChatType ns.Or[ns.Identifier, ns.ChatType]
 	// The name of the one sending the message, usually the sender's display name. This is used as the sender parameter when formatting the message on the client.
 	SenderName ns.TextComponent
