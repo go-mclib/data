@@ -22,9 +22,3 @@ type C2SIntentionData struct {
 	// 1 for Status , 2 for Login , 3 for Transfer .
 	Intent ns.VarInt
 }
-
-const (
-	IntentStatus ns.VarInt = iota + 1
-	IntentLogin
-	IntentTransfer
-)

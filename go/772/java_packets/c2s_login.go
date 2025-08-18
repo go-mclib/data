@@ -26,9 +26,9 @@ var C2SKey = jp.NewPacket(jp.StateLogin, jp.C2S, 0x01)
 
 type C2SKeyData struct {
 	// Shared Secret value, encrypted with the server's public key.
-	SharedSecret ns.PrefixedByteArray
+	SharedSecret ns.PrefixedArray[ns.Byte]
 	// Verify Token value, encrypted with the same public key as the shared secret.
-	VerifyToken ns.PrefixedByteArray
+	VerifyToken ns.PrefixedArray[ns.Byte]
 }
 
 // C2SCustomQueryAnswer represents "Login Plugin Response".

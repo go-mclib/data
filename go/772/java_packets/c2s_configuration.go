@@ -66,7 +66,7 @@ type C2SCustomPayloadConfigurationData struct {
 	// Name of the plugin channel used to send the data.
 	Channel ns.Identifier
 	// Any data, depending on the channel. minecraft: channels are documented here . The length of this array must be inferred from the packet length.
-	Data ns.ByteArray
+	Data ns.Array[ns.Byte]
 }
 
 // C2SFinishConfiguration represents "Acknowledge Finish Configuration".
@@ -131,7 +131,11 @@ var C2SSelectKnownPacks = jp.NewPacket(jp.StateConfiguration, jp.C2S, 0x07)
 
 type C2SSelectKnownPacksData struct {
 	// Prefixed Array
-	KnownPacks ns.PrefixedArray[ns.String]
+	KnownPacks ns.PrefixedArray[struct {
+		Namespace ns.String
+		Id        ns.String
+		Version   ns.String
+	}]
 }
 
 // C2SCustomClickActionConfiguration represents "Custom Click Action (configuration)".

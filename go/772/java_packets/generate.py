@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 PROTOCOL_VERSION = "772"
-JSON_FILE = ROOT.parent.parent / "data" / PROTOCOL_VERSION / "packets.json"
+JSON_FILE = ROOT.parent.parent.parent / "data" / PROTOCOL_VERSION / "java_packets.json"
 GENERATE_INTO = ROOT
 
 FILE_MAPPINGS = {
@@ -54,9 +54,32 @@ def normalize_field_name(name: str) -> str:
     # remove parentheses content, clean up special chars
     name = re.sub(r"\(.+\)", "", name)
     name = name.replace("-", " ").replace("/", " ").replace("?", "").replace(":", "")
-    # remove numbers and convert to TitleCase
-    name = re.sub(r"\d+", "", name)
-    return "".join(word.capitalize() for word in name.split())
+    # Convert to TitleCase while preserving numbers
+    words = name.split()
+    result = []
+    for word in words:
+        # If the word contains both letters and numbers, capitalize the first letter
+        # Otherwise just capitalize normally
+        if any(c.isdigit() for c in word) and any(c.isalpha() for c in word):
+            # Find first letter and capitalize it
+            new_word = ""
+            first_letter_found = False
+            for c in word:
+                if c.isalpha() and not first_letter_found:
+                    new_word += c.upper()
+                    first_letter_found = True
+                else:
+                    new_word += c
+            result.append(new_word)
+        else:
+            result.append(word.capitalize())
+    final_name = "".join(result)
+    
+    # If the name starts with a number, prefix it with 'Field' to make it a valid Go identifier
+    if final_name and final_name[0].isdigit():
+        final_name = "Field" + final_name
+    
+    return final_name
 
 
 def normalize_resource_name(packet_resource: str, packet_name: str) -> str:
@@ -105,6 +128,14 @@ def generate_packets_go() -> None:
                 for field in packet["fields"]:
                     field_name = normalize_field_name(field["name"])
                     field_type = field["type"]  # type is already Go-ready from JSON
+                    # Handle inline struct syntax - make it multiline for readability
+                    if "struct {" in field_type and ";" in field_type:
+                        # Convert inline struct to multiline format
+                        field_type = field_type.replace("struct { ", "struct {\n\t\t")
+                        field_type = field_type.replace("; ", "\n\t\t")
+                        field_type = field_type.replace(" }", "\n\t}")
+                        # Remove trailing semicolon before closing brace if present
+                        field_type = field_type.replace(";\n\t}", "\n\t}")
                     field_notes = field["notes"].replace("\n", " ").strip()
 
                     if field_name and field_type:
@@ -128,7 +159,7 @@ def generate_packets_go() -> None:
                     packet_name=packet["name"],
                     packet_notes=packet_notes,
                     minecraft_wiki_anchor=wiki_anchor,
-                    packet_state=state.title(),
+                    packet_state="Handshake" if state == "handshaking" else state.title(),
                     packet_bound=packet_bound,
                     packet_id=packet["id"],
                     fields="\n".join(fields) if fields else "\t// No fields",

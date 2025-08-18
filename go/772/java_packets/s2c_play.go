@@ -80,7 +80,11 @@ var S2CAwardStats = jp.NewPacket(jp.StatePlay, jp.S2C, 0x03)
 
 type S2CAwardStatsData struct {
 	// Prefixed Array
-	Statistics ns.PrefixedArray[any]
+	Statistics ns.PrefixedArray[struct {
+		CategoryId  ns.VarInt
+		StatisticId ns.VarInt
+		Value       ns.VarInt
+	}]
 }
 
 // S2CBlockChangedAck represents "Acknowledge Block Change".
@@ -236,7 +240,11 @@ var S2CChunksBiomes = jp.NewPacket(jp.StatePlay, jp.S2C, 0x0D)
 
 type S2CChunksBiomesData struct {
 	// Prefixed Array
-	ChunkBiomeData ns.PrefixedArray[any]
+	ChunkBiomeData ns.PrefixedArray[struct {
+		ChunkZ ns.Int
+		ChunkX ns.Int
+		Data   ns.PrefixedArray[ns.Byte]
+	}]
 }
 
 // S2CClearTitles represents "Clear Titles".
@@ -283,7 +291,7 @@ var S2CCommands = jp.NewPacket(jp.StatePlay, jp.S2C, 0x10)
 
 type S2CCommandsData struct {
 	// An array of nodes.
-	Nodes ns.PrefixedArray[any] // TODO: add Node type
+	Nodes ns.PrefixedArray[ns.ByteArray] // TODO: Node
 	// Index of the root node in the previous array.
 	RootIndex ns.VarInt
 }
@@ -502,7 +510,7 @@ type S2CDisguisedChatData struct {
 	// This is used as the content parameter when formatting the message on the client.
 	Message ns.TextComponent
 	// Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an inline definition.
-	ChatType ns.IDor[ns.ChatType]
+	ChatType ns.Or[ns.Identifier, ns.ChatType]
 	// The name of the one sending the message, usually the sender's display name. This is used as the sender parameter when formatting the message on the client.
 	SenderName ns.TextComponent
 	// The name of the one receiving the message, usually the receiver's display name. This is used as the target parameter when formatting the message on the client.
@@ -570,9 +578,9 @@ type S2CExplodeData struct {
 	// The particle ID listed in Particles .
 	ExplosionParticleId ns.VarInt
 	// Particle data as specified in Particles .
-	ExplosionParticleData ns.ByteArray // TODO: varies?
+	ExplosionParticleData ns.ByteArray // TODO: ParticleData
 	// ID in the minecraft:sound_event registry, or an inline definition.
-	ExplosionSound ns.IDor[ns.SoundEvent]
+	ExplosionSound ns.Or[ns.Identifier, ns.SoundEvent]
 }
 
 // S2CForgetLevelChunk represents "Unload Chunk".
@@ -762,7 +770,7 @@ type S2CLevelParticlesData struct {
 	// The particle ID listed in Particles .
 	ParticleId ns.VarInt
 	// Particle data as specified in Particles .
-	Data ns.ByteArray // TODO: varies?
+	Data ns.ByteArray // TODO: ParticleData
 }
 
 // S2CLightUpdate represents "Update Light".
@@ -862,16 +870,11 @@ type S2CMapItemDataData struct {
 	Z ns.Byte
 	// 0-15
 	Direction ns.Byte
-	//
 	DisplayName ns.PrefixedOptional[ns.TextComponent]
 	// Only if Columns is more than 0; number of rows updated
 	Rows ns.Optional[ns.UnsignedByte]
-	// Only if Columns is more than 0; x offset of the westernmost column
-	XB ns.Optional[ns.UnsignedByte]
-	// Only if Columns is more than 0; z offset of the northernmost row
-	ZB ns.Optional[ns.UnsignedByte]
 	// Only if Columns is more than 0; see Map item format
-	Data ns.Optional[ns.PrefixedByteArray]
+	Data ns.Optional[ns.PrefixedArray[ns.ByteArray]]
 }
 
 // S2CMerchantOffers represents "Merchant Offers".
@@ -889,7 +892,7 @@ type S2CMerchantOffersData struct {
 	// The item the player will receive from this villager trade.
 	OutputItem ns.Slot
 	// The second item the player has to supply for this villager trade.
-	InputItem ns.PrefixedOptional[any] // TODO: add TradeItem type
+	InputItem2 ns.PrefixedOptional[ns.ByteArray] // TODO: TradeItem
 	// True if the trade is disabled; false if the trade is enabled.
 	TradeDisabled ns.Boolean
 	// Number of times the trade has been used so far. If equal to the maximum number of trades, the client will display a red X.
@@ -1137,7 +1140,7 @@ var S2CPlayerChat = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3A)
 
 type S2CPlayerChatData struct {
 	// VarInt
-	Header ns.VarInt // TODO: GlobalIndex
+	Header ns.VarInt
 	// Used by the vanilla client for the disableChat launch option. Setting both longs to 0 will always display the message regardless of the setting.
 	Sender ns.UUID
 	//
@@ -1218,7 +1221,7 @@ type S2CPlayerInfoUpdateData struct {
 	// Determines what actions are present.
 	Actions ns.EnumSet
 	// The length of this array is determined by the number of Player Actions that give a non-zero value when applying its mask to the actions flag. For example given the decimal number 5, binary 00000101. The masks 0x01 and 0x04 would return a non-zero value, meaning the Player Actions array would include two actions: Add Player and Update Game Mode.
-	PlayerActions ns.ByteArray // TODO: PlayerArrayActions
+	PlayerActions ns.ByteArray // TODO: https://minecraft.wiki/w/Java_Edition_protocol/Packets#player-info:player-actions
 }
 
 // S2CPlayerLookAt represents "Look At".
@@ -1303,7 +1306,14 @@ var S2CRecipeBookAdd = jp.NewPacket(jp.StatePlay, jp.S2C, 0x43)
 
 type S2CRecipeBookAddData struct {
 	// Prefixed Array
-	Recipes ns.PrefixedArray[any]
+	Recipes ns.PrefixedArray[struct {
+		RecipeId    ns.VarInt
+		Display     ns.RecipeDisplay
+		GroupId     ns.VarInt
+		CategoryId  ns.VarInt
+		Ingredients ns.PrefixedOptional[ns.PrefixedArray[ns.ByteArray]] // TODO: ID Set (https://minecraft.wiki/w/Java_Edition_protocol/Packets#ID_Set)
+		Flags       ns.Byte
+	}]
 	// Replace or Add to known recipes
 	Replace ns.Boolean
 }
@@ -1815,7 +1825,7 @@ type S2CSetObjectiveData struct {
 	// Only if mode is 0 or 2 and the previous boolean is true. Determines how the score number should be formatted.
 	NumberFormat ns.Optional[ns.VarInt]
 	// Show nothing.
-	Blank any // TODO: no fields?
+	StylingContent ns.ByteArray // TODO
 }
 
 // S2CSetPassengers represents "Set Passengers".
@@ -1870,7 +1880,6 @@ type S2CSetPlayerTeamData struct {
 	TeamSuffix ns.TextComponent
 	// Identifiers for the entities in this team. For players, this is their username; for other entities, it is their UUID.
 	Entities ns.PrefixedArray[ns.String]
-	// TODO: more fields yielded from generator, check
 }
 
 // S2CSetScore represents "Update Score".
@@ -1892,7 +1901,7 @@ type S2CSetScoreData struct {
 	// Determines how the score number should be formatted.
 	NumberFormat ns.PrefixedOptional[ns.VarInt]
 	// Show nothing.
-	Blank any // TODO: no fields?
+	StylingContent ns.ByteArray // TODO
 }
 
 // S2CSetSimulationDistance represents "Set Simulation Distance".
@@ -1968,7 +1977,7 @@ var S2CSoundEntity = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6D)
 
 type S2CSoundEntityData struct {
 	// ID in the minecraft:sound_event registry, or an inline definition.
-	SoundEvent ns.IDor[ns.SoundEvent]
+	SoundEvent ns.Or[ns.Identifier, ns.SoundEvent]
 	// The category that this sound will be played from ( current categories ).
 	SoundCategory ns.VarInt
 	//
@@ -1990,7 +1999,7 @@ var S2CSound = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6E)
 
 type S2CSoundData struct {
 	// ID in the minecraft:sound_event registry, or an inline definition.
-	SoundEvent ns.IDor[ns.SoundEvent]
+	SoundEvent ns.Or[ns.Identifier, ns.SoundEvent]
 	// The category that this sound will be played from ( current categories ).
 	SoundCategory ns.VarInt
 	// Effect X multiplied by 8 ( fixed-point number with only 3 bits dedicated to the fractional part).
@@ -2213,11 +2222,11 @@ var S2CUpdateAdvancements = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7B)
 type S2CUpdateAdvancementsData struct {
 	// Whether to reset/clear the current advancements.
 	ResetClear ns.Boolean
+	// See below
+	Value ns.ByteArray // TODO: Advancement
 	// The identifiers of the advancements that should be removed.
 	Identifiers ns.PrefixedArray[ns.Identifier]
-	// See below.
-	Value ns.ByteArray // TODO: Advancementprogress
-	//
+	//Value ns.ByteArray // TODO: AdvancementProgress
 	ShowAdvancements ns.Boolean
 }
 
@@ -2236,7 +2245,7 @@ type S2CUpdateAttributesData struct {
 	// See below.
 	Value ns.Double
 	// See Attribute#Modifiers . Modifier Data defined below.
-	Modifiers ns.ByteArray // TODO: PrefixedModifierArrayData
+	Modifiers ns.PrefixedArray[ns.ByteArray] // TODO: ModifierData
 }
 
 // S2CUpdateMobEffect represents "Entity Effect".
@@ -2264,7 +2273,10 @@ var S2CUpdateRecipes = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7E)
 
 type S2CUpdateRecipesData struct {
 	// Prefixed Array
-	PropertySets ns.PrefixedArray[any]
+	PropertySets ns.PrefixedArray[struct {
+		PropertySetId ns.Identifier
+		Items         ns.PrefixedArray[ns.VarInt]
+	}]
 	//
 	SlotDisplay ns.SlotDisplay
 }
@@ -2278,7 +2290,15 @@ var S2CUpdateTagsPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7F)
 
 type S2CUpdateTagsPlayData struct {
 	// Prefixed Array
-	RegistryToTagsMap ns.PrefixedArray[any]
+	RegistryToTagsMap ns.PrefixedArray[struct {
+		Registry ns.Identifier
+		Tags     ns.Array[Tag]
+	}]
+}
+
+type Tag struct {
+	Identifier ns.Identifier
+	Entries    ns.PrefixedArray[ns.VarInt]
 }
 
 // S2CProjectilePower represents "Projectile Power".
@@ -2302,7 +2322,10 @@ var S2CCustomReportDetails = jp.NewPacket(jp.StatePlay, jp.S2C, 0x81)
 
 type S2CCustomReportDetailsData struct {
 	// Prefixed Array (32)
-	Details ns.PrefixedArray[any]
+	Details ns.PrefixedArray[struct {
+		Title       ns.String
+		Description ns.String
+	}]
 }
 
 // S2CServerLinks represents "Server Links".
@@ -2314,8 +2337,29 @@ var S2CServerLinks = jp.NewPacket(jp.StatePlay, jp.S2C, 0x82)
 
 type S2CServerLinksData struct {
 	// Prefixed Array
-	Links ns.PrefixedArray[any]
+	Links ns.PrefixedArray[struct {
+		// Determines if the following label is built-in (from enum) or custom (text component).
+		IsBuiltin ns.Boolean
+		// See `ServerLink*` enums.
+		Label ns.Or[ns.VarInt, ns.TextComponent]
+		// Valid URL.
+		Url ns.String
+	}]
 }
+
+const (
+	// Displayed on connection error screen; included as a comment in the disconnection report.
+	ServerLinkBugReport ns.VarInt = iota
+	ServerLinkCommunityGuidelines
+	ServerLinkSupport
+	ServerLinkStatus
+	ServerLinkFeedback
+	ServerLinkCommunity
+	ServerLinkWebsite
+	ServerLinkForums
+	ServerLinkNews
+	ServerLinkAnnouncements
+)
 
 // S2CWaypoint represents "Waypoint".
 //
@@ -2328,7 +2372,7 @@ type S2CWaypointData struct {
 	// 0: track, 1: untrack, 2: update.
 	Operation ns.VarInt
 	// Something that uniquely identifies this specific waypoint.
-	Identifier ns.Or[ns.UUID, ns.String] // UUID or String
+	Identifier ns.Or[ns.UUID, ns.String]
 	// Path to the waypoint style JSON: assets/<namespace>/waypoint_style/<value>.json.
 	IconStyle ns.Identifier
 	// Defines how the following field is read.
@@ -2355,5 +2399,5 @@ var S2CShowDialogPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x85)
 
 type S2CShowDialogPlayData struct {
 	// ID in the minecraft:dialog registry, or an inline definition as described at Registry_data#Dialog .
-	Dialog ns.IDor[ns.NBT]
+	Dialog ns.Or[ns.Identifier, ns.NBT]
 }

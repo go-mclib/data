@@ -32,7 +32,7 @@ type S2CCustomPayloadConfigurationData struct {
 	// Name of the plugin channel used to send the data.
 	Channel ns.Identifier
 	// Any data. The length of this array must be inferred from the packet length.
-	Data ns.ByteArray
+	Data ns.Array[ns.Byte]
 }
 
 // S2CDisconnectConfiguration represents "Disconnect (configuration)".
@@ -191,7 +191,10 @@ var S2CUpdateTagsConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x0
 
 type S2CUpdateTagsConfigurationData struct {
 	// Prefixed Array
-	ArrayOfTags ns.PrefixedArray[any]
+	ArrayOfTags ns.PrefixedArray[struct {
+		Registry   ns.Identifier
+		ArrayOfTag ns.Array[Tag]
+	}]
 }
 
 // S2CSelectKnownPacks represents "Clientbound Known Packs".
@@ -206,7 +209,11 @@ var S2CSelectKnownPacks = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x0E)
 
 type S2CSelectKnownPacksData struct {
 	// Prefixed Array
-	KnownPacks []ns.String // TODO: actually PrefixedArray
+	KnownPacks ns.PrefixedArray[struct {
+		Namespace ns.String
+		Id        ns.String
+		Version   ns.String
+	}]
 }
 
 // S2CCustomReportDetailsConfiguration represents "Custom Report Details (configuration)".
@@ -218,7 +225,10 @@ var S2CCustomReportDetailsConfiguration = jp.NewPacket(jp.StateConfiguration, jp
 
 type S2CCustomReportDetailsConfigurationData struct {
 	// Prefixed Array (32)
-	Details ns.PrefixedArray[any]
+	Details ns.PrefixedArray[struct {
+		Title       ns.String
+		Description ns.String
+	}]
 }
 
 // S2CServerLinksConfiguration represents "Server Links (configuration)".
@@ -230,7 +240,10 @@ var S2CServerLinksConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x
 
 type S2CServerLinksConfigurationData struct {
 	// Prefixed Array
-	Links ns.PrefixedArray[any]
+	Links ns.PrefixedArray[struct {
+		Label ns.Or[ns.VarInt, ns.TextComponent]
+		Url   ns.String
+	}]
 }
 
 // S2CClearDialogConfiguration represents "Clear Dialog (configuration)".

@@ -206,7 +206,7 @@
         "fields": [
           {
             "name": "Array of tags",
-            "type": "ns.PrefixedArray /* FIXME: mixed element types */",
+            "type": "ns.PrefixedArray[struct { Registry ns.Identifier; ArrayOfTag ns.Unknown // FIXME: See below }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -219,7 +219,7 @@
         "fields": [
           {
             "name": "Known Packs",
-            "type": "ns.PrefixedArray[ns.String]",
+            "type": "ns.PrefixedArray[struct { Namespace ns.String; Id ns.String; Version ns.String }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -232,7 +232,7 @@
         "fields": [
           {
             "name": "Details",
-            "type": "ns.PrefixedArray /* FIXME: mixed element types */",
+            "type": "ns.PrefixedArray[struct { Title ns.String; Description ns.String }]",
             "notes": "Prefixed Array (32)"
           }
         ]
@@ -245,7 +245,7 @@
         "fields": [
           {
             "name": "Links",
-            "type": "ns.PrefixedArray /* FIXME: mixed element types */",
+            "type": "ns.PrefixedArray[struct { Label ns.Or[ns.VarInt, ns.TextComponent]; Url ns.String }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -420,7 +420,7 @@
         "fields": [
           {
             "name": "Known Packs",
-            "type": "ns.PrefixedArray[ns.String]",
+            "type": "ns.PrefixedArray[struct { Namespace ns.String; Id ns.String; Version ns.String }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -779,7 +779,7 @@
         "fields": [
           {
             "name": "Statistics",
-            "type": "ns.PrefixedArray /* FIXME: mixed element types */",
+            "type": "ns.PrefixedArray[struct { CategoryId ns.VarInt; StatisticId ns.VarInt; Value ns.VarInt }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -978,7 +978,7 @@
         "fields": [
           {
             "name": "Chunk biome data",
-            "type": "ns.PrefixedArray /* FIXME: mixed element types */",
+            "type": "ns.PrefixedArray[struct { ChunkZ ns.Int; ChunkX ns.Int; Data ns.PrefixedArray[ns.Byte] }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -1286,7 +1286,7 @@
           },
           {
             "name": "Chat Type",
-            "type": "ns.IDorChatType",
+            "type": "ns.Or[ns.Identifier, ns.ChatType]",
             "notes": "Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an\ninline definition."
           },
           {
@@ -1410,7 +1410,7 @@
           },
           {
             "name": "Explosion Sound",
-            "type": "ns.IDorSoundEvent",
+            "type": "ns.Or[ns.Identifier, ns.SoundEvent]",
             "notes": "ID in the minecraft:sound_event registry, or an inline definition."
           }
         ]
@@ -2524,7 +2524,7 @@
         "fields": [
           {
             "name": "Recipes",
-            "type": "ns.PrefixedArray /* FIXME: mixed element types */",
+            "type": "ns.PrefixedArray[struct { RecipeId ns.VarInt; Display ns.RecipeDisplay; GroupId ns.VarInt; CategoryId ns.VarInt; Ingredients ns.PrefixedOptional[ns.PrefixedIDArraySet]; Flags ns.Byte }]",
             "notes": "Prefixed Array"
           },
           {
@@ -3444,7 +3444,7 @@
         "fields": [
           {
             "name": "Sound Event",
-            "type": "ns.IDorSoundEvent",
+            "type": "ns.Or[ns.Identifier, ns.SoundEvent]",
             "notes": "ID in the minecraft:sound_event registry, or an inline definition."
           },
           {
@@ -3482,7 +3482,7 @@
         "fields": [
           {
             "name": "Sound Event",
-            "type": "ns.IDorSoundEvent",
+            "type": "ns.Or[ns.Identifier, ns.SoundEvent]",
             "notes": "ID in the minecraft:sound_event registry, or an inline definition."
           },
           {
@@ -3889,7 +3889,7 @@
         "fields": [
           {
             "name": "Property Sets",
-            "type": "ns.PrefixedArray /* FIXME: mixed element types */",
+            "type": "ns.PrefixedArray[struct { PropertySetId ns.Identifier; Items ns.PrefixedArray[ns.VarInt] }]",
             "notes": "Prefixed Array"
           },
           {
@@ -3907,7 +3907,7 @@
         "fields": [
           {
             "name": "Registry to tags map",
-            "type": "ns.PrefixedArray /* FIXME: mixed element types */",
+            "type": "ns.PrefixedArray[struct { Registry ns.Identifier; Tags ns.PrefixedTagArray // FIXME: See below }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -3938,7 +3938,7 @@
         "fields": [
           {
             "name": "Details",
-            "type": "ns.PrefixedArray /* FIXME: mixed element types */",
+            "type": "ns.PrefixedArray[struct { Title ns.String; Description ns.String }]",
             "notes": "Prefixed Array (32)"
           }
         ]
@@ -3951,7 +3951,7 @@
         "fields": [
           {
             "name": "Links",
-            "type": "ns.PrefixedArray /* FIXME: mixed element types */",
+            "type": "ns.PrefixedArray[struct { IsBuilt-in ns.Boolean; Label ns.VarIntTextComponent; Url ns.String }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -3969,7 +3969,7 @@
           },
           {
             "name": "Identifier",
-            "type": "ns.UuidorString",
+            "type": "ns.Or[ns.UUID, ns.String]",
             "notes": "Something that uniquely identifies this specific waypoint."
           },
           {
@@ -3999,7 +3999,7 @@
         "fields": [
           {
             "name": "Dialog",
-            "type": "ns.IDorNBT",
+            "type": "ns.Or[ns.Identifier, ns.NBT]",
             "notes": "ID in the minecraft:dialog registry, or an inline definition as described at Registry_data#Dialog ."
           }
         ]
@@ -4486,7 +4486,7 @@
           },
           {
             "name": "Entries",
-            "type": "ns.PrefixedArray[ns.String]",
+            "type": "ns.PrefixedStringArray // Size: 100",
             "notes": "Text from each page. Maximum string length is 1024 chars."
           },
           {

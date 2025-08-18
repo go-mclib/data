@@ -135,7 +135,25 @@ def normalize_field_type(raw_type: str, target_format: str = "json") -> str:
     )
     t = re.sub(r"\bArray\s+of\s+([A-Za-z0-9]+)\b", r"\1Array", t)
 
-    # remove all spaces
+    id_or_match = re.match(r"ID\s+or\s+(.+)", t, re.IGNORECASE)
+    if id_or_match:
+        inner_type = id_or_match.group(1).strip()
+        inner_type_normalized = normalize_field_type(inner_type, "json")
+        t = f"IDor{inner_type_normalized}"
+
+    var_or_match = re.match(r"(\w+)\s+or\s+(.+)", t, re.IGNORECASE)
+    if var_or_match:
+        type1 = var_or_match.group(1).strip()
+        type2 = var_or_match.group(2).strip()
+        type1_norm = normalize_field_type(type1, "json")
+        type2_norm = normalize_field_type(type2, "json")
+        t = f"Or{type1_norm}{type2_norm}"
+
+    t = re.sub(r"\b[Ee]num\b", "", t)
+    t = re.sub(r"\s+", " ", t).strip()
+
+    t = re.sub(r"\(\s*([^)]+)\s*\)", r"(\1)", t)
+
     t = re.sub(r"\s+", "", t)
 
     if target_format == "go":
@@ -157,6 +175,55 @@ def transform_to_go_type(field_type: str) -> str:
         return "ns.Unknown // FIXME"
     if base_type == "Namespace":
         return "ns.Identifier"
+    if base_type.lower() in ["seebelow", "see below", "(seebelow)", "(see below)"]:
+        return "ns.Unknown // FIXME: See below"
+
+    paren_match = re.match(r"^(.+)\((.+)\)$", base_type)
+    if paren_match:
+        main_type = paren_match.group(1)
+        paren_content = paren_match.group(2).lower()
+        if paren_content in ["seebelow", "see below"]:
+            return f"ns.{main_type} // FIXME: See below"
+        else:
+            # Try to parse as a size or other valid parameter
+            if paren_content.isdigit():
+                return f"ns.{main_type} // Size: {paren_content}"
+            else:
+                return f"ns.{main_type} // FIXME: {paren_content}"
+    id_or_match = re.match(r"^IDor(.+)$", base_type)
+    if id_or_match:
+        inner_type = id_or_match.group(1)
+        inner_go_type = transform_to_go_type(inner_type)
+        if inner_go_type.startswith("ns."):
+            inner_go_type = inner_go_type[3:]
+        return f"ns.Or[ns.Identifier, ns.{inner_go_type}]"
+
+    or_match = re.match(r"^Or(.+)$", base_type)
+    if or_match:
+        combined = or_match.group(1)
+        for boundary in [
+            "TextComponent",
+            "String",
+            "VarInt",
+            "Int",
+            "Long",
+            "Float",
+            "Double",
+            "Boolean",
+            "Byte",
+        ]:
+            if boundary in combined and combined != boundary:
+                if combined.endswith(boundary):
+                    type1 = combined[: -len(boundary)]
+                    type2 = boundary
+                    type1_go = transform_to_go_type(type1)
+                    type2_go = transform_to_go_type(type2)
+                    if type1_go.startswith("ns."):
+                        type1_go = type1_go[3:]
+                    if type2_go.startswith("ns."):
+                        type2_go = type2_go[3:]
+                    return f"ns.Or[ns.{type1_go}, ns.{type2_go}]"
+        return f"ns.Unknown // FIXME: Or type {combined}"
     prefixed_optional_match = re.match(r"^PrefixedOptional(.+)$", base_type)
     if prefixed_optional_match:
         inner_type = prefixed_optional_match.group(1)
@@ -199,6 +266,9 @@ def transform_to_go_type(field_type: str) -> str:
         if inner_go_type.startswith("ns."):
             inner_go_type = inner_go_type[3:]
         return f"ns.Array[ns.{inner_go_type}]"
+    if not base_type or not base_type.replace("_", "").replace("-", "").isalnum():
+        return f"ns.Unknown // FIXME: Invalid type '{base_type}'"
+
     return f"ns.{base_type}"
 
 
@@ -364,6 +434,7 @@ def import_packets_wiki() -> dict:
 
             rowspan_field = None  # track field with rowspan
             rowspan_count = 0  # track remaining rows for rowspan
+            rowspan_elements = []  # track element fields for complex arrays
 
             for row in rows[1:]:  # skip header row
                 if not isinstance(row, Tag):
@@ -444,23 +515,34 @@ def import_packets_wiki() -> dict:
                                 "type": field_type,  # this might be the first element type
                                 "notes": field_notes,
                                 "is_array": True,
-                                "element_types": [],
                             }
-                            if len(cells) > 6:
-                                for extra_cell in cells[6:]:
-                                    extra_type = (
-                                        extra_cell.get_text(" ", strip=True)
-                                        if hasattr(extra_cell, "get_text")
+                            rowspan_elements = []
+                            if len(cells) >= 6:
+                                elem_name = (
+                                    cells[4].get_text(" ", strip=True)
+                                    if hasattr(cells[4], "get_text") and len(cells) > 4
+                                    else ""
+                                )
+                                elem_type = (
+                                    cells[6].get_text(" ", strip=True)
+                                    if hasattr(cells[6], "get_text") and len(cells) > 6
+                                    else (
+                                        cells[5].get_text(" ", strip=True)
+                                        if hasattr(cells[5], "get_text")
+                                        and len(cells) > 5
                                         else ""
                                     )
-                                    if extra_type and extra_type.strip():
-                                        rowspan_field["element_types"].append(
-                                            normalize_field_type(extra_type)
-                                        )
-                            elif field_type:
-                                rowspan_field["element_types"].append(
-                                    normalize_field_type(field_type)
                                 )
+                                if elem_name and elem_type:
+                                    go_field_name = "".join(
+                                        word.capitalize() for word in elem_name.split()
+                                    )
+                                    go_field_type = transform_to_go_type(
+                                        normalize_field_type(elem_type)
+                                    )
+                                    rowspan_elements.append(
+                                        {"name": go_field_name, "type": go_field_type}
+                                    )
                         elif field_name and field_type:
                             normalized_type = normalize_field_type(field_type)
                             go_type = transform_to_go_type(normalized_type)
@@ -478,44 +560,53 @@ def import_packets_wiki() -> dict:
                     # 2. Regular field rows (3 cells: name, type, notes)
 
                     if rowspan_field and rowspan_count > 0:
-                        element_type = (
+                        elem_name = (
+                            cells[0].get_text(" ", strip=True)
+                            if hasattr(cells[0], "get_text")
+                            else ""
+                        )
+                        elem_type = (
                             cells[1].get_text(" ", strip=True)
                             if hasattr(cells[1], "get_text")
                             else ""
                         )
-                        if element_type:
-                            rowspan_field["element_types"].append(
-                                normalize_field_type(element_type)
+                        if elem_name and elem_type:
+                            go_field_name = "".join(
+                                word.capitalize() for word in elem_name.split()
+                            )
+                            go_field_type = transform_to_go_type(
+                                normalize_field_type(elem_type)
+                            )
+                            rowspan_elements.append(
+                                {"name": go_field_name, "type": go_field_type}
                             )
                         rowspan_count -= 1
                         if rowspan_count == 0:
-                            if rowspan_field["element_types"]:
-                                unique_types = set(rowspan_field["element_types"])
-                                if len(unique_types) == 1:
-                                    element_type = list(unique_types)[0]
-                                    if (
-                                        "prefixed array"
-                                        in rowspan_field["notes"].lower()
-                                    ):
-                                        base_type = f"Prefixed{element_type}Array"
-                                    else:
-                                        base_type = f"{element_type}Array"
-                                    final_type = transform_to_go_type(base_type)
+                            if len(rowspan_elements) > 1:
+                                struct_fields = []
+                                for elem in rowspan_elements:
+                                    struct_fields.append(
+                                        f"{elem['name']} {elem['type']}"
+                                    )
+                                struct_def = (
+                                    "struct { " + "; ".join(struct_fields) + " }"
+                                )
+
+                                if "prefixed array" in rowspan_field["notes"].lower():
+                                    final_type = f"ns.PrefixedArray[{struct_def}]"
                                 else:
-                                    if (
-                                        "prefixed array"
-                                        in rowspan_field["notes"].lower()
-                                    ):
-                                        final_type = "ns.PrefixedArray /* FIXME: mixed element types */"
-                                    else:
-                                        final_type = (
-                                            "ns.Array /* FIXME: mixed element types */"
-                                        )
+                                    final_type = f"ns.Array[{struct_def}]"
+                            elif len(rowspan_elements) == 1:
+                                elem_type = rowspan_elements[0]["type"]
+                                if "prefixed array" in rowspan_field["notes"].lower():
+                                    final_type = f"ns.PrefixedArray[{elem_type}]"
+                                else:
+                                    final_type = f"ns.Array[{elem_type}]"
                             else:
                                 if "prefixed array" in rowspan_field["notes"].lower():
-                                    final_type = "ns.PrefixedArray"
+                                    final_type = "ns.PrefixedArray[ns.Unknown]"
                                 else:
-                                    final_type = "ns.Array"
+                                    final_type = "ns.Array[ns.Unknown]"
 
                             fields.append(
                                 {
@@ -525,6 +616,7 @@ def import_packets_wiki() -> dict:
                                 }
                             )
                             rowspan_field = None
+                            rowspan_elements = []
                         continue
                     else:
                         field_name = (
