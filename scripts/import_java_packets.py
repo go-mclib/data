@@ -185,7 +185,6 @@ def transform_to_go_type(field_type: str) -> str:
         if paren_content in ["seebelow", "see below"]:
             return f"ns.{main_type} // FIXME: See below"
         else:
-            # Try to parse as a size or other valid parameter
             if paren_content.isdigit():
                 return f"ns.{main_type} // Size: {paren_content}"
             else:
@@ -227,24 +226,24 @@ def transform_to_go_type(field_type: str) -> str:
     prefixed_optional_match = re.match(r"^PrefixedOptional(.+)$", base_type)
     if prefixed_optional_match:
         inner_type = prefixed_optional_match.group(1)
-        # Check if it's a byte array variant
-        if inner_type == "ByteArray" or inner_type == "PrefixedByteArray":
+        if inner_type == "ByteArray":
             return "ns.PrefixedOptional[ns.ByteArray]"
+        if inner_type == "PrefixedByteArray":
+            return "ns.PrefixedOptional[ns.PrefixedByteArray]"
         inner_go_type = transform_to_go_type(inner_type)
-        # If the inner type is already ns.ByteArray, use it directly
         if inner_go_type == "ns.ByteArray":
             return "ns.PrefixedOptional[ns.ByteArray]"
+        if inner_go_type == "ns.PrefixedByteArray":
+            return "ns.PrefixedOptional[ns.PrefixedByteArray]"
         if inner_go_type.startswith("ns."):
             inner_go_type = inner_go_type[3:]
         return f"ns.PrefixedOptional[ns.{inner_go_type}]"
     optional_match = re.match(r"^Optional(.+)$", base_type)
     if optional_match:
         inner_type = optional_match.group(1)
-        # Check if it's a byte array variant
         if inner_type == "ByteArray" or inner_type == "PrefixedByteArray":
             return "ns.Optional[ns.ByteArray]"
         inner_go_type = transform_to_go_type(inner_type)
-        # If the inner type is already ns.ByteArray, use it directly
         if inner_go_type == "ns.ByteArray":
             return "ns.Optional[ns.ByteArray]"
         if inner_go_type.startswith("ns."):
@@ -254,7 +253,7 @@ def transform_to_go_type(field_type: str) -> str:
     if prefixed_array_size_match:
         inner_type = prefixed_array_size_match.group(1)
         if inner_type == "Byte":
-            return "ns.ByteArray"
+            return "ns.PrefixedByteArray"
         inner_go_type = transform_to_go_type(inner_type)
         if inner_go_type.startswith("ns."):
             inner_go_type = inner_go_type[3:]
@@ -272,7 +271,7 @@ def transform_to_go_type(field_type: str) -> str:
     if prefixed_array_match:
         inner_type = prefixed_array_match.group(1)
         if inner_type == "Byte":
-            return "ns.ByteArray"
+            return "ns.PrefixedByteArray"
         inner_go_type = transform_to_go_type(inner_type)
         if inner_go_type.startswith("ns."):
             inner_go_type = inner_go_type[3:]
@@ -618,9 +617,11 @@ def import_packets_wiki() -> dict:
                                     final_type = f"ns.Array[{struct_def}]"
                             elif len(rowspan_elements) == 1:
                                 elem_type = rowspan_elements[0]["type"]
-                                # Check if the element type is Byte
                                 if elem_type == "ns.Byte":
-                                    final_type = "ns.ByteArray"
+                                    if "prefixed array" in rowspan_field["notes"].lower():
+                                        final_type = "ns.PrefixedByteArray"
+                                    else:
+                                        final_type = "ns.ByteArray"
                                 elif "prefixed array" in rowspan_field["notes"].lower():
                                     final_type = f"ns.PrefixedArray[{elem_type}]"
                                 else:
