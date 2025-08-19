@@ -580,7 +580,7 @@ type S2CExplodeData struct {
 	// Particle data as specified in Particles .
 	ExplosionParticleData ns.ByteArray // TODO: ParticleData
 	// ID in the minecraft:sound_event registry, or an inline definition.
-	ExplosionSound ns.Or[ns.Identifier, ns.SoundEvent]
+	ExplosionSound ns.IDor[ns.SoundEvent]
 }
 
 // S2CForgetLevelChunk represents "Unload Chunk".
@@ -1145,7 +1145,7 @@ type S2CPlayerChatData struct {
 	//
 	Index ns.VarInt
 	// Cryptography, the signature consists of the Sender UUID, Session UUID from the Player Session packet, Index, Salt, Timestamp in epoch seconds, the length of the original chat content, the original content itself, the length of Previous Messages, and all of the Previous message signatures. These values are hashed with SHA-256 and signed using the RSA cryptosystem. Modifying any of these values in the packet will cause this signature to fail. This buffer is always 256 bytes long and it is not length-prefixed.
-	MessageSignatureBytes ns.PrefixedOptional[ns.ByteArray]
+	MessageSignatureBytes ns.PrefixedOptional[ns.FixedByteArray] `mc:"length:256"`
 	// Raw (optionally) signed sent message content. This is used as the content parameter when formatting the message on the client.
 	Message ns.String
 	// Represents the time the message was signed as milliseconds since the epoch , used to check if the message was received within 2 minutes of it being sent.
@@ -1157,7 +1157,7 @@ type S2CPlayerChatData struct {
 		// The message Id + 1, used for validating message signature. The next field is present only when value of this field is equal to 0.
 		MessageID ns.VarInt
 		// The previous message's signature. Contains the same type of data as Message Signature bytes (256 bytes) above. Not length-prefxied.
-		Signature ns.Optional[ns.ByteArray]
+		Signature ns.Optional[ns.FixedByteArray] `mc:"length:256"`
 	}]
 	// The original message content, before filtering.
 	UnsignedContent ns.PrefixedOptional[ns.TextComponent]
@@ -1166,7 +1166,7 @@ type S2CPlayerChatData struct {
 	// Only present if the Filter Type is Partially Filtered. Specifies the indexes at which characters in the original message string should be replaced with the # symbol (i.e. filtered) by the vanilla client
 	FilterTypeBits ns.Optional[ns.BitSet]
 	// Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an inline definition.
-	ChatType ns.Or[ns.Identifier, ns.ChatType]
+	ChatType ns.IDor[ns.ChatType]
 	// The name of the one sending the message, usually the sender's display name. This is used as the sender parameter when formatting the message on the client.
 	SenderName ns.TextComponent
 	// The name of the one receiving the message, usually the receiver's display name. This is used as the target parameter when formatting the message on the client.
@@ -1787,7 +1787,7 @@ type S2CSetExperienceData struct {
 //
 // > Sent by the server to set the health of the player it is sent to.
 // >
-// > Food saturation acts as a food “overcharge”. Food values will not decrease while the saturation is over zero. New players logging in or respawning
+// > Food saturation acts as a food "overcharge". Food values will not decrease while the saturation is over zero. New players logging in or respawning
 // > automatically get a saturation of 5.0. Eating food increases the saturation as well as the food bar.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Health
@@ -2409,5 +2409,5 @@ var S2CShowDialogPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x85)
 
 type S2CShowDialogPlayData struct {
 	// ID in the minecraft:dialog registry, or an inline definition as described at Registry_data#Dialog .
-	Dialog ns.Or[ns.Identifier, ns.NBT]
+	Dialog ns.IDor[ns.NBT]
 }
