@@ -243,7 +243,7 @@ type S2CChunksBiomesData struct {
 	ChunkBiomeData ns.PrefixedArray[struct {
 		ChunkZ ns.Int
 		ChunkX ns.Int
-		Data   ns.PrefixedByteArray
+		Data   ns.PrefixedArray[ns.Byte]
 	}]
 }
 
@@ -1522,7 +1522,7 @@ type S2CServerDataData struct {
 	//
 	Motd ns.TextComponent
 	// Icon bytes in the PNG format.
-	Icon ns.PrefixedOptional[ns.PrefixedByteArray]
+	Icon ns.PrefixedOptional[ns.PrefixedArray[ns.Byte]]
 }
 
 // S2CSetActionBarText represents "Set Action Bar Text".
@@ -2066,7 +2066,7 @@ type S2CStoreCookiePlayData struct {
 	// The identifier of the cookie.
 	Key ns.Identifier
 	// The data of the cookie.
-	Payload ns.PrefixedByteArray
+	Payload ns.PrefixedArray[ns.Byte]
 }
 
 // S2CSystemChat represents "System Chat Message".

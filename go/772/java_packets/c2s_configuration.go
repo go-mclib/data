@@ -46,7 +46,7 @@ type C2SCookieResponseConfigurationData struct {
 	// The identifier of the cookie.
 	Key ns.Identifier
 	// The data of the cookie.
-	Payload ns.PrefixedOptional[ns.PrefixedByteArray]
+	Payload ns.PrefixedOptional[ns.PrefixedArray[ns.Byte]]
 }
 
 // C2SCustomPayloadConfiguration represents "Serverbound Plugin Message (configuration)".

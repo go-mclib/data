@@ -145,9 +145,9 @@ type C2SChatSessionUpdateData struct {
 	//
 	SessionId ns.UUID
 	// A byte array of an X.509-encoded public key.
-	PublicKey ns.PrefixedByteArray
+	PublicKey ns.PrefixedArray[ns.Byte]
 	// The signature consists of the player UUID, the key expiration timestamp, and the public key data. These values are hashed using SHA-1 and signed using Mojang's private RSA key.
-	KeySignature ns.PrefixedByteArray
+	KeySignature ns.PrefixedArray[ns.Byte]
 }
 
 // C2SChunkBatchReceived represents "Chunk Batch Received".
@@ -332,7 +332,7 @@ type C2SCookieResponsePlayData struct {
 	// The identifier of the cookie.
 	Key ns.Identifier
 	// The data of the cookie.
-	Payload ns.PrefixedOptional[ns.PrefixedByteArray]
+	Payload ns.PrefixedOptional[ns.PrefixedArray[ns.Byte]]
 }
 
 // C2SCustomPayloadPlay represents "Serverbound Plugin Message (play)".

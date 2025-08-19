@@ -151,7 +151,7 @@ type S2CStoreCookieConfigurationData struct {
 	// The identifier of the cookie.
 	Key ns.Identifier
 	// The data of the cookie.
-	Payload ns.PrefixedByteArray
+	Payload ns.PrefixedArray[ns.Byte]
 }
 
 // S2CTransferConfiguration represents "Transfer (configuration)".
