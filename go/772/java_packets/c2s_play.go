@@ -142,8 +142,10 @@ type C2SChatData struct {
 var C2SChatSessionUpdate = jp.NewPacket(jp.StatePlay, jp.C2S, 0x09)
 
 type C2SChatSessionUpdateData struct {
-	//
+	// Unique identifier for the (entire) chat session.
 	SessionId ns.UUID
+	// The expiry timestamp of the public key (milliseconds since epoch)
+	ExpiresAt ns.Long
 	// A byte array of an X.509-encoded public key.
 	PublicKey ns.PrefixedArray[ns.Byte]
 	// The signature consists of the player UUID, the key expiration timestamp, and the public key data. These values are hashed using SHA-1 and signed using Mojang's private RSA key.
