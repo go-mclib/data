@@ -284,7 +284,11 @@ type C2SContainerClickData struct {
 	// Inventory operation mode, see below.
 	Mode ns.VarInt
 	// New data for this slot, in the client's opinion; see below.
-	SlotData ns.HashedSlot
+	ChangedSlots ns.PrefixedArray[struct {
+		SlotNumber ns.Short
+		// See `ServerLink*` enums.
+		SlotData ns.HashedSlot
+	}]
 	// Item carried by the cursor.
 	CarriedItem ns.HashedSlot
 }

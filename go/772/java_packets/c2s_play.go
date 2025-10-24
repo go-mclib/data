@@ -277,7 +277,7 @@ type C2SContainerButtonClickData struct {
 var C2SContainerClick = jp.NewPacket(jp.StatePlay, jp.C2S, 0x11)
 
 type C2SContainerClickData struct {
-	// The ID of the window which was clicked. 0 for player inventory. The server ignores any packets targeting a Window ID other than the current one, including ignoring 0 when any other window is open.
+	// The ID of the window that was clicked. 0 for player inventory. The server ignores any packets targeting a Window ID other than the current one, including ignoring 0 when any other window is open.
 	WindowId ns.VarInt
 	// The last received State ID from either a Set Container Slot or a Set Container Content packet.
 	StateId ns.VarInt
@@ -288,8 +288,12 @@ type C2SContainerClickData struct {
 	// Inventory operation mode, see below.
 	Mode ns.VarInt
 	// New data for this slot, in the client's opinion; see below.
-	SlotData ns.HashedSlot
-	// Item carried by the cursor. Has to be empty (item ID = -1) for drop mode, otherwise nothing will happen.
+	ChangedSlots ns.PrefixedArray[struct {
+		SlotNumber ns.Short
+		// See `ServerLink*` enums.
+		SlotData ns.HashedSlot
+	}]
+	// Item carried by the cursor.
 	CarriedItem ns.HashedSlot
 }
 
