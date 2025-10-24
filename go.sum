@@ -1,6 +1,4 @@
 github.com/Tnze/go-mc v1.20.2 h1:arHCE/WxLCxY73C/4ZNLdOymRYtdwoXE05ohB7HVN6Q=
 github.com/Tnze/go-mc v1.20.2/go.mod h1:geoRj2HsXSkB3FJBuhr7wCzXegRlzWsVXd7h7jiJ6aQ=
-github.com/go-mclib/protocol v0.0.0-20250819111155-0e3a23dc2054 h1:eca6YbFacj0SMJbAh56hUYuF6c77oLLGDuh2yx1zE90=
-github.com/go-mclib/protocol v0.0.0-20250819111155-0e3a23dc2054/go.mod h1:YL8InL1tZODkSIOCbFZsz0FIi3RSHGilYnILrq6y4Qg=
 github.com/go-mclib/protocol v0.0.0-20251024062106-9e1063000339 h1:3A2VV33CzLQiYF/1JxtzkFM8OlKKyh8IGH56lcBH9MQ=
 github.com/go-mclib/protocol v0.0.0-20251024062106-9e1063000339/go.mod h1:YL8InL1tZODkSIOCbFZsz0FIi3RSHGilYnILrq6y4Qg=
