@@ -190,7 +190,7 @@ type S2CUpdateTagsConfigurationData struct {
 	// Prefixed Array
 	ArrayOfTags ns.PrefixedArray[struct {
 		Registry   ns.Identifier
-		ArrayOfTag any // FIXME
+		ArrayOfTag ns.ByteArray // FIXME
 	}]
 }
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 generate.py generates JSON definitions of Minecraft packets from a HTML capture of the
 Minecraft Wiki page (https://minecraft.wiki/w/Java_Edition_protocol/Packets)

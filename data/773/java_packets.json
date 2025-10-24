@@ -1211,7 +1211,7 @@
       },
       {
         "name": "Debug Sample",
-        "id": "0x1A",
+        "id": "0x1E",
         "resource": "debug_sample",
         "notes": "Sample data that is sent periodically after the client has subscribed with Debug Sample Subscription .\n\nThe vanilla server only sends debug samples to players who are server operators.\n\nTypes:",
         "fields": [
@@ -1229,7 +1229,7 @@
       },
       {
         "name": "Delete Message",
-        "id": "0x1B",
+        "id": "0x1F",
         "resource": "delete_chat",
         "notes": "Removes a message from the client's chat. This only works for messages with signatures; system messages cannot be deleted with this packet.",
         "fields": [
@@ -1247,7 +1247,7 @@
       },
       {
         "name": "Disconnect (play)",
-        "id": "0x1C",
+        "id": "0x20",
         "resource": "disconnect",
         "notes": "Sent by the server before it disconnects a client. The client assumes that the server has already closed the connection by the time the packet arrives.",
         "fields": [
@@ -1260,7 +1260,7 @@
       },
       {
         "name": "Disguised Chat Message",
-        "id": "0x1D",
+        "id": "0x21",
         "resource": "disguised_chat",
         "notes": "Sends the client a chat message, but without any message signing information.\n\nThe vanilla server uses this packet when the console is communicating with players through commands, such as /say , /tell , /me , among others.",
         "fields": [
@@ -1288,7 +1288,7 @@
       },
       {
         "name": "Entity Event",
-        "id": "0x1E",
+        "id": "0x22",
         "resource": "entity_event",
         "notes": "Entity statuses generally trigger an animation for an entity. The available statuses vary by the entity's type (and are available to subclasses of that type as well).",
         "fields": [
@@ -1306,7 +1306,7 @@
       },
       {
         "name": "Teleport Entity",
-        "id": "0x1F",
+        "id": "0x23",
         "resource": "entity_position_sync",
         "notes": "This packet is sent by the server when an entity moves more than 8 blocks.",
         "fields": [
@@ -1364,7 +1364,7 @@
       },
       {
         "name": "Explosion",
-        "id": "0x20",
+        "id": "0x24",
         "resource": "explode",
         "notes": "Sent when an explosion occurs (creepers, TNT, and ghast fireballs).",
         "fields": [
@@ -1402,7 +1402,7 @@
       },
       {
         "name": "Unload Chunk",
-        "id": "0x21",
+        "id": "0x25",
         "resource": "forget_level_chunk",
         "notes": "Tells the client to unload a chunk column.\n\nNote: The order is inverted, because the client reads this packet as one big-endian Long , with Z being the upper 32 bits.\n\nIt is legal to send this packet even if the given chunk is not currently loaded.",
         "fields": [
@@ -1420,7 +1420,7 @@
       },
       {
         "name": "Game Event",
-        "id": "0x22",
+        "id": "0x26",
         "resource": "game_event",
         "notes": "Used for a wide variety of game events, such as weather, respawn availability (from bed and respawn anchor ), game mode, some game rules, and demo messages.\n\nEvents :",
         "fields": [
@@ -1438,7 +1438,7 @@
       },
       {
         "name": "Open Horse Screen",
-        "id": "0x23",
+        "id": "0x28",
         "resource": "horse_screen_open",
         "notes": "This packet is used exclusively for opening the horse GUI. Open Screen is used for all other GUIs. The client will not open the inventory if the Entity ID does not point to a horse-like animal.",
         "fields": [
@@ -1461,7 +1461,7 @@
       },
       {
         "name": "Hurt Animation",
-        "id": "0x24",
+        "id": "0x29",
         "resource": "hurt_animation",
         "notes": "Plays a bobbing animation for the entity receiving damage.",
         "fields": [
@@ -1479,7 +1479,7 @@
       },
       {
         "name": "Initialize World Border",
-        "id": "0x25",
+        "id": "0x2A",
         "resource": "initialize_border",
         "notes": "The vanilla client determines how solid to display the warning by comparing to whichever is higher, the warning distance or whichever is lower, the distance from the current diameter to the target diameter or the place the border will be after warningTime seconds. In pseudocode:",
         "fields": [
@@ -1527,7 +1527,7 @@
       },
       {
         "name": "Clientbound Keep Alive (play)",
-        "id": "0x26",
+        "id": "0x2B",
         "resource": "keep_alive",
         "notes": "The server will frequently send out a keep-alive, each containing a random ID. The client must respond with the same payload (see Serverbound Keep Alive ). If the client does not respond to a Keep Alive packet within 15 seconds after it was sent, the server kicks the client. Vice versa, if the server does not send any keep-alives for 20 seconds, the client will disconnect and yield a \"Timed out\" exception.\n\nThe vanilla server uses a system-dependent time in milliseconds to generate the keep alive ID value.",
         "fields": [
@@ -1540,7 +1540,7 @@
       },
       {
         "name": "Chunk Data and Update Light",
-        "id": "0x27",
+        "id": "0x2C",
         "resource": "level_chunk_with_light",
         "notes": "Sent when a chunk comes into the client's view distance, specifying its terrain, lighting and block entities.\n\nThe chunk must be within the view area previously specified with Set Center Chunk ; see that packet for details.\n\nIt is not strictly necessary to send all block entities in this packet; it is still legal to send them with Block Entity Data later.\n\nUnlike the Update Light packet, which uses the same format, setting the bit corresponding to a section to 0 in both of the block light or sky light masks does not appear to be useful, and the results in testing have been highly inconsistent.",
         "fields": [
@@ -1568,7 +1568,7 @@
       },
       {
         "name": "World Event",
-        "id": "0x28",
+        "id": "0x2D",
         "resource": "level_event",
         "notes": "Sent when a client is to play a sound or particle effect.\n\nBy default, the Minecraft client adjusts the volume of sound effects based on distance. The final boolean field is used to disable this, and instead, the effect is played from 2 blocks away in the correct direction. Currently, this is only used for effect 1023 (wither spawn), effect 1028 (enderdragon death), and effect 1038 (end portal opening); it is ignored on other effects.\n\nEvents:",
         "fields": [
@@ -1596,7 +1596,7 @@
       },
       {
         "name": "Particle",
-        "id": "0x29",
+        "id": "0x2E",
         "resource": "level_particles",
         "notes": "Displays the named particle",
         "fields": [
@@ -1664,7 +1664,7 @@
       },
       {
         "name": "Update Light",
-        "id": "0x2A",
+        "id": "0x2F",
         "resource": "light_update",
         "notes": "Updates light levels for a chunk. See Light for information on how lighting works in Minecraft.\n\nA bit will never be set in both the block light mask and the empty block light mask, though it may be present in neither of them (if the block light does not need to be updated for the corresponding chunk section). The same applies to the sky light mask and the empty sky light mask.",
         "fields": [
@@ -1687,7 +1687,7 @@
       },
       {
         "name": "Login (play)",
-        "id": "0x2B",
+        "id": "0x30",
         "resource": "login",
         "notes": "See protocol encryption for information on logging in.",
         "fields": [
@@ -1805,7 +1805,7 @@
       },
       {
         "name": "Map Data",
-        "id": "0x2C",
+        "id": "0x31",
         "resource": "map_item_data",
         "notes": "Updates a rectangular area on a map item.\n\nFor icons, a direction of 0 is a vertical icon and increments by 22.5\u00b0 (360/16).\n\nTypes are based off of rows and columns in map_icons.png :",
         "fields": [
@@ -1868,7 +1868,7 @@
       },
       {
         "name": "Merchant Offers",
-        "id": "0x2D",
+        "id": "0x32",
         "resource": "merchant_offers",
         "notes": "The list of trades a villager NPC is offering.\n\nTrade Item:",
         "fields": [
@@ -1946,7 +1946,7 @@
       },
       {
         "name": "Update Entity Position",
-        "id": "0x2E",
+        "id": "0x33",
         "resource": "move_entity_pos",
         "notes": "This packet is sent by the server when an entity moves a small distance. The change in position is represented as a fixed-point number with 12 fraction bits and 4 integer bits. As such, the maximum movement distance along each axis is 8 blocks in the negative direction, or 7.999755859375 blocks in the positive direction. If the movement exceeds these limits, Teleport Entity should be sent instead.",
         "fields": [
@@ -1979,7 +1979,7 @@
       },
       {
         "name": "Update Entity Position and Rotation",
-        "id": "0x2F",
+        "id": "0x34",
         "resource": "move_entity_pos_rot",
         "notes": "This packet is sent by the server when an entity rotates and moves. See #Update Entity Position for how the position is encoded.",
         "fields": [
@@ -2022,7 +2022,7 @@
       },
       {
         "name": "Move Minecart Along Track",
-        "id": "0x30",
+        "id": "0x35",
         "resource": "move_minecart_along_track",
         "notes": "",
         "fields": [
@@ -2070,7 +2070,7 @@
       },
       {
         "name": "Update Entity Rotation",
-        "id": "0x31",
+        "id": "0x36",
         "resource": "move_entity_rot",
         "notes": "This packet is sent by the server when an entity rotates.",
         "fields": [
@@ -2098,7 +2098,7 @@
       },
       {
         "name": "Move Vehicle (clientbound)",
-        "id": "0x32",
+        "id": "0x37",
         "resource": "move_vehicle",
         "notes": "If the player is riding a client-side-controlled vehicle, teleports the vehicle to the specified position. Sent by the vanilla server in response to serverbound Move Vehicle packets that fail the movement speed check. Note that all fields use absolute positioning and do not allow for relative positioning.",
         "fields": [
@@ -2131,7 +2131,7 @@
       },
       {
         "name": "Open Book",
-        "id": "0x33",
+        "id": "0x38",
         "resource": "open_book",
         "notes": "Sent when a player right-clicks with a signed book. This tells the client to open the book GUI.",
         "fields": [
@@ -2144,7 +2144,7 @@
       },
       {
         "name": "Open Screen",
-        "id": "0x34",
+        "id": "0x39",
         "resource": "open_screen",
         "notes": "This is sent to the client when it should open an inventory, such as a chest, workbench, furnace, or other container. Resending this packet with the already existing window ID, will update the window title and window type without closing the window.\n\nThis message is not sent to clients opening their own inventory, nor do clients inform the server in any way when doing so. From the server's perspective, the inventory is always \"open\" whenever no other windows are.\n\nFor horses, use Open Horse Screen .",
         "fields": [
@@ -2167,7 +2167,7 @@
       },
       {
         "name": "Open Sign Editor",
-        "id": "0x35",
+        "id": "0x3A",
         "resource": "open_sign_editor",
         "notes": "Sent when the client has placed a sign and is allowed to send Update Sign . There must already be a sign at the given location (which the client does not do automatically) - send a Block Update first.",
         "fields": [
@@ -2185,7 +2185,7 @@
       },
       {
         "name": "Ping (play)",
-        "id": "0x36",
+        "id": "0x3B",
         "resource": "ping",
         "notes": "Packet is not used by the vanilla server. When sent to the client, client responds with a Pong packet with the same ID.\n\nUnlike Keep Alive this packet is handled synchronously with game logic on the vanilla client, and can thus be used to reliably detect which serverbound packets were sent after the ping and all preceding clientbound packets were received and handled.",
         "fields": [
@@ -2198,7 +2198,7 @@
       },
       {
         "name": "Ping Response (play)",
-        "id": "0x37",
+        "id": "0x3C",
         "resource": "pong_response",
         "notes": "",
         "fields": [
@@ -2211,7 +2211,7 @@
       },
       {
         "name": "Place Ghost Recipe",
-        "id": "0x38",
+        "id": "0x3D",
         "resource": "place_ghost_recipe",
         "notes": "Response to the serverbound packet ( Place Recipe ), with the same recipe ID. Appears to be used to notify the UI.",
         "fields": [
@@ -2229,7 +2229,7 @@
       },
       {
         "name": "Player Abilities (clientbound)",
-        "id": "0x39",
+        "id": "0x3E",
         "resource": "player_abilities",
         "notes": "The latter 2 floats are used to indicate the flying speed and field of view respectively, while the first byte is used to determine the value of 4 booleans.\n\nAbout the flags:",
         "fields": [
@@ -2252,7 +2252,7 @@
       },
       {
         "name": "Player Chat Message",
-        "id": "0x3A",
+        "id": "0x3F",
         "resource": "player_chat",
         "notes": "Sends the client a chat message from a player.\n\nCurrently, a lot is unknown about this packet, blank descriptions are for those that are unknown",
         "fields": [
@@ -2315,7 +2315,7 @@
       },
       {
         "name": "End Combat",
-        "id": "0x3B",
+        "id": "0x40",
         "resource": "player_combat_end",
         "notes": "Unused by the vanilla client. This data was once used for twitch.tv metadata circa 1.8.",
         "fields": [
@@ -2328,14 +2328,14 @@
       },
       {
         "name": "Enter Combat",
-        "id": "0x3C",
+        "id": "0x41",
         "resource": "player_combat_enter",
         "notes": "Unused by the vanilla client. This data was once used for twitch.tv metadata circa 1.8.",
         "fields": []
       },
       {
         "name": "Combat Death",
-        "id": "0x3D",
+        "id": "0x42",
         "resource": "player_combat_kill",
         "notes": "Used to send a respawn screen.",
         "fields": [
@@ -2353,7 +2353,7 @@
       },
       {
         "name": "Player Info Remove",
-        "id": "0x3E",
+        "id": "0x43",
         "resource": "player_info_remove",
         "notes": "Used by the server to remove players from the player list.",
         "fields": [
@@ -2366,7 +2366,7 @@
       },
       {
         "name": "Player Info Update",
-        "id": "0x3F",
+        "id": "0x44",
         "resource": "player_info_update",
         "notes": "",
         "fields": [
@@ -2384,7 +2384,7 @@
       },
       {
         "name": "Look At",
-        "id": "0x40",
+        "id": "0x45",
         "resource": "player_look_at",
         "notes": "Used to rotate the client player to face the given location or entity (for /teleport [<targets>] <x> <y> <z> facing ).\n\nIf the entity given by entity ID cannot be found, this packet should be treated as if is entity was false.",
         "fields": [
@@ -2427,7 +2427,7 @@
       },
       {
         "name": "Synchronize Player Position",
-        "id": "0x41",
+        "id": "0x46",
         "resource": "player_position",
         "notes": "Teleports the client, e.g., during login, when using an ender pearl, in response to invalid move packets, etc.\n\nDue to latency, the server may receive outdated movement packets sent before the client was aware of the teleport. To account for this, the server ignores all movement packets from the client until a Confirm Teleportation packet with an ID matching the one sent in the teleport packet is received. The vanilla client will also send a Set Player Position and Rotation packet after the Confirm Teleportation packet with the position and rotation received from this packet, and horizontal collision and on ground set to false.\n\nYaw is measured in degrees and does not follow classical trigonometry rules. The unit circle of yaw on the XZ-plane starts at (0, 1) and turns counterclockwise, with 90 at (-1, 0), 180 at (0, -1) and 270 at (1, 0). Additionally, yaw is not clamped to between 0 and 360 degrees; any number is valid, including negative numbers and numbers greater than 360 (see MC-90097 ).\n\nPitch is measured in degrees, where 0 is looking straight ahead, -90 is looking straight up, and 90 is looking straight down.\n\nIf the player is riding a vehicle, this packet has no effect, but both the Confirm Teleportation and Set Player Position and Rotation packets are still sent.",
         "fields": [
@@ -2485,7 +2485,7 @@
       },
       {
         "name": "Player Rotation",
-        "id": "0x42",
+        "id": "0x47",
         "resource": "player_rotation",
         "notes": "",
         "fields": [
@@ -2503,7 +2503,7 @@
       },
       {
         "name": "Recipe Book Add",
-        "id": "0x43",
+        "id": "0x48",
         "resource": "recipe_book_add",
         "notes": "",
         "fields": [
@@ -2521,7 +2521,7 @@
       },
       {
         "name": "Recipe Book Remove",
-        "id": "0x44",
+        "id": "0x49",
         "resource": "recipe_book_remove",
         "notes": "",
         "fields": [
@@ -2534,7 +2534,7 @@
       },
       {
         "name": "Recipe Book Settings",
-        "id": "0x45",
+        "id": "0x4A",
         "resource": "recipe_book_settings",
         "notes": "",
         "fields": [
@@ -2582,7 +2582,7 @@
       },
       {
         "name": "Remove Entities",
-        "id": "0x46",
+        "id": "0x4B",
         "resource": "remove_entities",
         "notes": "Sent by the server when an entity is to be destroyed on the client.",
         "fields": [
@@ -2595,7 +2595,7 @@
       },
       {
         "name": "Remove Entity Effect",
-        "id": "0x47",
+        "id": "0x4C",
         "resource": "remove_mob_effect",
         "notes": "",
         "fields": [
@@ -2613,7 +2613,7 @@
       },
       {
         "name": "Reset Score",
-        "id": "0x48",
+        "id": "0x4D",
         "resource": "reset_score",
         "notes": "This is sent to the client when it should remove a scoreboard item.",
         "fields": [
@@ -2631,7 +2631,7 @@
       },
       {
         "name": "Remove Resource Pack (play)",
-        "id": "0x49",
+        "id": "0x4E",
         "resource": "resource_pack_pop",
         "notes": "",
         "fields": [
@@ -2644,7 +2644,7 @@
       },
       {
         "name": "Add Resource Pack (play)",
-        "id": "0x4A",
+        "id": "0x4F",
         "resource": "resource_pack_push",
         "notes": "",
         "fields": [
@@ -2677,7 +2677,7 @@
       },
       {
         "name": "Respawn",
-        "id": "0x4B",
+        "id": "0x50",
         "resource": "respawn",
         "notes": "To change the player's dimension (overworld/nether/end), send them a respawn packet with the appropriate dimension, followed by prechunks/chunks for the new dimension, and finally a position and look packet. You do not need to unload chunks; the client will do it automatically.\n\nThe background of the loading screen is determined based on the Dimension Name specified in this packet and the one specified in the previous Login or Respawn packet. If either the current or the previous dimension is minecraft:nether , the Nether portal background is used. Otherwise, if the current or the previous dimension is minecraft:the_end , the End portal background is used. If the player is dead (health is 0), the default background is always used.",
         "fields": [
@@ -2750,7 +2750,7 @@
       },
       {
         "name": "Set Head Rotation",
-        "id": "0x4C",
+        "id": "0x51",
         "resource": "rotate_head",
         "notes": "Changes the direction an entity's head is facing.\n\nWhile sending the Entity Look packet changes the vertical rotation of the head, sending this packet appears to be necessary to rotate the head horizontally.",
         "fields": [
@@ -2768,7 +2768,7 @@
       },
       {
         "name": "Update Section Blocks",
-        "id": "0x4D",
+        "id": "0x52",
         "resource": "section_blocks_update",
         "notes": "Chunk section position is encoded:",
         "fields": [
@@ -2786,7 +2786,7 @@
       },
       {
         "name": "Select Advancements Tab",
-        "id": "0x4E",
+        "id": "0x53",
         "resource": "select_advancements_tab",
         "notes": "Sent by the server to indicate that the client should switch advancement tab. Sent either when the client switches tab in the GUI or when an advancement is made in another tab.\n\nThe Identifier must be one of the following if no custom data pack is loaded:",
         "fields": [
@@ -2799,7 +2799,7 @@
       },
       {
         "name": "Server Data",
-        "id": "0x4F",
+        "id": "0x54",
         "resource": "server_data",
         "notes": "",
         "fields": [
@@ -2817,14 +2817,14 @@
       },
       {
         "name": "Set Action Bar Text",
-        "id": "0x50",
+        "id": "0x55",
         "resource": "set_action_bar_text",
         "notes": "Displays a message above the hotbar. Equivalent to System Chat Message with Overlay set to true, except that chat message blocking isn't performed. Used by the vanilla server only to implement the /title command.",
         "fields": []
       },
       {
         "name": "Set Border Center",
-        "id": "0x51",
+        "id": "0x56",
         "resource": "set_border_center",
         "notes": "",
         "fields": [
@@ -2842,7 +2842,7 @@
       },
       {
         "name": "Set Border Lerp Size",
-        "id": "0x52",
+        "id": "0x57",
         "resource": "set_border_lerp_size",
         "notes": "",
         "fields": [
@@ -2865,7 +2865,7 @@
       },
       {
         "name": "Set Border Size",
-        "id": "0x53",
+        "id": "0x58",
         "resource": "set_border_size",
         "notes": "",
         "fields": [
@@ -2878,7 +2878,7 @@
       },
       {
         "name": "Set Border Warning Delay",
-        "id": "0x54",
+        "id": "0x59",
         "resource": "set_border_warning_delay",
         "notes": "",
         "fields": [
@@ -2891,7 +2891,7 @@
       },
       {
         "name": "Set Border Warning Distance",
-        "id": "0x55",
+        "id": "0x5A",
         "resource": "set_border_warning_distance",
         "notes": "",
         "fields": [
@@ -2904,7 +2904,7 @@
       },
       {
         "name": "Set Camera",
-        "id": "0x56",
+        "id": "0x5B",
         "resource": "set_camera",
         "notes": "Sets the entity that the player renders from. This is normally used when the player left-clicks an entity while in spectator mode.\n\nThe player's camera will move with the entity and look where it is looking. The entity is often another player, but can be any type of entity. The player is unable to move this entity (move packets will act as if they are coming from the other entity).\n\nIf the given entity is not loaded by the player, this packet is ignored. To return control to the player, send this packet with their entity ID.\n\nThe vanilla server resets this (sends it back to the default entity) whenever the spectated entity is killed or the player sneaks, but only if they were spectating an entity. It also sends this packet whenever the player switches out of spectator mode (even if they weren't spectating an entity).\n\nThe vanilla client also loads certain shaders for given entities:",
         "fields": [
@@ -2917,7 +2917,7 @@
       },
       {
         "name": "Set Center Chunk",
-        "id": "0x57",
+        "id": "0x5C",
         "resource": "set_chunk_cache_center",
         "notes": "Sets the center position of the client's chunk loading area. The area is square-shaped, spanning 2 \u00d7 server view distance + 7 chunks on both axes (width, not radius!). Since the area's width is always an odd number, there is no ambiguity as to which chunk is the center.\n\nThe vanilla client never renders or simulates chunks located outside the loading area, but keeps them in memory (unless explicitly unloaded by the server while still in range), and only automatically unloads a chunk when another chunk is loaded at coordinates congruent to the old chunk's coordinates modulo (2 \u00d7 server view distance + 7). This means that a chunk may reappear after leaving and later re-entering the loading area through successive uses of this packet, unless it is replaced in the meantime by a different chunk in the same \"slot\".\n\nThe vanilla client ignores attempts to load or unload chunks located outside the loading area. This applies even to unloads targeting chunks that are still loaded, but currently located outside the loading area (per the previous paragraph).\n\nThe vanilla server does not rely on any specific behavior for chunks leaving the loading area, and custom clients need not replicate the above exactly. A client may instead choose to immediately unload any chunks outside the loading area, to use a different modulus, or to ignore the loading area completely and keep chunks loaded regardless of their location until the server requests to unload them. Servers aiming for maximal interoperability should always explicitly unload any loaded chunks before they go outside the loading area.\n\nThe center chunk is normally the chunk the player is in, but apart from the implications on chunk loading, the (vanilla) client takes no issue with this not being the case. Indeed, as long as chunks are sent only within the default loading area centered on the world origin, it is not necessary to send this packet at all. This may be useful for servers with small bounded worlds, such as minigames, since it ensures chunks never need to be resent after the client has joined, saving on bandwidth.\n\nThe vanilla server sends this packet whenever the player moves across a chunk border horizontally, and also (according to testing) for any integer change in the vertical axis, even if it doesn't go across a chunk section border.",
         "fields": [
@@ -2935,7 +2935,7 @@
       },
       {
         "name": "Set Render Distance",
-        "id": "0x58",
+        "id": "0x5D",
         "resource": "set_chunk_cache_radius",
         "notes": "Sent by the integrated singleplayer server when changing render distance. This packet is sent by the server when the client reappears in the overworld after leaving the end.",
         "fields": [
@@ -2948,7 +2948,7 @@
       },
       {
         "name": "Set Cursor Item",
-        "id": "0x59",
+        "id": "0x5E",
         "resource": "set_cursor_item",
         "notes": "Replaces or sets the inventory item that's being dragged with the mouse.",
         "fields": [
@@ -2961,7 +2961,7 @@
       },
       {
         "name": "Set Default Spawn Position",
-        "id": "0x5A",
+        "id": "0x5F",
         "resource": "set_default_spawn_position",
         "notes": "Sent by the server after login to specify the coordinates of the spawn point (the point at which players spawn at, and which the compass points to). It can be sent at any time to update the point compasses point at.\n\nBefore receiving this packet, the client uses the default position 8, 64, 8, and angle 0.0.",
         "fields": [
@@ -2979,7 +2979,7 @@
       },
       {
         "name": "Display Objective",
-        "id": "0x5B",
+        "id": "0x60",
         "resource": "set_display_objective",
         "notes": "This is sent to the client when it should display a scoreboard.",
         "fields": [
@@ -2997,7 +2997,7 @@
       },
       {
         "name": "Set Entity Metadata",
-        "id": "0x5C",
+        "id": "0x61",
         "resource": "set_entity_data",
         "notes": "Updates one or more metadata properties for an existing entity. Any properties not included in the Metadata field are left unchanged.",
         "fields": [
@@ -3015,7 +3015,7 @@
       },
       {
         "name": "Link Entities",
-        "id": "0x5D",
+        "id": "0x62",
         "resource": "set_entity_link",
         "notes": "This packet is sent when an entity has been leashed to another entity.",
         "fields": [
@@ -3033,7 +3033,7 @@
       },
       {
         "name": "Set Entity Velocity",
-        "id": "0x5E",
+        "id": "0x63",
         "resource": "set_entity_motion",
         "notes": "Velocity is in units of 1/8000 of a block per server tick (50ms); for example, -1343 would move (-1343 / 8000) = \u22120.167875 blocks per tick (or \u22123.3575 blocks per second).",
         "fields": [
@@ -3061,7 +3061,7 @@
       },
       {
         "name": "Set Equipment",
-        "id": "0x5F",
+        "id": "0x64",
         "resource": "set_equipment",
         "notes": "Equipment slot can be one of the following:",
         "fields": [
@@ -3079,7 +3079,7 @@
       },
       {
         "name": "Set Experience",
-        "id": "0x60",
+        "id": "0x65",
         "resource": "set_experience",
         "notes": "Sent by the server when the client should change experience levels.",
         "fields": [
@@ -3102,7 +3102,7 @@
       },
       {
         "name": "Set Health",
-        "id": "0x61",
+        "id": "0x66",
         "resource": "set_health",
         "notes": "Sent by the server to set the health of the player it is sent to.\n\nFood saturation acts as a food \u201covercharge\u201d. Food values will not decrease while the saturation is over zero. New players logging in or respawning automatically get a saturation of 5.0. Eating food increases the saturation as well as the food bar.",
         "fields": [
@@ -3125,7 +3125,7 @@
       },
       {
         "name": "Set Held Item (clientbound)",
-        "id": "0x62",
+        "id": "0x67",
         "resource": "set_held_slot",
         "notes": "Sent to change the player's slot selection.",
         "fields": [
@@ -3138,7 +3138,7 @@
       },
       {
         "name": "Update Objectives",
-        "id": "0x63",
+        "id": "0x68",
         "resource": "set_objective",
         "notes": "This is sent to the client when it should create a new scoreboard objective or remove one.",
         "fields": [
@@ -3181,7 +3181,7 @@
       },
       {
         "name": "Set Passengers",
-        "id": "0x64",
+        "id": "0x69",
         "resource": "set_passengers",
         "notes": "",
         "fields": [
@@ -3199,7 +3199,7 @@
       },
       {
         "name": "Set Player Inventory Slot",
-        "id": "0x65",
+        "id": "0x6A",
         "resource": "set_player_inventory",
         "notes": "",
         "fields": [
@@ -3217,7 +3217,7 @@
       },
       {
         "name": "Update Teams",
-        "id": "0x66",
+        "id": "0x6B",
         "resource": "set_player_team",
         "notes": "Creates and updates teams.\n\nTeam Color: The color of a team defines how the names of the team members are visualized; any formatting code can be used. The following table lists all the possible values.",
         "fields": [
@@ -3300,7 +3300,7 @@
       },
       {
         "name": "Update Score",
-        "id": "0x67",
+        "id": "0x6C",
         "resource": "set_score",
         "notes": "This is sent to the client when it should update a scoreboard item.",
         "fields": [
@@ -3338,7 +3338,7 @@
       },
       {
         "name": "Set Simulation Distance",
-        "id": "0x68",
+        "id": "0x6D",
         "resource": "set_simulation_distance",
         "notes": "",
         "fields": [
@@ -3351,7 +3351,7 @@
       },
       {
         "name": "Set Subtitle Text",
-        "id": "0x69",
+        "id": "0x6E",
         "resource": "set_subtitle_text",
         "notes": "",
         "fields": [
@@ -3364,7 +3364,7 @@
       },
       {
         "name": "Update Time",
-        "id": "0x6A",
+        "id": "0x6F",
         "resource": "set_time",
         "notes": "Time is based on ticks, where 20 ticks happen every second. There are 24000 ticks in a day, making Minecraft days exactly 20 minutes long.\n\nThe time of day is based on the timestamp modulo 24000. 0 is sunrise, 6000 is noon, 12000 is sunset, and 18000 is midnight.\n\nThe default SMP server increments the time by 20 every second.",
         "fields": [
@@ -3387,7 +3387,7 @@
       },
       {
         "name": "Set Title Text",
-        "id": "0x6B",
+        "id": "0x70",
         "resource": "set_title_text",
         "notes": "",
         "fields": [
@@ -3400,7 +3400,7 @@
       },
       {
         "name": "Set Title Animation Times",
-        "id": "0x6C",
+        "id": "0x71",
         "resource": "set_titles_animation",
         "notes": "",
         "fields": [
@@ -3423,7 +3423,7 @@
       },
       {
         "name": "Entity Sound Effect",
-        "id": "0x6D",
+        "id": "0x72",
         "resource": "sound_entity",
         "notes": "Plays a sound effect from an entity, either by hardcoded ID or Identifier. Sound IDs and names can be found here .",
         "fields": [
@@ -3461,7 +3461,7 @@
       },
       {
         "name": "Sound Effect",
-        "id": "0x6E",
+        "id": "0x73",
         "resource": "sound",
         "notes": "Plays a sound effect at the given location, either by hardcoded ID or Identifier. Sound IDs and names can be found here .",
         "fields": [
@@ -3509,14 +3509,14 @@
       },
       {
         "name": "Start Configuration",
-        "id": "0x6F",
+        "id": "0x74",
         "resource": "start_configuration",
         "notes": "Sent during gameplay in order to redo the configuration process. The client must respond with Acknowledge Configuration for the process to start.\n\nThis packet switches the connection state to configuration .",
         "fields": []
       },
       {
         "name": "Stop Sound",
-        "id": "0x70",
+        "id": "0x75",
         "resource": "stop_sound",
         "notes": "Categories:",
         "fields": [
@@ -3539,7 +3539,7 @@
       },
       {
         "name": "Store Cookie (play)",
-        "id": "0x71",
+        "id": "0x76",
         "resource": "store_cookie",
         "notes": "Stores some arbitrary data on the client, which persists between server transfers. The vanilla client only accepts cookies of up to 5 kiB in size.",
         "fields": [
@@ -3557,7 +3557,7 @@
       },
       {
         "name": "System Chat Message",
-        "id": "0x72",
+        "id": "0x77",
         "resource": "system_chat",
         "notes": "Sends the client a raw system message.",
         "fields": [
@@ -3575,7 +3575,7 @@
       },
       {
         "name": "Set Tab List Header And Footer",
-        "id": "0x73",
+        "id": "0x78",
         "resource": "tab_list",
         "notes": "This packet may be used by custom servers to display additional information above/below the player list. It is never sent by the vanilla server.",
         "fields": [
@@ -3593,7 +3593,7 @@
       },
       {
         "name": "Tag Query Response",
-        "id": "0x74",
+        "id": "0x79",
         "resource": "tag_query",
         "notes": "Sent in response to Query Block Entity Tag or Query Entity Tag .",
         "fields": [
@@ -3611,7 +3611,7 @@
       },
       {
         "name": "Pickup Item",
-        "id": "0x75",
+        "id": "0x7A",
         "resource": "take_item_entity",
         "notes": "Sent by the server when someone picks up an item lying on the ground \u2014 its sole purpose appears to be the animation of the item flying towards you. It doesn't destroy the entity in the client memory, and it doesn't add it to your inventory. The server only checks for items to be picked up after each Set Player Position (and Set Player Position And Rotation ) packet sent by the client. The collector entity can be any entity; it does not have to be a player. The collected entity can also be any entity, but the vanilla server only uses this for items, experience orbs, and the different varieties of arrows.",
         "fields": [
@@ -3634,7 +3634,7 @@
       },
       {
         "name": "Synchronize Vehicle Position",
-        "id": "0x76",
+        "id": "0x7B",
         "resource": "teleport_entity",
         "notes": "Teleports the entity on the client without changing the reference point of movement deltas in future Update Entity Position packets. Seems to be used to make relative adjustments to vehicle positions; more information needed.",
         "fields": [
@@ -3697,7 +3697,7 @@
       },
       {
         "name": "Test Instance Block Status",
-        "id": "0x77",
+        "id": "0x7C",
         "resource": "test_instance_block_status",
         "notes": "Updates the status of the currently open Test Instance Block screen, if any.",
         "fields": [
@@ -3730,7 +3730,7 @@
       },
       {
         "name": "Set Ticking State",
-        "id": "0x78",
+        "id": "0x7D",
         "resource": "ticking_state",
         "notes": "Used to adjust the ticking rate of the client, and whether it's frozen.",
         "fields": [
@@ -3748,7 +3748,7 @@
       },
       {
         "name": "Step Tick",
-        "id": "0x79",
+        "id": "0x7E",
         "resource": "ticking_step",
         "notes": "Advances the client processing by the specified number of ticks. Has no effect unless client ticking is frozen.",
         "fields": [
@@ -3761,7 +3761,7 @@
       },
       {
         "name": "Transfer (play)",
-        "id": "0x7A",
+        "id": "0x7F",
         "resource": "transfer",
         "notes": "Notifies the client that it should transfer to the given server. Cookies previously stored are preserved between server transfers.",
         "fields": [
@@ -3779,7 +3779,7 @@
       },
       {
         "name": "Update Advancements",
-        "id": "0x7B",
+        "id": "0x80",
         "resource": "update_advancements",
         "notes": "Advancement structure:",
         "fields": [
@@ -3812,7 +3812,7 @@
       },
       {
         "name": "Update Attributes",
-        "id": "0x7C",
+        "id": "0x81",
         "resource": "update_attributes",
         "notes": "Sets attributes on the given entity.\n\nModifier Data structure:",
         "fields": [
@@ -3835,7 +3835,7 @@
       },
       {
         "name": "Entity Effect",
-        "id": "0x7D",
+        "id": "0x82",
         "resource": "update_mob_effect",
         "notes": "",
         "fields": [
@@ -3868,7 +3868,7 @@
       },
       {
         "name": "Update Recipes",
-        "id": "0x7E",
+        "id": "0x83",
         "resource": "update_recipes",
         "notes": "",
         "fields": [
@@ -3886,7 +3886,7 @@
       },
       {
         "name": "Update Tags (play)",
-        "id": "0x7F",
+        "id": "0x84",
         "resource": "update_tags",
         "notes": "A tag looks like this:",
         "fields": [
@@ -3899,7 +3899,7 @@
       },
       {
         "name": "Projectile Power",
-        "id": "0x80",
+        "id": "0x85",
         "resource": "projectile_power",
         "notes": "",
         "fields": [
@@ -3917,7 +3917,7 @@
       },
       {
         "name": "Custom Report Details",
-        "id": "0x81",
+        "id": "0x86",
         "resource": "custom_report_details",
         "notes": "Contains a list of key-value text entries that are included in any crash or disconnection report generated during connection to the server.",
         "fields": [
@@ -3930,7 +3930,7 @@
       },
       {
         "name": "Server Links",
-        "id": "0x82",
+        "id": "0x87",
         "resource": "server_links",
         "notes": "This packet contains a list of links that the vanilla client will display in the menu available from the pause menu. Link labels can be built-in or custom (i.e., any text).",
         "fields": [
@@ -3943,7 +3943,7 @@
       },
       {
         "name": "Waypoint",
-        "id": "0x83",
+        "id": "0x88",
         "resource": "waypoint",
         "notes": "Adds, removes, or updates an entry that will be tracked on the player locator bar.",
         "fields": [
@@ -3971,14 +3971,14 @@
       },
       {
         "name": "Clear Dialog (play)",
-        "id": "0x84",
+        "id": "0x89",
         "resource": "clear_dialog",
         "notes": "If we're currently in a dialog screen, then this removes the current screen and switches back to the previous one.",
         "fields": []
       },
       {
         "name": "Show Dialog (play)",
-        "id": "0x85",
+        "id": "0x8A",
         "resource": "show_dialog",
         "notes": "Show a custom dialog screen to the client.",
         "fields": [

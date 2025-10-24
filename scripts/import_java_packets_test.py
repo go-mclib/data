@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from scripts.import_java_packets import import_packets_wiki
 
 
