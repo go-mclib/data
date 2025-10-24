@@ -1,11 +1,13 @@
+#!/usr/bin/env python3
+# Usage: python scripts/generate_java_packets.py [protocol_version]
 import re
+import argparse
 from json import load
 from pathlib import Path
 
-ROOT = Path(__file__).parent
-PROTOCOL_VERSION = "772"
-JSON_FILE = ROOT.parent.parent.parent / "data" / PROTOCOL_VERSION / "java_packets.json"
-GENERATE_INTO = ROOT
+ROOT = Path(__file__).parent.parent
+DATA_DIR = ROOT / "data"
+GO_DIR = ROOT / "go"
 
 FILE_MAPPINGS = {
     ("serverbound", "handshaking"): "c2s_handshaking.go",
@@ -43,9 +45,10 @@ GO_FIELD_TEMPLATE = """	// {field_notes}
 	{field_name} {field_type}"""
 
 
-def load_packets_json() -> dict:
+def load_packets_json(protocol_version: str) -> dict:
     """Load packets from JSON file."""
-    with JSON_FILE.open("r") as f:
+    json_file = DATA_DIR / protocol_version / "java_packets.json"
+    with json_file.open("r") as f:
         return load(f)
 
 
@@ -74,11 +77,11 @@ def normalize_field_name(name: str) -> str:
         else:
             result.append(word.capitalize())
     final_name = "".join(result)
-    
+
     # If the name starts with a number, prefix it with 'Field' to make it a valid Go identifier
     if final_name and final_name[0].isdigit():
         final_name = "Field" + final_name
-    
+
     return final_name
 
 
@@ -112,9 +115,13 @@ def format_packet_notes(notes: str) -> str:
     return "\n".join(formatted)
 
 
-def generate_packets_go() -> None:
+def generate_packets_go(protocol_version: str) -> None:
     """Generate Go packet definitions from JSON."""
-    packets_data = load_packets_json()
+    packets_data = load_packets_json(protocol_version)
+    generate_into = GO_DIR / protocol_version / "java_packets"
+
+    # Ensure output directory exists
+    generate_into.mkdir(parents=True, exist_ok=True)
 
     for state, bounds in packets_data.items():
         for bound, packets in bounds.items():
@@ -166,18 +173,51 @@ def generate_packets_go() -> None:
                 )
 
                 structs.append(struct_code)
-            output_file = GENERATE_INTO / FILE_MAPPINGS[(bound, state)]
+            output_file = generate_into / FILE_MAPPINGS[(bound, state)]
             file_content = GO_FILE_TEMPLATE.format(structs="\n\n".join(structs))
             output_file.write_text(file_content)
             print(f"Generated {output_file}")
 
 
+def get_all_protocol_versions() -> list[str]:
+    """Get all protocol versions from the data directory."""
+    versions = []
+    if DATA_DIR.exists():
+        for path in DATA_DIR.iterdir():
+            if path.is_dir() and path.name.isdigit():
+                versions.append(path.name)
+    return sorted(versions)
+
+
 if __name__ == "__main__":
     import subprocess
 
-    generate_packets_go()
-    try:
-        subprocess.run(["go", "fmt", "./..."], cwd=ROOT.parent, check=True)
-        print("Formatted Go files")
-    except subprocess.CalledProcessError as e:
-        print(f"Warning: Failed to format Go files: {e}")
+    parser = argparse.ArgumentParser(description="Generate Go packet definitions from JSON")
+    parser.add_argument(
+        "protocol_version",
+        nargs="?",
+        help="Protocol version to generate (e.g., 772). If not provided, generates for all versions.",
+    )
+    args = parser.parse_args()
+
+    if args.protocol_version:
+        versions = [args.protocol_version]
+    else:
+        versions = get_all_protocol_versions()
+        if not versions:
+            print("No protocol versions found in data directory")
+            exit(1)
+        print(f"Generating for all versions: {', '.join(versions)}")
+
+    for version in versions:
+        print(f"\n=== Processing protocol version {version} ===")
+        try:
+            generate_packets_go(version)
+            go_output_dir = GO_DIR / version
+            if go_output_dir.exists():
+                subprocess.run(["go", "fmt", "./..."], cwd=go_output_dir, check=True)
+                print(f"Formatted Go files for version {version}")
+        except FileNotFoundError as e:
+            print(f"Warning: Skipping version {version} - {e}")
+        except subprocess.CalledProcessError as e:
+            print(f"Warning: Failed to format Go files for version {version}: {e}")
