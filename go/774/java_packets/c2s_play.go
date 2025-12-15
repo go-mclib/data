@@ -370,7 +370,7 @@ type C2SEditBookData struct {
 	// The hotbar slot where the written book is located
 	Slot ns.VarInt
 	// Text from each page. Maximum string length is 1024 chars.
-	Entries ns.PrefixedStringArray // Size: 100
+	Entries ns.PrefixedArray[ns.String]
 	// Title of book. Present if book is being signed, not present if book is being edited.
 	Title ns.PrefixedOptional[ns.String]
 }

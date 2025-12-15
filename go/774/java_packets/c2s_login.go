@@ -40,7 +40,7 @@ type C2SCustomQueryAnswerData struct {
 	// Should match ID from server.
 	MessageId ns.VarInt
 	// Any data, depending on the channel. Only present if the client understood the request. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (e.g. for strings).
-	Data ns.PrefixedOptional[ns.Varies]
+	Data ns.PrefixedOptional[ns.ByteArray]
 }
 
 // C2SLoginAcknowledged represents "Login Acknowledged".

@@ -30,7 +30,7 @@ type S2CCustomPayloadConfigurationData struct {
 	// Name of the plugin channel used to send the data.
 	Channel ns.Identifier
 	// Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (such as the string length prefix in the standard minecraft:brand channel). The vanilla client enforces a length limit of 1048576 bytes on this data, but only if the channel type is unrecognized.
-	Data ns.Varies
+	Data ns.ByteArray
 }
 
 // S2CDisconnectConfiguration represents "Disconnect (configuration)".
@@ -188,7 +188,7 @@ type S2CUpdateTagsConfigurationData struct {
 	// Prefixed Array
 	ArrayOfTags ns.PrefixedArray[struct {
 		Registry   ns.Identifier
-		ArrayOfTag ns.Unknown // FIXME: See below
+		ArrayOfTag ns.ByteArray // FIXME: See below
 	}]
 }
 

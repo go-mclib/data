@@ -132,6 +132,7 @@ def generate_packets_go(protocol_version: str) -> None:
 
             for packet in packets:
                 fields = []
+                seen_field_names = {}  # Track field names for duplicate detection
                 for field in packet["fields"]:
                     field_name = normalize_field_name(field["name"])
                     field_type = field["type"]  # type is already Go-ready from JSON
@@ -146,6 +147,15 @@ def generate_packets_go(protocol_version: str) -> None:
                     field_notes = field["notes"].replace("\n", " ").strip()
 
                     if field_name and field_type:
+                        # Handle duplicate field names by adding a suffix
+                        original_name = field_name
+                        if field_name in seen_field_names:
+                            seen_field_names[field_name] += 1
+                            field_name = f"{field_name}{seen_field_names[field_name]}"
+                            field_notes = f"(duplicate of {original_name}) {field_notes}"
+                        else:
+                            seen_field_names[field_name] = 1
+
                         fields.append(
                             GO_FIELD_TEMPLATE.format(
                                 field_notes=field_notes,

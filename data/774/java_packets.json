@@ -27,7 +27,7 @@
           },
           {
             "name": "Data",
-            "type": "ns.Varies",
+            "type": "ns.ByteArray",
             "notes": "Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (such as the string length prefix in the standard minecraft:brand channel). The vanilla client enforces a length limit of 1048576 bytes on this data, but only if the channel type is unrecognized."
           }
         ]
@@ -206,7 +206,7 @@
         "fields": [
           {
             "name": "Array of tags",
-            "type": "ns.PrefixedArray[struct { Registry ns.Identifier; ArrayOfTag ns.Unknown // FIXME: See below }]",
+            "type": "ns.PrefixedArray[struct { Registry ns.Identifier; ArrayOfTag ns.ByteArray // FIXME: See below }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -369,7 +369,7 @@
           },
           {
             "name": "Data",
-            "type": "ns.Varies",
+            "type": "ns.ByteArray",
             "notes": "Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (such as the string length prefix in the standard minecraft:brand channel). The vanilla server enforces a length limit of 32767 bytes on this data, but only if the channel type is unrecognized."
           }
         ]
@@ -440,7 +440,7 @@
       },
       {
         "name": "Custom Click Action (configuration)",
-        "id": "0x09",
+        "id": "0x08",
         "resource": "accept_code_of_conduct",
         "notes": "Sent when the client clicks a Text Component with the minecraft:custom click action. This is meant as an alternative to running a command, but it will not have any effect on vanilla servers.",
         "fields": []
@@ -490,7 +490,7 @@
         "fields": [
           {
             "name": "Reason",
-            "type": "ns.JSONTextComponent",
+            "type": "ns.TextComponent",
             "notes": "The reason why the player was disconnected."
           }
         ]
@@ -567,7 +567,7 @@
           },
           {
             "name": "Data",
-            "type": "ns.Varies",
+            "type": "ns.ByteArray",
             "notes": "Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (e.g. for strings). The vanilla client enforces a length limit of 1048576 bytes on this data, but only if the channel type is unrecognized (which is the case for all login plugin messages with a completely vanilla client)."
           }
         ]
@@ -636,7 +636,7 @@
           },
           {
             "name": "Data",
-            "type": "ns.PrefixedOptional[ns.Varies]",
+            "type": "ns.PrefixedOptional[ns.ByteArray]",
             "notes": "Any data, depending on the channel. Only present if the client understood the request. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (e.g. for strings)."
           }
         ]
@@ -715,7 +715,7 @@
           },
           {
             "name": "Velocity",
-            "type": "ns.LpVec3",
+            "type": "ns.ByteArray",
             "notes": ""
           },
           {
@@ -1019,7 +1019,7 @@
         "fields": [
           {
             "name": "Nodes",
-            "type": "ns.PrefixedArray[ns.Node]",
+            "type": "ns.PrefixedArray[ns.ByteArray]",
             "notes": "An array of nodes."
           },
           {
@@ -1224,7 +1224,7 @@
           },
           {
             "name": "Update",
-            "type": "ns.DebugSubscriptionUpdate",
+            "type": "ns.ByteArray",
             "notes": ""
           }
         ]
@@ -1247,7 +1247,7 @@
           },
           {
             "name": "Update",
-            "type": "ns.DebugSubscriptionUpdate",
+            "type": "ns.ByteArray",
             "notes": ""
           }
         ]
@@ -1265,7 +1265,7 @@
           },
           {
             "name": "Update",
-            "type": "ns.DebugSubscriptionUpdate",
+            "type": "ns.ByteArray",
             "notes": ""
           }
         ]
@@ -1278,7 +1278,7 @@
         "fields": [
           {
             "name": "Event",
-            "type": "ns.DebugSubscriptionEvent",
+            "type": "ns.ByteArray",
             "notes": ""
           }
         ]
@@ -1345,7 +1345,7 @@
           },
           {
             "name": "Chat Type",
-            "type": "ns.Or[ns.Identifier, ns.ChatType]",
+            "type": "ns.Or[ns.Identifier, ns.ByteArray]",
             "notes": "Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an inline definition."
           },
           {
@@ -1469,17 +1469,17 @@
           },
           {
             "name": "Explosion Particle Data",
-            "type": "ns.Varies",
+            "type": "ns.ByteArray",
             "notes": "Particle data as specified in Java Edition protocol/Particles ."
           },
           {
             "name": "Explosion Sound",
-            "type": "ns.Or[ns.Identifier, ns.SoundEvent]",
+            "type": "ns.Or[ns.Identifier, ns.ByteArray]",
             "notes": "ID in the minecraft:sound_event registry, or an inline definition."
           },
           {
             "name": "Particle Data",
-            "type": "ns.Varies",
+            "type": "ns.ByteArray",
             "notes": "Particle data as specified in Java Edition protocol/Particles ."
           },
           {
@@ -1655,12 +1655,12 @@
           },
           {
             "name": "Data",
-            "type": "ns.ChunkData",
+            "type": "ns.ByteArray",
             "notes": ""
           },
           {
             "name": "Light",
-            "type": "ns.LightData",
+            "type": "ns.ByteArray",
             "notes": ""
           }
         ]
@@ -1756,7 +1756,7 @@
           },
           {
             "name": "Data",
-            "type": "ns.Varies",
+            "type": "ns.ByteArray",
             "notes": "Particle data as specified in Java Edition protocol/Particles ."
           }
         ]
@@ -1779,7 +1779,7 @@
           },
           {
             "name": "Data",
-            "type": "ns.LightData",
+            "type": "ns.ByteArray",
             "notes": ""
           }
         ]
@@ -1960,7 +1960,7 @@
           },
           {
             "name": "Data",
-            "type": "ns.Optional[ns.PrefixedUnsignedArrayByte]",
+            "type": "ns.Optional[ns.PrefixedArray[ns.Byte]]",
             "notes": "Only if Columns is more than 0; see Map item format"
           }
         ]
@@ -1983,7 +1983,7 @@
           },
           {
             "name": "Input item 2",
-            "type": "ns.PrefixedOptional[ns.TradeItem]",
+            "type": "ns.PrefixedOptional[ns.ByteArray]",
             "notes": "The second item the player has to supply for this villager trade."
           },
           {
@@ -2321,7 +2321,7 @@
           },
           {
             "name": "Recipe Display",
-            "type": "ns.RecipeDisplay",
+            "type": "ns.ByteArray",
             "notes": ""
           }
         ]
@@ -2357,7 +2357,7 @@
         "fields": [
           {
             "name": "Header",
-            "type": "ns.GlobalIndex",
+            "type": "ns.VarInt",
             "notes": "VarInt"
           },
           {
@@ -2476,7 +2476,7 @@
           },
           {
             "name": "Player Actions",
-            "type": "ns.PlayerArrayActions",
+            "type": "ns.ByteArray",
             "notes": "The length of this array is determined by the number of Player Actions that give a non-zero value when applying its mask to the actions flag. For example, given the decimal number 5, binary 00000101. The masks 0x01 and 0x04 would return a non-zero value, meaning the Player Actions array would include two actions: Add Player and Update Game Mode."
           }
         ]
@@ -2577,7 +2577,7 @@
           },
           {
             "name": "Flags",
-            "type": "ns.TeleportFlags",
+            "type": "ns.Byte",
             "notes": ""
           }
         ]
@@ -2618,7 +2618,7 @@
         "fields": [
           {
             "name": "Recipes",
-            "type": "ns.PrefixedArray[struct { RecipeId ns.VarInt; Display ns.RecipeDisplay; GroupId ns.VarInt; CategoryId ns.VarInt; Ingredients ns.PrefixedOptional[ns.PrefixedIDArraySet]; Flags ns.Byte }]",
+            "type": "ns.PrefixedArray[struct { RecipeId ns.VarInt; Display ns.ByteArray; GroupId ns.VarInt; CategoryId ns.VarInt; Ingredients ns.PrefixedOptional[ns.ByteArray]; Flags ns.Byte }]",
             "notes": "Prefixed Array"
           },
           {
@@ -3163,7 +3163,7 @@
           },
           {
             "name": "Velocity",
-            "type": "ns.LpVec3",
+            "type": "ns.ByteArray",
             "notes": ""
           }
         ]
@@ -3283,7 +3283,7 @@
           },
           {
             "name": "0: blank",
-            "type": "ns.nofields",
+            "type": "struct{}",
             "notes": "Show nothing."
           }
         ]
@@ -3440,7 +3440,7 @@
           },
           {
             "name": "0: blank",
-            "type": "ns.nofields",
+            "type": "struct{}",
             "notes": "Show nothing."
           }
         ]
@@ -3538,7 +3538,7 @@
         "fields": [
           {
             "name": "Sound Event",
-            "type": "ns.Or[ns.Identifier, ns.SoundEvent]",
+            "type": "ns.Or[ns.Identifier, ns.ByteArray]",
             "notes": "ID in the minecraft:sound_event registry, or an inline definition."
           },
           {
@@ -3576,7 +3576,7 @@
         "fields": [
           {
             "name": "Sound Event",
-            "type": "ns.Or[ns.Identifier, ns.SoundEvent]",
+            "type": "ns.Or[ns.Identifier, ns.ByteArray]",
             "notes": "ID in the minecraft:sound_event registry, or an inline definition."
           },
           {
@@ -3794,7 +3794,7 @@
           },
           {
             "name": "Flags",
-            "type": "ns.TeleportFlags",
+            "type": "ns.Byte",
             "notes": ""
           },
           {
@@ -3899,7 +3899,7 @@
           },
           {
             "name": "Value",
-            "type": "ns.Advancement",
+            "type": "ns.ByteArray",
             "notes": "See below"
           },
           {
@@ -3909,7 +3909,7 @@
           },
           {
             "name": "Value",
-            "type": "ns.Advancementprogress",
+            "type": "ns.ByteArray",
             "notes": "See below."
           },
           {
@@ -3937,7 +3937,7 @@
           },
           {
             "name": "Modifiers",
-            "type": "ns.PrefixedModifierArrayData",
+            "type": "ns.ByteArray",
             "notes": "See Attribute#Modifiers . Modifier Data defined below."
           }
         ]
@@ -4001,7 +4001,7 @@
         "fields": [
           {
             "name": "Registry to tags map",
-            "type": "ns.PrefixedArray[struct { Registry ns.Identifier; Tags ns.PrefixedTagArray // FIXME: See below }]",
+            "type": "ns.PrefixedArray[struct { Registry ns.Identifier; Tags ns.ByteArray }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -4045,7 +4045,7 @@
         "fields": [
           {
             "name": "Links",
-            "type": "ns.PrefixedArray[struct { IsBuilt-in ns.Boolean; Label ns.VarIntTextComponent; Url ns.String }]",
+            "type": "ns.PrefixedArray[struct { IsBuiltIn ns.Boolean; Label ns.TextComponent; Url ns.String }]",
             "notes": "Prefixed Array"
           }
         ]
@@ -4063,7 +4063,7 @@
           },
           {
             "name": "Identifier",
-            "type": "ns.Or[ns.Uuid, ns.String]",
+            "type": "ns.Or[ns.UUID, ns.String]",
             "notes": "Something that uniquely identifies this specific waypoint."
           },
           {
@@ -4580,7 +4580,7 @@
           },
           {
             "name": "Entries",
-            "type": "ns.PrefixedStringArray // Size: 100",
+            "type": "ns.PrefixedArray[ns.String]",
             "notes": "Text from each page. Maximum string length is 1024 chars."
           },
           {

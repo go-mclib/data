@@ -97,6 +97,43 @@ def normalize_notes(text: str) -> str:
     return "\n".join(normalized_lines).strip()
 
 
+def normalize_go_field_name(name: str) -> str:
+    """Convert field name to Go naming convention (TitleCase, no special chars)."""
+    if not name:
+        return ""
+    # Replace hyphens, underscores, slashes, and other special chars with spaces
+    name = re.sub(r"[-_/]", " ", name)
+    # Remove parentheses content
+    name = re.sub(r"\(.+\)", "", name)
+    # Remove other special characters
+    name = re.sub(r"[?:'\"]", "", name)
+    # Split on spaces and capitalize each word
+    words = name.split()
+    result = []
+    for word in words:
+        # Skip empty words
+        if not word:
+            continue
+        # If the word contains both letters and numbers, just capitalize first letter
+        if any(c.isdigit() for c in word) and any(c.isalpha() for c in word):
+            new_word = ""
+            first_letter_found = False
+            for c in word:
+                if c.isalpha() and not first_letter_found:
+                    new_word += c.upper()
+                    first_letter_found = True
+                else:
+                    new_word += c
+            result.append(new_word)
+        else:
+            result.append(word.capitalize())
+    final_name = "".join(result)
+    # If the name starts with a number, prefix it with 'Field'
+    if final_name and final_name[0].isdigit():
+        final_name = "Field" + final_name
+    return final_name
+
+
 def normalize_field_type(raw_type: str, target_format: str = "json") -> str:
     """
     Normalize field types from wiki format.
@@ -165,19 +202,86 @@ def normalize_field_type(raw_type: str, target_format: str = "json") -> str:
 
 def transform_to_go_type(field_type: str) -> str:
     """Transform normalized field type to Go format with ns. prefix."""
-    # but keep them for special handling if needed
-    size_match = re.match(r"^(.+?)\((\d+)\)$", field_type)
-    if size_match:
-        base_type = size_match.group(1)
-        field_type = base_type
-    base_type = field_type.replace("-", "").replace("/", "")
+    # Special type mappings for wiki-specific types
+    TYPE_MAPPINGS = {
+        # Types that need special handling
+        "Varies": "ns.ByteArray",  # Variable content, treat as raw bytes
+        # Vector types - map to existing or use fallback
+        "LpVec3": "ns.ByteArray",  # Length-prefixed Vec3 (new in 774, 3 shorts)
+        "Vec3": "ns.ByteArray",  # 3D vector
+        "Namespace": "ns.Identifier",  # Namespace is same as Identifier
+        "JSONTextComponent": "ns.TextComponent",  # JSON format text
+        "VarIntTextComponent": "ns.TextComponent",  # VarInt-prefixed text component
+        # Command tree node (complex structure)
+        "Node": "ns.ByteArray",  # Command tree node - complex
+        "CommandNode": "ns.ByteArray",  # Command tree node - complex
+        # Debug/profiling types
+        "DebugSubscriptionUpdate": "ns.ByteArray",  # Complex debug data
+        "DebugSubscriptionEvent": "ns.ByteArray",  # Complex debug data
+        "DebugSubscriptionData": "ns.ByteArray",  # Complex debug data
+        # Profile types
+        "GameProfile": "ns.GameProfile",  # Player profile
+        "ResolvableProfile": "ns.ByteArray",  # Resolvable profile (complex)
+        "ChatType": "ns.ByteArray",  # Chat type definition (complex)
+        # Item types
+        "Slot": "ns.Slot",  # Item slot
+        "HashedSlot": "ns.HashedSlot",  # Hashed slot
+        "TradeItem": "ns.ByteArray",  # Trade item (complex)
+        "RecipeDisplay": "ns.ByteArray",  # Recipe display (complex)
+        # Data structures
+        "NBT": "ns.NBT",  # NBT data
+        "CompoundTag": "ns.NBT",  # Same as NBT
+        "Angle": "ns.Angle",  # Rotation angle
+        "Position": "ns.Position",  # Block position
+        "BitSet": "ns.BitSet",  # Bit set
+        "FixedBitSet": "ns.FixedBitSet",  # Fixed-size bit set
+        "SoundEvent": "ns.ByteArray",  # Sound event (complex)
+        "IDSet": "ns.ByteArray",  # ID set (complex)
+        "ChunkData": "ns.ByteArray",  # Chunk data (complex)
+        "LightData": "ns.ByteArray",  # Light data (complex)
+        "TeleportFlags": "ns.Byte",  # Teleport flags
+        # UUID variants
+        "Uuid": "ns.UUID",  # UUID type
+        "UUID": "ns.UUID",  # UUID type
+        # Advancement types
+        "Advancement": "ns.ByteArray",  # Advancement structure (complex)
+        "Advancementprogress": "ns.ByteArray",  # Advancement progress (complex)
+        # Complex types that need placeholder
+        "GlobalIndex": "ns.VarInt",  # Global palette index (simplified)
+        "PlayerArrayActions": "ns.ByteArray",  # Player info actions (complex)
+        "PrefixedUnsignedArrayByte": "ns.PrefixedArray[ns.Byte]",  # Byte array
+        "PrefixedStringArray": "ns.PrefixedArray[ns.String]",  # String array
+        "PrefixedIDArraySet": "ns.ByteArray",  # ID array set (complex)
+        "PrefixedTagArray": "ns.ByteArray",  # Tag array (complex)
+        "PrefixedModifierArrayData": "ns.ByteArray",  # Modifier array (complex)
+        "Unknown": "ns.ByteArray",  # Unknown types
+        "nofields": "struct{}",  # Empty struct (no fields)
+        "Nofields": "struct{}",  # Empty struct (no fields)
+    }
+
+    # Strip ALL size suffixes like (100) or (see below) to get base type
+    # Loop to handle multiple suffixes like PrefixedStringArray(100)(1024)
+    base_type = field_type
+    while True:
+        size_match = re.match(r"^(.+?)\((\d+)\)$", base_type)
+        seebelow_match = re.match(r"^(.+?)\((see\s*below|seebelow)\)$", base_type, re.IGNORECASE)
+        if size_match:
+            base_type = size_match.group(1)
+        elif seebelow_match:
+            base_type = seebelow_match.group(1)
+        else:
+            break
+    base_type = base_type.replace("-", "").replace("/", "")
 
     if not base_type:
         return "ns.Unknown // FIXME"
-    if base_type == "Namespace":
-        return "ns.Identifier"
+
+    # Check for direct type mapping first
+    if base_type in TYPE_MAPPINGS:
+        return TYPE_MAPPINGS[base_type]
+
     if base_type.lower() in ["seebelow", "see below", "(seebelow)", "(see below)"]:
-        return "ns.Unknown // FIXME: See below"
+        return "ns.ByteArray // FIXME: See below"
 
     paren_match = re.match(r"^(.+)\((.+)\)$", base_type)
     if paren_match:
@@ -556,9 +660,7 @@ def import_packets_wiki() -> dict:
                                     )
                                 )
                                 if elem_name and elem_type:
-                                    go_field_name = "".join(
-                                        word.capitalize() for word in elem_name.split()
-                                    )
+                                    go_field_name = normalize_go_field_name(elem_name)
                                     go_field_type = transform_to_go_type(
                                         normalize_field_type(elem_type)
                                     )
@@ -593,9 +695,7 @@ def import_packets_wiki() -> dict:
                             else ""
                         )
                         if elem_name and elem_type:
-                            go_field_name = "".join(
-                                word.capitalize() for word in elem_name.split()
-                            )
+                            go_field_name = normalize_go_field_name(elem_name)
                             go_field_type = transform_to_go_type(
                                 normalize_field_type(elem_type)
                             )

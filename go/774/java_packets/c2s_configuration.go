@@ -62,7 +62,7 @@ type C2SCustomPayloadConfigurationData struct {
 	// Name of the plugin channel used to send the data.
 	Channel ns.Identifier
 	// Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (such as the string length prefix in the standard minecraft:brand channel). The vanilla server enforces a length limit of 32767 bytes on this data, but only if the channel type is unrecognized.
-	Data ns.Varies
+	Data ns.ByteArray
 }
 
 // C2SFinishConfiguration represents "Acknowledge Finish Configuration".
@@ -139,7 +139,7 @@ type C2SSelectKnownPacksData struct {
 // > Sent when the client clicks a Text Component with the minecraft:custom click action. This is meant as an alternative to running a command, but it will not have any effect on vanilla servers.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Custom_Click_Action_(Configuration)
-var C2SAcceptCodeOfConductConfiguration = jp.NewPacket(jp.StateConfiguration, jp.C2S, 0x09)
+var C2SAcceptCodeOfConductConfiguration = jp.NewPacket(jp.StateConfiguration, jp.C2S, 0x08)
 
 type C2SAcceptCodeOfConductConfigurationData struct {
 	// No fields

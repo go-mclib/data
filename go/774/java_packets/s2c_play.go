@@ -8,9 +8,9 @@ import (
 // S2CBundleDelimiter represents "Bundle Delimiter".
 //
 // > The delimiter for a bundle of packets. When received, the client should store every subsequent packet it receives and wait until another delimiter is received. Once that happens, the client is guaranteed to process every packet in the bundle on the same tick, and the client should stop storing packets.
-// > 
+// >
 // > As of 1.20.6, the vanilla server only uses this to ensure Spawn Entity and associated packets used to configure the entity happen on the same tick. Each entity gets a separate bundle.
-// > 
+// >
 // > The vanilla client doesn't allow more than 4096 packets in the same bundle.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Bundle_Delimiter
@@ -23,7 +23,7 @@ type S2CBundleDelimiterData struct {
 // S2CAddEntity represents "Spawn Entity".
 //
 // > Sent by the server to create an entity on the client, normally upon the entity spawning within or entering the player's view range.
-// > 
+// >
 // > The local player entity is automatically created by the client, and must not be created explicitly using this packet. Doing so on the vanilla client will have strange consequences.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Spawn_Entity
@@ -36,17 +36,17 @@ type S2CAddEntityData struct {
 	EntityUuid ns.UUID
 	// ID in the minecraft:entity_type registry (see "type" field in Java Edition protocol/Entity metadata#Entities ).
 	Type ns.VarInt
-	// 
+	//
 	X ns.Double
-	// 
+	//
 	Y ns.Double
-	// 
+	//
 	Z ns.Double
-	// 
-	Velocity ns.LpVec3
-	// 
+	//
+	Velocity ns.ByteArray
+	//
 	Pitch ns.Angle
-	// 
+	//
 	Yaw ns.Angle
 	// Only used by living entities, where the head of the entity may differ from the general body rotation.
 	HeadYaw ns.Angle
@@ -57,7 +57,7 @@ type S2CAddEntityData struct {
 // S2CAnimate represents "Entity Animation".
 //
 // > Sent whenever an entity should change animation.
-// > 
+// >
 // > Animation can be one of the following values:
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Entity_Animation
@@ -73,7 +73,7 @@ type S2CAnimateData struct {
 // S2CAwardStats represents "Award Statistics".
 //
 // > Sent as a response to Client Status (id 1). Will only send the changed values if previously requested.
-// > 
+// >
 // > Categories (defined in the minecraft:stat_type registry).
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Award_Statistics
@@ -82,9 +82,9 @@ var S2CAwardStats = jp.NewPacket(jp.StatePlay, jp.S2C, 0x03)
 type S2CAwardStatsData struct {
 	// Prefixed Array
 	Statistics ns.PrefixedArray[struct {
-		CategoryId ns.VarInt
+		CategoryId  ns.VarInt
 		StatisticId ns.VarInt
-		Value ns.VarInt
+		Value       ns.VarInt
 	}]
 }
 
@@ -103,11 +103,11 @@ type S2CBlockChangedAckData struct {
 // S2CBlockDestruction represents "Set Block Destroy Stage".
 //
 // > 0–9 are the displayable destroy stages and each other number means that there is no animation on this coordinate.
-// > 
+// >
 // > Block break animations can still be applied on air; the animation will remain visible, although there is no block being broken. However, if this is applied to a transparent block, odd graphical effects may happen, including water losing its transparency. (An effect similar to this can be seen in normal gameplay when breaking ice blocks)
-// > 
+// >
 // > If you need to display several break animations at the same time, you have to give each of them a unique Entity ID. The entity ID does not need to correspond to an actual entity on the client. It is valid to use a randomly generated number.
-// > 
+// >
 // > When removing the break animation, you must use the ID of the entity that set it.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Block_Destroy_Stage
@@ -130,7 +130,7 @@ type S2CBlockDestructionData struct {
 var S2CBlockEntityData = jp.NewPacket(jp.StatePlay, jp.S2C, 0x06)
 
 type S2CBlockEntityDataData struct {
-	// 
+	//
 	Location ns.Position
 	// ID in the minecraft:block_entity_type registry
 	Type ns.VarInt
@@ -139,7 +139,6 @@ type S2CBlockEntityDataData struct {
 }
 
 // S2CBlockEvent represents "Block Action".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Block_Action
 var S2CBlockEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x07)
@@ -157,7 +156,6 @@ type S2CBlockEventData struct {
 
 // S2CBlockUpdate represents "Block Update".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Block_Update
 var S2CBlockUpdate = jp.NewPacket(jp.StatePlay, jp.S2C, 0x08)
 
@@ -169,7 +167,6 @@ type S2CBlockUpdateData struct {
 }
 
 // S2CBossEvent represents "Boss Bar".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Boss_Bar
 var S2CBossEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x09)
@@ -201,14 +198,14 @@ var S2CChangeDifficulty = jp.NewPacket(jp.StatePlay, jp.S2C, 0x0A)
 type S2CChangeDifficultyData struct {
 	// 0: peaceful, 1: easy, 2: normal, 3: hard.
 	Difficulty ns.UnsignedByte
-	// 
+	//
 	DifficultyLocked ns.Boolean
 }
 
 // S2CChunkBatchFinished represents "Chunk Batch Finished".
 //
 // > Marks the end of a chunk batch. The vanilla client marks the time it receives this packet and calculates the elapsed duration since the beginning of the chunk batch . The server uses this duration and the batch size received in this packet to estimate the number of milliseconds elapsed per chunk received. This value is then used to calculate the desired number of chunks per tick through the formula 25 / millisPerChunk , which is reported to the server through Chunk Batch Received . This likely uses 25 instead of the normal tick duration of 50 so chunk processing will only use half of the client's and network's bandwidth.
-// > 
+// >
 // > The vanilla client uses the samples from the latest 15 batches to estimate the milliseconds per chunk number.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chunk_Batch_Finished
@@ -242,7 +239,7 @@ type S2CChunksBiomesData struct {
 	ChunkBiomeData ns.PrefixedArray[struct {
 		ChunkZ ns.Int
 		ChunkX ns.Int
-		Data ns.PrefixedArray[ns.Byte]
+		Data   ns.PrefixedArray[ns.Byte]
 	}]
 }
 
@@ -254,7 +251,7 @@ type S2CChunksBiomesData struct {
 var S2CClearTitles = jp.NewPacket(jp.StatePlay, jp.S2C, 0x0E)
 
 type S2CClearTitlesData struct {
-	// 
+	//
 	Reset ns.Boolean
 }
 
@@ -279,9 +276,9 @@ type S2CCommandSuggestionsData struct {
 // S2CCommands represents "Commands".
 //
 // > Lists all of the commands on the server, and how they are parsed.
-// > 
+// >
 // > This is a directed graph, with one root node. Each redirect or child node must refer only to nodes that have already been declared.
-// > 
+// >
 // > For more information on this packet, see the Java Edition protocol/Command data article.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Commands
@@ -289,7 +286,7 @@ var S2CCommands = jp.NewPacket(jp.StatePlay, jp.S2C, 0x10)
 
 type S2CCommandsData struct {
 	// An array of nodes.
-	Nodes ns.PrefixedArray[ns.Node]
+	Nodes ns.PrefixedArray[ns.ByteArray]
 	// Index of the root node in the previous array.
 	RootIndex ns.VarInt
 }
@@ -309,7 +306,7 @@ type S2CContainerCloseData struct {
 // S2CContainerSetContent represents "Set Container Content".
 //
 // > Replaces the contents of a container window. Sent by the server upon initialization of a container window or the player's inventory, and in response to state ID mismatches (see #Click Container ).
-// > 
+// >
 // > See inventory windows for further information about how slots are indexed.
 // > Use Open Screen to open the container on the client.
 //
@@ -328,14 +325,14 @@ type S2CContainerSetContentData struct {
 // S2CContainerSetData represents "Set Container Property".
 //
 // > This packet is used to inform the client that part of a GUI window should be updated.
-// > 
+// >
 // > The meaning of the Property field depends on the type of the window. The following table shows the known combinations of window type and property, and how the value is to be interpreted.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Container_Property
 var S2CContainerSetData = jp.NewPacket(jp.StatePlay, jp.S2C, 0x13)
 
 type S2CContainerSetDataData struct {
-	// 
+	//
 	WindowId ns.VarInt
 	// The property to be updated, see below.
 	Property ns.Short
@@ -346,9 +343,9 @@ type S2CContainerSetDataData struct {
 // S2CContainerSetSlot represents "Set Container Slot".
 //
 // > Sent by the server when an item in a slot (in a window) is added/removed.
-// > 
+// >
 // > If Window ID is 0, the hotbar and offhand slots (slots 36 through 45) may be updated even when a different container window is open. (The vanilla server does not appear to utilize this special case.) Updates are also restricted to those slots when the player is looking at a creative inventory tab other than the survival inventory. (The vanilla server does not handle this restriction in any way, leading to MC-242392 .)
-// > 
+// >
 // > When a container window is open, the server never sends updates targeting Window ID 0—all of the window types include slots for the player inventory. The client must automatically apply changes targeting the inventory portion of a container window to the main inventory; the server does not resend them for ID 0 when the window is closed. However, since the armor and offhand slots are only present on ID 0, updates to those slots occurring while a window is open must be deferred by the server until the window's closure.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Container_Slot
@@ -361,7 +358,7 @@ type S2CContainerSetSlotData struct {
 	StateId ns.VarInt
 	// The slot that should be updated.
 	Slot ns.Short
-	// 
+	//
 	SlotData ns.Slot
 }
 
@@ -401,14 +398,14 @@ var S2CCustomChatCompletions = jp.NewPacket(jp.StatePlay, jp.S2C, 0x17)
 type S2CCustomChatCompletionsData struct {
 	// 0: Add, 1: Remove, 2: Set
 	Action ns.VarInt
-	// 
+	//
 	Entries ns.PrefixedArray[ns.String]
 }
 
 // S2CCustomPayloadPlay represents "Clientbound Plugin Message (play)".
 //
 // > Mods and plugins can use this to send their data. Minecraft itself uses several plugin channels . These internal channels are in the minecraft namespace.
-// > 
+// >
 // > More information on how it works on Dinnerbone's blog . More documentation about internal and popular registered channels is here .
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clientbound_Plugin_Message_(Play)
@@ -422,7 +419,6 @@ type S2CCustomPayloadPlayData struct {
 }
 
 // S2CDamageEvent represents "Damage Event".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Damage_Event
 var S2CDamageEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x19)
@@ -440,15 +436,14 @@ type S2CDamageEventData struct {
 
 // S2CDebugBlockValue represents "Debug Block Value".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Debug_Block_Value
 var S2CDebugBlockValue = jp.NewPacket(jp.StatePlay, jp.S2C, 0x1A)
 
 type S2CDebugBlockValueData struct {
-	// 
+	//
 	Location ns.Position
-	// 
-	Update ns.DebugSubscriptionUpdate
+	//
+	Update ns.ByteArray
 }
 
 // S2CDebugChunkValue represents "Debug Chunk Value".
@@ -459,44 +454,42 @@ type S2CDebugBlockValueData struct {
 var S2CDebugChunkValue = jp.NewPacket(jp.StatePlay, jp.S2C, 0x1B)
 
 type S2CDebugChunkValueData struct {
-	// 
+	//
 	ChunkZ ns.Int
-	// 
+	//
 	ChunkX ns.Int
-	// 
-	Update ns.DebugSubscriptionUpdate
+	//
+	Update ns.ByteArray
 }
 
 // S2CDebugEntityValue represents "Debug Entity Value".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Debug_Entity_Value
 var S2CDebugEntityValue = jp.NewPacket(jp.StatePlay, jp.S2C, 0x1C)
 
 type S2CDebugEntityValueData struct {
-	// 
+	//
 	EntityId ns.VarInt
-	// 
-	Update ns.DebugSubscriptionUpdate
+	//
+	Update ns.ByteArray
 }
 
 // S2CDebugEvent represents "Debug Event".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Debug_Event
 var S2CDebugEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x1D)
 
 type S2CDebugEventData struct {
-	// 
-	Event ns.DebugSubscriptionEvent
+	//
+	Event ns.ByteArray
 }
 
 // S2CDebugSample represents "Debug Sample".
 //
 // > Sample data that is sent periodically after the client has subscribed with Debug Sample Subscription .
-// > 
+// >
 // > The vanilla server only sends debug samples to players who are server operators.
-// > 
+// >
 // > Types:
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Debug_Sample
@@ -538,7 +531,7 @@ type S2CDisconnectPlayData struct {
 // S2CDisguisedChat represents "Disguised Chat Message".
 //
 // > Sends the client a chat message, but without any message signing information.
-// > 
+// >
 // > The vanilla server uses this packet when the console is communicating with players through commands, such as /say , /tell , /me , among others.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Disguised_Chat_Message
@@ -548,7 +541,7 @@ type S2CDisguisedChatData struct {
 	// This is used as the content parameter when formatting the message on the client.
 	Message ns.TextComponent
 	// Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an inline definition.
-	ChatType ns.Or[ns.Identifier, ns.ChatType]
+	ChatType ns.Or[ns.Identifier, ns.ByteArray]
 	// The name of the one sending the message, usually the sender's display name. This is used as the sender parameter when formatting the message on the client.
 	SenderName ns.TextComponent
 	// The name of the one receiving the message, usually the receiver's display name. This is used as the target parameter when formatting the message on the client.
@@ -563,7 +556,7 @@ type S2CDisguisedChatData struct {
 var S2CEntityEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x22)
 
 type S2CEntityEventData struct {
-	// 
+	//
 	EntityId ns.Int
 	// See Java Edition protocol/Entity statuses for a list of which statuses are valid for each type of entity.
 	EntityStatus ns.Byte
@@ -577,25 +570,25 @@ type S2CEntityEventData struct {
 var S2CEntityPositionSync = jp.NewPacket(jp.StatePlay, jp.S2C, 0x23)
 
 type S2CEntityPositionSyncData struct {
-	// 
+	//
 	EntityId ns.VarInt
-	// 
+	//
 	X ns.Double
-	// 
+	//
 	Y ns.Double
-	// 
+	//
 	Z ns.Double
-	// 
+	//
 	VelocityX ns.Double
-	// 
+	//
 	VelocityY ns.Double
-	// 
+	//
 	VelocityZ ns.Double
 	// Rotation on the X axis, in degrees.
 	Yaw ns.Float
 	// Rotation on the Y axis, in degrees.
 	Pitch ns.Float
-	// 
+	//
 	OnGround ns.Boolean
 }
 
@@ -607,36 +600,36 @@ type S2CEntityPositionSyncData struct {
 var S2CExplode = jp.NewPacket(jp.StatePlay, jp.S2C, 0x24)
 
 type S2CExplodeData struct {
-	// 
+	//
 	X ns.Double
-	// 
+	//
 	Y ns.Double
-	// 
+	//
 	Z ns.Double
-	// 
+	//
 	Radius ns.Float
 	// ID in the minecraft:particle_type registry.
 	ExplosionParticleId ns.VarInt
 	// Particle data as specified in Java Edition protocol/Particles .
-	ExplosionParticleData ns.Varies
+	ExplosionParticleData ns.ByteArray
 	// ID in the minecraft:sound_event registry, or an inline definition.
-	ExplosionSound ns.Or[ns.Identifier, ns.SoundEvent]
+	ExplosionSound ns.Or[ns.Identifier, ns.ByteArray]
 	// Particle data as specified in Java Edition protocol/Particles .
-	ParticleData ns.Varies
-	// 
+	ParticleData ns.ByteArray
+	//
 	Scaling ns.Float
-	// 
+	//
 	Speed ns.Float
-	// 
+	//
 	Weight ns.VarInt
 }
 
 // S2CForgetLevelChunk represents "Unload Chunk".
 //
 // > Tells the client to unload a chunk column.
-// > 
+// >
 // > Note: The order is inverted, because the client reads this packet as one big-endian Long , with Z being the upper 32 bits.
-// > 
+// >
 // > It is legal to send this packet even if the given chunk is not currently loaded.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Unload_Chunk
@@ -652,7 +645,7 @@ type S2CForgetLevelChunkData struct {
 // S2CGameEvent represents "Game Event".
 //
 // > Used for a wide variety of game events, such as weather, respawn availability (from bed and respawn anchor ), game mode, some game rules, and demo messages.
-// > 
+// >
 // > Events :
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Game_Event
@@ -703,9 +696,9 @@ type S2CHurtAnimationData struct {
 var S2CInitializeBorder = jp.NewPacket(jp.StatePlay, jp.S2C, 0x2A)
 
 type S2CInitializeBorderData struct {
-	// 
+	//
 	X ns.Double
-	// 
+	//
 	Z ns.Double
 	// Current length of a single side of the world border, in meters.
 	OldDiameter ns.Double
@@ -724,25 +717,25 @@ type S2CInitializeBorderData struct {
 // S2CKeepAlivePlay represents "Clientbound Keep Alive (play)".
 //
 // > The server will frequently send out a keep-alive, each containing a random ID. The client must respond with the same payload (see Serverbound Keep Alive ). If the client does not respond to a Keep Alive packet within 15 seconds after it was sent, the server kicks the client. Vice versa, if the server does not send any keep-alives for 20 seconds, the client will disconnect and yield a "Timed out" exception.
-// > 
+// >
 // > The vanilla server uses a system-dependent time in milliseconds to generate the keep alive ID value.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clientbound_Keep_Alive_(Play)
 var S2CKeepAlivePlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x2B)
 
 type S2CKeepAlivePlayData struct {
-	// 
+	//
 	KeepAliveId ns.Long
 }
 
 // S2CLevelChunkWithLight represents "Chunk Data and Update Light".
 //
 // > Sent when a chunk comes into the client's view distance, specifying its terrain, lighting and block entities.
-// > 
+// >
 // > The chunk must be within the view area previously specified with Set Center Chunk ; see that packet for details.
-// > 
+// >
 // > It is not strictly necessary to send all block entities in this packet; it is still legal to send them with Block Entity Data later.
-// > 
+// >
 // > Unlike the Update Light packet, which uses the same format, setting the bit corresponding to a section to 0 in both of the block light or sky light masks does not appear to be useful, and the results in testing have been highly inconsistent.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chunk_Data_And_Update_Light
@@ -753,18 +746,18 @@ type S2CLevelChunkWithLightData struct {
 	ChunkX ns.Int
 	// Chunk coordinate (block coordinate divided by 16, rounded down)
 	ChunkZ ns.Int
-	// 
-	Data ns.ChunkData
-	// 
-	Light ns.LightData
+	//
+	Data ns.ByteArray
+	//
+	Light ns.ByteArray
 }
 
 // S2CLevelEvent represents "World Event".
 //
 // > Sent when a client is to play a sound or particle effect.
-// > 
+// >
 // > By default, the Minecraft client adjusts the volume of sound effects based on distance. The final boolean field is used to disable this, and instead, the effect is played from 2 blocks away in the correct direction. Currently, this is only used for effect 1023 (wither spawn), effect 1028 (enderdragon death), and effect 1038 (end portal opening); it is ignored on other effects.
-// > 
+// >
 // > Events:
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#World_Event
@@ -805,20 +798,20 @@ type S2CLevelParticlesData struct {
 	OffsetY ns.Float
 	// This is added to the Z position after being multiplied by random.nextGaussian() .
 	OffsetZ ns.Float
-	// 
+	//
 	MaxSpeed ns.Float
 	// The number of particles to create.
 	ParticleCount ns.Int
 	// ID in the minecraft:particle_type registry.
 	ParticleId ns.VarInt
 	// Particle data as specified in Java Edition protocol/Particles .
-	Data ns.Varies
+	Data ns.ByteArray
 }
 
 // S2CLightUpdate represents "Update Light".
 //
 // > Updates light levels for a chunk. See Light for information on how lighting works in Minecraft.
-// > 
+// >
 // > A bit will never be set in both the block light mask and the empty block light mask, though it may be present in neither of them (if the block light does not need to be updated for the corresponding chunk section). The same applies to the sky light mask and the empty sky light mask.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Light
@@ -829,8 +822,8 @@ type S2CLightUpdateData struct {
 	ChunkX ns.VarInt
 	// Chunk coordinate (block coordinate divided by 16, rounded down)
 	ChunkZ ns.VarInt
-	// 
-	Data ns.LightData
+	//
+	Data ns.ByteArray
 }
 
 // S2CLoginPlay represents "Login (play)".
@@ -843,7 +836,7 @@ var S2CLoginPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x30)
 type S2CLoginPlayData struct {
 	// The player's Entity ID (EID).
 	EntityId ns.Int
-	// 
+	//
 	IsHardcore ns.Boolean
 	// Identifiers for all dimensions on the server.
 	DimensionNames ns.PrefixedArray[ns.Identifier]
@@ -881,18 +874,18 @@ type S2CLoginPlayData struct {
 	DeathLocation ns.Optional[ns.Position]
 	// The number of ticks until the player can use the last used portal again. Looks like it's an attempt to fix MC-180.
 	PortalCooldown ns.VarInt
-	// 
+	//
 	SeaLevel ns.VarInt
-	// 
+	//
 	EnforcesSecureChat ns.Boolean
 }
 
 // S2CMapItemData represents "Map Data".
 //
 // > Updates a rectangular area on a map item.
-// > 
+// >
 // > For icons, a direction of 0 is a vertical icon and increments by 22.5° (360/16).
-// > 
+// >
 // > Types are based off of rows and columns in map_icons.png :
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Map_Data
@@ -911,22 +904,22 @@ type S2CMapItemDataData struct {
 	Z ns.Byte
 	// 0-15
 	Direction ns.Byte
-	// 
+	//
 	DisplayName ns.PrefixedOptional[ns.TextComponent]
 	// Only if Columns is more than 0; number of rows updated
 	Rows ns.Optional[ns.UnsignedByte]
-	// Only if Columns is more than 0; x offset of the westernmost column
-	X ns.Optional[ns.UnsignedByte]
-	// Only if Columns is more than 0; z offset of the northernmost row
-	Z ns.Optional[ns.UnsignedByte]
+	// (duplicate of X) Only if Columns is more than 0; x offset of the westernmost column
+	X2 ns.Optional[ns.UnsignedByte]
+	// (duplicate of Z) Only if Columns is more than 0; z offset of the northernmost row
+	Z2 ns.Optional[ns.UnsignedByte]
 	// Only if Columns is more than 0; see Map item format
-	Data ns.Optional[ns.PrefixedUnsignedArrayByte]
+	Data ns.Optional[ns.PrefixedArray[ns.Byte]]
 }
 
 // S2CMerchantOffers represents "Merchant Offers".
 //
 // > The list of trades a villager NPC is offering.
-// > 
+// >
 // > Trade Item:
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Merchant_Offers
@@ -938,7 +931,7 @@ type S2CMerchantOffersData struct {
 	// The item the player will receive from this villager trade.
 	OutputItem ns.Slot
 	// The second item the player has to supply for this villager trade.
-	InputItem2 ns.PrefixedOptional[ns.TradeItem]
+	InputItem2 ns.PrefixedOptional[ns.ByteArray]
 	// True if the trade is disabled; false if the trade is enabled.
 	TradeDisabled ns.Boolean
 	// Number of times the trade has been used so far. If equal to the maximum number of trades, the client will display a red X.
@@ -971,7 +964,7 @@ type S2CMerchantOffersData struct {
 var S2CMoveEntityPos = jp.NewPacket(jp.StatePlay, jp.S2C, 0x33)
 
 type S2CMoveEntityPosData struct {
-	// 
+	//
 	EntityId ns.VarInt
 	// Change in X position as currentX * 4096 - prevX * 4096 .
 	DeltaX ns.Short
@@ -979,7 +972,7 @@ type S2CMoveEntityPosData struct {
 	DeltaY ns.Short
 	// Change in Z position as currentZ * 4096 - prevZ * 4096 .
 	DeltaZ ns.Short
-	// 
+	//
 	OnGround ns.Boolean
 }
 
@@ -991,7 +984,7 @@ type S2CMoveEntityPosData struct {
 var S2CMoveEntityPosRot = jp.NewPacket(jp.StatePlay, jp.S2C, 0x34)
 
 type S2CMoveEntityPosRotData struct {
-	// 
+	//
 	EntityId ns.VarInt
 	// Change in X position as currentX * 4096 - prevX * 4096 .
 	DeltaX ns.Short
@@ -1003,32 +996,31 @@ type S2CMoveEntityPosRotData struct {
 	Yaw ns.Angle
 	// New angle, not a delta.
 	Pitch ns.Angle
-	// 
+	//
 	OnGround ns.Boolean
 }
 
 // S2CMoveMinecartAlongTrack represents "Move Minecart Along Track".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Move_Minecart_Along_Track
 var S2CMoveMinecartAlongTrack = jp.NewPacket(jp.StatePlay, jp.S2C, 0x35)
 
 type S2CMoveMinecartAlongTrackData struct {
-	// 
+	//
 	EntityId ns.VarInt
-	// 
+	//
 	Y ns.Double
-	// 
+	//
 	Z ns.Double
-	// 
+	//
 	VelocityX ns.Double
-	// 
+	//
 	VelocityY ns.Double
-	// 
+	//
 	VelocityZ ns.Double
-	// 
+	//
 	Yaw ns.Angle
-	// 
+	//
 	Pitch ns.Angle
 }
 
@@ -1040,13 +1032,13 @@ type S2CMoveMinecartAlongTrackData struct {
 var S2CMoveEntityRot = jp.NewPacket(jp.StatePlay, jp.S2C, 0x36)
 
 type S2CMoveEntityRotData struct {
-	// 
+	//
 	EntityId ns.VarInt
 	// New angle, not a delta.
 	Yaw ns.Angle
 	// New angle, not a delta.
 	Pitch ns.Angle
-	// 
+	//
 	OnGround ns.Boolean
 }
 
@@ -1085,9 +1077,9 @@ type S2COpenBookData struct {
 // S2COpenScreen represents "Open Screen".
 //
 // > This is sent to the client when it should open an inventory, such as a chest, workbench, furnace, or other container. Resending this packet with the already existing window ID, will update the window title and window type without closing the window.
-// > 
+// >
 // > This message is not sent to clients opening their own inventory, nor do clients inform the server in any way when doing so. From the server's perspective, the inventory is always "open" whenever no other windows are.
-// > 
+// >
 // > For horses, use Open Horse Screen .
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Open_Screen
@@ -1110,7 +1102,7 @@ type S2COpenScreenData struct {
 var S2COpenSignEditor = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3A)
 
 type S2COpenSignEditorData struct {
-	// 
+	//
 	Location ns.Position
 	// Whether the opened editor is for the front or on the back of the sign
 	IsFrontText ns.Boolean
@@ -1119,19 +1111,18 @@ type S2COpenSignEditorData struct {
 // S2CPingPlay represents "Ping (play)".
 //
 // > Packet is not used by the vanilla server. When sent to the client, client responds with a Pong packet with the same ID.
-// > 
+// >
 // > Unlike Keep Alive this packet is handled synchronously with game logic on the vanilla client, and can thus be used to reliably detect which serverbound packets were sent after the ping and all preceding clientbound packets were received and handled.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Ping_(Play)
 var S2CPingPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3B)
 
 type S2CPingPlayData struct {
-	// 
+	//
 	Id ns.Int
 }
 
 // S2CPongResponsePlay represents "Ping Response (play)".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Ping_Response_(Play)
 var S2CPongResponsePlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3C)
@@ -1149,16 +1140,16 @@ type S2CPongResponsePlayData struct {
 var S2CPlaceGhostRecipe = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3D)
 
 type S2CPlaceGhostRecipeData struct {
-	// 
+	//
 	WindowId ns.VarInt
-	// 
-	RecipeDisplay ns.RecipeDisplay
+	//
+	RecipeDisplay ns.ByteArray
 }
 
 // S2CPlayerAbilities represents "Player Abilities (clientbound)".
 //
 // > The latter 2 floats are used to indicate the flying speed and field of view respectively, while the first byte is used to determine the value of 4 booleans.
-// > 
+// >
 // > About the flags:
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Abilities_(Clientbound)
@@ -1176,31 +1167,41 @@ type S2CPlayerAbilitiesData struct {
 // S2CPlayerChat represents "Player Chat Message".
 //
 // > Sends the client a chat message from a player.
-// > 
+// >
 // > Currently, a lot is unknown about this packet, blank descriptions are for those that are unknown
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Chat_Message
 var S2CPlayerChat = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3F)
 
 type S2CPlayerChatData struct {
-	// VarInt
-	Header ns.GlobalIndex
+	GlobalIndex ns.VarInt
 	// Used by the vanilla client for the disableChat launch option. Setting both longs to 0 will always display the message regardless of the setting.
 	Sender ns.UUID
-	// 
+	//
 	Index ns.VarInt
 	// Cryptography, the signature consists of the Sender UUID, Session UUID from the Player Session packet, Index, Salt, Timestamp in epoch seconds, the length of the original chat content, the original content itself, the length of Previous Messages, and all of the Previous message signatures. These values are hashed with SHA-256 and signed using the RSA cryptosystem. Modifying any of these values in the packet will cause this signature to fail. This buffer is always 256 bytes long and it is not length-prefixed.
-	MessageSignatureBytes ns.PrefixedOptional[ns.ByteArray]
+	MessageSignatureBytes ns.PrefixedOptional[ns.FixedByteArray] `mc:"length:256"`
+	// Raw (optionally) signed sent message content. This is used as the content parameter when formatting the message on the client.
+	Message ns.String
 	// Represents the time the message was signed as milliseconds since the epoch , used to check if the message was received within 2 minutes of it being sent.
 	Timestamp ns.Long
 	// Cryptography, used for validating the message signature.
 	Salt ns.Long
-	// The previous message's signature. Contains the same type of data as Message Signature bytes (256 bytes) above. Not length-prefixed.
-	Signature ns.Optional[ns.ByteArray]
+	// The previous message's signature. Contains the same type of data as Message Signature bytes (256 bytes) above. Not length-prefxied.
+	SignatureData ns.PrefixedArray[struct {
+		// The message Id + 1, used for validating message signature. The next field is present only when value of this field is equal to 0.
+		MessageID ns.VarInt
+		// The previous message's signature. Contains the same type of data as Message Signature bytes (256 bytes) above. Not length-prefxied.
+		Signature ns.Optional[ns.FixedByteArray] `mc:"length:256"`
+	}]
+	// The original message content, before filtering.
+	UnsignedContent ns.PrefixedOptional[ns.TextComponent]
 	// If the message has been filtered
 	FilterType ns.VarInt
-	// Only present if the Filter Type is Partially Filtered. Specifies the indices at which characters in the original message string should be replaced with the # symbol (i.e., filtered) by the vanilla client
+	// Only present if the Filter Type is Partially Filtered. Specifies the indexes at which characters in the original message string should be replaced with the # symbol (i.e. filtered) by the vanilla client
 	FilterTypeBits ns.Optional[ns.BitSet]
+	// Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an inline definition.
+	ChatType ns.IDor[ns.ChatType]
 	// The name of the one sending the message, usually the sender's display name. This is used as the sender parameter when formatting the message on the client.
 	SenderName ns.TextComponent
 	// The name of the one receiving the message, usually the receiver's display name. This is used as the target parameter when formatting the message on the client.
@@ -1258,7 +1259,6 @@ type S2CPlayerInfoRemoveData struct {
 
 // S2CPlayerInfoUpdate represents "Player Info Update".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Info_Update
 var S2CPlayerInfoUpdate = jp.NewPacket(jp.StatePlay, jp.S2C, 0x44)
 
@@ -1266,13 +1266,13 @@ type S2CPlayerInfoUpdateData struct {
 	// Determines what actions are present.
 	Actions ns.EnumSet
 	// The length of this array is determined by the number of Player Actions that give a non-zero value when applying its mask to the actions flag. For example, given the decimal number 5, binary 00000101. The masks 0x01 and 0x04 would return a non-zero value, meaning the Player Actions array would include two actions: Add Player and Update Game Mode.
-	PlayerActions ns.PlayerArrayActions
+	PlayerActions ns.ByteArray
 }
 
 // S2CPlayerLookAt represents "Look At".
 //
 // > Used to rotate the client player to face the given location or entity (for /teleport [<targets>] <x> <y> <z> facing ).
-// > 
+// >
 // > If the entity given by entity ID cannot be found, this packet should be treated as if is entity was false.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Look_At
@@ -1298,13 +1298,13 @@ type S2CPlayerLookAtData struct {
 // S2CPlayerPosition represents "Synchronize Player Position".
 //
 // > Teleports the client, e.g., during login, when using an ender pearl, in response to invalid move packets, etc.
-// > 
+// >
 // > Due to latency, the server may receive outdated movement packets sent before the client was aware of the teleport. To account for this, the server ignores all movement packets from the client until a Confirm Teleportation packet with an ID matching the one sent in the teleport packet is received. The vanilla client will also send a Set Player Position and Rotation packet after the Confirm Teleportation packet with the position and rotation received from this packet, and horizontal collision and on ground set to false.
-// > 
+// >
 // > Yaw is measured in degrees and does not follow classical trigonometry rules. The unit circle of yaw on the XZ-plane starts at (0, 1) and turns counterclockwise, with 90 at (-1, 0), 180 at (0, -1) and 270 at (1, 0). Additionally, yaw is not clamped to between 0 and 360 degrees; any number is valid, including negative numbers and numbers greater than 360 (see MC-90097 ).
-// > 
+// >
 // > Pitch is measured in degrees, where 0 is looking straight ahead, -90 is looking straight up, and 90 is looking straight down.
-// > 
+// >
 // > If the player is riding a vehicle, this packet has no effect, but both the Confirm Teleportation and Set Player Position and Rotation packets are still sent.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Synchronize_Player_Position
@@ -1319,22 +1319,21 @@ type S2CPlayerPositionData struct {
 	Y ns.Double
 	// Absolute or relative position, depending on Flags.
 	Z ns.Double
-	// 
+	//
 	VelocityX ns.Double
-	// 
+	//
 	VelocityY ns.Double
-	// 
+	//
 	VelocityZ ns.Double
 	// Absolute or relative rotation on the X axis, in degrees.
 	Yaw ns.Float
 	// Absolute or relative rotation on the Y axis, in degrees.
 	Pitch ns.Float
-	// 
-	Flags ns.TeleportFlags
+	//
+	Flags ns.Byte
 }
 
 // S2CPlayerRotation represents "Player Rotation".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Rotation
 var S2CPlayerRotation = jp.NewPacket(jp.StatePlay, jp.S2C, 0x47)
@@ -1342,16 +1341,15 @@ var S2CPlayerRotation = jp.NewPacket(jp.StatePlay, jp.S2C, 0x47)
 type S2CPlayerRotationData struct {
 	// Rotation on the X axis, in degrees.
 	Yaw ns.Float
-	// 
+	//
 	RelativeYaw ns.Boolean
 	// Rotation on the Y axis, in degrees.
 	Pitch ns.Float
-	// 
+	//
 	RelativePitch ns.Boolean
 }
 
 // S2CRecipeBookAdd represents "Recipe Book Add".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Recipe_Book_Add
 var S2CRecipeBookAdd = jp.NewPacket(jp.StatePlay, jp.S2C, 0x48)
@@ -1359,19 +1357,18 @@ var S2CRecipeBookAdd = jp.NewPacket(jp.StatePlay, jp.S2C, 0x48)
 type S2CRecipeBookAddData struct {
 	// Prefixed Array
 	Recipes ns.PrefixedArray[struct {
-		RecipeId ns.VarInt
-		Display ns.RecipeDisplay
-		GroupId ns.VarInt
-		CategoryId ns.VarInt
-		Ingredients ns.PrefixedOptional[ns.PrefixedIDArraySet]
-		Flags ns.Byte
+		RecipeId    ns.VarInt
+		Display     ns.ByteArray
+		GroupId     ns.VarInt
+		CategoryId  ns.VarInt
+		Ingredients ns.PrefixedOptional[ns.ByteArray]
+		Flags       ns.Byte
 	}]
 	// Replace or Add to known recipes
 	Replace ns.Boolean
 }
 
 // S2CRecipeBookRemove represents "Recipe Book Remove".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Recipe_Book_Remove
 var S2CRecipeBookRemove = jp.NewPacket(jp.StatePlay, jp.S2C, 0x49)
@@ -1382,7 +1379,6 @@ type S2CRecipeBookRemoveData struct {
 }
 
 // S2CRecipeBookSettings represents "Recipe Book Settings".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Recipe_Book_Settings
 var S2CRecipeBookSettings = jp.NewPacket(jp.StatePlay, jp.S2C, 0x4A)
@@ -1420,12 +1416,11 @@ type S2CRemoveEntitiesData struct {
 
 // S2CRemoveMobEffect represents "Remove Entity Effect".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Remove_Entity_Effect
 var S2CRemoveMobEffect = jp.NewPacket(jp.StatePlay, jp.S2C, 0x4C)
 
 type S2CRemoveMobEffectData struct {
-	// 
+	//
 	EntityId ns.VarInt
 	// See this table .
 	EffectId ns.VarInt
@@ -1447,7 +1442,6 @@ type S2CResetScoreData struct {
 
 // S2CResourcePackPopPlay represents "Remove Resource Pack (play)".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Remove_Resource_Pack_(Play)
 var S2CResourcePackPopPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x4E)
 
@@ -1457,7 +1451,6 @@ type S2CResourcePackPopPlayData struct {
 }
 
 // S2CResourcePackPushPlay represents "Add Resource Pack (play)".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Add_Resource_Pack_(Play)
 var S2CResourcePackPushPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x4F)
@@ -1478,7 +1471,7 @@ type S2CResourcePackPushPlayData struct {
 // S2CRespawn represents "Respawn".
 //
 // > To change the player's dimension (overworld/nether/end), send them a respawn packet with the appropriate dimension, followed by prechunks/chunks for the new dimension, and finally a position and look packet. You do not need to unload chunks; the client will do it automatically.
-// > 
+// >
 // > The background of the loading screen is determined based on the Dimension Name specified in this packet and the one specified in the previous Login or Respawn packet. If either the current or the previous dimension is minecraft:nether , the Nether portal background is used. Otherwise, if the current or the previous dimension is minecraft:the_end , the End portal background is used. If the player is dead (health is 0), the default background is always used.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Respawn
@@ -1507,7 +1500,7 @@ type S2CRespawnData struct {
 	DeathLocation ns.Optional[ns.Position]
 	// The number of ticks until the player can use the portal again.
 	PortalCooldown ns.VarInt
-	// 
+	//
 	SeaLevel ns.VarInt
 	// Bit mask. 0x01: Keep attributes, 0x02: Keep metadata. Tells which data should be kept on the client side once the player has respawned. In the vanilla implementation, this is context-dependent: normal respawns (after death) keep no data; exiting the end poem/credits keeps the attributes; other dimension changes (portals or teleports) keep all data.
 	DataKept ns.Byte
@@ -1516,14 +1509,14 @@ type S2CRespawnData struct {
 // S2CRotateHead represents "Set Head Rotation".
 //
 // > Changes the direction an entity's head is facing.
-// > 
+// >
 // > While sending the Entity Look packet changes the vertical rotation of the head, sending this packet appears to be necessary to rotate the head horizontally.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Head_Rotation
 var S2CRotateHead = jp.NewPacket(jp.StatePlay, jp.S2C, 0x51)
 
 type S2CRotateHeadData struct {
-	// 
+	//
 	EntityId ns.VarInt
 	// New angle, not a delta.
 	HeadYaw ns.Angle
@@ -1546,7 +1539,7 @@ type S2CSectionBlocksUpdateData struct {
 // S2CSelectAdvancementsTab represents "Select Advancements Tab".
 //
 // > Sent by the server to indicate that the client should switch advancement tab. Sent either when the client switches tab in the GUI or when an advancement is made in another tab.
-// > 
+// >
 // > The Identifier must be one of the following if no custom data pack is loaded:
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Select_Advancements_Tab
@@ -1559,12 +1552,11 @@ type S2CSelectAdvancementsTabData struct {
 
 // S2CServerData represents "Server Data".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Server_Data
 var S2CServerData = jp.NewPacket(jp.StatePlay, jp.S2C, 0x54)
 
 type S2CServerDataData struct {
-	// 
+	//
 	Motd ns.TextComponent
 	// Icon bytes in the PNG format.
 	Icon ns.PrefixedOptional[ns.PrefixedArray[ns.Byte]]
@@ -1583,19 +1575,17 @@ type S2CSetActionBarTextData struct {
 
 // S2CSetBorderCenter represents "Set Border Center".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Border_Center
 var S2CSetBorderCenter = jp.NewPacket(jp.StatePlay, jp.S2C, 0x56)
 
 type S2CSetBorderCenterData struct {
-	// 
+	//
 	X ns.Double
-	// 
+	//
 	Z ns.Double
 }
 
 // S2CSetBorderLerpSize represents "Set Border Lerp Size".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Border_Lerp_Size
 var S2CSetBorderLerpSize = jp.NewPacket(jp.StatePlay, jp.S2C, 0x57)
@@ -1611,7 +1601,6 @@ type S2CSetBorderLerpSizeData struct {
 
 // S2CSetBorderSize represents "Set Border Size".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Border_Size
 var S2CSetBorderSize = jp.NewPacket(jp.StatePlay, jp.S2C, 0x58)
 
@@ -1622,7 +1611,6 @@ type S2CSetBorderSizeData struct {
 
 // S2CSetBorderWarningDelay represents "Set Border Warning Delay".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Border_Warning_Delay
 var S2CSetBorderWarningDelay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x59)
 
@@ -1632,7 +1620,6 @@ type S2CSetBorderWarningDelayData struct {
 }
 
 // S2CSetBorderWarningDistance represents "Set Border Warning Distance".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Border_Warning_Distance
 var S2CSetBorderWarningDistance = jp.NewPacket(jp.StatePlay, jp.S2C, 0x5A)
@@ -1645,13 +1632,13 @@ type S2CSetBorderWarningDistanceData struct {
 // S2CSetCamera represents "Set Camera".
 //
 // > Sets the entity that the player renders from. This is normally used when the player left-clicks an entity while in spectator mode.
-// > 
+// >
 // > The player's camera will move with the entity and look where it is looking. The entity is often another player, but can be any type of entity. The player is unable to move this entity (move packets will act as if they are coming from the other entity).
-// > 
+// >
 // > If the given entity is not loaded by the player, this packet is ignored. To return control to the player, send this packet with their entity ID.
-// > 
+// >
 // > The vanilla server resets this (sends it back to the default entity) whenever the spectated entity is killed or the player sneaks, but only if they were spectating an entity. It also sends this packet whenever the player switches out of spectator mode (even if they weren't spectating an entity).
-// > 
+// >
 // > The vanilla client also loads certain shaders for given entities:
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Camera
@@ -1665,15 +1652,15 @@ type S2CSetCameraData struct {
 // S2CSetChunkCacheCenter represents "Set Center Chunk".
 //
 // > Sets the center position of the client's chunk loading area. The area is square-shaped, spanning 2 × server view distance + 7 chunks on both axes (width, not radius!). Since the area's width is always an odd number, there is no ambiguity as to which chunk is the center.
-// > 
+// >
 // > The vanilla client never renders or simulates chunks located outside the loading area, but keeps them in memory (unless explicitly unloaded by the server while still in range), and only automatically unloads a chunk when another chunk is loaded at coordinates congruent to the old chunk's coordinates modulo (2 × server view distance + 7). This means that a chunk may reappear after leaving and later re-entering the loading area through successive uses of this packet, unless it is replaced in the meantime by a different chunk in the same "slot".
-// > 
+// >
 // > The vanilla client ignores attempts to load or unload chunks located outside the loading area. This applies even to unloads targeting chunks that are still loaded, but currently located outside the loading area (per the previous paragraph).
-// > 
+// >
 // > The vanilla server does not rely on any specific behavior for chunks leaving the loading area, and custom clients need not replicate the above exactly. A client may instead choose to immediately unload any chunks outside the loading area, to use a different modulus, or to ignore the loading area completely and keep chunks loaded regardless of their location until the server requests to unload them. Servers aiming for maximal interoperability should always explicitly unload any loaded chunks before they go outside the loading area.
-// > 
+// >
 // > The center chunk is normally the chunk the player is in, but apart from the implications on chunk loading, the (vanilla) client takes no issue with this not being the case. Indeed, as long as chunks are sent only within the default loading area centered on the world origin, it is not necessary to send this packet at all. This may be useful for servers with small bounded worlds, such as minigames, since it ensures chunks never need to be resent after the client has joined, saving on bandwidth.
-// > 
+// >
 // > The vanilla server sends this packet whenever the player moves across a chunk border horizontally, and also (according to testing) for any integer change in the vertical axis, even if it doesn't go across a chunk section border.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Center_Chunk
@@ -1706,14 +1693,14 @@ type S2CSetChunkCacheRadiusData struct {
 var S2CSetCursorItem = jp.NewPacket(jp.StatePlay, jp.S2C, 0x5E)
 
 type S2CSetCursorItemData struct {
-	// 
+	//
 	CarriedItem ns.Slot
 }
 
 // S2CSetDefaultSpawnPosition represents "Set Default Spawn Position".
 //
 // > Sent by the server after login to specify the coordinates of the spawn point (the point at which players spawn at, and which the compass points to). It can be sent at any time to update the point compasses point at.
-// > 
+// >
 // > Before receiving this packet, the client uses the default position 8, 64, 8, and angle 0.0.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Default_Spawn_Position
@@ -1752,9 +1739,9 @@ type S2CSetDisplayObjectiveData struct {
 var S2CSetEntityData = jp.NewPacket(jp.StatePlay, jp.S2C, 0x61)
 
 type S2CSetEntityDataData struct {
-	// 
+	//
 	EntityId ns.VarInt
-	// 
+	//
 	Metadata ns.EntityMetadata
 }
 
@@ -1774,15 +1761,14 @@ type S2CSetEntityLinkData struct {
 
 // S2CSetEntityMotion represents "Set Entity Velocity".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Entity_Velocity
 var S2CSetEntityMotion = jp.NewPacket(jp.StatePlay, jp.S2C, 0x63)
 
 type S2CSetEntityMotionData struct {
-	// 
+	//
 	EntityId ns.VarInt
-	// 
-	Velocity ns.LpVec3
+	//
+	Velocity ns.ByteArray
 }
 
 // S2CSetEquipment represents "Set Equipment".
@@ -1795,7 +1781,7 @@ var S2CSetEquipment = jp.NewPacket(jp.StatePlay, jp.S2C, 0x64)
 type S2CSetEquipmentData struct {
 	// Entity's ID.
 	EntityId ns.VarInt
-	// 
+	//
 	Item ns.Slot
 }
 
@@ -1809,7 +1795,7 @@ var S2CSetExperience = jp.NewPacket(jp.StatePlay, jp.S2C, 0x65)
 type S2CSetExperienceData struct {
 	// Between 0 and 1.
 	ExperienceBar ns.Float
-	// 
+	//
 	Level ns.VarInt
 	// See Experience#Leveling up on the Minecraft Wiki for Total Experience to Level conversion.
 	TotalExperience ns.VarInt
@@ -1818,7 +1804,7 @@ type S2CSetExperienceData struct {
 // S2CSetHealth represents "Set Health".
 //
 // > Sent by the server to set the health of the player it is sent to.
-// > 
+// >
 // > Food saturation acts as a food “overcharge”. Food values will not decrease while the saturation is over zero. New players logging in or respawning automatically get a saturation of 5.0. Eating food increases the saturation as well as the food bar.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Health
@@ -1866,11 +1852,10 @@ type S2CSetObjectiveData struct {
 	// Only if mode is 0 or 2 and the previous boolean is true. Determines how the score number should be formatted.
 	NumberFormat ns.Optional[ns.VarInt]
 	// Show nothing.
-	Field0Blank ns.nofields
+	Field0Blank struct{}
 }
 
 // S2CSetPassengers represents "Set Passengers".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Passengers
 var S2CSetPassengers = jp.NewPacket(jp.StatePlay, jp.S2C, 0x69)
@@ -1884,21 +1869,20 @@ type S2CSetPassengersData struct {
 
 // S2CSetPlayerInventory represents "Set Player Inventory Slot".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Player_Inventory_Slot
 var S2CSetPlayerInventory = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6A)
 
 type S2CSetPlayerInventoryData struct {
-	// 
+	//
 	Slot ns.VarInt
-	// 
+	//
 	SlotData ns.Slot
 }
 
 // S2CSetPlayerTeam represents "Update Teams".
 //
 // > Creates and updates teams.
-// > 
+// >
 // > Team Color: The color of a team defines how the names of the team members are visualized; any formatting code can be used. The following table lists all the possible values.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Teams
@@ -1923,18 +1907,18 @@ type S2CSetPlayerTeamData struct {
 	TeamSuffix ns.TextComponent
 	// Identifiers for the entities in this team. For players, this is their username; for other entities, it is their UUID.
 	Entities ns.PrefixedArray[ns.String]
-	// Bit mask. 0x01: Allow friendly fire, 0x02: can see invisible entities on the same team.
-	FriendlyFlags ns.Byte
-	// 0 = ALWAYS, 1 = NEVER, 2 = HIDE_FOR_OTHER_TEAMS, 3 = HIDE_FOR_OWN_TEAMS
-	NameTagVisibility ns.VarInt
-	// 0 = ALWAYS, 1 = NEVER, 2 = PUSH_OTHER_TEAMS, 3 = PUSH_OWN_TEAM
-	CollisionRule ns.VarInt
-	// Used to color the names of players on the team; see below.
-	TeamColor ns.VarInt
-	// Displayed before the names of players that are part of this team.
-	TeamPrefix ns.TextComponent
-	// Displayed after the names of players that are part of this team.
-	TeamSuffix ns.TextComponent
+	// (duplicate of FriendlyFlags) Bit mask. 0x01: Allow friendly fire, 0x02: can see invisible entities on the same team.
+	FriendlyFlags2 ns.Byte
+	// (duplicate of NameTagVisibility) 0 = ALWAYS, 1 = NEVER, 2 = HIDE_FOR_OTHER_TEAMS, 3 = HIDE_FOR_OWN_TEAMS
+	NameTagVisibility2 ns.VarInt
+	// (duplicate of CollisionRule) 0 = ALWAYS, 1 = NEVER, 2 = PUSH_OTHER_TEAMS, 3 = PUSH_OWN_TEAM
+	CollisionRule2 ns.VarInt
+	// (duplicate of TeamColor) Used to color the names of players on the team; see below.
+	TeamColor2 ns.VarInt
+	// (duplicate of TeamPrefix) Displayed before the names of players that are part of this team.
+	TeamPrefix2 ns.TextComponent
+	// (duplicate of TeamSuffix) Displayed after the names of players that are part of this team.
+	TeamSuffix2 ns.TextComponent
 }
 
 // S2CSetScore represents "Update Score".
@@ -1956,11 +1940,10 @@ type S2CSetScoreData struct {
 	// Determines how the score number should be formatted.
 	NumberFormat ns.PrefixedOptional[ns.VarInt]
 	// Show nothing.
-	Field0Blank ns.nofields
+	Field0Blank struct{}
 }
 
 // S2CSetSimulationDistance represents "Set Simulation Distance".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Simulation_Distance
 var S2CSetSimulationDistance = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6D)
@@ -1972,21 +1955,20 @@ type S2CSetSimulationDistanceData struct {
 
 // S2CSetSubtitleText represents "Set Subtitle Text".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Subtitle_Text
 var S2CSetSubtitleText = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6E)
 
 type S2CSetSubtitleTextData struct {
-	// 
+	//
 	SubtitleText ns.TextComponent
 }
 
 // S2CSetTime represents "Update Time".
 //
 // > Time is based on ticks, where 20 ticks happen every second. There are 24000 ticks in a day, making Minecraft days exactly 20 minutes long.
-// > 
+// >
 // > The time of day is based on the timestamp modulo 24000. 0 is sunrise, 6000 is noon, 12000 is sunset, and 18000 is midnight.
-// > 
+// >
 // > The default SMP server increments the time by 20 every second.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Time
@@ -2003,17 +1985,15 @@ type S2CSetTimeData struct {
 
 // S2CSetTitleText represents "Set Title Text".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Title_Text
 var S2CSetTitleText = jp.NewPacket(jp.StatePlay, jp.S2C, 0x70)
 
 type S2CSetTitleTextData struct {
-	// 
+	//
 	TitleText ns.TextComponent
 }
 
 // S2CSetTitlesAnimation represents "Set Title Animation Times".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Title_Animation_Times
 var S2CSetTitlesAnimation = jp.NewPacket(jp.StatePlay, jp.S2C, 0x71)
@@ -2036,10 +2016,10 @@ var S2CSoundEntity = jp.NewPacket(jp.StatePlay, jp.S2C, 0x72)
 
 type S2CSoundEntityData struct {
 	// ID in the minecraft:sound_event registry, or an inline definition.
-	SoundEvent ns.Or[ns.Identifier, ns.SoundEvent]
+	SoundEvent ns.Or[ns.Identifier, ns.ByteArray]
 	// The category that this sound will be played from ( current categories ).
 	SoundCategory ns.VarInt
-	// 
+	//
 	EntityId ns.VarInt
 	// 1.0 is 100%, capped between 0.0 and 1.0 by vanilla clients.
 	Volume ns.Float
@@ -2058,7 +2038,7 @@ var S2CSound = jp.NewPacket(jp.StatePlay, jp.S2C, 0x73)
 
 type S2CSoundData struct {
 	// ID in the minecraft:sound_event registry, or an inline definition.
-	SoundEvent ns.Or[ns.Identifier, ns.SoundEvent]
+	SoundEvent ns.Or[ns.Identifier, ns.ByteArray]
 	// The category that this sound will be played from ( current categories ).
 	SoundCategory ns.VarInt
 	// Effect X multiplied by 8 ( fixed-point number with only 3 bits dedicated to the fractional part).
@@ -2078,7 +2058,7 @@ type S2CSoundData struct {
 // S2CStartConfiguration represents "Start Configuration".
 //
 // > Sent during gameplay in order to redo the configuration process. The client must respond with Acknowledge Configuration for the process to start.
-// > 
+// >
 // > This packet switches the connection state to configuration .
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Start_Configuration
@@ -2168,9 +2148,9 @@ type S2CTagQueryData struct {
 var S2CTakeItemEntity = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7A)
 
 type S2CTakeItemEntityData struct {
-	// 
+	//
 	CollectedEntityId ns.VarInt
-	// 
+	//
 	CollectorEntityId ns.VarInt
 	// Seems to be 1 for XP orbs, otherwise the number of items in the stack.
 	PickupItemCount ns.VarInt
@@ -2184,27 +2164,27 @@ type S2CTakeItemEntityData struct {
 var S2CTeleportEntity = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7B)
 
 type S2CTeleportEntityData struct {
-	// 
+	//
 	EntityId ns.VarInt
-	// 
+	//
 	X ns.Double
-	// 
+	//
 	Y ns.Double
-	// 
+	//
 	Z ns.Double
-	// 
+	//
 	VelocityX ns.Double
-	// 
+	//
 	VelocityY ns.Double
-	// 
+	//
 	VelocityZ ns.Double
 	// Rotation on the Y axis, in degrees.
 	Yaw ns.Float
 	// Rotation on the Y axis, in degrees.
 	Pitch ns.Float
-	// 
-	Flags ns.TeleportFlags
-	// 
+	//
+	Flags ns.Byte
+	//
 	OnGround ns.Boolean
 }
 
@@ -2216,9 +2196,9 @@ type S2CTeleportEntityData struct {
 var S2CTestInstanceBlockStatus = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7C)
 
 type S2CTestInstanceBlockStatusData struct {
-	// 
+	//
 	Status ns.TextComponent
-	// 
+	//
 	HasSize ns.Boolean
 	// Only present if Has Size is true.
 	SizeX ns.Optional[ns.Double]
@@ -2236,9 +2216,9 @@ type S2CTestInstanceBlockStatusData struct {
 var S2CTickingState = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7D)
 
 type S2CTickingStateData struct {
-	// 
+	//
 	TickRate ns.Float
-	// 
+	//
 	IsFrozen ns.Boolean
 }
 
@@ -2250,7 +2230,7 @@ type S2CTickingStateData struct {
 var S2CTickingStep = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7E)
 
 type S2CTickingStepData struct {
-	// 
+	//
 	TickSteps ns.VarInt
 }
 
@@ -2279,41 +2259,40 @@ type S2CUpdateAdvancementsData struct {
 	// Whether to reset/clear the current advancements.
 	ResetClear ns.Boolean
 	// See below
-	Value ns.Advancement
+	Value ns.ByteArray
 	// The identifiers of the advancements that should be removed.
 	Identifiers ns.PrefixedArray[ns.Identifier]
-	// See below.
-	Value ns.Advancementprogress
-	// 
+	// (duplicate of Value) See below.
+	Value2 ns.ByteArray
+	//
 	ShowAdvancements ns.Boolean
 }
 
 // S2CUpdateAttributes represents "Update Attributes".
 //
 // > Sets attributes on the given entity.
-// > 
+// >
 // > Modifier Data structure:
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Attributes
 var S2CUpdateAttributes = jp.NewPacket(jp.StatePlay, jp.S2C, 0x81)
 
 type S2CUpdateAttributesData struct {
-	// 
+	//
 	EntityId ns.VarInt
 	// See below.
 	Value ns.Double
 	// See Attribute#Modifiers . Modifier Data defined below.
-	Modifiers ns.PrefixedModifierArrayData
+	Modifiers ns.ByteArray
 }
 
 // S2CUpdateMobEffect represents "Entity Effect".
-//
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Entity_Effect
 var S2CUpdateMobEffect = jp.NewPacket(jp.StatePlay, jp.S2C, 0x82)
 
 type S2CUpdateMobEffectData struct {
-	// 
+	//
 	EntityId ns.VarInt
 	// See this table .
 	EffectId ns.VarInt
@@ -2327,7 +2306,6 @@ type S2CUpdateMobEffectData struct {
 
 // S2CUpdateRecipes represents "Update Recipes".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Recipes
 var S2CUpdateRecipes = jp.NewPacket(jp.StatePlay, jp.S2C, 0x83)
 
@@ -2335,9 +2313,9 @@ type S2CUpdateRecipesData struct {
 	// Prefixed Array
 	PropertySets ns.PrefixedArray[struct {
 		PropertySetId ns.Identifier
-		Items ns.PrefixedArray[ns.VarInt]
+		Items         ns.PrefixedArray[ns.VarInt]
 	}]
-	// 
+	//
 	SlotDisplay ns.SlotDisplay
 }
 
@@ -2352,20 +2330,19 @@ type S2CUpdateTagsPlayData struct {
 	// Prefixed Array
 	RegistryToTagsMap ns.PrefixedArray[struct {
 		Registry ns.Identifier
-		Tags ns.PrefixedTagArray // FIXME: See below
+		Tags     ns.ByteArray
 	}]
 }
 
 // S2CProjectilePower represents "Projectile Power".
 //
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Projectile_Power
 var S2CProjectilePower = jp.NewPacket(jp.StatePlay, jp.S2C, 0x85)
 
 type S2CProjectilePowerData struct {
-	// 
+	//
 	EntityId ns.VarInt
-	// 
+	//
 	Power ns.Double
 }
 
@@ -2379,7 +2356,7 @@ var S2CCustomReportDetails = jp.NewPacket(jp.StatePlay, jp.S2C, 0x86)
 type S2CCustomReportDetailsData struct {
 	// Prefixed Array (32)
 	Details ns.PrefixedArray[struct {
-		Title ns.String
+		Title       ns.String
 		Description ns.String
 	}]
 }
@@ -2394,9 +2371,9 @@ var S2CServerLinks = jp.NewPacket(jp.StatePlay, jp.S2C, 0x87)
 type S2CServerLinksData struct {
 	// Prefixed Array
 	Links ns.PrefixedArray[struct {
-		IsBuiltin ns.Boolean
-		Label ns.VarIntTextComponent
-		Url ns.String
+		IsBuiltIn ns.Boolean
+		Label     ns.TextComponent
+		Url       ns.String
 	}]
 }
 
@@ -2411,7 +2388,7 @@ type S2CWaypointData struct {
 	// 0: track, 1: untrack, 2: update.
 	Operation ns.VarInt
 	// Something that uniquely identifies this specific waypoint.
-	Identifier ns.Or[ns.Uuid, ns.String]
+	Identifier ns.Or[ns.UUID, ns.String]
 	// Path to the waypoint style JSON: assets/<namespace>/waypoint_style/<value>.json.
 	IconStyle ns.Identifier
 	// Defines how the following field is read.
