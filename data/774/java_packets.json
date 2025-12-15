@@ -440,7 +440,7 @@
       },
       {
         "name": "Custom Click Action (configuration)",
-        "id": "0x08",
+        "id": "0x09",
         "resource": "accept_code_of_conduct",
         "notes": "Sent when the client clicks a Text Component with the minecraft:custom click action. This is meant as an alternative to running a command, but it will not have any effect on vanilla servers.",
         "fields": []
