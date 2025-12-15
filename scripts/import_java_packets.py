@@ -7,7 +7,7 @@ To use:
 1. Visit https://minecraft.wiki/w/Java_Edition_protocol/Packets
 2. Press Ctrl + U
 3. Copy the HTML to `packets.html` in current directory (`scripts/packets.html`)
-4. Run this script (e. g. from repository root, run `python scripts/import_packets.py`)
+4. `mkdir -p data/protocolVer`, then run this script (e. g. from repository root, run `python scripts/import_java_packets.py > data/protocolVer/java_packets.json`)
 
 ### How it works?
 

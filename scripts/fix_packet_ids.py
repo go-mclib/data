@@ -8,7 +8,7 @@ consuming process that takes a lot of effort from the Minecraft community.
 This script fixes the IDs automatically, so go-mclib can work on newer Minecraft versions faster.
 
 Quickstart:
-1. Download official server.jar and put it in the root of this dir (e. g.: ./scripts/server.jar).
+1. Download official server.jar (https://www.minecraft.net/en-us/download/server) and put it in the root of this dir (e. g.: ./scripts/server.jar).
 2. Dump the packets.json: `java -jar -DbundlerMainClass="net.minecraft.data.Main" server.jar --all`.
 3. Find packets.json in `generated/reports/packets.json` (should be symlinked to `./packets.json`).
 4. Run `fix_packet_ids.py <protocol_version>` - this will update packet IDs in `./data` to corrent ones.

@@ -10,6 +10,14 @@ See `data/` directory for JSON outputs. See `scripts/` for scripts to generate t
 
 Also see [wlwanpan/mcdata](https://github.com/wlwanpan/mcdata) and [PrismarineJS/minecraft-data](https://github.com/PrismarineJS/minecraft-data).
 
+## Updating to a new Minecraft version
+
+Also see headers of Python script files in [`scripts/`](./scripts/) for more detailed instructions.
+
+1. Download HTML ("Save page as..." or Ctrl/Cmd + U and copy all text) of <https://minecraft.wiki/w/Java_Edition_protocol/Packets>
+2. Run `mkdir -p data/774; python scripts/import_java_packets.py > data/774/java_packets.json`, replacing `774` with the actual protocol version
+3. See [`fix_packet_ids.py`](./scripts/fix_packet_ids.py): `cd scripts; java -jar -DbundlerMainClass="net.minecraft.data.Main" server.jar --all`, then `python fix_packet_ids.py 774`.
+
 ## License
 
 Licensed under the GNU General Public License v3.0
