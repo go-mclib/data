@@ -5,6 +5,10 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
+const (
+	C2SIntentionID ns.VarInt = iota
+)
+
 // C2SIntention represents "Handshake".
 //
 // This packet causes the server to switch into the target state. It should be
@@ -22,7 +26,7 @@ type C2SIntention struct {
 	Intent ns.VarInt
 }
 
-func (p *C2SIntention) ID() ns.VarInt   { return 0x00 }
+func (p *C2SIntention) ID() ns.VarInt   { return C2SIntentionID }
 func (p *C2SIntention) State() jp.State { return jp.StateHandshake }
 func (p *C2SIntention) Bound() jp.Bound { return jp.C2S }
 

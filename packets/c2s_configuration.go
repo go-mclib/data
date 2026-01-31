@@ -6,6 +6,18 @@ import (
 	"github.com/go-mclib/protocol/nbt"
 )
 
+const (
+	C2SClientInformationConfigurationID ns.VarInt = iota
+	C2SCookieResponseConfigurationID
+	C2SCustomPayloadConfigurationID
+	C2SFinishConfigurationID
+	C2SKeepAliveConfigurationID
+	C2SPongConfigurationID
+	C2SResourcePackConfigurationID
+	C2SSelectKnownPacksID
+	C2SCustomClickActionConfigurationID
+)
+
 // C2SClientInformationConfiguration represents "Client Information (configuration)".
 //
 // Sent when the player connects, or when settings are changed.
@@ -32,7 +44,9 @@ type C2SClientInformationConfiguration struct {
 	ParticleStatus ns.VarInt
 }
 
-func (p *C2SClientInformationConfiguration) ID() ns.VarInt   { return 0x00 }
+func (p *C2SClientInformationConfiguration) ID() ns.VarInt {
+	return C2SClientInformationConfigurationID
+}
 func (p *C2SClientInformationConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SClientInformationConfiguration) Bound() jp.Bound { return jp.C2S }
 
@@ -107,7 +121,7 @@ type C2SCookieResponseConfiguration struct {
 	Payload ns.PrefixedOptional[ns.ByteArray]
 }
 
-func (p *C2SCookieResponseConfiguration) ID() ns.VarInt   { return 0x01 }
+func (p *C2SCookieResponseConfiguration) ID() ns.VarInt   { return C2SCookieResponseConfigurationID }
 func (p *C2SCookieResponseConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SCookieResponseConfiguration) Bound() jp.Bound { return jp.C2S }
 
@@ -142,7 +156,7 @@ type C2SCustomPayloadConfiguration struct {
 	Data ns.ByteArray
 }
 
-func (p *C2SCustomPayloadConfiguration) ID() ns.VarInt   { return 0x02 }
+func (p *C2SCustomPayloadConfiguration) ID() ns.VarInt   { return C2SCustomPayloadConfigurationID }
 func (p *C2SCustomPayloadConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SCustomPayloadConfiguration) Bound() jp.Bound { return jp.C2S }
 
@@ -170,7 +184,7 @@ func (p *C2SCustomPayloadConfiguration) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Acknowledge_Finish_Configuration
 type C2SFinishConfiguration struct{}
 
-func (p *C2SFinishConfiguration) ID() ns.VarInt                { return 0x03 }
+func (p *C2SFinishConfiguration) ID() ns.VarInt                { return C2SFinishConfigurationID }
 func (p *C2SFinishConfiguration) State() jp.State              { return jp.StateConfiguration }
 func (p *C2SFinishConfiguration) Bound() jp.Bound              { return jp.C2S }
 func (p *C2SFinishConfiguration) Read(*ns.PacketBuffer) error  { return nil }
@@ -186,7 +200,7 @@ type C2SKeepAliveConfiguration struct {
 	KeepAliveId ns.Int64
 }
 
-func (p *C2SKeepAliveConfiguration) ID() ns.VarInt   { return 0x04 }
+func (p *C2SKeepAliveConfiguration) ID() ns.VarInt   { return C2SKeepAliveConfigurationID }
 func (p *C2SKeepAliveConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SKeepAliveConfiguration) Bound() jp.Bound { return jp.C2S }
 
@@ -209,7 +223,7 @@ type C2SPongConfiguration struct {
 	Id ns.Int32
 }
 
-func (p *C2SPongConfiguration) ID() ns.VarInt   { return 0x05 }
+func (p *C2SPongConfiguration) ID() ns.VarInt   { return C2SPongConfigurationID }
 func (p *C2SPongConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SPongConfiguration) Bound() jp.Bound { return jp.C2S }
 
@@ -233,7 +247,7 @@ type C2SResourcePackConfiguration struct {
 	Result ns.VarInt
 }
 
-func (p *C2SResourcePackConfiguration) ID() ns.VarInt   { return 0x06 }
+func (p *C2SResourcePackConfiguration) ID() ns.VarInt   { return C2SResourcePackConfigurationID }
 func (p *C2SResourcePackConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SResourcePackConfiguration) Bound() jp.Bound { return jp.C2S }
 
@@ -269,7 +283,7 @@ type C2SSelectKnownPacks struct {
 	KnownPacks []KnownPack
 }
 
-func (p *C2SSelectKnownPacks) ID() ns.VarInt   { return 0x07 }
+func (p *C2SSelectKnownPacks) ID() ns.VarInt   { return C2SSelectKnownPacksID }
 func (p *C2SSelectKnownPacks) State() jp.State { return jp.StateConfiguration }
 func (p *C2SSelectKnownPacks) Bound() jp.Bound { return jp.C2S }
 
@@ -323,7 +337,9 @@ type C2SCustomClickActionConfiguration struct {
 	Payload nbt.Tag
 }
 
-func (p *C2SCustomClickActionConfiguration) ID() ns.VarInt   { return 0x08 }
+func (p *C2SCustomClickActionConfiguration) ID() ns.VarInt {
+	return C2SCustomClickActionConfigurationID
+}
 func (p *C2SCustomClickActionConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SCustomClickActionConfiguration) Bound() jp.Bound { return jp.C2S }
 

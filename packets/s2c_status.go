@@ -5,6 +5,11 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
+const (
+	S2CStatusResponseID ns.VarInt = iota
+	S2CPongResponseStatusID
+)
+
 // S2CStatusResponse represents "Status Response".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Status_Response
@@ -13,7 +18,7 @@ type S2CStatusResponse struct {
 	JsonResponse ns.String
 }
 
-func (p *S2CStatusResponse) ID() ns.VarInt   { return 0x00 }
+func (p *S2CStatusResponse) ID() ns.VarInt   { return S2CStatusResponseID }
 func (p *S2CStatusResponse) State() jp.State { return jp.StateStatus }
 func (p *S2CStatusResponse) Bound() jp.Bound { return jp.S2C }
 
@@ -35,7 +40,7 @@ type S2CPongResponseStatus struct {
 	Timestamp ns.Int64
 }
 
-func (p *S2CPongResponseStatus) ID() ns.VarInt   { return 0x01 }
+func (p *S2CPongResponseStatus) ID() ns.VarInt   { return S2CPongResponseStatusID }
 func (p *S2CPongResponseStatus) State() jp.State { return jp.StateStatus }
 func (p *S2CPongResponseStatus) Bound() jp.Bound { return jp.S2C }
 

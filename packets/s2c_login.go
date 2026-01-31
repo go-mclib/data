@@ -5,6 +5,15 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
+const (
+	S2CLoginDisconnectLoginID ns.VarInt = iota
+	S2CHelloID
+	S2CLoginFinishedID
+	S2CLoginCompressionID
+	S2CCustomQueryID
+	S2CCookieRequestLoginID
+)
+
 // S2CLoginDisconnectLogin represents "Disconnect (login)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Disconnect_(Login)
@@ -13,7 +22,7 @@ type S2CLoginDisconnectLogin struct {
 	Reason ns.TextComponent
 }
 
-func (p *S2CLoginDisconnectLogin) ID() ns.VarInt   { return 0x00 }
+func (p *S2CLoginDisconnectLogin) ID() ns.VarInt   { return S2CLoginDisconnectLoginID }
 func (p *S2CLoginDisconnectLogin) State() jp.State { return jp.StateLogin }
 func (p *S2CLoginDisconnectLogin) Bound() jp.Bound { return jp.S2C }
 
@@ -43,7 +52,7 @@ type S2CHello struct {
 	ShouldAuthenticate ns.Boolean
 }
 
-func (p *S2CHello) ID() ns.VarInt   { return 0x01 }
+func (p *S2CHello) ID() ns.VarInt   { return S2CHelloID }
 func (p *S2CHello) State() jp.State { return jp.StateLogin }
 func (p *S2CHello) Bound() jp.Bound { return jp.S2C }
 
@@ -96,7 +105,7 @@ type S2CLoginFinished struct {
 	Profile GameProfile
 }
 
-func (p *S2CLoginFinished) ID() ns.VarInt   { return 0x02 }
+func (p *S2CLoginFinished) ID() ns.VarInt   { return S2CLoginFinishedID }
 func (p *S2CLoginFinished) State() jp.State { return jp.StateLogin }
 func (p *S2CLoginFinished) Bound() jp.Bound { return jp.S2C }
 
@@ -166,7 +175,7 @@ type S2CLoginCompression struct {
 	Threshold ns.VarInt
 }
 
-func (p *S2CLoginCompression) ID() ns.VarInt   { return 0x03 }
+func (p *S2CLoginCompression) ID() ns.VarInt   { return S2CLoginCompressionID }
 func (p *S2CLoginCompression) State() jp.State { return jp.StateLogin }
 func (p *S2CLoginCompression) Bound() jp.Bound { return jp.S2C }
 
@@ -194,7 +203,7 @@ type S2CCustomQuery struct {
 	Data ns.ByteArray
 }
 
-func (p *S2CCustomQuery) ID() ns.VarInt   { return 0x04 }
+func (p *S2CCustomQuery) ID() ns.VarInt   { return S2CCustomQueryID }
 func (p *S2CCustomQuery) State() jp.State { return jp.StateLogin }
 func (p *S2CCustomQuery) Bound() jp.Bound { return jp.S2C }
 
@@ -230,7 +239,7 @@ type S2CCookieRequestLogin struct {
 	Key ns.Identifier
 }
 
-func (p *S2CCookieRequestLogin) ID() ns.VarInt   { return 0x05 }
+func (p *S2CCookieRequestLogin) ID() ns.VarInt   { return S2CCookieRequestLoginID }
 func (p *S2CCookieRequestLogin) State() jp.State { return jp.StateLogin }
 func (p *S2CCookieRequestLogin) Bound() jp.Bound { return jp.S2C }
 
