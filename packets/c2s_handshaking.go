@@ -7,18 +7,49 @@ import (
 
 // C2SIntention represents "Handshake".
 //
-// > This packet causes the server to switch into the target state. It should be sent right after opening the TCP connection to prevent the server from disconnecting.
+// This packet causes the server to switch into the target state. It should be
+// sent right after opening the TCP connection to prevent the server from disconnecting.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Handshake
-var C2SIntention = jp.NewPacket(jp.StateHandshake, jp.C2S, 0x00)
-
-type C2SIntentionData struct {
-	// See protocol version numbers (currently 773 in Minecraft 1.21.10).
+type C2SIntention struct {
+	// See protocol version numbers (currently 774 in Minecraft 1.21.11).
 	ProtocolVersion ns.VarInt
-	// Hostname or IP, e.g. localhost or 127.0.0.1, that was used to connect. The vanilla server does not use this information. This is the name obtained after SRV record resolution, except in 1.17 (and no older or newer version) and during server list ping ( MC-278651 ), where it is the host portion of the address specified by the user directly. In 1.17.1 and later if a literal IP address is specified by the user, reverse DNS lookup is attempted, and the result is used as the value of this field if successful.
+	// Hostname or IP, e.g. localhost or 127.0.0.1, that was used to connect.
 	ServerAddress ns.String
-	// Default is 25565. The vanilla server does not use this information.
-	ServerPort ns.UnsignedShort
-	// 1 for Status , 2 for Login , 3 for Transfer .
+	// Default is 25565.
+	ServerPort ns.Uint16
+	// 1 for Status, 2 for Login, 3 for Transfer.
 	Intent ns.VarInt
+}
+
+func (p *C2SIntention) ID() ns.VarInt   { return 0x00 }
+func (p *C2SIntention) State() jp.State { return jp.StateHandshake }
+func (p *C2SIntention) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SIntention) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.ProtocolVersion, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.ServerAddress, err = buf.ReadString(255); err != nil {
+		return err
+	}
+	if p.ServerPort, err = buf.ReadUint16(); err != nil {
+		return err
+	}
+	p.Intent, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SIntention) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.ProtocolVersion); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.ServerAddress); err != nil {
+		return err
+	}
+	if err := buf.WriteUint16(p.ServerPort); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.Intent)
 }

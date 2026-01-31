@@ -7,21 +7,36 @@ import (
 
 // C2SStatusRequest represents "Status Request".
 //
-// > The status can only be requested once, immediately after the handshake, before any ping. The server won't respond otherwise.
+// The status can only be requested once, immediately after the handshake,
+// before any ping. The server won't respond otherwise.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Status_Request
-var C2SStatusRequest = jp.NewPacket(jp.StateStatus, jp.C2S, 0x00)
+type C2SStatusRequest struct{}
 
-type C2SStatusRequestData struct {
-	// No fields
-}
+func (p *C2SStatusRequest) ID() ns.VarInt                { return 0x00 }
+func (p *C2SStatusRequest) State() jp.State              { return jp.StateStatus }
+func (p *C2SStatusRequest) Bound() jp.Bound              { return jp.C2S }
+func (p *C2SStatusRequest) Read(*ns.PacketBuffer) error  { return nil }
+func (p *C2SStatusRequest) Write(*ns.PacketBuffer) error { return nil }
 
 // C2SPingRequestStatus represents "Ping Request (status)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Ping_Request_(Status)
-var C2SPingRequestStatus = jp.NewPacket(jp.StateStatus, jp.C2S, 0x01)
-
-type C2SPingRequestStatusData struct {
+type C2SPingRequestStatus struct {
 	// May be any number, but vanilla clients will always use the timestamp in milliseconds.
-	Timestamp ns.Long
+	Timestamp ns.Int64
+}
+
+func (p *C2SPingRequestStatus) ID() ns.VarInt   { return 0x01 }
+func (p *C2SPingRequestStatus) State() jp.State { return jp.StateStatus }
+func (p *C2SPingRequestStatus) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPingRequestStatus) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Timestamp, err = buf.ReadInt64()
+	return err
+}
+
+func (p *C2SPingRequestStatus) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt64(p.Timestamp)
 }

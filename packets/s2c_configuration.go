@@ -3,276 +3,748 @@ package packets
 import (
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	"github.com/go-mclib/protocol/nbt"
 )
 
 // S2CCookieRequestConfiguration represents "Cookie Request (configuration)".
 //
-// > Requests a cookie that was previously stored.
+// Requests a cookie that was previously stored.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Cookie_Request_(Configuration)
-var S2CCookieRequestConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x00)
-
-type S2CCookieRequestConfigurationData struct {
+type S2CCookieRequestConfiguration struct {
 	// The identifier of the cookie.
 	Key ns.Identifier
 }
 
+func (p *S2CCookieRequestConfiguration) ID() ns.VarInt   { return 0x00 }
+func (p *S2CCookieRequestConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CCookieRequestConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCookieRequestConfiguration) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Key, err = buf.ReadIdentifier()
+	return err
+}
+
+func (p *S2CCookieRequestConfiguration) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteIdentifier(p.Key)
+}
+
 // S2CCustomPayloadConfiguration represents "Clientbound Plugin Message (configuration)".
 //
-// > Mods and plugins can use this to send their data. Minecraft itself uses several plugin channels . These internal channels are in the minecraft namespace.
-// >
-// > More information on how it works on Dinnerbone's blog . More documentation about internal and popular registered channels are here .
+// Mods and plugins can use this to send their data.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clientbound_Plugin_Message_(Configuration)
-var S2CCustomPayloadConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x01)
-
-type S2CCustomPayloadConfigurationData struct {
+type S2CCustomPayloadConfiguration struct {
 	// Name of the plugin channel used to send the data.
 	Channel ns.Identifier
-	// Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (such as the string length prefix in the standard minecraft:brand channel). The vanilla client enforces a length limit of 1048576 bytes on this data, but only if the channel type is unrecognized.
+	// Any data, depending on the channel.
 	Data ns.ByteArray
+}
+
+func (p *S2CCustomPayloadConfiguration) ID() ns.VarInt   { return 0x01 }
+func (p *S2CCustomPayloadConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CCustomPayloadConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCustomPayloadConfiguration) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Channel, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CCustomPayloadConfiguration) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.Channel); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CDisconnectConfiguration represents "Disconnect (configuration)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Disconnect_(Configuration)
-var S2CDisconnectConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x02)
-
-type S2CDisconnectConfigurationData struct {
+type S2CDisconnectConfiguration struct {
 	// The reason why the player was disconnected.
 	Reason ns.TextComponent
 }
 
+func (p *S2CDisconnectConfiguration) ID() ns.VarInt   { return 0x02 }
+func (p *S2CDisconnectConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CDisconnectConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CDisconnectConfiguration) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Reason, err = buf.ReadTextComponent()
+	return err
+}
+
+func (p *S2CDisconnectConfiguration) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteTextComponent(p.Reason)
+}
+
 // S2CFinishConfiguration represents "Finish Configuration".
 //
-// > Sent by the server to notify the client that the configuration process has finished. The client answers with Acknowledge Finish Configuration whenever it is ready to continue.
-// >
-// > This packet switches the connection state to play .
+// Sent by the server to notify the client that the configuration process has finished.
+// This packet switches the connection state to play.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Finish_Configuration
-var S2CFinishConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x03)
+type S2CFinishConfiguration struct{}
 
-type S2CFinishConfigurationData struct {
-	// No fields
-}
+func (p *S2CFinishConfiguration) ID() ns.VarInt                { return 0x03 }
+func (p *S2CFinishConfiguration) State() jp.State              { return jp.StateConfiguration }
+func (p *S2CFinishConfiguration) Bound() jp.Bound              { return jp.S2C }
+func (p *S2CFinishConfiguration) Read(*ns.PacketBuffer) error  { return nil }
+func (p *S2CFinishConfiguration) Write(*ns.PacketBuffer) error { return nil }
 
 // S2CKeepAliveConfiguration represents "Clientbound Keep Alive (configuration)".
 //
-// > The server will frequently send out a keep-alive, each containing a random ID. The client must respond with the same payload (see Serverbound Keep Alive ). If the client does not respond to a Keep Alive packet within 15 seconds after it was sent, the server kicks the client. Vice versa, if the server does not send any keep-alives for 20 seconds, the client will disconnect and yield a "Timed out" exception.
-// >
-// > The vanilla server uses a system-dependent time in milliseconds to generate the keep alive ID value.
+// The server will frequently send out a keep-alive, each containing a random ID.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clientbound_Keep_Alive_(Configuration)
-var S2CKeepAliveConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x04)
+type S2CKeepAliveConfiguration struct {
+	KeepAliveId ns.Int64
+}
 
-type S2CKeepAliveConfigurationData struct {
-	//
-	KeepAliveId ns.Long
+func (p *S2CKeepAliveConfiguration) ID() ns.VarInt   { return 0x04 }
+func (p *S2CKeepAliveConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CKeepAliveConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CKeepAliveConfiguration) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.KeepAliveId, err = buf.ReadInt64()
+	return err
+}
+
+func (p *S2CKeepAliveConfiguration) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt64(p.KeepAliveId)
 }
 
 // S2CPingConfiguration represents "Ping (configuration)".
 //
-// > Packet is not used by the vanilla server. When sent to the client, the client responds with a Pong packet with the same ID.
+// Packet is not used by the vanilla server.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Ping_(Configuration)
-var S2CPingConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x05)
+type S2CPingConfiguration struct {
+	Id ns.Int32
+}
 
-type S2CPingConfigurationData struct {
-	//
-	Id ns.Int
+func (p *S2CPingConfiguration) ID() ns.VarInt   { return 0x05 }
+func (p *S2CPingConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CPingConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPingConfiguration) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Id, err = buf.ReadInt32()
+	return err
+}
+
+func (p *S2CPingConfiguration) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt32(p.Id)
 }
 
 // S2CResetChat represents "Reset Chat".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Reset_Chat
-var S2CResetChat = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x06)
+type S2CResetChat struct{}
 
-type S2CResetChatData struct {
-	// No fields
+func (p *S2CResetChat) ID() ns.VarInt                { return 0x06 }
+func (p *S2CResetChat) State() jp.State              { return jp.StateConfiguration }
+func (p *S2CResetChat) Bound() jp.Bound              { return jp.S2C }
+func (p *S2CResetChat) Read(*ns.PacketBuffer) error  { return nil }
+func (p *S2CResetChat) Write(*ns.PacketBuffer) error { return nil }
+
+// RegistryEntry represents a single registry entry.
+type RegistryEntry struct {
+	EntryId ns.Identifier
+	HasData ns.Boolean
+	Data    nbt.Tag // only present if HasData is true
 }
 
 // S2CRegistryData represents "Registry Data".
 //
-// > Represents certain registries that are sent from the server and are applied on the client.
-// >
-// > See Java Edition protocol/Registry data for details.
+// Represents certain registries that are sent from the server.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Registry_Data
-var S2CRegistryData = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x07)
-
-type S2CRegistryDataData struct {
-	//
+type S2CRegistryData struct {
 	RegistryId ns.Identifier
-	// Entry data.
-	Data ns.PrefixedOptional[ns.NBT]
+	Entries    []RegistryEntry
+}
+
+func (p *S2CRegistryData) ID() ns.VarInt   { return 0x07 }
+func (p *S2CRegistryData) State() jp.State { return jp.StateConfiguration }
+func (p *S2CRegistryData) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CRegistryData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.RegistryId, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.Entries = make([]RegistryEntry, count)
+	for i := range p.Entries {
+		if p.Entries[i].EntryId, err = buf.ReadIdentifier(); err != nil {
+			return err
+		}
+		if p.Entries[i].HasData, err = buf.ReadBool(); err != nil {
+			return err
+		}
+		if p.Entries[i].HasData {
+			// read NBT data - we need to read remaining bytes for this entry
+			// this is a limitation as we don't know the exact NBT size upfront
+			remaining, err := buf.ReadByteArray(1048576)
+			if err != nil {
+				return err
+			}
+			p.Entries[i].Data, err = nbt.DecodeNetwork(remaining)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func (p *S2CRegistryData) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.RegistryId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Entries))); err != nil {
+		return err
+	}
+	for _, entry := range p.Entries {
+		if err := buf.WriteIdentifier(entry.EntryId); err != nil {
+			return err
+		}
+		if err := buf.WriteBool(entry.HasData); err != nil {
+			return err
+		}
+		if entry.HasData {
+			data, err := nbt.EncodeNetwork(entry.Data)
+			if err != nil {
+				return err
+			}
+			if err := buf.WriteFixedByteArray(data); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
 }
 
 // S2CResourcePackPopConfiguration represents "Remove Resource Pack (configuration)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Remove_Resource_Pack_(Configuration)
-var S2CResourcePackPopConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x08)
-
-type S2CResourcePackPopConfigurationData struct {
+type S2CResourcePackPopConfiguration struct {
 	// The UUID of the resource pack to be removed. If not present, every resource pack will be removed.
 	Uuid ns.PrefixedOptional[ns.UUID]
+}
+
+func (p *S2CResourcePackPopConfiguration) ID() ns.VarInt   { return 0x08 }
+func (p *S2CResourcePackPopConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CResourcePackPopConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CResourcePackPopConfiguration) Read(buf *ns.PacketBuffer) error {
+	return p.Uuid.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.UUID, error) {
+		return b.ReadUUID()
+	})
+}
+
+func (p *S2CResourcePackPopConfiguration) Write(buf *ns.PacketBuffer) error {
+	return p.Uuid.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.UUID) error {
+		return b.WriteUUID(v)
+	})
 }
 
 // S2CResourcePackPushConfiguration represents "Add Resource Pack (configuration)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Add_Resource_Pack_(Configuration)
-var S2CResourcePackPushConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x09)
-
-type S2CResourcePackPushConfigurationData struct {
+type S2CResourcePackPushConfiguration struct {
 	// The unique identifier of the resource pack.
 	Uuid ns.UUID
 	// The URL to the resource pack.
 	Url ns.String
-	// A 40 character hexadecimal, case-insensitive SHA-1 hash of the resource pack file. If it's not a 40-character hexadecimal string, the client will not use it for hash verification and likely waste bandwidth.
+	// A 40 character hexadecimal SHA-1 hash of the resource pack file.
 	Hash ns.String
-	// The vanilla client will be forced to use the resource pack from the server. If they decline, they will be kicked from the server.
+	// The vanilla client will be forced to use the resource pack from the server.
 	Forced ns.Boolean
-	// This is shown in the prompt making the client accept or decline the resource pack (only if present).
+	// This is shown in the prompt making the client accept or decline the resource pack.
 	PromptMessage ns.PrefixedOptional[ns.TextComponent]
+}
+
+func (p *S2CResourcePackPushConfiguration) ID() ns.VarInt   { return 0x09 }
+func (p *S2CResourcePackPushConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CResourcePackPushConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CResourcePackPushConfiguration) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Uuid, err = buf.ReadUUID(); err != nil {
+		return err
+	}
+	if p.Url, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.Hash, err = buf.ReadString(40); err != nil {
+		return err
+	}
+	if p.Forced, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	return p.PromptMessage.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
+		return b.ReadTextComponent()
+	})
+}
+
+func (p *S2CResourcePackPushConfiguration) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteUUID(p.Uuid); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Url); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Hash); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.Forced); err != nil {
+		return err
+	}
+	return p.PromptMessage.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.TextComponent) error {
+		return b.WriteTextComponent(v)
+	})
 }
 
 // S2CStoreCookieConfiguration represents "Store Cookie (configuration)".
 //
-// > Stores some arbitrary data on the client, which persists between server transfers. The vanilla client only accepts cookies of up to 5 kiB in size.
+// Stores some arbitrary data on the client, which persists between server transfers.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Store_Cookie_(Configuration)
-var S2CStoreCookieConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x0A)
-
-type S2CStoreCookieConfigurationData struct {
+type S2CStoreCookieConfiguration struct {
 	// The identifier of the cookie.
 	Key ns.Identifier
 	// The data of the cookie.
-	Payload ns.PrefixedArray[ns.Byte]
+	Payload ns.ByteArray
+}
+
+func (p *S2CStoreCookieConfiguration) ID() ns.VarInt   { return 0x0A }
+func (p *S2CStoreCookieConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CStoreCookieConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CStoreCookieConfiguration) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Key, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	p.Payload, err = buf.ReadByteArray(5120)
+	return err
+}
+
+func (p *S2CStoreCookieConfiguration) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.Key); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Payload)
 }
 
 // S2CTransferConfiguration represents "Transfer (configuration)".
 //
-// > Notifies the client that it should transfer to the given server. Cookies previously stored are preserved between server transfers.
+// Notifies the client that it should transfer to the given server.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Transfer_(Configuration)
-var S2CTransferConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x0B)
-
-type S2CTransferConfigurationData struct {
+type S2CTransferConfiguration struct {
 	// The hostname or IP of the server.
 	Host ns.String
 	// The port of the server.
 	Port ns.VarInt
 }
 
+func (p *S2CTransferConfiguration) ID() ns.VarInt   { return 0x0B }
+func (p *S2CTransferConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CTransferConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CTransferConfiguration) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Host, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	p.Port, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CTransferConfiguration) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteString(p.Host); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.Port)
+}
+
 // S2CUpdateEnabledFeatures represents "Feature Flags".
 //
-// > Used to enable and disable features, generally experimental ones, on the client.
-// >
-// > There is one special feature flag, which is in most versions:
+// Used to enable and disable features on the client.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Feature_Flags
-var S2CUpdateEnabledFeatures = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x0C)
+type S2CUpdateEnabledFeatures struct {
+	FeatureFlags []ns.Identifier
+}
 
-type S2CUpdateEnabledFeaturesData struct {
-	//
-	FeatureFlags ns.PrefixedArray[ns.Identifier]
+func (p *S2CUpdateEnabledFeatures) ID() ns.VarInt   { return 0x0C }
+func (p *S2CUpdateEnabledFeatures) State() jp.State { return jp.StateConfiguration }
+func (p *S2CUpdateEnabledFeatures) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CUpdateEnabledFeatures) Read(buf *ns.PacketBuffer) error {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.FeatureFlags = make([]ns.Identifier, count)
+	for i := range p.FeatureFlags {
+		if p.FeatureFlags[i], err = buf.ReadIdentifier(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (p *S2CUpdateEnabledFeatures) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(ns.VarInt(len(p.FeatureFlags))); err != nil {
+		return err
+	}
+	for _, flag := range p.FeatureFlags {
+		if err := buf.WriteIdentifier(flag); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Tag represents a single tag entry.
+type Tag struct {
+	TagName ns.Identifier
+	Entries []ns.VarInt
+}
+
+// TagRegistry represents a registry of tags.
+type TagRegistry struct {
+	Registry ns.Identifier
+	Tags     []Tag
 }
 
 // S2CUpdateTagsConfiguration represents "Update Tags (configuration)".
 //
-// > Tag arrays look like:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Tags_(Configuration)
-var S2CUpdateTagsConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x0D)
+type S2CUpdateTagsConfiguration struct {
+	ArrayOfTags []TagRegistry
+}
 
-type S2CUpdateTagsConfigurationData struct {
-	// Prefixed Array
-	ArrayOfTags ns.PrefixedArray[struct {
-		Registry   ns.Identifier
-		ArrayOfTag ns.ByteArray // FIXME: See below
-	}]
+func (p *S2CUpdateTagsConfiguration) ID() ns.VarInt   { return 0x0D }
+func (p *S2CUpdateTagsConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CUpdateTagsConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CUpdateTagsConfiguration) Read(buf *ns.PacketBuffer) error {
+	registryCount, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.ArrayOfTags = make([]TagRegistry, registryCount)
+	for i := range p.ArrayOfTags {
+		if p.ArrayOfTags[i].Registry, err = buf.ReadIdentifier(); err != nil {
+			return err
+		}
+		tagCount, err := buf.ReadVarInt()
+		if err != nil {
+			return err
+		}
+		p.ArrayOfTags[i].Tags = make([]Tag, tagCount)
+		for j := range p.ArrayOfTags[i].Tags {
+			if p.ArrayOfTags[i].Tags[j].TagName, err = buf.ReadIdentifier(); err != nil {
+				return err
+			}
+			entryCount, err := buf.ReadVarInt()
+			if err != nil {
+				return err
+			}
+			p.ArrayOfTags[i].Tags[j].Entries = make([]ns.VarInt, entryCount)
+			for k := range p.ArrayOfTags[i].Tags[j].Entries {
+				if p.ArrayOfTags[i].Tags[j].Entries[k], err = buf.ReadVarInt(); err != nil {
+					return err
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func (p *S2CUpdateTagsConfiguration) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(ns.VarInt(len(p.ArrayOfTags))); err != nil {
+		return err
+	}
+	for _, registry := range p.ArrayOfTags {
+		if err := buf.WriteIdentifier(registry.Registry); err != nil {
+			return err
+		}
+		if err := buf.WriteVarInt(ns.VarInt(len(registry.Tags))); err != nil {
+			return err
+		}
+		for _, tag := range registry.Tags {
+			if err := buf.WriteIdentifier(tag.TagName); err != nil {
+				return err
+			}
+			if err := buf.WriteVarInt(ns.VarInt(len(tag.Entries))); err != nil {
+				return err
+			}
+			for _, entry := range tag.Entries {
+				if err := buf.WriteVarInt(entry); err != nil {
+					return err
+				}
+			}
+		}
+	}
+	return nil
 }
 
 // S2CSelectKnownPacks represents "Clientbound Known Packs".
 //
-// > Informs the client of which data packs are present on the server.
-// > The client is expected to respond with its own Serverbound Known Packs packet.
-// > The vanilla server does not continue with Configuration until it receives a response.
-// >
-// > The vanilla client requires the minecraft:core pack with version 1.21.10 for a normal login sequence. This packet must be sent before the Registry Data packets.
+// Informs the client of which data packs are present on the server.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clientbound_Known_Packs
-var S2CSelectKnownPacks = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x0E)
+type S2CSelectKnownPacks struct {
+	KnownPacks []KnownPack
+}
 
-type S2CSelectKnownPacksData struct {
-	// Prefixed Array
-	KnownPacks ns.PrefixedArray[struct {
-		Namespace ns.String
-		Id        ns.String
-		Version   ns.String
-	}]
+func (p *S2CSelectKnownPacks) ID() ns.VarInt   { return 0x0E }
+func (p *S2CSelectKnownPacks) State() jp.State { return jp.StateConfiguration }
+func (p *S2CSelectKnownPacks) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSelectKnownPacks) Read(buf *ns.PacketBuffer) error {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.KnownPacks = make([]KnownPack, count)
+	for i := range p.KnownPacks {
+		if p.KnownPacks[i].Namespace, err = buf.ReadString(32767); err != nil {
+			return err
+		}
+		if p.KnownPacks[i].Id, err = buf.ReadString(32767); err != nil {
+			return err
+		}
+		if p.KnownPacks[i].Version, err = buf.ReadString(32767); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (p *S2CSelectKnownPacks) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(ns.VarInt(len(p.KnownPacks))); err != nil {
+		return err
+	}
+	for _, pack := range p.KnownPacks {
+		if err := buf.WriteString(pack.Namespace); err != nil {
+			return err
+		}
+		if err := buf.WriteString(pack.Id); err != nil {
+			return err
+		}
+		if err := buf.WriteString(pack.Version); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// CustomReportDetail represents a single report detail entry.
+type CustomReportDetail struct {
+	Title       ns.String
+	Description ns.String
 }
 
 // S2CCustomReportDetailsConfiguration represents "Custom Report Details (configuration)".
 //
-// > Contains a list of key-value text entries that are included in any crash or disconnection report generated during connection to the server.
+// Contains a list of key-value text entries that are included in any crash or disconnection report.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Custom_Report_Details_(Configuration)
-var S2CCustomReportDetailsConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x0F)
+type S2CCustomReportDetailsConfiguration struct {
+	Details []CustomReportDetail
+}
 
-type S2CCustomReportDetailsConfigurationData struct {
-	// Prefixed Array (32)
-	Details ns.PrefixedArray[struct {
-		Title       ns.String
-		Description ns.String
-	}]
+func (p *S2CCustomReportDetailsConfiguration) ID() ns.VarInt   { return 0x0F }
+func (p *S2CCustomReportDetailsConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CCustomReportDetailsConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCustomReportDetailsConfiguration) Read(buf *ns.PacketBuffer) error {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.Details = make([]CustomReportDetail, count)
+	for i := range p.Details {
+		if p.Details[i].Title, err = buf.ReadString(128); err != nil {
+			return err
+		}
+		if p.Details[i].Description, err = buf.ReadString(4096); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (p *S2CCustomReportDetailsConfiguration) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Details))); err != nil {
+		return err
+	}
+	for _, detail := range p.Details {
+		if err := buf.WriteString(detail.Title); err != nil {
+			return err
+		}
+		if err := buf.WriteString(detail.Description); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// ServerLink represents a server link entry.
+type ServerLink struct {
+	IsBuiltIn ns.Boolean
+	// If IsBuiltIn is true, this is a VarInt for built-in label type.
+	// If IsBuiltIn is false, this is a TextComponent for custom label.
+	BuiltInLabel ns.VarInt
+	CustomLabel  ns.TextComponent
+	Url          ns.String
 }
 
 // S2CServerLinksConfiguration represents "Server Links (configuration)".
 //
-// > This packet contains a list of links that the vanilla client will display in the menu available from the pause menu. Link labels can be built-in or custom (i.e., any text).
+// Contains a list of links that the vanilla client will display in the pause menu.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Server_Links_(Configuration)
-var S2CServerLinksConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x10)
+type S2CServerLinksConfiguration struct {
+	Links []ServerLink
+}
 
-type S2CServerLinksConfigurationData struct {
-	// Prefixed Array
-	Links ns.PrefixedArray[struct {
-		Label ns.Or[ns.VarInt, ns.TextComponent]
-		Url   ns.String
-	}]
+func (p *S2CServerLinksConfiguration) ID() ns.VarInt   { return 0x10 }
+func (p *S2CServerLinksConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CServerLinksConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CServerLinksConfiguration) Read(buf *ns.PacketBuffer) error {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.Links = make([]ServerLink, count)
+	for i := range p.Links {
+		if p.Links[i].IsBuiltIn, err = buf.ReadBool(); err != nil {
+			return err
+		}
+		if p.Links[i].IsBuiltIn {
+			if p.Links[i].BuiltInLabel, err = buf.ReadVarInt(); err != nil {
+				return err
+			}
+		} else {
+			if p.Links[i].CustomLabel, err = buf.ReadTextComponent(); err != nil {
+				return err
+			}
+		}
+		if p.Links[i].Url, err = buf.ReadString(32767); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (p *S2CServerLinksConfiguration) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Links))); err != nil {
+		return err
+	}
+	for _, link := range p.Links {
+		if err := buf.WriteBool(link.IsBuiltIn); err != nil {
+			return err
+		}
+		if link.IsBuiltIn {
+			if err := buf.WriteVarInt(link.BuiltInLabel); err != nil {
+				return err
+			}
+		} else {
+			if err := buf.WriteTextComponent(link.CustomLabel); err != nil {
+				return err
+			}
+		}
+		if err := buf.WriteString(link.Url); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // S2CClearDialogConfiguration represents "Clear Dialog (configuration)".
 //
-// > If we're currently in a dialog screen, then this removes the current screen and switches back to the previous one.
+// Removes the current dialog screen and switches back to the previous one.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clear_Dialog_(Configuration)
-var S2CClearDialogConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x11)
+type S2CClearDialogConfiguration struct{}
 
-type S2CClearDialogConfigurationData struct {
-	// No fields
-}
+func (p *S2CClearDialogConfiguration) ID() ns.VarInt                { return 0x11 }
+func (p *S2CClearDialogConfiguration) State() jp.State              { return jp.StateConfiguration }
+func (p *S2CClearDialogConfiguration) Bound() jp.Bound              { return jp.S2C }
+func (p *S2CClearDialogConfiguration) Read(*ns.PacketBuffer) error  { return nil }
+func (p *S2CClearDialogConfiguration) Write(*ns.PacketBuffer) error { return nil }
 
 // S2CShowDialogConfiguration represents "Show Dialog (configuration)".
 //
-// > Show a custom dialog screen to the client.
+// Show a custom dialog screen to the client.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Show_Dialog_(Configuration)
-var S2CShowDialogConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x12)
+type S2CShowDialogConfiguration struct {
+	// Inline definition as described at Java Edition protocol/Registry data#Dialog.
+	Dialog nbt.Tag
+}
 
-type S2CShowDialogConfigurationData struct {
-	// Inline definition as described at Java Edition protocol/Registry data#Dialog .
-	Dialog ns.NBT
+func (p *S2CShowDialogConfiguration) ID() ns.VarInt   { return 0x12 }
+func (p *S2CShowDialogConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CShowDialogConfiguration) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CShowDialogConfiguration) Read(buf *ns.PacketBuffer) error {
+	// read remaining bytes as NBT
+	remaining, err := buf.ReadByteArray(1048576)
+	if err != nil {
+		return err
+	}
+	p.Dialog, err = nbt.DecodeNetwork(remaining)
+	return err
+}
+
+func (p *S2CShowDialogConfiguration) Write(buf *ns.PacketBuffer) error {
+	data, err := nbt.EncodeNetwork(p.Dialog)
+	if err != nil {
+		return err
+	}
+	return buf.WriteFixedByteArray(data)
 }
 
 // S2CCodeOfConduct represents "Code of Conduct".
 //
-// > Show the client the server Code of Conduct
+// Show the client the server Code of Conduct.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Code_Of_Conduct
-var S2CCodeOfConduct = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x13)
-
-type S2CCodeOfConductData struct {
+type S2CCodeOfConduct struct {
 	// Code of Conduct of the server.
 	Codeofconduct ns.String
+}
+
+func (p *S2CCodeOfConduct) ID() ns.VarInt   { return 0x13 }
+func (p *S2CCodeOfConduct) State() jp.State { return jp.StateConfiguration }
+func (p *S2CCodeOfConduct) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCodeOfConduct) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Codeofconduct, err = buf.ReadString(32767)
+	return err
+}
+
+func (p *S2CCodeOfConduct) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteString(p.Codeofconduct)
 }

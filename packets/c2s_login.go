@@ -8,64 +8,144 @@ import (
 // C2SHello represents "Login Start".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Login_Start
-var C2SHello = jp.NewPacket(jp.StateLogin, jp.C2S, 0x00)
-
-type C2SHelloData struct {
+type C2SHello struct {
 	// Player's Username.
 	Name ns.String
 	// The UUID of the player logging in. Unused by the vanilla server.
 	PlayerUuid ns.UUID
 }
 
+func (p *C2SHello) ID() ns.VarInt   { return 0x00 }
+func (p *C2SHello) State() jp.State { return jp.StateLogin }
+func (p *C2SHello) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SHello) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Name, err = buf.ReadString(16); err != nil {
+		return err
+	}
+	p.PlayerUuid, err = buf.ReadUUID()
+	return err
+}
+
+func (p *C2SHello) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteString(p.Name); err != nil {
+		return err
+	}
+	return buf.WriteUUID(p.PlayerUuid)
+}
+
 // C2SKey represents "Encryption Response".
 //
-// > See protocol encryption for details.
+// See protocol encryption for details.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Encryption_Response
-var C2SKey = jp.NewPacket(jp.StateLogin, jp.C2S, 0x01)
-
-type C2SKeyData struct {
+type C2SKey struct {
 	// Shared Secret value, encrypted with the server's public key.
-	SharedSecret ns.PrefixedArray[ns.Byte]
+	SharedSecret ns.ByteArray
 	// Verify Token value, encrypted with the same public key as the shared secret.
-	VerifyToken ns.PrefixedArray[ns.Byte]
+	VerifyToken ns.ByteArray
+}
+
+func (p *C2SKey) ID() ns.VarInt   { return 0x01 }
+func (p *C2SKey) State() jp.State { return jp.StateLogin }
+func (p *C2SKey) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SKey) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.SharedSecret, err = buf.ReadByteArray(256); err != nil {
+		return err
+	}
+	p.VerifyToken, err = buf.ReadByteArray(256)
+	return err
+}
+
+func (p *C2SKey) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteByteArray(p.SharedSecret); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.VerifyToken)
 }
 
 // C2SCustomQueryAnswer represents "Login Plugin Response".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Login_Plugin_Response
-var C2SCustomQueryAnswer = jp.NewPacket(jp.StateLogin, jp.C2S, 0x02)
-
-type C2SCustomQueryAnswerData struct {
+type C2SCustomQueryAnswer struct {
 	// Should match ID from server.
 	MessageId ns.VarInt
-	// Any data, depending on the channel. Only present if the client understood the request. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (e.g. for strings).
+	// Any data, depending on the channel. Only present if the client understood the request.
 	Data ns.PrefixedOptional[ns.ByteArray]
+}
+
+func (p *C2SCustomQueryAnswer) ID() ns.VarInt   { return 0x02 }
+func (p *C2SCustomQueryAnswer) State() jp.State { return jp.StateLogin }
+func (p *C2SCustomQueryAnswer) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SCustomQueryAnswer) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.MessageId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	return p.Data.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
+		return b.ReadByteArray(1048576)
+	})
+}
+
+func (p *C2SCustomQueryAnswer) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.MessageId); err != nil {
+		return err
+	}
+	return p.Data.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
+		return b.WriteByteArray(v)
+	})
 }
 
 // C2SLoginAcknowledged represents "Login Acknowledged".
 //
-// > Acknowledgement to the Login Success packet sent by the server.
-// >
-// > This packet switches the connection state to configuration .
+// Acknowledgement to the Login Success packet sent by the server.
+// This packet switches the connection state to configuration.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Login_Acknowledged
-var C2SLoginAcknowledged = jp.NewPacket(jp.StateLogin, jp.C2S, 0x03)
+type C2SLoginAcknowledged struct{}
 
-type C2SLoginAcknowledgedData struct {
-	// No fields
-}
+func (p *C2SLoginAcknowledged) ID() ns.VarInt                { return 0x03 }
+func (p *C2SLoginAcknowledged) State() jp.State              { return jp.StateLogin }
+func (p *C2SLoginAcknowledged) Bound() jp.Bound              { return jp.C2S }
+func (p *C2SLoginAcknowledged) Read(*ns.PacketBuffer) error  { return nil }
+func (p *C2SLoginAcknowledged) Write(*ns.PacketBuffer) error { return nil }
 
 // C2SCookieResponseLogin represents "Cookie Response (login)".
 //
-// > Response to a Cookie Request (login) from the server. The vanilla server only accepts responses of up to 5 kiB in size.
+// Response to a Cookie Request (login) from the server.
+// The vanilla server only accepts responses of up to 5 kiB in size.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Cookie_Response_(Login)
-var C2SCookieResponseLogin = jp.NewPacket(jp.StateLogin, jp.C2S, 0x04)
-
-type C2SCookieResponseLoginData struct {
+type C2SCookieResponseLogin struct {
 	// The identifier of the cookie.
 	Key ns.Identifier
 	// The data of the cookie.
-	Payload ns.PrefixedOptional[ns.PrefixedArray[ns.Byte]]
+	Payload ns.PrefixedOptional[ns.ByteArray]
+}
+
+func (p *C2SCookieResponseLogin) ID() ns.VarInt   { return 0x04 }
+func (p *C2SCookieResponseLogin) State() jp.State { return jp.StateLogin }
+func (p *C2SCookieResponseLogin) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SCookieResponseLogin) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Key, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	return p.Payload.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
+		return b.ReadByteArray(5120)
+	})
+}
+
+func (p *C2SCookieResponseLogin) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.Key); err != nil {
+		return err
+	}
+	return p.Payload.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
+		return b.WriteByteArray(v)
+	})
 }

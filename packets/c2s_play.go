@@ -3,1097 +3,2378 @@ package packets
 import (
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	"github.com/go-mclib/protocol/nbt"
 )
 
 // C2SAcceptTeleportation represents "Confirm Teleportation".
 //
-// > Sent by client as confirmation of Synchronize Player Position .
+// Sent by client as confirmation of Synchronize Player Position.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Confirm_Teleportation
-var C2SAcceptTeleportation = jp.NewPacket(jp.StatePlay, jp.C2S, 0x00)
-
-type C2SAcceptTeleportationData struct {
-	// The ID given by the Synchronize Player Position packet.
+type C2SAcceptTeleportation struct {
 	TeleportId ns.VarInt
+}
+
+func (p *C2SAcceptTeleportation) ID() ns.VarInt   { return 0x00 }
+func (p *C2SAcceptTeleportation) State() jp.State { return jp.StatePlay }
+func (p *C2SAcceptTeleportation) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SAcceptTeleportation) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.TeleportId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SAcceptTeleportation) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.TeleportId)
 }
 
 // C2SBlockEntityTagQuery represents "Query Block Entity Tag".
 //
-// > Used when F3 + I is pressed while looking at a block.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Query_Block_Entity_Tag
-var C2SBlockEntityTagQuery = jp.NewPacket(jp.StatePlay, jp.C2S, 0x01)
-
-type C2SBlockEntityTagQueryData struct {
-	// An incremental ID so that the client can verify that the response matches.
+type C2SBlockEntityTagQuery struct {
 	TransactionId ns.VarInt
-	// The location of the block to check.
-	Location ns.Position
+	Location      ns.Position
+}
+
+func (p *C2SBlockEntityTagQuery) ID() ns.VarInt   { return 0x01 }
+func (p *C2SBlockEntityTagQuery) State() jp.State { return jp.StatePlay }
+func (p *C2SBlockEntityTagQuery) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SBlockEntityTagQuery) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.TransactionId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Location, err = buf.ReadPosition()
+	return err
+}
+
+func (p *C2SBlockEntityTagQuery) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.TransactionId); err != nil {
+		return err
+	}
+	return buf.WritePosition(p.Location)
 }
 
 // C2SBundleItemSelected represents "Bundle Item Selected".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Bundle_Item_Selected
-var C2SBundleItemSelected = jp.NewPacket(jp.StatePlay, jp.C2S, 0x02)
-
-type C2SBundleItemSelectedData struct {
-	//
+type C2SBundleItemSelected struct {
 	SlotOfBundle ns.VarInt
-	//
 	SlotInBundle ns.VarInt
+}
+
+func (p *C2SBundleItemSelected) ID() ns.VarInt   { return 0x02 }
+func (p *C2SBundleItemSelected) State() jp.State { return jp.StatePlay }
+func (p *C2SBundleItemSelected) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SBundleItemSelected) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.SlotOfBundle, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.SlotInBundle, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SBundleItemSelected) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.SlotOfBundle); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.SlotInBundle)
 }
 
 // C2SChangeDifficulty represents "Change Difficulty".
 //
-// > Must have at least op level 2 to use. Appears to only be used on singleplayer; the difficulty buttons are still disabled in multiplayer.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Change_Difficulty
-var C2SChangeDifficulty = jp.NewPacket(jp.StatePlay, jp.C2S, 0x03)
+type C2SChangeDifficulty struct {
+	NewDifficulty ns.Uint8
+}
 
-type C2SChangeDifficultyData struct {
-	// 0: peaceful, 1: easy, 2: normal, 3: hard.
-	NewDifficulty ns.UnsignedByte
+func (p *C2SChangeDifficulty) ID() ns.VarInt   { return 0x03 }
+func (p *C2SChangeDifficulty) State() jp.State { return jp.StatePlay }
+func (p *C2SChangeDifficulty) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SChangeDifficulty) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.NewDifficulty, err = buf.ReadUint8()
+	return err
+}
+
+func (p *C2SChangeDifficulty) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteUint8(p.NewDifficulty)
 }
 
 // C2SChangeGameMode represents "Change Game Mode".
 //
-// > Requests for the server to update our game mode. Has no effect on vanilla servers if the client doesn't have the required permissions.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Change_Game_Mode
-var C2SChangeGameMode = jp.NewPacket(jp.StatePlay, jp.C2S, 0x04)
-
-type C2SChangeGameModeData struct {
-	// 0: survival, 1: creative, 2: adventure, 3: spectator.
+type C2SChangeGameMode struct {
 	GameMode ns.VarInt
+}
+
+func (p *C2SChangeGameMode) ID() ns.VarInt   { return 0x04 }
+func (p *C2SChangeGameMode) State() jp.State { return jp.StatePlay }
+func (p *C2SChangeGameMode) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SChangeGameMode) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.GameMode, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SChangeGameMode) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.GameMode)
 }
 
 // C2SChatAck represents "Acknowledge Message".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Acknowledge_Message
-var C2SChatAck = jp.NewPacket(jp.StatePlay, jp.C2S, 0x05)
-
-type C2SChatAckData struct {
-	//
+type C2SChatAck struct {
 	MessageCount ns.VarInt
+}
+
+func (p *C2SChatAck) ID() ns.VarInt   { return 0x05 }
+func (p *C2SChatAck) State() jp.State { return jp.StatePlay }
+func (p *C2SChatAck) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SChatAck) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.MessageCount, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SChatAck) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.MessageCount)
 }
 
 // C2SChatCommand represents "Chat Command".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chat_Command
-var C2SChatCommand = jp.NewPacket(jp.StatePlay, jp.C2S, 0x06)
-
-type C2SChatCommandData struct {
-	// The command typed by the client excluding the / .
+type C2SChatCommand struct {
 	Command ns.String
+}
+
+func (p *C2SChatCommand) ID() ns.VarInt   { return 0x06 }
+func (p *C2SChatCommand) State() jp.State { return jp.StatePlay }
+func (p *C2SChatCommand) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SChatCommand) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Command, err = buf.ReadString(32767)
+	return err
+}
+
+func (p *C2SChatCommand) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteString(p.Command)
 }
 
 // C2SChatCommandSigned represents "Signed Chat Command".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Signed_Chat_Command
-var C2SChatCommandSigned = jp.NewPacket(jp.StatePlay, jp.C2S, 0x07)
-
-type C2SChatCommandSignedData struct {
-	// The command typed by the client excluding the / .
-	Command ns.String
-	// The timestamp that the command was executed.
-	Timestamp ns.Long
-	// The salt for the following argument signatures.
-	Salt ns.Long
-	// The signature that verifies the argument. Always 256 bytes and is not length-prefixed.
-	Signature ns.ByteArray
-	//
+type C2SChatCommandSigned struct {
+	Command      ns.String
+	Timestamp    ns.Int64
+	Salt         ns.Int64
+	Signature    ns.ByteArray
 	MessageCount ns.VarInt
-	//
-	Acknowledged ns.FixedBitSet
-	//
-	Checksum ns.Byte
+	Acknowledged *ns.FixedBitSet
+	Checksum     ns.Int8
+}
+
+func (p *C2SChatCommandSigned) ID() ns.VarInt   { return 0x07 }
+func (p *C2SChatCommandSigned) State() jp.State { return jp.StatePlay }
+func (p *C2SChatCommandSigned) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SChatCommandSigned) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Command, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.Timestamp, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	if p.Salt, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	if p.Signature, err = buf.ReadByteArray(256); err != nil {
+		return err
+	}
+	if p.MessageCount, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Acknowledged = ns.NewFixedBitSet(20)
+	ackBytes, err := buf.ReadFixedByteArray(3)
+	if err != nil {
+		return err
+	}
+	p.Acknowledged = ns.FixedBitSetFromBytes(ackBytes, 20)
+	p.Checksum, err = buf.ReadInt8()
+	return err
+}
+
+func (p *C2SChatCommandSigned) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteString(p.Command); err != nil {
+		return err
+	}
+	if err := buf.WriteInt64(p.Timestamp); err != nil {
+		return err
+	}
+	if err := buf.WriteInt64(p.Salt); err != nil {
+		return err
+	}
+	if err := buf.WriteByteArray(p.Signature); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.MessageCount); err != nil {
+		return err
+	}
+	if err := buf.WriteFixedByteArray(p.Acknowledged.Bytes()); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.Checksum)
 }
 
 // C2SChat represents "Chat Message".
 //
-// > Used to send a chat message to the server. The message may not be longer than 256 characters or else the server will kick the client.
-// >
-// > The server will broadcast a Player Chat Message packet with Chat Type minecraft:chat to all players that haven't disabled chat (including the player that sent the message). See Java Edition protocol/Chat#Processing chat for more information.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chat_Message
-var C2SChat = jp.NewPacket(jp.StatePlay, jp.C2S, 0x08)
-
-type C2SChatData struct {
-	// Content of the message
-	Message ns.String
-	// Number of milliseconds since the epoch (1 Jan 1970, midnight, UTC)
-	Timestamp ns.Long
-	// The salt used to verify the signature hash. Randomly generated by the client
-	Salt ns.Long
-	// The signature used to verify the chat message's authentication. When present, always 256 bytes and not length-prefixed. This is a SHA256 with RSA digital signature computed over the following: The number 1 as a 4-byte int. Always 00 00 00 01. The player's 16-byte UUID. The chat session (a 16-byte UUID randomly generated by the client). The index of the message within this chat session as a 4-byte int. First message is 0, next message is 1, etc. Incremented each time the client sends a chat message. The salt (from above) as an 8-byte long. The timestamp (from above) converted from milliseconds to seconds, so divide by 1000, as an 8-byte long. The length of the message in bytes (from above) as a 4-byte int. The message bytes. The number of messages in the last seen set, as a 4-byte int. Always in the range [0,20]. For each message in the last seen set, from oldest to newest, the 256-byte signature of that message. The client's chat private key is used for the message signature.
-	Signature ns.PrefixedOptional[ns.ByteArray]
-	// Number of signed clientbound chat messages the client has seen from the server since the last serverbound chat message from this client. The server will use this to update its last seen list for the client.
+type C2SChat struct {
+	Message      ns.String
+	Timestamp    ns.Int64
+	Salt         ns.Int64
+	Signature    ns.PrefixedOptional[ns.ByteArray]
 	MessageCount ns.VarInt
-	// Bitmask of which message signatures from the last seen set were used to sign this message. The most recent is the highest bit. If there are fewer than 20 messages in the last seen set, the lower bits will be zeros.
-	Acknowledged ns.FixedBitSet
-	// Checksum is computed over all the message signature checksums in the last seen set, from oldest to newest. Both the packet checksum and signature checksums use the same logic as Java's Arrays.hashCode(byte[]) implementation. The packet checksum additionally casts the resulting int to a byte, and if that byte is 0 returns 1, otherwise returns said byte
-	Checksum ns.Byte
+	Acknowledged *ns.FixedBitSet
+	Checksum     ns.Int8
+}
+
+func (p *C2SChat) ID() ns.VarInt   { return 0x08 }
+func (p *C2SChat) State() jp.State { return jp.StatePlay }
+func (p *C2SChat) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SChat) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Message, err = buf.ReadString(256); err != nil {
+		return err
+	}
+	if p.Timestamp, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	if p.Salt, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	if err = p.Signature.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
+		return b.ReadFixedByteArray(256)
+	}); err != nil {
+		return err
+	}
+	if p.MessageCount, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	ackBytes, err := buf.ReadFixedByteArray(3)
+	if err != nil {
+		return err
+	}
+	p.Acknowledged = ns.FixedBitSetFromBytes(ackBytes, 20)
+	p.Checksum, err = buf.ReadInt8()
+	return err
+}
+
+func (p *C2SChat) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteString(p.Message); err != nil {
+		return err
+	}
+	if err := buf.WriteInt64(p.Timestamp); err != nil {
+		return err
+	}
+	if err := buf.WriteInt64(p.Salt); err != nil {
+		return err
+	}
+	if err := p.Signature.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
+		return b.WriteFixedByteArray(v)
+	}); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.MessageCount); err != nil {
+		return err
+	}
+	if err := buf.WriteFixedByteArray(p.Acknowledged.Bytes()); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.Checksum)
 }
 
 // C2SChatSessionUpdate represents "Player Session".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Session
-var C2SChatSessionUpdate = jp.NewPacket(jp.StatePlay, jp.C2S, 0x09)
+type C2SChatSessionUpdate struct {
+	SessionId    ns.UUID
+	ExpiresAt    ns.Int64
+	PublicKey    ns.ByteArray
+	KeySignature ns.ByteArray
+}
 
-type C2SChatSessionUpdateData struct {
-	// Unique identifier for the (entire) chat session.
-	SessionId ns.UUID
-	// The expiry timestamp of the public key (milliseconds since epoch)
-	ExpiresAt ns.Long
-	// A byte array of an X.509-encoded public key.
-	PublicKey ns.PrefixedArray[ns.Byte]
-	// The signature consists of the player UUID, the key expiration timestamp, and the public key data. These values are hashed using SHA-1 and signed using Mojang's private RSA key.
-	KeySignature ns.PrefixedArray[ns.Byte]
+func (p *C2SChatSessionUpdate) ID() ns.VarInt   { return 0x09 }
+func (p *C2SChatSessionUpdate) State() jp.State { return jp.StatePlay }
+func (p *C2SChatSessionUpdate) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SChatSessionUpdate) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.SessionId, err = buf.ReadUUID(); err != nil {
+		return err
+	}
+	if p.ExpiresAt, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	if p.PublicKey, err = buf.ReadByteArray(512); err != nil {
+		return err
+	}
+	p.KeySignature, err = buf.ReadByteArray(4096)
+	return err
+}
+
+func (p *C2SChatSessionUpdate) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteUUID(p.SessionId); err != nil {
+		return err
+	}
+	if err := buf.WriteInt64(p.ExpiresAt); err != nil {
+		return err
+	}
+	if err := buf.WriteByteArray(p.PublicKey); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.KeySignature)
 }
 
 // C2SChunkBatchReceived represents "Chunk Batch Received".
 //
-// > Notifies the server that the chunk batch has been received by the client. The server uses the value sent in this packet to adjust the number of chunks to be sent in a batch.
-// >
-// > The vanilla server will stop sending further chunk data until the client acknowledges the sent chunk batch. After the first acknowledgement, the server adjusts this number to allow up to 10 unacknowledged batches.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chunk_Batch_Received
-var C2SChunkBatchReceived = jp.NewPacket(jp.StatePlay, jp.C2S, 0x0A)
+type C2SChunkBatchReceived struct {
+	ChunksPerTick ns.Float32
+}
 
-type C2SChunkBatchReceivedData struct {
-	// Desired chunks per tick.
-	ChunksPerTick ns.Float
+func (p *C2SChunkBatchReceived) ID() ns.VarInt   { return 0x0A }
+func (p *C2SChunkBatchReceived) State() jp.State { return jp.StatePlay }
+func (p *C2SChunkBatchReceived) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SChunkBatchReceived) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.ChunksPerTick, err = buf.ReadFloat32()
+	return err
+}
+
+func (p *C2SChunkBatchReceived) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteFloat32(p.ChunksPerTick)
 }
 
 // C2SClientCommand represents "Client Status".
 //
-// > Action ID values:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Client_Status
-var C2SClientCommand = jp.NewPacket(jp.StatePlay, jp.C2S, 0x0B)
-
-type C2SClientCommandData struct {
-	// See below
+type C2SClientCommand struct {
 	ActionId ns.VarInt
+}
+
+func (p *C2SClientCommand) ID() ns.VarInt   { return 0x0B }
+func (p *C2SClientCommand) State() jp.State { return jp.StatePlay }
+func (p *C2SClientCommand) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SClientCommand) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.ActionId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SClientCommand) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.ActionId)
 }
 
 // C2SClientTickEnd represents "Client Tick End".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Client_Tick_End
-var C2SClientTickEnd = jp.NewPacket(jp.StatePlay, jp.C2S, 0x0C)
+type C2SClientTickEnd struct{}
 
-type C2SClientTickEndData struct {
-	// No fields
-}
+func (p *C2SClientTickEnd) ID() ns.VarInt                { return 0x0C }
+func (p *C2SClientTickEnd) State() jp.State              { return jp.StatePlay }
+func (p *C2SClientTickEnd) Bound() jp.Bound              { return jp.C2S }
+func (p *C2SClientTickEnd) Read(*ns.PacketBuffer) error  { return nil }
+func (p *C2SClientTickEnd) Write(*ns.PacketBuffer) error { return nil }
 
 // C2SClientInformationPlay represents "Client Information (play)".
 //
-// > Sent when the player connects, or when settings are changed.
-// >
-// > Displayed Skin Parts flags:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Client_Information_(Play)
-var C2SClientInformationPlay = jp.NewPacket(jp.StatePlay, jp.C2S, 0x0D)
-
-type C2SClientInformationPlayData struct {
-	// e.g. en_GB .
-	Locale ns.String
-	// Client-side render distance, in chunks.
-	ViewDistance ns.Byte
-	// 0: enabled, 1: commands only, 2: hidden. See Java Edition protocol/Chat#Client chat mode for more information.
-	ChatMode ns.VarInt
-	// “Colors” multiplayer setting. The vanilla server stores this value but does nothing with it (see MC-64867 ). Some third-party servers disable all coloring in chat and system messages when it is false.
-	ChatColors ns.Boolean
-	// Bit mask, see below.
-	DisplayedSkinParts ns.UnsignedByte
-	// 0: Left, 1: Right.
-	MainHand ns.VarInt
-	// Enables filtering of text on signs and written book titles. The vanilla client sets this according to the profanityFilterPreferences.profanityFilterOn account attribute indicated by the Mojang API endpoint for player attributes . In offline mode, it is always false.
+type C2SClientInformationPlay struct {
+	Locale              ns.String
+	ViewDistance        ns.Int8
+	ChatMode            ns.VarInt
+	ChatColors          ns.Boolean
+	DisplayedSkinParts  ns.Uint8
+	MainHand            ns.VarInt
 	EnableTextFiltering ns.Boolean
-	// Servers usually list online players; this option should let you not show up in that list.
 	AllowServerListings ns.Boolean
-	// 0: all, 1: decreased, 2: minimal
-	ParticleStatus ns.VarInt
+	ParticleStatus      ns.VarInt
+}
+
+func (p *C2SClientInformationPlay) ID() ns.VarInt   { return 0x0D }
+func (p *C2SClientInformationPlay) State() jp.State { return jp.StatePlay }
+func (p *C2SClientInformationPlay) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SClientInformationPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Locale, err = buf.ReadString(16); err != nil {
+		return err
+	}
+	if p.ViewDistance, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.ChatMode, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.ChatColors, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.DisplayedSkinParts, err = buf.ReadUint8(); err != nil {
+		return err
+	}
+	if p.MainHand, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.EnableTextFiltering, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.AllowServerListings, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	p.ParticleStatus, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SClientInformationPlay) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteString(p.Locale); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.ViewDistance); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.ChatMode); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.ChatColors); err != nil {
+		return err
+	}
+	if err := buf.WriteUint8(p.DisplayedSkinParts); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.MainHand); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.EnableTextFiltering); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.AllowServerListings); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.ParticleStatus)
 }
 
 // C2SCommandSuggestion represents "Command Suggestions Request".
 //
-// > Sent when the client needs to tab-complete a minecraft:ask_server suggestion type.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Command_Suggestions_Request
-var C2SCommandSuggestion = jp.NewPacket(jp.StatePlay, jp.C2S, 0x0E)
-
-type C2SCommandSuggestionData struct {
-	// The ID of the transaction that the server will send back to the client in the response of this packet. Client generates this and increments it each time it sends another tab completion that doesn't get a response.
+type C2SCommandSuggestion struct {
 	TransactionId ns.VarInt
-	// All the text behind the cursor including the / (e.g. to the left of the cursor in left-to-right languages like English).
-	Text ns.String
+	Text          ns.String
+}
+
+func (p *C2SCommandSuggestion) ID() ns.VarInt   { return 0x0E }
+func (p *C2SCommandSuggestion) State() jp.State { return jp.StatePlay }
+func (p *C2SCommandSuggestion) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SCommandSuggestion) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.TransactionId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Text, err = buf.ReadString(32500)
+	return err
+}
+
+func (p *C2SCommandSuggestion) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.TransactionId); err != nil {
+		return err
+	}
+	return buf.WriteString(p.Text)
 }
 
 // C2SConfigurationAcknowledged represents "Acknowledge Configuration".
 //
-// > Sent by the client upon receiving a Start Configuration packet from the server.
-// >
-// > This packet switches the connection state to configuration .
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Acknowledge_Configuration
-var C2SConfigurationAcknowledged = jp.NewPacket(jp.StatePlay, jp.C2S, 0x0F)
+type C2SConfigurationAcknowledged struct{}
 
-type C2SConfigurationAcknowledgedData struct {
-	// No fields
-}
+func (p *C2SConfigurationAcknowledged) ID() ns.VarInt                { return 0x0F }
+func (p *C2SConfigurationAcknowledged) State() jp.State              { return jp.StatePlay }
+func (p *C2SConfigurationAcknowledged) Bound() jp.Bound              { return jp.C2S }
+func (p *C2SConfigurationAcknowledged) Read(*ns.PacketBuffer) error  { return nil }
+func (p *C2SConfigurationAcknowledged) Write(*ns.PacketBuffer) error { return nil }
 
 // C2SContainerButtonClick represents "Click Container Button".
 //
-// > Used when clicking on window buttons. Until 1.14, this was only used by enchantment tables.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Click_Container_Button
-var C2SContainerButtonClick = jp.NewPacket(jp.StatePlay, jp.C2S, 0x10)
-
-type C2SContainerButtonClickData struct {
-	// The ID of the window sent by Open Screen .
+type C2SContainerButtonClick struct {
 	WindowId ns.VarInt
-	// Meaning depends on window type; see below.
 	ButtonId ns.VarInt
+}
+
+func (p *C2SContainerButtonClick) ID() ns.VarInt   { return 0x10 }
+func (p *C2SContainerButtonClick) State() jp.State { return jp.StatePlay }
+func (p *C2SContainerButtonClick) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SContainerButtonClick) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.ButtonId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SContainerButtonClick) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.ButtonId)
 }
 
 // C2SContainerClick represents "Click Container".
 //
-// > This packet is sent by the client when the player clicks on a slot in a window.
-// >
-// > See Java Edition protocol/Inventory for further information about how slots are indexed.
-// >
-// > After performing the action, the server compares the results to the slot change information included in the packet, as applied on top of the server's view of the container's state prior to the action. For any slots that do not match, it sends Set Container Slot packets containing the correct results. If State ID does not match the last ID sent by the server, it will instead send a full Set Container Content to resynchronize the client.
-// >
-// > When right-clicking on a stack of items, half the stack will be picked up and half left in the slot. If the stack is an odd number, the half left in the slot will be the smaller of the amounts.
-// >
-// > The distinct type of click performed by the client is determined by the combination of the Mode and Button fields.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Click_Container
-var C2SContainerClick = jp.NewPacket(jp.StatePlay, jp.C2S, 0x11)
+type C2SContainerClick struct {
+	WindowId    ns.VarInt
+	StateId     ns.VarInt
+	Slot        ns.Int16
+	Button      ns.Int8
+	Mode        ns.VarInt
+	SlotData    ns.Slot
+	CarriedItem ns.Slot
+}
 
-type C2SContainerClickData struct {
-	// The ID of the window that was clicked. 0 for player inventory. The server ignores any packets targeting a Window ID other than the current one, including ignoring 0 when any other window is open.
-	WindowId ns.VarInt
-	// The last received State ID from either a Set Container Slot or a Set Container Content packet.
-	StateId ns.VarInt
-	// The clicked slot number, see below.
-	Slot ns.Short
-	// The button used in the click, see below.
-	Button ns.Byte
-	// Inventory operation mode, see below.
-	Mode ns.VarInt
-	// New data for this slot, in the client's opinion; see below.
-	SlotData ns.HashedSlot
-	// Item carried by the cursor.
-	CarriedItem ns.HashedSlot
+func (p *C2SContainerClick) ID() ns.VarInt   { return 0x11 }
+func (p *C2SContainerClick) State() jp.State { return jp.StatePlay }
+func (p *C2SContainerClick) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SContainerClick) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.StateId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Slot, err = buf.ReadInt16(); err != nil {
+		return err
+	}
+	if p.Button, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.Mode, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.SlotData, err = buf.ReadSlot(); err != nil {
+		return err
+	}
+	p.CarriedItem, err = buf.ReadSlot()
+	return err
+}
+
+func (p *C2SContainerClick) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.StateId); err != nil {
+		return err
+	}
+	if err := buf.WriteInt16(p.Slot); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.Button); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Mode); err != nil {
+		return err
+	}
+	if err := buf.WriteSlot(p.SlotData); err != nil {
+		return err
+	}
+	return buf.WriteSlot(p.CarriedItem)
 }
 
 // C2SContainerClose represents "Close Container".
 //
-// > This packet is sent by the client when closing a window.
-// >
-// > vanilla clients send a Close Window packet with Window ID 0 to close their inventory, even though there is never an Open Screen packet for the inventory.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Close_Container
-var C2SContainerClose = jp.NewPacket(jp.StatePlay, jp.C2S, 0x12)
-
-type C2SContainerCloseData struct {
-	// This is the ID of the window that was closed. 0 for player inventory.
+type C2SContainerClose struct {
 	WindowId ns.VarInt
+}
+
+func (p *C2SContainerClose) ID() ns.VarInt   { return 0x12 }
+func (p *C2SContainerClose) State() jp.State { return jp.StatePlay }
+func (p *C2SContainerClose) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SContainerClose) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.WindowId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SContainerClose) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.WindowId)
 }
 
 // C2SContainerSlotStateChanged represents "Change Container Slot State".
 //
-// > This packet is sent by the client when toggling the state of a Crafter.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Change_Container_Slot_State
-var C2SContainerSlotStateChanged = jp.NewPacket(jp.StatePlay, jp.C2S, 0x13)
+type C2SContainerSlotStateChanged struct {
+	SlotId      ns.VarInt
+	WindowId    ns.VarInt
+	SlotEnabled ns.Boolean
+}
 
-type C2SContainerSlotStateChangedData struct {
-	// This is the ID of the slot that was changed.
-	SlotId ns.VarInt
-	// This is the ID of the window that was changed.
-	WindowId ns.VarInt
-	// The new state of the slot. True for enabled, false for disabled.
-	State ns.Boolean
+func (p *C2SContainerSlotStateChanged) ID() ns.VarInt   { return 0x13 }
+func (p *C2SContainerSlotStateChanged) State() jp.State { return jp.StatePlay }
+func (p *C2SContainerSlotStateChanged) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SContainerSlotStateChanged) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.SlotId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.SlotEnabled, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SContainerSlotStateChanged) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.SlotId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.SlotEnabled)
 }
 
 // C2SCookieResponsePlay represents "Cookie Response (play)".
 //
-// > Response to a Cookie Request (play) from the server. The vanilla server only accepts responses of up to 5 kiB in size.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Cookie_Response_(Play)
-var C2SCookieResponsePlay = jp.NewPacket(jp.StatePlay, jp.C2S, 0x14)
+type C2SCookieResponsePlay struct {
+	Key     ns.Identifier
+	Payload ns.PrefixedOptional[ns.ByteArray]
+}
 
-type C2SCookieResponsePlayData struct {
-	// The identifier of the cookie.
-	Key ns.Identifier
-	// The data of the cookie.
-	Payload ns.PrefixedOptional[ns.PrefixedArray[ns.Byte]]
+func (p *C2SCookieResponsePlay) ID() ns.VarInt   { return 0x14 }
+func (p *C2SCookieResponsePlay) State() jp.State { return jp.StatePlay }
+func (p *C2SCookieResponsePlay) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SCookieResponsePlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Key, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	return p.Payload.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
+		return b.ReadByteArray(5120)
+	})
+}
+
+func (p *C2SCookieResponsePlay) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.Key); err != nil {
+		return err
+	}
+	return p.Payload.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
+		return b.WriteByteArray(v)
+	})
 }
 
 // C2SCustomPayloadPlay represents "Serverbound Plugin Message (play)".
 //
-// > Mods and plugins can use this to send their data. Minecraft itself uses some plugin channels . These internal channels are in the minecraft namespace.
-// >
-// > More documentation on this: "Minecraft Plugin Channels + Messaging" on Dinnerbone's former blog, archived from the original .
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Serverbound_Plugin_Message_(Play)
-var C2SCustomPayloadPlay = jp.NewPacket(jp.StatePlay, jp.C2S, 0x15)
-
-type C2SCustomPayloadPlayData struct {
-	// Name of the plugin channel used to send the data.
+type C2SCustomPayloadPlay struct {
 	Channel ns.Identifier
-	// Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (such as the string length prefix in the standard minecraft:brand channel). The vanilla server enforces a length limit of 32767 bytes on this data, but only if the channel type is unrecognized.
-	Data ns.ByteArray
+	Data    ns.ByteArray
+}
+
+func (p *C2SCustomPayloadPlay) ID() ns.VarInt   { return 0x15 }
+func (p *C2SCustomPayloadPlay) State() jp.State { return jp.StatePlay }
+func (p *C2SCustomPayloadPlay) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SCustomPayloadPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Channel, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(32767)
+	return err
+}
+
+func (p *C2SCustomPayloadPlay) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.Channel); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // C2SDebugSubscriptionRequest represents "Debug Subscription Request".
 //
-// > Sent by the client whenever debug subscriptions, used by debug graphs and renderers , are activated or deactivated. The list in the packet replaces the previous set of active subscriptions. Subscriptions not in the list are deactivated.
-// >
-// > If the client does not have permission to receive the requested debug information, the subscriptions are nonetheless retained by the server, and it is not necessary to send this packet again if the permissions change.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Debug_Subscription_Request
-var C2SDebugSubscriptionRequest = jp.NewPacket(jp.StatePlay, jp.C2S, 0x16)
+type C2SDebugSubscriptionRequest struct {
+	Subscriptions []ns.VarInt
+}
 
-type C2SDebugSubscriptionRequestData struct {
-	// List of active debug subscriptions. IDs in the minecraft:debug_subscription registry.
-	Subscriptions ns.PrefixedArray[ns.VarInt]
+func (p *C2SDebugSubscriptionRequest) ID() ns.VarInt   { return 0x16 }
+func (p *C2SDebugSubscriptionRequest) State() jp.State { return jp.StatePlay }
+func (p *C2SDebugSubscriptionRequest) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SDebugSubscriptionRequest) Read(buf *ns.PacketBuffer) error {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.Subscriptions = make([]ns.VarInt, count)
+	for i := range p.Subscriptions {
+		if p.Subscriptions[i], err = buf.ReadVarInt(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (p *C2SDebugSubscriptionRequest) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Subscriptions))); err != nil {
+		return err
+	}
+	for _, sub := range p.Subscriptions {
+		if err := buf.WriteVarInt(sub); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // C2SEditBook represents "Edit Book".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Edit_Book
-var C2SEditBook = jp.NewPacket(jp.StatePlay, jp.C2S, 0x17)
+type C2SEditBook struct {
+	Slot    ns.VarInt
+	Entries []ns.String
+	Title   ns.PrefixedOptional[ns.String]
+}
 
-type C2SEditBookData struct {
-	// The hotbar slot where the written book is located
-	Slot ns.VarInt
-	// Text from each page. Maximum string length is 1024 chars.
-	Entries ns.PrefixedArray[ns.String]
-	// Title of book. Present if book is being signed, not present if book is being edited.
-	Title ns.PrefixedOptional[ns.String]
+func (p *C2SEditBook) ID() ns.VarInt   { return 0x17 }
+func (p *C2SEditBook) State() jp.State { return jp.StatePlay }
+func (p *C2SEditBook) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SEditBook) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Slot, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.Entries = make([]ns.String, count)
+	for i := range p.Entries {
+		if p.Entries[i], err = buf.ReadString(8192); err != nil {
+			return err
+		}
+	}
+	return p.Title.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.String, error) {
+		return b.ReadString(128)
+	})
+}
+
+func (p *C2SEditBook) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.Slot); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Entries))); err != nil {
+		return err
+	}
+	for _, entry := range p.Entries {
+		if err := buf.WriteString(entry); err != nil {
+			return err
+		}
+	}
+	return p.Title.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.String) error {
+		return b.WriteString(v)
+	})
 }
 
 // C2SEntityTagQuery represents "Query Entity Tag".
 //
-// > Used when F3 + I is pressed while looking at an entity.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Query_Entity_Tag
-var C2SEntityTagQuery = jp.NewPacket(jp.StatePlay, jp.C2S, 0x18)
-
-type C2SEntityTagQueryData struct {
-	// An incremental ID so that the client can verify that the response matches.
+type C2SEntityTagQuery struct {
 	TransactionId ns.VarInt
-	// The ID of the entity to query.
-	EntityId ns.VarInt
+	EntityId      ns.VarInt
+}
+
+func (p *C2SEntityTagQuery) ID() ns.VarInt   { return 0x18 }
+func (p *C2SEntityTagQuery) State() jp.State { return jp.StatePlay }
+func (p *C2SEntityTagQuery) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SEntityTagQuery) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.TransactionId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.EntityId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SEntityTagQuery) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.TransactionId); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.EntityId)
 }
 
 // C2SInteract represents "Interact".
 //
-// > This packet is sent from the client to the server when the client attacks or right-clicks another entity (a player, minecart, etc).
-// >
-// > A vanilla server only accepts this packet if the entity being attacked/used is visible without obstruction and within a 4-unit radius of the player's position.
-// >
-// > The target X, Y, and Z fields represent the difference between the vector location of the cursor at the time of the packet and the entity's position.
-// >
-// > Note that middle-click in creative mode is interpreted by the client and sent as a Set Creative Mode Slot packet instead.
-// >
-// > Interaction with the ender dragon is an odd special case characteristic of release deadline–driven design. 8 consecutive entity IDs following the dragon's ID ( id + 1, id + 2, ..., id + 8) are reserved for the 8 hitboxes that make up the dragon:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Interact
-var C2SInteract = jp.NewPacket(jp.StatePlay, jp.C2S, 0x19)
-
-type C2SInteractData struct {
-	// The ID of the entity to interact. Note the special case described below.
-	EntityId ns.VarInt
-	// 0: interact, 1: attack, 2: interact at.
-	Type ns.VarInt
-	// Only if Type is interact at.
-	TargetX ns.Optional[ns.Float]
-	// Only if Type is interact at.
-	TargetY ns.Optional[ns.Float]
-	// Only if Type is interact at.
-	TargetZ ns.Optional[ns.Float]
-	// Only if Type is interact or interact at; 0: main hand, 1: off hand.
-	Hand ns.Optional[ns.VarInt]
-	// If the client is pressing the sneak key. Has the same effect as a Player Command Press/Release sneak key preceding the interaction, and the state is permanently changed.
+type C2SInteract struct {
+	EntityId        ns.VarInt
+	Type            ns.VarInt
+	TargetX         ns.Float32 // only if Type is 2 (interact at)
+	TargetY         ns.Float32 // only if Type is 2
+	TargetZ         ns.Float32 // only if Type is 2
+	Hand            ns.VarInt  // only if Type is 0 or 2
 	SneakKeyPressed ns.Boolean
+}
+
+func (p *C2SInteract) ID() ns.VarInt   { return 0x19 }
+func (p *C2SInteract) State() jp.State { return jp.StatePlay }
+func (p *C2SInteract) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SInteract) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Type, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Type == 2 {
+		if p.TargetX, err = buf.ReadFloat32(); err != nil {
+			return err
+		}
+		if p.TargetY, err = buf.ReadFloat32(); err != nil {
+			return err
+		}
+		if p.TargetZ, err = buf.ReadFloat32(); err != nil {
+			return err
+		}
+	}
+	if p.Type == 0 || p.Type == 2 {
+		if p.Hand, err = buf.ReadVarInt(); err != nil {
+			return err
+		}
+	}
+	p.SneakKeyPressed, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SInteract) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Type); err != nil {
+		return err
+	}
+	if p.Type == 2 {
+		if err := buf.WriteFloat32(p.TargetX); err != nil {
+			return err
+		}
+		if err := buf.WriteFloat32(p.TargetY); err != nil {
+			return err
+		}
+		if err := buf.WriteFloat32(p.TargetZ); err != nil {
+			return err
+		}
+	}
+	if p.Type == 0 || p.Type == 2 {
+		if err := buf.WriteVarInt(p.Hand); err != nil {
+			return err
+		}
+	}
+	return buf.WriteBool(p.SneakKeyPressed)
 }
 
 // C2SJigsawGenerate represents "Jigsaw Generate".
 //
-// > Sent when Generate is pressed on the Jigsaw Block interface.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Jigsaw_Generate
-var C2SJigsawGenerate = jp.NewPacket(jp.StatePlay, jp.C2S, 0x1A)
-
-type C2SJigsawGenerateData struct {
-	// Block entity location.
-	Location ns.Position
-	// Value of the levels slider/max depth to generate.
-	Levels ns.VarInt
-	//
+type C2SJigsawGenerate struct {
+	Location    ns.Position
+	Levels      ns.VarInt
 	KeepJigsaws ns.Boolean
+}
+
+func (p *C2SJigsawGenerate) ID() ns.VarInt   { return 0x1A }
+func (p *C2SJigsawGenerate) State() jp.State { return jp.StatePlay }
+func (p *C2SJigsawGenerate) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SJigsawGenerate) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Levels, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.KeepJigsaws, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SJigsawGenerate) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Levels); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.KeepJigsaws)
 }
 
 // C2SKeepAlivePlay represents "Serverbound Keep Alive (play)".
 //
-// > The server will frequently send out a keep-alive (see Clientbound Keep Alive ), each containing a random ID. The client must respond with the same packet.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Serverbound_Keep_Alive_(Play)
-var C2SKeepAlivePlay = jp.NewPacket(jp.StatePlay, jp.C2S, 0x1B)
+type C2SKeepAlivePlay struct {
+	KeepAliveId ns.Int64
+}
 
-type C2SKeepAlivePlayData struct {
-	//
-	KeepAliveId ns.Long
+func (p *C2SKeepAlivePlay) ID() ns.VarInt   { return 0x1B }
+func (p *C2SKeepAlivePlay) State() jp.State { return jp.StatePlay }
+func (p *C2SKeepAlivePlay) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SKeepAlivePlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.KeepAliveId, err = buf.ReadInt64()
+	return err
+}
+
+func (p *C2SKeepAlivePlay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt64(p.KeepAliveId)
 }
 
 // C2SLockDifficulty represents "Lock Difficulty".
 //
-// > Must have at least op level 2 to use. Appears to only be used on singleplayer; the difficulty buttons are still disabled in multiplayer.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Lock_Difficulty
-var C2SLockDifficulty = jp.NewPacket(jp.StatePlay, jp.C2S, 0x1C)
-
-type C2SLockDifficultyData struct {
-	//
+type C2SLockDifficulty struct {
 	Locked ns.Boolean
+}
+
+func (p *C2SLockDifficulty) ID() ns.VarInt   { return 0x1C }
+func (p *C2SLockDifficulty) State() jp.State { return jp.StatePlay }
+func (p *C2SLockDifficulty) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SLockDifficulty) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Locked, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SLockDifficulty) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteBool(p.Locked)
 }
 
 // C2SMovePlayerPos represents "Set Player Position".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Player_Position
-var C2SMovePlayerPos = jp.NewPacket(jp.StatePlay, jp.C2S, 0x1D)
+type C2SMovePlayerPos struct {
+	X     ns.Float64
+	FeetY ns.Float64
+	Z     ns.Float64
+	Flags ns.Int8
+}
 
-type C2SMovePlayerPosData struct {
-	// Absolute position.
-	X ns.Double
-	// Absolute feet position, normally Head Y - 1.62.
-	FeetY ns.Double
-	// Absolute position.
-	Z ns.Double
-	// Bit field: 0x01: on ground, 0x02: pushing against wall.
-	Flags ns.Byte
+func (p *C2SMovePlayerPos) ID() ns.VarInt   { return 0x1D }
+func (p *C2SMovePlayerPos) State() jp.State { return jp.StatePlay }
+func (p *C2SMovePlayerPos) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SMovePlayerPos) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.FeetY, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	p.Flags, err = buf.ReadInt8()
+	return err
+}
+
+func (p *C2SMovePlayerPos) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.FeetY); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.Flags)
 }
 
 // C2SMovePlayerPosRot represents "Set Player Position and Rotation".
 //
-// > A combination of Move Player Rotation and Move Player Position .
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Player_Position_And_Rotation
-var C2SMovePlayerPosRot = jp.NewPacket(jp.StatePlay, jp.C2S, 0x1E)
+type C2SMovePlayerPosRot struct {
+	X     ns.Float64
+	FeetY ns.Float64
+	Z     ns.Float64
+	Yaw   ns.Float32
+	Pitch ns.Float32
+	Flags ns.Int8
+}
 
-type C2SMovePlayerPosRotData struct {
-	// Absolute position.
-	X ns.Double
-	// Absolute feet position, normally Head Y - 1.62.
-	FeetY ns.Double
-	// Absolute position.
-	Z ns.Double
-	// Absolute rotation on the X Axis, in degrees.
-	Yaw ns.Float
-	// Absolute rotation on the Y Axis, in degrees.
-	Pitch ns.Float
-	// Bit field: 0x01: on ground, 0x02: pushing against wall.
-	Flags ns.Byte
+func (p *C2SMovePlayerPosRot) ID() ns.VarInt   { return 0x1E }
+func (p *C2SMovePlayerPosRot) State() jp.State { return jp.StatePlay }
+func (p *C2SMovePlayerPosRot) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SMovePlayerPosRot) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.FeetY, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.Flags, err = buf.ReadInt8()
+	return err
+}
+
+func (p *C2SMovePlayerPosRot) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.FeetY); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Pitch); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.Flags)
 }
 
 // C2SMovePlayerRot represents "Set Player Rotation".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Player_Rotation
-var C2SMovePlayerRot = jp.NewPacket(jp.StatePlay, jp.C2S, 0x1F)
+type C2SMovePlayerRot struct {
+	Yaw   ns.Float32
+	Pitch ns.Float32
+	Flags ns.Int8
+}
 
-type C2SMovePlayerRotData struct {
-	// Absolute rotation on the X Axis, in degrees.
-	Yaw ns.Float
-	// Absolute rotation on the Y Axis, in degrees.
-	Pitch ns.Float
-	// Bit field: 0x01: on ground, 0x02: pushing against wall.
-	Flags ns.Byte
+func (p *C2SMovePlayerRot) ID() ns.VarInt   { return 0x1F }
+func (p *C2SMovePlayerRot) State() jp.State { return jp.StatePlay }
+func (p *C2SMovePlayerRot) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SMovePlayerRot) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.Flags, err = buf.ReadInt8()
+	return err
+}
+
+func (p *C2SMovePlayerRot) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Pitch); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.Flags)
 }
 
 // C2SMovePlayerStatusOnly represents "Set Player Movement Flags".
 //
-// > This packet, as well as Set Player Position , Set Player Rotation , and Set Player Position and Rotation are called the “serverbound movement packets”. Vanilla clients will send Move Player Position once every 20 ticks, even for a stationary player.
-// >
-// > This packet is used to indicate whether the player is on ground (walking/swimming) or airborne (jumping/falling).
-// >
-// > When dropping from a sufficient height, fall damage is applied when this state goes from false to true. The amount of damage applied is based on the point where it last changed from true to false. Note that there are several movement related packets containing this state.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Player_Movement_Flags
-var C2SMovePlayerStatusOnly = jp.NewPacket(jp.StatePlay, jp.C2S, 0x20)
+type C2SMovePlayerStatusOnly struct {
+	Flags ns.Int8
+}
 
-type C2SMovePlayerStatusOnlyData struct {
-	// Bit field: 0x01: on ground, 0x02: pushing against wall.
-	Flags ns.Byte
+func (p *C2SMovePlayerStatusOnly) ID() ns.VarInt   { return 0x20 }
+func (p *C2SMovePlayerStatusOnly) State() jp.State { return jp.StatePlay }
+func (p *C2SMovePlayerStatusOnly) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SMovePlayerStatusOnly) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Flags, err = buf.ReadInt8()
+	return err
+}
+
+func (p *C2SMovePlayerStatusOnly) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt8(p.Flags)
 }
 
 // C2SMoveVehicle represents "Move Vehicle (serverbound)".
 //
-// > Sent when a player moves in a client-side-controlled vehicle. Fields are the same as in Set Player Position and Rotation . Note that all fields use absolute positioning and do not allow for relative positioning.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Move_Vehicle_(Serverbound)
-var C2SMoveVehicle = jp.NewPacket(jp.StatePlay, jp.C2S, 0x21)
-
-type C2SMoveVehicleData struct {
-	// Absolute position (X coordinate).
-	X ns.Double
-	// Absolute position (Y coordinate).
-	Y ns.Double
-	// Absolute position (Z coordinate).
-	Z ns.Double
-	// Absolute rotation on the vertical axis, in degrees.
-	Yaw ns.Float
-	// Absolute rotation on the horizontal axis, in degrees.
-	Pitch ns.Float
-	// (This value does not seem to exist)
+type C2SMoveVehicle struct {
+	X        ns.Float64
+	Y        ns.Float64
+	Z        ns.Float64
+	Yaw      ns.Float32
+	Pitch    ns.Float32
 	OnGround ns.Boolean
+}
+
+func (p *C2SMoveVehicle) ID() ns.VarInt   { return 0x21 }
+func (p *C2SMoveVehicle) State() jp.State { return jp.StatePlay }
+func (p *C2SMoveVehicle) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SMoveVehicle) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Y, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.OnGround, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SMoveVehicle) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Y); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Pitch); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.OnGround)
 }
 
 // C2SPaddleBoat represents "Paddle Boat".
 //
-// > Used to visually update whether boat paddles are turning. The server will update the Boat entity metadata to match the values here.
-// >
-// > Right paddle turning is set to true when the left button or forward button is held, left paddle turning is set to true when the right button or forward button is held.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Paddle_Boat
-var C2SPaddleBoat = jp.NewPacket(jp.StatePlay, jp.C2S, 0x22)
-
-type C2SPaddleBoatData struct {
-	//
-	LeftPaddleTurning ns.Boolean
-	//
+type C2SPaddleBoat struct {
+	LeftPaddleTurning  ns.Boolean
 	RightPaddleTurning ns.Boolean
+}
+
+func (p *C2SPaddleBoat) ID() ns.VarInt   { return 0x22 }
+func (p *C2SPaddleBoat) State() jp.State { return jp.StatePlay }
+func (p *C2SPaddleBoat) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPaddleBoat) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.LeftPaddleTurning, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	p.RightPaddleTurning, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SPaddleBoat) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteBool(p.LeftPaddleTurning); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.RightPaddleTurning)
 }
 
 // C2SPickItemFromBlock represents "Pick Item From Block".
 //
-// > Used for pick block functionality (middle click) on blocks to retrieve items from the inventory in survival or creative mode or create them in creative mode. See Controls#Pick Block for more information.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Pick_Item_From_Block
-var C2SPickItemFromBlock = jp.NewPacket(jp.StatePlay, jp.C2S, 0x23)
-
-type C2SPickItemFromBlockData struct {
-	// The location of the block.
-	Location ns.Position
-	// Used to tell the server to include block data in the new stack, works only if in creative mode.
+type C2SPickItemFromBlock struct {
+	Location    ns.Position
 	IncludeData ns.Boolean
+}
+
+func (p *C2SPickItemFromBlock) ID() ns.VarInt   { return 0x23 }
+func (p *C2SPickItemFromBlock) State() jp.State { return jp.StatePlay }
+func (p *C2SPickItemFromBlock) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPickItemFromBlock) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	p.IncludeData, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SPickItemFromBlock) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.IncludeData)
 }
 
 // C2SPickItemFromEntity represents "Pick Item From Entity".
 //
-// > Used for pick block functionality (middle click) on entities to retrieve items from the inventory in survival or creative mode or create them in creative mode. See Controls#Pick Block for more information.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Pick_Item_From_Entity
-var C2SPickItemFromEntity = jp.NewPacket(jp.StatePlay, jp.C2S, 0x24)
-
-type C2SPickItemFromEntityData struct {
-	// The ID of the entity to pick.
-	EntityId ns.VarInt
-	// Unused by the vanilla server.
+type C2SPickItemFromEntity struct {
+	EntityId    ns.VarInt
 	IncludeData ns.Boolean
+}
+
+func (p *C2SPickItemFromEntity) ID() ns.VarInt   { return 0x24 }
+func (p *C2SPickItemFromEntity) State() jp.State { return jp.StatePlay }
+func (p *C2SPickItemFromEntity) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPickItemFromEntity) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.IncludeData, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SPickItemFromEntity) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.IncludeData)
 }
 
 // C2SPingRequestPlay represents "Ping Request (play)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Ping_Request_(Play)
-var C2SPingRequestPlay = jp.NewPacket(jp.StatePlay, jp.C2S, 0x25)
+type C2SPingRequestPlay struct {
+	Payload ns.Int64
+}
 
-type C2SPingRequestPlayData struct {
-	// May be any number. vanilla clients use a system-dependent time value, which is counted in milliseconds.
-	Payload ns.Long
+func (p *C2SPingRequestPlay) ID() ns.VarInt   { return 0x25 }
+func (p *C2SPingRequestPlay) State() jp.State { return jp.StatePlay }
+func (p *C2SPingRequestPlay) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPingRequestPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Payload, err = buf.ReadInt64()
+	return err
+}
+
+func (p *C2SPingRequestPlay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt64(p.Payload)
 }
 
 // C2SPlaceRecipe represents "Place Recipe".
 //
-// > This packet is sent when a player clicks a recipe in the crafting book that is craftable (white border).
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Place_Recipe
-var C2SPlaceRecipe = jp.NewPacket(jp.StatePlay, jp.C2S, 0x26)
-
-type C2SPlaceRecipeData struct {
-	//
+type C2SPlaceRecipe struct {
 	WindowId ns.VarInt
-	// ID of recipe previously defined in Recipe Book Add .
 	RecipeId ns.VarInt
-	// Affects the amount of items processed; true if shift is down when clicked.
-	MakeAll ns.Boolean
+	MakeAll  ns.Boolean
+}
+
+func (p *C2SPlaceRecipe) ID() ns.VarInt   { return 0x26 }
+func (p *C2SPlaceRecipe) State() jp.State { return jp.StatePlay }
+func (p *C2SPlaceRecipe) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPlaceRecipe) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.RecipeId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.MakeAll, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SPlaceRecipe) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.RecipeId); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.MakeAll)
 }
 
 // C2SPlayerAbilities represents "Player Abilities (serverbound)".
 //
-// > The vanilla client sends this packet when the player starts/stops flying with the Flags parameter changed accordingly.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Abilities_(Serverbound)
-var C2SPlayerAbilities = jp.NewPacket(jp.StatePlay, jp.C2S, 0x27)
+type C2SPlayerAbilities struct {
+	Flags ns.Int8
+}
 
-type C2SPlayerAbilitiesData struct {
-	// Bit mask. 0x02: is flying.
-	Flags ns.Byte
+func (p *C2SPlayerAbilities) ID() ns.VarInt   { return 0x27 }
+func (p *C2SPlayerAbilities) State() jp.State { return jp.StatePlay }
+func (p *C2SPlayerAbilities) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPlayerAbilities) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Flags, err = buf.ReadInt8()
+	return err
+}
+
+func (p *C2SPlayerAbilities) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt8(p.Flags)
 }
 
 // C2SPlayerAction represents "Player Action".
 //
-// > Sent when the player mines a block. A vanilla server only accepts digging packets with coordinates within a 6-unit radius between the center of the block and the player's eyes.
-// >
-// > Status can be one of seven values:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Action
-var C2SPlayerAction = jp.NewPacket(jp.StatePlay, jp.C2S, 0x28)
-
-type C2SPlayerActionData struct {
-	// The action the player is taking against the block (see below).
-	Status ns.VarInt
-	// Block position.
+type C2SPlayerAction struct {
+	Status   ns.VarInt
 	Location ns.Position
-	// The face being hit (see below).
-	Face ns.Byte
-	// Block change sequence number (see #Acknowledge Block Change ).
+	Face     ns.Int8
 	Sequence ns.VarInt
+}
+
+func (p *C2SPlayerAction) ID() ns.VarInt   { return 0x28 }
+func (p *C2SPlayerAction) State() jp.State { return jp.StatePlay }
+func (p *C2SPlayerAction) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPlayerAction) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Status, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Face, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	p.Sequence, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SPlayerAction) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.Status); err != nil {
+		return err
+	}
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.Face); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.Sequence)
 }
 
 // C2SPlayerCommand represents "Player Command".
 //
-// > Sent by the client to indicate that it has performed certain actions: sprinting, exiting a bed, jumping with a horse, and opening a horse's inventory while riding it.
-// >
-// > Action ID can be one of the following values:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Command
-var C2SPlayerCommand = jp.NewPacket(jp.StatePlay, jp.C2S, 0x29)
-
-type C2SPlayerCommandData struct {
-	// Player ID (ignored by the vanilla server)
-	EntityId ns.VarInt
-	// The ID of the action, see below.
-	ActionId ns.VarInt
-	// Only used by the “start jump with horse” action, in which case it ranges from 0 to 100. In all other cases it is 0.
+type C2SPlayerCommand struct {
+	EntityId  ns.VarInt
+	ActionId  ns.VarInt
 	JumpBoost ns.VarInt
+}
+
+func (p *C2SPlayerCommand) ID() ns.VarInt   { return 0x29 }
+func (p *C2SPlayerCommand) State() jp.State { return jp.StatePlay }
+func (p *C2SPlayerCommand) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPlayerCommand) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.ActionId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.JumpBoost, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SPlayerCommand) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.ActionId); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.JumpBoost)
 }
 
 // C2SPlayerInput represents "Player Input".
 //
-// > Sent whenever the player presses or releases certain keys. The flags correspond directly to the states of their corresponding keys—the Sprint flag does not depend on whether the player is actually able to sprint at the moment, etc.
-// >
-// > Used by the vanilla server for minecart controls, player inputs in the entity_properties predicate , and sneaking (sprinting is still controlled by Player Command ).
-// >
-// > The flags are as follows:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Input
-var C2SPlayerInput = jp.NewPacket(jp.StatePlay, jp.C2S, 0x2A)
+type C2SPlayerInput struct {
+	Flags ns.Uint8
+}
 
-type C2SPlayerInputData struct {
-	// Bit mask; see below
-	Flags ns.UnsignedByte
+func (p *C2SPlayerInput) ID() ns.VarInt   { return 0x2A }
+func (p *C2SPlayerInput) State() jp.State { return jp.StatePlay }
+func (p *C2SPlayerInput) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPlayerInput) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Flags, err = buf.ReadUint8()
+	return err
+}
+
+func (p *C2SPlayerInput) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteUint8(p.Flags)
 }
 
 // C2SPlayerLoaded represents "Player Loaded".
 //
-// > Sent by the client to indicate that it is ready to start simulating the player. The vanilla client sends this when the "Loading terrain..." screen is closed . (But see the caveat below.)
-// >
-// > The vanilla client skips ticking the player entity until the tick on which this packet is sent (the first tick will happen between this packet and the next Client Tick End ). Other entities and objects will still be ticked.
-// >
-// > Once 60 ticks have elapsed since the last Login or Respawn packet, the vanilla client will start ticking the player and skip sending this packet completely , even after the usual conditions for it have been met. This can happen even before the "Start waiting for level chunks" Game Event is received. The loading screen is not affected in any way by this timer (except indirectly by the player falling into the void after ticking has started). Likewise, the vanilla server will assume that the client has loaded if it takes longer than 60 server ticks to send this packet. A more robust way to detect this condition is to count the number of Client Tick End packets sent by the client. The first player tick will occur after 60 Client Tick End packets have been sent. To determine when this counter should be restarted following a respawn, the Respawn packet can be sent in a bundle together with a Ping packet.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Loaded
-var C2SPlayerLoaded = jp.NewPacket(jp.StatePlay, jp.C2S, 0x2B)
+type C2SPlayerLoaded struct{}
 
-type C2SPlayerLoadedData struct {
-	// No fields
-}
+func (p *C2SPlayerLoaded) ID() ns.VarInt                { return 0x2B }
+func (p *C2SPlayerLoaded) State() jp.State              { return jp.StatePlay }
+func (p *C2SPlayerLoaded) Bound() jp.Bound              { return jp.C2S }
+func (p *C2SPlayerLoaded) Read(*ns.PacketBuffer) error  { return nil }
+func (p *C2SPlayerLoaded) Write(*ns.PacketBuffer) error { return nil }
 
 // C2SPongPlay represents "Pong (play)".
 //
-// > Response to the clientbound packet ( Ping ) with the same ID.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Pong_(Play)
-var C2SPongPlay = jp.NewPacket(jp.StatePlay, jp.C2S, 0x2C)
+type C2SPongPlay struct {
+	Id ns.Int32
+}
 
-type C2SPongPlayData struct {
-	// id is the same as the ping packet
-	Id ns.Int
+func (p *C2SPongPlay) ID() ns.VarInt   { return 0x2C }
+func (p *C2SPongPlay) State() jp.State { return jp.StatePlay }
+func (p *C2SPongPlay) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SPongPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Id, err = buf.ReadInt32()
+	return err
+}
+
+func (p *C2SPongPlay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt32(p.Id)
 }
 
 // C2SRecipeBookChangeSettings represents "Change Recipe Book Settings".
 //
-// > Replaces Recipe Book Data, type 1.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Change_Recipe_Book_Settings
-var C2SRecipeBookChangeSettings = jp.NewPacket(jp.StatePlay, jp.C2S, 0x2D)
-
-type C2SRecipeBookChangeSettingsData struct {
-	// 0: crafting, 1: furnace, 2: blast furnace, 3: smoker.
-	BookId ns.VarInt
-	//
-	BookOpen ns.Boolean
-	//
+type C2SRecipeBookChangeSettings struct {
+	BookId       ns.VarInt
+	BookOpen     ns.Boolean
 	FilterActive ns.Boolean
+}
+
+func (p *C2SRecipeBookChangeSettings) ID() ns.VarInt   { return 0x2D }
+func (p *C2SRecipeBookChangeSettings) State() jp.State { return jp.StatePlay }
+func (p *C2SRecipeBookChangeSettings) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SRecipeBookChangeSettings) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.BookId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.BookOpen, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	p.FilterActive, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SRecipeBookChangeSettings) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.BookId); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.BookOpen); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.FilterActive)
 }
 
 // C2SRecipeBookSeenRecipe represents "Set Seen Recipe".
 //
-// > Sent when recipe is first seen in recipe book. Replaces Recipe Book Data, type 0.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Seen_Recipe
-var C2SRecipeBookSeenRecipe = jp.NewPacket(jp.StatePlay, jp.C2S, 0x2E)
-
-type C2SRecipeBookSeenRecipeData struct {
-	// ID of recipe previously defined in Recipe Book Add.
+type C2SRecipeBookSeenRecipe struct {
 	RecipeId ns.VarInt
+}
+
+func (p *C2SRecipeBookSeenRecipe) ID() ns.VarInt   { return 0x2E }
+func (p *C2SRecipeBookSeenRecipe) State() jp.State { return jp.StatePlay }
+func (p *C2SRecipeBookSeenRecipe) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SRecipeBookSeenRecipe) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.RecipeId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SRecipeBookSeenRecipe) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.RecipeId)
 }
 
 // C2SRenameItem represents "Rename Item".
 //
-// > Sent as a player is renaming an item in an anvil (each keypress in the anvil UI sends a new Rename Item packet). If the new name is empty, then the item loses its custom name (this is different from setting the custom name to the normal name of the item). The item name may be no longer than 50 characters, and if it is longer than that, then the rename is silently ignored.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Rename_Item
-var C2SRenameItem = jp.NewPacket(jp.StatePlay, jp.C2S, 0x2F)
-
-type C2SRenameItemData struct {
-	// The new name of the item.
+type C2SRenameItem struct {
 	ItemName ns.String
+}
+
+func (p *C2SRenameItem) ID() ns.VarInt   { return 0x2F }
+func (p *C2SRenameItem) State() jp.State { return jp.StatePlay }
+func (p *C2SRenameItem) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SRenameItem) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.ItemName, err = buf.ReadString(50)
+	return err
+}
+
+func (p *C2SRenameItem) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteString(p.ItemName)
 }
 
 // C2SResourcePackPlay represents "Resource Pack Response (play)".
 //
-// > Result can be one of the following values:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Resource_Pack_Response_(Play)
-var C2SResourcePackPlay = jp.NewPacket(jp.StatePlay, jp.C2S, 0x30)
-
-type C2SResourcePackPlayData struct {
-	// The unique identifier of the resource pack received in the Add Resource Pack (play) request.
-	Uuid ns.UUID
-	// Result ID (see below).
+type C2SResourcePackPlay struct {
+	Uuid   ns.UUID
 	Result ns.VarInt
+}
+
+func (p *C2SResourcePackPlay) ID() ns.VarInt   { return 0x30 }
+func (p *C2SResourcePackPlay) State() jp.State { return jp.StatePlay }
+func (p *C2SResourcePackPlay) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SResourcePackPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Uuid, err = buf.ReadUUID(); err != nil {
+		return err
+	}
+	p.Result, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SResourcePackPlay) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteUUID(p.Uuid); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.Result)
 }
 
 // C2SSeenAdvancements represents "Seen Advancements".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Seen_Advancements
-var C2SSeenAdvancements = jp.NewPacket(jp.StatePlay, jp.C2S, 0x31)
-
-type C2SSeenAdvancementsData struct {
-	// 0: Opened tab, 1: Closed screen.
+type C2SSeenAdvancements struct {
 	Action ns.VarInt
-	// Only present if action is Opened tab.
-	TabId ns.Optional[ns.Identifier]
+	TabId  ns.Identifier // only present if Action is 0
+}
+
+func (p *C2SSeenAdvancements) ID() ns.VarInt   { return 0x31 }
+func (p *C2SSeenAdvancements) State() jp.State { return jp.StatePlay }
+func (p *C2SSeenAdvancements) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSeenAdvancements) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Action, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Action == 0 {
+		p.TabId, err = buf.ReadIdentifier()
+	}
+	return err
+}
+
+func (p *C2SSeenAdvancements) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.Action); err != nil {
+		return err
+	}
+	if p.Action == 0 {
+		return buf.WriteIdentifier(p.TabId)
+	}
+	return nil
 }
 
 // C2SSelectTrade represents "Select Trade".
 //
-// > When a player selects a specific trade offered by a villager NPC.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Select_Trade
-var C2SSelectTrade = jp.NewPacket(jp.StatePlay, jp.C2S, 0x32)
-
-type C2SSelectTradeData struct {
-	// The selected slot in the player's current (trading) inventory.
+type C2SSelectTrade struct {
 	SelectedSlot ns.VarInt
+}
+
+func (p *C2SSelectTrade) ID() ns.VarInt   { return 0x32 }
+func (p *C2SSelectTrade) State() jp.State { return jp.StatePlay }
+func (p *C2SSelectTrade) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSelectTrade) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.SelectedSlot, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SSelectTrade) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.SelectedSlot)
 }
 
 // C2SSetBeacon represents "Set Beacon Effect".
 //
-// > Changes the effect of the current beacon.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Beacon_Effect
-var C2SSetBeacon = jp.NewPacket(jp.StatePlay, jp.C2S, 0x33)
-
-type C2SSetBeaconData struct {
-	// A Potion ID .
-	PrimaryEffect ns.PrefixedOptional[ns.VarInt]
-	// A Potion ID .
+type C2SSetBeacon struct {
+	PrimaryEffect   ns.PrefixedOptional[ns.VarInt]
 	SecondaryEffect ns.PrefixedOptional[ns.VarInt]
+}
+
+func (p *C2SSetBeacon) ID() ns.VarInt   { return 0x33 }
+func (p *C2SSetBeacon) State() jp.State { return jp.StatePlay }
+func (p *C2SSetBeacon) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSetBeacon) Read(buf *ns.PacketBuffer) error {
+	if err := p.PrimaryEffect.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.VarInt, error) {
+		return b.ReadVarInt()
+	}); err != nil {
+		return err
+	}
+	return p.SecondaryEffect.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.VarInt, error) {
+		return b.ReadVarInt()
+	})
+}
+
+func (p *C2SSetBeacon) Write(buf *ns.PacketBuffer) error {
+	if err := p.PrimaryEffect.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.VarInt) error {
+		return b.WriteVarInt(v)
+	}); err != nil {
+		return err
+	}
+	return p.SecondaryEffect.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.VarInt) error {
+		return b.WriteVarInt(v)
+	})
 }
 
 // C2SSetCarriedItem represents "Set Held Item (serverbound)".
 //
-// > Sent when the player changes the slot selection.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Held_Item_(Serverbound)
-var C2SSetCarriedItem = jp.NewPacket(jp.StatePlay, jp.C2S, 0x34)
+type C2SSetCarriedItem struct {
+	Slot ns.Int16
+}
 
-type C2SSetCarriedItemData struct {
-	// The slot which the player has selected (0–8).
-	Slot ns.Short
+func (p *C2SSetCarriedItem) ID() ns.VarInt   { return 0x34 }
+func (p *C2SSetCarriedItem) State() jp.State { return jp.StatePlay }
+func (p *C2SSetCarriedItem) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSetCarriedItem) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Slot, err = buf.ReadInt16()
+	return err
+}
+
+func (p *C2SSetCarriedItem) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt16(p.Slot)
 }
 
 // C2SSetCommandBlock represents "Program Command Block".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Program_Command_Block
-var C2SSetCommandBlock = jp.NewPacket(jp.StatePlay, jp.C2S, 0x35)
-
-type C2SSetCommandBlockData struct {
-	//
+type C2SSetCommandBlock struct {
 	Location ns.Position
-	//
-	Command ns.String
-	// 0: chain, 1: repeating, 2: impulse.
-	Mode ns.VarInt
-	// 0x01: Track Output (if false, the output of the previous command will not be stored within the command block); 0x02: Is conditional; 0x04: Automatic.
-	Flags ns.Byte
+	Command  ns.String
+	Mode     ns.VarInt
+	Flags    ns.Int8
+}
+
+func (p *C2SSetCommandBlock) ID() ns.VarInt   { return 0x35 }
+func (p *C2SSetCommandBlock) State() jp.State { return jp.StatePlay }
+func (p *C2SSetCommandBlock) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSetCommandBlock) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Command, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.Mode, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Flags, err = buf.ReadInt8()
+	return err
+}
+
+func (p *C2SSetCommandBlock) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Command); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Mode); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.Flags)
 }
 
 // C2SSetCommandMinecart represents "Program Command Block Minecart".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Program_Command_Block_Minecart
-var C2SSetCommandMinecart = jp.NewPacket(jp.StatePlay, jp.C2S, 0x36)
-
-type C2SSetCommandMinecartData struct {
-	//
-	EntityId ns.VarInt
-	//
-	Command ns.String
-	// If false, the output of the previous command will not be stored within the command block.
+type C2SSetCommandMinecart struct {
+	EntityId    ns.VarInt
+	Command     ns.String
 	TrackOutput ns.Boolean
+}
+
+func (p *C2SSetCommandMinecart) ID() ns.VarInt   { return 0x36 }
+func (p *C2SSetCommandMinecart) State() jp.State { return jp.StatePlay }
+func (p *C2SSetCommandMinecart) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSetCommandMinecart) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Command, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	p.TrackOutput, err = buf.ReadBool()
+	return err
+}
+
+func (p *C2SSetCommandMinecart) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Command); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.TrackOutput)
 }
 
 // C2SSetCreativeModeSlot represents "Set Creative Mode Slot".
 //
-// > While the user is in the standard inventory (i.e., not a crafting bench) in Creative mode, the player will send this packet.
-// >
-// > Clicking in the creative inventory menu is quite different from non-creative inventory management. Picking up an item with the mouse actually deletes the item from the server, and placing an item into a slot or dropping it out of the inventory actually tells the server to create the item from scratch. (This can be verified by clicking an item that you don't mind deleting, then severing the connection to the server; the item will be nowhere to be found when you log back in.) As a result of this implementation strategy, the "Destroy Item" slot is just a client-side implementation detail that means "I don't intend to recreate this item.". Additionally, the long listings of items (by category, etc.) are a client-side interface for choosing which item to create. Picking up an item from such listings sends no packets to the server; only when you put it somewhere does it tell the server to create the item in that location.
-// >
-// > This action can be described as "set inventory slot". Picking up an item sets the slot to item ID -1. Placing an item into an inventory slot sets the slot to the specified item. Dropping an item (by clicking outside the window) effectively sets slot -1 to the specified item, which causes the server to spawn the item entity, etc.. All other inventory slots are numbered the same as the non-creative inventory (including slots for the 2x2 crafting menu, even though they aren't visible in the vanilla client).
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Creative_Mode_Slot
-var C2SSetCreativeModeSlot = jp.NewPacket(jp.StatePlay, jp.C2S, 0x37)
-
-type C2SSetCreativeModeSlotData struct {
-	// Inventory slot.
-	Slot ns.Short
-	//
+type C2SSetCreativeModeSlot struct {
+	Slot        ns.Int16
 	ClickedItem ns.Slot
+}
+
+func (p *C2SSetCreativeModeSlot) ID() ns.VarInt   { return 0x37 }
+func (p *C2SSetCreativeModeSlot) State() jp.State { return jp.StatePlay }
+func (p *C2SSetCreativeModeSlot) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSetCreativeModeSlot) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Slot, err = buf.ReadInt16(); err != nil {
+		return err
+	}
+	p.ClickedItem, err = buf.ReadSlot()
+	return err
+}
+
+func (p *C2SSetCreativeModeSlot) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt16(p.Slot); err != nil {
+		return err
+	}
+	return buf.WriteSlot(p.ClickedItem)
 }
 
 // C2SSetJigsawBlock represents "Program Jigsaw Block".
 //
-// > Sent when Done is pressed on the Jigsaw Block interface.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Program_Jigsaw_Block
-var C2SSetJigsawBlock = jp.NewPacket(jp.StatePlay, jp.C2S, 0x38)
-
-type C2SSetJigsawBlockData struct {
-	// Block entity location
-	Location ns.Position
-	//
-	Name ns.Identifier
-	//
-	Target ns.Identifier
-	//
-	Pool ns.Identifier
-	// "Turns into" on the GUI, final_state in NBT.
-	FinalState ns.String
-	// rollable if the attached piece can be rotated, else aligned .
-	JointType ns.String
-	//
+type C2SSetJigsawBlock struct {
+	Location          ns.Position
+	Name              ns.Identifier
+	Target            ns.Identifier
+	Pool              ns.Identifier
+	FinalState        ns.String
+	JointType         ns.String
 	SelectionPriority ns.VarInt
-	//
 	PlacementPriority ns.VarInt
+}
+
+func (p *C2SSetJigsawBlock) ID() ns.VarInt   { return 0x38 }
+func (p *C2SSetJigsawBlock) State() jp.State { return jp.StatePlay }
+func (p *C2SSetJigsawBlock) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSetJigsawBlock) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Name, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	if p.Target, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	if p.Pool, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	if p.FinalState, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.JointType, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.SelectionPriority, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.PlacementPriority, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SSetJigsawBlock) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteIdentifier(p.Name); err != nil {
+		return err
+	}
+	if err := buf.WriteIdentifier(p.Target); err != nil {
+		return err
+	}
+	if err := buf.WriteIdentifier(p.Pool); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.FinalState); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.JointType); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SelectionPriority); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.PlacementPriority)
 }
 
 // C2SSetStructureBlock represents "Program Structure Block".
 //
-// > Possible actions:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Program_Structure_Block
-var C2SSetStructureBlock = jp.NewPacket(jp.StatePlay, jp.C2S, 0x39)
+type C2SSetStructureBlock struct {
+	Location  ns.Position
+	Action    ns.VarInt
+	Mode      ns.VarInt
+	Name      ns.String
+	OffsetX   ns.Int8
+	OffsetY   ns.Int8
+	OffsetZ   ns.Int8
+	SizeX     ns.Int8
+	SizeY     ns.Int8
+	SizeZ     ns.Int8
+	Mirror    ns.VarInt
+	Rotation  ns.VarInt
+	Metadata  ns.String
+	Integrity ns.Float32
+	Seed      ns.VarLong
+	Flags     ns.Int8
+}
 
-type C2SSetStructureBlockData struct {
-	// Block entity location.
-	Location ns.Position
-	// An additional action to perform beyond simply saving the given data; see below.
-	Action ns.VarInt
-	// One of SAVE (0), LOAD (1), CORNER (2), DATA (3).
-	Mode ns.VarInt
-	//
-	Name ns.String
-	// Between -48 and 48.
-	OffsetX ns.Byte
-	// Between -48 and 48.
-	OffsetY ns.Byte
-	// Between -48 and 48.
-	OffsetZ ns.Byte
-	// Between 0 and 48.
-	SizeX ns.Byte
-	// Between 0 and 48.
-	SizeY ns.Byte
-	// Between 0 and 48.
-	SizeZ ns.Byte
-	// One of NONE (0), LEFT_RIGHT (1), FRONT_BACK (2).
-	Mirror ns.VarInt
-	// One of NONE (0), CLOCKWISE_90 (1), CLOCKWISE_180 (2), COUNTERCLOCKWISE_90 (3).
-	Rotation ns.VarInt
-	//
-	Metadata ns.String
-	// Between 0 and 1.
-	Integrity ns.Float
-	//
-	Seed ns.VarLong
-	// 0x01: Ignore entities; 0x02: Show air; 0x04: Show bounding box; 0x08: Strict placement.
-	Flags ns.Byte
+func (p *C2SSetStructureBlock) ID() ns.VarInt   { return 0x39 }
+func (p *C2SSetStructureBlock) State() jp.State { return jp.StatePlay }
+func (p *C2SSetStructureBlock) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSetStructureBlock) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Action, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Mode, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Name, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.OffsetX, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.OffsetY, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.OffsetZ, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.SizeX, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.SizeY, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.SizeZ, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.Mirror, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Rotation, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Metadata, err = buf.ReadString(128); err != nil {
+		return err
+	}
+	if p.Integrity, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Seed, err = buf.ReadVarLong(); err != nil {
+		return err
+	}
+	p.Flags, err = buf.ReadInt8()
+	return err
+}
+
+func (p *C2SSetStructureBlock) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Action); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Mode); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Name); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.OffsetX); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.OffsetY); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.OffsetZ); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.SizeX); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.SizeY); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.SizeZ); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Mirror); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Rotation); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Metadata); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Integrity); err != nil {
+		return err
+	}
+	if err := buf.WriteVarLong(p.Seed); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.Flags)
 }
 
 // C2SSetTestBlock represents "Set Test Block".
 //
-// > Updates the value of the Test Block at the given position.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Test_Block
-var C2SSetTestBlock = jp.NewPacket(jp.StatePlay, jp.C2S, 0x3A)
-
-type C2SSetTestBlockData struct {
-	//
+type C2SSetTestBlock struct {
 	Position ns.Position
-	// 0: start, 1: log, 2: fail, 3: accept
-	Mode ns.VarInt
-	//
-	Message ns.String
+	Mode     ns.VarInt
+	Message  ns.String
+}
+
+func (p *C2SSetTestBlock) ID() ns.VarInt   { return 0x3A }
+func (p *C2SSetTestBlock) State() jp.State { return jp.StatePlay }
+func (p *C2SSetTestBlock) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSetTestBlock) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Position, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Mode, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Message, err = buf.ReadString(32767)
+	return err
+}
+
+func (p *C2SSetTestBlock) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Position); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Mode); err != nil {
+		return err
+	}
+	return buf.WriteString(p.Message)
 }
 
 // C2SSignUpdate represents "Update Sign".
 //
-// > This message is sent from the client to the server when the “Done” button is pushed after placing a sign.
-// >
-// > The server only accepts this packet after Open Sign Editor , otherwise this packet is silently ignored.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Sign
-var C2SSignUpdate = jp.NewPacket(jp.StatePlay, jp.C2S, 0x3B)
-
-type C2SSignUpdateData struct {
-	// Block Coordinates.
-	Location ns.Position
-	// Whether the updated text is in front or on the back of the sign
+type C2SSignUpdate struct {
+	Location    ns.Position
 	IsFrontText ns.Boolean
-	// First line of text in the sign.
-	Line1 ns.String
-	// Second line of text in the sign.
-	Line2 ns.String
-	// Third line of text in the sign.
-	Line3 ns.String
-	// Fourth line of text in the sign.
-	Line4 ns.String
+	Line1       ns.String
+	Line2       ns.String
+	Line3       ns.String
+	Line4       ns.String
+}
+
+func (p *C2SSignUpdate) ID() ns.VarInt   { return 0x3B }
+func (p *C2SSignUpdate) State() jp.State { return jp.StatePlay }
+func (p *C2SSignUpdate) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSignUpdate) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.IsFrontText, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.Line1, err = buf.ReadString(384); err != nil {
+		return err
+	}
+	if p.Line2, err = buf.ReadString(384); err != nil {
+		return err
+	}
+	if p.Line3, err = buf.ReadString(384); err != nil {
+		return err
+	}
+	p.Line4, err = buf.ReadString(384)
+	return err
+}
+
+func (p *C2SSignUpdate) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.IsFrontText); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Line1); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Line2); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Line3); err != nil {
+		return err
+	}
+	return buf.WriteString(p.Line4)
 }
 
 // C2SSwing represents "Swing Arm".
 //
-// > Sent when the player's arm swings.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Swing_Arm
-var C2SSwing = jp.NewPacket(jp.StatePlay, jp.C2S, 0x3C)
-
-type C2SSwingData struct {
-	// Hand used for the animation. 0: main hand, 1: off hand.
+type C2SSwing struct {
 	Hand ns.VarInt
+}
+
+func (p *C2SSwing) ID() ns.VarInt   { return 0x3C }
+func (p *C2SSwing) State() jp.State { return jp.StatePlay }
+func (p *C2SSwing) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSwing) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Hand, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SSwing) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.Hand)
 }
 
 // C2STeleportToEntity represents "Teleport To Entity".
 //
-// > Teleports the player to the given entity. The player must be in spectator mode.
-// >
-// > The vanilla client only uses this to teleport to players, but it appears to accept any type of entity. The entity does not need to be in the same dimension as the player; if necessary, the player will be respawned in the right world. If the given entity cannot be found (or isn't loaded), this packet will be ignored.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Teleport_To_Entity
-var C2STeleportToEntity = jp.NewPacket(jp.StatePlay, jp.C2S, 0x3D)
-
-type C2STeleportToEntityData struct {
-	// UUID of the player to teleport to (can also be an entity UUID).
+type C2STeleportToEntity struct {
 	TargetPlayer ns.UUID
+}
+
+func (p *C2STeleportToEntity) ID() ns.VarInt   { return 0x3D }
+func (p *C2STeleportToEntity) State() jp.State { return jp.StatePlay }
+func (p *C2STeleportToEntity) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2STeleportToEntity) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.TargetPlayer, err = buf.ReadUUID()
+	return err
+}
+
+func (p *C2STeleportToEntity) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteUUID(p.TargetPlayer)
 }
 
 // C2STestInstanceBlockAction represents "Test Instance Block Action".
 //
-// > Tries to perform an action the Test Instance Block at the given position.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Test_Instance_Block_Action
-var C2STestInstanceBlockAction = jp.NewPacket(jp.StatePlay, jp.C2S, 0x3E)
-
-type C2STestInstanceBlockActionData struct {
-	//
-	Position ns.Position
-	// 0: init, 1: query, 2: set, 3: reset, 4: save, 5: export, 6: run.
-	Action ns.VarInt
-	// ID in the minecraft:test_instance registry.
-	Test ns.PrefixedOptional[ns.Identifier]
-	//
-	SizeX ns.VarInt
-	//
-	SizeY ns.VarInt
-	//
-	SizeZ ns.VarInt
-	// 0: none, 1: clockwise 90°, 2: clockwise 180°, 3: counter-clockwise 90°.
-	Rotation ns.VarInt
-	//
+type C2STestInstanceBlockAction struct {
+	Position       ns.Position
+	Action         ns.VarInt
+	Test           ns.PrefixedOptional[ns.Identifier]
+	SizeX          ns.VarInt
+	SizeY          ns.VarInt
+	SizeZ          ns.VarInt
+	Rotation       ns.VarInt
 	IgnoreEntities ns.Boolean
-	// 0: cleared, 1: running, 2: finished.
-	Status ns.VarInt
-	//
-	ErrorMessage ns.PrefixedOptional[ns.TextComponent]
+	Status         ns.VarInt
+	ErrorMessage   ns.PrefixedOptional[ns.TextComponent]
+}
+
+func (p *C2STestInstanceBlockAction) ID() ns.VarInt   { return 0x3E }
+func (p *C2STestInstanceBlockAction) State() jp.State { return jp.StatePlay }
+func (p *C2STestInstanceBlockAction) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2STestInstanceBlockAction) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Position, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Action, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if err = p.Test.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.Identifier, error) {
+		return b.ReadIdentifier()
+	}); err != nil {
+		return err
+	}
+	if p.SizeX, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.SizeY, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.SizeZ, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Rotation, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.IgnoreEntities, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.Status, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	return p.ErrorMessage.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
+		return b.ReadTextComponent()
+	})
+}
+
+func (p *C2STestInstanceBlockAction) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Position); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Action); err != nil {
+		return err
+	}
+	if err := p.Test.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.Identifier) error {
+		return b.WriteIdentifier(v)
+	}); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SizeX); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SizeY); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SizeZ); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Rotation); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.IgnoreEntities); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Status); err != nil {
+		return err
+	}
+	return p.ErrorMessage.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.TextComponent) error {
+		return b.WriteTextComponent(v)
+	})
 }
 
 // C2SUseItemOn represents "Use Item On".
 //
-// > Upon placing a block, this packet is sent once.
-// >
-// > The Cursor Position X/Y/Z fields (also known as in-block coordinates) are calculated using raytracing. The unit corresponds to sixteen pixels in the default resource pack. For example, let's say a slab is being placed against the south face of a full block. The Cursor Position X will be higher if the player was pointing near the right (east) edge of the face, lower if pointing near the left. The Cursor Position Y will be used to determine whether it will appear as a bottom slab (values 0.0–0.5) or as a top slab (values 0.5-1.0). The Cursor Position Z should be 1.0 since the player was looking at the southernmost part of the block.
-// >
-// > Inside block is true when a player's head (specifically eyes) are inside of a block's collision. In 1.13 and later versions, collision is rather complicated and individual blocks can have multiple collision boxes. For instance, a ring of vines has a non-colliding hole in the middle. This value is only true when the player is directly in the box. In practice, though, this value is only used by scaffolding to place in front of the player when sneaking inside of it (other blocks will place behind when you intersect with them -- try with glass for instance).
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Use_Item_On
-var C2SUseItemOn = jp.NewPacket(jp.StatePlay, jp.C2S, 0x3F)
+type C2SUseItemOn struct {
+	Hand            ns.VarInt
+	Location        ns.Position
+	Face            ns.VarInt
+	CursorPositionX ns.Float32
+	CursorPositionY ns.Float32
+	CursorPositionZ ns.Float32
+	InsideBlock     ns.Boolean
+	WorldBorderHit  ns.Boolean
+	Sequence        ns.VarInt
+}
 
-type C2SUseItemOnData struct {
-	// The hand from which the block is placed; 0: main hand, 1: off hand.
-	Hand ns.VarInt
-	// Block position.
-	Location ns.Position
-	// The face on which the block is placed (as documented at Player Action ).
-	Face ns.VarInt
-	// The position of the crosshair on the block, from 0 to 1 increasing from west to east.
-	CursorPositionX ns.Float
-	// The position of the crosshair on the block, from 0 to 1 increasing from bottom to top.
-	CursorPositionY ns.Float
-	// The position of the crosshair on the block, from 0 to 1 increasing from north to south.
-	CursorPositionZ ns.Float
-	// True when the player's head is inside of a block.
-	InsideBlock ns.Boolean
-	// Seems to always be false, even when interacting with blocks around or outside the world border, or while the player is outside the border.
-	WorldBorderHit ns.Boolean
-	// Block change sequence number (see #Acknowledge Block Change ).
-	Sequence ns.VarInt
+func (p *C2SUseItemOn) ID() ns.VarInt   { return 0x3F }
+func (p *C2SUseItemOn) State() jp.State { return jp.StatePlay }
+func (p *C2SUseItemOn) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SUseItemOn) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Hand, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Face, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.CursorPositionX, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.CursorPositionY, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.CursorPositionZ, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.InsideBlock, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.WorldBorderHit, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	p.Sequence, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SUseItemOn) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.Hand); err != nil {
+		return err
+	}
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Face); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.CursorPositionX); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.CursorPositionY); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.CursorPositionZ); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.InsideBlock); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.WorldBorderHit); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.Sequence)
 }
 
 // C2SUseItem represents "Use Item".
 //
-// > Sent when pressing the Use Item key (default: right click) with an item in hand.
-// >
-// > The player's rotation is permanently updated according to the Yaw and Pitch fields before performing the action, unless there is no item in the specified hand.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Use_Item
-var C2SUseItem = jp.NewPacket(jp.StatePlay, jp.C2S, 0x40)
-
-type C2SUseItemData struct {
-	// Hand used for the animation. 0: main hand, 1: off hand.
-	Hand ns.VarInt
-	// Block change sequence number (see #Acknowledge Block Change ).
+type C2SUseItem struct {
+	Hand     ns.VarInt
 	Sequence ns.VarInt
-	// Player head rotation around the Y-Axis.
-	Yaw ns.Float
-	// Player head rotation around the X-Axis.
-	Pitch ns.Float
+	Yaw      ns.Float32
+	Pitch    ns.Float32
+}
+
+func (p *C2SUseItem) ID() ns.VarInt   { return 0x40 }
+func (p *C2SUseItem) State() jp.State { return jp.StatePlay }
+func (p *C2SUseItem) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SUseItem) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Hand, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Sequence, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.Pitch, err = buf.ReadFloat32()
+	return err
+}
+
+func (p *C2SUseItem) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.Hand); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Sequence); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	return buf.WriteFloat32(p.Pitch)
 }
 
 // C2SCustomClickActionPlay represents "Custom Click Action (play)".
 //
-// > Sent when the client clicks a Text Component with the minecraft:custom click action. This is meant as an alternative to running a command, but will not have any effect on vanilla servers.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Custom_Click_Action_(Play)
-var C2SCustomClickActionPlay = jp.NewPacket(jp.StatePlay, jp.C2S, 0x41)
+type C2SCustomClickActionPlay struct {
+	Id      ns.Identifier
+	Payload nbt.Tag
+}
 
-type C2SCustomClickActionPlayData struct {
-	// The identifier for the click action.
-	Id ns.Identifier
-	// The data to send with the click action. May be a TAG_END (0).
-	Payload ns.NBT
+func (p *C2SCustomClickActionPlay) ID() ns.VarInt   { return 0x41 }
+func (p *C2SCustomClickActionPlay) State() jp.State { return jp.StatePlay }
+func (p *C2SCustomClickActionPlay) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SCustomClickActionPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Id, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	remaining, err := buf.ReadByteArray(1048576)
+	if err != nil {
+		return err
+	}
+	p.Payload, err = nbt.DecodeNetwork(remaining)
+	return err
+}
+
+func (p *C2SCustomClickActionPlay) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.Id); err != nil {
+		return err
+	}
+	data, err := nbt.EncodeNetwork(p.Payload)
+	if err != nil {
+		return err
+	}
+	return buf.WriteFixedByteArray(data)
 }

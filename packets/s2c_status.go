@@ -8,19 +8,43 @@ import (
 // S2CStatusResponse represents "Status Response".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Status_Response
-var S2CStatusResponse = jp.NewPacket(jp.StateStatus, jp.S2C, 0x00)
-
-type S2CStatusResponseData struct {
-	// See Java Edition protocol/Server List Ping#Status Response ; as with all strings, this is prefixed by its length as a VarInt .
+type S2CStatusResponse struct {
+	// See Server List Ping; as with all strings, this is prefixed by its length as a VarInt.
 	JsonResponse ns.String
+}
+
+func (p *S2CStatusResponse) ID() ns.VarInt   { return 0x00 }
+func (p *S2CStatusResponse) State() jp.State { return jp.StateStatus }
+func (p *S2CStatusResponse) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CStatusResponse) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.JsonResponse, err = buf.ReadString(32767)
+	return err
+}
+
+func (p *S2CStatusResponse) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteString(p.JsonResponse)
 }
 
 // S2CPongResponseStatus represents "Pong Response (status)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Pong_Response_(Status)
-var S2CPongResponseStatus = jp.NewPacket(jp.StateStatus, jp.S2C, 0x01)
-
-type S2CPongResponseStatusData struct {
+type S2CPongResponseStatus struct {
 	// Should match the one sent by the client.
-	Timestamp ns.Long
+	Timestamp ns.Int64
+}
+
+func (p *S2CPongResponseStatus) ID() ns.VarInt   { return 0x01 }
+func (p *S2CPongResponseStatus) State() jp.State { return jp.StateStatus }
+func (p *S2CPongResponseStatus) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPongResponseStatus) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Timestamp, err = buf.ReadInt64()
+	return err
+}
+
+func (p *S2CPongResponseStatus) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt64(p.Timestamp)
 }

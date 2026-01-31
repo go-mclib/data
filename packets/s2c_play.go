@@ -3,2417 +3,4694 @@ package packets
 import (
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	"github.com/go-mclib/protocol/nbt"
 )
 
 // S2CBundleDelimiter represents "Bundle Delimiter".
 //
-// > The delimiter for a bundle of packets. When received, the client should store every subsequent packet it receives and wait until another delimiter is received. Once that happens, the client is guaranteed to process every packet in the bundle on the same tick, and the client should stop storing packets.
-// >
-// > As of 1.20.6, the vanilla server only uses this to ensure Spawn Entity and associated packets used to configure the entity happen on the same tick. Each entity gets a separate bundle.
-// >
-// > The vanilla client doesn't allow more than 4096 packets in the same bundle.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Bundle_Delimiter
-var S2CBundleDelimiter = jp.NewPacket(jp.StatePlay, jp.S2C, 0x00)
+type S2CBundleDelimiter struct{}
 
-type S2CBundleDelimiterData struct {
-	// No fields
-}
+func (p *S2CBundleDelimiter) ID() ns.VarInt                { return 0x00 }
+func (p *S2CBundleDelimiter) State() jp.State              { return jp.StatePlay }
+func (p *S2CBundleDelimiter) Bound() jp.Bound              { return jp.S2C }
+func (p *S2CBundleDelimiter) Read(*ns.PacketBuffer) error  { return nil }
+func (p *S2CBundleDelimiter) Write(*ns.PacketBuffer) error { return nil }
 
 // S2CAddEntity represents "Spawn Entity".
 //
-// > Sent by the server to create an entity on the client, normally upon the entity spawning within or entering the player's view range.
-// >
-// > The local player entity is automatically created by the client, and must not be created explicitly using this packet. Doing so on the vanilla client will have strange consequences.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Spawn_Entity
-var S2CAddEntity = jp.NewPacket(jp.StatePlay, jp.S2C, 0x01)
-
-type S2CAddEntityData struct {
-	// A unique integer ID mostly used in the protocol to identify the entity. If an entity with the same ID already exists on the client, it is automatically deleted and replaced by the new entity. On the vanilla server entity IDs are globally unique across all dimensions and never reused while the server is running, but not preserved across server restarts.
-	EntityId ns.VarInt
-	// A unique identifier that is mostly used in persistence and places where the uniqueness matters more. It is possible to create multiple entities with the same UUID on the vanilla client, but a warning will be logged, and functionality dependent on UUIDs may ignore the entity or otherwise misbehave.
+type S2CAddEntity struct {
+	EntityId   ns.VarInt
 	EntityUuid ns.UUID
-	// ID in the minecraft:entity_type registry (see "type" field in Java Edition protocol/Entity metadata#Entities ).
-	Type ns.VarInt
-	//
-	X ns.Double
-	//
-	Y ns.Double
-	//
-	Z ns.Double
-	//
-	Velocity ns.ByteArray
-	//
-	Pitch ns.Angle
-	//
-	Yaw ns.Angle
-	// Only used by living entities, where the head of the entity may differ from the general body rotation.
-	HeadYaw ns.Angle
-	// Meaning dependent on the value of the Type field, see Java Edition protocol/Object data for details.
-	Data ns.VarInt
+	Type       ns.VarInt
+	X          ns.Float64
+	Y          ns.Float64
+	Z          ns.Float64
+	Velocity   ns.ByteArray
+	Pitch      ns.Angle
+	Yaw        ns.Angle
+	HeadYaw    ns.Angle
+	Data       ns.VarInt
+}
+
+func (p *S2CAddEntity) ID() ns.VarInt   { return 0x01 }
+func (p *S2CAddEntity) State() jp.State { return jp.StatePlay }
+func (p *S2CAddEntity) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CAddEntity) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.EntityUuid, err = buf.ReadUUID(); err != nil {
+		return err
+	}
+	if p.Type, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Y, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Velocity, err = buf.ReadByteArray(12); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadAngle(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadAngle(); err != nil {
+		return err
+	}
+	if p.HeadYaw, err = buf.ReadAngle(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CAddEntity) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteUUID(p.EntityUuid); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Type); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Y); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	if err := buf.WriteByteArray(p.Velocity); err != nil {
+		return err
+	}
+	if err := buf.WriteAngle(p.Pitch); err != nil {
+		return err
+	}
+	if err := buf.WriteAngle(p.Yaw); err != nil {
+		return err
+	}
+	if err := buf.WriteAngle(p.HeadYaw); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.Data)
 }
 
 // S2CAnimate represents "Entity Animation".
 //
-// > Sent whenever an entity should change animation.
-// >
-// > Animation can be one of the following values:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Entity_Animation
-var S2CAnimate = jp.NewPacket(jp.StatePlay, jp.S2C, 0x02)
+type S2CAnimate struct {
+	EntityId  ns.VarInt
+	Animation ns.Uint8
+}
 
-type S2CAnimateData struct {
-	// Player ID.
-	EntityId ns.VarInt
-	// Animation ID (see below).
-	Animation ns.UnsignedByte
+func (p *S2CAnimate) ID() ns.VarInt   { return 0x02 }
+func (p *S2CAnimate) State() jp.State { return jp.StatePlay }
+func (p *S2CAnimate) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CAnimate) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Animation, err = buf.ReadUint8()
+	return err
+}
+
+func (p *S2CAnimate) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteUint8(p.Animation)
 }
 
 // S2CAwardStats represents "Award Statistics".
 //
-// > Sent as a response to Client Status (id 1). Will only send the changed values if previously requested.
-// >
-// > Categories (defined in the minecraft:stat_type registry).
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Award_Statistics
-var S2CAwardStats = jp.NewPacket(jp.StatePlay, jp.S2C, 0x03)
+type S2CAwardStats struct {
+	Statistics ns.ByteArray
+}
 
-type S2CAwardStatsData struct {
-	// Prefixed Array
-	Statistics ns.PrefixedArray[struct {
-		CategoryId  ns.VarInt
-		StatisticId ns.VarInt
-		Value       ns.VarInt
-	}]
+func (p *S2CAwardStats) ID() ns.VarInt   { return 0x03 }
+func (p *S2CAwardStats) State() jp.State { return jp.StatePlay }
+func (p *S2CAwardStats) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CAwardStats) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Statistics, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CAwardStats) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Statistics)
 }
 
 // S2CBlockChangedAck represents "Acknowledge Block Change".
 //
-// > Acknowledges a user-initiated block change. After receiving this packet, the client will display the block state sent by the server instead of the one predicted by the client.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Acknowledge_Block_Change
-var S2CBlockChangedAck = jp.NewPacket(jp.StatePlay, jp.S2C, 0x04)
-
-type S2CBlockChangedAckData struct {
-	// Represents the sequence to acknowledge; this is used for properly syncing block changes to the client after interactions.
+type S2CBlockChangedAck struct {
 	SequenceId ns.VarInt
+}
+
+func (p *S2CBlockChangedAck) ID() ns.VarInt   { return 0x04 }
+func (p *S2CBlockChangedAck) State() jp.State { return jp.StatePlay }
+func (p *S2CBlockChangedAck) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CBlockChangedAck) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.SequenceId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CBlockChangedAck) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.SequenceId)
 }
 
 // S2CBlockDestruction represents "Set Block Destroy Stage".
 //
-// > 0–9 are the displayable destroy stages and each other number means that there is no animation on this coordinate.
-// >
-// > Block break animations can still be applied on air; the animation will remain visible, although there is no block being broken. However, if this is applied to a transparent block, odd graphical effects may happen, including water losing its transparency. (An effect similar to this can be seen in normal gameplay when breaking ice blocks)
-// >
-// > If you need to display several break animations at the same time, you have to give each of them a unique Entity ID. The entity ID does not need to correspond to an actual entity on the client. It is valid to use a randomly generated number.
-// >
-// > When removing the break animation, you must use the ID of the entity that set it.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Block_Destroy_Stage
-var S2CBlockDestruction = jp.NewPacket(jp.StatePlay, jp.S2C, 0x05)
+type S2CBlockDestruction struct {
+	EntityId     ns.VarInt
+	Location     ns.Position
+	DestroyStage ns.Uint8
+}
 
-type S2CBlockDestructionData struct {
-	// The ID of the entity breaking the block.
-	EntityId ns.VarInt
-	// Block Position.
-	Location ns.Position
-	// 0–9 to set it, any other value to remove it.
-	DestroyStage ns.UnsignedByte
+func (p *S2CBlockDestruction) ID() ns.VarInt   { return 0x05 }
+func (p *S2CBlockDestruction) State() jp.State { return jp.StatePlay }
+func (p *S2CBlockDestruction) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CBlockDestruction) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	p.DestroyStage, err = buf.ReadUint8()
+	return err
+}
+
+func (p *S2CBlockDestruction) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	return buf.WriteUint8(p.DestroyStage)
 }
 
 // S2CBlockEntityData represents "Block Entity Data".
 //
-// > Sets the block entity associated with the block at the given location.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Block_Entity_Data
-var S2CBlockEntityData = jp.NewPacket(jp.StatePlay, jp.S2C, 0x06)
-
-type S2CBlockEntityDataData struct {
-	//
+type S2CBlockEntityData struct {
 	Location ns.Position
-	// ID in the minecraft:block_entity_type registry
-	Type ns.VarInt
-	// Data to set.
-	NbtData ns.NBT
+	Type     ns.VarInt
+	NbtData  nbt.Tag
+}
+
+func (p *S2CBlockEntityData) ID() ns.VarInt   { return 0x06 }
+func (p *S2CBlockEntityData) State() jp.State { return jp.StatePlay }
+func (p *S2CBlockEntityData) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CBlockEntityData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Type, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	remaining, err := buf.ReadByteArray(1048576)
+	if err != nil {
+		return err
+	}
+	p.NbtData, err = nbt.DecodeNetwork(remaining)
+	return err
+}
+
+func (p *S2CBlockEntityData) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Type); err != nil {
+		return err
+	}
+	data, err := nbt.EncodeNetwork(p.NbtData)
+	if err != nil {
+		return err
+	}
+	return buf.WriteFixedByteArray(data)
 }
 
 // S2CBlockEvent represents "Block Action".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Block_Action
-var S2CBlockEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x07)
+type S2CBlockEvent struct {
+	Location        ns.Position
+	ActionId        ns.Uint8
+	ActionParameter ns.Uint8
+	BlockType       ns.VarInt
+}
 
-type S2CBlockEventData struct {
-	// Block coordinates.
-	Location ns.Position
-	// Varies depending on block — see Java Edition protocol/Block actions .
-	ActionId ns.UnsignedByte
-	// Varies depending on block — see Java Edition protocol/Block actions .
-	ActionParameter ns.UnsignedByte
-	// ID in the minecraft:block registry. This value is unused by the vanilla client, as it will infer the type of block based on the given position.
-	BlockType ns.VarInt
+func (p *S2CBlockEvent) ID() ns.VarInt   { return 0x07 }
+func (p *S2CBlockEvent) State() jp.State { return jp.StatePlay }
+func (p *S2CBlockEvent) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CBlockEvent) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.ActionId, err = buf.ReadUint8(); err != nil {
+		return err
+	}
+	if p.ActionParameter, err = buf.ReadUint8(); err != nil {
+		return err
+	}
+	p.BlockType, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CBlockEvent) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteUint8(p.ActionId); err != nil {
+		return err
+	}
+	if err := buf.WriteUint8(p.ActionParameter); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.BlockType)
 }
 
 // S2CBlockUpdate represents "Block Update".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Block_Update
-var S2CBlockUpdate = jp.NewPacket(jp.StatePlay, jp.S2C, 0x08)
-
-type S2CBlockUpdateData struct {
-	// Block Coordinates.
+type S2CBlockUpdate struct {
 	Location ns.Position
-	// The new block state ID for the block as given in the block state registry .
-	BlockId ns.VarInt
+	BlockId  ns.VarInt
+}
+
+func (p *S2CBlockUpdate) ID() ns.VarInt   { return 0x08 }
+func (p *S2CBlockUpdate) State() jp.State { return jp.StatePlay }
+func (p *S2CBlockUpdate) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CBlockUpdate) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	p.BlockId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CBlockUpdate) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.BlockId)
 }
 
 // S2CBossEvent represents "Boss Bar".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Boss_Bar
-var S2CBossEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x09)
-
-type S2CBossEventData struct {
-	// Unique ID for this bar.
-	Uuid ns.UUID
-	// Determines the layout of the remaining packet.
+type S2CBossEvent struct {
+	Uuid   ns.UUID
 	Action ns.VarInt
-	// From 0 to 1. Values greater than 1 do not crash a vanilla client, and start rendering part of a second health bar at around 1.5.
-	Health ns.Float
-	// Color ID (see below).
-	Color ns.VarInt
-	// Type of division (see below).
-	Division ns.VarInt
-	// Bit mask. 0x01: should darken sky, 0x02: is dragon bar (used to play end music), 0x04: create fog (previously was also controlled by 0x02).
-	Flags ns.UnsignedByte
-	// as above
-	Dividers ns.VarInt
+	Data   ns.ByteArray
+}
+
+func (p *S2CBossEvent) ID() ns.VarInt   { return 0x09 }
+func (p *S2CBossEvent) State() jp.State { return jp.StatePlay }
+func (p *S2CBossEvent) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CBossEvent) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Uuid, err = buf.ReadUUID(); err != nil {
+		return err
+	}
+	if p.Action, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CBossEvent) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteUUID(p.Uuid); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Action); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CChangeDifficulty represents "Change Difficulty".
 //
-// > Changes the difficulty setting in the client's option menu
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Change_Difficulty
-var S2CChangeDifficulty = jp.NewPacket(jp.StatePlay, jp.S2C, 0x0A)
-
-type S2CChangeDifficultyData struct {
-	// 0: peaceful, 1: easy, 2: normal, 3: hard.
-	Difficulty ns.UnsignedByte
-	//
+type S2CChangeDifficulty struct {
+	Difficulty       ns.Uint8
 	DifficultyLocked ns.Boolean
+}
+
+func (p *S2CChangeDifficulty) ID() ns.VarInt   { return 0x0A }
+func (p *S2CChangeDifficulty) State() jp.State { return jp.StatePlay }
+func (p *S2CChangeDifficulty) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CChangeDifficulty) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Difficulty, err = buf.ReadUint8(); err != nil {
+		return err
+	}
+	p.DifficultyLocked, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CChangeDifficulty) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteUint8(p.Difficulty); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.DifficultyLocked)
 }
 
 // S2CChunkBatchFinished represents "Chunk Batch Finished".
 //
-// > Marks the end of a chunk batch. The vanilla client marks the time it receives this packet and calculates the elapsed duration since the beginning of the chunk batch . The server uses this duration and the batch size received in this packet to estimate the number of milliseconds elapsed per chunk received. This value is then used to calculate the desired number of chunks per tick through the formula 25 / millisPerChunk , which is reported to the server through Chunk Batch Received . This likely uses 25 instead of the normal tick duration of 50 so chunk processing will only use half of the client's and network's bandwidth.
-// >
-// > The vanilla client uses the samples from the latest 15 batches to estimate the milliseconds per chunk number.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chunk_Batch_Finished
-var S2CChunkBatchFinished = jp.NewPacket(jp.StatePlay, jp.S2C, 0x0B)
-
-type S2CChunkBatchFinishedData struct {
-	// Number of chunks.
+type S2CChunkBatchFinished struct {
 	BatchSize ns.VarInt
+}
+
+func (p *S2CChunkBatchFinished) ID() ns.VarInt   { return 0x0B }
+func (p *S2CChunkBatchFinished) State() jp.State { return jp.StatePlay }
+func (p *S2CChunkBatchFinished) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CChunkBatchFinished) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.BatchSize, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CChunkBatchFinished) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.BatchSize)
 }
 
 // S2CChunkBatchStart represents "Chunk Batch Start".
 //
-// > Marks the start of a chunk batch. The vanilla client marks and stores the time it receives this packet.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chunk_Batch_Start
-var S2CChunkBatchStart = jp.NewPacket(jp.StatePlay, jp.S2C, 0x0C)
+type S2CChunkBatchStart struct{}
 
-type S2CChunkBatchStartData struct {
-	// No fields
-}
+func (p *S2CChunkBatchStart) ID() ns.VarInt                { return 0x0C }
+func (p *S2CChunkBatchStart) State() jp.State              { return jp.StatePlay }
+func (p *S2CChunkBatchStart) Bound() jp.Bound              { return jp.S2C }
+func (p *S2CChunkBatchStart) Read(*ns.PacketBuffer) error  { return nil }
+func (p *S2CChunkBatchStart) Write(*ns.PacketBuffer) error { return nil }
 
 // S2CChunksBiomes represents "Chunk Biomes".
 //
-// > Note: The order of X and Z is inverted, because the client reads them as one big-endian Long , with Z being the upper 32 bits.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chunk_Biomes
-var S2CChunksBiomes = jp.NewPacket(jp.StatePlay, jp.S2C, 0x0D)
+type S2CChunksBiomes struct {
+	ChunkBiomeData ns.ByteArray
+}
 
-type S2CChunksBiomesData struct {
-	// Prefixed Array
-	ChunkBiomeData ns.PrefixedArray[struct {
-		ChunkZ ns.Int
-		ChunkX ns.Int
-		Data   ns.PrefixedArray[ns.Byte]
-	}]
+func (p *S2CChunksBiomes) ID() ns.VarInt   { return 0x0D }
+func (p *S2CChunksBiomes) State() jp.State { return jp.StatePlay }
+func (p *S2CChunksBiomes) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CChunksBiomes) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.ChunkBiomeData, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CChunksBiomes) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.ChunkBiomeData)
 }
 
 // S2CClearTitles represents "Clear Titles".
 //
-// > Clear the client's current title information, with the option to also reset it.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clear_Titles
-var S2CClearTitles = jp.NewPacket(jp.StatePlay, jp.S2C, 0x0E)
-
-type S2CClearTitlesData struct {
-	//
+type S2CClearTitles struct {
 	Reset ns.Boolean
+}
+
+func (p *S2CClearTitles) ID() ns.VarInt   { return 0x0E }
+func (p *S2CClearTitles) State() jp.State { return jp.StatePlay }
+func (p *S2CClearTitles) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CClearTitles) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Reset, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CClearTitles) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteBool(p.Reset)
 }
 
 // S2CCommandSuggestions represents "Command Suggestions Response".
 //
-// > The server responds with a list of auto-completions of the last word sent to it. In the case of regular chat, this is a player username. Command names and parameters are also supported. The client sorts these alphabetically before listing them.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Command_Suggestions_Response
-var S2CCommandSuggestions = jp.NewPacket(jp.StatePlay, jp.S2C, 0x0F)
+type S2CCommandSuggestions struct {
+	Id      ns.VarInt
+	Start   ns.VarInt
+	Length  ns.VarInt
+	Matches ns.ByteArray
+}
 
-type S2CCommandSuggestionsData struct {
-	// Transaction ID.
-	Id ns.VarInt
-	// Start of the text to replace.
-	Start ns.VarInt
-	// Length of the text to replace.
-	Length ns.VarInt
-	// Tooltip to display.
-	Tooltip ns.PrefixedOptional[ns.TextComponent]
+func (p *S2CCommandSuggestions) ID() ns.VarInt   { return 0x0F }
+func (p *S2CCommandSuggestions) State() jp.State { return jp.StatePlay }
+func (p *S2CCommandSuggestions) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCommandSuggestions) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Id, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Start, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Length, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Matches, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CCommandSuggestions) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.Id); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Start); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Length); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Matches)
 }
 
 // S2CCommands represents "Commands".
 //
-// > Lists all of the commands on the server, and how they are parsed.
-// >
-// > This is a directed graph, with one root node. Each redirect or child node must refer only to nodes that have already been declared.
-// >
-// > For more information on this packet, see the Java Edition protocol/Command data article.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Commands
-var S2CCommands = jp.NewPacket(jp.StatePlay, jp.S2C, 0x10)
+type S2CCommands struct {
+	Data ns.ByteArray
+}
 
-type S2CCommandsData struct {
-	// An array of nodes.
-	Nodes ns.PrefixedArray[ns.ByteArray]
-	// Index of the root node in the previous array.
-	RootIndex ns.VarInt
+func (p *S2CCommands) ID() ns.VarInt   { return 0x10 }
+func (p *S2CCommands) State() jp.State { return jp.StatePlay }
+func (p *S2CCommands) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCommands) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CCommands) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CContainerClose represents "Close Container".
 //
-// > This packet is sent from the server to the client when a window is forcibly closed, such as when a chest is destroyed while it's open. The vanilla client disregards the provided window ID and closes any active window.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Close_Container
-var S2CContainerClose = jp.NewPacket(jp.StatePlay, jp.S2C, 0x11)
-
-type S2CContainerCloseData struct {
-	// This is the ID of the window that was closed. 0 for inventory.
+type S2CContainerClose struct {
 	WindowId ns.VarInt
+}
+
+func (p *S2CContainerClose) ID() ns.VarInt   { return 0x11 }
+func (p *S2CContainerClose) State() jp.State { return jp.StatePlay }
+func (p *S2CContainerClose) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CContainerClose) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.WindowId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CContainerClose) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.WindowId)
 }
 
 // S2CContainerSetContent represents "Set Container Content".
 //
-// > Replaces the contents of a container window. Sent by the server upon initialization of a container window or the player's inventory, and in response to state ID mismatches (see #Click Container ).
-// >
-// > See inventory windows for further information about how slots are indexed.
-// > Use Open Screen to open the container on the client.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Container_Content
-var S2CContainerSetContent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x12)
-
-type S2CContainerSetContentData struct {
-	// The ID of window which items are being sent for. 0 for player inventory. The client ignores any packets targeting a Window ID other than the current one. However, an exception is made for the player inventory, which may be targeted at any time. (The vanilla server does not appear to utilize this special case.)
-	WindowId ns.VarInt
-	// A server-managed sequence number used to avoid desynchronization; see #Click Container .
-	StateId ns.VarInt
-	// Item being dragged with the mouse.
+type S2CContainerSetContent struct {
+	WindowId    ns.VarInt
+	StateId     ns.VarInt
+	SlotData    ns.ByteArray
 	CarriedItem ns.Slot
+}
+
+func (p *S2CContainerSetContent) ID() ns.VarInt   { return 0x12 }
+func (p *S2CContainerSetContent) State() jp.State { return jp.StatePlay }
+func (p *S2CContainerSetContent) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CContainerSetContent) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.StateId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.SlotData, err = buf.ReadByteArray(1048576); err != nil {
+		return err
+	}
+	p.CarriedItem, err = buf.ReadSlot()
+	return err
+}
+
+func (p *S2CContainerSetContent) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.StateId); err != nil {
+		return err
+	}
+	if err := buf.WriteByteArray(p.SlotData); err != nil {
+		return err
+	}
+	return buf.WriteSlot(p.CarriedItem)
 }
 
 // S2CContainerSetData represents "Set Container Property".
 //
-// > This packet is used to inform the client that part of a GUI window should be updated.
-// >
-// > The meaning of the Property field depends on the type of the window. The following table shows the known combinations of window type and property, and how the value is to be interpreted.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Container_Property
-var S2CContainerSetData = jp.NewPacket(jp.StatePlay, jp.S2C, 0x13)
-
-type S2CContainerSetDataData struct {
-	//
+type S2CContainerSetData struct {
 	WindowId ns.VarInt
-	// The property to be updated, see below.
-	Property ns.Short
-	// The new value for the property, see below.
-	Value ns.Short
+	Property ns.Int16
+	Value    ns.Int16
+}
+
+func (p *S2CContainerSetData) ID() ns.VarInt   { return 0x13 }
+func (p *S2CContainerSetData) State() jp.State { return jp.StatePlay }
+func (p *S2CContainerSetData) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CContainerSetData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Property, err = buf.ReadInt16(); err != nil {
+		return err
+	}
+	p.Value, err = buf.ReadInt16()
+	return err
+}
+
+func (p *S2CContainerSetData) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	if err := buf.WriteInt16(p.Property); err != nil {
+		return err
+	}
+	return buf.WriteInt16(p.Value)
 }
 
 // S2CContainerSetSlot represents "Set Container Slot".
 //
-// > Sent by the server when an item in a slot (in a window) is added/removed.
-// >
-// > If Window ID is 0, the hotbar and offhand slots (slots 36 through 45) may be updated even when a different container window is open. (The vanilla server does not appear to utilize this special case.) Updates are also restricted to those slots when the player is looking at a creative inventory tab other than the survival inventory. (The vanilla server does not handle this restriction in any way, leading to MC-242392 .)
-// >
-// > When a container window is open, the server never sends updates targeting Window ID 0—all of the window types include slots for the player inventory. The client must automatically apply changes targeting the inventory portion of a container window to the main inventory; the server does not resend them for ID 0 when the window is closed. However, since the armor and offhand slots are only present on ID 0, updates to those slots occurring while a window is open must be deferred by the server until the window's closure.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Container_Slot
-var S2CContainerSetSlot = jp.NewPacket(jp.StatePlay, jp.S2C, 0x14)
-
-type S2CContainerSetSlotData struct {
-	// The window that is being updated. 0 for player inventory. The client ignores any packets targeting a Window ID other than the current one; see below for exceptions.
+type S2CContainerSetSlot struct {
 	WindowId ns.VarInt
-	// A server-managed sequence number used to avoid desynchronization; see #Click Container .
-	StateId ns.VarInt
-	// The slot that should be updated.
-	Slot ns.Short
-	//
+	StateId  ns.VarInt
+	Slot     ns.Int16
 	SlotData ns.Slot
+}
+
+func (p *S2CContainerSetSlot) ID() ns.VarInt   { return 0x14 }
+func (p *S2CContainerSetSlot) State() jp.State { return jp.StatePlay }
+func (p *S2CContainerSetSlot) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CContainerSetSlot) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.StateId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Slot, err = buf.ReadInt16(); err != nil {
+		return err
+	}
+	p.SlotData, err = buf.ReadSlot()
+	return err
+}
+
+func (p *S2CContainerSetSlot) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.StateId); err != nil {
+		return err
+	}
+	if err := buf.WriteInt16(p.Slot); err != nil {
+		return err
+	}
+	return buf.WriteSlot(p.SlotData)
 }
 
 // S2CCookieRequestPlay represents "Cookie Request (play)".
 //
-// > Requests a cookie that was previously stored.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Cookie_Request_(Play)
-var S2CCookieRequestPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x15)
-
-type S2CCookieRequestPlayData struct {
-	// The identifier of the cookie.
+type S2CCookieRequestPlay struct {
 	Key ns.Identifier
+}
+
+func (p *S2CCookieRequestPlay) ID() ns.VarInt   { return 0x15 }
+func (p *S2CCookieRequestPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CCookieRequestPlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCookieRequestPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Key, err = buf.ReadIdentifier()
+	return err
+}
+
+func (p *S2CCookieRequestPlay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteIdentifier(p.Key)
 }
 
 // S2CCooldown represents "Set Cooldown".
 //
-// > Applies a cooldown period to all items with the given type. Used by the vanilla server with enderpearls. This packet should be sent when the cooldown starts and also when the cooldown ends (to compensate for lag), although the client will end the cooldown automatically. Can be applied to any item, note that interactions still get sent to the server with the item, but the client does not play the animation nor attempt to predict results (i.e, block placing).
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Cooldown
-var S2CCooldown = jp.NewPacket(jp.StatePlay, jp.S2C, 0x16)
-
-type S2CCooldownData struct {
-	// Identifier of the item (minecraft:stone) or the cooldown group ("use_cooldown" item component)
+type S2CCooldown struct {
 	CooldownGroup ns.Identifier
-	// Number of ticks to apply a cooldown for, or 0 to clear the cooldown.
 	CooldownTicks ns.VarInt
+}
+
+func (p *S2CCooldown) ID() ns.VarInt   { return 0x16 }
+func (p *S2CCooldown) State() jp.State { return jp.StatePlay }
+func (p *S2CCooldown) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCooldown) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.CooldownGroup, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	p.CooldownTicks, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CCooldown) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.CooldownGroup); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.CooldownTicks)
 }
 
 // S2CCustomChatCompletions represents "Chat Suggestions".
 //
-// > Unused by the vanilla server. Likely provided for custom servers to send chat message completions to clients.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chat_Suggestions
-var S2CCustomChatCompletions = jp.NewPacket(jp.StatePlay, jp.S2C, 0x17)
+type S2CCustomChatCompletions struct {
+	Action  ns.VarInt
+	Entries ns.ByteArray
+}
 
-type S2CCustomChatCompletionsData struct {
-	// 0: Add, 1: Remove, 2: Set
-	Action ns.VarInt
-	//
-	Entries ns.PrefixedArray[ns.String]
+func (p *S2CCustomChatCompletions) ID() ns.VarInt   { return 0x17 }
+func (p *S2CCustomChatCompletions) State() jp.State { return jp.StatePlay }
+func (p *S2CCustomChatCompletions) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCustomChatCompletions) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Action, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Entries, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CCustomChatCompletions) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.Action); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Entries)
 }
 
 // S2CCustomPayloadPlay represents "Clientbound Plugin Message (play)".
 //
-// > Mods and plugins can use this to send their data. Minecraft itself uses several plugin channels . These internal channels are in the minecraft namespace.
-// >
-// > More information on how it works on Dinnerbone's blog . More documentation about internal and popular registered channels is here .
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clientbound_Plugin_Message_(Play)
-var S2CCustomPayloadPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x18)
-
-type S2CCustomPayloadPlayData struct {
-	// Name of the plugin channel used to send the data.
+type S2CCustomPayloadPlay struct {
 	Channel ns.Identifier
-	// Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (such as the string length prefix in the standard minecraft:brand channel). The vanilla client enforces a length limit of 1048576 bytes on this data, but only if the channel type is unrecognized.
-	Data ns.ByteArray
+	Data    ns.ByteArray
+}
+
+func (p *S2CCustomPayloadPlay) ID() ns.VarInt   { return 0x18 }
+func (p *S2CCustomPayloadPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CCustomPayloadPlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCustomPayloadPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Channel, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CCustomPayloadPlay) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.Channel); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CDamageEvent represents "Damage Event".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Damage_Event
-var S2CDamageEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x19)
-
-type S2CDamageEventData struct {
-	// The ID of the entity taking damage
-	EntityId ns.VarInt
-	// The type of damage in the minecraft:damage_type registry, defined by the Registry Data packet.
-	SourceTypeId ns.VarInt
-	// The ID + 1 of the entity responsible for the damage, if present. If not present, the value is 0
-	SourceCauseId ns.VarInt
-	// The ID + 1 of the entity that directly dealt the damage, if present. If not present, the value is 0. If this field is present: and damage was dealt indirectly, such as by the use of a projectile, this field will contain the ID of such projectile; and damage was dealt directly, such as by manually attacking, this field will contain the same value as Source Cause ID.
+type S2CDamageEvent struct {
+	EntityId       ns.VarInt
+	SourceTypeId   ns.VarInt
+	SourceCauseId  ns.VarInt
 	SourceDirectId ns.VarInt
+	SourcePosition ns.PrefixedOptional[ns.ByteArray]
+}
+
+func (p *S2CDamageEvent) ID() ns.VarInt   { return 0x19 }
+func (p *S2CDamageEvent) State() jp.State { return jp.StatePlay }
+func (p *S2CDamageEvent) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CDamageEvent) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.SourceTypeId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.SourceCauseId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.SourceDirectId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	return p.SourcePosition.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
+		return b.ReadByteArray(24)
+	})
+}
+
+func (p *S2CDamageEvent) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SourceTypeId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SourceCauseId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SourceDirectId); err != nil {
+		return err
+	}
+	return p.SourcePosition.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
+		return b.WriteByteArray(v)
+	})
 }
 
 // S2CDebugBlockValue represents "Debug Block Value".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Debug_Block_Value
-var S2CDebugBlockValue = jp.NewPacket(jp.StatePlay, jp.S2C, 0x1A)
-
-type S2CDebugBlockValueData struct {
-	//
+type S2CDebugBlockValue struct {
 	Location ns.Position
-	//
-	Update ns.ByteArray
+	Update   ns.ByteArray
+}
+
+func (p *S2CDebugBlockValue) ID() ns.VarInt   { return 0x1A }
+func (p *S2CDebugBlockValue) State() jp.State { return jp.StatePlay }
+func (p *S2CDebugBlockValue) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CDebugBlockValue) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	p.Update, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CDebugBlockValue) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Update)
 }
 
 // S2CDebugChunkValue represents "Debug Chunk Value".
 //
-// > Note: The order of X and Z is inverted, because the client reads them as one big-endian Long , with Z being the upper 32 bits.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Debug_Chunk_Value
-var S2CDebugChunkValue = jp.NewPacket(jp.StatePlay, jp.S2C, 0x1B)
-
-type S2CDebugChunkValueData struct {
-	//
-	ChunkZ ns.Int
-	//
-	ChunkX ns.Int
-	//
+type S2CDebugChunkValue struct {
+	ChunkZ ns.Int32
+	ChunkX ns.Int32
 	Update ns.ByteArray
+}
+
+func (p *S2CDebugChunkValue) ID() ns.VarInt   { return 0x1B }
+func (p *S2CDebugChunkValue) State() jp.State { return jp.StatePlay }
+func (p *S2CDebugChunkValue) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CDebugChunkValue) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.ChunkZ, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	if p.ChunkX, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	p.Update, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CDebugChunkValue) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt32(p.ChunkZ); err != nil {
+		return err
+	}
+	if err := buf.WriteInt32(p.ChunkX); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Update)
 }
 
 // S2CDebugEntityValue represents "Debug Entity Value".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Debug_Entity_Value
-var S2CDebugEntityValue = jp.NewPacket(jp.StatePlay, jp.S2C, 0x1C)
-
-type S2CDebugEntityValueData struct {
-	//
+type S2CDebugEntityValue struct {
 	EntityId ns.VarInt
-	//
-	Update ns.ByteArray
+	Update   ns.ByteArray
+}
+
+func (p *S2CDebugEntityValue) ID() ns.VarInt   { return 0x1C }
+func (p *S2CDebugEntityValue) State() jp.State { return jp.StatePlay }
+func (p *S2CDebugEntityValue) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CDebugEntityValue) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Update, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CDebugEntityValue) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Update)
 }
 
 // S2CDebugEvent represents "Debug Event".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Debug_Event
-var S2CDebugEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x1D)
-
-type S2CDebugEventData struct {
-	//
+type S2CDebugEvent struct {
 	Event ns.ByteArray
+}
+
+func (p *S2CDebugEvent) ID() ns.VarInt   { return 0x1D }
+func (p *S2CDebugEvent) State() jp.State { return jp.StatePlay }
+func (p *S2CDebugEvent) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CDebugEvent) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Event, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CDebugEvent) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Event)
 }
 
 // S2CDebugSample represents "Debug Sample".
 //
-// > Sample data that is sent periodically after the client has subscribed with Debug Sample Subscription .
-// >
-// > The vanilla server only sends debug samples to players who are server operators.
-// >
-// > Types:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Debug_Sample
-var S2CDebugSample = jp.NewPacket(jp.StatePlay, jp.S2C, 0x1E)
-
-type S2CDebugSampleData struct {
-	// Array of type-dependent samples.
-	Sample ns.PrefixedArray[ns.Long]
-	// See below.
+type S2CDebugSample struct {
+	Sample     ns.ByteArray
 	SampleType ns.VarInt
+}
+
+func (p *S2CDebugSample) ID() ns.VarInt   { return 0x1E }
+func (p *S2CDebugSample) State() jp.State { return jp.StatePlay }
+func (p *S2CDebugSample) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CDebugSample) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Sample, err = buf.ReadByteArray(1048576); err != nil {
+		return err
+	}
+	p.SampleType, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CDebugSample) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteByteArray(p.Sample); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.SampleType)
 }
 
 // S2CDeleteChat represents "Delete Message".
 //
-// > Removes a message from the client's chat. This only works for messages with signatures; system messages cannot be deleted with this packet.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Delete_Message
-var S2CDeleteChat = jp.NewPacket(jp.StatePlay, jp.S2C, 0x1F)
-
-type S2CDeleteChatData struct {
-	// The message ID + 1, used for validating message signature. The next field is present only when value of this field is equal to 0.
+type S2CDeleteChat struct {
 	MessageId ns.VarInt
-	// The previous message's signature. Always 256 bytes and not length-prefixed.
-	Signature ns.Optional[ns.ByteArray]
+	Signature ns.ByteArray
+}
+
+func (p *S2CDeleteChat) ID() ns.VarInt   { return 0x1F }
+func (p *S2CDeleteChat) State() jp.State { return jp.StatePlay }
+func (p *S2CDeleteChat) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CDeleteChat) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.MessageId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.MessageId == 0 {
+		p.Signature, err = buf.ReadByteArray(256)
+	}
+	return err
+}
+
+func (p *S2CDeleteChat) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.MessageId); err != nil {
+		return err
+	}
+	if p.MessageId == 0 {
+		return buf.WriteFixedByteArray(p.Signature)
+	}
+	return nil
 }
 
 // S2CDisconnectPlay represents "Disconnect (play)".
 //
-// > Sent by the server before it disconnects a client. The client assumes that the server has already closed the connection by the time the packet arrives.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Disconnect_(Play)
-var S2CDisconnectPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x20)
-
-type S2CDisconnectPlayData struct {
-	// Displayed to the client when the connection terminates.
+type S2CDisconnectPlay struct {
 	Reason ns.TextComponent
+}
+
+func (p *S2CDisconnectPlay) ID() ns.VarInt   { return 0x20 }
+func (p *S2CDisconnectPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CDisconnectPlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CDisconnectPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Reason, err = buf.ReadTextComponent()
+	return err
+}
+
+func (p *S2CDisconnectPlay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteTextComponent(p.Reason)
 }
 
 // S2CDisguisedChat represents "Disguised Chat Message".
 //
-// > Sends the client a chat message, but without any message signing information.
-// >
-// > The vanilla server uses this packet when the console is communicating with players through commands, such as /say , /tell , /me , among others.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Disguised_Chat_Message
-var S2CDisguisedChat = jp.NewPacket(jp.StatePlay, jp.S2C, 0x21)
-
-type S2CDisguisedChatData struct {
-	// This is used as the content parameter when formatting the message on the client.
-	Message ns.TextComponent
-	// Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an inline definition.
-	ChatType ns.Or[ns.Identifier, ns.ByteArray]
-	// The name of the one sending the message, usually the sender's display name. This is used as the sender parameter when formatting the message on the client.
+type S2CDisguisedChat struct {
+	Message    ns.TextComponent
+	ChatType   ns.ByteArray
 	SenderName ns.TextComponent
-	// The name of the one receiving the message, usually the receiver's display name. This is used as the target parameter when formatting the message on the client.
 	TargetName ns.PrefixedOptional[ns.TextComponent]
+}
+
+func (p *S2CDisguisedChat) ID() ns.VarInt   { return 0x21 }
+func (p *S2CDisguisedChat) State() jp.State { return jp.StatePlay }
+func (p *S2CDisguisedChat) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CDisguisedChat) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Message, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	if p.ChatType, err = buf.ReadByteArray(1048576); err != nil {
+		return err
+	}
+	if p.SenderName, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	return p.TargetName.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
+		return b.ReadTextComponent()
+	})
+}
+
+func (p *S2CDisguisedChat) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteTextComponent(p.Message); err != nil {
+		return err
+	}
+	if err := buf.WriteByteArray(p.ChatType); err != nil {
+		return err
+	}
+	if err := buf.WriteTextComponent(p.SenderName); err != nil {
+		return err
+	}
+	return p.TargetName.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.TextComponent) error {
+		return b.WriteTextComponent(v)
+	})
 }
 
 // S2CEntityEvent represents "Entity Event".
 //
-// > Entity statuses generally trigger an animation for an entity. The available statuses vary by the entity's type (and are available to subclasses of that type as well).
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Entity_Event
-var S2CEntityEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x22)
+type S2CEntityEvent struct {
+	EntityId     ns.Int32
+	EntityStatus ns.Int8
+}
 
-type S2CEntityEventData struct {
-	//
-	EntityId ns.Int
-	// See Java Edition protocol/Entity statuses for a list of which statuses are valid for each type of entity.
-	EntityStatus ns.Byte
+func (p *S2CEntityEvent) ID() ns.VarInt   { return 0x22 }
+func (p *S2CEntityEvent) State() jp.State { return jp.StatePlay }
+func (p *S2CEntityEvent) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CEntityEvent) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	p.EntityStatus, err = buf.ReadInt8()
+	return err
+}
+
+func (p *S2CEntityEvent) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt32(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.EntityStatus)
 }
 
 // S2CEntityPositionSync represents "Teleport Entity".
 //
-// > This packet is sent by the server when an entity moves more than 8 blocks.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Teleport_Entity
-var S2CEntityPositionSync = jp.NewPacket(jp.StatePlay, jp.S2C, 0x23)
+type S2CEntityPositionSync struct {
+	EntityId  ns.VarInt
+	X         ns.Float64
+	Y         ns.Float64
+	Z         ns.Float64
+	VelocityX ns.Float64
+	VelocityY ns.Float64
+	VelocityZ ns.Float64
+	Yaw       ns.Float32
+	Pitch     ns.Float32
+	OnGround  ns.Boolean
+}
 
-type S2CEntityPositionSyncData struct {
-	//
-	EntityId ns.VarInt
-	//
-	X ns.Double
-	//
-	Y ns.Double
-	//
-	Z ns.Double
-	//
-	VelocityX ns.Double
-	//
-	VelocityY ns.Double
-	//
-	VelocityZ ns.Double
-	// Rotation on the X axis, in degrees.
-	Yaw ns.Float
-	// Rotation on the Y axis, in degrees.
-	Pitch ns.Float
-	//
-	OnGround ns.Boolean
+func (p *S2CEntityPositionSync) ID() ns.VarInt   { return 0x23 }
+func (p *S2CEntityPositionSync) State() jp.State { return jp.StatePlay }
+func (p *S2CEntityPositionSync) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CEntityPositionSync) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Y, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.VelocityX, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.VelocityY, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.VelocityZ, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.OnGround, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CEntityPositionSync) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Y); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.VelocityX); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.VelocityY); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.VelocityZ); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Pitch); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.OnGround)
 }
 
 // S2CExplode represents "Explosion".
 //
-// > Sent when an explosion occurs (creepers, TNT, and ghast fireballs).
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Explosion
-var S2CExplode = jp.NewPacket(jp.StatePlay, jp.S2C, 0x24)
+type S2CExplode struct {
+	X    ns.Float64
+	Y    ns.Float64
+	Z    ns.Float64
+	Data ns.ByteArray
+}
 
-type S2CExplodeData struct {
-	//
-	X ns.Double
-	//
-	Y ns.Double
-	//
-	Z ns.Double
-	//
-	Radius ns.Float
-	// ID in the minecraft:particle_type registry.
-	ExplosionParticleId ns.VarInt
-	// Particle data as specified in Java Edition protocol/Particles .
-	ExplosionParticleData ns.ByteArray
-	// ID in the minecraft:sound_event registry, or an inline definition.
-	ExplosionSound ns.Or[ns.Identifier, ns.ByteArray]
-	// Particle data as specified in Java Edition protocol/Particles .
-	ParticleData ns.ByteArray
-	//
-	Scaling ns.Float
-	//
-	Speed ns.Float
-	//
-	Weight ns.VarInt
+func (p *S2CExplode) ID() ns.VarInt   { return 0x24 }
+func (p *S2CExplode) State() jp.State { return jp.StatePlay }
+func (p *S2CExplode) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CExplode) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Y, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CExplode) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Y); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CForgetLevelChunk represents "Unload Chunk".
 //
-// > Tells the client to unload a chunk column.
-// >
-// > Note: The order is inverted, because the client reads this packet as one big-endian Long , with Z being the upper 32 bits.
-// >
-// > It is legal to send this packet even if the given chunk is not currently loaded.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Unload_Chunk
-var S2CForgetLevelChunk = jp.NewPacket(jp.StatePlay, jp.S2C, 0x25)
+type S2CForgetLevelChunk struct {
+	ChunkZ ns.Int32
+	ChunkX ns.Int32
+}
 
-type S2CForgetLevelChunkData struct {
-	// Block coordinate divided by 16, rounded down.
-	ChunkZ ns.Int
-	// Block coordinate divided by 16, rounded down.
-	ChunkX ns.Int
+func (p *S2CForgetLevelChunk) ID() ns.VarInt   { return 0x25 }
+func (p *S2CForgetLevelChunk) State() jp.State { return jp.StatePlay }
+func (p *S2CForgetLevelChunk) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CForgetLevelChunk) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.ChunkZ, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	p.ChunkX, err = buf.ReadInt32()
+	return err
+}
+
+func (p *S2CForgetLevelChunk) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt32(p.ChunkZ); err != nil {
+		return err
+	}
+	return buf.WriteInt32(p.ChunkX)
 }
 
 // S2CGameEvent represents "Game Event".
 //
-// > Used for a wide variety of game events, such as weather, respawn availability (from bed and respawn anchor ), game mode, some game rules, and demo messages.
-// >
-// > Events :
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Game_Event
-var S2CGameEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x26)
+type S2CGameEvent struct {
+	Event ns.Uint8
+	Value ns.Float32
+}
 
-type S2CGameEventData struct {
-	// See below.
-	Event ns.UnsignedByte
-	// Depends on Event.
-	Value ns.Float
+func (p *S2CGameEvent) ID() ns.VarInt   { return 0x26 }
+func (p *S2CGameEvent) State() jp.State { return jp.StatePlay }
+func (p *S2CGameEvent) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CGameEvent) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Event, err = buf.ReadUint8(); err != nil {
+		return err
+	}
+	p.Value, err = buf.ReadFloat32()
+	return err
+}
+
+func (p *S2CGameEvent) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteUint8(p.Event); err != nil {
+		return err
+	}
+	return buf.WriteFloat32(p.Value)
+}
+
+// S2CHitboxes represents "Hitboxes".
+//
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Hitboxes
+type S2CHitboxes struct {
+	Data ns.ByteArray
+}
+
+func (p *S2CHitboxes) ID() ns.VarInt   { return 0x27 }
+func (p *S2CHitboxes) State() jp.State { return jp.StatePlay }
+func (p *S2CHitboxes) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CHitboxes) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CHitboxes) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CHorseScreenOpen represents "Open Horse Screen".
 //
-// > This packet is used exclusively for opening the horse GUI. Open Screen is used for all other GUIs. The client will not open the inventory if the Entity ID does not point to a horse-like animal.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Open_Horse_Screen
-var S2CHorseScreenOpen = jp.NewPacket(jp.StatePlay, jp.S2C, 0x28)
-
-type S2CHorseScreenOpenData struct {
-	// Same as the field of Open Screen .
-	WindowId ns.VarInt
-	// How many columns of horse inventory slots exist in the GUI, 3 slots per column.
+type S2CHorseScreenOpen struct {
+	WindowId              ns.VarInt
 	InventoryColumnsCount ns.VarInt
-	// The "owner" entity of the GUI. The client should close the GUI if the owner entity dies or is cleared.
-	EntityId ns.Int
+	EntityId              ns.Int32
+}
+
+func (p *S2CHorseScreenOpen) ID() ns.VarInt   { return 0x28 }
+func (p *S2CHorseScreenOpen) State() jp.State { return jp.StatePlay }
+func (p *S2CHorseScreenOpen) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CHorseScreenOpen) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.InventoryColumnsCount, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.EntityId, err = buf.ReadInt32()
+	return err
+}
+
+func (p *S2CHorseScreenOpen) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.InventoryColumnsCount); err != nil {
+		return err
+	}
+	return buf.WriteInt32(p.EntityId)
 }
 
 // S2CHurtAnimation represents "Hurt Animation".
 //
-// > Plays a bobbing animation for the entity receiving damage.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Hurt_Animation
-var S2CHurtAnimation = jp.NewPacket(jp.StatePlay, jp.S2C, 0x29)
-
-type S2CHurtAnimationData struct {
-	// The ID of the entity taking damage
+type S2CHurtAnimation struct {
 	EntityId ns.VarInt
-	// The direction the damage is coming from in relation to the entity
-	Yaw ns.Float
+	Yaw      ns.Float32
+}
+
+func (p *S2CHurtAnimation) ID() ns.VarInt   { return 0x29 }
+func (p *S2CHurtAnimation) State() jp.State { return jp.StatePlay }
+func (p *S2CHurtAnimation) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CHurtAnimation) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Yaw, err = buf.ReadFloat32()
+	return err
+}
+
+func (p *S2CHurtAnimation) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteFloat32(p.Yaw)
 }
 
 // S2CInitializeBorder represents "Initialize World Border".
 //
-// > The vanilla client determines how solid to display the warning by comparing to whichever is higher, the warning distance or whichever is lower, the distance from the current diameter to the target diameter or the place the border will be after warningTime seconds. In pseudocode:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Initialize_World_Border
-var S2CInitializeBorder = jp.NewPacket(jp.StatePlay, jp.S2C, 0x2A)
-
-type S2CInitializeBorderData struct {
-	//
-	X ns.Double
-	//
-	Z ns.Double
-	// Current length of a single side of the world border, in meters.
-	OldDiameter ns.Double
-	// Target length of a single side of the world border, in meters.
-	NewDiameter ns.Double
-	// Number of real-time milli seconds until New Diameter is reached. It appears that vanilla server does not sync world border speed to game ticks, so it gets out of sync with server lag. If the world border is not moving, this is set to 0.
-	Speed ns.VarLong
-	// Resulting coordinates from a portal teleport are limited to ±value. Usually 29999984.
+type S2CInitializeBorder struct {
+	X                      ns.Float64
+	Z                      ns.Float64
+	OldDiameter            ns.Float64
+	NewDiameter            ns.Float64
+	Speed                  ns.VarLong
 	PortalTeleportBoundary ns.VarInt
-	// In meters.
-	WarningBlocks ns.VarInt
-	// In seconds as set by /worldborder warning time .
-	WarningTime ns.VarInt
+	WarningBlocks          ns.VarInt
+	WarningTime            ns.VarInt
+}
+
+func (p *S2CInitializeBorder) ID() ns.VarInt   { return 0x2A }
+func (p *S2CInitializeBorder) State() jp.State { return jp.StatePlay }
+func (p *S2CInitializeBorder) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CInitializeBorder) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.OldDiameter, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.NewDiameter, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Speed, err = buf.ReadVarLong(); err != nil {
+		return err
+	}
+	if p.PortalTeleportBoundary, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.WarningBlocks, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.WarningTime, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CInitializeBorder) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.OldDiameter); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.NewDiameter); err != nil {
+		return err
+	}
+	if err := buf.WriteVarLong(p.Speed); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.PortalTeleportBoundary); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.WarningBlocks); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.WarningTime)
 }
 
 // S2CKeepAlivePlay represents "Clientbound Keep Alive (play)".
 //
-// > The server will frequently send out a keep-alive, each containing a random ID. The client must respond with the same payload (see Serverbound Keep Alive ). If the client does not respond to a Keep Alive packet within 15 seconds after it was sent, the server kicks the client. Vice versa, if the server does not send any keep-alives for 20 seconds, the client will disconnect and yield a "Timed out" exception.
-// >
-// > The vanilla server uses a system-dependent time in milliseconds to generate the keep alive ID value.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clientbound_Keep_Alive_(Play)
-var S2CKeepAlivePlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x2B)
+type S2CKeepAlivePlay struct {
+	KeepAliveId ns.Int64
+}
 
-type S2CKeepAlivePlayData struct {
-	//
-	KeepAliveId ns.Long
+func (p *S2CKeepAlivePlay) ID() ns.VarInt   { return 0x2B }
+func (p *S2CKeepAlivePlay) State() jp.State { return jp.StatePlay }
+func (p *S2CKeepAlivePlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CKeepAlivePlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.KeepAliveId, err = buf.ReadInt64()
+	return err
+}
+
+func (p *S2CKeepAlivePlay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt64(p.KeepAliveId)
 }
 
 // S2CLevelChunkWithLight represents "Chunk Data and Update Light".
 //
-// > Sent when a chunk comes into the client's view distance, specifying its terrain, lighting and block entities.
-// >
-// > The chunk must be within the view area previously specified with Set Center Chunk ; see that packet for details.
-// >
-// > It is not strictly necessary to send all block entities in this packet; it is still legal to send them with Block Entity Data later.
-// >
-// > Unlike the Update Light packet, which uses the same format, setting the bit corresponding to a section to 0 in both of the block light or sky light masks does not appear to be useful, and the results in testing have been highly inconsistent.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chunk_Data_And_Update_Light
-var S2CLevelChunkWithLight = jp.NewPacket(jp.StatePlay, jp.S2C, 0x2C)
+type S2CLevelChunkWithLight struct {
+	ChunkX ns.Int32
+	ChunkZ ns.Int32
+	Data   ns.ByteArray
+}
 
-type S2CLevelChunkWithLightData struct {
-	// Chunk coordinate (block coordinate divided by 16, rounded down)
-	ChunkX ns.Int
-	// Chunk coordinate (block coordinate divided by 16, rounded down)
-	ChunkZ ns.Int
-	//
-	Data ns.ByteArray
-	//
-	Light ns.ByteArray
+func (p *S2CLevelChunkWithLight) ID() ns.VarInt   { return 0x2C }
+func (p *S2CLevelChunkWithLight) State() jp.State { return jp.StatePlay }
+func (p *S2CLevelChunkWithLight) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CLevelChunkWithLight) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.ChunkX, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	if p.ChunkZ, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(2097152)
+	return err
+}
+
+func (p *S2CLevelChunkWithLight) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt32(p.ChunkX); err != nil {
+		return err
+	}
+	if err := buf.WriteInt32(p.ChunkZ); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CLevelEvent represents "World Event".
 //
-// > Sent when a client is to play a sound or particle effect.
-// >
-// > By default, the Minecraft client adjusts the volume of sound effects based on distance. The final boolean field is used to disable this, and instead, the effect is played from 2 blocks away in the correct direction. Currently, this is only used for effect 1023 (wither spawn), effect 1028 (enderdragon death), and effect 1038 (end portal opening); it is ignored on other effects.
-// >
-// > Events:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#World_Event
-var S2CLevelEvent = jp.NewPacket(jp.StatePlay, jp.S2C, 0x2D)
-
-type S2CLevelEventData struct {
-	// The event, see below.
-	Event ns.Int
-	// The location of the event.
-	Location ns.Position
-	// Extra data for certain events, see below.
-	Data ns.Int
-	// See above.
+type S2CLevelEvent struct {
+	Event                 ns.Int32
+	Location              ns.Position
+	Data                  ns.Int32
 	DisableRelativeVolume ns.Boolean
+}
+
+func (p *S2CLevelEvent) ID() ns.VarInt   { return 0x2D }
+func (p *S2CLevelEvent) State() jp.State { return jp.StatePlay }
+func (p *S2CLevelEvent) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CLevelEvent) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Event, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Data, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	p.DisableRelativeVolume, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CLevelEvent) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt32(p.Event); err != nil {
+		return err
+	}
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteInt32(p.Data); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.DisableRelativeVolume)
 }
 
 // S2CLevelParticles represents "Particle".
 //
-// > Displays the named particle
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Particle
-var S2CLevelParticles = jp.NewPacket(jp.StatePlay, jp.S2C, 0x2E)
-
-type S2CLevelParticlesData struct {
-	// If true, particle distance increases from 256 to 65536.
-	LongDistance ns.Boolean
-	// Whether this particle should always be visible.
+type S2CLevelParticles struct {
+	LongDistance  ns.Boolean
 	AlwaysVisible ns.Boolean
-	// X position of the particle.
-	X ns.Double
-	// Y position of the particle.
-	Y ns.Double
-	// Z position of the particle.
-	Z ns.Double
-	// This is added to the X position after being multiplied by random.nextGaussian() .
-	OffsetX ns.Float
-	// This is added to the Y position after being multiplied by random.nextGaussian() .
-	OffsetY ns.Float
-	// This is added to the Z position after being multiplied by random.nextGaussian() .
-	OffsetZ ns.Float
-	//
-	MaxSpeed ns.Float
-	// The number of particles to create.
-	ParticleCount ns.Int
-	// ID in the minecraft:particle_type registry.
-	ParticleId ns.VarInt
-	// Particle data as specified in Java Edition protocol/Particles .
-	Data ns.ByteArray
+	X             ns.Float64
+	Y             ns.Float64
+	Z             ns.Float64
+	OffsetX       ns.Float32
+	OffsetY       ns.Float32
+	OffsetZ       ns.Float32
+	MaxSpeed      ns.Float32
+	ParticleCount ns.Int32
+	ParticleId    ns.VarInt
+	Data          ns.ByteArray
+}
+
+func (p *S2CLevelParticles) ID() ns.VarInt   { return 0x2E }
+func (p *S2CLevelParticles) State() jp.State { return jp.StatePlay }
+func (p *S2CLevelParticles) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CLevelParticles) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.LongDistance, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.AlwaysVisible, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Y, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.OffsetX, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.OffsetY, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.OffsetZ, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.MaxSpeed, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.ParticleCount, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	if p.ParticleId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CLevelParticles) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteBool(p.LongDistance); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.AlwaysVisible); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Y); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.OffsetX); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.OffsetY); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.OffsetZ); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.MaxSpeed); err != nil {
+		return err
+	}
+	if err := buf.WriteInt32(p.ParticleCount); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.ParticleId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CLightUpdate represents "Update Light".
 //
-// > Updates light levels for a chunk. See Light for information on how lighting works in Minecraft.
-// >
-// > A bit will never be set in both the block light mask and the empty block light mask, though it may be present in neither of them (if the block light does not need to be updated for the corresponding chunk section). The same applies to the sky light mask and the empty sky light mask.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Light
-var S2CLightUpdate = jp.NewPacket(jp.StatePlay, jp.S2C, 0x2F)
-
-type S2CLightUpdateData struct {
-	// Chunk coordinate (block coordinate divided by 16, rounded down)
+type S2CLightUpdate struct {
 	ChunkX ns.VarInt
-	// Chunk coordinate (block coordinate divided by 16, rounded down)
 	ChunkZ ns.VarInt
-	//
-	Data ns.ByteArray
+	Data   ns.ByteArray
+}
+
+func (p *S2CLightUpdate) ID() ns.VarInt   { return 0x2F }
+func (p *S2CLightUpdate) State() jp.State { return jp.StatePlay }
+func (p *S2CLightUpdate) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CLightUpdate) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.ChunkX, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.ChunkZ, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CLightUpdate) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.ChunkX); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.ChunkZ); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CLoginPlay represents "Login (play)".
 //
-// > See protocol encryption for information on logging in.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Login_(Play)
-var S2CLoginPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x30)
-
-type S2CLoginPlayData struct {
-	// The player's Entity ID (EID).
-	EntityId ns.Int
-	//
-	IsHardcore ns.Boolean
-	// Identifiers for all dimensions on the server.
-	DimensionNames ns.PrefixedArray[ns.Identifier]
-	// Was once used by the client to draw the tab list, but now it is ignored.
-	MaxPlayers ns.VarInt
-	// Render distance (2-32).
-	ViewDistance ns.VarInt
-	// The distance that the client will process specific things, such as entities.
-	SimulationDistance ns.VarInt
-	// If true, a vanilla client shows reduced information on the debug screen . For servers in development, this should almost always be false.
-	ReducedDebugInfo ns.Boolean
-	// Set to false when the doImmediateRespawn gamerule is true.
+type S2CLoginPlay struct {
+	EntityId            ns.Int32
+	IsHardcore          ns.Boolean
+	DimensionNames      ns.ByteArray
+	MaxPlayers          ns.VarInt
+	ViewDistance        ns.VarInt
+	SimulationDistance  ns.VarInt
+	ReducedDebugInfo    ns.Boolean
 	EnableRespawnScreen ns.Boolean
-	// Whether players can only craft recipes they have already unlocked. Currently unused by the client.
-	DoLimitedCrafting ns.Boolean
-	// The ID of the type of dimension in the minecraft:dimension_type registry, defined by the Registry Data packet.
-	DimensionType ns.VarInt
-	// Name of the dimension being spawned into.
-	DimensionName ns.Identifier
-	// First 8 bytes of the SHA-256 hash of the world's seed. Used client-side for biome noise
-	HashedSeed ns.Long
-	// 0: Survival, 1: Creative, 2: Adventure, 3: Spectator.
-	GameMode ns.UnsignedByte
-	// -1: Undefined (null), 0: Survival, 1: Creative, 2: Adventure, 3: Spectator. The previous game mode. Vanilla client uses this for the debug (F3 + N & F3 + F4) game mode switch. (More information needed)
-	PreviousGameMode ns.Byte
-	// True if the world is a debug mode world; debug mode worlds cannot be modified and have predefined blocks.
-	IsDebug ns.Boolean
-	// True if the world is a superflat world; flat worlds have different void fog and a horizon at y=0 instead of y=63.
-	IsFlat ns.Boolean
-	// If true, then the next two fields are present.
-	HasDeathLocation ns.Boolean
-	// Name of the dimension the player died in.
-	DeathDimensionName ns.Optional[ns.Identifier]
-	// The location that the player died at.
-	DeathLocation ns.Optional[ns.Position]
-	// The number of ticks until the player can use the last used portal again. Looks like it's an attempt to fix MC-180.
-	PortalCooldown ns.VarInt
-	//
-	SeaLevel ns.VarInt
-	//
-	EnforcesSecureChat ns.Boolean
+	DoLimitedCrafting   ns.Boolean
+	DimensionType       ns.VarInt
+	DimensionName       ns.Identifier
+	HashedSeed          ns.Int64
+	GameMode            ns.Uint8
+	PreviousGameMode    ns.Int8
+	IsDebug             ns.Boolean
+	IsFlat              ns.Boolean
+	DeathLocation       ns.PrefixedOptional[ns.ByteArray]
+	PortalCooldown      ns.VarInt
+	SeaLevel            ns.VarInt
+	EnforcesSecureChat  ns.Boolean
+}
+
+func (p *S2CLoginPlay) ID() ns.VarInt   { return 0x30 }
+func (p *S2CLoginPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CLoginPlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CLoginPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	if p.IsHardcore, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.DimensionNames, err = buf.ReadByteArray(1048576); err != nil {
+		return err
+	}
+	if p.MaxPlayers, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.ViewDistance, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.SimulationDistance, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.ReducedDebugInfo, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.EnableRespawnScreen, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.DoLimitedCrafting, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.DimensionType, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.DimensionName, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	if p.HashedSeed, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	if p.GameMode, err = buf.ReadUint8(); err != nil {
+		return err
+	}
+	if p.PreviousGameMode, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.IsDebug, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.IsFlat, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if err = p.DeathLocation.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
+		return b.ReadByteArray(1048576)
+	}); err != nil {
+		return err
+	}
+	if p.PortalCooldown, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.SeaLevel, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.EnforcesSecureChat, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CLoginPlay) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt32(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.IsHardcore); err != nil {
+		return err
+	}
+	if err := buf.WriteByteArray(p.DimensionNames); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.MaxPlayers); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.ViewDistance); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SimulationDistance); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.ReducedDebugInfo); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.EnableRespawnScreen); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.DoLimitedCrafting); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.DimensionType); err != nil {
+		return err
+	}
+	if err := buf.WriteIdentifier(p.DimensionName); err != nil {
+		return err
+	}
+	if err := buf.WriteInt64(p.HashedSeed); err != nil {
+		return err
+	}
+	if err := buf.WriteUint8(p.GameMode); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.PreviousGameMode); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.IsDebug); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.IsFlat); err != nil {
+		return err
+	}
+	if err := p.DeathLocation.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
+		return b.WriteByteArray(v)
+	}); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.PortalCooldown); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SeaLevel); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.EnforcesSecureChat)
 }
 
 // S2CMapItemData represents "Map Data".
 //
-// > Updates a rectangular area on a map item.
-// >
-// > For icons, a direction of 0 is a vertical icon and increments by 22.5° (360/16).
-// >
-// > Types are based off of rows and columns in map_icons.png :
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Map_Data
-var S2CMapItemData = jp.NewPacket(jp.StatePlay, jp.S2C, 0x31)
-
-type S2CMapItemDataData struct {
-	// Map ID of the map being modified
+type S2CMapItemData struct {
 	MapId ns.VarInt
-	// From 0 for a fully zoomed-in map (1 block per pixel) to 4 for a fully zoomed-out map (16 blocks per pixel)
-	Scale ns.Byte
-	// True if the map has been locked in a cartography table
-	Locked ns.Boolean
-	// Map coordinates: -128 for furthest left, +127 for furthest right
-	X ns.Byte
-	// Map coordinates: -128 for highest, +127 for lowest
-	Z ns.Byte
-	// 0-15
-	Direction ns.Byte
-	//
-	DisplayName ns.PrefixedOptional[ns.TextComponent]
-	// Only if Columns is more than 0; number of rows updated
-	Rows ns.Optional[ns.UnsignedByte]
-	// (duplicate of X) Only if Columns is more than 0; x offset of the westernmost column
-	X2 ns.Optional[ns.UnsignedByte]
-	// (duplicate of Z) Only if Columns is more than 0; z offset of the northernmost row
-	Z2 ns.Optional[ns.UnsignedByte]
-	// Only if Columns is more than 0; see Map item format
-	Data ns.Optional[ns.PrefixedArray[ns.Byte]]
+	Data  ns.ByteArray
+}
+
+func (p *S2CMapItemData) ID() ns.VarInt   { return 0x31 }
+func (p *S2CMapItemData) State() jp.State { return jp.StatePlay }
+func (p *S2CMapItemData) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CMapItemData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.MapId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CMapItemData) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.MapId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CMerchantOffers represents "Merchant Offers".
 //
-// > The list of trades a villager NPC is offering.
-// >
-// > Trade Item:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Merchant_Offers
-var S2CMerchantOffers = jp.NewPacket(jp.StatePlay, jp.S2C, 0x32)
-
-type S2CMerchantOffersData struct {
-	// The ID of the window that is open; this is an int rather than a byte.
+type S2CMerchantOffers struct {
 	WindowId ns.VarInt
-	// The item the player will receive from this villager trade.
-	OutputItem ns.Slot
-	// The second item the player has to supply for this villager trade.
-	InputItem2 ns.PrefixedOptional[ns.ByteArray]
-	// True if the trade is disabled; false if the trade is enabled.
-	TradeDisabled ns.Boolean
-	// Number of times the trade has been used so far. If equal to the maximum number of trades, the client will display a red X.
-	NumberOfTradeUses ns.Int
-	// Number of times this trade can be used before it's exhausted.
-	MaximumNumberOfTradeUses ns.Int
-	// Amount of XP the villager will earn each time the trade is used.
-	Xp ns.Int
-	// Can be zero or negative. The number is added to the price when an item is discounted due to player reputation or other effects.
-	SpecialPrice ns.Int
-	// Can be low (0.05) or high (0.2). Determines how much demand, player reputation, and temporary effects will adjust the price.
-	PriceMultiplier ns.Float
-	// If positive, causes the price to increase. Negative values seem to be treated the same as zero.
-	Demand ns.Int
-	// Appears on the trade GUI; meaning comes from the translation key merchant.level. + level. 1: Novice, 2: Apprentice, 3: Journeyman, 4: Expert, 5: Master.
-	VillagerLevel ns.VarInt
-	// Total experience for this villager (always 0 for the wandering trader).
-	Experience ns.VarInt
-	// True if this is a regular villager; false for the wandering trader. When false, hides the villager level and some other GUI elements.
-	IsRegularVillager ns.Boolean
-	// True for regular villagers and false for the wandering trader. If true, the "Villagers restock up to two times per day." message is displayed when hovering over disabled trades.
-	CanRestock ns.Boolean
+	Data     ns.ByteArray
+}
+
+func (p *S2CMerchantOffers) ID() ns.VarInt   { return 0x32 }
+func (p *S2CMerchantOffers) State() jp.State { return jp.StatePlay }
+func (p *S2CMerchantOffers) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CMerchantOffers) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CMerchantOffers) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CMoveEntityPos represents "Update Entity Position".
 //
-// > This packet is sent by the server when an entity moves a small distance. The change in position is represented as a fixed-point number with 12 fraction bits and 4 integer bits. As such, the maximum movement distance along each axis is 8 blocks in the negative direction, or 7.999755859375 blocks in the positive direction. If the movement exceeds these limits, Teleport Entity should be sent instead.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Entity_Position
-var S2CMoveEntityPos = jp.NewPacket(jp.StatePlay, jp.S2C, 0x33)
-
-type S2CMoveEntityPosData struct {
-	//
+type S2CMoveEntityPos struct {
 	EntityId ns.VarInt
-	// Change in X position as currentX * 4096 - prevX * 4096 .
-	DeltaX ns.Short
-	// Change in Y position as currentY * 4096 - prevY * 4096 .
-	DeltaY ns.Short
-	// Change in Z position as currentZ * 4096 - prevZ * 4096 .
-	DeltaZ ns.Short
-	//
+	DeltaX   ns.Int16
+	DeltaY   ns.Int16
+	DeltaZ   ns.Int16
 	OnGround ns.Boolean
+}
+
+func (p *S2CMoveEntityPos) ID() ns.VarInt   { return 0x33 }
+func (p *S2CMoveEntityPos) State() jp.State { return jp.StatePlay }
+func (p *S2CMoveEntityPos) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CMoveEntityPos) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.DeltaX, err = buf.ReadInt16(); err != nil {
+		return err
+	}
+	if p.DeltaY, err = buf.ReadInt16(); err != nil {
+		return err
+	}
+	if p.DeltaZ, err = buf.ReadInt16(); err != nil {
+		return err
+	}
+	p.OnGround, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CMoveEntityPos) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteInt16(p.DeltaX); err != nil {
+		return err
+	}
+	if err := buf.WriteInt16(p.DeltaY); err != nil {
+		return err
+	}
+	if err := buf.WriteInt16(p.DeltaZ); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.OnGround)
 }
 
 // S2CMoveEntityPosRot represents "Update Entity Position and Rotation".
 //
-// > This packet is sent by the server when an entity rotates and moves. See #Update Entity Position for how the position is encoded.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Entity_Position_And_Rotation
-var S2CMoveEntityPosRot = jp.NewPacket(jp.StatePlay, jp.S2C, 0x34)
-
-type S2CMoveEntityPosRotData struct {
-	//
+type S2CMoveEntityPosRot struct {
 	EntityId ns.VarInt
-	// Change in X position as currentX * 4096 - prevX * 4096 .
-	DeltaX ns.Short
-	// Change in Y position as currentY * 4096 - prevY * 4096 .
-	DeltaY ns.Short
-	// Change in Z position as currentZ * 4096 - prevZ * 4096 .
-	DeltaZ ns.Short
-	// New angle, not a delta.
-	Yaw ns.Angle
-	// New angle, not a delta.
-	Pitch ns.Angle
-	//
+	DeltaX   ns.Int16
+	DeltaY   ns.Int16
+	DeltaZ   ns.Int16
+	Yaw      ns.Angle
+	Pitch    ns.Angle
 	OnGround ns.Boolean
+}
+
+func (p *S2CMoveEntityPosRot) ID() ns.VarInt   { return 0x34 }
+func (p *S2CMoveEntityPosRot) State() jp.State { return jp.StatePlay }
+func (p *S2CMoveEntityPosRot) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CMoveEntityPosRot) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.DeltaX, err = buf.ReadInt16(); err != nil {
+		return err
+	}
+	if p.DeltaY, err = buf.ReadInt16(); err != nil {
+		return err
+	}
+	if p.DeltaZ, err = buf.ReadInt16(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadAngle(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadAngle(); err != nil {
+		return err
+	}
+	p.OnGround, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CMoveEntityPosRot) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteInt16(p.DeltaX); err != nil {
+		return err
+	}
+	if err := buf.WriteInt16(p.DeltaY); err != nil {
+		return err
+	}
+	if err := buf.WriteInt16(p.DeltaZ); err != nil {
+		return err
+	}
+	if err := buf.WriteAngle(p.Yaw); err != nil {
+		return err
+	}
+	if err := buf.WriteAngle(p.Pitch); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.OnGround)
 }
 
 // S2CMoveMinecartAlongTrack represents "Move Minecart Along Track".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Move_Minecart_Along_Track
-var S2CMoveMinecartAlongTrack = jp.NewPacket(jp.StatePlay, jp.S2C, 0x35)
-
-type S2CMoveMinecartAlongTrackData struct {
-	//
+type S2CMoveMinecartAlongTrack struct {
 	EntityId ns.VarInt
-	//
-	Y ns.Double
-	//
-	Z ns.Double
-	//
-	VelocityX ns.Double
-	//
-	VelocityY ns.Double
-	//
-	VelocityZ ns.Double
-	//
-	Yaw ns.Angle
-	//
-	Pitch ns.Angle
+	Data     ns.ByteArray
+}
+
+func (p *S2CMoveMinecartAlongTrack) ID() ns.VarInt   { return 0x35 }
+func (p *S2CMoveMinecartAlongTrack) State() jp.State { return jp.StatePlay }
+func (p *S2CMoveMinecartAlongTrack) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CMoveMinecartAlongTrack) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CMoveMinecartAlongTrack) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CMoveEntityRot represents "Update Entity Rotation".
 //
-// > This packet is sent by the server when an entity rotates.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Entity_Rotation
-var S2CMoveEntityRot = jp.NewPacket(jp.StatePlay, jp.S2C, 0x36)
-
-type S2CMoveEntityRotData struct {
-	//
+type S2CMoveEntityRot struct {
 	EntityId ns.VarInt
-	// New angle, not a delta.
-	Yaw ns.Angle
-	// New angle, not a delta.
-	Pitch ns.Angle
-	//
+	Yaw      ns.Angle
+	Pitch    ns.Angle
 	OnGround ns.Boolean
+}
+
+func (p *S2CMoveEntityRot) ID() ns.VarInt   { return 0x36 }
+func (p *S2CMoveEntityRot) State() jp.State { return jp.StatePlay }
+func (p *S2CMoveEntityRot) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CMoveEntityRot) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadAngle(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadAngle(); err != nil {
+		return err
+	}
+	p.OnGround, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CMoveEntityRot) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteAngle(p.Yaw); err != nil {
+		return err
+	}
+	if err := buf.WriteAngle(p.Pitch); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.OnGround)
 }
 
 // S2CMoveVehicle represents "Move Vehicle (clientbound)".
 //
-// > If the player is riding a client-side-controlled vehicle, teleports the vehicle to the specified position. Sent by the vanilla server in response to serverbound Move Vehicle packets that fail the movement speed check. Note that all fields use absolute positioning and do not allow for relative positioning.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Move_Vehicle_(Clientbound)
-var S2CMoveVehicle = jp.NewPacket(jp.StatePlay, jp.S2C, 0x37)
+type S2CMoveVehicle struct {
+	X     ns.Float64
+	Y     ns.Float64
+	Z     ns.Float64
+	Yaw   ns.Float32
+	Pitch ns.Float32
+}
 
-type S2CMoveVehicleData struct {
-	// Absolute position (X coordinate).
-	X ns.Double
-	// Absolute position (Y coordinate).
-	Y ns.Double
-	// Absolute position (Z coordinate).
-	Z ns.Double
-	// Absolute rotation on the vertical axis, in degrees.
-	Yaw ns.Float
-	// Absolute rotation on the horizontal axis, in degrees.
-	Pitch ns.Float
+func (p *S2CMoveVehicle) ID() ns.VarInt   { return 0x37 }
+func (p *S2CMoveVehicle) State() jp.State { return jp.StatePlay }
+func (p *S2CMoveVehicle) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CMoveVehicle) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Y, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.Pitch, err = buf.ReadFloat32()
+	return err
+}
+
+func (p *S2CMoveVehicle) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Y); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	return buf.WriteFloat32(p.Pitch)
 }
 
 // S2COpenBook represents "Open Book".
 //
-// > Sent when a player right-clicks with a signed book. This tells the client to open the book GUI.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Open_Book
-var S2COpenBook = jp.NewPacket(jp.StatePlay, jp.S2C, 0x38)
-
-type S2COpenBookData struct {
-	// 0: Main hand, 1: Off hand .
+type S2COpenBook struct {
 	Hand ns.VarInt
+}
+
+func (p *S2COpenBook) ID() ns.VarInt   { return 0x38 }
+func (p *S2COpenBook) State() jp.State { return jp.StatePlay }
+func (p *S2COpenBook) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2COpenBook) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Hand, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2COpenBook) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.Hand)
 }
 
 // S2COpenScreen represents "Open Screen".
 //
-// > This is sent to the client when it should open an inventory, such as a chest, workbench, furnace, or other container. Resending this packet with the already existing window ID, will update the window title and window type without closing the window.
-// >
-// > This message is not sent to clients opening their own inventory, nor do clients inform the server in any way when doing so. From the server's perspective, the inventory is always "open" whenever no other windows are.
-// >
-// > For horses, use Open Horse Screen .
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Open_Screen
-var S2COpenScreen = jp.NewPacket(jp.StatePlay, jp.S2C, 0x39)
-
-type S2COpenScreenData struct {
-	// An identifier for the window to be displayed. The vanilla server implementation is a counter, starting at 1. There can only be one window at a time; this is only used to ignore outdated packets targeting already-closed windows. Note also that the Window ID field in most other packets is only a single byte, and indeed, the vanilla server wraps around after 100.
-	WindowId ns.VarInt
-	// The window type to use for display. Contained in the minecraft:menu registry; see Java Edition protocol/Inventory for the different values.
-	WindowType ns.VarInt
-	// The title of the window.
+type S2COpenScreen struct {
+	WindowId    ns.VarInt
+	WindowType  ns.VarInt
 	WindowTitle ns.TextComponent
+}
+
+func (p *S2COpenScreen) ID() ns.VarInt   { return 0x39 }
+func (p *S2COpenScreen) State() jp.State { return jp.StatePlay }
+func (p *S2COpenScreen) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2COpenScreen) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.WindowType, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.WindowTitle, err = buf.ReadTextComponent()
+	return err
+}
+
+func (p *S2COpenScreen) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.WindowType); err != nil {
+		return err
+	}
+	return buf.WriteTextComponent(p.WindowTitle)
 }
 
 // S2COpenSignEditor represents "Open Sign Editor".
 //
-// > Sent when the client has placed a sign and is allowed to send Update Sign . There must already be a sign at the given location (which the client does not do automatically) - send a Block Update first.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Open_Sign_Editor
-var S2COpenSignEditor = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3A)
-
-type S2COpenSignEditorData struct {
-	//
-	Location ns.Position
-	// Whether the opened editor is for the front or on the back of the sign
+type S2COpenSignEditor struct {
+	Location    ns.Position
 	IsFrontText ns.Boolean
+}
+
+func (p *S2COpenSignEditor) ID() ns.VarInt   { return 0x3A }
+func (p *S2COpenSignEditor) State() jp.State { return jp.StatePlay }
+func (p *S2COpenSignEditor) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2COpenSignEditor) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	p.IsFrontText, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2COpenSignEditor) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.IsFrontText)
 }
 
 // S2CPingPlay represents "Ping (play)".
 //
-// > Packet is not used by the vanilla server. When sent to the client, client responds with a Pong packet with the same ID.
-// >
-// > Unlike Keep Alive this packet is handled synchronously with game logic on the vanilla client, and can thus be used to reliably detect which serverbound packets were sent after the ping and all preceding clientbound packets were received and handled.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Ping_(Play)
-var S2CPingPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3B)
+type S2CPingPlay struct {
+	Id ns.Int32
+}
 
-type S2CPingPlayData struct {
-	//
-	Id ns.Int
+func (p *S2CPingPlay) ID() ns.VarInt   { return 0x3B }
+func (p *S2CPingPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CPingPlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPingPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Id, err = buf.ReadInt32()
+	return err
+}
+
+func (p *S2CPingPlay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt32(p.Id)
 }
 
 // S2CPongResponsePlay represents "Ping Response (play)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Ping_Response_(Play)
-var S2CPongResponsePlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3C)
+type S2CPongResponsePlay struct {
+	Payload ns.Int64
+}
 
-type S2CPongResponsePlayData struct {
-	// Should be the same as sent by the client.
-	Payload ns.Long
+func (p *S2CPongResponsePlay) ID() ns.VarInt   { return 0x3C }
+func (p *S2CPongResponsePlay) State() jp.State { return jp.StatePlay }
+func (p *S2CPongResponsePlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPongResponsePlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Payload, err = buf.ReadInt64()
+	return err
+}
+
+func (p *S2CPongResponsePlay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteInt64(p.Payload)
 }
 
 // S2CPlaceGhostRecipe represents "Place Ghost Recipe".
 //
-// > Response to the serverbound packet ( Place Recipe ), with the same recipe ID. Appears to be used to notify the UI.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Place_Ghost_Recipe
-var S2CPlaceGhostRecipe = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3D)
-
-type S2CPlaceGhostRecipeData struct {
-	//
-	WindowId ns.VarInt
-	//
+type S2CPlaceGhostRecipe struct {
+	WindowId      ns.VarInt
 	RecipeDisplay ns.ByteArray
+}
+
+func (p *S2CPlaceGhostRecipe) ID() ns.VarInt   { return 0x3D }
+func (p *S2CPlaceGhostRecipe) State() jp.State { return jp.StatePlay }
+func (p *S2CPlaceGhostRecipe) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPlaceGhostRecipe) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.RecipeDisplay, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CPlaceGhostRecipe) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.WindowId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.RecipeDisplay)
 }
 
 // S2CPlayerAbilities represents "Player Abilities (clientbound)".
 //
-// > The latter 2 floats are used to indicate the flying speed and field of view respectively, while the first byte is used to determine the value of 4 booleans.
-// >
-// > About the flags:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Abilities_(Clientbound)
-var S2CPlayerAbilities = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3E)
+type S2CPlayerAbilities struct {
+	Flags               ns.Int8
+	FlyingSpeed         ns.Float32
+	FieldOfViewModifier ns.Float32
+}
 
-type S2CPlayerAbilitiesData struct {
-	// Bit field, see below.
-	Flags ns.Byte
-	// 0.05 by default.
-	FlyingSpeed ns.Float
-	// Modifies the field of view, like a speed potion. A vanilla server will use the same value as the movement speed sent in the Update Attributes packet, which defaults to 0.1 for players.
-	FieldOfViewModifier ns.Float
+func (p *S2CPlayerAbilities) ID() ns.VarInt   { return 0x3E }
+func (p *S2CPlayerAbilities) State() jp.State { return jp.StatePlay }
+func (p *S2CPlayerAbilities) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPlayerAbilities) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Flags, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.FlyingSpeed, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.FieldOfViewModifier, err = buf.ReadFloat32()
+	return err
+}
+
+func (p *S2CPlayerAbilities) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt8(p.Flags); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.FlyingSpeed); err != nil {
+		return err
+	}
+	return buf.WriteFloat32(p.FieldOfViewModifier)
 }
 
 // S2CPlayerChat represents "Player Chat Message".
 //
-// > Sends the client a chat message from a player.
-// >
-// > Currently, a lot is unknown about this packet, blank descriptions are for those that are unknown
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Chat_Message
-var S2CPlayerChat = jp.NewPacket(jp.StatePlay, jp.S2C, 0x3F)
+type S2CPlayerChat struct {
+	Data ns.ByteArray
+}
 
-type S2CPlayerChatData struct {
-	GlobalIndex ns.VarInt
-	// Used by the vanilla client for the disableChat launch option. Setting both longs to 0 will always display the message regardless of the setting.
-	Sender ns.UUID
-	//
-	Index ns.VarInt
-	// Cryptography, the signature consists of the Sender UUID, Session UUID from the Player Session packet, Index, Salt, Timestamp in epoch seconds, the length of the original chat content, the original content itself, the length of Previous Messages, and all of the Previous message signatures. These values are hashed with SHA-256 and signed using the RSA cryptosystem. Modifying any of these values in the packet will cause this signature to fail. This buffer is always 256 bytes long and it is not length-prefixed.
-	MessageSignatureBytes ns.PrefixedOptional[ns.FixedByteArray] `mc:"length:256"`
-	// Raw (optionally) signed sent message content. This is used as the content parameter when formatting the message on the client.
-	Message ns.String
-	// Represents the time the message was signed as milliseconds since the epoch , used to check if the message was received within 2 minutes of it being sent.
-	Timestamp ns.Long
-	// Cryptography, used for validating the message signature.
-	Salt ns.Long
-	// The previous message's signature. Contains the same type of data as Message Signature bytes (256 bytes) above. Not length-prefxied.
-	SignatureData ns.PrefixedArray[struct {
-		// The message Id + 1, used for validating message signature. The next field is present only when value of this field is equal to 0.
-		MessageID ns.VarInt
-		// The previous message's signature. Contains the same type of data as Message Signature bytes (256 bytes) above. Not length-prefxied.
-		Signature ns.Optional[ns.FixedByteArray] `mc:"length:256"`
-	}]
-	// The original message content, before filtering.
-	UnsignedContent ns.PrefixedOptional[ns.TextComponent]
-	// If the message has been filtered
-	FilterType ns.VarInt
-	// Only present if the Filter Type is Partially Filtered. Specifies the indexes at which characters in the original message string should be replaced with the # symbol (i.e. filtered) by the vanilla client
-	FilterTypeBits ns.Optional[ns.BitSet]
-	// Either the type of chat in the minecraft:chat_type registry, defined by the Registry Data packet, or an inline definition.
-	ChatType ns.IDor[ns.ChatType]
-	// The name of the one sending the message, usually the sender's display name. This is used as the sender parameter when formatting the message on the client.
-	SenderName ns.TextComponent
-	// The name of the one receiving the message, usually the receiver's display name. This is used as the target parameter when formatting the message on the client.
-	TargetName ns.PrefixedOptional[ns.TextComponent]
+func (p *S2CPlayerChat) ID() ns.VarInt   { return 0x3F }
+func (p *S2CPlayerChat) State() jp.State { return jp.StatePlay }
+func (p *S2CPlayerChat) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPlayerChat) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CPlayerChat) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CPlayerCombatEnd represents "End Combat".
 //
-// > Unused by the vanilla client. This data was once used for twitch.tv metadata circa 1.8.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#End_Combat
-var S2CPlayerCombatEnd = jp.NewPacket(jp.StatePlay, jp.S2C, 0x40)
-
-type S2CPlayerCombatEndData struct {
-	// Length of the combat in ticks.
+type S2CPlayerCombatEnd struct {
 	Duration ns.VarInt
+}
+
+func (p *S2CPlayerCombatEnd) ID() ns.VarInt   { return 0x40 }
+func (p *S2CPlayerCombatEnd) State() jp.State { return jp.StatePlay }
+func (p *S2CPlayerCombatEnd) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPlayerCombatEnd) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Duration, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CPlayerCombatEnd) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.Duration)
 }
 
 // S2CPlayerCombatEnter represents "Enter Combat".
 //
-// > Unused by the vanilla client. This data was once used for twitch.tv metadata circa 1.8.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Enter_Combat
-var S2CPlayerCombatEnter = jp.NewPacket(jp.StatePlay, jp.S2C, 0x41)
+type S2CPlayerCombatEnter struct{}
 
-type S2CPlayerCombatEnterData struct {
-	// No fields
-}
+func (p *S2CPlayerCombatEnter) ID() ns.VarInt                { return 0x41 }
+func (p *S2CPlayerCombatEnter) State() jp.State              { return jp.StatePlay }
+func (p *S2CPlayerCombatEnter) Bound() jp.Bound              { return jp.S2C }
+func (p *S2CPlayerCombatEnter) Read(*ns.PacketBuffer) error  { return nil }
+func (p *S2CPlayerCombatEnter) Write(*ns.PacketBuffer) error { return nil }
 
 // S2CPlayerCombatKill represents "Combat Death".
 //
-// > Used to send a respawn screen.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Combat_Death
-var S2CPlayerCombatKill = jp.NewPacket(jp.StatePlay, jp.S2C, 0x42)
-
-type S2CPlayerCombatKillData struct {
-	// Entity ID of the player that died (should match the client's entity ID).
+type S2CPlayerCombatKill struct {
 	PlayerId ns.VarInt
-	// The death message.
-	Message ns.TextComponent
+	Message  ns.TextComponent
+}
+
+func (p *S2CPlayerCombatKill) ID() ns.VarInt   { return 0x42 }
+func (p *S2CPlayerCombatKill) State() jp.State { return jp.StatePlay }
+func (p *S2CPlayerCombatKill) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPlayerCombatKill) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.PlayerId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Message, err = buf.ReadTextComponent()
+	return err
+}
+
+func (p *S2CPlayerCombatKill) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.PlayerId); err != nil {
+		return err
+	}
+	return buf.WriteTextComponent(p.Message)
 }
 
 // S2CPlayerInfoRemove represents "Player Info Remove".
 //
-// > Sent by the server to remove players from the client's player list.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Info_Remove
-var S2CPlayerInfoRemove = jp.NewPacket(jp.StatePlay, jp.S2C, 0x43)
+type S2CPlayerInfoRemove struct {
+	Uuids ns.ByteArray
+}
 
-type S2CPlayerInfoRemoveData struct {
-	// UUIDs of players to remove.
-	Uuids ns.PrefixedArray[ns.UUID]
+func (p *S2CPlayerInfoRemove) ID() ns.VarInt   { return 0x43 }
+func (p *S2CPlayerInfoRemove) State() jp.State { return jp.StatePlay }
+func (p *S2CPlayerInfoRemove) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPlayerInfoRemove) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Uuids, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CPlayerInfoRemove) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Uuids)
 }
 
 // S2CPlayerInfoUpdate represents "Player Info Update".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Info_Update
-var S2CPlayerInfoUpdate = jp.NewPacket(jp.StatePlay, jp.S2C, 0x44)
+type S2CPlayerInfoUpdate struct {
+	Data ns.ByteArray
+}
 
-type S2CPlayerInfoUpdateData struct {
-	// Determines what actions are present.
-	Actions ns.EnumSet
-	// The length of this array is determined by the number of Player Actions that give a non-zero value when applying its mask to the actions flag. For example, given the decimal number 5, binary 00000101. The masks 0x01 and 0x04 would return a non-zero value, meaning the Player Actions array would include two actions: Add Player and Update Game Mode.
-	PlayerActions ns.ByteArray
+func (p *S2CPlayerInfoUpdate) ID() ns.VarInt   { return 0x44 }
+func (p *S2CPlayerInfoUpdate) State() jp.State { return jp.StatePlay }
+func (p *S2CPlayerInfoUpdate) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPlayerInfoUpdate) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CPlayerInfoUpdate) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CPlayerLookAt represents "Look At".
 //
-// > Used to rotate the client player to face the given location or entity (for /teleport [<targets>] <x> <y> <z> facing ).
-// >
-// > If the entity given by entity ID cannot be found, this packet should be treated as if is entity was false.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Look_At
-var S2CPlayerLookAt = jp.NewPacket(jp.StatePlay, jp.S2C, 0x45)
+type S2CPlayerLookAt struct {
+	FeetEyes       ns.VarInt
+	TargetX        ns.Float64
+	TargetY        ns.Float64
+	TargetZ        ns.Float64
+	IsEntity       ns.Boolean
+	EntityId       ns.VarInt
+	EntityFeetEyes ns.VarInt
+}
 
-type S2CPlayerLookAtData struct {
-	// Values are feet=0, eyes=1. If set to eyes, aims using the head position; otherwise, aims using the feet position.
-	FeetEyes ns.VarInt
-	// x coordinate of the point to face towards.
-	TargetX ns.Double
-	// y coordinate of the point to face towards.
-	TargetY ns.Double
-	// z coordinate of the point to face towards.
-	TargetZ ns.Double
-	// If true, additional information about an entity is provided.
-	IsEntity ns.Boolean
-	// Only if is entity is true — the entity to face towards.
-	EntityId ns.Optional[ns.VarInt]
-	// Whether to look at the entity's eyes or feet. Same values and meanings as before, just for the entity's head/feet.
-	EntityFeetEyes ns.Optional[ns.VarInt]
+func (p *S2CPlayerLookAt) ID() ns.VarInt   { return 0x45 }
+func (p *S2CPlayerLookAt) State() jp.State { return jp.StatePlay }
+func (p *S2CPlayerLookAt) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPlayerLookAt) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.FeetEyes, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.TargetX, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.TargetY, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.TargetZ, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.IsEntity, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.IsEntity {
+		if p.EntityId, err = buf.ReadVarInt(); err != nil {
+			return err
+		}
+		p.EntityFeetEyes, err = buf.ReadVarInt()
+	}
+	return err
+}
+
+func (p *S2CPlayerLookAt) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.FeetEyes); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.TargetX); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.TargetY); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.TargetZ); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.IsEntity); err != nil {
+		return err
+	}
+	if p.IsEntity {
+		if err := buf.WriteVarInt(p.EntityId); err != nil {
+			return err
+		}
+		return buf.WriteVarInt(p.EntityFeetEyes)
+	}
+	return nil
 }
 
 // S2CPlayerPosition represents "Synchronize Player Position".
 //
-// > Teleports the client, e.g., during login, when using an ender pearl, in response to invalid move packets, etc.
-// >
-// > Due to latency, the server may receive outdated movement packets sent before the client was aware of the teleport. To account for this, the server ignores all movement packets from the client until a Confirm Teleportation packet with an ID matching the one sent in the teleport packet is received. The vanilla client will also send a Set Player Position and Rotation packet after the Confirm Teleportation packet with the position and rotation received from this packet, and horizontal collision and on ground set to false.
-// >
-// > Yaw is measured in degrees and does not follow classical trigonometry rules. The unit circle of yaw on the XZ-plane starts at (0, 1) and turns counterclockwise, with 90 at (-1, 0), 180 at (0, -1) and 270 at (1, 0). Additionally, yaw is not clamped to between 0 and 360 degrees; any number is valid, including negative numbers and numbers greater than 360 (see MC-90097 ).
-// >
-// > Pitch is measured in degrees, where 0 is looking straight ahead, -90 is looking straight up, and 90 is looking straight down.
-// >
-// > If the player is riding a vehicle, this packet has no effect, but both the Confirm Teleportation and Set Player Position and Rotation packets are still sent.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Synchronize_Player_Position
-var S2CPlayerPosition = jp.NewPacket(jp.StatePlay, jp.S2C, 0x46)
-
-type S2CPlayerPositionData struct {
-	// Client should confirm this packet with Confirm Teleportation containing the same Teleport ID.
+type S2CPlayerPosition struct {
 	TeleportId ns.VarInt
-	// Absolute or relative position, depending on Flags.
-	X ns.Double
-	// Absolute or relative position, depending on Flags.
-	Y ns.Double
-	// Absolute or relative position, depending on Flags.
-	Z ns.Double
-	//
-	VelocityX ns.Double
-	//
-	VelocityY ns.Double
-	//
-	VelocityZ ns.Double
-	// Absolute or relative rotation on the X axis, in degrees.
-	Yaw ns.Float
-	// Absolute or relative rotation on the Y axis, in degrees.
-	Pitch ns.Float
-	//
-	Flags ns.Byte
+	X          ns.Float64
+	Y          ns.Float64
+	Z          ns.Float64
+	VelocityX  ns.Float64
+	VelocityY  ns.Float64
+	VelocityZ  ns.Float64
+	Yaw        ns.Float32
+	Pitch      ns.Float32
+	Flags      ns.Int32
+}
+
+func (p *S2CPlayerPosition) ID() ns.VarInt   { return 0x46 }
+func (p *S2CPlayerPosition) State() jp.State { return jp.StatePlay }
+func (p *S2CPlayerPosition) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPlayerPosition) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.TeleportId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Y, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.VelocityX, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.VelocityY, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.VelocityZ, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.Flags, err = buf.ReadInt32()
+	return err
+}
+
+func (p *S2CPlayerPosition) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.TeleportId); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Y); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.VelocityX); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.VelocityY); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.VelocityZ); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Pitch); err != nil {
+		return err
+	}
+	return buf.WriteInt32(p.Flags)
 }
 
 // S2CPlayerRotation represents "Player Rotation".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Rotation
-var S2CPlayerRotation = jp.NewPacket(jp.StatePlay, jp.S2C, 0x47)
-
-type S2CPlayerRotationData struct {
-	// Rotation on the X axis, in degrees.
-	Yaw ns.Float
-	//
-	RelativeYaw ns.Boolean
-	// Rotation on the Y axis, in degrees.
-	Pitch ns.Float
-	//
+type S2CPlayerRotation struct {
+	Yaw           ns.Float32
+	RelativeYaw   ns.Boolean
+	Pitch         ns.Float32
 	RelativePitch ns.Boolean
+}
+
+func (p *S2CPlayerRotation) ID() ns.VarInt   { return 0x47 }
+func (p *S2CPlayerRotation) State() jp.State { return jp.StatePlay }
+func (p *S2CPlayerRotation) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CPlayerRotation) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.RelativeYaw, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.RelativePitch, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CPlayerRotation) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.RelativeYaw); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Pitch); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.RelativePitch)
 }
 
 // S2CRecipeBookAdd represents "Recipe Book Add".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Recipe_Book_Add
-var S2CRecipeBookAdd = jp.NewPacket(jp.StatePlay, jp.S2C, 0x48)
+type S2CRecipeBookAdd struct {
+	Data ns.ByteArray
+}
 
-type S2CRecipeBookAddData struct {
-	// Prefixed Array
-	Recipes ns.PrefixedArray[struct {
-		RecipeId    ns.VarInt
-		Display     ns.ByteArray
-		GroupId     ns.VarInt
-		CategoryId  ns.VarInt
-		Ingredients ns.PrefixedOptional[ns.ByteArray]
-		Flags       ns.Byte
-	}]
-	// Replace or Add to known recipes
-	Replace ns.Boolean
+func (p *S2CRecipeBookAdd) ID() ns.VarInt   { return 0x48 }
+func (p *S2CRecipeBookAdd) State() jp.State { return jp.StatePlay }
+func (p *S2CRecipeBookAdd) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CRecipeBookAdd) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CRecipeBookAdd) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CRecipeBookRemove represents "Recipe Book Remove".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Recipe_Book_Remove
-var S2CRecipeBookRemove = jp.NewPacket(jp.StatePlay, jp.S2C, 0x49)
+type S2CRecipeBookRemove struct {
+	Recipes ns.ByteArray
+}
 
-type S2CRecipeBookRemoveData struct {
-	// IDs of recipes to remove.
-	Recipes ns.PrefixedArray[ns.VarInt]
+func (p *S2CRecipeBookRemove) ID() ns.VarInt   { return 0x49 }
+func (p *S2CRecipeBookRemove) State() jp.State { return jp.StatePlay }
+func (p *S2CRecipeBookRemove) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CRecipeBookRemove) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Recipes, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CRecipeBookRemove) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Recipes)
 }
 
 // S2CRecipeBookSettings represents "Recipe Book Settings".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Recipe_Book_Settings
-var S2CRecipeBookSettings = jp.NewPacket(jp.StatePlay, jp.S2C, 0x4A)
-
-type S2CRecipeBookSettingsData struct {
-	// If true, then the crafting recipe book will be open when the player opens its inventory.
-	CraftingRecipeBookOpen ns.Boolean
-	// If true, then the filtering option is active when the player opens its inventory.
-	CraftingRecipeBookFilterActive ns.Boolean
-	// If true, then the smelting recipe book will be open when the player opens its inventory.
-	SmeltingRecipeBookOpen ns.Boolean
-	// If true, then the filtering option is active when the player opens its inventory.
-	SmeltingRecipeBookFilterActive ns.Boolean
-	// If true, then the blast furnace recipe book will be open when the player opens its inventory.
-	BlastFurnaceRecipeBookOpen ns.Boolean
-	// If true, then the filtering option is active when the player opens its inventory.
+type S2CRecipeBookSettings struct {
+	CraftingRecipeBookOpen             ns.Boolean
+	CraftingRecipeBookFilterActive     ns.Boolean
+	SmeltingRecipeBookOpen             ns.Boolean
+	SmeltingRecipeBookFilterActive     ns.Boolean
+	BlastFurnaceRecipeBookOpen         ns.Boolean
 	BlastFurnaceRecipeBookFilterActive ns.Boolean
-	// If true, then the smoker recipe book will be open when the player opens its inventory.
-	SmokerRecipeBookOpen ns.Boolean
-	// If true, then the filtering option is active when the player opens its inventory.
-	SmokerRecipeBookFilterActive ns.Boolean
+	SmokerRecipeBookOpen               ns.Boolean
+	SmokerRecipeBookFilterActive       ns.Boolean
+}
+
+func (p *S2CRecipeBookSettings) ID() ns.VarInt   { return 0x4A }
+func (p *S2CRecipeBookSettings) State() jp.State { return jp.StatePlay }
+func (p *S2CRecipeBookSettings) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CRecipeBookSettings) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.CraftingRecipeBookOpen, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.CraftingRecipeBookFilterActive, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.SmeltingRecipeBookOpen, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.SmeltingRecipeBookFilterActive, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.BlastFurnaceRecipeBookOpen, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.BlastFurnaceRecipeBookFilterActive, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.SmokerRecipeBookOpen, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	p.SmokerRecipeBookFilterActive, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CRecipeBookSettings) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteBool(p.CraftingRecipeBookOpen); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.CraftingRecipeBookFilterActive); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.SmeltingRecipeBookOpen); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.SmeltingRecipeBookFilterActive); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.BlastFurnaceRecipeBookOpen); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.BlastFurnaceRecipeBookFilterActive); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.SmokerRecipeBookOpen); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.SmokerRecipeBookFilterActive)
 }
 
 // S2CRemoveEntities represents "Remove Entities".
 //
-// > Sent by the server when an entity is to be destroyed on the client.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Remove_Entities
-var S2CRemoveEntities = jp.NewPacket(jp.StatePlay, jp.S2C, 0x4B)
+type S2CRemoveEntities struct {
+	EntityIds ns.ByteArray
+}
 
-type S2CRemoveEntitiesData struct {
-	// The list of entities to destroy.
-	EntityIds ns.PrefixedArray[ns.VarInt]
+func (p *S2CRemoveEntities) ID() ns.VarInt   { return 0x4B }
+func (p *S2CRemoveEntities) State() jp.State { return jp.StatePlay }
+func (p *S2CRemoveEntities) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CRemoveEntities) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.EntityIds, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CRemoveEntities) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.EntityIds)
 }
 
 // S2CRemoveMobEffect represents "Remove Entity Effect".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Remove_Entity_Effect
-var S2CRemoveMobEffect = jp.NewPacket(jp.StatePlay, jp.S2C, 0x4C)
-
-type S2CRemoveMobEffectData struct {
-	//
+type S2CRemoveMobEffect struct {
 	EntityId ns.VarInt
-	// See this table .
 	EffectId ns.VarInt
+}
+
+func (p *S2CRemoveMobEffect) ID() ns.VarInt   { return 0x4C }
+func (p *S2CRemoveMobEffect) State() jp.State { return jp.StatePlay }
+func (p *S2CRemoveMobEffect) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CRemoveMobEffect) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.EffectId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CRemoveMobEffect) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.EffectId)
 }
 
 // S2CResetScore represents "Reset Score".
 //
-// > This is sent to the client when it should remove a scoreboard item.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Reset_Score
-var S2CResetScore = jp.NewPacket(jp.StatePlay, jp.S2C, 0x4D)
-
-type S2CResetScoreData struct {
-	// The entity whose score this is. For players, this is their username; for other entities, it is their UUID.
-	EntityName ns.String
-	// The name of the objective the score belongs to.
+type S2CResetScore struct {
+	EntityName    ns.String
 	ObjectiveName ns.PrefixedOptional[ns.String]
+}
+
+func (p *S2CResetScore) ID() ns.VarInt   { return 0x4D }
+func (p *S2CResetScore) State() jp.State { return jp.StatePlay }
+func (p *S2CResetScore) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CResetScore) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityName, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	return p.ObjectiveName.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.String, error) {
+		return b.ReadString(32767)
+	})
+}
+
+func (p *S2CResetScore) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteString(p.EntityName); err != nil {
+		return err
+	}
+	return p.ObjectiveName.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.String) error {
+		return b.WriteString(v)
+	})
 }
 
 // S2CResourcePackPopPlay represents "Remove Resource Pack (play)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Remove_Resource_Pack_(Play)
-var S2CResourcePackPopPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x4E)
+type S2CResourcePackPopPlay struct {
+	Uuid ns.PrefixedOptional[ns.UUID]
+}
 
-type S2CResourcePackPopPlayData struct {
-	// The UUID of the resource pack to be removed.
-	Uuid ns.Optional[ns.UUID]
+func (p *S2CResourcePackPopPlay) ID() ns.VarInt   { return 0x4E }
+func (p *S2CResourcePackPopPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CResourcePackPopPlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CResourcePackPopPlay) Read(buf *ns.PacketBuffer) error {
+	return p.Uuid.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.UUID, error) {
+		return b.ReadUUID()
+	})
+}
+
+func (p *S2CResourcePackPopPlay) Write(buf *ns.PacketBuffer) error {
+	return p.Uuid.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.UUID) error {
+		return b.WriteUUID(v)
+	})
 }
 
 // S2CResourcePackPushPlay represents "Add Resource Pack (play)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Add_Resource_Pack_(Play)
-var S2CResourcePackPushPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x4F)
-
-type S2CResourcePackPushPlayData struct {
-	// The unique identifier of the resource pack.
-	Uuid ns.UUID
-	// The URL to the resource pack.
-	Url ns.String
-	// A 40 character hexadecimal, case-insensitive SHA-1 hash of the resource pack file. If it's not a 40-character hexadecimal string, the client will not use it for hash verification and likely waste bandwidth.
-	Hash ns.String
-	// The vanilla client will be forced to use the resource pack from the server. If they decline, they will be kicked from the server.
-	Forced ns.Boolean
-	// This is shown in the prompt making the client accept or decline the resource pack.
+type S2CResourcePackPushPlay struct {
+	Uuid          ns.UUID
+	Url           ns.String
+	Hash          ns.String
+	Forced        ns.Boolean
 	PromptMessage ns.PrefixedOptional[ns.TextComponent]
+}
+
+func (p *S2CResourcePackPushPlay) ID() ns.VarInt   { return 0x4F }
+func (p *S2CResourcePackPushPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CResourcePackPushPlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CResourcePackPushPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Uuid, err = buf.ReadUUID(); err != nil {
+		return err
+	}
+	if p.Url, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.Hash, err = buf.ReadString(40); err != nil {
+		return err
+	}
+	if p.Forced, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	return p.PromptMessage.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
+		return b.ReadTextComponent()
+	})
+}
+
+func (p *S2CResourcePackPushPlay) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteUUID(p.Uuid); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Url); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.Hash); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.Forced); err != nil {
+		return err
+	}
+	return p.PromptMessage.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.TextComponent) error {
+		return b.WriteTextComponent(v)
+	})
 }
 
 // S2CRespawn represents "Respawn".
 //
-// > To change the player's dimension (overworld/nether/end), send them a respawn packet with the appropriate dimension, followed by prechunks/chunks for the new dimension, and finally a position and look packet. You do not need to unload chunks; the client will do it automatically.
-// >
-// > The background of the loading screen is determined based on the Dimension Name specified in this packet and the one specified in the previous Login or Respawn packet. If either the current or the previous dimension is minecraft:nether , the Nether portal background is used. Otherwise, if the current or the previous dimension is minecraft:the_end , the End portal background is used. If the player is dead (health is 0), the default background is always used.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Respawn
-var S2CRespawn = jp.NewPacket(jp.StatePlay, jp.S2C, 0x50)
+type S2CRespawn struct {
+	DimensionType    ns.VarInt
+	DimensionName    ns.Identifier
+	HashedSeed       ns.Int64
+	GameMode         ns.Uint8
+	PreviousGameMode ns.Int8
+	IsDebug          ns.Boolean
+	IsFlat           ns.Boolean
+	DeathLocation    ns.PrefixedOptional[ns.ByteArray]
+	PortalCooldown   ns.VarInt
+	SeaLevel         ns.VarInt
+	DataKept         ns.Int8
+}
 
-type S2CRespawnData struct {
-	// The ID of type of dimension in the minecraft:dimension_type registry, defined by the Registry Data packet.
-	DimensionType ns.VarInt
-	// Name of the dimension being spawned into.
-	DimensionName ns.Identifier
-	// First 8 bytes of the SHA-256 hash of the world's seed. Used client-side for biome noise
-	HashedSeed ns.Long
-	// 0: Survival, 1: Creative, 2: Adventure, 3: Spectator.
-	GameMode ns.UnsignedByte
-	// -1: Undefined (null), 0: Survival, 1: Creative, 2: Adventure, 3: Spectator. The previous game mode. Vanilla client uses this for the debug (F3 + N & F3 + F4) game mode switch. (More information needed)
-	PreviousGameMode ns.Byte
-	// True if the world is a debug mode world; debug mode worlds cannot be modified and have predefined blocks.
-	IsDebug ns.Boolean
-	// True if the world is a superflat world; flat worlds have different void fog and a horizon at y=0 instead of y=63.
-	IsFlat ns.Boolean
-	// If true, then the next two fields are present.
-	HasDeathLocation ns.Boolean
-	// Name of the dimension the player died in.
-	DeathDimensionName ns.Optional[ns.Identifier]
-	// The location that the player died at.
-	DeathLocation ns.Optional[ns.Position]
-	// The number of ticks until the player can use the portal again.
-	PortalCooldown ns.VarInt
-	//
-	SeaLevel ns.VarInt
-	// Bit mask. 0x01: Keep attributes, 0x02: Keep metadata. Tells which data should be kept on the client side once the player has respawned. In the vanilla implementation, this is context-dependent: normal respawns (after death) keep no data; exiting the end poem/credits keeps the attributes; other dimension changes (portals or teleports) keep all data.
-	DataKept ns.Byte
+func (p *S2CRespawn) ID() ns.VarInt   { return 0x50 }
+func (p *S2CRespawn) State() jp.State { return jp.StatePlay }
+func (p *S2CRespawn) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CRespawn) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.DimensionType, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.DimensionName, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	if p.HashedSeed, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	if p.GameMode, err = buf.ReadUint8(); err != nil {
+		return err
+	}
+	if p.PreviousGameMode, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.IsDebug, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if p.IsFlat, err = buf.ReadBool(); err != nil {
+		return err
+	}
+	if err = p.DeathLocation.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
+		return b.ReadByteArray(1048576)
+	}); err != nil {
+		return err
+	}
+	if p.PortalCooldown, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.SeaLevel, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.DataKept, err = buf.ReadInt8()
+	return err
+}
+
+func (p *S2CRespawn) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.DimensionType); err != nil {
+		return err
+	}
+	if err := buf.WriteIdentifier(p.DimensionName); err != nil {
+		return err
+	}
+	if err := buf.WriteInt64(p.HashedSeed); err != nil {
+		return err
+	}
+	if err := buf.WriteUint8(p.GameMode); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.PreviousGameMode); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.IsDebug); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.IsFlat); err != nil {
+		return err
+	}
+	if err := p.DeathLocation.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
+		return b.WriteByteArray(v)
+	}); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.PortalCooldown); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SeaLevel); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.DataKept)
 }
 
 // S2CRotateHead represents "Set Head Rotation".
 //
-// > Changes the direction an entity's head is facing.
-// >
-// > While sending the Entity Look packet changes the vertical rotation of the head, sending this packet appears to be necessary to rotate the head horizontally.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Head_Rotation
-var S2CRotateHead = jp.NewPacket(jp.StatePlay, jp.S2C, 0x51)
-
-type S2CRotateHeadData struct {
-	//
+type S2CRotateHead struct {
 	EntityId ns.VarInt
-	// New angle, not a delta.
-	HeadYaw ns.Angle
+	HeadYaw  ns.Angle
+}
+
+func (p *S2CRotateHead) ID() ns.VarInt   { return 0x51 }
+func (p *S2CRotateHead) State() jp.State { return jp.StatePlay }
+func (p *S2CRotateHead) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CRotateHead) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.HeadYaw, err = buf.ReadAngle()
+	return err
+}
+
+func (p *S2CRotateHead) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteAngle(p.HeadYaw)
 }
 
 // S2CSectionBlocksUpdate represents "Update Section Blocks".
 //
-// > Chunk section position is encoded:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Section_Blocks
-var S2CSectionBlocksUpdate = jp.NewPacket(jp.StatePlay, jp.S2C, 0x52)
+type S2CSectionBlocksUpdate struct {
+	ChunkSectionPosition ns.Int64
+	Blocks               ns.ByteArray
+}
 
-type S2CSectionBlocksUpdateData struct {
-	// Chunk section coordinate (encoded chunk x and z with each 22 bits, and section y with 20 bits, from left to right).
-	ChunkSectionPosition ns.Long
-	// Each entry is composed of the block state id, shifted left by 12, and the relative block position in the chunk section (4 bits for x, z, and y, from left to right).
-	Blocks ns.PrefixedArray[ns.VarLong]
+func (p *S2CSectionBlocksUpdate) ID() ns.VarInt   { return 0x52 }
+func (p *S2CSectionBlocksUpdate) State() jp.State { return jp.StatePlay }
+func (p *S2CSectionBlocksUpdate) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSectionBlocksUpdate) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.ChunkSectionPosition, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	p.Blocks, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CSectionBlocksUpdate) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt64(p.ChunkSectionPosition); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Blocks)
 }
 
 // S2CSelectAdvancementsTab represents "Select Advancements Tab".
 //
-// > Sent by the server to indicate that the client should switch advancement tab. Sent either when the client switches tab in the GUI or when an advancement is made in another tab.
-// >
-// > The Identifier must be one of the following if no custom data pack is loaded:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Select_Advancements_Tab
-var S2CSelectAdvancementsTab = jp.NewPacket(jp.StatePlay, jp.S2C, 0x53)
-
-type S2CSelectAdvancementsTabData struct {
-	// See below.
+type S2CSelectAdvancementsTab struct {
 	Identifier ns.PrefixedOptional[ns.Identifier]
+}
+
+func (p *S2CSelectAdvancementsTab) ID() ns.VarInt   { return 0x53 }
+func (p *S2CSelectAdvancementsTab) State() jp.State { return jp.StatePlay }
+func (p *S2CSelectAdvancementsTab) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSelectAdvancementsTab) Read(buf *ns.PacketBuffer) error {
+	return p.Identifier.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.Identifier, error) {
+		return b.ReadIdentifier()
+	})
+}
+
+func (p *S2CSelectAdvancementsTab) Write(buf *ns.PacketBuffer) error {
+	return p.Identifier.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.Identifier) error {
+		return b.WriteIdentifier(v)
+	})
 }
 
 // S2CServerData represents "Server Data".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Server_Data
-var S2CServerData = jp.NewPacket(jp.StatePlay, jp.S2C, 0x54)
-
-type S2CServerDataData struct {
-	//
+type S2CServerData struct {
 	Motd ns.TextComponent
-	// Icon bytes in the PNG format.
-	Icon ns.PrefixedOptional[ns.PrefixedArray[ns.Byte]]
+	Icon ns.PrefixedOptional[ns.ByteArray]
+}
+
+func (p *S2CServerData) ID() ns.VarInt   { return 0x54 }
+func (p *S2CServerData) State() jp.State { return jp.StatePlay }
+func (p *S2CServerData) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CServerData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Motd, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	return p.Icon.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
+		return b.ReadByteArray(1048576)
+	})
+}
+
+func (p *S2CServerData) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteTextComponent(p.Motd); err != nil {
+		return err
+	}
+	return p.Icon.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
+		return b.WriteByteArray(v)
+	})
 }
 
 // S2CSetActionBarText represents "Set Action Bar Text".
 //
-// > Displays a message above the hotbar. Equivalent to System Chat Message with Overlay set to true, except that chat message blocking isn't performed. Used by the vanilla server only to implement the /title command.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Action_Bar_Text
-var S2CSetActionBarText = jp.NewPacket(jp.StatePlay, jp.S2C, 0x55)
+type S2CSetActionBarText struct {
+	Text ns.TextComponent
+}
 
-type S2CSetActionBarTextData struct {
-	// No fields
+func (p *S2CSetActionBarText) ID() ns.VarInt   { return 0x55 }
+func (p *S2CSetActionBarText) State() jp.State { return jp.StatePlay }
+func (p *S2CSetActionBarText) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetActionBarText) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Text, err = buf.ReadTextComponent()
+	return err
+}
+
+func (p *S2CSetActionBarText) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteTextComponent(p.Text)
 }
 
 // S2CSetBorderCenter represents "Set Border Center".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Border_Center
-var S2CSetBorderCenter = jp.NewPacket(jp.StatePlay, jp.S2C, 0x56)
+type S2CSetBorderCenter struct {
+	X ns.Float64
+	Z ns.Float64
+}
 
-type S2CSetBorderCenterData struct {
-	//
-	X ns.Double
-	//
-	Z ns.Double
+func (p *S2CSetBorderCenter) ID() ns.VarInt   { return 0x56 }
+func (p *S2CSetBorderCenter) State() jp.State { return jp.StatePlay }
+func (p *S2CSetBorderCenter) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetBorderCenter) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	p.Z, err = buf.ReadFloat64()
+	return err
+}
+
+func (p *S2CSetBorderCenter) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	return buf.WriteFloat64(p.Z)
 }
 
 // S2CSetBorderLerpSize represents "Set Border Lerp Size".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Border_Lerp_Size
-var S2CSetBorderLerpSize = jp.NewPacket(jp.StatePlay, jp.S2C, 0x57)
+type S2CSetBorderLerpSize struct {
+	OldDiameter ns.Float64
+	NewDiameter ns.Float64
+	Speed       ns.VarLong
+}
 
-type S2CSetBorderLerpSizeData struct {
-	// Current length of a single side of the world border, in meters.
-	OldDiameter ns.Double
-	// Target length of a single side of the world border, in meters.
-	NewDiameter ns.Double
-	// Number of real-time milli seconds until New Diameter is reached. It appears that vanilla server does not sync world border speed to game ticks, so it gets out of sync with server lag. If the world border is not moving, this is set to 0.
-	Speed ns.VarLong
+func (p *S2CSetBorderLerpSize) ID() ns.VarInt   { return 0x57 }
+func (p *S2CSetBorderLerpSize) State() jp.State { return jp.StatePlay }
+func (p *S2CSetBorderLerpSize) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetBorderLerpSize) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.OldDiameter, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.NewDiameter, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	p.Speed, err = buf.ReadVarLong()
+	return err
+}
+
+func (p *S2CSetBorderLerpSize) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat64(p.OldDiameter); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.NewDiameter); err != nil {
+		return err
+	}
+	return buf.WriteVarLong(p.Speed)
 }
 
 // S2CSetBorderSize represents "Set Border Size".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Border_Size
-var S2CSetBorderSize = jp.NewPacket(jp.StatePlay, jp.S2C, 0x58)
+type S2CSetBorderSize struct {
+	Diameter ns.Float64
+}
 
-type S2CSetBorderSizeData struct {
-	// Length of a single side of the world border, in meters.
-	Diameter ns.Double
+func (p *S2CSetBorderSize) ID() ns.VarInt   { return 0x58 }
+func (p *S2CSetBorderSize) State() jp.State { return jp.StatePlay }
+func (p *S2CSetBorderSize) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetBorderSize) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Diameter, err = buf.ReadFloat64()
+	return err
+}
+
+func (p *S2CSetBorderSize) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteFloat64(p.Diameter)
 }
 
 // S2CSetBorderWarningDelay represents "Set Border Warning Delay".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Border_Warning_Delay
-var S2CSetBorderWarningDelay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x59)
-
-type S2CSetBorderWarningDelayData struct {
-	// In seconds as set by /worldborder warning time .
+type S2CSetBorderWarningDelay struct {
 	WarningTime ns.VarInt
+}
+
+func (p *S2CSetBorderWarningDelay) ID() ns.VarInt   { return 0x59 }
+func (p *S2CSetBorderWarningDelay) State() jp.State { return jp.StatePlay }
+func (p *S2CSetBorderWarningDelay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetBorderWarningDelay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.WarningTime, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CSetBorderWarningDelay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.WarningTime)
 }
 
 // S2CSetBorderWarningDistance represents "Set Border Warning Distance".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Border_Warning_Distance
-var S2CSetBorderWarningDistance = jp.NewPacket(jp.StatePlay, jp.S2C, 0x5A)
-
-type S2CSetBorderWarningDistanceData struct {
-	// In meters.
+type S2CSetBorderWarningDistance struct {
 	WarningBlocks ns.VarInt
+}
+
+func (p *S2CSetBorderWarningDistance) ID() ns.VarInt   { return 0x5A }
+func (p *S2CSetBorderWarningDistance) State() jp.State { return jp.StatePlay }
+func (p *S2CSetBorderWarningDistance) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetBorderWarningDistance) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.WarningBlocks, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CSetBorderWarningDistance) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.WarningBlocks)
 }
 
 // S2CSetCamera represents "Set Camera".
 //
-// > Sets the entity that the player renders from. This is normally used when the player left-clicks an entity while in spectator mode.
-// >
-// > The player's camera will move with the entity and look where it is looking. The entity is often another player, but can be any type of entity. The player is unable to move this entity (move packets will act as if they are coming from the other entity).
-// >
-// > If the given entity is not loaded by the player, this packet is ignored. To return control to the player, send this packet with their entity ID.
-// >
-// > The vanilla server resets this (sends it back to the default entity) whenever the spectated entity is killed or the player sneaks, but only if they were spectating an entity. It also sends this packet whenever the player switches out of spectator mode (even if they weren't spectating an entity).
-// >
-// > The vanilla client also loads certain shaders for given entities:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Camera
-var S2CSetCamera = jp.NewPacket(jp.StatePlay, jp.S2C, 0x5B)
-
-type S2CSetCameraData struct {
-	// ID of the entity to set the client's camera to.
+type S2CSetCamera struct {
 	CameraId ns.VarInt
+}
+
+func (p *S2CSetCamera) ID() ns.VarInt   { return 0x5B }
+func (p *S2CSetCamera) State() jp.State { return jp.StatePlay }
+func (p *S2CSetCamera) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetCamera) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.CameraId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CSetCamera) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.CameraId)
 }
 
 // S2CSetChunkCacheCenter represents "Set Center Chunk".
 //
-// > Sets the center position of the client's chunk loading area. The area is square-shaped, spanning 2 × server view distance + 7 chunks on both axes (width, not radius!). Since the area's width is always an odd number, there is no ambiguity as to which chunk is the center.
-// >
-// > The vanilla client never renders or simulates chunks located outside the loading area, but keeps them in memory (unless explicitly unloaded by the server while still in range), and only automatically unloads a chunk when another chunk is loaded at coordinates congruent to the old chunk's coordinates modulo (2 × server view distance + 7). This means that a chunk may reappear after leaving and later re-entering the loading area through successive uses of this packet, unless it is replaced in the meantime by a different chunk in the same "slot".
-// >
-// > The vanilla client ignores attempts to load or unload chunks located outside the loading area. This applies even to unloads targeting chunks that are still loaded, but currently located outside the loading area (per the previous paragraph).
-// >
-// > The vanilla server does not rely on any specific behavior for chunks leaving the loading area, and custom clients need not replicate the above exactly. A client may instead choose to immediately unload any chunks outside the loading area, to use a different modulus, or to ignore the loading area completely and keep chunks loaded regardless of their location until the server requests to unload them. Servers aiming for maximal interoperability should always explicitly unload any loaded chunks before they go outside the loading area.
-// >
-// > The center chunk is normally the chunk the player is in, but apart from the implications on chunk loading, the (vanilla) client takes no issue with this not being the case. Indeed, as long as chunks are sent only within the default loading area centered on the world origin, it is not necessary to send this packet at all. This may be useful for servers with small bounded worlds, such as minigames, since it ensures chunks never need to be resent after the client has joined, saving on bandwidth.
-// >
-// > The vanilla server sends this packet whenever the player moves across a chunk border horizontally, and also (according to testing) for any integer change in the vertical axis, even if it doesn't go across a chunk section border.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Center_Chunk
-var S2CSetChunkCacheCenter = jp.NewPacket(jp.StatePlay, jp.S2C, 0x5C)
-
-type S2CSetChunkCacheCenterData struct {
-	// Chunk X coordinate of the loading area center.
+type S2CSetChunkCacheCenter struct {
 	ChunkX ns.VarInt
-	// Chunk Z coordinate of the loading area center.
 	ChunkZ ns.VarInt
+}
+
+func (p *S2CSetChunkCacheCenter) ID() ns.VarInt   { return 0x5C }
+func (p *S2CSetChunkCacheCenter) State() jp.State { return jp.StatePlay }
+func (p *S2CSetChunkCacheCenter) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetChunkCacheCenter) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.ChunkX, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.ChunkZ, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CSetChunkCacheCenter) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.ChunkX); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.ChunkZ)
 }
 
 // S2CSetChunkCacheRadius represents "Set Render Distance".
 //
-// > Sent by the integrated singleplayer server when changing render distance. This packet is sent by the server when the client reappears in the overworld after leaving the end.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Render_Distance
-var S2CSetChunkCacheRadius = jp.NewPacket(jp.StatePlay, jp.S2C, 0x5D)
-
-type S2CSetChunkCacheRadiusData struct {
-	// Render distance (2-32).
+type S2CSetChunkCacheRadius struct {
 	ViewDistance ns.VarInt
+}
+
+func (p *S2CSetChunkCacheRadius) ID() ns.VarInt   { return 0x5D }
+func (p *S2CSetChunkCacheRadius) State() jp.State { return jp.StatePlay }
+func (p *S2CSetChunkCacheRadius) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetChunkCacheRadius) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.ViewDistance, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CSetChunkCacheRadius) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.ViewDistance)
 }
 
 // S2CSetCursorItem represents "Set Cursor Item".
 //
-// > Replaces or sets the inventory item that's being dragged with the mouse.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Cursor_Item
-var S2CSetCursorItem = jp.NewPacket(jp.StatePlay, jp.S2C, 0x5E)
-
-type S2CSetCursorItemData struct {
-	//
+type S2CSetCursorItem struct {
 	CarriedItem ns.Slot
+}
+
+func (p *S2CSetCursorItem) ID() ns.VarInt   { return 0x5E }
+func (p *S2CSetCursorItem) State() jp.State { return jp.StatePlay }
+func (p *S2CSetCursorItem) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetCursorItem) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.CarriedItem, err = buf.ReadSlot()
+	return err
+}
+
+func (p *S2CSetCursorItem) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteSlot(p.CarriedItem)
 }
 
 // S2CSetDefaultSpawnPosition represents "Set Default Spawn Position".
 //
-// > Sent by the server after login to specify the coordinates of the spawn point (the point at which players spawn at, and which the compass points to). It can be sent at any time to update the point compasses point at.
-// >
-// > Before receiving this packet, the client uses the default position 8, 64, 8, and angle 0.0.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Default_Spawn_Position
-var S2CSetDefaultSpawnPosition = jp.NewPacket(jp.StatePlay, jp.S2C, 0x5F)
-
-type S2CSetDefaultSpawnPositionData struct {
-	// Name of spawn dimension.
+type S2CSetDefaultSpawnPosition struct {
 	DimensionName ns.Identifier
-	// Spawn location.
-	Location ns.Position
-	// Yaw after respawning.
-	Yaw ns.Float
-	// Pitch after respawning.
-	Pitch ns.Float
+	Location      ns.Position
+	Yaw           ns.Float32
+	Pitch         ns.Float32
+}
+
+func (p *S2CSetDefaultSpawnPosition) ID() ns.VarInt   { return 0x5F }
+func (p *S2CSetDefaultSpawnPosition) State() jp.State { return jp.StatePlay }
+func (p *S2CSetDefaultSpawnPosition) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetDefaultSpawnPosition) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.DimensionName, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.Pitch, err = buf.ReadFloat32()
+	return err
+}
+
+func (p *S2CSetDefaultSpawnPosition) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.DimensionName); err != nil {
+		return err
+	}
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	return buf.WriteFloat32(p.Pitch)
 }
 
 // S2CSetDisplayObjective represents "Display Objective".
 //
-// > This is sent to the client when it should display a scoreboard.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Display_Objective
-var S2CSetDisplayObjective = jp.NewPacket(jp.StatePlay, jp.S2C, 0x60)
-
-type S2CSetDisplayObjectiveData struct {
-	// The position of the scoreboard. 0: list, 1: sidebar, 2: below name, 3 - 18: team-specific sidebar, indexed as 3 + team color.
-	Position ns.VarInt
-	// The unique name for the scoreboard to be displayed.
+type S2CSetDisplayObjective struct {
+	Position  ns.VarInt
 	ScoreName ns.String
+}
+
+func (p *S2CSetDisplayObjective) ID() ns.VarInt   { return 0x60 }
+func (p *S2CSetDisplayObjective) State() jp.State { return jp.StatePlay }
+func (p *S2CSetDisplayObjective) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetDisplayObjective) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Position, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.ScoreName, err = buf.ReadString(32767)
+	return err
+}
+
+func (p *S2CSetDisplayObjective) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.Position); err != nil {
+		return err
+	}
+	return buf.WriteString(p.ScoreName)
 }
 
 // S2CSetEntityData represents "Set Entity Metadata".
 //
-// > Updates one or more metadata properties for an existing entity. Any properties not included in the Metadata field are left unchanged.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Entity_Metadata
-var S2CSetEntityData = jp.NewPacket(jp.StatePlay, jp.S2C, 0x61)
-
-type S2CSetEntityDataData struct {
-	//
+type S2CSetEntityData struct {
 	EntityId ns.VarInt
-	//
-	Metadata ns.EntityMetadata
+	Metadata ns.ByteArray
+}
+
+func (p *S2CSetEntityData) ID() ns.VarInt   { return 0x61 }
+func (p *S2CSetEntityData) State() jp.State { return jp.StatePlay }
+func (p *S2CSetEntityData) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetEntityData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Metadata, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CSetEntityData) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Metadata)
 }
 
 // S2CSetEntityLink represents "Link Entities".
 //
-// > This packet is sent when an entity has been leashed to another entity.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Link_Entities
-var S2CSetEntityLink = jp.NewPacket(jp.StatePlay, jp.S2C, 0x62)
+type S2CSetEntityLink struct {
+	AttachedEntityId ns.Int32
+	HoldingEntityId  ns.Int32
+}
 
-type S2CSetEntityLinkData struct {
-	// Attached entity's EID.
-	AttachedEntityId ns.Int
-	// ID of the entity holding the lead. Set to -1 to detach.
-	HoldingEntityId ns.Int
+func (p *S2CSetEntityLink) ID() ns.VarInt   { return 0x62 }
+func (p *S2CSetEntityLink) State() jp.State { return jp.StatePlay }
+func (p *S2CSetEntityLink) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetEntityLink) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.AttachedEntityId, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	p.HoldingEntityId, err = buf.ReadInt32()
+	return err
+}
+
+func (p *S2CSetEntityLink) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt32(p.AttachedEntityId); err != nil {
+		return err
+	}
+	return buf.WriteInt32(p.HoldingEntityId)
 }
 
 // S2CSetEntityMotion represents "Set Entity Velocity".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Entity_Velocity
-var S2CSetEntityMotion = jp.NewPacket(jp.StatePlay, jp.S2C, 0x63)
-
-type S2CSetEntityMotionData struct {
-	//
+type S2CSetEntityMotion struct {
 	EntityId ns.VarInt
-	//
 	Velocity ns.ByteArray
+}
+
+func (p *S2CSetEntityMotion) ID() ns.VarInt   { return 0x63 }
+func (p *S2CSetEntityMotion) State() jp.State { return jp.StatePlay }
+func (p *S2CSetEntityMotion) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetEntityMotion) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Velocity, err = buf.ReadByteArray(12)
+	return err
+}
+
+func (p *S2CSetEntityMotion) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Velocity)
 }
 
 // S2CSetEquipment represents "Set Equipment".
 //
-// > Equipment slot can be one of the following:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Equipment
-var S2CSetEquipment = jp.NewPacket(jp.StatePlay, jp.S2C, 0x64)
-
-type S2CSetEquipmentData struct {
-	// Entity's ID.
+type S2CSetEquipment struct {
 	EntityId ns.VarInt
-	//
-	Item ns.Slot
+	Data     ns.ByteArray
+}
+
+func (p *S2CSetEquipment) ID() ns.VarInt   { return 0x64 }
+func (p *S2CSetEquipment) State() jp.State { return jp.StatePlay }
+func (p *S2CSetEquipment) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetEquipment) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CSetEquipment) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CSetExperience represents "Set Experience".
 //
-// > Sent by the server when the client should change experience levels.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Experience
-var S2CSetExperience = jp.NewPacket(jp.StatePlay, jp.S2C, 0x65)
-
-type S2CSetExperienceData struct {
-	// Between 0 and 1.
-	ExperienceBar ns.Float
-	//
-	Level ns.VarInt
-	// See Experience#Leveling up on the Minecraft Wiki for Total Experience to Level conversion.
+type S2CSetExperience struct {
+	ExperienceBar   ns.Float32
+	Level           ns.VarInt
 	TotalExperience ns.VarInt
+}
+
+func (p *S2CSetExperience) ID() ns.VarInt   { return 0x65 }
+func (p *S2CSetExperience) State() jp.State { return jp.StatePlay }
+func (p *S2CSetExperience) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetExperience) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.ExperienceBar, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Level, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.TotalExperience, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CSetExperience) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat32(p.ExperienceBar); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Level); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.TotalExperience)
 }
 
 // S2CSetHealth represents "Set Health".
 //
-// > Sent by the server to set the health of the player it is sent to.
-// >
-// > Food saturation acts as a food “overcharge”. Food values will not decrease while the saturation is over zero. New players logging in or respawning automatically get a saturation of 5.0. Eating food increases the saturation as well as the food bar.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Health
-var S2CSetHealth = jp.NewPacket(jp.StatePlay, jp.S2C, 0x66)
+type S2CSetHealth struct {
+	Health         ns.Float32
+	Food           ns.VarInt
+	FoodSaturation ns.Float32
+}
 
-type S2CSetHealthData struct {
-	// 0 or less = dead, 20 = full HP.
-	Health ns.Float
-	// 0–20.
-	Food ns.VarInt
-	// Seems to vary from 0.0 to 5.0 in integer increments.
-	FoodSaturation ns.Float
+func (p *S2CSetHealth) ID() ns.VarInt   { return 0x66 }
+func (p *S2CSetHealth) State() jp.State { return jp.StatePlay }
+func (p *S2CSetHealth) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetHealth) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Health, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Food, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.FoodSaturation, err = buf.ReadFloat32()
+	return err
+}
+
+func (p *S2CSetHealth) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat32(p.Health); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Food); err != nil {
+		return err
+	}
+	return buf.WriteFloat32(p.FoodSaturation)
 }
 
 // S2CSetHeldSlot represents "Set Held Item (clientbound)".
 //
-// > Sent to change the player's slot selection.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Held_Item_(Clientbound)
-var S2CSetHeldSlot = jp.NewPacket(jp.StatePlay, jp.S2C, 0x67)
-
-type S2CSetHeldSlotData struct {
-	// The slot which the player has selected (0–8).
+type S2CSetHeldSlot struct {
 	Slot ns.VarInt
+}
+
+func (p *S2CSetHeldSlot) ID() ns.VarInt   { return 0x67 }
+func (p *S2CSetHeldSlot) State() jp.State { return jp.StatePlay }
+func (p *S2CSetHeldSlot) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetHeldSlot) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Slot, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CSetHeldSlot) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.Slot)
 }
 
 // S2CSetObjective represents "Update Objectives".
 //
-// > This is sent to the client when it should create a new scoreboard objective or remove one.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Objectives
-var S2CSetObjective = jp.NewPacket(jp.StatePlay, jp.S2C, 0x68)
-
-type S2CSetObjectiveData struct {
-	// A unique name for the objective.
+type S2CSetObjective struct {
 	ObjectiveName ns.String
-	// 0 to create the scoreboard. 1 to remove the scoreboard. 2 to update the display text.
-	Mode ns.Byte
-	// Only if mode is 0 or 2.The text to be displayed for the score.
-	ObjectiveValue ns.Optional[ns.TextComponent]
-	// Only if mode is 0 or 2. 0 = "integer", 1 = "hearts".
-	Type ns.Optional[ns.VarInt]
-	// Only if mode is 0 or 2. Whether this objective has a set number format for the scores.
-	HasNumberFormat ns.Optional[ns.Boolean]
-	// Only if mode is 0 or 2 and the previous boolean is true. Determines how the score number should be formatted.
-	NumberFormat ns.Optional[ns.VarInt]
-	// Show nothing.
-	Field0Blank struct{}
+	Mode          ns.Int8
+	Data          ns.ByteArray
+}
+
+func (p *S2CSetObjective) ID() ns.VarInt   { return 0x68 }
+func (p *S2CSetObjective) State() jp.State { return jp.StatePlay }
+func (p *S2CSetObjective) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetObjective) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.ObjectiveName, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.Mode, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.Mode == 0 || p.Mode == 2 {
+		p.Data, err = buf.ReadByteArray(1048576)
+	}
+	return err
+}
+
+func (p *S2CSetObjective) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteString(p.ObjectiveName); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.Mode); err != nil {
+		return err
+	}
+	if p.Mode == 0 || p.Mode == 2 {
+		return buf.WriteByteArray(p.Data)
+	}
+	return nil
 }
 
 // S2CSetPassengers represents "Set Passengers".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Passengers
-var S2CSetPassengers = jp.NewPacket(jp.StatePlay, jp.S2C, 0x69)
+type S2CSetPassengers struct {
+	EntityId   ns.VarInt
+	Passengers ns.ByteArray
+}
 
-type S2CSetPassengersData struct {
-	// Vehicle's EID.
-	EntityId ns.VarInt
-	// EIDs of entity's passengers.
-	Passengers ns.PrefixedArray[ns.VarInt]
+func (p *S2CSetPassengers) ID() ns.VarInt   { return 0x69 }
+func (p *S2CSetPassengers) State() jp.State { return jp.StatePlay }
+func (p *S2CSetPassengers) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetPassengers) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Passengers, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CSetPassengers) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Passengers)
 }
 
 // S2CSetPlayerInventory represents "Set Player Inventory Slot".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Player_Inventory_Slot
-var S2CSetPlayerInventory = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6A)
-
-type S2CSetPlayerInventoryData struct {
-	//
-	Slot ns.VarInt
-	//
+type S2CSetPlayerInventory struct {
+	Slot     ns.VarInt
 	SlotData ns.Slot
+}
+
+func (p *S2CSetPlayerInventory) ID() ns.VarInt   { return 0x6A }
+func (p *S2CSetPlayerInventory) State() jp.State { return jp.StatePlay }
+func (p *S2CSetPlayerInventory) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetPlayerInventory) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Slot, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.SlotData, err = buf.ReadSlot()
+	return err
+}
+
+func (p *S2CSetPlayerInventory) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.Slot); err != nil {
+		return err
+	}
+	return buf.WriteSlot(p.SlotData)
 }
 
 // S2CSetPlayerTeam represents "Update Teams".
 //
-// > Creates and updates teams.
-// >
-// > Team Color: The color of a team defines how the names of the team members are visualized; any formatting code can be used. The following table lists all the possible values.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Teams
-var S2CSetPlayerTeam = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6B)
-
-type S2CSetPlayerTeamData struct {
-	// A unique name for the team. (Shared with scoreboard).
+type S2CSetPlayerTeam struct {
 	TeamName ns.String
-	// Determines the layout of the remaining packet.
-	Method ns.Byte
-	// Bit mask. 0x01: Allow friendly fire, 0x02: can see invisible players on the same team.
-	FriendlyFlags ns.Byte
-	// 0 = ALWAYS, 1 = NEVER, 2 = HIDE_FOR_OTHER_TEAMS, 3 = HIDE_FOR_OWN_TEAMS
-	NameTagVisibility ns.VarInt
-	// 0 = ALWAYS, 1 = NEVER, 2 = PUSH_OTHER_TEAMS, 3 = PUSH_OWN_TEAM
-	CollisionRule ns.VarInt
-	// Used to color the names of players on the team; see below.
-	TeamColor ns.VarInt
-	// Displayed before the names of players that are part of this team.
-	TeamPrefix ns.TextComponent
-	// Displayed after the names of players that are part of this team.
-	TeamSuffix ns.TextComponent
-	// Identifiers for the entities in this team. For players, this is their username; for other entities, it is their UUID.
-	Entities ns.PrefixedArray[ns.String]
-	// (duplicate of FriendlyFlags) Bit mask. 0x01: Allow friendly fire, 0x02: can see invisible entities on the same team.
-	FriendlyFlags2 ns.Byte
-	// (duplicate of NameTagVisibility) 0 = ALWAYS, 1 = NEVER, 2 = HIDE_FOR_OTHER_TEAMS, 3 = HIDE_FOR_OWN_TEAMS
-	NameTagVisibility2 ns.VarInt
-	// (duplicate of CollisionRule) 0 = ALWAYS, 1 = NEVER, 2 = PUSH_OTHER_TEAMS, 3 = PUSH_OWN_TEAM
-	CollisionRule2 ns.VarInt
-	// (duplicate of TeamColor) Used to color the names of players on the team; see below.
-	TeamColor2 ns.VarInt
-	// (duplicate of TeamPrefix) Displayed before the names of players that are part of this team.
-	TeamPrefix2 ns.TextComponent
-	// (duplicate of TeamSuffix) Displayed after the names of players that are part of this team.
-	TeamSuffix2 ns.TextComponent
+	Method   ns.Int8
+	Data     ns.ByteArray
+}
+
+func (p *S2CSetPlayerTeam) ID() ns.VarInt   { return 0x6B }
+func (p *S2CSetPlayerTeam) State() jp.State { return jp.StatePlay }
+func (p *S2CSetPlayerTeam) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetPlayerTeam) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.TeamName, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.Method, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CSetPlayerTeam) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteString(p.TeamName); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.Method); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CSetScore represents "Update Score".
 //
-// > This is sent to the client when it should update a scoreboard item.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Score
-var S2CSetScore = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6C)
-
-type S2CSetScoreData struct {
-	// The entity whose score this is. For players, this is their username; for other entities, it is their UUID.
-	EntityName ns.String
-	// The name of the objective the score belongs to.
+type S2CSetScore struct {
+	EntityName    ns.String
 	ObjectiveName ns.String
-	// The score to be displayed next to the entry.
-	Value ns.VarInt
-	// The custom display name.
-	DisplayName ns.PrefixedOptional[ns.TextComponent]
-	// Determines how the score number should be formatted.
-	NumberFormat ns.PrefixedOptional[ns.VarInt]
-	// Show nothing.
-	Field0Blank struct{}
+	Value         ns.VarInt
+	Data          ns.ByteArray
+}
+
+func (p *S2CSetScore) ID() ns.VarInt   { return 0x6C }
+func (p *S2CSetScore) State() jp.State { return jp.StatePlay }
+func (p *S2CSetScore) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetScore) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityName, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.ObjectiveName, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	if p.Value, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CSetScore) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteString(p.EntityName); err != nil {
+		return err
+	}
+	if err := buf.WriteString(p.ObjectiveName); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Value); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CSetSimulationDistance represents "Set Simulation Distance".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Simulation_Distance
-var S2CSetSimulationDistance = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6D)
-
-type S2CSetSimulationDistanceData struct {
-	// The distance that the client will process specific things, such as entities.
+type S2CSetSimulationDistance struct {
 	SimulationDistance ns.VarInt
+}
+
+func (p *S2CSetSimulationDistance) ID() ns.VarInt   { return 0x6D }
+func (p *S2CSetSimulationDistance) State() jp.State { return jp.StatePlay }
+func (p *S2CSetSimulationDistance) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetSimulationDistance) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.SimulationDistance, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CSetSimulationDistance) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.SimulationDistance)
 }
 
 // S2CSetSubtitleText represents "Set Subtitle Text".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Subtitle_Text
-var S2CSetSubtitleText = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6E)
-
-type S2CSetSubtitleTextData struct {
-	//
+type S2CSetSubtitleText struct {
 	SubtitleText ns.TextComponent
+}
+
+func (p *S2CSetSubtitleText) ID() ns.VarInt   { return 0x6E }
+func (p *S2CSetSubtitleText) State() jp.State { return jp.StatePlay }
+func (p *S2CSetSubtitleText) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetSubtitleText) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.SubtitleText, err = buf.ReadTextComponent()
+	return err
+}
+
+func (p *S2CSetSubtitleText) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteTextComponent(p.SubtitleText)
 }
 
 // S2CSetTime represents "Update Time".
 //
-// > Time is based on ticks, where 20 ticks happen every second. There are 24000 ticks in a day, making Minecraft days exactly 20 minutes long.
-// >
-// > The time of day is based on the timestamp modulo 24000. 0 is sunrise, 6000 is noon, 12000 is sunset, and 18000 is midnight.
-// >
-// > The default SMP server increments the time by 20 every second.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Time
-var S2CSetTime = jp.NewPacket(jp.StatePlay, jp.S2C, 0x6F)
-
-type S2CSetTimeData struct {
-	// In ticks; not changed by server commands.
-	WorldAge ns.Long
-	// The world (or region) time, in ticks.
-	TimeOfDay ns.Long
-	// If true, the client should automatically advance the time of day according to its ticking rate.
+type S2CSetTime struct {
+	WorldAge            ns.Int64
+	TimeOfDay           ns.Int64
 	TimeOfDayIncreasing ns.Boolean
+}
+
+func (p *S2CSetTime) ID() ns.VarInt   { return 0x6F }
+func (p *S2CSetTime) State() jp.State { return jp.StatePlay }
+func (p *S2CSetTime) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetTime) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.WorldAge, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	if p.TimeOfDay, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	p.TimeOfDayIncreasing, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CSetTime) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt64(p.WorldAge); err != nil {
+		return err
+	}
+	if err := buf.WriteInt64(p.TimeOfDay); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.TimeOfDayIncreasing)
 }
 
 // S2CSetTitleText represents "Set Title Text".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Title_Text
-var S2CSetTitleText = jp.NewPacket(jp.StatePlay, jp.S2C, 0x70)
-
-type S2CSetTitleTextData struct {
-	//
+type S2CSetTitleText struct {
 	TitleText ns.TextComponent
+}
+
+func (p *S2CSetTitleText) ID() ns.VarInt   { return 0x70 }
+func (p *S2CSetTitleText) State() jp.State { return jp.StatePlay }
+func (p *S2CSetTitleText) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetTitleText) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.TitleText, err = buf.ReadTextComponent()
+	return err
+}
+
+func (p *S2CSetTitleText) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteTextComponent(p.TitleText)
 }
 
 // S2CSetTitlesAnimation represents "Set Title Animation Times".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Title_Animation_Times
-var S2CSetTitlesAnimation = jp.NewPacket(jp.StatePlay, jp.S2C, 0x71)
+type S2CSetTitlesAnimation struct {
+	FadeIn  ns.Int32
+	Stay    ns.Int32
+	FadeOut ns.Int32
+}
 
-type S2CSetTitlesAnimationData struct {
-	// Ticks to spend fading in.
-	FadeIn ns.Int
-	// Ticks to keep the title displayed.
-	Stay ns.Int
-	// Ticks to spend fading out, not when to start fading out.
-	FadeOut ns.Int
+func (p *S2CSetTitlesAnimation) ID() ns.VarInt   { return 0x71 }
+func (p *S2CSetTitlesAnimation) State() jp.State { return jp.StatePlay }
+func (p *S2CSetTitlesAnimation) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSetTitlesAnimation) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.FadeIn, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	if p.Stay, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	p.FadeOut, err = buf.ReadInt32()
+	return err
+}
+
+func (p *S2CSetTitlesAnimation) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt32(p.FadeIn); err != nil {
+		return err
+	}
+	if err := buf.WriteInt32(p.Stay); err != nil {
+		return err
+	}
+	return buf.WriteInt32(p.FadeOut)
 }
 
 // S2CSoundEntity represents "Entity Sound Effect".
 //
-// > Plays a sound effect from an entity, either by hardcoded ID or Identifier. Sound IDs and names can be found here .
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Entity_Sound_Effect
-var S2CSoundEntity = jp.NewPacket(jp.StatePlay, jp.S2C, 0x72)
-
-type S2CSoundEntityData struct {
-	// ID in the minecraft:sound_event registry, or an inline definition.
-	SoundEvent ns.Or[ns.Identifier, ns.ByteArray]
-	// The category that this sound will be played from ( current categories ).
+type S2CSoundEntity struct {
+	SoundEvent    ns.ByteArray
 	SoundCategory ns.VarInt
-	//
-	EntityId ns.VarInt
-	// 1.0 is 100%, capped between 0.0 and 1.0 by vanilla clients.
-	Volume ns.Float
-	// Float between 0.5 and 2.0 by vanilla clients.
-	Pitch ns.Float
-	// Seed used to pick sound variant.
-	Seed ns.Long
+	EntityId      ns.VarInt
+	Volume        ns.Float32
+	Pitch         ns.Float32
+	Seed          ns.Int64
+}
+
+func (p *S2CSoundEntity) ID() ns.VarInt   { return 0x72 }
+func (p *S2CSoundEntity) State() jp.State { return jp.StatePlay }
+func (p *S2CSoundEntity) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSoundEntity) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.SoundEvent, err = buf.ReadByteArray(1048576); err != nil {
+		return err
+	}
+	if p.SoundCategory, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Volume, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.Seed, err = buf.ReadInt64()
+	return err
+}
+
+func (p *S2CSoundEntity) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteByteArray(p.SoundEvent); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SoundCategory); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Volume); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Pitch); err != nil {
+		return err
+	}
+	return buf.WriteInt64(p.Seed)
 }
 
 // S2CSound represents "Sound Effect".
 //
-// > Plays a sound effect at the given location, either by hardcoded ID or Identifier. Sound IDs and names can be found here .
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Sound_Effect
-var S2CSound = jp.NewPacket(jp.StatePlay, jp.S2C, 0x73)
+type S2CSound struct {
+	SoundEvent      ns.ByteArray
+	SoundCategory   ns.VarInt
+	EffectPositionX ns.Int32
+	EffectPositionY ns.Int32
+	EffectPositionZ ns.Int32
+	Volume          ns.Float32
+	Pitch           ns.Float32
+	Seed            ns.Int64
+}
 
-type S2CSoundData struct {
-	// ID in the minecraft:sound_event registry, or an inline definition.
-	SoundEvent ns.Or[ns.Identifier, ns.ByteArray]
-	// The category that this sound will be played from ( current categories ).
-	SoundCategory ns.VarInt
-	// Effect X multiplied by 8 ( fixed-point number with only 3 bits dedicated to the fractional part).
-	EffectPositionX ns.Int
-	// Effect Y multiplied by 8 ( fixed-point number with only 3 bits dedicated to the fractional part).
-	EffectPositionY ns.Int
-	// Effect Z multiplied by 8 ( fixed-point number with only 3 bits dedicated to the fractional part).
-	EffectPositionZ ns.Int
-	// 1.0 is 100%, capped between 0.0 and 1.0 by vanilla clients.
-	Volume ns.Float
-	// Float between 0.5 and 2.0 by vanilla clients.
-	Pitch ns.Float
-	// Seed used to pick sound variant.
-	Seed ns.Long
+func (p *S2CSound) ID() ns.VarInt   { return 0x73 }
+func (p *S2CSound) State() jp.State { return jp.StatePlay }
+func (p *S2CSound) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSound) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.SoundEvent, err = buf.ReadByteArray(1048576); err != nil {
+		return err
+	}
+	if p.SoundCategory, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.EffectPositionX, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	if p.EffectPositionY, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	if p.EffectPositionZ, err = buf.ReadInt32(); err != nil {
+		return err
+	}
+	if p.Volume, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.Seed, err = buf.ReadInt64()
+	return err
+}
+
+func (p *S2CSound) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteByteArray(p.SoundEvent); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.SoundCategory); err != nil {
+		return err
+	}
+	if err := buf.WriteInt32(p.EffectPositionX); err != nil {
+		return err
+	}
+	if err := buf.WriteInt32(p.EffectPositionY); err != nil {
+		return err
+	}
+	if err := buf.WriteInt32(p.EffectPositionZ); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Volume); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Pitch); err != nil {
+		return err
+	}
+	return buf.WriteInt64(p.Seed)
 }
 
 // S2CStartConfiguration represents "Start Configuration".
 //
-// > Sent during gameplay in order to redo the configuration process. The client must respond with Acknowledge Configuration for the process to start.
-// >
-// > This packet switches the connection state to configuration .
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Start_Configuration
-var S2CStartConfiguration = jp.NewPacket(jp.StatePlay, jp.S2C, 0x74)
+type S2CStartConfiguration struct{}
 
-type S2CStartConfigurationData struct {
-	// No fields
-}
+func (p *S2CStartConfiguration) ID() ns.VarInt                { return 0x74 }
+func (p *S2CStartConfiguration) State() jp.State              { return jp.StatePlay }
+func (p *S2CStartConfiguration) Bound() jp.Bound              { return jp.S2C }
+func (p *S2CStartConfiguration) Read(*ns.PacketBuffer) error  { return nil }
+func (p *S2CStartConfiguration) Write(*ns.PacketBuffer) error { return nil }
 
 // S2CStopSound represents "Stop Sound".
 //
-// > Categories:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Stop_Sound
-var S2CStopSound = jp.NewPacket(jp.StatePlay, jp.S2C, 0x75)
+type S2CStopSound struct {
+	Flags  ns.Int8
+	Source ns.VarInt
+	Sound  ns.Identifier
+}
 
-type S2CStopSoundData struct {
-	// Controls which fields are present.
-	Flags ns.Byte
-	// Only if flags is 3 or 1 (bit mask 0x1). See below. If not present, then sounds from all sources are cleared.
-	Source ns.Optional[ns.VarInt]
-	// Only if flags is 2 or 3 (bit mask 0x2). A sound effect name, see Custom Sound Effect . If not present, then all sounds are cleared.
-	Sound ns.Optional[ns.Identifier]
+func (p *S2CStopSound) ID() ns.VarInt   { return 0x75 }
+func (p *S2CStopSound) State() jp.State { return jp.StatePlay }
+func (p *S2CStopSound) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CStopSound) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Flags, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	if p.Flags&0x01 != 0 {
+		if p.Source, err = buf.ReadVarInt(); err != nil {
+			return err
+		}
+	}
+	if p.Flags&0x02 != 0 {
+		p.Sound, err = buf.ReadIdentifier()
+	}
+	return err
+}
+
+func (p *S2CStopSound) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteInt8(p.Flags); err != nil {
+		return err
+	}
+	if p.Flags&0x01 != 0 {
+		if err := buf.WriteVarInt(p.Source); err != nil {
+			return err
+		}
+	}
+	if p.Flags&0x02 != 0 {
+		return buf.WriteIdentifier(p.Sound)
+	}
+	return nil
 }
 
 // S2CStoreCookiePlay represents "Store Cookie (play)".
 //
-// > Stores some arbitrary data on the client, which persists between server transfers. The vanilla client only accepts cookies of up to 5 kiB in size.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Store_Cookie_(Play)
-var S2CStoreCookiePlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x76)
+type S2CStoreCookiePlay struct {
+	Key     ns.Identifier
+	Payload ns.ByteArray
+}
 
-type S2CStoreCookiePlayData struct {
-	// The identifier of the cookie.
-	Key ns.Identifier
-	// The data of the cookie.
-	Payload ns.PrefixedArray[ns.Byte]
+func (p *S2CStoreCookiePlay) ID() ns.VarInt   { return 0x76 }
+func (p *S2CStoreCookiePlay) State() jp.State { return jp.StatePlay }
+func (p *S2CStoreCookiePlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CStoreCookiePlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Key, err = buf.ReadIdentifier(); err != nil {
+		return err
+	}
+	p.Payload, err = buf.ReadByteArray(5120)
+	return err
+}
+
+func (p *S2CStoreCookiePlay) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteIdentifier(p.Key); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Payload)
 }
 
 // S2CSystemChat represents "System Chat Message".
 //
-// > Sends the client a raw system message.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#System_Chat_Message
-var S2CSystemChat = jp.NewPacket(jp.StatePlay, jp.S2C, 0x77)
-
-type S2CSystemChatData struct {
-	// Limited to 262144 bytes.
+type S2CSystemChat struct {
 	Content ns.TextComponent
-	// Whether the message is an actionbar or chat message. See also #Set Action Bar Text .
 	Overlay ns.Boolean
+}
+
+func (p *S2CSystemChat) ID() ns.VarInt   { return 0x77 }
+func (p *S2CSystemChat) State() jp.State { return jp.StatePlay }
+func (p *S2CSystemChat) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSystemChat) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Content, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	p.Overlay, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CSystemChat) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteTextComponent(p.Content); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.Overlay)
 }
 
 // S2CTabList represents "Set Tab List Header And Footer".
 //
-// > This packet may be used by custom servers to display additional information above/below the tab list. It is never sent by the vanilla server.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Tab_List_Header_And_Footer
-var S2CTabList = jp.NewPacket(jp.StatePlay, jp.S2C, 0x78)
-
-type S2CTabListData struct {
-	// To remove the header, send an empty text component: {"text":""} .
+type S2CTabList struct {
 	Header ns.TextComponent
-	// To remove the footer, send an empty text component: {"text":""} .
 	Footer ns.TextComponent
+}
+
+func (p *S2CTabList) ID() ns.VarInt   { return 0x78 }
+func (p *S2CTabList) State() jp.State { return jp.StatePlay }
+func (p *S2CTabList) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CTabList) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Header, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	p.Footer, err = buf.ReadTextComponent()
+	return err
+}
+
+func (p *S2CTabList) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteTextComponent(p.Header); err != nil {
+		return err
+	}
+	return buf.WriteTextComponent(p.Footer)
 }
 
 // S2CTagQuery represents "Tag Query Response".
 //
-// > Sent in response to Query Block Entity Tag or Query Entity Tag .
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Tag_Query_Response
-var S2CTagQuery = jp.NewPacket(jp.StatePlay, jp.S2C, 0x79)
-
-type S2CTagQueryData struct {
-	// Can be compared to the one sent in the original query packet.
+type S2CTagQuery struct {
 	TransactionId ns.VarInt
-	// The NBT of the block or entity. May be a TAG_END (0), in which case no NBT is present.
-	Nbt ns.NBT
+	Nbt           nbt.Tag
+}
+
+func (p *S2CTagQuery) ID() ns.VarInt   { return 0x79 }
+func (p *S2CTagQuery) State() jp.State { return jp.StatePlay }
+func (p *S2CTagQuery) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CTagQuery) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.TransactionId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	remaining, err := buf.ReadByteArray(1048576)
+	if err != nil {
+		return err
+	}
+	p.Nbt, err = nbt.DecodeNetwork(remaining)
+	return err
+}
+
+func (p *S2CTagQuery) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.TransactionId); err != nil {
+		return err
+	}
+	data, err := nbt.EncodeNetwork(p.Nbt)
+	if err != nil {
+		return err
+	}
+	return buf.WriteFixedByteArray(data)
 }
 
 // S2CTakeItemEntity represents "Pickup Item".
 //
-// > Sent by the server when someone picks up an item lying on the ground — its sole purpose appears to be the animation of the item flying towards you. It doesn't destroy the entity in the client memory, and it doesn't add it to your inventory. The server only checks for items to be picked up after each Set Player Position (and Set Player Position And Rotation ) packet sent by the client. The collector entity can be any entity; it does not have to be a player. The collected entity can also be any entity, but the vanilla server only uses this for items, experience orbs, and the different varieties of arrows.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Pickup_Item
-var S2CTakeItemEntity = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7A)
-
-type S2CTakeItemEntityData struct {
-	//
+type S2CTakeItemEntity struct {
 	CollectedEntityId ns.VarInt
-	//
 	CollectorEntityId ns.VarInt
-	// Seems to be 1 for XP orbs, otherwise the number of items in the stack.
-	PickupItemCount ns.VarInt
+	PickupItemCount   ns.VarInt
+}
+
+func (p *S2CTakeItemEntity) ID() ns.VarInt   { return 0x7A }
+func (p *S2CTakeItemEntity) State() jp.State { return jp.StatePlay }
+func (p *S2CTakeItemEntity) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CTakeItemEntity) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.CollectedEntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.CollectorEntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.PickupItemCount, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CTakeItemEntity) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.CollectedEntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.CollectorEntityId); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.PickupItemCount)
 }
 
 // S2CTeleportEntity represents "Synchronize Vehicle Position".
 //
-// > Teleports the entity on the client without changing the reference point of movement deltas in future Update Entity Position packets. Seems to be used to make relative adjustments to vehicle positions; more information needed.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Synchronize_Vehicle_Position
-var S2CTeleportEntity = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7B)
+type S2CTeleportEntity struct {
+	EntityId  ns.VarInt
+	X         ns.Float64
+	Y         ns.Float64
+	Z         ns.Float64
+	VelocityX ns.Float64
+	VelocityY ns.Float64
+	VelocityZ ns.Float64
+	Yaw       ns.Float32
+	Pitch     ns.Float32
+	Flags     ns.Int8
+	OnGround  ns.Boolean
+}
 
-type S2CTeleportEntityData struct {
-	//
-	EntityId ns.VarInt
-	//
-	X ns.Double
-	//
-	Y ns.Double
-	//
-	Z ns.Double
-	//
-	VelocityX ns.Double
-	//
-	VelocityY ns.Double
-	//
-	VelocityZ ns.Double
-	// Rotation on the Y axis, in degrees.
-	Yaw ns.Float
-	// Rotation on the Y axis, in degrees.
-	Pitch ns.Float
-	//
-	Flags ns.Byte
-	//
-	OnGround ns.Boolean
+func (p *S2CTeleportEntity) ID() ns.VarInt   { return 0x7B }
+func (p *S2CTeleportEntity) State() jp.State { return jp.StatePlay }
+func (p *S2CTeleportEntity) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CTeleportEntity) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Y, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.VelocityX, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.VelocityY, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.VelocityZ, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Pitch, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if p.Flags, err = buf.ReadInt8(); err != nil {
+		return err
+	}
+	p.OnGround, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CTeleportEntity) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Y); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.VelocityX); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.VelocityY); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.VelocityZ); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Pitch); err != nil {
+		return err
+	}
+	if err := buf.WriteInt8(p.Flags); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.OnGround)
 }
 
 // S2CTestInstanceBlockStatus represents "Test Instance Block Status".
 //
-// > Updates the status of the currently open Test Instance Block screen, if any.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Test_Instance_Block_Status
-var S2CTestInstanceBlockStatus = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7C)
-
-type S2CTestInstanceBlockStatusData struct {
-	//
+type S2CTestInstanceBlockStatus struct {
 	Status ns.TextComponent
-	//
-	HasSize ns.Boolean
-	// Only present if Has Size is true.
-	SizeX ns.Optional[ns.Double]
-	// Only present if Has Size is true.
-	SizeY ns.Optional[ns.Double]
-	// Only present if Has Size is true.
-	SizeZ ns.Optional[ns.Double]
+	Size   ns.PrefixedOptional[ns.ByteArray]
+}
+
+func (p *S2CTestInstanceBlockStatus) ID() ns.VarInt   { return 0x7C }
+func (p *S2CTestInstanceBlockStatus) State() jp.State { return jp.StatePlay }
+func (p *S2CTestInstanceBlockStatus) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CTestInstanceBlockStatus) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Status, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	return p.Size.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
+		return b.ReadByteArray(24)
+	})
+}
+
+func (p *S2CTestInstanceBlockStatus) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteTextComponent(p.Status); err != nil {
+		return err
+	}
+	return p.Size.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
+		return b.WriteByteArray(v)
+	})
 }
 
 // S2CTickingState represents "Set Ticking State".
 //
-// > Used to adjust the ticking rate of the client, and whether it's frozen.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Ticking_State
-var S2CTickingState = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7D)
-
-type S2CTickingStateData struct {
-	//
-	TickRate ns.Float
-	//
+type S2CTickingState struct {
+	TickRate ns.Float32
 	IsFrozen ns.Boolean
+}
+
+func (p *S2CTickingState) ID() ns.VarInt   { return 0x7D }
+func (p *S2CTickingState) State() jp.State { return jp.StatePlay }
+func (p *S2CTickingState) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CTickingState) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.TickRate, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.IsFrozen, err = buf.ReadBool()
+	return err
+}
+
+func (p *S2CTickingState) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteFloat32(p.TickRate); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.IsFrozen)
 }
 
 // S2CTickingStep represents "Step Tick".
 //
-// > Advances the client processing by the specified number of ticks. Has no effect unless client ticking is frozen.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Step_Tick
-var S2CTickingStep = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7E)
-
-type S2CTickingStepData struct {
-	//
+type S2CTickingStep struct {
 	TickSteps ns.VarInt
+}
+
+func (p *S2CTickingStep) ID() ns.VarInt   { return 0x7E }
+func (p *S2CTickingStep) State() jp.State { return jp.StatePlay }
+func (p *S2CTickingStep) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CTickingStep) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.TickSteps, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CTickingStep) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.TickSteps)
 }
 
 // S2CTransferPlay represents "Transfer (play)".
 //
-// > Notifies the client that it should transfer to the given server. Cookies previously stored are preserved between server transfers.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Transfer_(Play)
-var S2CTransferPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x7F)
-
-type S2CTransferPlayData struct {
-	// The hostname or IP of the server.
+type S2CTransferPlay struct {
 	Host ns.String
-	// The port of the server.
 	Port ns.VarInt
+}
+
+func (p *S2CTransferPlay) ID() ns.VarInt   { return 0x7F }
+func (p *S2CTransferPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CTransferPlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CTransferPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Host, err = buf.ReadString(32767); err != nil {
+		return err
+	}
+	p.Port, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CTransferPlay) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteString(p.Host); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.Port)
 }
 
 // S2CUpdateAdvancements represents "Update Advancements".
 //
-// > Advancement structure:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Advancements
-var S2CUpdateAdvancements = jp.NewPacket(jp.StatePlay, jp.S2C, 0x80)
+type S2CUpdateAdvancements struct {
+	Data ns.ByteArray
+}
 
-type S2CUpdateAdvancementsData struct {
-	// Whether to reset/clear the current advancements.
-	ResetClear ns.Boolean
-	// See below
-	Value ns.ByteArray
-	// The identifiers of the advancements that should be removed.
-	Identifiers ns.PrefixedArray[ns.Identifier]
-	// (duplicate of Value) See below.
-	Value2 ns.ByteArray
-	//
-	ShowAdvancements ns.Boolean
+func (p *S2CUpdateAdvancements) ID() ns.VarInt   { return 0x80 }
+func (p *S2CUpdateAdvancements) State() jp.State { return jp.StatePlay }
+func (p *S2CUpdateAdvancements) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CUpdateAdvancements) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CUpdateAdvancements) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CUpdateAttributes represents "Update Attributes".
 //
-// > Sets attributes on the given entity.
-// >
-// > Modifier Data structure:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Attributes
-var S2CUpdateAttributes = jp.NewPacket(jp.StatePlay, jp.S2C, 0x81)
-
-type S2CUpdateAttributesData struct {
-	//
+type S2CUpdateAttributes struct {
 	EntityId ns.VarInt
-	// See below.
-	Value ns.Double
-	// See Attribute#Modifiers . Modifier Data defined below.
-	Modifiers ns.ByteArray
+	Data     ns.ByteArray
+}
+
+func (p *S2CUpdateAttributes) ID() ns.VarInt   { return 0x81 }
+func (p *S2CUpdateAttributes) State() jp.State { return jp.StatePlay }
+func (p *S2CUpdateAttributes) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CUpdateAttributes) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CUpdateAttributes) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CUpdateMobEffect represents "Entity Effect".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Entity_Effect
-var S2CUpdateMobEffect = jp.NewPacket(jp.StatePlay, jp.S2C, 0x82)
-
-type S2CUpdateMobEffectData struct {
-	//
-	EntityId ns.VarInt
-	// See this table .
-	EffectId ns.VarInt
-	// Vanilla client displays effect level as Amplifier + 1.
+type S2CUpdateMobEffect struct {
+	EntityId  ns.VarInt
+	EffectId  ns.VarInt
 	Amplifier ns.VarInt
-	// Duration in ticks. (-1 for infinite)
-	Duration ns.VarInt
-	// Bit field, see below.
-	Flags ns.Byte
+	Duration  ns.VarInt
+	Flags     ns.Int8
+}
+
+func (p *S2CUpdateMobEffect) ID() ns.VarInt   { return 0x82 }
+func (p *S2CUpdateMobEffect) State() jp.State { return jp.StatePlay }
+func (p *S2CUpdateMobEffect) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CUpdateMobEffect) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.EffectId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Amplifier, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Duration, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Flags, err = buf.ReadInt8()
+	return err
+}
+
+func (p *S2CUpdateMobEffect) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.EffectId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Amplifier); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Duration); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.Flags)
 }
 
 // S2CUpdateRecipes represents "Update Recipes".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Recipes
-var S2CUpdateRecipes = jp.NewPacket(jp.StatePlay, jp.S2C, 0x83)
+type S2CUpdateRecipes struct {
+	Data ns.ByteArray
+}
 
-type S2CUpdateRecipesData struct {
-	// Prefixed Array
-	PropertySets ns.PrefixedArray[struct {
-		PropertySetId ns.Identifier
-		Items         ns.PrefixedArray[ns.VarInt]
-	}]
-	//
-	SlotDisplay ns.SlotDisplay
+func (p *S2CUpdateRecipes) ID() ns.VarInt   { return 0x83 }
+func (p *S2CUpdateRecipes) State() jp.State { return jp.StatePlay }
+func (p *S2CUpdateRecipes) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CUpdateRecipes) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CUpdateRecipes) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CUpdateTagsPlay represents "Update Tags (play)".
 //
-// > A tag looks like this:
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Tags_(Play)
-var S2CUpdateTagsPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x84)
+type S2CUpdateTagsPlay struct {
+	Data ns.ByteArray
+}
 
-type S2CUpdateTagsPlayData struct {
-	// Prefixed Array
-	RegistryToTagsMap ns.PrefixedArray[struct {
-		Registry ns.Identifier
-		Tags     ns.ByteArray
-	}]
+func (p *S2CUpdateTagsPlay) ID() ns.VarInt   { return 0x84 }
+func (p *S2CUpdateTagsPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CUpdateTagsPlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CUpdateTagsPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CUpdateTagsPlay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CProjectilePower represents "Projectile Power".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Projectile_Power
-var S2CProjectilePower = jp.NewPacket(jp.StatePlay, jp.S2C, 0x85)
-
-type S2CProjectilePowerData struct {
-	//
+type S2CProjectilePower struct {
 	EntityId ns.VarInt
-	//
-	Power ns.Double
+	Power    ns.Float64
+}
+
+func (p *S2CProjectilePower) ID() ns.VarInt   { return 0x85 }
+func (p *S2CProjectilePower) State() jp.State { return jp.StatePlay }
+func (p *S2CProjectilePower) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CProjectilePower) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Power, err = buf.ReadFloat64()
+	return err
+}
+
+func (p *S2CProjectilePower) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	return buf.WriteFloat64(p.Power)
 }
 
 // S2CCustomReportDetails represents "Custom Report Details".
 //
-// > Contains a list of key-value text entries that are included in any crash or disconnection report generated during connection to the server.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Custom_Report_Details
-var S2CCustomReportDetails = jp.NewPacket(jp.StatePlay, jp.S2C, 0x86)
+type S2CCustomReportDetails struct {
+	Details ns.ByteArray
+}
 
-type S2CCustomReportDetailsData struct {
-	// Prefixed Array (32)
-	Details ns.PrefixedArray[struct {
-		Title       ns.String
-		Description ns.String
-	}]
+func (p *S2CCustomReportDetails) ID() ns.VarInt   { return 0x86 }
+func (p *S2CCustomReportDetails) State() jp.State { return jp.StatePlay }
+func (p *S2CCustomReportDetails) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CCustomReportDetails) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Details, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CCustomReportDetails) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Details)
 }
 
 // S2CServerLinks represents "Server Links".
 //
-// > This packet contains a list of links that the vanilla client will display in the menu available from the pause menu. Link labels can be built-in or custom (i.e., any text).
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Server_Links
-var S2CServerLinks = jp.NewPacket(jp.StatePlay, jp.S2C, 0x87)
+type S2CServerLinks struct {
+	Links ns.ByteArray
+}
 
-type S2CServerLinksData struct {
-	// Prefixed Array
-	Links ns.PrefixedArray[struct {
-		IsBuiltIn ns.Boolean
-		Label     ns.TextComponent
-		Url       ns.String
-	}]
+func (p *S2CServerLinks) ID() ns.VarInt   { return 0x87 }
+func (p *S2CServerLinks) State() jp.State { return jp.StatePlay }
+func (p *S2CServerLinks) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CServerLinks) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Links, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CServerLinks) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Links)
 }
 
 // S2CWaypoint represents "Waypoint".
 //
-// > Adds, removes, or updates an entry that will be tracked on the player locator bar.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Waypoint
-var S2CWaypoint = jp.NewPacket(jp.StatePlay, jp.S2C, 0x88)
+type S2CWaypoint struct {
+	Data ns.ByteArray
+}
 
-type S2CWaypointData struct {
-	// 0: track, 1: untrack, 2: update.
-	Operation ns.VarInt
-	// Something that uniquely identifies this specific waypoint.
-	Identifier ns.Or[ns.UUID, ns.String]
-	// Path to the waypoint style JSON: assets/<namespace>/waypoint_style/<value>.json.
-	IconStyle ns.Identifier
-	// Defines how the following field is read.
-	WaypointType ns.VarInt
+func (p *S2CWaypoint) ID() ns.VarInt   { return 0x88 }
+func (p *S2CWaypoint) State() jp.State { return jp.StatePlay }
+func (p *S2CWaypoint) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CWaypoint) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Data, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CWaypoint) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Data)
 }
 
 // S2CClearDialogPlay represents "Clear Dialog (play)".
 //
-// > If we're currently in a dialog screen, then this removes the current screen and switches back to the previous one.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clear_Dialog_(Play)
-var S2CClearDialogPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x89)
+type S2CClearDialogPlay struct{}
 
-type S2CClearDialogPlayData struct {
-	// No fields
-}
+func (p *S2CClearDialogPlay) ID() ns.VarInt                { return 0x89 }
+func (p *S2CClearDialogPlay) State() jp.State              { return jp.StatePlay }
+func (p *S2CClearDialogPlay) Bound() jp.Bound              { return jp.S2C }
+func (p *S2CClearDialogPlay) Read(*ns.PacketBuffer) error  { return nil }
+func (p *S2CClearDialogPlay) Write(*ns.PacketBuffer) error { return nil }
 
 // S2CShowDialogPlay represents "Show Dialog (play)".
 //
-// > Show a custom dialog screen to the client.
-//
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Show_Dialog_(Play)
-var S2CShowDialogPlay = jp.NewPacket(jp.StatePlay, jp.S2C, 0x8A)
+type S2CShowDialogPlay struct {
+	Dialog ns.ByteArray
+}
 
-type S2CShowDialogPlayData struct {
-	// ID in the minecraft:dialog registry, or an inline definition as described at Java Edition protocol/Registry data#Dialog .
-	Dialog ns.Or[ns.Identifier, ns.NBT]
+func (p *S2CShowDialogPlay) ID() ns.VarInt   { return 0x8A }
+func (p *S2CShowDialogPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CShowDialogPlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CShowDialogPlay) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.Dialog, err = buf.ReadByteArray(1048576)
+	return err
+}
+
+func (p *S2CShowDialogPlay) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteByteArray(p.Dialog)
 }
