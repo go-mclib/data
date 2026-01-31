@@ -1805,7 +1805,7 @@ func (p *S2CLightUpdate) Write(buf *ns.PacketBuffer) error {
 type S2CLoginPlay struct {
 	EntityId            ns.Int32
 	IsHardcore          ns.Boolean
-	DimensionNames      ns.ByteArray
+	DimensionNames      ns.PrefixedArray[ns.Identifier]
 	MaxPlayers          ns.VarInt
 	ViewDistance        ns.VarInt
 	SimulationDistance  ns.VarInt
@@ -1819,7 +1819,7 @@ type S2CLoginPlay struct {
 	PreviousGameMode    ns.Int8
 	IsDebug             ns.Boolean
 	IsFlat              ns.Boolean
-	DeathLocation       ns.PrefixedOptional[ns.ByteArray]
+	DeathLocation       ns.PrefixedOptional[ns.GlobalPos]
 	PortalCooldown      ns.VarInt
 	SeaLevel            ns.VarInt
 	EnforcesSecureChat  ns.Boolean
@@ -1837,7 +1837,9 @@ func (p *S2CLoginPlay) Read(buf *ns.PacketBuffer) error {
 	if p.IsHardcore, err = buf.ReadBool(); err != nil {
 		return err
 	}
-	if p.DimensionNames, err = buf.ReadByteArray(1048576); err != nil {
+	if err = p.DimensionNames.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.Identifier, error) {
+		return b.ReadIdentifier()
+	}); err != nil {
 		return err
 	}
 	if p.MaxPlayers, err = buf.ReadVarInt(); err != nil {
@@ -1879,8 +1881,8 @@ func (p *S2CLoginPlay) Read(buf *ns.PacketBuffer) error {
 	if p.IsFlat, err = buf.ReadBool(); err != nil {
 		return err
 	}
-	if err = p.DeathLocation.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
-		return b.ReadByteArray(1048576)
+	if err = p.DeathLocation.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.GlobalPos, error) {
+		return b.ReadGlobalPos()
 	}); err != nil {
 		return err
 	}
@@ -1901,7 +1903,9 @@ func (p *S2CLoginPlay) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteBool(p.IsHardcore); err != nil {
 		return err
 	}
-	if err := buf.WriteByteArray(p.DimensionNames); err != nil {
+	if err := p.DimensionNames.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.Identifier) error {
+		return b.WriteIdentifier(v)
+	}); err != nil {
 		return err
 	}
 	if err := buf.WriteVarInt(p.MaxPlayers); err != nil {
@@ -1943,8 +1947,8 @@ func (p *S2CLoginPlay) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteBool(p.IsFlat); err != nil {
 		return err
 	}
-	if err := p.DeathLocation.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
-		return b.WriteByteArray(v)
+	if err := p.DeathLocation.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.GlobalPos) error {
+		return b.WriteGlobalPos(v)
 	}); err != nil {
 		return err
 	}
