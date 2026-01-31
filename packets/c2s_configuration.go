@@ -2,7 +2,7 @@ package packets
 
 import (
 	jp "github.com/go-mclib/protocol/java_protocol"
-	ns "github.com/go-mclib/protocol/net_structures"
+	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
 // C2SClientInformationConfiguration represents "Client Information (configuration)".
@@ -19,7 +19,7 @@ type C2SClientInformationConfigurationData struct {
 	Locale ns.String
 	// Client-side render distance, in chunks.
 	ViewDistance ns.Byte
-	// 0: enabled, 1: commands only, 2: hidden. See Chat#Client chat mode for more information.
+	// 0: enabled, 1: commands only, 2: hidden. See Java Edition protocol/Chat#Client chat mode for more information.
 	ChatMode ns.VarInt
 	// “Colors” multiplayer setting. The vanilla server stores this value but does nothing with it (see MC-64867 ). Some third-party servers disable all coloring in chat and system messages when it is false.
 	ChatColors ns.Boolean
@@ -27,7 +27,7 @@ type C2SClientInformationConfigurationData struct {
 	DisplayedSkinParts ns.UnsignedByte
 	// 0: Left, 1: Right.
 	MainHand ns.VarInt
-	// Enables filtering of text on signs and written book titles. The vanilla client sets this according to the profanityFilterPreferences.profanityFilterOn account attribute indicated by the /player/attributes Mojang API endpoint . In offline mode, it is always false.
+	// Enables filtering of text on signs and written book titles. The vanilla client sets this according to the profanityFilterPreferences.profanityFilterOn account attribute indicated by the Mojang API endpoint for player attributes . In offline mode, it is always false.
 	EnableTextFiltering ns.Boolean
 	// Servers usually list online players; this option should let you not show up in that list.
 	AllowServerListings ns.Boolean
@@ -54,10 +54,6 @@ type C2SCookieResponseConfigurationData struct {
 // > Mods and plugins can use this to send their data. Minecraft itself uses some plugin channels . These internal channels are in the minecraft namespace.
 // >
 // > More documentation on this: https://dinnerbone.com/blog/2012/01/13/minecraft-plugin-channels-messaging/
-// >
-// > Note that the length of Data is known only from the packet length, since the packet has no length field of any kind.
-// >
-// > In the vanilla server, the maximum data length is 32767 bytes.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Serverbound_Plugin_Message_(Configuration)
 var C2SCustomPayloadConfiguration = jp.NewPacket(jp.StateConfiguration, jp.C2S, 0x02)
@@ -65,7 +61,7 @@ var C2SCustomPayloadConfiguration = jp.NewPacket(jp.StateConfiguration, jp.C2S, 
 type C2SCustomPayloadConfigurationData struct {
 	// Name of the plugin channel used to send the data.
 	Channel ns.Identifier
-	// Any data, depending on the channel. minecraft: channels are documented here . The length of this array must be inferred from the packet length.
+	// Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (such as the string length prefix in the standard minecraft:brand channel). The vanilla server enforces a length limit of 32767 bytes on this data, but only if the channel type is unrecognized.
 	Data ns.ByteArray
 }
 
@@ -138,16 +134,13 @@ type C2SSelectKnownPacksData struct {
 	}]
 }
 
-// C2SCustomClickActionConfiguration represents "Custom Click Action (configuration)".
+// C2SAcceptCodeOfConductConfiguration represents "Custom Click Action (configuration)".
 //
 // > Sent when the client clicks a Text Component with the minecraft:custom click action. This is meant as an alternative to running a command, but it will not have any effect on vanilla servers.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Custom_Click_Action_(Configuration)
-var C2SCustomClickActionConfiguration = jp.NewPacket(jp.StateConfiguration, jp.C2S, 0x08)
+var C2SAcceptCodeOfConductConfiguration = jp.NewPacket(jp.StateConfiguration, jp.C2S, 0x08)
 
-type C2SCustomClickActionConfigurationData struct {
-	// The identifier for the click action.
-	Id ns.Identifier
-	// The data to send with the click action. May be a TAG_END (0).
-	Payload ns.NBT
+type C2SAcceptCodeOfConductConfigurationData struct {
+	// No fields
 }

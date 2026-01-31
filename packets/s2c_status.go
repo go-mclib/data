@@ -2,7 +2,7 @@ package packets
 
 import (
 	jp "github.com/go-mclib/protocol/java_protocol"
-	ns "github.com/go-mclib/protocol/net_structures"
+	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
 // S2CStatusResponse represents "Status Response".
@@ -11,7 +11,7 @@ import (
 var S2CStatusResponse = jp.NewPacket(jp.StateStatus, jp.S2C, 0x00)
 
 type S2CStatusResponseData struct {
-	// See Server List Ping#Status Response ; as with all strings this is prefixed by its length as a VarInt .
+	// See Java Edition protocol/Server List Ping#Status Response ; as with all strings, this is prefixed by its length as a VarInt .
 	JsonResponse ns.String
 }
 

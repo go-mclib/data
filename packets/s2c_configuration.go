@@ -2,7 +2,7 @@ package packets
 
 import (
 	jp "github.com/go-mclib/protocol/java_protocol"
-	ns "github.com/go-mclib/protocol/net_structures"
+	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
 // S2CCookieRequestConfiguration represents "Cookie Request (configuration)".
@@ -22,8 +22,6 @@ type S2CCookieRequestConfigurationData struct {
 // > Mods and plugins can use this to send their data. Minecraft itself uses several plugin channels . These internal channels are in the minecraft namespace.
 // >
 // > More information on how it works on Dinnerbone's blog . More documentation about internal and popular registered channels are here .
-// >
-// > In vanilla clients, the maximum data length is 1048576 bytes.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clientbound_Plugin_Message_(Configuration)
 var S2CCustomPayloadConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x01)
@@ -31,7 +29,7 @@ var S2CCustomPayloadConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 
 type S2CCustomPayloadConfigurationData struct {
 	// Name of the plugin channel used to send the data.
 	Channel ns.Identifier
-	// Any data. The length of this array must be inferred from the packet length.
+	// Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (such as the string length prefix in the standard minecraft:brand channel). The vanilla client enforces a length limit of 1048576 bytes on this data, but only if the channel type is unrecognized.
 	Data ns.ByteArray
 }
 
@@ -97,7 +95,7 @@ type S2CResetChatData struct {
 //
 // > Represents certain registries that are sent from the server and are applied on the client.
 // >
-// > See Registry Data for details.
+// > See Java Edition protocol/Registry data for details.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Registry_Data
 var S2CRegistryData = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x07)
@@ -190,7 +188,7 @@ type S2CUpdateTagsConfigurationData struct {
 	// Prefixed Array
 	ArrayOfTags ns.PrefixedArray[struct {
 		Registry   ns.Identifier
-		ArrayOfTag ns.ByteArray // FIXME
+		ArrayOfTag ns.ByteArray // FIXME: See below
 	}]
 }
 
@@ -200,7 +198,7 @@ type S2CUpdateTagsConfigurationData struct {
 // > The client is expected to respond with its own Serverbound Known Packs packet.
 // > The vanilla server does not continue with Configuration until it receives a response.
 // >
-// > The vanilla client requires the minecraft:core pack with version 1.21.8 for a normal login sequence. This packet must be sent before the Registry Data packets.
+// > The vanilla client requires the minecraft:core pack with version 1.21.10 for a normal login sequence. This packet must be sent before the Registry Data packets.
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clientbound_Known_Packs
 var S2CSelectKnownPacks = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x0E)
@@ -263,6 +261,18 @@ type S2CClearDialogConfigurationData struct {
 var S2CShowDialogConfiguration = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x12)
 
 type S2CShowDialogConfigurationData struct {
-	// Inline definition as described at Registry_data#Dialog .
+	// Inline definition as described at Java Edition protocol/Registry data#Dialog .
 	Dialog ns.NBT
+}
+
+// S2CCodeOfConduct represents "Code of Conduct".
+//
+// > Show the client the server Code of Conduct
+//
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Code_Of_Conduct
+var S2CCodeOfConduct = jp.NewPacket(jp.StateConfiguration, jp.S2C, 0x13)
+
+type S2CCodeOfConductData struct {
+	// Code of Conduct of the server.
+	Codeofconduct ns.String
 }

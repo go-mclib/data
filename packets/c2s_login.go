@@ -2,7 +2,7 @@ package packets
 
 import (
 	jp "github.com/go-mclib/protocol/java_protocol"
-	ns "github.com/go-mclib/protocol/net_structures"
+	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
 // C2SHello represents "Login Start".
@@ -39,7 +39,7 @@ var C2SCustomQueryAnswer = jp.NewPacket(jp.StateLogin, jp.C2S, 0x02)
 type C2SCustomQueryAnswerData struct {
 	// Should match ID from server.
 	MessageId ns.VarInt
-	// Any data, depending on the channel. The length of this array must be inferred from the packet length. Only present if the client understood the request.
+	// Any data, depending on the channel. Only present if the client understood the request. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (e.g. for strings).
 	Data ns.PrefixedOptional[ns.ByteArray]
 }
 

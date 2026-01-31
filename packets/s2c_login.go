@@ -2,7 +2,7 @@ package packets
 
 import (
 	jp "github.com/go-mclib/protocol/java_protocol"
-	ns "github.com/go-mclib/protocol/net_structures"
+	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
 // S2CLoginDisconnectLogin represents "Disconnect (login)".
@@ -12,7 +12,7 @@ var S2CLoginDisconnectLogin = jp.NewPacket(jp.StateLogin, jp.S2C, 0x00)
 
 type S2CLoginDisconnectLoginData struct {
 	// The reason why the player was disconnected.
-	Reason ns.JSONTextComponent
+	Reason ns.TextComponent
 }
 
 // S2CHello represents "Encryption Request".
@@ -69,7 +69,7 @@ type S2CCustomQueryData struct {
 	MessageId ns.VarInt
 	// Name of the plugin channel used to send the data.
 	Channel ns.Identifier
-	// Any data, depending on the channel. The length of this array must be inferred from the packet length.
+	// Any data, depending on the channel. Typically this would be a sequence of fields using standard data types, but some unofficial channels have unusual formats. There is no length prefix that applies to all channel types, but the format specific to the channel may or may not include one or more length prefixes (e.g. for strings). The vanilla client enforces a length limit of 1048576 bytes on this data, but only if the channel type is unrecognized (which is the case for all login plugin messages with a completely vanilla client).
 	Data ns.ByteArray
 }
 
