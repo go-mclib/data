@@ -1,0 +1,14 @@
+advancements/
+data/
+datapacks/
+DIM-1/
+DIM1/
+entities/
+playerdata/
+players/
+poi/
+region/
+stats/
+
+level.dat*
+session.lock

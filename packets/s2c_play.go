@@ -2441,7 +2441,60 @@ func (p *S2CPlayerAbilities) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Chat_Message
 type S2CPlayerChat struct {
-	Data ns.ByteArray
+	GlobalIndex     ns.VarInt
+	Sender          ns.UUID
+	Index           ns.VarInt
+	Signature       ns.PrefixedOptional[MessageSignature]
+	Body            SignedMessageBody
+	UnsignedContent ns.PrefixedOptional[ns.TextComponent]
+	FilterMask      FilterMask
+	ChatType        ChatTypeBound
+}
+
+// MessageSignature is a 256-byte cryptographic signature for chat messages.
+type MessageSignature [256]byte
+
+// SignedMessageBody contains the signed content of a chat message.
+type SignedMessageBody struct {
+	Content   ns.String
+	Timestamp ns.Int64 // epoch milliseconds
+	Salt      ns.Int64
+	LastSeen  LastSeenMessagesPacked
+}
+
+// LastSeenMessagesPacked contains references to previously seen messages.
+type LastSeenMessagesPacked struct {
+	Entries ns.PrefixedArray[MessageSignaturePacked]
+}
+
+// MessageSignaturePacked is either a cache index or a full signature.
+type MessageSignaturePacked struct {
+	ID            ns.VarInt         // id + 1; if 0, FullSignature follows
+	FullSignature *MessageSignature // only present if ID == 0
+}
+
+// FilterMask indicates how a message should be filtered.
+type FilterMask struct {
+	Type FilterMaskType
+	Mask *ns.BitSet // only present if Type == FilterMaskPartiallyFiltered
+}
+
+// FilterMaskType indicates the type of filter mask.
+type FilterMaskType ns.VarInt
+
+const (
+	FilterMaskPassThrough FilterMaskType = iota
+	FilterMaskFullyFiltered
+	FilterMaskPartiallyFiltered
+)
+
+// ChatTypeBound contains the chat type and sender information.
+type ChatTypeBound struct {
+	// Registry ID. In vanilla: 1 = normal chat, 3 = whisper, 5 = /say, 2 = /me, ...
+	// TODO: accumulate the registry data in client store and reference in higher level funcs
+	ChatType   ns.VarInt
+	Name       ns.TextComponent                      // sender's display name
+	TargetName ns.PrefixedOptional[ns.TextComponent] // target's display name (for whispers)
 }
 
 func (p *S2CPlayerChat) ID() ns.VarInt   { return S2CPlayerChatID }
@@ -2450,12 +2503,187 @@ func (p *S2CPlayerChat) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CPlayerChat) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.Data, err = buf.ReadByteArray(1048576)
-	return err
+
+	if p.GlobalIndex, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Sender, err = buf.ReadUUID(); err != nil {
+		return err
+	}
+	if p.Index, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+
+	// Signature (optional)
+	if err = p.Signature.DecodeWith(buf, func(b *ns.PacketBuffer) (MessageSignature, error) {
+		var sig MessageSignature
+		data, err := b.ReadFixedByteArray(256)
+		if err != nil {
+			return sig, err
+		}
+		copy(sig[:], data)
+		return sig, nil
+	}); err != nil {
+		return err
+	}
+
+	// Body
+	if p.Body.Content, err = buf.ReadString(256); err != nil {
+		return err
+	}
+	if p.Body.Timestamp, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+	if p.Body.Salt, err = buf.ReadInt64(); err != nil {
+		return err
+	}
+
+	// LastSeen
+	if err = p.Body.LastSeen.Entries.DecodeWith(buf, func(b *ns.PacketBuffer) (MessageSignaturePacked, error) {
+		var msp MessageSignaturePacked
+		id, err := b.ReadVarInt()
+		if err != nil {
+			return msp, err
+		}
+		msp.ID = id
+		if id == 0 {
+			var sig MessageSignature
+			data, err := b.ReadFixedByteArray(256)
+			if err != nil {
+				return msp, err
+			}
+			copy(sig[:], data)
+			msp.FullSignature = &sig
+		}
+		return msp, nil
+	}); err != nil {
+		return err
+	}
+
+	// UnsignedContent (optional)
+	if err = p.UnsignedContent.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
+		return b.ReadTextComponent()
+	}); err != nil {
+		return err
+	}
+
+	// FilterMask
+	filterType, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.FilterMask.Type = FilterMaskType(filterType)
+	if p.FilterMask.Type == FilterMaskPartiallyFiltered {
+		bitset := &ns.BitSet{}
+		if err = bitset.Decode(buf); err != nil {
+			return err
+		}
+		p.FilterMask.Mask = bitset
+	}
+
+	// ChatType
+	if p.ChatType.ChatType, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.ChatType.Name, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	if err = p.ChatType.TargetName.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
+		return b.ReadTextComponent()
+	}); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (p *S2CPlayerChat) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteByteArray(p.Data)
+	if err := buf.WriteVarInt(p.GlobalIndex); err != nil {
+		return err
+	}
+	if err := buf.WriteUUID(p.Sender); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Index); err != nil {
+		return err
+	}
+
+	// Signature
+	if err := p.Signature.EncodeWith(buf, func(b *ns.PacketBuffer, sig MessageSignature) error {
+		return b.WriteFixedByteArray(sig[:])
+	}); err != nil {
+		return err
+	}
+
+	// Body
+	if err := buf.WriteString(p.Body.Content); err != nil {
+		return err
+	}
+	if err := buf.WriteInt64(p.Body.Timestamp); err != nil {
+		return err
+	}
+	if err := buf.WriteInt64(p.Body.Salt); err != nil {
+		return err
+	}
+
+	// LastSeen
+	if err := p.Body.LastSeen.Entries.EncodeWith(buf, func(b *ns.PacketBuffer, msp MessageSignaturePacked) error {
+		if err := b.WriteVarInt(msp.ID); err != nil {
+			return err
+		}
+		if msp.ID == 0 && msp.FullSignature != nil {
+			return b.WriteFixedByteArray(msp.FullSignature[:])
+		}
+		return nil
+	}); err != nil {
+		return err
+	}
+
+	// UnsignedContent
+	if err := p.UnsignedContent.EncodeWith(buf, func(b *ns.PacketBuffer, tc ns.TextComponent) error {
+		return b.WriteTextComponent(tc)
+	}); err != nil {
+		return err
+	}
+
+	// FilterMask
+	if err := buf.WriteVarInt(ns.VarInt(p.FilterMask.Type)); err != nil {
+		return err
+	}
+	if p.FilterMask.Type == FilterMaskPartiallyFiltered && p.FilterMask.Mask != nil {
+		if err := p.FilterMask.Mask.Encode(buf); err != nil {
+			return err
+		}
+	}
+
+	// ChatType
+	if err := buf.WriteVarInt(p.ChatType.ChatType); err != nil {
+		return err
+	}
+	if err := buf.WriteTextComponent(p.ChatType.Name); err != nil {
+		return err
+	}
+	if err := p.ChatType.TargetName.EncodeWith(buf, func(b *ns.PacketBuffer, tc ns.TextComponent) error {
+		return b.WriteTextComponent(tc)
+	}); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// GetMessage returns the chat message content.
+// If there's unsigned content, it returns that; otherwise returns the signed body content.
+func (p *S2CPlayerChat) GetMessage() string {
+	if p.UnsignedContent.Present {
+		return p.UnsignedContent.Value.PlainText()
+	}
+	return string(p.Body.Content)
+}
+
+// GetSenderName returns the sender's display name as plain text.
+func (p *S2CPlayerChat) GetSenderName() string {
+	return p.ChatType.Name.PlainText()
 }
 
 // S2CPlayerCombatEnd represents "End Combat".

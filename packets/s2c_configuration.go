@@ -217,8 +217,8 @@ func (p *S2CRegistryData) Read(buf *ns.PacketBuffer) error {
 			return err
 		}
 		if p.Entries[i].HasData {
-			// read NBT data - we need to read remaining bytes for this entry
-			// this is a limitation as we don't know the exact NBT size upfront
+			// read NBT data - we need to read remaining bytes for this entry,
+			// as we don't know the exact NBT size upfront
 			remaining, err := buf.ReadByteArray(1048576)
 			if err != nil {
 				return err

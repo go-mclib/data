@@ -1,0 +1,9 @@
+*.jar
+*.json
+*.dat*
+*.lock
+
+logs/
+versions/
+libraries/
+eula.txt

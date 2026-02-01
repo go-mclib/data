@@ -6,4 +6,4 @@ Decompiling the source code is helpful to reveal the internals of the Minecraft 
 
 ## Decompiling
 
-This repository uses [MinecraftDecompiler](https://github.com/MaxPixelStudios/MinecraftDecompiler) under the hood.
+This repository uses [MinecraftDecompiler](https://github.com/MaxPixelStudios/MinecraftDecompiler) under the hood. You must download the latest .jar to this directory, see `download.sh`. See also <https://minecraft.wiki/w/Tutorial:See_Minecraft%27s_code>
