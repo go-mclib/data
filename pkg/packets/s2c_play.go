@@ -46,7 +46,7 @@ const (
 	S2CExplodeID
 	S2CForgetLevelChunkID
 	S2CGameEventID
-	S2CHitboxesID
+	S2CGameTestHighlightPosID
 	S2CHorseScreenOpenID
 	S2CHurtAnimationID
 	S2CInitializeBorderID
@@ -169,7 +169,7 @@ type S2CAddEntity struct {
 	X          ns.Float64
 	Y          ns.Float64
 	Z          ns.Float64
-	Velocity   ns.ByteArray
+	Velocity   ns.LpVec3
 	Pitch      ns.Angle
 	Yaw        ns.Angle
 	HeadYaw    ns.Angle
@@ -200,7 +200,7 @@ func (p *S2CAddEntity) Read(buf *ns.PacketBuffer) error {
 	if p.Z, err = buf.ReadFloat64(); err != nil {
 		return err
 	}
-	if p.Velocity, err = buf.ReadByteArray(12); err != nil {
+	if p.Velocity, err = buf.ReadLpVec3(); err != nil {
 		return err
 	}
 	if p.Pitch, err = buf.ReadAngle(); err != nil {
@@ -235,7 +235,7 @@ func (p *S2CAddEntity) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteFloat64(p.Z); err != nil {
 		return err
 	}
-	if err := buf.WriteByteArray(p.Velocity); err != nil {
+	if err := buf.WriteLpVec3(p.Velocity); err != nil {
 		return err
 	}
 	if err := buf.WriteAngle(p.Pitch); err != nil {
@@ -695,7 +695,7 @@ func (p *S2CContainerClose) Write(buf *ns.PacketBuffer) error {
 type S2CContainerSetContent struct {
 	WindowId    ns.VarInt
 	StateId     ns.VarInt
-	SlotData    ns.ByteArray
+	Slots       []ns.Slot
 	CarriedItem ns.Slot
 }
 
@@ -711,8 +711,15 @@ func (p *S2CContainerSetContent) Read(buf *ns.PacketBuffer) error {
 	if p.StateId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.SlotData, err = buf.ReadByteArray(1048576); err != nil {
+	slotCount, err := buf.ReadVarInt()
+	if err != nil {
 		return err
+	}
+	p.Slots = make([]ns.Slot, slotCount)
+	for i := range p.Slots {
+		if p.Slots[i], err = buf.ReadSlot(); err != nil {
+			return err
+		}
 	}
 	p.CarriedItem, err = buf.ReadSlot()
 	return err
@@ -725,8 +732,13 @@ func (p *S2CContainerSetContent) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.StateId); err != nil {
 		return err
 	}
-	if err := buf.WriteByteArray(p.SlotData); err != nil {
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Slots))); err != nil {
 		return err
+	}
+	for _, slot := range p.Slots {
+		if err := buf.WriteSlot(slot); err != nil {
+			return err
+		}
 	}
 	return buf.WriteSlot(p.CarriedItem)
 }
@@ -1414,24 +1426,24 @@ func (p *S2CGameEvent) Write(buf *ns.PacketBuffer) error {
 	return buf.WriteFloat32(p.Value)
 }
 
-// S2CHitboxes represents "Hitboxes".
+// S2CGameTestHighlightPos represents "Game Test Highlight Position" (debug packet).
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Hitboxes
-type S2CHitboxes struct {
+type S2CGameTestHighlightPos struct {
 	Data ns.ByteArray
 }
 
-func (p *S2CHitboxes) ID() ns.VarInt   { return S2CHitboxesID }
-func (p *S2CHitboxes) State() jp.State { return jp.StatePlay }
-func (p *S2CHitboxes) Bound() jp.Bound { return jp.S2C }
+func (p *S2CGameTestHighlightPos) ID() ns.VarInt   { return S2CGameTestHighlightPosID }
+func (p *S2CGameTestHighlightPos) State() jp.State { return jp.StatePlay }
+func (p *S2CGameTestHighlightPos) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CHitboxes) Read(buf *ns.PacketBuffer) error {
+func (p *S2CGameTestHighlightPos) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Data, err = buf.ReadByteArray(1048576)
 	return err
 }
 
-func (p *S2CHitboxes) Write(buf *ns.PacketBuffer) error {
+func (p *S2CGameTestHighlightPos) Write(buf *ns.PacketBuffer) error {
 	return buf.WriteByteArray(p.Data)
 }
 
@@ -3823,7 +3835,7 @@ func (p *S2CSetEntityLink) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Entity_Velocity
 type S2CSetEntityMotion struct {
 	EntityId ns.VarInt
-	Velocity ns.ByteArray
+	Velocity ns.LpVec3
 }
 
 func (p *S2CSetEntityMotion) ID() ns.VarInt   { return S2CSetEntityMotionID }
@@ -3835,7 +3847,7 @@ func (p *S2CSetEntityMotion) Read(buf *ns.PacketBuffer) error {
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.Velocity, err = buf.ReadByteArray(12)
+	p.Velocity, err = buf.ReadLpVec3()
 	return err
 }
 
@@ -3843,7 +3855,7 @@ func (p *S2CSetEntityMotion) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.EntityId); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Velocity)
+	return buf.WriteLpVec3(p.Velocity)
 }
 
 // S2CSetEquipment represents "Set Equipment".

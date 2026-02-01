@@ -1,4 +1,4 @@
-// decode reads a captured packet JSON file and prints decoded packet structures
+// Reads a captured packet JSON file and prints decoded packet structures
 package main
 
 import (
@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/go-mclib/data/packets"
+	"github.com/go-mclib/data/pkg/packets"
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
@@ -191,7 +191,7 @@ func formatValue(v reflect.Value, indent string) string {
 		// for UUID (16-byte array)
 		if v.Type().Elem().Kind() == reflect.Uint8 && v.Len() == 16 {
 			bytes := make([]byte, 16)
-			for i := 0; i < 16; i++ {
+			for i := range 16 {
 				bytes[i] = byte(v.Index(i).Uint())
 			}
 			return fmt.Sprintf("%x-%x-%x-%x-%x", bytes[0:4], bytes[4:6], bytes[6:8], bytes[8:10], bytes[10:16])
