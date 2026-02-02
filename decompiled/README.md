@@ -2,7 +2,7 @@
 
 This is the root directory for decompiled Minecraft client folders. Keep the decompiled sources in `.gitignore`!
 
-Decompiling the source code is helpful to reveal the internals of the Minecraft client/server networking code, which allows us to pipe the diffs between versions to LLMs and develop the Go bindings faster. For this purpose, we are using a [Claude Code agent](./AGENTS.md).
+Decompiling the source code is helpful to reveal the internals of the Minecraft client/server networking code, which allows us to pipe the diffs between versions to LLMs and develop the Go bindings faster. See `.claude/prompts/` for AI prompts.
 
 ## Decompiling
 

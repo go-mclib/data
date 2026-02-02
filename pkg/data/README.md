@@ -167,7 +167,17 @@ Benchmarks on Apple M2 (`go test -bench=. -benchmem ./...`):
 
 ## Data Sources (as of Minecraft 1.21.11)
 
-Not committed to the repository, see [json_reports/README.md](./json_reports/README.md) for more details.
+Generated from Minecraft server reports (not committed). To regenerate:
+
+```bash
+# generate server reports (see vanilla_server_reports/)
+java -DbundlerMainClass=net.minecraft.data.Main -jar server.jar --reports
+
+# regenerate Go code
+cd pkg/data && go generate ./... && go fmt ./...
+```
+
+Source JSON files:
 
 - `blocks.json`: 1,166 blocks, 29,671 total states, 92 unique properties
 - `items.json`: 1,505 items, 104 component types
