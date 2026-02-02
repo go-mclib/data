@@ -1319,20 +1319,20 @@ func (p *S2CGameTestHighlightPos) Write(buf *ns.PacketBuffer) error {
 	return buf.WriteByteArray(p.Data)
 }
 
-// S2CHorseScreenOpen represents "Open Horse Screen".
+// S2CMountScreenOpen represents "Open Mount Screen".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Open_Horse_Screen
-type S2CHorseScreenOpen struct {
+type S2CMountScreenOpen struct {
 	WindowId              ns.VarInt
 	InventoryColumnsCount ns.VarInt
 	EntityId              ns.Int32
 }
 
-func (p *S2CHorseScreenOpen) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CMountScreenOpenID) }
-func (p *S2CHorseScreenOpen) State() jp.State { return jp.StatePlay }
-func (p *S2CHorseScreenOpen) Bound() jp.Bound { return jp.S2C }
+func (p *S2CMountScreenOpen) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CMountScreenOpenID) }
+func (p *S2CMountScreenOpen) State() jp.State { return jp.StatePlay }
+func (p *S2CMountScreenOpen) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CHorseScreenOpen) Read(buf *ns.PacketBuffer) error {
+func (p *S2CMountScreenOpen) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.WindowId, err = buf.ReadVarInt(); err != nil {
 		return err
@@ -1344,7 +1344,7 @@ func (p *S2CHorseScreenOpen) Read(buf *ns.PacketBuffer) error {
 	return err
 }
 
-func (p *S2CHorseScreenOpen) Write(buf *ns.PacketBuffer) error {
+func (p *S2CMountScreenOpen) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.WindowId); err != nil {
 		return err
 	}
@@ -1685,10 +1685,10 @@ func (p *S2CLightUpdate) Write(buf *ns.PacketBuffer) error {
 	return buf.WriteByteArray(p.Data)
 }
 
-// S2CLoginPlay represents "Login (play)".
+// S2CLogin represents "Login (play)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Login_(Play)
-type S2CLoginPlay struct {
+type S2CLogin struct {
 	EntityId            ns.Int32
 	IsHardcore          ns.Boolean
 	DimensionNames      ns.PrefixedArray[ns.Identifier]
@@ -1711,11 +1711,11 @@ type S2CLoginPlay struct {
 	EnforcesSecureChat  ns.Boolean
 }
 
-func (p *S2CLoginPlay) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CLoginID) }
-func (p *S2CLoginPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CLoginPlay) Bound() jp.Bound { return jp.S2C }
+func (p *S2CLogin) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CLoginID) }
+func (p *S2CLogin) State() jp.State { return jp.StatePlay }
+func (p *S2CLogin) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CLoginPlay) Read(buf *ns.PacketBuffer) error {
+func (p *S2CLogin) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.EntityId, err = buf.ReadInt32(); err != nil {
 		return err
@@ -1782,7 +1782,7 @@ func (p *S2CLoginPlay) Read(buf *ns.PacketBuffer) error {
 	return err
 }
 
-func (p *S2CLoginPlay) Write(buf *ns.PacketBuffer) error {
+func (p *S2CLogin) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt32(p.EntityId); err != nil {
 		return err
 	}
@@ -4896,47 +4896,47 @@ func (p *S2CProjectilePower) Write(buf *ns.PacketBuffer) error {
 	return buf.WriteFloat64(p.Power)
 }
 
-// S2CCustomReportDetails represents "Custom Report Details".
+// S2CCustomReportDetailsPlay represents "Custom Report Details (play)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Custom_Report_Details
-type S2CCustomReportDetails struct {
+type S2CCustomReportDetailsPlay struct {
 	Details ns.ByteArray
 }
 
-func (p *S2CCustomReportDetails) ID() ns.VarInt {
+func (p *S2CCustomReportDetailsPlay) ID() ns.VarInt {
 	return ns.VarInt(packets_data.S2CCustomReportDetailsPlayID)
 }
-func (p *S2CCustomReportDetails) State() jp.State { return jp.StatePlay }
-func (p *S2CCustomReportDetails) Bound() jp.Bound { return jp.S2C }
+func (p *S2CCustomReportDetailsPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CCustomReportDetailsPlay) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CCustomReportDetails) Read(buf *ns.PacketBuffer) error {
+func (p *S2CCustomReportDetailsPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Details, err = buf.ReadByteArray(1048576)
 	return err
 }
 
-func (p *S2CCustomReportDetails) Write(buf *ns.PacketBuffer) error {
+func (p *S2CCustomReportDetailsPlay) Write(buf *ns.PacketBuffer) error {
 	return buf.WriteByteArray(p.Details)
 }
 
-// S2CServerLinks represents "Server Links".
+// S2CServerLinksPlay represents "Server Links (play)".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Server_Links
-type S2CServerLinks struct {
+type S2CServerLinksPlay struct {
 	Links ns.ByteArray
 }
 
-func (p *S2CServerLinks) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CServerLinksPlayID) }
-func (p *S2CServerLinks) State() jp.State { return jp.StatePlay }
-func (p *S2CServerLinks) Bound() jp.Bound { return jp.S2C }
+func (p *S2CServerLinksPlay) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CServerLinksPlayID) }
+func (p *S2CServerLinksPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CServerLinksPlay) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CServerLinks) Read(buf *ns.PacketBuffer) error {
+func (p *S2CServerLinksPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Links, err = buf.ReadByteArray(1048576)
 	return err
 }
 
-func (p *S2CServerLinks) Write(buf *ns.PacketBuffer) error {
+func (p *S2CServerLinksPlay) Write(buf *ns.PacketBuffer) error {
 	return buf.WriteByteArray(p.Links)
 }
 

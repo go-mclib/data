@@ -8,10 +8,12 @@ import (
 	"log"
 	"net"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
+	"syscall"
 	"time"
 
 	jp "github.com/go-mclib/protocol/java_protocol"
@@ -382,7 +384,21 @@ func main() {
 	log.Printf("listening on :%d, proxying to %s", *listenPort, *targetAddr)
 	log.Printf("packet captures will be saved to %s/", *outputDir)
 
-	sessionNum := 0
+	// single capture for entire proxy run
+	capture := NewPacketCapture(*outputDir, filter)
+	startTime := time.Now()
+
+	// save capture on exit
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-sigCh
+		log.Println("shutting down...")
+		saveCapture(capture, startTime)
+		os.Exit(0)
+	}()
+
+	connNum := 0
 	for {
 		clientConn, err := listener.Accept()
 		if err != nil {
@@ -390,8 +406,8 @@ func main() {
 			continue
 		}
 
-		sessionNum++
-		log.Printf("session %d: client connected from %s", sessionNum, clientConn.RemoteAddr())
+		connNum++
+		log.Printf("connection %d: client connected from %s", connNum, clientConn.RemoteAddr())
 
 		go func(num int, client net.Conn) {
 			defer client.Close()
@@ -399,28 +415,30 @@ func main() {
 			// connect to target server
 			serverConn, err := net.Dial("tcp", *targetAddr)
 			if err != nil {
-				log.Printf("session %d: failed to connect to server: %v", num, err)
+				log.Printf("connection %d: failed to connect to server: %v", num, err)
 				return
 			}
 			defer serverConn.Close()
 
-			log.Printf("session %d: connected to server %s", num, *targetAddr)
+			log.Printf("connection %d: connected to server %s", num, *targetAddr)
 
-			capture := NewPacketCapture(*outputDir, filter)
 			session := NewProxySession(client, serverConn, capture, *verbose)
 			session.Run()
 
-			// save captured packets
-			if capture.Count() > 0 {
-				filename := fmt.Sprintf("session_%d_%s.json", num, time.Now().Format("20060102_150405"))
-				if err := capture.Save(filename); err != nil {
-					log.Printf("session %d: failed to save capture: %v", num, err)
-				} else {
-					log.Printf("session %d: saved %d packets to %s", num, capture.Count(), filename)
-				}
-			} else {
-				log.Printf("session %d: no packets matched filter, nothing saved", num)
-			}
-		}(sessionNum, clientConn)
+			log.Printf("connection %d: closed (%d total packets captured)", num, capture.Count())
+		}(connNum, clientConn)
+	}
+}
+
+func saveCapture(capture *PacketCapture, startTime time.Time) {
+	if capture.Count() > 0 {
+		filename := fmt.Sprintf("session_%s.json", startTime.Format("20060102_150405"))
+		if err := capture.Save(filename); err != nil {
+			log.Printf("failed to save capture: %v", err)
+		} else {
+			log.Printf("saved %d packets to %s", capture.Count(), filename)
+		}
+	} else {
+		log.Println("no packets matched filter, nothing saved")
 	}
 }
