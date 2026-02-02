@@ -61,7 +61,7 @@ defaultID := blocks.DefaultStateID(blocks.OakDoor)
 
 ### `items`
 
-Contains item protocol IDs, lookups, and default component data.
+Contains item protocol IDs, lookups, default component data, and slot decoding.
 
 ```go
 import "github.com/go-mclib/data/pkg/data/items"
@@ -82,6 +82,41 @@ comps := items.DefaultComponents(items.Apple)
 if comps.Food != nil {
     fmt.Printf("nutrition: %d\n", comps.Food.Nutrition)  // 4
 }
+```
+
+#### ItemStack
+
+`ItemStack` provides middleware over `net_structures.Slot` for typed component access:
+
+```go
+// read a slot from wire and convert to typed ItemStack
+stack, err := items.ReadSlot(buf)
+if !stack.IsEmpty() {
+    fmt.Printf("item: %s x%d\n", items.ItemName(stack.ID), stack.Count)
+    if stack.Components.Food != nil {
+        fmt.Printf("nutrition: %d\n", stack.Components.Food.Nutrition)
+    }
+}
+
+// create a new stack with default components
+stack := items.NewStack(items.DiamondSword, 1)
+stack.Components.Damage = 100  // modify durability
+
+// write back to wire
+err := stack.WriteSlot(buf)
+
+// convert from/to raw Slot
+stack, err := items.FromSlot(rawSlot)
+rawSlot, err := stack.ToSlot()
+```
+
+Component type constants (104 types) are generated from the registry:
+
+```go
+items.ComponentDamage         // 3
+items.ComponentFood           // 23
+items.ComponentEnchantments   // 13
+items.MaxComponentID          // 103
 ```
 
 ## Code Generation
@@ -135,7 +170,7 @@ Benchmarks on Apple M2 (`go test -bench=. -benchmem ./...`):
 Not committed to the repository, see [json_reports/README.md](./json_reports/README.md) for more details.
 
 - `blocks.json`: 1,166 blocks, 29,671 total states, 92 unique properties
-- `items.json`: 1,505 items, 58 component types
+- `items.json`: 1,505 items, 104 component types
 - `registries.json`: 95 registries
 
 ## Testing

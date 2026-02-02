@@ -1,6 +1,7 @@
 package packets
 
 import (
+	"github.com/go-mclib/data/pkg/data/items"
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/go-mclib/protocol/nbt"
@@ -717,11 +718,11 @@ func (p *S2CContainerSetContent) Read(buf *ns.PacketBuffer) error {
 	}
 	p.Slots = make([]ns.Slot, slotCount)
 	for i := range p.Slots {
-		if p.Slots[i], err = buf.ReadSlot(); err != nil {
+		if p.Slots[i], err = buf.ReadSlot(items.Decoder()); err != nil {
 			return err
 		}
 	}
-	p.CarriedItem, err = buf.ReadSlot()
+	p.CarriedItem, err = buf.ReadSlot(items.Decoder())
 	return err
 }
 
@@ -803,7 +804,7 @@ func (p *S2CContainerSetSlot) Read(buf *ns.PacketBuffer) error {
 	if p.Slot, err = buf.ReadInt16(); err != nil {
 		return err
 	}
-	p.SlotData, err = buf.ReadSlot()
+	p.SlotData, err = buf.ReadSlot(items.Decoder())
 	return err
 }
 
@@ -2688,14 +2689,14 @@ func (p *S2CPlayerChat) Write(buf *ns.PacketBuffer) error {
 // If there's unsigned content, it returns that; otherwise returns the signed body content.
 func (p *S2CPlayerChat) GetMessage() string {
 	if p.UnsignedContent.Present {
-		return p.UnsignedContent.Value.PlainText()
+		return p.UnsignedContent.Value.Text
 	}
 	return string(p.Body.Content)
 }
 
 // GetSenderName returns the sender's display name as plain text.
 func (p *S2CPlayerChat) GetSenderName() string {
-	return p.ChatType.Name.PlainText()
+	return p.ChatType.Name.Text
 }
 
 // S2CPlayerCombatEnd represents "End Combat".
@@ -3696,7 +3697,7 @@ func (p *S2CSetCursorItem) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetCursorItem) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.CarriedItem, err = buf.ReadSlot()
+	p.CarriedItem, err = buf.ReadSlot(items.Decoder())
 	return err
 }
 
@@ -4062,7 +4063,7 @@ func (p *S2CSetPlayerInventory) Read(buf *ns.PacketBuffer) error {
 	if p.Slot, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.SlotData, err = buf.ReadSlot()
+	p.SlotData, err = buf.ReadSlot(items.Decoder())
 	return err
 }
 

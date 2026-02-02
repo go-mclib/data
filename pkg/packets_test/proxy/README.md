@@ -13,7 +13,7 @@ A MITM (Man-in-the-Middle) proxy for capturing Minecraft Java Edition packets. C
 Run the vanilla server locally in offline-mode (no encryption) at `localhost:25566`. Then, start the proxy:
 
 ```bash
-go run ./cmd/proxy -target localhost:25566 [options]
+go run ./cmd/proxy -target localhost:25566 [options (see below)]
 ```
 
 Connect your Minecraft client to `localhost:25565`. The proxy will:
@@ -34,7 +34,7 @@ Connect your Minecraft client to `localhost:25565`. The proxy will:
 | `-output` | captures | Directory to save captured packets |
 | `-verbose` | false | Enable verbose logging of all packets |
 | `-state` | (all) | Comma-separated states to capture (e.g., `login,play`) |
-| `-packetId` | (all) | Comma-separated packet IDs to capture (e.g., `0x00,0x01`) |
+| `-packetId` | (all) | Comma-separated packet IDs to capture (e.g., `0x00,0x01`). See packet IDs in <https://minecraft.wiki/w/Java_Edition_protocol/Packets> |
 
 ### Filtering Examples
 

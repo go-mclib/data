@@ -1,6 +1,7 @@
 package packets
 
 import (
+	"github.com/go-mclib/data/pkg/data/items"
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/go-mclib/protocol/nbt"
@@ -646,10 +647,10 @@ func (p *C2SContainerClick) Read(buf *ns.PacketBuffer) error {
 	if p.Mode, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.SlotData, err = buf.ReadSlot(); err != nil {
+	if p.SlotData, err = buf.ReadSlot(items.Decoder()); err != nil {
 		return err
 	}
-	p.CarriedItem, err = buf.ReadSlot()
+	p.CarriedItem, err = buf.ReadSlot(items.Decoder())
 	return err
 }
 
@@ -1862,7 +1863,7 @@ func (p *C2SSetCreativeModeSlot) Read(buf *ns.PacketBuffer) error {
 	if p.Slot, err = buf.ReadInt16(); err != nil {
 		return err
 	}
-	p.ClickedItem, err = buf.ReadSlot()
+	p.ClickedItem, err = buf.ReadSlot(items.Decoder())
 	return err
 }
 
