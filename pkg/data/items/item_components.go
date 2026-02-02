@@ -201,3 +201,142 @@ type AttackRange struct {
 	MinReach         float64
 	MobFactor        float64
 }
+
+// Clone returns a deep copy of the Components struct.
+func (c *Components) Clone() *Components {
+	if c == nil {
+		return &Components{}
+	}
+
+	clone := &Components{
+		BreakSound:             c.BreakSound,
+		Damage:                 c.Damage,
+		DamageType:             c.DamageType,
+		Glider:                 c.Glider,
+		Instrument:             c.Instrument,
+		ItemModel:              c.ItemModel,
+		JukeboxPlayable:        c.JukeboxPlayable,
+		MapColor:               c.MapColor,
+		MaxDamage:              c.MaxDamage,
+		MaxStackSize:           c.MaxStackSize,
+		MinimumAttackCharge:    c.MinimumAttackCharge,
+		OminousBottleAmplifier: c.OminousBottleAmplifier,
+		PotionDurationScale:    c.PotionDurationScale,
+		ProvidesBannerPatterns: c.ProvidesBannerPatterns,
+		ProvidesTrimMaterial:   c.ProvidesTrimMaterial,
+		Rarity:                 c.Rarity,
+		RepairCost:             c.RepairCost,
+	}
+
+	// clone slices
+	if c.AttributeModifiers != nil {
+		clone.AttributeModifiers = make([]AttributeModifier, len(c.AttributeModifiers))
+		copy(clone.AttributeModifiers, c.AttributeModifiers)
+	}
+	if c.Container != nil {
+		clone.Container = make([]any, len(c.Container))
+		copy(clone.Container, c.Container)
+	}
+	if c.Lore != nil {
+		clone.Lore = make([]string, len(c.Lore))
+		copy(clone.Lore, c.Lore)
+	}
+	if c.Recipes != nil {
+		clone.Recipes = make([]any, len(c.Recipes))
+		copy(clone.Recipes, c.Recipes)
+	}
+
+	// clone maps
+	if c.Enchantments != nil {
+		clone.Enchantments = make(map[string]int32, len(c.Enchantments))
+		for k, v := range c.Enchantments {
+			clone.Enchantments[k] = v
+		}
+	}
+	if c.StoredEnchantments != nil {
+		clone.StoredEnchantments = make(map[string]int32, len(c.StoredEnchantments))
+		for k, v := range c.StoredEnchantments {
+			clone.StoredEnchantments[k] = v
+		}
+	}
+
+	// clone pointer types
+	if c.BlocksAttacks != nil {
+		v := *c.BlocksAttacks
+		clone.BlocksAttacks = &v
+	}
+	if c.Consumable != nil {
+		v := *c.Consumable
+		clone.Consumable = &v
+	}
+	if c.DamageResistant != nil {
+		v := *c.DamageResistant
+		clone.DamageResistant = &v
+	}
+	if c.DeathProtection != nil {
+		v := *c.DeathProtection
+		clone.DeathProtection = &v
+	}
+	if c.Enchantable != nil {
+		v := *c.Enchantable
+		clone.Enchantable = &v
+	}
+	if c.Equippable != nil {
+		v := *c.Equippable
+		clone.Equippable = &v
+	}
+	if c.Fireworks != nil {
+		v := *c.Fireworks
+		clone.Fireworks = &v
+	}
+	if c.Food != nil {
+		v := *c.Food
+		clone.Food = &v
+	}
+	if c.ItemName != nil {
+		v := *c.ItemName
+		clone.ItemName = &v
+	}
+	if c.KineticWeapon != nil {
+		v := *c.KineticWeapon
+		clone.KineticWeapon = &v
+	}
+	if c.PiercingWeapon != nil {
+		v := *c.PiercingWeapon
+		clone.PiercingWeapon = &v
+	}
+	if c.PotionContents != nil {
+		v := *c.PotionContents
+		clone.PotionContents = &v
+	}
+	if c.Repairable != nil {
+		v := *c.Repairable
+		clone.Repairable = &v
+	}
+	if c.Tool != nil {
+		v := *c.Tool
+		clone.Tool = &v
+	}
+	if c.TooltipDisplay != nil {
+		v := *c.TooltipDisplay
+		clone.TooltipDisplay = &v
+	}
+	if c.UseCooldown != nil {
+		v := *c.UseCooldown
+		clone.UseCooldown = &v
+	}
+	if c.UseEffects != nil {
+		v := *c.UseEffects
+		clone.UseEffects = &v
+	}
+	if c.UseRemainder != nil {
+		v := *c.UseRemainder
+		clone.UseRemainder = &v
+	}
+	if c.Weapon != nil {
+		v := *c.Weapon
+		clone.Weapon = &v
+	}
+
+	return clone
+}
