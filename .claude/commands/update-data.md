@@ -8,7 +8,7 @@ Read and follow `.claude/prompts/DATA.md` to update data logic for the new Minec
 
 Key files:
 
-- `pkg/data/items/item_stack_decoders.go` - Item component wire format
+- `pkg/data/items/item_stack_codecs.go` - Item component wire format
 - `pkg/decoders/` - Custom packet decoders
 
 After completing:

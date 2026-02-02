@@ -6,7 +6,7 @@ Update hard-coded data logic for a new Minecraft version.
 
 This prompt covers hand-written data logic that cannot be auto-generated from server reports:
 
-- **Item component decoders**: `pkg/data/items/item_stack_decoders.go`
+- **Item component encoders/decoders**: `pkg/data/items/item_stack_codecs.go`
 - **Custom packet decoders**: `pkg/decoders/`
 
 ## Item Component Decoders
