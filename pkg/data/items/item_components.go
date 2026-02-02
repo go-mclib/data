@@ -7,6 +7,7 @@ type Components struct {
 	BreakSound             string
 	Consumable             *Consumable
 	Container              []any
+	CustomName             *ItemNameComponent
 	Damage                 int32
 	DamageResistant        *DamageResistant
 	DamageType             string
@@ -40,6 +41,7 @@ type Components struct {
 	StoredEnchantments     map[string]int32
 	Tool                   *Tool
 	TooltipDisplay         *TooltipDisplay
+	Unbreakable            bool
 	UseCooldown            *UseCooldown
 	UseEffects             *UseEffects
 	UseRemainder           *UseRemainder
@@ -124,6 +126,7 @@ type Food struct {
 }
 
 type ItemNameComponent struct {
+	Text      string
 	Translate string
 }
 
@@ -170,7 +173,8 @@ type ToolRule struct {
 }
 
 type TooltipDisplay struct {
-	// marker component
+	HideTooltip      bool
+	HiddenComponents []int32
 }
 
 type UseCooldown struct {

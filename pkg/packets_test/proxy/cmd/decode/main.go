@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/go-mclib/data/pkg/data/items"
 	"github.com/go-mclib/data/pkg/packets"
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
@@ -40,6 +41,62 @@ func getPacketName(p jp.Packet) string {
 	return t.Name()
 }
 
+func formatItemStack(stack *items.ItemStack, indent string) string {
+	if stack.IsEmpty() {
+		return "Empty"
+	}
+
+	var sb strings.Builder
+	sb.WriteString("ItemStack {\n")
+	sb.WriteString(indent)
+	sb.WriteString(fmt.Sprintf("  ID: %d\n", stack.ID))
+	sb.WriteString(indent)
+	sb.WriteString(fmt.Sprintf("  Count: %d\n", stack.Count))
+	sb.WriteString(indent)
+	sb.WriteString("  Components: ")
+
+	if stack.Components == nil {
+		sb.WriteString("nil\n")
+	} else {
+		// use reflection to display non-zero component fields
+		cv := reflect.ValueOf(stack.Components).Elem()
+		ct := cv.Type()
+
+		sb.WriteString("{\n")
+		hasAny := false
+		for i := 0; i < cv.NumField(); i++ {
+			field := ct.Field(i)
+			if !field.IsExported() {
+				continue
+			}
+			fv := cv.Field(i)
+
+			// skip zero values
+			if fv.IsZero() {
+				continue
+			}
+
+			hasAny = true
+			sb.WriteString(indent)
+			sb.WriteString("    ")
+			sb.WriteString(field.Name)
+			sb.WriteString(": ")
+			sb.WriteString(formatValue(fv, indent+"    "))
+			sb.WriteString("\n")
+		}
+		if !hasAny {
+			sb.WriteString(indent)
+			sb.WriteString("    (all defaults)\n")
+		}
+		sb.WriteString(indent)
+		sb.WriteString("  }\n")
+	}
+
+	sb.WriteString(indent)
+	sb.WriteString("}")
+	return sb.String()
+}
+
 func formatValue(v reflect.Value, indent string) string {
 	switch v.Kind() {
 	case reflect.Ptr:
@@ -58,10 +115,22 @@ func formatValue(v reflect.Value, indent string) string {
 			// format UUID as standard hex string
 			if v.Len() == 16 {
 				bytes := make([]byte, 16)
-				for i := 0; i < 16; i++ {
+				for i := range 16 {
 					bytes[i] = byte(v.Index(i).Uint())
 				}
 				return fmt.Sprintf("%x-%x-%x-%x-%x", bytes[0:4], bytes[4:6], bytes[6:8], bytes[8:10], bytes[10:16])
+			}
+		case "Slot":
+			// convert ns.Slot to items.ItemStack for better display
+			if slot, ok := v.Interface().(ns.Slot); ok {
+				if slot.IsEmpty() {
+					return "Empty"
+				}
+				stack, err := items.FromSlot(slot)
+				if err != nil {
+					return fmt.Sprintf("Slot{decode error: %v}", err)
+				}
+				return formatItemStack(stack, indent)
 			}
 		}
 

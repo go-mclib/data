@@ -463,7 +463,7 @@ func decodeComponentWire(buf *ns.PacketBuffer, id ns.VarInt) ([]byte, error) {
 
 	case ComponentAttributeModifiers:
 		// https://minecraft.wiki/w/Data_component_format/attribute_modifiers
-		// VarInt count, AttributeModifier[], Bool showInTooltip
+		// VarInt count, AttributeModifier[] (each entry includes Display field)
 		count, err := buf.ReadVarInt()
 		if err != nil {
 			return nil, err
@@ -471,14 +471,9 @@ func decodeComponentWire(buf *ns.PacketBuffer, id ns.VarInt) ([]byte, error) {
 		w.WriteVarInt(count)
 		for i := 0; i < int(count); i++ {
 			if err := copyAttributeModifier(buf, w); err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to read modifier %d: %w", i, err)
 			}
 		}
-		showInTooltip, err := buf.ReadBool()
-		if err != nil {
-			return nil, err
-		}
-		w.WriteBool(showInTooltip)
 
 	case ComponentDyedColor:
 		// https://minecraft.wiki/w/Data_component_format/dyed_color
@@ -1056,920 +1051,6 @@ func decodeComponentWire(buf *ns.PacketBuffer, id ns.VarInt) ([]byte, error) {
 	return w.Bytes(), nil
 }
 
-// encodeComponentWire writes component data to wire format.
-// This is the inverse of decodeComponentWire.
-func encodeComponentWire(w *ns.PacketBuffer, id ns.VarInt, data []byte) error {
-	buf := ns.NewReader(data)
-
-	switch id {
-	// === Simple types ===
-
-	case ComponentMaxStackSize, ComponentMaxDamage, ComponentDamage,
-		ComponentRepairCost, ComponentMapColor, ComponentMapId,
-		ComponentOminousBottleAmplifier:
-		v, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(v)
-
-	case ComponentMinimumAttackCharge, ComponentPotionDurationScale:
-		v, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(v)
-
-	case ComponentUnbreakable, ComponentCreativeSlotLock,
-		ComponentIntangibleProjectile, ComponentGlider:
-		// empty marker component - no data
-
-	case ComponentEnchantmentGlintOverride:
-		v, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(v)
-
-	case ComponentRarity:
-		v, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(v)
-
-	case ComponentDamageType, ComponentItemModel, ComponentInstrument,
-		ComponentProvidesTrimMaterial, ComponentJukeboxPlayable,
-		ComponentProvidesBannerPatterns, ComponentTooltipStyle,
-		ComponentNoteBlockSound, ComponentBreakSound:
-		v, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return err
-		}
-		w.WriteString(v)
-
-	// === Text components (NBT) ===
-
-	case ComponentCustomName, ComponentItemName:
-		if err := copyNBT(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentLore:
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(count)
-		for i := 0; i < int(count); i++ {
-			if err := copyNBT(buf, w); err != nil {
-				return err
-			}
-		}
-
-	// === Enchantments ===
-
-	case ComponentEnchantments, ComponentStoredEnchantments:
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(count)
-		for i := 0; i < int(count); i++ {
-			enchantID, err := buf.ReadVarInt()
-			if err != nil {
-				return err
-			}
-			level, err := buf.ReadVarInt()
-			if err != nil {
-				return err
-			}
-			w.WriteVarInt(enchantID)
-			w.WriteVarInt(level)
-		}
-		showInTooltip, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(showInTooltip)
-
-	case ComponentEnchantable:
-		v, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(v)
-
-	// === Food & Consumable ===
-
-	case ComponentFood:
-		nutrition, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		saturation, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(nutrition)
-		w.WriteFloat32(saturation)
-
-	case ComponentConsumable:
-		consumeSeconds, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(consumeSeconds)
-
-		animation, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(animation)
-
-		if err := copySoundEvent(buf, w); err != nil {
-			return err
-		}
-
-		hasParticles, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(hasParticles)
-
-		effectCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(effectCount)
-		for i := 0; i < int(effectCount); i++ {
-			if err := copyConsumeEffect(buf, w); err != nil {
-				return err
-			}
-		}
-
-	case ComponentUseRemainder:
-		if err := copySlot(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentUseCooldown:
-		seconds, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(seconds)
-
-		hasGroup, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(hasGroup)
-		if hasGroup {
-			group, err := buf.ReadString(maxStringLen)
-			if err != nil {
-				return err
-			}
-			w.WriteString(group)
-		}
-
-	// === Combat ===
-
-	case ComponentTool:
-		ruleCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(ruleCount)
-		for i := 0; i < int(ruleCount); i++ {
-			if err := copyToolRule(buf, w); err != nil {
-				return err
-			}
-		}
-		damagePerBlock, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(damagePerBlock)
-
-		canDestroy, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(canDestroy)
-
-	case ComponentWeapon:
-		itemDamage, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(itemDamage)
-
-		disableBlocking, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(disableBlocking)
-
-	case ComponentAttackRange:
-		for i := 0; i < 6; i++ {
-			v, err := buf.ReadFloat32()
-			if err != nil {
-				return err
-			}
-			w.WriteFloat32(v)
-		}
-
-	case ComponentDamageResistant:
-		v, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return err
-		}
-		w.WriteString(v)
-
-	case ComponentRepairable:
-		if err := copyHolderSet(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentBlocksAttacks:
-		blockDelay, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(blockDelay)
-
-		disableCooldown, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(disableCooldown)
-
-		reductionCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(reductionCount)
-		for i := 0; i < int(reductionCount); i++ {
-			if err := copyDamageReduction(buf, w); err != nil {
-				return err
-			}
-		}
-
-		if err := copyItemDamageFunction(buf, w); err != nil {
-			return err
-		}
-
-		if err := copyOptionalIdentifier(buf, w); err != nil {
-			return err
-		}
-		if err := copyOptionalSoundEvent(buf, w); err != nil {
-			return err
-		}
-		if err := copyOptionalSoundEvent(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentPiercingWeapon:
-		if err := copyOptionalSoundEvent(buf, w); err != nil {
-			return err
-		}
-		if err := copyOptionalSoundEvent(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentKineticWeapon:
-		delayTicks, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(delayTicks)
-
-		forwardMovement, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(forwardMovement)
-
-		damageMultiplier, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(damageMultiplier)
-
-		for i := 0; i < 3; i++ {
-			if err := copyOptionalKineticConditions(buf, w); err != nil {
-				return err
-			}
-		}
-
-		if err := copyOptionalSoundEvent(buf, w); err != nil {
-			return err
-		}
-		if err := copyOptionalSoundEvent(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentSwingAnimation:
-		v, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(v)
-
-	case ComponentDeathProtection:
-		effectCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(effectCount)
-		for i := 0; i < int(effectCount); i++ {
-			if err := copyConsumeEffect(buf, w); err != nil {
-				return err
-			}
-		}
-
-	// === Equipment ===
-
-	case ComponentEquippable:
-		slot, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(slot)
-
-		if err := copySoundEvent(buf, w); err != nil {
-			return err
-		}
-
-		if err := copyOptionalIdentifier(buf, w); err != nil {
-			return err
-		}
-		if err := copyOptionalIdentifier(buf, w); err != nil {
-			return err
-		}
-		if err := copyOptionalHolderSet(buf, w); err != nil {
-			return err
-		}
-
-		dispensable, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(dispensable)
-
-		swappable, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(swappable)
-
-		damageOnHurt, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(damageOnHurt)
-
-		if err := copyOptionalIdentifier(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentAttributeModifiers:
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(count)
-		for i := 0; i < int(count); i++ {
-			if err := copyAttributeModifier(buf, w); err != nil {
-				return err
-			}
-		}
-		showInTooltip, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(showInTooltip)
-
-	case ComponentDyedColor:
-		v, err := buf.ReadInt32()
-		if err != nil {
-			return err
-		}
-		w.WriteInt32(v)
-
-	// === Tooltip ===
-
-	case ComponentTooltipDisplay:
-		hideTooltip, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(hideTooltip)
-
-		hiddenCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(hiddenCount)
-		for i := 0; i < int(hiddenCount); i++ {
-			hidden, err := buf.ReadVarInt()
-			if err != nil {
-				return err
-			}
-			w.WriteVarInt(hidden)
-		}
-
-	case ComponentCustomModelData:
-		floatCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(floatCount)
-		for i := 0; i < int(floatCount); i++ {
-			v, err := buf.ReadFloat32()
-			if err != nil {
-				return err
-			}
-			w.WriteFloat32(v)
-		}
-
-		flagCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(flagCount)
-		for i := 0; i < int(flagCount); i++ {
-			v, err := buf.ReadBool()
-			if err != nil {
-				return err
-			}
-			w.WriteBool(v)
-		}
-
-		stringCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(stringCount)
-		for i := 0; i < int(stringCount); i++ {
-			v, err := buf.ReadString(maxStringLen)
-			if err != nil {
-				return err
-			}
-			w.WriteString(v)
-		}
-
-		colorCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(colorCount)
-		for i := 0; i < int(colorCount); i++ {
-			v, err := buf.ReadInt32()
-			if err != nil {
-				return err
-			}
-			w.WriteInt32(v)
-		}
-
-	// === Adventure mode ===
-
-	case ComponentCanPlaceOn, ComponentCanBreak:
-		predicateCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(predicateCount)
-		for i := 0; i < int(predicateCount); i++ {
-			if err := copyBlockPredicate(buf, w); err != nil {
-				return err
-			}
-		}
-
-	// === Map ===
-
-	case ComponentMapDecorations:
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(count)
-		for i := 0; i < int(count); i++ {
-			key, err := buf.ReadString(maxStringLen)
-			if err != nil {
-				return err
-			}
-			w.WriteString(key)
-			if err := copyMapDecoration(buf, w); err != nil {
-				return err
-			}
-		}
-
-	case ComponentMapPostProcessing:
-		v, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(v)
-
-	// === Containers ===
-
-	case ComponentChargedProjectiles, ComponentBundleContents:
-		itemCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(itemCount)
-		for i := 0; i < int(itemCount); i++ {
-			if err := copySlot(buf, w); err != nil {
-				return err
-			}
-		}
-
-	case ComponentContainer:
-		slotCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(slotCount)
-		for i := 0; i < int(slotCount); i++ {
-			slotIndex, err := buf.ReadVarInt()
-			if err != nil {
-				return err
-			}
-			w.WriteVarInt(slotIndex)
-			if err := copySlot(buf, w); err != nil {
-				return err
-			}
-		}
-
-	case ComponentContainerLoot:
-		lootTable, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return err
-		}
-		w.WriteString(lootTable)
-
-		seed, err := buf.ReadInt64()
-		if err != nil {
-			return err
-		}
-		w.WriteInt64(seed)
-
-	// === Potions ===
-
-	case ComponentPotionContents:
-		if err := copyOptionalVarInt(buf, w); err != nil {
-			return err
-		}
-		if err := copyOptionalInt(buf, w); err != nil {
-			return err
-		}
-
-		effectCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(effectCount)
-		for i := 0; i < int(effectCount); i++ {
-			if err := copyStatusEffect(buf, w); err != nil {
-				return err
-			}
-		}
-
-		if err := copyOptionalIdentifier(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentSuspiciousStewEffects:
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(count)
-		for i := 0; i < int(count); i++ {
-			effectID, err := buf.ReadVarInt()
-			if err != nil {
-				return err
-			}
-			w.WriteVarInt(effectID)
-			duration, err := buf.ReadVarInt()
-			if err != nil {
-				return err
-			}
-			w.WriteVarInt(duration)
-		}
-
-	// === Effects ===
-
-	case ComponentUseEffects:
-		effectCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(effectCount)
-		for i := 0; i < int(effectCount); i++ {
-			if err := copyConsumeEffect(buf, w); err != nil {
-				return err
-			}
-		}
-
-	// === Books ===
-
-	case ComponentWritableBookContent:
-		pageCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(pageCount)
-		for i := 0; i < int(pageCount); i++ {
-			raw, err := buf.ReadString(maxStringLen)
-			if err != nil {
-				return err
-			}
-			w.WriteString(raw)
-			if err := copyOptionalString(buf, w); err != nil {
-				return err
-			}
-		}
-
-	case ComponentWrittenBookContent:
-		rawTitle, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return err
-		}
-		w.WriteString(rawTitle)
-		if err := copyOptionalString(buf, w); err != nil {
-			return err
-		}
-
-		author, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return err
-		}
-		w.WriteString(author)
-
-		generation, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(generation)
-
-		pageCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(pageCount)
-		for i := 0; i < int(pageCount); i++ {
-			if err := copyNBT(buf, w); err != nil {
-				return err
-			}
-			if err := copyOptionalNBT(buf, w); err != nil {
-				return err
-			}
-		}
-
-		resolved, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(resolved)
-
-	// === Fireworks ===
-
-	case ComponentFireworkExplosion:
-		shape, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(shape)
-
-		colorCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(colorCount)
-		for i := 0; i < int(colorCount); i++ {
-			color, err := buf.ReadInt32()
-			if err != nil {
-				return err
-			}
-			w.WriteInt32(color)
-		}
-
-		fadeColorCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(fadeColorCount)
-		for i := 0; i < int(fadeColorCount); i++ {
-			color, err := buf.ReadInt32()
-			if err != nil {
-				return err
-			}
-			w.WriteInt32(color)
-		}
-
-		hasTrail, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(hasTrail)
-
-		hasTwinkle, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(hasTwinkle)
-
-	case ComponentFireworks:
-		flightDuration, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(flightDuration)
-
-		explosionCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(explosionCount)
-		for i := 0; i < int(explosionCount); i++ {
-			if err := copyFireworkExplosion(buf, w); err != nil {
-				return err
-			}
-		}
-
-	// === Decorations ===
-
-	case ComponentTrim:
-		if err := copyTrimMaterial(buf, w); err != nil {
-			return err
-		}
-		if err := copyTrimPattern(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentBannerPatterns:
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(count)
-		for i := 0; i < int(count); i++ {
-			if err := copyBannerPattern(buf, w); err != nil {
-				return err
-			}
-			color, err := buf.ReadVarInt()
-			if err != nil {
-				return err
-			}
-			w.WriteVarInt(color)
-		}
-
-	case ComponentBaseColor:
-		v, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(v)
-
-	case ComponentPotDecorations:
-		for i := 0; i < 4; i++ {
-			if err := copyOptionalVarInt(buf, w); err != nil {
-				return err
-			}
-		}
-
-	// === Player data ===
-
-	case ComponentProfile:
-		if err := copyOptionalString(buf, w); err != nil {
-			return err
-		}
-		if err := copyOptionalUUID(buf, w); err != nil {
-			return err
-		}
-
-		propertyCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(propertyCount)
-		for i := 0; i < int(propertyCount); i++ {
-			if err := copyGameProfileProperty(buf, w); err != nil {
-				return err
-			}
-		}
-
-	case ComponentRecipes:
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(count)
-		for i := 0; i < int(count); i++ {
-			recipe, err := buf.ReadString(maxStringLen)
-			if err != nil {
-				return err
-			}
-			w.WriteString(recipe)
-		}
-
-	case ComponentLodestoneTracker:
-		if err := copyOptionalGlobalPos(buf, w); err != nil {
-			return err
-		}
-		tracked, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(tracked)
-
-	// === Block/Entity data (NBT passthrough) ===
-
-	case ComponentCustomData, ComponentEntityData, ComponentBucketEntityData,
-		ComponentBlockEntityData, ComponentDebugStickState, ComponentLock:
-		if err := copyNBT(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentBlockState:
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(count)
-		for i := 0; i < int(count); i++ {
-			key, err := buf.ReadString(maxStringLen)
-			if err != nil {
-				return err
-			}
-			w.WriteString(key)
-			value, err := buf.ReadString(maxStringLen)
-			if err != nil {
-				return err
-			}
-			w.WriteString(value)
-		}
-
-	case ComponentBees:
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(count)
-		for i := 0; i < int(count); i++ {
-			if err := copyNBT(buf, w); err != nil {
-				return err
-			}
-			ticksInHive, err := buf.ReadVarInt()
-			if err != nil {
-				return err
-			}
-			w.WriteVarInt(ticksInHive)
-			minTicks, err := buf.ReadVarInt()
-			if err != nil {
-				return err
-			}
-			w.WriteVarInt(minTicks)
-		}
-
-	// === Entity variant components ===
-
-	case ComponentVillagerVariant, ComponentWolfVariant, ComponentWolfSoundVariant,
-		ComponentFoxVariant, ComponentParrotVariant, ComponentTropicalFishPattern,
-		ComponentMooshroomVariant, ComponentRabbitVariant, ComponentPigVariant,
-		ComponentCowVariant, ComponentChickenVariant, ComponentZombieNautilusVariant,
-		ComponentFrogVariant, ComponentHorseVariant, ComponentPaintingVariant,
-		ComponentLlamaVariant, ComponentAxolotlVariant, ComponentCatVariant:
-		if err := copyIDOrTag(buf, w); err != nil {
-			return err
-		}
-
-	case ComponentWolfCollar, ComponentCatCollar, ComponentSheepColor, ComponentShulkerColor,
-		ComponentTropicalFishBaseColor, ComponentTropicalFishPatternColor:
-		v, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(v)
-
-	case ComponentSalmonSize:
-		v, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(v)
-
-	default:
-		return fmt.Errorf("unknown component ID: %d", id)
-	}
-
-	return nil
-}
-
 // === Helper functions for copying complex structures ===
 
 func copyNBT(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -1983,6 +1064,91 @@ func copyNBT(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 
 	writer := nbt.NewWriterTo(w.Writer())
 	return writer.WriteTag(tag, "", true) // network format
+}
+
+// decodeItemName reads an NBT text component and returns an ItemNameComponent.
+func decodeItemName(buf *ns.PacketBuffer) (*ItemNameComponent, error) {
+	reader := nbt.NewReaderFrom(buf.Reader())
+	tag, _, err := reader.ReadTag(true) // network format
+	if err != nil {
+		return nil, err
+	}
+
+	// text component can be a string (literal) or compound (with translate/etc)
+	switch v := tag.(type) {
+	case nbt.String:
+		return &ItemNameComponent{Text: string(v)}, nil
+	case nbt.Compound:
+		name := &ItemNameComponent{}
+		if t, ok := v["text"].(nbt.String); ok {
+			name.Text = string(t)
+		}
+		if t, ok := v["translate"].(nbt.String); ok {
+			name.Translate = string(t)
+		}
+		return name, nil
+	default:
+		return &ItemNameComponent{}, nil
+	}
+}
+
+// decodeAttributeModifier reads an attribute modifier entry.
+func decodeAttributeModifier(buf *ns.PacketBuffer) (AttributeModifier, error) {
+	var mod AttributeModifier
+
+	// attribute ID (registry reference)
+	attrID, err := buf.ReadVarInt()
+	if err != nil {
+		return mod, err
+	}
+	mod.Type = registries.Attribute.ByID(int32(attrID))
+
+	// modifier ID (Identifier string)
+	modID, err := buf.ReadString(maxStringLen)
+	if err != nil {
+		return mod, err
+	}
+	mod.ID = string(modID)
+
+	// amount (Double)
+	amount, err := buf.ReadFloat64()
+	if err != nil {
+		return mod, err
+	}
+	mod.Amount = float64(amount)
+
+	// operation (VarInt)
+	operation, err := buf.ReadVarInt()
+	if err != nil {
+		return mod, err
+	}
+	operations := []string{"add_value", "add_multiplied_base", "add_multiplied_total"}
+	if int(operation) < len(operations) {
+		mod.Operation = operations[operation]
+	}
+
+	// slot (VarInt - equipment slot group)
+	slot, err := buf.ReadVarInt()
+	if err != nil {
+		return mod, err
+	}
+	slots := []string{"any", "hand", "mainhand", "offhand", "armor", "feet", "legs", "chest", "head", "body"}
+	if int(slot) < len(slots) {
+		mod.Slot = slots[slot]
+	}
+
+	// display type (VarInt)
+	displayType, err := buf.ReadVarInt()
+	if err != nil {
+		return mod, err
+	}
+	if displayType == 2 {
+		// OVERRIDE includes a Component (NBT) - skip for now
+		reader := nbt.NewReaderFrom(buf.Reader())
+		_, _, _ = reader.ReadTag(true)
+	}
+
+	return mod, nil
 }
 
 func copySlot(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -2364,7 +1530,7 @@ func copyToolRule(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func copyAttributeModifier(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// AttributeModifier: VarInt attributeID, AttributeModifierData, VarInt slot
+	// AttributeModifier: VarInt attributeID, AttributeModifierData, VarInt slot, Display
 	attributeID, err := buf.ReadVarInt()
 	if err != nil {
 		return err
@@ -2374,7 +1540,7 @@ func copyAttributeModifier(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	// AttributeModifierData: Identifier id, Double amount, VarInt operation
 	modID, err := buf.ReadString(maxStringLen)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to read string data: %w", err)
 	}
 	w.WriteString(modID)
 
@@ -2395,6 +1561,19 @@ func copyAttributeModifier(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 		return err
 	}
 	w.WriteVarInt(slot)
+
+	// Display: type-dispatched (0=DEFAULT, 1=HIDDEN, 2=OVERRIDE with Component)
+	displayType, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	w.WriteVarInt(displayType)
+
+	if displayType == 2 { // OVERRIDE includes a Component (NBT)
+		if err := copyNBT(buf, w); err != nil {
+			return err
+		}
+	}
 
 	return nil
 }
@@ -2953,6 +2132,55 @@ func applyComponent(c *Components, id int32, data []byte) error {
 		}
 		c.Fireworks = &Fireworks{FlightDuration: int32(flightDuration)}
 
+	case ComponentUnbreakable:
+		// empty marker component
+		c.Unbreakable = true
+
+	case ComponentCustomName:
+		// NBT text component
+		name, err := decodeItemName(buf)
+		if err != nil {
+			return err
+		}
+		c.CustomName = name
+
+	case ComponentAttributeModifiers:
+		count, err := buf.ReadVarInt()
+		if err != nil {
+			return err
+		}
+		modifiers := make([]AttributeModifier, 0, count)
+		for i := 0; i < int(count); i++ {
+			mod, err := decodeAttributeModifier(buf)
+			if err != nil {
+				return fmt.Errorf("modifier %d: %w", i, err)
+			}
+			modifiers = append(modifiers, mod)
+		}
+		c.AttributeModifiers = modifiers
+
+	case ComponentTooltipDisplay:
+		hideTooltip, err := buf.ReadBool()
+		if err != nil {
+			return err
+		}
+		hiddenCount, err := buf.ReadVarInt()
+		if err != nil {
+			return err
+		}
+		hidden := make([]int32, 0, hiddenCount)
+		for i := 0; i < int(hiddenCount); i++ {
+			compID, err := buf.ReadVarInt()
+			if err != nil {
+				return err
+			}
+			hidden = append(hidden, int32(compID))
+		}
+		c.TooltipDisplay = &TooltipDisplay{
+			HideTooltip:      bool(hideTooltip),
+			HiddenComponents: hidden,
+		}
+
 	// complex components are passed through as raw data for now
 	default:
 		// unknown or complex component - ignore for typed access
@@ -3042,6 +2270,10 @@ func clearComponent(c *Components, id int32) {
 		c.PiercingWeapon = nil
 	case ComponentTooltipDisplay:
 		c.TooltipDisplay = nil
+	case ComponentUnbreakable:
+		c.Unbreakable = false
+	case ComponentCustomName:
+		c.CustomName = nil
 	case ComponentUseEffects:
 		c.UseEffects = nil
 	case ComponentPotionContents:

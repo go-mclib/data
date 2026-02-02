@@ -101,10 +101,47 @@ func Decoder() ns.SlotDecoder {
 	return decodeComponentWire
 }
 
+// DecoderDelimited returns a SlotDecoder that handles length-prefixed
+// component data, as used by OPTIONAL_UNTRUSTED_STREAM_CODEC (e.g. creative mode slots).
+func DecoderDelimited() ns.SlotDecoder {
+	return func(buf *ns.PacketBuffer, id ns.VarInt) ([]byte, error) {
+		// read length prefix
+		length, err := buf.ReadVarInt()
+		if err != nil {
+			return nil, fmt.Errorf("failed to read component length: %w", err)
+		}
+
+		if length == 0 {
+			// empty component (e.g. Unbreakable)
+			return nil, nil
+		}
+
+		// read exactly 'length' bytes
+		rawData, err := buf.ReadFixedByteArray(int(length))
+		if err != nil {
+			return nil, fmt.Errorf("failed to read component data: %w", err)
+		}
+
+		// decode from the raw bytes
+		limitedBuf := ns.NewReader(rawData)
+		return decodeComponentWire(limitedBuf, id)
+	}
+}
+
 // ReadSlot is a convenience function that reads a Slot from the buffer
 // and converts it to an ItemStack.
 func ReadSlot(buf *ns.PacketBuffer) (*ItemStack, error) {
 	slot, err := buf.ReadSlot(Decoder())
+	if err != nil {
+		return nil, err
+	}
+	return FromSlot(slot)
+}
+
+// ReadSlotDelimited reads a slot with length-prefixed component data.
+// Used for packets with OPTIONAL_UNTRUSTED_STREAM_CODEC like creative mode.
+func ReadSlotDelimited(buf *ns.PacketBuffer) (*ItemStack, error) {
+	slot, err := buf.ReadSlot(DecoderDelimited())
 	if err != nil {
 		return nil, err
 	}
@@ -118,4 +155,70 @@ func (s *ItemStack) WriteSlot(buf *ns.PacketBuffer) error {
 		return err
 	}
 	return buf.WriteSlot(slot)
+}
+
+// WriteSlotDelimited writes the ItemStack with length-prefixed component data.
+// Used for packets with OPTIONAL_UNTRUSTED_STREAM_CODEC like creative mode.
+func (s *ItemStack) WriteSlotDelimited(buf *ns.PacketBuffer) error {
+	slot, err := s.ToSlot()
+	if err != nil {
+		return err
+	}
+	return writeSlotDelimited(buf, slot)
+}
+
+// WriteRawSlotDelimited writes a raw ns.Slot with length-prefixed component data.
+// Used for packets with OPTIONAL_UNTRUSTED_STREAM_CODEC like creative mode.
+func WriteRawSlotDelimited(buf *ns.PacketBuffer, slot ns.Slot) error {
+	return writeSlotDelimited(buf, slot)
+}
+
+// writeSlotDelimited writes a slot with length-prefixed component data.
+func writeSlotDelimited(buf *ns.PacketBuffer, slot ns.Slot) error {
+	// write count
+	if err := buf.WriteVarInt(slot.Count); err != nil {
+		return err
+	}
+
+	if slot.Count <= 0 {
+		return nil
+	}
+
+	// write item ID
+	if err := buf.WriteVarInt(slot.ItemID); err != nil {
+		return err
+	}
+
+	// write add count and remove count
+	if err := buf.WriteVarInt(ns.VarInt(len(slot.Components.Add))); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(ns.VarInt(len(slot.Components.Remove))); err != nil {
+		return err
+	}
+
+	// write components with length prefix
+	for _, comp := range slot.Components.Add {
+		// write component ID
+		if err := buf.WriteVarInt(comp.ID); err != nil {
+			return err
+		}
+		// write component data length
+		if err := buf.WriteVarInt(ns.VarInt(len(comp.Data))); err != nil {
+			return err
+		}
+		// write component data
+		if _, err := buf.Write(comp.Data); err != nil {
+			return err
+		}
+	}
+
+	// write removed component IDs (no length prefix for these)
+	for _, id := range slot.Components.Remove {
+		if err := buf.WriteVarInt(id); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

@@ -1827,7 +1827,8 @@ func (p *C2SSetCreativeModeSlot) Read(buf *ns.PacketBuffer) error {
 	if p.Slot, err = buf.ReadInt16(); err != nil {
 		return err
 	}
-	p.ClickedItem, err = buf.ReadSlot(items.Decoder())
+	// uses length-prefixed format (OPTIONAL_UNTRUSTED_STREAM_CODEC in JE source code)
+	p.ClickedItem, err = buf.ReadSlot(items.DecoderDelimited())
 	return err
 }
 
@@ -1835,7 +1836,8 @@ func (p *C2SSetCreativeModeSlot) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt16(p.Slot); err != nil {
 		return err
 	}
-	return buf.WriteSlot(p.ClickedItem)
+	// uses length-prefixed format (OPTIONAL_UNTRUSTED_STREAM_CODEC in JE source code)
+	return items.WriteRawSlotDelimited(buf, p.ClickedItem)
 }
 
 // C2SSetJigsawBlock represents "Program Jigsaw Block".
