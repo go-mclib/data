@@ -1,17 +1,9 @@
 package packets
 
 import (
+	packets_data "github.com/go-mclib/data/pkg/data/packets"
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
-)
-
-const (
-	S2CLoginDisconnectLoginID ns.VarInt = iota
-	S2CHelloID
-	S2CLoginFinishedID
-	S2CLoginCompressionID
-	S2CCustomQueryID
-	S2CCookieRequestLoginID
 )
 
 // S2CLoginDisconnectLogin represents "Disconnect (login)".
@@ -22,7 +14,7 @@ type S2CLoginDisconnectLogin struct {
 	Reason ns.TextComponent
 }
 
-func (p *S2CLoginDisconnectLogin) ID() ns.VarInt   { return S2CLoginDisconnectLoginID }
+func (p *S2CLoginDisconnectLogin) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CLoginDisconnectID) }
 func (p *S2CLoginDisconnectLogin) State() jp.State { return jp.StateLogin }
 func (p *S2CLoginDisconnectLogin) Bound() jp.Bound { return jp.S2C }
 
@@ -52,7 +44,7 @@ type S2CHello struct {
 	ShouldAuthenticate ns.Boolean
 }
 
-func (p *S2CHello) ID() ns.VarInt   { return S2CHelloID }
+func (p *S2CHello) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CHelloID) }
 func (p *S2CHello) State() jp.State { return jp.StateLogin }
 func (p *S2CHello) Bound() jp.Bound { return jp.S2C }
 
@@ -105,7 +97,7 @@ type S2CLoginFinished struct {
 	Profile GameProfile
 }
 
-func (p *S2CLoginFinished) ID() ns.VarInt   { return S2CLoginFinishedID }
+func (p *S2CLoginFinished) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CLoginFinishedID) }
 func (p *S2CLoginFinished) State() jp.State { return jp.StateLogin }
 func (p *S2CLoginFinished) Bound() jp.Bound { return jp.S2C }
 
@@ -175,7 +167,7 @@ type S2CLoginCompression struct {
 	Threshold ns.VarInt
 }
 
-func (p *S2CLoginCompression) ID() ns.VarInt   { return S2CLoginCompressionID }
+func (p *S2CLoginCompression) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CLoginCompressionID) }
 func (p *S2CLoginCompression) State() jp.State { return jp.StateLogin }
 func (p *S2CLoginCompression) Bound() jp.Bound { return jp.S2C }
 
@@ -203,7 +195,7 @@ type S2CCustomQuery struct {
 	Data ns.ByteArray
 }
 
-func (p *S2CCustomQuery) ID() ns.VarInt   { return S2CCustomQueryID }
+func (p *S2CCustomQuery) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CCustomQueryID) }
 func (p *S2CCustomQuery) State() jp.State { return jp.StateLogin }
 func (p *S2CCustomQuery) Bound() jp.Bound { return jp.S2C }
 
@@ -239,7 +231,9 @@ type S2CCookieRequestLogin struct {
 	Key ns.Identifier
 }
 
-func (p *S2CCookieRequestLogin) ID() ns.VarInt   { return S2CCookieRequestLoginID }
+func (p *S2CCookieRequestLogin) ID() ns.VarInt {
+	return ns.VarInt(packets_data.S2CCookieRequestLoginID)
+}
 func (p *S2CCookieRequestLogin) State() jp.State { return jp.StateLogin }
 func (p *S2CCookieRequestLogin) Bound() jp.Bound { return jp.S2C }
 

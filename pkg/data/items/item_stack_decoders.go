@@ -7,7 +7,6 @@ package items
 //   - https://minecraft.wiki/w/Data_component_format
 //
 // Component IDs from minecraft:data_component_type registry.
-// Last updated: Minecraft 1.21.5
 
 import (
 	"fmt"

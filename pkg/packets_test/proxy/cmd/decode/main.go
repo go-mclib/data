@@ -22,70 +22,6 @@ type CapturedPacket struct {
 	RawData   string `json:"raw_data"`
 }
 
-type packetFactory func() jp.Packet
-
-var packetRegistries = map[string]map[int]struct {
-	name    string
-	factory packetFactory
-}{
-	"handshake_c2s": {
-		int(packets.C2SIntentionID): {"C2SIntention", func() jp.Packet { return &packets.C2SIntention{} }},
-	},
-	"status_c2s": {
-		int(packets.C2SStatusRequestID):     {"C2SStatusRequest", func() jp.Packet { return &packets.C2SStatusRequest{} }},
-		int(packets.C2SPingRequestStatusID): {"C2SPingRequestStatus", func() jp.Packet { return &packets.C2SPingRequestStatus{} }},
-	},
-	"status_s2c": {
-		int(packets.S2CStatusResponseID):     {"S2CStatusResponse", func() jp.Packet { return &packets.S2CStatusResponse{} }},
-		int(packets.S2CPongResponseStatusID): {"S2CPongResponseStatus", func() jp.Packet { return &packets.S2CPongResponseStatus{} }},
-	},
-	"login_c2s": {
-		int(packets.C2SHelloID):               {"C2SHello", func() jp.Packet { return &packets.C2SHello{} }},
-		int(packets.C2SKeyID):                 {"C2SKey", func() jp.Packet { return &packets.C2SKey{} }},
-		int(packets.C2SCustomQueryAnswerID):   {"C2SCustomQueryAnswer", func() jp.Packet { return &packets.C2SCustomQueryAnswer{} }},
-		int(packets.C2SLoginAcknowledgedID):   {"C2SLoginAcknowledged", func() jp.Packet { return &packets.C2SLoginAcknowledged{} }},
-		int(packets.C2SCookieResponseLoginID): {"C2SCookieResponseLogin", func() jp.Packet { return &packets.C2SCookieResponseLogin{} }},
-	},
-	"login_s2c": {
-		int(packets.S2CLoginDisconnectLoginID): {"S2CLoginDisconnectLogin", func() jp.Packet { return &packets.S2CLoginDisconnectLogin{} }},
-		int(packets.S2CHelloID):                {"S2CHello", func() jp.Packet { return &packets.S2CHello{} }},
-		int(packets.S2CLoginFinishedID):        {"S2CLoginFinished", func() jp.Packet { return &packets.S2CLoginFinished{} }},
-		int(packets.S2CLoginCompressionID):     {"S2CLoginCompression", func() jp.Packet { return &packets.S2CLoginCompression{} }},
-		int(packets.S2CCustomQueryID):          {"S2CCustomQuery", func() jp.Packet { return &packets.S2CCustomQuery{} }},
-		int(packets.S2CCookieRequestLoginID):   {"S2CCookieRequestLogin", func() jp.Packet { return &packets.S2CCookieRequestLogin{} }},
-	},
-	"configuration_c2s": {
-		int(packets.C2SClientInformationConfigurationID): {"C2SClientInformationConfiguration", func() jp.Packet { return &packets.C2SClientInformationConfiguration{} }},
-		int(packets.C2SCookieResponseConfigurationID):    {"C2SCookieResponseConfiguration", func() jp.Packet { return &packets.C2SCookieResponseConfiguration{} }},
-		int(packets.C2SCustomPayloadConfigurationID):     {"C2SCustomPayloadConfiguration", func() jp.Packet { return &packets.C2SCustomPayloadConfiguration{} }},
-		int(packets.C2SFinishConfigurationID):            {"C2SFinishConfiguration", func() jp.Packet { return &packets.C2SFinishConfiguration{} }},
-		int(packets.C2SKeepAliveConfigurationID):         {"C2SKeepAliveConfiguration", func() jp.Packet { return &packets.C2SKeepAliveConfiguration{} }},
-		int(packets.C2SPongConfigurationID):              {"C2SPongConfiguration", func() jp.Packet { return &packets.C2SPongConfiguration{} }},
-		int(packets.C2SResourcePackConfigurationID):      {"C2SResourcePackConfiguration", func() jp.Packet { return &packets.C2SResourcePackConfiguration{} }},
-		int(packets.C2SSelectKnownPacksID):               {"C2SSelectKnownPacks", func() jp.Packet { return &packets.C2SSelectKnownPacks{} }},
-	},
-	"configuration_s2c": {
-		int(packets.S2CCookieRequestConfigurationID):       {"S2CCookieRequestConfiguration", func() jp.Packet { return &packets.S2CCookieRequestConfiguration{} }},
-		int(packets.S2CCustomPayloadConfigurationID):       {"S2CCustomPayloadConfiguration", func() jp.Packet { return &packets.S2CCustomPayloadConfiguration{} }},
-		int(packets.S2CDisconnectConfigurationID):          {"S2CDisconnectConfiguration", func() jp.Packet { return &packets.S2CDisconnectConfiguration{} }},
-		int(packets.S2CFinishConfigurationID):              {"S2CFinishConfiguration", func() jp.Packet { return &packets.S2CFinishConfiguration{} }},
-		int(packets.S2CKeepAliveConfigurationID):           {"S2CKeepAliveConfiguration", func() jp.Packet { return &packets.S2CKeepAliveConfiguration{} }},
-		int(packets.S2CPingConfigurationID):                {"S2CPingConfiguration", func() jp.Packet { return &packets.S2CPingConfiguration{} }},
-		int(packets.S2CResetChatID):                        {"S2CResetChat", func() jp.Packet { return &packets.S2CResetChat{} }},
-		int(packets.S2CResourcePackPopConfigurationID):     {"S2CResourcePackPopConfiguration", func() jp.Packet { return &packets.S2CResourcePackPopConfiguration{} }},
-		int(packets.S2CResourcePackPushConfigurationID):    {"S2CResourcePackPushConfiguration", func() jp.Packet { return &packets.S2CResourcePackPushConfiguration{} }},
-		int(packets.S2CStoreCookieConfigurationID):         {"S2CStoreCookieConfiguration", func() jp.Packet { return &packets.S2CStoreCookieConfiguration{} }},
-		int(packets.S2CTransferConfigurationID):            {"S2CTransferConfiguration", func() jp.Packet { return &packets.S2CTransferConfiguration{} }},
-		int(packets.S2CUpdateEnabledFeaturesID):            {"S2CUpdateEnabledFeatures", func() jp.Packet { return &packets.S2CUpdateEnabledFeatures{} }},
-		int(packets.S2CUpdateTagsConfigurationID):          {"S2CUpdateTagsConfiguration", func() jp.Packet { return &packets.S2CUpdateTagsConfiguration{} }},
-		int(packets.S2CSelectKnownPacksID):                 {"S2CSelectKnownPacks", func() jp.Packet { return &packets.S2CSelectKnownPacks{} }},
-		int(packets.S2CCustomReportDetailsConfigurationID): {"S2CCustomReportDetailsConfiguration", func() jp.Packet { return &packets.S2CCustomReportDetailsConfiguration{} }},
-		int(packets.S2CServerLinksConfigurationID):         {"S2CServerLinksConfiguration", func() jp.Packet { return &packets.S2CServerLinksConfiguration{} }},
-		int(packets.S2CClearDialogConfigurationID):         {"S2CClearDialogConfiguration", func() jp.Packet { return &packets.S2CClearDialogConfiguration{} }},
-		int(packets.S2CCodeOfConductID):                    {"S2CCodeOfConduct", func() jp.Packet { return &packets.S2CCodeOfConduct{} }},
-	},
-}
-
 func parsePacketID(s string) (int, error) {
 	s = strings.TrimSpace(s)
 	if strings.HasPrefix(s, "0x") || strings.HasPrefix(s, "0X") {
@@ -94,6 +30,14 @@ func parsePacketID(s string) (int, error) {
 	}
 	id, err := strconv.ParseInt(s, 10, 32)
 	return int(id), err
+}
+
+func getPacketName(p jp.Packet) string {
+	t := reflect.TypeOf(p)
+	if t.Kind() == reflect.Ptr {
+		t = t.Elem()
+	}
+	return t.Name()
 }
 
 func formatValue(v reflect.Value, indent string) string {
@@ -292,13 +236,13 @@ func main() {
 		}
 
 		registryKey := cap.State + "_" + cap.Direction
-		registry, ok := packetRegistries[registryKey]
+		registry, ok := packets.PacketRegistries[registryKey]
 		if !ok {
 			fmt.Printf("// [%d] WARNING: unknown state/direction %s (packet %s)\n\n", i, registryKey, cap.PacketID)
 			continue
 		}
 
-		entry, ok := registry[packetID]
+		factory, ok := registry[packetID]
 		if !ok {
 			fmt.Printf("// [%d] WARNING: unknown packet %s in %s\n\n", i, cap.PacketID, registryKey)
 			continue
@@ -306,20 +250,21 @@ func main() {
 
 		rawData, err := hex.DecodeString(cap.RawData)
 		if err != nil {
-			fmt.Printf("// [%d] WARNING: invalid hex data for %s: %v\n\n", i, entry.name, err)
+			fmt.Printf("// [%d] WARNING: invalid hex data: %v\n\n", i, err)
 			continue
 		}
 
-		p := entry.factory()
+		p := factory()
+		packetName := getPacketName(p)
 		buf := ns.NewReader(rawData)
 		if err := p.Read(buf); err != nil {
-			fmt.Printf("// [%d] WARNING: failed to decode %s: %v\n", i, entry.name, err)
+			fmt.Printf("// [%d] WARNING: failed to decode %s: %v\n", i, packetName, err)
 			fmt.Printf("//     raw data: %s\n\n", cap.RawData)
 			continue
 		}
 
 		fmt.Printf("// [%d] %s %s\n", i, cap.Direction, cap.PacketID)
-		fmt.Printf("%s {\n", entry.name)
+		fmt.Printf("%s {\n", packetName)
 		fmt.Print(formatPacket(p))
 		fmt.Printf("}\n\n")
 	}

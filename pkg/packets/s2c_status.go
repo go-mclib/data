@@ -1,13 +1,9 @@
 package packets
 
 import (
+	packets_data "github.com/go-mclib/data/pkg/data/packets"
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
-)
-
-const (
-	S2CStatusResponseID ns.VarInt = iota
-	S2CPongResponseStatusID
 )
 
 // S2CStatusResponse represents "Status Response".
@@ -18,7 +14,7 @@ type S2CStatusResponse struct {
 	JsonResponse ns.String
 }
 
-func (p *S2CStatusResponse) ID() ns.VarInt   { return S2CStatusResponseID }
+func (p *S2CStatusResponse) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CStatusResponseID) }
 func (p *S2CStatusResponse) State() jp.State { return jp.StateStatus }
 func (p *S2CStatusResponse) Bound() jp.Bound { return jp.S2C }
 
@@ -40,7 +36,9 @@ type S2CPongResponseStatus struct {
 	Timestamp ns.Int64
 }
 
-func (p *S2CPongResponseStatus) ID() ns.VarInt   { return S2CPongResponseStatusID }
+func (p *S2CPongResponseStatus) ID() ns.VarInt {
+	return ns.VarInt(packets_data.S2CPongResponseStatusID)
+}
 func (p *S2CPongResponseStatus) State() jp.State { return jp.StateStatus }
 func (p *S2CPongResponseStatus) Bound() jp.Bound { return jp.S2C }
 

@@ -2,78 +2,10 @@ package packets
 
 import (
 	"github.com/go-mclib/data/pkg/data/items"
+	packets_data "github.com/go-mclib/data/pkg/data/packets"
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/go-mclib/protocol/nbt"
-)
-
-const (
-	C2SAcceptTeleportationID ns.VarInt = iota
-	C2SBlockEntityTagQueryID
-	C2SBundleItemSelectedID
-	C2SChangeDifficultyID
-	C2SChangeGameModeID
-	C2SChatAckID
-	C2SChatCommandID
-	C2SChatCommandSignedID
-	C2SChatID
-	C2SChatSessionUpdateID
-	C2SChunkBatchReceivedID
-	C2SClientCommandID
-	C2SClientTickEndID
-	C2SClientInformationPlayID
-	C2SCommandSuggestionID
-	C2SConfigurationAcknowledgedID
-	C2SContainerButtonClickID
-	C2SContainerClickID
-	C2SContainerCloseID
-	C2SContainerSlotStateChangedID
-	C2SCookieResponsePlayID
-	C2SCustomPayloadPlayID
-	C2SDebugSubscriptionRequestID
-	C2SEditBookID
-	C2SEntityTagQueryID
-	C2SInteractID
-	C2SJigsawGenerateID
-	C2SKeepAlivePlayID
-	C2SLockDifficultyID
-	C2SMovePlayerPosID
-	C2SMovePlayerPosRotID
-	C2SMovePlayerRotID
-	C2SMovePlayerStatusOnlyID
-	C2SMoveVehicleID
-	C2SPaddleBoatID
-	C2SPickItemFromBlockID
-	C2SPickItemFromEntityID
-	C2SPingRequestPlayID
-	C2SPlaceRecipeID
-	C2SPlayerAbilitiesID
-	C2SPlayerActionID
-	C2SPlayerCommandID
-	C2SPlayerInputID
-	C2SPlayerLoadedID
-	C2SPongPlayID
-	C2SRecipeBookChangeSettingsID
-	C2SRecipeBookSeenRecipeID
-	C2SRenameItemID
-	C2SResourcePackPlayID
-	C2SSeenAdvancementsID
-	C2SSelectTradeID
-	C2SSetBeaconID
-	C2SSetCarriedItemID
-	C2SSetCommandBlockID
-	C2SSetCommandMinecartID
-	C2SSetCreativeModeSlotID
-	C2SSetJigsawBlockID
-	C2SSetStructureBlockID
-	C2SSetTestBlockID
-	C2SSignUpdateID
-	C2SSwingID
-	C2STeleportToEntityID
-	C2STestInstanceBlockActionID
-	C2SUseItemOnID
-	C2SUseItemID
-	C2SCustomClickActionPlayID
 )
 
 // C2SAcceptTeleportation represents "Confirm Teleportation".
@@ -85,7 +17,9 @@ type C2SAcceptTeleportation struct {
 	TeleportId ns.VarInt
 }
 
-func (p *C2SAcceptTeleportation) ID() ns.VarInt   { return C2SAcceptTeleportationID }
+func (p *C2SAcceptTeleportation) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SAcceptTeleportationID)
+}
 func (p *C2SAcceptTeleportation) State() jp.State { return jp.StatePlay }
 func (p *C2SAcceptTeleportation) Bound() jp.Bound { return jp.C2S }
 
@@ -107,7 +41,9 @@ type C2SBlockEntityTagQuery struct {
 	Location      ns.Position
 }
 
-func (p *C2SBlockEntityTagQuery) ID() ns.VarInt   { return C2SBlockEntityTagQueryID }
+func (p *C2SBlockEntityTagQuery) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SBlockEntityTagQueryID)
+}
 func (p *C2SBlockEntityTagQuery) State() jp.State { return jp.StatePlay }
 func (p *C2SBlockEntityTagQuery) Bound() jp.Bound { return jp.C2S }
 
@@ -135,7 +71,9 @@ type C2SBundleItemSelected struct {
 	SlotInBundle ns.VarInt
 }
 
-func (p *C2SBundleItemSelected) ID() ns.VarInt   { return C2SBundleItemSelectedID }
+func (p *C2SBundleItemSelected) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SBundleItemSelectedID)
+}
 func (p *C2SBundleItemSelected) State() jp.State { return jp.StatePlay }
 func (p *C2SBundleItemSelected) Bound() jp.Bound { return jp.C2S }
 
@@ -162,7 +100,7 @@ type C2SChangeDifficulty struct {
 	NewDifficulty ns.Uint8
 }
 
-func (p *C2SChangeDifficulty) ID() ns.VarInt   { return C2SChangeDifficultyID }
+func (p *C2SChangeDifficulty) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SChangeDifficultyID) }
 func (p *C2SChangeDifficulty) State() jp.State { return jp.StatePlay }
 func (p *C2SChangeDifficulty) Bound() jp.Bound { return jp.C2S }
 
@@ -183,7 +121,7 @@ type C2SChangeGameMode struct {
 	GameMode ns.VarInt
 }
 
-func (p *C2SChangeGameMode) ID() ns.VarInt   { return C2SChangeGameModeID }
+func (p *C2SChangeGameMode) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SChangeGameModeID) }
 func (p *C2SChangeGameMode) State() jp.State { return jp.StatePlay }
 func (p *C2SChangeGameMode) Bound() jp.Bound { return jp.C2S }
 
@@ -204,7 +142,7 @@ type C2SChatAck struct {
 	MessageCount ns.VarInt
 }
 
-func (p *C2SChatAck) ID() ns.VarInt   { return C2SChatAckID }
+func (p *C2SChatAck) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SChatAckID) }
 func (p *C2SChatAck) State() jp.State { return jp.StatePlay }
 func (p *C2SChatAck) Bound() jp.Bound { return jp.C2S }
 
@@ -225,7 +163,7 @@ type C2SChatCommand struct {
 	Command ns.String
 }
 
-func (p *C2SChatCommand) ID() ns.VarInt   { return C2SChatCommandID }
+func (p *C2SChatCommand) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SChatCommandID) }
 func (p *C2SChatCommand) State() jp.State { return jp.StatePlay }
 func (p *C2SChatCommand) Bound() jp.Bound { return jp.C2S }
 
@@ -252,7 +190,7 @@ type C2SChatCommandSigned struct {
 	Checksum     ns.Int8
 }
 
-func (p *C2SChatCommandSigned) ID() ns.VarInt   { return C2SChatCommandSignedID }
+func (p *C2SChatCommandSigned) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SChatCommandSignedID) }
 func (p *C2SChatCommandSigned) State() jp.State { return jp.StatePlay }
 func (p *C2SChatCommandSigned) Bound() jp.Bound { return jp.C2S }
 
@@ -318,7 +256,7 @@ type C2SChat struct {
 	Checksum     ns.Int8
 }
 
-func (p *C2SChat) ID() ns.VarInt   { return C2SChatID }
+func (p *C2SChat) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SChatID) }
 func (p *C2SChat) State() jp.State { return jp.StatePlay }
 func (p *C2SChat) Bound() jp.Bound { return jp.C2S }
 
@@ -384,7 +322,7 @@ type C2SChatSessionUpdate struct {
 	KeySignature ns.ByteArray
 }
 
-func (p *C2SChatSessionUpdate) ID() ns.VarInt   { return C2SChatSessionUpdateID }
+func (p *C2SChatSessionUpdate) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SChatSessionUpdateID) }
 func (p *C2SChatSessionUpdate) State() jp.State { return jp.StatePlay }
 func (p *C2SChatSessionUpdate) Bound() jp.Bound { return jp.C2S }
 
@@ -423,7 +361,9 @@ type C2SChunkBatchReceived struct {
 	ChunksPerTick ns.Float32
 }
 
-func (p *C2SChunkBatchReceived) ID() ns.VarInt   { return C2SChunkBatchReceivedID }
+func (p *C2SChunkBatchReceived) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SChunkBatchReceivedID)
+}
 func (p *C2SChunkBatchReceived) State() jp.State { return jp.StatePlay }
 func (p *C2SChunkBatchReceived) Bound() jp.Bound { return jp.C2S }
 
@@ -444,7 +384,7 @@ type C2SClientCommand struct {
 	ActionId ns.VarInt
 }
 
-func (p *C2SClientCommand) ID() ns.VarInt   { return C2SClientCommandID }
+func (p *C2SClientCommand) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SClientCommandID) }
 func (p *C2SClientCommand) State() jp.State { return jp.StatePlay }
 func (p *C2SClientCommand) Bound() jp.Bound { return jp.C2S }
 
@@ -463,7 +403,7 @@ func (p *C2SClientCommand) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Client_Tick_End
 type C2SClientTickEnd struct{}
 
-func (p *C2SClientTickEnd) ID() ns.VarInt                { return C2SClientTickEndID }
+func (p *C2SClientTickEnd) ID() ns.VarInt                { return ns.VarInt(packets_data.C2SClientTickEndID) }
 func (p *C2SClientTickEnd) State() jp.State              { return jp.StatePlay }
 func (p *C2SClientTickEnd) Bound() jp.Bound              { return jp.C2S }
 func (p *C2SClientTickEnd) Read(*ns.PacketBuffer) error  { return nil }
@@ -484,7 +424,9 @@ type C2SClientInformationPlay struct {
 	ParticleStatus      ns.VarInt
 }
 
-func (p *C2SClientInformationPlay) ID() ns.VarInt   { return C2SClientInformationPlayID }
+func (p *C2SClientInformationPlay) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SClientInformationPlayID)
+}
 func (p *C2SClientInformationPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SClientInformationPlay) Bound() jp.Bound { return jp.C2S }
 
@@ -554,7 +496,7 @@ type C2SCommandSuggestion struct {
 	Text          ns.String
 }
 
-func (p *C2SCommandSuggestion) ID() ns.VarInt   { return C2SCommandSuggestionID }
+func (p *C2SCommandSuggestion) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SCommandSuggestionID) }
 func (p *C2SCommandSuggestion) State() jp.State { return jp.StatePlay }
 func (p *C2SCommandSuggestion) Bound() jp.Bound { return jp.C2S }
 
@@ -579,7 +521,9 @@ func (p *C2SCommandSuggestion) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Acknowledge_Configuration
 type C2SConfigurationAcknowledged struct{}
 
-func (p *C2SConfigurationAcknowledged) ID() ns.VarInt                { return C2SConfigurationAcknowledgedID }
+func (p *C2SConfigurationAcknowledged) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SConfigurationAcknowledgedID)
+}
 func (p *C2SConfigurationAcknowledged) State() jp.State              { return jp.StatePlay }
 func (p *C2SConfigurationAcknowledged) Bound() jp.Bound              { return jp.C2S }
 func (p *C2SConfigurationAcknowledged) Read(*ns.PacketBuffer) error  { return nil }
@@ -593,7 +537,9 @@ type C2SContainerButtonClick struct {
 	ButtonId ns.VarInt
 }
 
-func (p *C2SContainerButtonClick) ID() ns.VarInt   { return C2SContainerButtonClickID }
+func (p *C2SContainerButtonClick) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SContainerButtonClickID)
+}
 func (p *C2SContainerButtonClick) State() jp.State { return jp.StatePlay }
 func (p *C2SContainerButtonClick) Bound() jp.Bound { return jp.C2S }
 
@@ -626,7 +572,7 @@ type C2SContainerClick struct {
 	CarriedItem ns.Slot
 }
 
-func (p *C2SContainerClick) ID() ns.VarInt   { return C2SContainerClickID }
+func (p *C2SContainerClick) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SContainerClickID) }
 func (p *C2SContainerClick) State() jp.State { return jp.StatePlay }
 func (p *C2SContainerClick) Bound() jp.Bound { return jp.C2S }
 
@@ -683,7 +629,7 @@ type C2SContainerClose struct {
 	WindowId ns.VarInt
 }
 
-func (p *C2SContainerClose) ID() ns.VarInt   { return C2SContainerCloseID }
+func (p *C2SContainerClose) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SContainerCloseID) }
 func (p *C2SContainerClose) State() jp.State { return jp.StatePlay }
 func (p *C2SContainerClose) Bound() jp.Bound { return jp.C2S }
 
@@ -706,7 +652,9 @@ type C2SContainerSlotStateChanged struct {
 	SlotEnabled ns.Boolean
 }
 
-func (p *C2SContainerSlotStateChanged) ID() ns.VarInt   { return C2SContainerSlotStateChangedID }
+func (p *C2SContainerSlotStateChanged) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SContainerSlotStateChangedID)
+}
 func (p *C2SContainerSlotStateChanged) State() jp.State { return jp.StatePlay }
 func (p *C2SContainerSlotStateChanged) Bound() jp.Bound { return jp.C2S }
 
@@ -740,7 +688,9 @@ type C2SCookieResponsePlay struct {
 	Payload ns.PrefixedOptional[ns.ByteArray]
 }
 
-func (p *C2SCookieResponsePlay) ID() ns.VarInt   { return C2SCookieResponsePlayID }
+func (p *C2SCookieResponsePlay) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SCookieResponsePlayID)
+}
 func (p *C2SCookieResponsePlay) State() jp.State { return jp.StatePlay }
 func (p *C2SCookieResponsePlay) Bound() jp.Bound { return jp.C2S }
 
@@ -771,7 +721,7 @@ type C2SCustomPayloadPlay struct {
 	Data    ns.ByteArray
 }
 
-func (p *C2SCustomPayloadPlay) ID() ns.VarInt   { return C2SCustomPayloadPlayID }
+func (p *C2SCustomPayloadPlay) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SCustomPayloadPlayID) }
 func (p *C2SCustomPayloadPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SCustomPayloadPlay) Bound() jp.Bound { return jp.C2S }
 
@@ -798,7 +748,9 @@ type C2SDebugSubscriptionRequest struct {
 	Subscriptions []ns.VarInt
 }
 
-func (p *C2SDebugSubscriptionRequest) ID() ns.VarInt   { return C2SDebugSubscriptionRequestID }
+func (p *C2SDebugSubscriptionRequest) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SDebugSubscriptionRequestID)
+}
 func (p *C2SDebugSubscriptionRequest) State() jp.State { return jp.StatePlay }
 func (p *C2SDebugSubscriptionRequest) Bound() jp.Bound { return jp.C2S }
 
@@ -837,7 +789,7 @@ type C2SEditBook struct {
 	Title   ns.PrefixedOptional[ns.String]
 }
 
-func (p *C2SEditBook) ID() ns.VarInt   { return C2SEditBookID }
+func (p *C2SEditBook) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SEditBookID) }
 func (p *C2SEditBook) State() jp.State { return jp.StatePlay }
 func (p *C2SEditBook) Bound() jp.Bound { return jp.C2S }
 
@@ -886,7 +838,7 @@ type C2SEntityTagQuery struct {
 	EntityId      ns.VarInt
 }
 
-func (p *C2SEntityTagQuery) ID() ns.VarInt   { return C2SEntityTagQueryID }
+func (p *C2SEntityTagQuery) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SEntityTagQueryID) }
 func (p *C2SEntityTagQuery) State() jp.State { return jp.StatePlay }
 func (p *C2SEntityTagQuery) Bound() jp.Bound { return jp.C2S }
 
@@ -919,7 +871,7 @@ type C2SInteract struct {
 	SneakKeyPressed ns.Boolean
 }
 
-func (p *C2SInteract) ID() ns.VarInt   { return C2SInteractID }
+func (p *C2SInteract) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SInteractID) }
 func (p *C2SInteract) State() jp.State { return jp.StatePlay }
 func (p *C2SInteract) Bound() jp.Bound { return jp.C2S }
 
@@ -986,7 +938,7 @@ type C2SJigsawGenerate struct {
 	KeepJigsaws ns.Boolean
 }
 
-func (p *C2SJigsawGenerate) ID() ns.VarInt   { return C2SJigsawGenerateID }
+func (p *C2SJigsawGenerate) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SJigsawGenerateID) }
 func (p *C2SJigsawGenerate) State() jp.State { return jp.StatePlay }
 func (p *C2SJigsawGenerate) Bound() jp.Bound { return jp.C2S }
 
@@ -1019,7 +971,7 @@ type C2SKeepAlivePlay struct {
 	KeepAliveId ns.Int64
 }
 
-func (p *C2SKeepAlivePlay) ID() ns.VarInt   { return C2SKeepAlivePlayID }
+func (p *C2SKeepAlivePlay) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SKeepAlivePlayID) }
 func (p *C2SKeepAlivePlay) State() jp.State { return jp.StatePlay }
 func (p *C2SKeepAlivePlay) Bound() jp.Bound { return jp.C2S }
 
@@ -1040,7 +992,7 @@ type C2SLockDifficulty struct {
 	Locked ns.Boolean
 }
 
-func (p *C2SLockDifficulty) ID() ns.VarInt   { return C2SLockDifficultyID }
+func (p *C2SLockDifficulty) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SLockDifficultyID) }
 func (p *C2SLockDifficulty) State() jp.State { return jp.StatePlay }
 func (p *C2SLockDifficulty) Bound() jp.Bound { return jp.C2S }
 
@@ -1064,7 +1016,7 @@ type C2SMovePlayerPos struct {
 	Flags ns.Int8
 }
 
-func (p *C2SMovePlayerPos) ID() ns.VarInt   { return C2SMovePlayerPosID }
+func (p *C2SMovePlayerPos) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SMovePlayerPosID) }
 func (p *C2SMovePlayerPos) State() jp.State { return jp.StatePlay }
 func (p *C2SMovePlayerPos) Bound() jp.Bound { return jp.C2S }
 
@@ -1108,7 +1060,7 @@ type C2SMovePlayerPosRot struct {
 	Flags ns.Int8
 }
 
-func (p *C2SMovePlayerPosRot) ID() ns.VarInt   { return C2SMovePlayerPosRotID }
+func (p *C2SMovePlayerPosRot) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SMovePlayerPosRotID) }
 func (p *C2SMovePlayerPosRot) State() jp.State { return jp.StatePlay }
 func (p *C2SMovePlayerPosRot) Bound() jp.Bound { return jp.C2S }
 
@@ -1161,7 +1113,7 @@ type C2SMovePlayerRot struct {
 	Flags ns.Int8
 }
 
-func (p *C2SMovePlayerRot) ID() ns.VarInt   { return C2SMovePlayerRotID }
+func (p *C2SMovePlayerRot) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SMovePlayerRotID) }
 func (p *C2SMovePlayerRot) State() jp.State { return jp.StatePlay }
 func (p *C2SMovePlayerRot) Bound() jp.Bound { return jp.C2S }
 
@@ -1194,7 +1146,9 @@ type C2SMovePlayerStatusOnly struct {
 	Flags ns.Int8
 }
 
-func (p *C2SMovePlayerStatusOnly) ID() ns.VarInt   { return C2SMovePlayerStatusOnlyID }
+func (p *C2SMovePlayerStatusOnly) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SMovePlayerStatusOnlyID)
+}
 func (p *C2SMovePlayerStatusOnly) State() jp.State { return jp.StatePlay }
 func (p *C2SMovePlayerStatusOnly) Bound() jp.Bound { return jp.C2S }
 
@@ -1220,7 +1174,7 @@ type C2SMoveVehicle struct {
 	OnGround ns.Boolean
 }
 
-func (p *C2SMoveVehicle) ID() ns.VarInt   { return C2SMoveVehicleID }
+func (p *C2SMoveVehicle) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SMoveVehicleID) }
 func (p *C2SMoveVehicle) State() jp.State { return jp.StatePlay }
 func (p *C2SMoveVehicle) Bound() jp.Bound { return jp.C2S }
 
@@ -1272,7 +1226,7 @@ type C2SPaddleBoat struct {
 	RightPaddleTurning ns.Boolean
 }
 
-func (p *C2SPaddleBoat) ID() ns.VarInt   { return C2SPaddleBoatID }
+func (p *C2SPaddleBoat) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SPaddleBoatID) }
 func (p *C2SPaddleBoat) State() jp.State { return jp.StatePlay }
 func (p *C2SPaddleBoat) Bound() jp.Bound { return jp.C2S }
 
@@ -1300,7 +1254,7 @@ type C2SPickItemFromBlock struct {
 	IncludeData ns.Boolean
 }
 
-func (p *C2SPickItemFromBlock) ID() ns.VarInt   { return C2SPickItemFromBlockID }
+func (p *C2SPickItemFromBlock) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SPickItemFromBlockID) }
 func (p *C2SPickItemFromBlock) State() jp.State { return jp.StatePlay }
 func (p *C2SPickItemFromBlock) Bound() jp.Bound { return jp.C2S }
 
@@ -1328,7 +1282,9 @@ type C2SPickItemFromEntity struct {
 	IncludeData ns.Boolean
 }
 
-func (p *C2SPickItemFromEntity) ID() ns.VarInt   { return C2SPickItemFromEntityID }
+func (p *C2SPickItemFromEntity) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SPickItemFromEntityID)
+}
 func (p *C2SPickItemFromEntity) State() jp.State { return jp.StatePlay }
 func (p *C2SPickItemFromEntity) Bound() jp.Bound { return jp.C2S }
 
@@ -1355,7 +1311,7 @@ type C2SPingRequestPlay struct {
 	Payload ns.Int64
 }
 
-func (p *C2SPingRequestPlay) ID() ns.VarInt   { return C2SPingRequestPlayID }
+func (p *C2SPingRequestPlay) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SPingRequestPlayID) }
 func (p *C2SPingRequestPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SPingRequestPlay) Bound() jp.Bound { return jp.C2S }
 
@@ -1378,7 +1334,7 @@ type C2SPlaceRecipe struct {
 	MakeAll  ns.Boolean
 }
 
-func (p *C2SPlaceRecipe) ID() ns.VarInt   { return C2SPlaceRecipeID }
+func (p *C2SPlaceRecipe) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SPlaceRecipeID) }
 func (p *C2SPlaceRecipe) State() jp.State { return jp.StatePlay }
 func (p *C2SPlaceRecipe) Bound() jp.Bound { return jp.C2S }
 
@@ -1411,7 +1367,7 @@ type C2SPlayerAbilities struct {
 	Flags ns.Int8
 }
 
-func (p *C2SPlayerAbilities) ID() ns.VarInt   { return C2SPlayerAbilitiesID }
+func (p *C2SPlayerAbilities) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SPlayerAbilitiesID) }
 func (p *C2SPlayerAbilities) State() jp.State { return jp.StatePlay }
 func (p *C2SPlayerAbilities) Bound() jp.Bound { return jp.C2S }
 
@@ -1435,7 +1391,7 @@ type C2SPlayerAction struct {
 	Sequence ns.VarInt
 }
 
-func (p *C2SPlayerAction) ID() ns.VarInt   { return C2SPlayerActionID }
+func (p *C2SPlayerAction) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SPlayerActionID) }
 func (p *C2SPlayerAction) State() jp.State { return jp.StatePlay }
 func (p *C2SPlayerAction) Bound() jp.Bound { return jp.C2S }
 
@@ -1476,7 +1432,7 @@ type C2SPlayerCommand struct {
 	JumpBoost ns.VarInt
 }
 
-func (p *C2SPlayerCommand) ID() ns.VarInt   { return C2SPlayerCommandID }
+func (p *C2SPlayerCommand) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SPlayerCommandID) }
 func (p *C2SPlayerCommand) State() jp.State { return jp.StatePlay }
 func (p *C2SPlayerCommand) Bound() jp.Bound { return jp.C2S }
 
@@ -1509,7 +1465,7 @@ type C2SPlayerInput struct {
 	Flags ns.Uint8
 }
 
-func (p *C2SPlayerInput) ID() ns.VarInt   { return C2SPlayerInputID }
+func (p *C2SPlayerInput) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SPlayerInputID) }
 func (p *C2SPlayerInput) State() jp.State { return jp.StatePlay }
 func (p *C2SPlayerInput) Bound() jp.Bound { return jp.C2S }
 
@@ -1528,7 +1484,7 @@ func (p *C2SPlayerInput) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Loaded
 type C2SPlayerLoaded struct{}
 
-func (p *C2SPlayerLoaded) ID() ns.VarInt                { return C2SPlayerLoadedID }
+func (p *C2SPlayerLoaded) ID() ns.VarInt                { return ns.VarInt(packets_data.C2SPlayerLoadedID) }
 func (p *C2SPlayerLoaded) State() jp.State              { return jp.StatePlay }
 func (p *C2SPlayerLoaded) Bound() jp.Bound              { return jp.C2S }
 func (p *C2SPlayerLoaded) Read(*ns.PacketBuffer) error  { return nil }
@@ -1541,7 +1497,7 @@ type C2SPongPlay struct {
 	Id ns.Int32
 }
 
-func (p *C2SPongPlay) ID() ns.VarInt   { return C2SPongPlayID }
+func (p *C2SPongPlay) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SPongPlayID) }
 func (p *C2SPongPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SPongPlay) Bound() jp.Bound { return jp.C2S }
 
@@ -1564,7 +1520,9 @@ type C2SRecipeBookChangeSettings struct {
 	FilterActive ns.Boolean
 }
 
-func (p *C2SRecipeBookChangeSettings) ID() ns.VarInt   { return C2SRecipeBookChangeSettingsID }
+func (p *C2SRecipeBookChangeSettings) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SRecipeBookChangeSettingsID)
+}
 func (p *C2SRecipeBookChangeSettings) State() jp.State { return jp.StatePlay }
 func (p *C2SRecipeBookChangeSettings) Bound() jp.Bound { return jp.C2S }
 
@@ -1597,7 +1555,9 @@ type C2SRecipeBookSeenRecipe struct {
 	RecipeId ns.VarInt
 }
 
-func (p *C2SRecipeBookSeenRecipe) ID() ns.VarInt   { return C2SRecipeBookSeenRecipeID }
+func (p *C2SRecipeBookSeenRecipe) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SRecipeBookSeenRecipeID)
+}
 func (p *C2SRecipeBookSeenRecipe) State() jp.State { return jp.StatePlay }
 func (p *C2SRecipeBookSeenRecipe) Bound() jp.Bound { return jp.C2S }
 
@@ -1618,7 +1578,7 @@ type C2SRenameItem struct {
 	ItemName ns.String
 }
 
-func (p *C2SRenameItem) ID() ns.VarInt   { return C2SRenameItemID }
+func (p *C2SRenameItem) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SRenameItemID) }
 func (p *C2SRenameItem) State() jp.State { return jp.StatePlay }
 func (p *C2SRenameItem) Bound() jp.Bound { return jp.C2S }
 
@@ -1640,7 +1600,7 @@ type C2SResourcePackPlay struct {
 	Result ns.VarInt
 }
 
-func (p *C2SResourcePackPlay) ID() ns.VarInt   { return C2SResourcePackPlayID }
+func (p *C2SResourcePackPlay) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SResourcePackPlayID) }
 func (p *C2SResourcePackPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SResourcePackPlay) Bound() jp.Bound { return jp.C2S }
 
@@ -1668,7 +1628,7 @@ type C2SSeenAdvancements struct {
 	TabId  ns.Identifier // only present if Action is 0
 }
 
-func (p *C2SSeenAdvancements) ID() ns.VarInt   { return C2SSeenAdvancementsID }
+func (p *C2SSeenAdvancements) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SSeenAdvancementsID) }
 func (p *C2SSeenAdvancements) State() jp.State { return jp.StatePlay }
 func (p *C2SSeenAdvancements) Bound() jp.Bound { return jp.C2S }
 
@@ -1700,7 +1660,7 @@ type C2SSelectTrade struct {
 	SelectedSlot ns.VarInt
 }
 
-func (p *C2SSelectTrade) ID() ns.VarInt   { return C2SSelectTradeID }
+func (p *C2SSelectTrade) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SSelectTradeID) }
 func (p *C2SSelectTrade) State() jp.State { return jp.StatePlay }
 func (p *C2SSelectTrade) Bound() jp.Bound { return jp.C2S }
 
@@ -1722,7 +1682,7 @@ type C2SSetBeacon struct {
 	SecondaryEffect ns.PrefixedOptional[ns.VarInt]
 }
 
-func (p *C2SSetBeacon) ID() ns.VarInt   { return C2SSetBeaconID }
+func (p *C2SSetBeacon) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SSetBeaconID) }
 func (p *C2SSetBeacon) State() jp.State { return jp.StatePlay }
 func (p *C2SSetBeacon) Bound() jp.Bound { return jp.C2S }
 
@@ -1755,7 +1715,7 @@ type C2SSetCarriedItem struct {
 	Slot ns.Int16
 }
 
-func (p *C2SSetCarriedItem) ID() ns.VarInt   { return C2SSetCarriedItemID }
+func (p *C2SSetCarriedItem) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SSetCarriedItemID) }
 func (p *C2SSetCarriedItem) State() jp.State { return jp.StatePlay }
 func (p *C2SSetCarriedItem) Bound() jp.Bound { return jp.C2S }
 
@@ -1779,7 +1739,7 @@ type C2SSetCommandBlock struct {
 	Flags    ns.Int8
 }
 
-func (p *C2SSetCommandBlock) ID() ns.VarInt   { return C2SSetCommandBlockID }
+func (p *C2SSetCommandBlock) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SSetCommandBlockID) }
 func (p *C2SSetCommandBlock) State() jp.State { return jp.StatePlay }
 func (p *C2SSetCommandBlock) Bound() jp.Bound { return jp.C2S }
 
@@ -1820,7 +1780,9 @@ type C2SSetCommandMinecart struct {
 	TrackOutput ns.Boolean
 }
 
-func (p *C2SSetCommandMinecart) ID() ns.VarInt   { return C2SSetCommandMinecartID }
+func (p *C2SSetCommandMinecart) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SSetCommandMinecartID)
+}
 func (p *C2SSetCommandMinecart) State() jp.State { return jp.StatePlay }
 func (p *C2SSetCommandMinecart) Bound() jp.Bound { return jp.C2S }
 
@@ -1854,7 +1816,9 @@ type C2SSetCreativeModeSlot struct {
 	ClickedItem ns.Slot
 }
 
-func (p *C2SSetCreativeModeSlot) ID() ns.VarInt   { return C2SSetCreativeModeSlotID }
+func (p *C2SSetCreativeModeSlot) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SSetCreativeModeSlotID)
+}
 func (p *C2SSetCreativeModeSlot) State() jp.State { return jp.StatePlay }
 func (p *C2SSetCreativeModeSlot) Bound() jp.Bound { return jp.C2S }
 
@@ -1888,7 +1852,7 @@ type C2SSetJigsawBlock struct {
 	PlacementPriority ns.VarInt
 }
 
-func (p *C2SSetJigsawBlock) ID() ns.VarInt   { return C2SSetJigsawBlockID }
+func (p *C2SSetJigsawBlock) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SSetJigsawBlockID) }
 func (p *C2SSetJigsawBlock) State() jp.State { return jp.StatePlay }
 func (p *C2SSetJigsawBlock) Bound() jp.Bound { return jp.C2S }
 
@@ -1966,7 +1930,7 @@ type C2SSetStructureBlock struct {
 	Flags     ns.Int8
 }
 
-func (p *C2SSetStructureBlock) ID() ns.VarInt   { return C2SSetStructureBlockID }
+func (p *C2SSetStructureBlock) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SSetStructureBlockID) }
 func (p *C2SSetStructureBlock) State() jp.State { return jp.StatePlay }
 func (p *C2SSetStructureBlock) Bound() jp.Bound { return jp.C2S }
 
@@ -2079,7 +2043,7 @@ type C2SSetTestBlock struct {
 	Message  ns.String
 }
 
-func (p *C2SSetTestBlock) ID() ns.VarInt   { return C2SSetTestBlockID }
+func (p *C2SSetTestBlock) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SSetTestBlockID) }
 func (p *C2SSetTestBlock) State() jp.State { return jp.StatePlay }
 func (p *C2SSetTestBlock) Bound() jp.Bound { return jp.C2S }
 
@@ -2117,7 +2081,7 @@ type C2SSignUpdate struct {
 	Line4       ns.String
 }
 
-func (p *C2SSignUpdate) ID() ns.VarInt   { return C2SSignUpdateID }
+func (p *C2SSignUpdate) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SSignUpdateID) }
 func (p *C2SSignUpdate) State() jp.State { return jp.StatePlay }
 func (p *C2SSignUpdate) Bound() jp.Bound { return jp.C2S }
 
@@ -2168,7 +2132,7 @@ type C2SSwing struct {
 	Hand ns.VarInt
 }
 
-func (p *C2SSwing) ID() ns.VarInt   { return C2SSwingID }
+func (p *C2SSwing) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SSwingID) }
 func (p *C2SSwing) State() jp.State { return jp.StatePlay }
 func (p *C2SSwing) Bound() jp.Bound { return jp.C2S }
 
@@ -2189,7 +2153,7 @@ type C2STeleportToEntity struct {
 	TargetPlayer ns.UUID
 }
 
-func (p *C2STeleportToEntity) ID() ns.VarInt   { return C2STeleportToEntityID }
+func (p *C2STeleportToEntity) ID() ns.VarInt   { return ns.VarInt(packets_data.C2STeleportToEntityID) }
 func (p *C2STeleportToEntity) State() jp.State { return jp.StatePlay }
 func (p *C2STeleportToEntity) Bound() jp.Bound { return jp.C2S }
 
@@ -2219,7 +2183,9 @@ type C2STestInstanceBlockAction struct {
 	ErrorMessage   ns.PrefixedOptional[ns.TextComponent]
 }
 
-func (p *C2STestInstanceBlockAction) ID() ns.VarInt   { return C2STestInstanceBlockActionID }
+func (p *C2STestInstanceBlockAction) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2STestInstanceBlockActionID)
+}
 func (p *C2STestInstanceBlockAction) State() jp.State { return jp.StatePlay }
 func (p *C2STestInstanceBlockAction) Bound() jp.Bound { return jp.C2S }
 
@@ -2309,7 +2275,7 @@ type C2SUseItemOn struct {
 	Sequence        ns.VarInt
 }
 
-func (p *C2SUseItemOn) ID() ns.VarInt   { return C2SUseItemOnID }
+func (p *C2SUseItemOn) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SUseItemOnID) }
 func (p *C2SUseItemOn) State() jp.State { return jp.StatePlay }
 func (p *C2SUseItemOn) Bound() jp.Bound { return jp.C2S }
 
@@ -2381,7 +2347,7 @@ type C2SUseItem struct {
 	Pitch    ns.Float32
 }
 
-func (p *C2SUseItem) ID() ns.VarInt   { return C2SUseItemID }
+func (p *C2SUseItem) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SUseItemID) }
 func (p *C2SUseItem) State() jp.State { return jp.StatePlay }
 func (p *C2SUseItem) Bound() jp.Bound { return jp.C2S }
 
@@ -2421,7 +2387,9 @@ type C2SCustomClickActionPlay struct {
 	Payload nbt.Tag
 }
 
-func (p *C2SCustomClickActionPlay) ID() ns.VarInt   { return C2SCustomClickActionPlayID }
+func (p *C2SCustomClickActionPlay) ID() ns.VarInt {
+	return ns.VarInt(packets_data.C2SCustomClickActionPlayID)
+}
 func (p *C2SCustomClickActionPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SCustomClickActionPlay) Bound() jp.Bound { return jp.C2S }
 

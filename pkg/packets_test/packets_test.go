@@ -23,69 +23,6 @@ type PacketFixture struct {
 	RawData   string `json:"raw_data"`  // hex encoded
 }
 
-// packetFactory creates a new packet instance by state, direction, and ID
-type packetFactory func() jp.Packet
-
-// registries map state+direction+id to packet factories
-var packetRegistries = map[string]map[int]packetFactory{
-	"handshake_c2s": {
-		int(packets.C2SIntentionID): func() jp.Packet { return &packets.C2SIntention{} },
-	},
-	"status_c2s": {
-		int(packets.C2SStatusRequestID):     func() jp.Packet { return &packets.C2SStatusRequest{} },
-		int(packets.C2SPingRequestStatusID): func() jp.Packet { return &packets.C2SPingRequestStatus{} },
-	},
-	"status_s2c": {
-		int(packets.S2CStatusResponseID):     func() jp.Packet { return &packets.S2CStatusResponse{} },
-		int(packets.S2CPongResponseStatusID): func() jp.Packet { return &packets.S2CPongResponseStatus{} },
-	},
-	"login_c2s": {
-		int(packets.C2SHelloID):               func() jp.Packet { return &packets.C2SHello{} },
-		int(packets.C2SKeyID):                 func() jp.Packet { return &packets.C2SKey{} },
-		int(packets.C2SCustomQueryAnswerID):   func() jp.Packet { return &packets.C2SCustomQueryAnswer{} },
-		int(packets.C2SLoginAcknowledgedID):   func() jp.Packet { return &packets.C2SLoginAcknowledged{} },
-		int(packets.C2SCookieResponseLoginID): func() jp.Packet { return &packets.C2SCookieResponseLogin{} },
-	},
-	"login_s2c": {
-		int(packets.S2CLoginDisconnectLoginID): func() jp.Packet { return &packets.S2CLoginDisconnectLogin{} },
-		int(packets.S2CHelloID):                func() jp.Packet { return &packets.S2CHello{} },
-		int(packets.S2CLoginFinishedID):        func() jp.Packet { return &packets.S2CLoginFinished{} },
-		int(packets.S2CLoginCompressionID):     func() jp.Packet { return &packets.S2CLoginCompression{} },
-		int(packets.S2CCustomQueryID):          func() jp.Packet { return &packets.S2CCustomQuery{} },
-		int(packets.S2CCookieRequestLoginID):   func() jp.Packet { return &packets.S2CCookieRequestLogin{} },
-	},
-	"configuration_c2s": {
-		int(packets.C2SClientInformationConfigurationID): func() jp.Packet { return &packets.C2SClientInformationConfiguration{} },
-		int(packets.C2SCookieResponseConfigurationID):    func() jp.Packet { return &packets.C2SCookieResponseConfiguration{} },
-		int(packets.C2SCustomPayloadConfigurationID):     func() jp.Packet { return &packets.C2SCustomPayloadConfiguration{} },
-		int(packets.C2SFinishConfigurationID):            func() jp.Packet { return &packets.C2SFinishConfiguration{} },
-		int(packets.C2SKeepAliveConfigurationID):         func() jp.Packet { return &packets.C2SKeepAliveConfiguration{} },
-		int(packets.C2SPongConfigurationID):              func() jp.Packet { return &packets.C2SPongConfiguration{} },
-		int(packets.C2SResourcePackConfigurationID):      func() jp.Packet { return &packets.C2SResourcePackConfiguration{} },
-		int(packets.C2SSelectKnownPacksID):               func() jp.Packet { return &packets.C2SSelectKnownPacks{} },
-	},
-	"configuration_s2c": {
-		int(packets.S2CCookieRequestConfigurationID):       func() jp.Packet { return &packets.S2CCookieRequestConfiguration{} },
-		int(packets.S2CCustomPayloadConfigurationID):       func() jp.Packet { return &packets.S2CCustomPayloadConfiguration{} },
-		int(packets.S2CDisconnectConfigurationID):          func() jp.Packet { return &packets.S2CDisconnectConfiguration{} },
-		int(packets.S2CFinishConfigurationID):              func() jp.Packet { return &packets.S2CFinishConfiguration{} },
-		int(packets.S2CKeepAliveConfigurationID):           func() jp.Packet { return &packets.S2CKeepAliveConfiguration{} },
-		int(packets.S2CPingConfigurationID):                func() jp.Packet { return &packets.S2CPingConfiguration{} },
-		int(packets.S2CResetChatID):                        func() jp.Packet { return &packets.S2CResetChat{} },
-		int(packets.S2CResourcePackPopConfigurationID):     func() jp.Packet { return &packets.S2CResourcePackPopConfiguration{} },
-		int(packets.S2CResourcePackPushConfigurationID):    func() jp.Packet { return &packets.S2CResourcePackPushConfiguration{} },
-		int(packets.S2CStoreCookieConfigurationID):         func() jp.Packet { return &packets.S2CStoreCookieConfiguration{} },
-		int(packets.S2CTransferConfigurationID):            func() jp.Packet { return &packets.S2CTransferConfiguration{} },
-		int(packets.S2CUpdateEnabledFeaturesID):            func() jp.Packet { return &packets.S2CUpdateEnabledFeatures{} },
-		int(packets.S2CUpdateTagsConfigurationID):          func() jp.Packet { return &packets.S2CUpdateTagsConfiguration{} },
-		int(packets.S2CSelectKnownPacksID):                 func() jp.Packet { return &packets.S2CSelectKnownPacks{} },
-		int(packets.S2CCustomReportDetailsConfigurationID): func() jp.Packet { return &packets.S2CCustomReportDetailsConfiguration{} },
-		int(packets.S2CServerLinksConfigurationID):         func() jp.Packet { return &packets.S2CServerLinksConfiguration{} },
-		int(packets.S2CClearDialogConfigurationID):         func() jp.Packet { return &packets.S2CClearDialogConfiguration{} },
-		int(packets.S2CCodeOfConductID):                    func() jp.Packet { return &packets.S2CCodeOfConduct{} },
-	},
-}
-
 func parsePacketID(s string) (int, error) {
 	s = strings.TrimSpace(s)
 	if strings.HasPrefix(s, "0x") || strings.HasPrefix(s, "0X") {
@@ -166,7 +103,7 @@ func TestPacketsFromCapture(t *testing.T) {
 				}
 
 				registryKey := f.State + "_" + f.Direction
-				registry, ok := packetRegistries[registryKey]
+				registry, ok := packets.PacketRegistries[registryKey]
 				if !ok {
 					t.Logf("fixture %d: unknown state/direction %s, skipping", i, registryKey)
 					continue

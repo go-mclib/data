@@ -1,13 +1,9 @@
 package packets
 
 import (
+	packets_data "github.com/go-mclib/data/pkg/data/packets"
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
-)
-
-const (
-	C2SStatusRequestID ns.VarInt = iota
-	C2SPingRequestStatusID
 )
 
 // C2SStatusRequest represents "Status Request".
@@ -18,7 +14,7 @@ const (
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Status_Request
 type C2SStatusRequest struct{}
 
-func (p *C2SStatusRequest) ID() ns.VarInt                { return C2SStatusRequestID }
+func (p *C2SStatusRequest) ID() ns.VarInt                { return ns.VarInt(packets_data.C2SStatusRequestID) }
 func (p *C2SStatusRequest) State() jp.State              { return jp.StateStatus }
 func (p *C2SStatusRequest) Bound() jp.Bound              { return jp.C2S }
 func (p *C2SStatusRequest) Read(*ns.PacketBuffer) error  { return nil }
@@ -32,7 +28,7 @@ type C2SPingRequestStatus struct {
 	Timestamp ns.Int64
 }
 
-func (p *C2SPingRequestStatus) ID() ns.VarInt   { return C2SPingRequestStatusID }
+func (p *C2SPingRequestStatus) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SPingRequestStatusID) }
 func (p *C2SPingRequestStatus) State() jp.State { return jp.StateStatus }
 func (p *C2SPingRequestStatus) Bound() jp.Bound { return jp.C2S }
 
