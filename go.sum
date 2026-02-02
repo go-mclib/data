@@ -1,2 +1,4 @@
 github.com/go-mclib/protocol v0.0.0-20260131202152-ceaeb62760d5 h1:90rIfnTEyjj8b03ZTaDahtKLI9F5iEYblTp/VL1b1Ow=
 github.com/go-mclib/protocol v0.0.0-20260131202152-ceaeb62760d5/go.mod h1:aVfH1TFVFv7ksiVmFKyWctJTws2MvXjnAJprdx9/5gw=
+github.com/go-mclib/protocol v0.0.0-20260202100318-1dd245017c13 h1:7eqhrmx2b9o4F4yBQLxchp8aLO6d2l33XSRxzA/LeI0=
+github.com/go-mclib/protocol v0.0.0-20260202100318-1dd245017c13/go.mod h1:aVfH1TFVFv7ksiVmFKyWctJTws2MvXjnAJprdx9/5gw=

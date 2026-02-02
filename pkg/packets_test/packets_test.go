@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/go-mclib/data/packets"
+	"github.com/go-mclib/data/pkg/packets"
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
