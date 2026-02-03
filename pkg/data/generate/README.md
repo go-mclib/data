@@ -18,6 +18,12 @@ Then, you can generate the Go bindings: `go generate ./...` (in the root path of
 
 ## Files
 
+From server reports (`vanilla_server_reports/`):
+
 - `blocks.json`: Each block and state enumerations mapped to their protocol ID. Used in unit tests to verify that the protocol ID of block states can be correctly calculated;
 - `items.json`: Each item in the game and its components;
 - `registries.json`: All registries in the base game and their protocol IDs;
+
+From decompiled assets (`decompiled/`):
+
+- `en_us.json`: English translations for all translation keys (items, blocks, UI, etc.);

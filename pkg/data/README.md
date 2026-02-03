@@ -1,6 +1,6 @@
 # Minecraft Data Packages
 
-Go bindings for Minecraft protocol data including registries, blocks, block states, items, and item components.
+Go bindings for Minecraft protocol data including registries, blocks, block states, items, item components, and translations.
 
 ## Packages
 
@@ -117,6 +117,21 @@ items.ComponentDamage         // 3
 items.ComponentFood           // 23
 items.ComponentEnchantments   // 13
 items.MaxComponentID          // 103
+```
+
+### `lang`
+
+Contains English translations for Minecraft translation keys.
+
+```go
+import "github.com/go-mclib/data/pkg/data/lang"
+
+// translate a key to English
+text := lang.Translate("item.minecraft.iron_sword")  // "Iron Sword"
+text := lang.Translate("block.minecraft.stone")      // "Stone"
+
+// returns empty string if key not found
+text := lang.Translate("invalid.key")  // ""
 ```
 
 ## Code Generation

@@ -1,0 +1,9 @@
+{
+  "java.project.sourcePaths": [],
+  "java.import.exclusions": [
+    "**/decompiled/**"
+  ],
+  "java.project.referencedLibraries": [],
+  "java.autobuild.enabled": false,
+  "java.configuration.checkProjectSettingsExclusions": false
+}
