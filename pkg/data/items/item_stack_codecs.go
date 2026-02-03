@@ -10,6 +10,7 @@ package items
 
 import (
 	"fmt"
+	"slices"
 
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/go-mclib/protocol/nbt"
@@ -1149,6 +1150,47 @@ func decodeAttributeModifier(buf *ns.PacketBuffer) (AttributeModifier, error) {
 	}
 
 	return mod, nil
+}
+
+// encodeItemName writes an ItemNameComponent as NBT text component.
+func encodeItemName(w *ns.PacketBuffer, name *ItemNameComponent) error {
+	writer := nbt.NewWriterTo(w.Writer())
+	var tag nbt.Tag
+	if name.Translate != "" {
+		tag = nbt.Compound{"translate": nbt.String(name.Translate)}
+	} else {
+		tag = nbt.String(name.Text)
+	}
+	return writer.WriteTag(tag, "", true) // network format
+}
+
+// encodeAttributeModifier writes an attribute modifier entry.
+func encodeAttributeModifier(w *ns.PacketBuffer, mod AttributeModifier) error {
+	// attribute type (registry ID)
+	attrID := registries.Attribute.Get(mod.Type)
+	if attrID < 0 {
+		return fmt.Errorf("unknown attribute type: %s", mod.Type)
+	}
+	w.WriteVarInt(ns.VarInt(attrID))
+
+	// modifier ID (Identifier string)
+	w.WriteString(ns.String(mod.ID))
+
+	// amount (Double)
+	w.WriteFloat64(ns.Float64(mod.Amount))
+
+	// operation (VarInt)
+	operations := map[string]int32{"add_value": 0, "add_multiplied_base": 1, "add_multiplied_total": 2}
+	w.WriteVarInt(ns.VarInt(operations[mod.Operation]))
+
+	// slot (VarInt - equipment slot group)
+	slots := map[string]int32{"any": 0, "hand": 1, "mainhand": 2, "offhand": 3, "armor": 4, "feet": 5, "legs": 6, "chest": 7, "head": 8, "body": 9}
+	w.WriteVarInt(ns.VarInt(slots[mod.Slot]))
+
+	// display type (VarInt) - 0=DEFAULT, 1:WHEN_NOT_DEFAULT, 2=OVERRIDE
+	w.WriteVarInt(0)
+
+	return nil
 }
 
 func copySlot(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -2385,6 +2427,41 @@ func componentDiffers(c *Components, defaults *Components, id int32) (bool, bool
 			return *c.Fireworks != *defaults.Fireworks, true
 		}
 		return false, false
+	case ComponentUnbreakable:
+		return c.Unbreakable != defaults.Unbreakable, c.Unbreakable
+	case ComponentCustomName:
+		cHas := c.CustomName != nil
+		dHas := defaults.CustomName != nil
+		if cHas != dHas {
+			return true, cHas
+		}
+		if cHas && dHas {
+			return *c.CustomName != *defaults.CustomName, true
+		}
+		return false, false
+	case ComponentTooltipDisplay:
+		cHas := c.TooltipDisplay != nil
+		dHas := defaults.TooltipDisplay != nil
+		if cHas != dHas {
+			return true, cHas
+		}
+		if cHas && dHas {
+			if c.TooltipDisplay.HideTooltip != defaults.TooltipDisplay.HideTooltip {
+				return true, true
+			}
+			return !slices.Equal(c.TooltipDisplay.HiddenComponents, defaults.TooltipDisplay.HiddenComponents), true
+		}
+		return false, false
+	case ComponentAttributeModifiers:
+		cHas := len(c.AttributeModifiers) > 0
+		dHas := len(defaults.AttributeModifiers) > 0
+		if cHas != dHas {
+			return true, cHas
+		}
+		if cHas && dHas {
+			return !slices.Equal(c.AttributeModifiers, defaults.AttributeModifiers), true
+		}
+		return false, false
 	default:
 		// for complex components we don't track differences yet
 		return false, false
@@ -2458,6 +2535,29 @@ func encodeComponent(c *Components, id int32) ([]byte, error) {
 		if c.Fireworks != nil {
 			w.WriteVarInt(ns.VarInt(c.Fireworks.FlightDuration))
 			w.WriteVarInt(0) // no explosions
+		}
+	case ComponentUnbreakable:
+		// empty marker - no data
+	case ComponentCustomName:
+		if c.CustomName != nil {
+			if err := encodeItemName(w, c.CustomName); err != nil {
+				return nil, err
+			}
+		}
+	case ComponentTooltipDisplay:
+		if c.TooltipDisplay != nil {
+			w.WriteBool(ns.Boolean(c.TooltipDisplay.HideTooltip))
+			w.WriteVarInt(ns.VarInt(len(c.TooltipDisplay.HiddenComponents)))
+			for _, compID := range c.TooltipDisplay.HiddenComponents {
+				w.WriteVarInt(ns.VarInt(compID))
+			}
+		}
+	case ComponentAttributeModifiers:
+		w.WriteVarInt(ns.VarInt(len(c.AttributeModifiers)))
+		for _, mod := range c.AttributeModifiers {
+			if err := encodeAttributeModifier(w, mod); err != nil {
+				return nil, err
+			}
 		}
 	default:
 		return nil, fmt.Errorf("cannot encode component %d", id)

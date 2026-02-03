@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/hex"
 	"encoding/json"
 	"flag"
@@ -25,7 +26,7 @@ type CapturedPacket struct {
 	Direction string `json:"direction"` // "c2s" or "s2c"
 	State     string `json:"state"`
 	PacketID  string `json:"packet_id"` // hex format "0x00"
-	RawData   string `json:"raw_data"`  // hex encoded
+	WireData  string `json:"wire_data"` // hex encoded full wire format (with length, compression, id)
 }
 
 // PacketFilter controls which packets are captured
@@ -60,12 +61,19 @@ func NewPacketCapture(outputDir string, filter *PacketFilter) *PacketCapture {
 	}
 }
 
-func (pc *PacketCapture) Add(pkt CapturedPacket, state string, packetID int) {
+func (pc *PacketCapture) Add(pkt CapturedPacket, state string, packetID int, wire *jp.WirePacket, compressionThreshold int) {
 	if !pc.filter.Match(state, packetID) {
 		return
 	}
 	pc.mu.Lock()
 	defer pc.mu.Unlock()
+
+	// encode wire format to buffer
+	buf := bytes.NewBuffer(nil)
+	if err := wire.WriteTo(buf, compressionThreshold); err == nil {
+		pkt.WireData = hex.EncodeToString(buf.Bytes())
+	}
+
 	pc.packets = append(pc.packets, pkt)
 }
 
@@ -210,8 +218,7 @@ func (s *ProxySession) forward(src, dst *jp.Conn, direction string) {
 			Direction: direction,
 			State:     stateToString(state),
 			PacketID:  fmt.Sprintf("0x%02X", packetID),
-			RawData:   hex.EncodeToString(wire.Data),
-		}, stateToString(state), packetID)
+		}, stateToString(state), packetID, wire, compression)
 
 		// handle state transitions based on packet type
 		s.handleStateTransition(wire, direction)

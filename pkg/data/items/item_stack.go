@@ -67,7 +67,16 @@ func FromSlot(slot ns.Slot) (*ItemStack, error) {
 
 // ToSlot converts the ItemStack back to a raw net_structures.Slot.
 // Only components that differ from the item's defaults are encoded.
+// Components are written in ascending ID order.
 func (s *ItemStack) ToSlot() (ns.Slot, error) {
+	return s.ToSlotOrdered(nil)
+}
+
+// ToSlotOrdered converts the ItemStack to a Slot with components in the specified order.
+// If order is nil, components are written in ascending ID order.
+// The order slice should contain component IDs in the desired output order.
+// Components not in the order slice are appended in ascending ID order.
+func (s *ItemStack) ToSlotOrdered(order []int32) (ns.Slot, error) {
 	if s.IsEmpty() {
 		return ns.EmptySlot(), nil
 	}
@@ -75,20 +84,46 @@ func (s *ItemStack) ToSlot() (ns.Slot, error) {
 	slot := ns.NewSlot(ns.VarInt(s.ID), ns.VarInt(s.Count))
 	defaults := DefaultComponents(s.ID)
 
-	// encode components that differ from defaults
+	// collect which components differ
+	differing := make(map[int32]bool)
+	hasValue := make(map[int32]bool)
 	for id := int32(0); id <= MaxComponentID; id++ {
-		differs, hasValue := componentDiffers(s.Components, defaults, id)
+		differs, hv := componentDiffers(s.Components, defaults, id)
 		if differs {
-			if hasValue {
-				data, err := encodeComponent(s.Components, id)
-				if err != nil {
-					return ns.Slot{}, fmt.Errorf("encode component %d: %w", id, err)
-				}
-				slot.AddComponent(ns.VarInt(id), data)
-			} else {
-				// component was removed (default has it, we don't)
-				slot.RemoveComponent(ns.VarInt(id))
+			differing[id] = true
+			hasValue[id] = hv
+		}
+	}
+
+	// helper to add a component
+	addComponent := func(id int32) error {
+		if !differing[id] {
+			return nil
+		}
+		delete(differing, id) // mark as processed
+		if hasValue[id] {
+			data, err := encodeComponent(s.Components, id)
+			if err != nil {
+				return fmt.Errorf("encode component %d: %w", id, err)
 			}
+			slot.AddComponent(ns.VarInt(id), data)
+		} else {
+			slot.RemoveComponent(ns.VarInt(id))
+		}
+		return nil
+	}
+
+	// add components in specified order first
+	for _, id := range order {
+		if err := addComponent(id); err != nil {
+			return ns.Slot{}, err
+		}
+	}
+
+	// add remaining components in ID order
+	for id := int32(0); id <= MaxComponentID; id++ {
+		if err := addComponent(id); err != nil {
+			return ns.Slot{}, err
 		}
 	}
 

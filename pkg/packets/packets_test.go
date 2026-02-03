@@ -1,0 +1,71 @@
+package packets_test
+
+import (
+	"bytes"
+	"encoding/hex"
+	"reflect"
+	"testing"
+
+	jp "github.com/go-mclib/protocol/java_protocol"
+	"github.com/stretchr/testify/assert"
+)
+
+type packetsToBytes map[jp.Packet][]byte
+
+var capturedPackets packetsToBytes = make(packetsToBytes)
+
+func validatePackets(t *testing.T, packets packetsToBytes) {
+	for packet, capture := range packets {
+		validatePacket(t, packet, capture)
+	}
+}
+
+func validatePacket(t *testing.T, packet jp.Packet, capture []byte) {
+	const compressionThreshold = 256 // default vanilla threshold
+
+	// encode
+	wirePacket, err := jp.ToWire(packet)
+	if err != nil {
+		t.Fatalf("failed to convert packet %T to wire: %v", packet, err)
+	}
+	buf := bytes.NewBuffer(nil)
+	wirePacket.WriteTo(buf, compressionThreshold)
+	if !assert.Equal(t, capture, buf.Bytes()) {
+		t.Fatalf("packet `%T` does not match captured bytes", packet)
+	}
+
+	// decode: read captured bytes back into a new packet instance
+	wire, err := jp.ReadWirePacketFrom(bytes.NewReader(capture), compressionThreshold)
+	if err != nil {
+		t.Fatalf("failed to read wire packet from captured bytes: %v", err)
+	}
+
+	// create new instance of same type and decode into it
+	decoded := reflect.New(reflect.TypeOf(packet).Elem()).Interface().(jp.Packet)
+	if err := wire.ReadInto(decoded); err != nil {
+		t.Fatalf("failed to decode packet %T: %v", packet, err)
+	}
+
+	// compare by re-encoding decoded packet (avoids nil vs empty slice differences)
+	reEncoded, err := jp.ToWire(decoded)
+	if err != nil {
+		t.Fatalf("failed to re-encode decoded packet %T: %v", decoded, err)
+	}
+	reBuf := bytes.NewBuffer(nil)
+	reEncoded.WriteTo(reBuf, compressionThreshold)
+	if !assert.Equal(t, capture, reBuf.Bytes()) {
+		t.Fatalf("re-encoded packet `%T` does not match original bytes", decoded)
+	}
+}
+
+func hexToBytesMust(hexData string) []byte {
+	bytes, err := hex.DecodeString(hexData)
+	if err != nil {
+		panic(err)
+	}
+	return bytes
+}
+
+func TestPackets(t *testing.T) {
+	validatePackets(t, capturedPackets)
+}
