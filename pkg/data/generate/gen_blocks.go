@@ -1,5 +1,3 @@
-//go:build ignore
-
 package main
 
 import (
@@ -8,7 +6,7 @@ import (
 	"strings"
 )
 
-func generateBlocks(blocks map[string]BlockJSON, registries map[string]RegistryJSON, outPath string) {
+func generateBlocks(registries map[string]RegistryJSON, outPath string) {
 	blockRegistry := registries["minecraft:block"]
 
 	var sb strings.Builder

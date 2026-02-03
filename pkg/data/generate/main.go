@@ -1,5 +1,3 @@
-//go:build ignore
-
 package main
 
 import (
@@ -26,7 +24,7 @@ func main() {
 
 	// generate packages
 	generateRegistries(registries, filepath.Join(outDir, "registries", "registries_gen.go"))
-	generateBlocks(blocks, registries, filepath.Join(outDir, "blocks", "blocks_gen.go"))
+	generateBlocks(registries, filepath.Join(outDir, "blocks", "blocks_gen.go"))
 	generateBlockStates(blocks, registries, filepath.Join(outDir, "blocks", "block_states_gen.go"))
 	generateItems(items, registries, filepath.Join(outDir, "items", "items_gen.go"))
 	generateComponentTypes(registries, filepath.Join(outDir, "items", "item_components_gen.go"))
