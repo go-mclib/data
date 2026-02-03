@@ -97,101 +97,38 @@ func init() {
 	RegisterCodec(ComponentFireworks, &fireworksCodec{})
 	RegisterCodec(ComponentRarity, &rarityCodec{})
 
-	// passthrough codecs for components we don't fully decode yet
-	// these just copy the wire format bytes without interpreting them
+	// complex passthrough codecs - these have custom decoders
+	// simple passthroughs (varint, bool, string, empty, int32, nbt, holderSet, slot, slotList)
+	// are registered in item_components_codec_gen.go
 
-	// varInt passthrough
-	registerVarIntPassthrough(ComponentMapId)
-
-	// bool passthrough
-	registerBoolPassthrough(ComponentEnchantmentGlintOverride)
-
-	// string/identifier passthrough
-	registerStringPassthrough(ComponentTooltipStyle)
-	registerStringPassthrough(ComponentNoteBlockSound)
-
-	// empty marker passthrough
-	registerEmptyPassthrough(ComponentCreativeSlotLock)
-	registerEmptyPassthrough(ComponentIntangibleProjectile)
-
-	// lore (varInt count + NBT[])
 	RegisterCodec(ComponentLore, &passthroughCodec{decode: decodeLoreWire})
-
-	// enchantments (varInt count + entries + bool)
 	RegisterCodec(ComponentEnchantments, &passthroughCodec{decode: decodeEnchantmentsWire})
 	RegisterCodec(ComponentStoredEnchantments, &passthroughCodec{decode: decodeEnchantmentsWire})
-
-	// complex components - passthrough for now
-	RegisterCodec(ComponentCustomData, &passthroughCodec{decode: decodeNBTWire})
 	RegisterCodec(ComponentCanBreak, &passthroughCodec{decode: decodeBlockPredicatesWire})
 	RegisterCodec(ComponentCanPlaceOn, &passthroughCodec{decode: decodeBlockPredicatesWire})
 	RegisterCodec(ComponentCustomModelData, &passthroughCodec{decode: decodeCustomModelDataWire})
 	RegisterCodec(ComponentConsumable, &passthroughCodec{decode: decodeConsumableWire})
-	RegisterCodec(ComponentUseRemainder, &passthroughCodec{decode: decodeSlotWire})
 	RegisterCodec(ComponentUseEffects, &passthroughCodec{decode: decodeUseEffectsWire})
-	RegisterCodec(ComponentDamageResistant, &passthroughCodec{decode: decodeHolderSetWire})
 	RegisterCodec(ComponentTool, &passthroughCodec{decode: decodeToolWire})
 	RegisterCodec(ComponentAttackRange, &passthroughCodec{decode: decodeAttackRangeWire})
 	RegisterCodec(ComponentEquippable, &passthroughCodec{decode: decodeEquippableWire})
-	RegisterCodec(ComponentRepairable, &passthroughCodec{decode: decodeHolderSetWire})
 	RegisterCodec(ComponentDeathProtection, &passthroughCodec{decode: decodeDeathProtectionWire})
 	RegisterCodec(ComponentBlocksAttacks, &passthroughCodec{decode: decodeBlocksAttacksWire})
 	RegisterCodec(ComponentKineticWeapon, &passthroughCodec{decode: decodeKineticWeaponWire})
 	RegisterCodec(ComponentPiercingWeapon, &passthroughCodec{decode: decodePiercingWeaponWire})
-	RegisterCodec(ComponentSwingAnimation, &passthroughCodec{decode: decodeVarIntWire})
-	RegisterCodec(ComponentDyedColor, &passthroughCodec{decode: decodeInt32Wire})
-	RegisterCodec(ComponentMapDecorations, &passthroughCodec{decode: decodeNBTWire})
-	RegisterCodec(ComponentMapPostProcessing, &passthroughCodec{decode: decodeVarIntWire})
-	RegisterCodec(ComponentChargedProjectiles, &passthroughCodec{decode: decodeSlotListWire})
-	RegisterCodec(ComponentBundleContents, &passthroughCodec{decode: decodeSlotListWire})
 	RegisterCodec(ComponentPotionContents, &passthroughCodec{decode: decodePotionContentsWire})
 	RegisterCodec(ComponentSuspiciousStewEffects, &passthroughCodec{decode: decodeSuspiciousStewWire})
 	RegisterCodec(ComponentWritableBookContent, &passthroughCodec{decode: decodeWritableBookWire})
 	RegisterCodec(ComponentWrittenBookContent, &passthroughCodec{decode: decodeWrittenBookWire})
 	RegisterCodec(ComponentTrim, &passthroughCodec{decode: decodeTrimWire})
-	RegisterCodec(ComponentDebugStickState, &passthroughCodec{decode: decodeNBTWire})
-	RegisterCodec(ComponentEntityData, &passthroughCodec{decode: decodeNBTWire})
-	RegisterCodec(ComponentBucketEntityData, &passthroughCodec{decode: decodeNBTWire})
-	RegisterCodec(ComponentBlockEntityData, &passthroughCodec{decode: decodeNBTWire})
 	RegisterCodec(ComponentRecipes, &passthroughCodec{decode: decodeRecipesWire})
 	RegisterCodec(ComponentLodestoneTracker, &passthroughCodec{decode: decodeLodestoneWire})
 	RegisterCodec(ComponentFireworkExplosion, &passthroughCodec{decode: decodeFireworkExplosionWire})
 	RegisterCodec(ComponentProfile, &passthroughCodec{decode: decodeProfileWire})
 	RegisterCodec(ComponentBannerPatterns, &passthroughCodec{decode: decodeBannerPatternsWire})
-	RegisterCodec(ComponentBaseColor, &passthroughCodec{decode: decodeVarIntWire})
 	RegisterCodec(ComponentPotDecorations, &passthroughCodec{decode: decodePotDecorationsWire})
-	RegisterCodec(ComponentContainer, &passthroughCodec{decode: decodeSlotListWire})
 	RegisterCodec(ComponentBlockState, &passthroughCodec{decode: decodeBlockStateWire})
 	RegisterCodec(ComponentBees, &passthroughCodec{decode: decodeBeesWire})
-	RegisterCodec(ComponentLock, &passthroughCodec{decode: decodeNBTWire})
-	RegisterCodec(ComponentContainerLoot, &passthroughCodec{decode: decodeNBTWire})
-
-	// entity variant components (varInt)
-	registerVarIntPassthrough(ComponentVillagerVariant)
-	registerVarIntPassthrough(ComponentWolfVariant)
-	registerVarIntPassthrough(ComponentWolfSoundVariant)
-	registerVarIntPassthrough(ComponentWolfCollar)
-	registerVarIntPassthrough(ComponentFoxVariant)
-	registerVarIntPassthrough(ComponentSalmonSize)
-	registerVarIntPassthrough(ComponentParrotVariant)
-	registerVarIntPassthrough(ComponentTropicalFishPattern)
-	registerVarIntPassthrough(ComponentTropicalFishBaseColor)
-	registerVarIntPassthrough(ComponentTropicalFishPatternColor)
-	registerVarIntPassthrough(ComponentMooshroomVariant)
-	registerVarIntPassthrough(ComponentRabbitVariant)
-	registerVarIntPassthrough(ComponentPigVariant)
-	registerVarIntPassthrough(ComponentCowVariant)
-	registerVarIntPassthrough(ComponentChickenVariant)
-	registerVarIntPassthrough(ComponentZombieNautilusVariant)
-	registerVarIntPassthrough(ComponentFrogVariant)
-	registerVarIntPassthrough(ComponentHorseVariant)
-	registerVarIntPassthrough(ComponentPaintingVariant)
-	registerVarIntPassthrough(ComponentLlamaVariant)
-	registerVarIntPassthrough(ComponentAxolotlVariant)
-	registerVarIntPassthrough(ComponentCatVariant)
-	registerVarIntPassthrough(ComponentCatCollar)
-	registerVarIntPassthrough(ComponentSheepColor)
-	registerVarIntPassthrough(ComponentShulkerColor)
 }
 
 // Helper functions for registering simple passthrough codecs
@@ -210,6 +147,26 @@ func registerStringPassthrough(id int32) {
 
 func registerEmptyPassthrough(id int32) {
 	RegisterCodec(id, &passthroughCodec{decode: decodeEmptyWire})
+}
+
+func registerInt32Passthrough(id int32) {
+	RegisterCodec(id, &passthroughCodec{decode: decodeInt32Wire})
+}
+
+func registerNBTPassthrough(id int32) {
+	RegisterCodec(id, &passthroughCodec{decode: decodeNBTWire})
+}
+
+func registerHolderSetPassthrough(id int32) {
+	RegisterCodec(id, &passthroughCodec{decode: decodeHolderSetWire})
+}
+
+func registerSlotListPassthrough(id int32) {
+	RegisterCodec(id, &passthroughCodec{decode: decodeSlotListWire})
+}
+
+func registerSlotPassthrough(id int32) {
+	RegisterCodec(id, &passthroughCodec{decode: decodeSlotWire})
 }
 
 // Wire format decode functions for passthrough codecs

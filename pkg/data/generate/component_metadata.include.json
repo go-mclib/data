@@ -1,0 +1,213 @@
+{
+  "_comment": "see ./main.go:generateComponentCodecs()",
+  "components": {
+    "minecraft:max_stack_size": {
+      "goField": "MaxStackSize",
+      "goType": "int32",
+      "wireType": "varint"
+    },
+    "minecraft:max_damage": {
+      "goField": "MaxDamage",
+      "goType": "int32",
+      "wireType": "varint"
+    },
+    "minecraft:damage": {
+      "goField": "Damage",
+      "goType": "int32",
+      "wireType": "varint"
+    },
+    "minecraft:repair_cost": {
+      "goField": "RepairCost",
+      "goType": "int32",
+      "wireType": "varint"
+    },
+    "minecraft:map_color": {
+      "goField": "MapColor",
+      "goType": "int32",
+      "wireType": "varint"
+    },
+    "minecraft:ominous_bottle_amplifier": {
+      "goField": "OminousBottleAmplifier",
+      "goType": "int32",
+      "wireType": "varint"
+    },
+    "minecraft:minimum_attack_charge": {
+      "goField": "MinimumAttackCharge",
+      "goType": "float64",
+      "wireType": "float32"
+    },
+    "minecraft:potion_duration_scale": {
+      "goField": "PotionDurationScale",
+      "goType": "float64",
+      "wireType": "float32"
+    },
+    "minecraft:damage_type": {
+      "goField": "DamageType",
+      "goType": "string",
+      "wireType": "identifier"
+    },
+    "minecraft:item_model": {
+      "goField": "ItemModel",
+      "goType": "string",
+      "wireType": "identifier"
+    },
+    "minecraft:instrument": {
+      "goField": "Instrument",
+      "goType": "string",
+      "wireType": "identifier"
+    },
+    "minecraft:provides_trim_material": {
+      "goField": "ProvidesTrimMaterial",
+      "goType": "string",
+      "wireType": "identifier"
+    },
+    "minecraft:jukebox_playable": {
+      "goField": "JukeboxPlayable",
+      "goType": "string",
+      "wireType": "identifier"
+    },
+    "minecraft:provides_banner_patterns": {
+      "goField": "ProvidesBannerPatterns",
+      "goType": "string",
+      "wireType": "identifier"
+    },
+    "minecraft:break_sound": {
+      "goField": "BreakSound",
+      "goType": "string",
+      "wireType": "identifier"
+    },
+    "minecraft:unbreakable": {
+      "goField": "Unbreakable",
+      "goType": "bool",
+      "wireType": "empty"
+    },
+    "minecraft:glider": {
+      "goField": "Glider",
+      "goType": "bool",
+      "wireType": "empty"
+    },
+    "minecraft:map_id": {
+      "wireType": "varint",
+      "passthrough": true
+    },
+    "minecraft:enchantment_glint_override": {
+      "wireType": "bool",
+      "passthrough": true
+    },
+    "minecraft:tooltip_style": {
+      "wireType": "identifier",
+      "passthrough": true
+    },
+    "minecraft:note_block_sound": {
+      "wireType": "identifier",
+      "passthrough": true
+    },
+    "minecraft:creative_slot_lock": {
+      "wireType": "empty",
+      "passthrough": true
+    },
+    "minecraft:intangible_projectile": {
+      "wireType": "empty",
+      "passthrough": true
+    },
+    "minecraft:dyed_color": {
+      "wireType": "int32",
+      "passthrough": true
+    },
+    "minecraft:base_color": {
+      "wireType": "varint",
+      "passthrough": true
+    },
+    "minecraft:swing_animation": {
+      "wireType": "varint",
+      "passthrough": true
+    },
+    "minecraft:map_post_processing": {
+      "wireType": "varint",
+      "passthrough": true
+    },
+    "minecraft:custom_data": {
+      "wireType": "nbt",
+      "passthrough": true
+    },
+    "minecraft:debug_stick_state": {
+      "wireType": "nbt",
+      "passthrough": true
+    },
+    "minecraft:entity_data": {
+      "wireType": "nbt",
+      "passthrough": true
+    },
+    "minecraft:bucket_entity_data": {
+      "wireType": "nbt",
+      "passthrough": true
+    },
+    "minecraft:block_entity_data": {
+      "wireType": "nbt",
+      "passthrough": true
+    },
+    "minecraft:map_decorations": {
+      "wireType": "nbt",
+      "passthrough": true
+    },
+    "minecraft:lock": {
+      "wireType": "nbt",
+      "passthrough": true
+    },
+    "minecraft:container_loot": {
+      "wireType": "nbt",
+      "passthrough": true
+    },
+    "minecraft:damage_resistant": {
+      "wireType": "holderSet",
+      "passthrough": true
+    },
+    "minecraft:repairable": {
+      "wireType": "holderSet",
+      "passthrough": true
+    },
+    "minecraft:charged_projectiles": {
+      "wireType": "slotList",
+      "passthrough": true
+    },
+    "minecraft:bundle_contents": {
+      "wireType": "slotList",
+      "passthrough": true
+    },
+    "minecraft:container": {
+      "wireType": "slotList",
+      "passthrough": true
+    },
+    "minecraft:use_remainder": {
+      "wireType": "slot",
+      "passthrough": true
+    }
+  },
+  "entityVariants": [
+    "minecraft:villager/variant",
+    "minecraft:wolf/variant",
+    "minecraft:wolf/sound_variant",
+    "minecraft:wolf/collar",
+    "minecraft:fox/variant",
+    "minecraft:salmon/size",
+    "minecraft:parrot/variant",
+    "minecraft:tropical_fish/pattern",
+    "minecraft:tropical_fish/base_color",
+    "minecraft:tropical_fish/pattern_color",
+    "minecraft:mooshroom/variant",
+    "minecraft:rabbit/variant",
+    "minecraft:pig/variant",
+    "minecraft:cow/variant",
+    "minecraft:chicken/variant",
+    "minecraft:zombie_nautilus/variant",
+    "minecraft:frog/variant",
+    "minecraft:horse/variant",
+    "minecraft:painting/variant",
+    "minecraft:llama/variant",
+    "minecraft:axolotl/variant",
+    "minecraft:cat/variant",
+    "minecraft:cat/collar",
+    "minecraft:sheep/color",
+    "minecraft:shulker/color"
+  ]
+}
