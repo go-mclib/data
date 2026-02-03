@@ -1,6 +1,6 @@
 # Minecraft Data Packages
 
-Go bindings for Minecraft protocol data including registries, blocks, block states, items, item components, and translations.
+Go bindings for Minecraft protocol data including registries, blocks, block states, items, item components, entities, and translations.
 
 ## Packages
 
@@ -117,6 +117,78 @@ items.ComponentDamage         // 3
 items.ComponentFood           // 23
 items.ComponentEnchantments   // 13
 items.MaxComponentID          // 103
+```
+
+### `entities`
+
+Contains entity type protocol IDs, lookups, and entity metadata parsing.
+
+```go
+import "github.com/go-mclib/data/pkg/data/entities"
+
+// entity type ID constants
+entities.Player       // 128
+entities.Zombie       // 156
+entities.Creeper      // 32
+
+// string to ID
+id := entities.EntityTypeID("minecraft:zombie")  // 156
+
+// ID to string
+name := entities.EntityTypeName(156)  // "minecraft:zombie"
+```
+
+#### Entity Metadata
+
+Entity metadata is read/written using the wire format: `[Index(UByte)][Type(VarInt)][Value]...[0xFF terminator]`
+
+```go
+// read metadata from packet buffer
+metadata, err := entities.ReadMetadata(buf)
+
+// access raw data by index
+if data := metadata.Get(entities.EntityIndexFlags); data != nil {
+    flags := data[0]
+    isOnFire := flags&0x01 != 0
+    isSneaking := flags&0x02 != 0
+}
+
+// set/update metadata
+metadata.Set(entities.EntityIndexPose, entities.SerializerPOSE, poseData)
+
+// write metadata back to packet buffer
+err := entities.WriteMetadata(buf, metadata)
+```
+
+Serializer types (39 types) define how values are encoded on the wire:
+
+```go
+entities.SerializerBYTE      // 0 - single byte
+entities.SerializerINT       // 1 - VarInt
+entities.SerializerFLOAT     // 3 - float32
+entities.SerializerSTRING    // 4 - length-prefixed string
+entities.SerializerBOOLEAN   // 8 - single byte bool
+entities.SerializerROTATIONS // 9 - 3x float32 (x,y,z)
+entities.SerializerBLOCK_POS // 10 - packed position
+```
+
+Per-entity metadata structs and field indices are generated:
+
+```go
+// Entity base class (all entities inherit these)
+entities.EntityIndexFlags         // 0 - on_fire|sneaking|sprinting|swimming|invisible|glowing|fall_flying
+entities.EntityIndexAirSupply     // 1 - air ticks remaining
+entities.EntityIndexCustomName    // 2 - optional name component
+entities.EntityIndexPose          // 6 - standing/sneaking/sleeping/etc.
+
+// Creeper-specific (inherits from Mob)
+entities.CreeperIndexSwellDir     // 16 - fuse state (-1=idle, 1=fuse)
+entities.CreeperIndexIsPowered    // 17 - charged creeper
+entities.CreeperIndexIsIgnited    // 18 - ignited
+
+// Player-specific (inherits from LivingEntity)
+entities.PlayerIndexAdditionalHearts // 15 - absorption hearts
+entities.PlayerIndexSkinParts        // 17 - visible skin parts flags
 ```
 
 ### `lang`

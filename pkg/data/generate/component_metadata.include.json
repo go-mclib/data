@@ -183,6 +183,7 @@
       "passthrough": true
     }
   },
+  "# TODO": "entity variants are in JSON data, fetch from there?",
   "entityVariants": [
     "minecraft:villager/variant",
     "minecraft:wolf/variant",
