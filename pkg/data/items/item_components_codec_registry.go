@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	// Simple VarInt components
+	// simple VarInt components
 	RegisterCodec(ComponentMaxStackSize, &varIntCodec{
 		get: func(c *Components) int32 { return c.MaxStackSize },
 		set: func(c *Components, v int32) { c.MaxStackSize = v },
@@ -35,7 +35,7 @@ func init() {
 		set: func(c *Components, v int32) { c.OminousBottleAmplifier = v },
 	})
 
-	// Simple Float32 components
+	// simple Float32 components
 	RegisterCodec(ComponentMinimumAttackCharge, &float32Codec{
 		get: func(c *Components) float64 { return c.MinimumAttackCharge },
 		set: func(c *Components, v float64) { c.MinimumAttackCharge = v },
@@ -45,7 +45,7 @@ func init() {
 		set: func(c *Components, v float64) { c.PotionDurationScale = v },
 	})
 
-	// Simple string/identifier components
+	// simple string/identifier components
 	RegisterCodec(ComponentDamageType, &stringCodec{
 		get: func(c *Components) string { return c.DamageType },
 		set: func(c *Components, v string) { c.DamageType = v },
@@ -75,7 +75,7 @@ func init() {
 		set: func(c *Components, v string) { c.BreakSound = v },
 	})
 
-	// Empty marker components (bool flags)
+	// empty marker components (bool flags)
 	RegisterCodec(ComponentUnbreakable, &emptyMarkerCodec{
 		get: func(c *Components) bool { return c.Unbreakable },
 		set: func(c *Components, v bool) { c.Unbreakable = v },
@@ -85,7 +85,7 @@ func init() {
 		set: func(c *Components, v bool) { c.Glider = v },
 	})
 
-	// Struct components with dedicated codecs
+	// struct components with dedicated codecs
 	RegisterCodec(ComponentCustomName, &customNameCodec{})
 	RegisterCodec(ComponentItemName, &itemNameCodec{})
 	RegisterCodec(ComponentTooltipDisplay, &tooltipDisplayCodec{})
@@ -97,31 +97,31 @@ func init() {
 	RegisterCodec(ComponentFireworks, &fireworksCodec{})
 	RegisterCodec(ComponentRarity, &rarityCodec{})
 
-	// Passthrough codecs for components we don't fully decode yet
-	// These just copy the wire format bytes without interpreting them
+	// passthrough codecs for components we don't fully decode yet
+	// these just copy the wire format bytes without interpreting them
 
-	// VarInt passthrough
+	// varInt passthrough
 	registerVarIntPassthrough(ComponentMapId)
 
-	// Bool passthrough
+	// bool passthrough
 	registerBoolPassthrough(ComponentEnchantmentGlintOverride)
 
-	// String/identifier passthrough
+	// string/identifier passthrough
 	registerStringPassthrough(ComponentTooltipStyle)
 	registerStringPassthrough(ComponentNoteBlockSound)
 
-	// Empty marker passthrough
+	// empty marker passthrough
 	registerEmptyPassthrough(ComponentCreativeSlotLock)
 	registerEmptyPassthrough(ComponentIntangibleProjectile)
 
-	// Lore (VarInt count + NBT[])
+	// lore (varInt count + NBT[])
 	RegisterCodec(ComponentLore, &passthroughCodec{decode: decodeLoreWire})
 
-	// Enchantments (VarInt count + entries + bool)
+	// enchantments (varInt count + entries + bool)
 	RegisterCodec(ComponentEnchantments, &passthroughCodec{decode: decodeEnchantmentsWire})
 	RegisterCodec(ComponentStoredEnchantments, &passthroughCodec{decode: decodeEnchantmentsWire})
 
-	// Complex components - passthrough for now
+	// complex components - passthrough for now
 	RegisterCodec(ComponentCustomData, &passthroughCodec{decode: decodeNBTWire})
 	RegisterCodec(ComponentCanBreak, &passthroughCodec{decode: decodeBlockPredicatesWire})
 	RegisterCodec(ComponentCanPlaceOn, &passthroughCodec{decode: decodeBlockPredicatesWire})
@@ -166,7 +166,7 @@ func init() {
 	RegisterCodec(ComponentLock, &passthroughCodec{decode: decodeNBTWire})
 	RegisterCodec(ComponentContainerLoot, &passthroughCodec{decode: decodeNBTWire})
 
-	// Entity variant components (VarInt)
+	// entity variant components (varInt)
 	registerVarIntPassthrough(ComponentVillagerVariant)
 	registerVarIntPassthrough(ComponentWolfVariant)
 	registerVarIntPassthrough(ComponentWolfSoundVariant)
@@ -215,39 +215,19 @@ func registerEmptyPassthrough(id int32) {
 // Wire format decode functions for passthrough codecs
 
 func decodeVarIntWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	v, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(v)
-	return nil
+	return w.CopyVarInt(buf)
 }
 
 func decodeInt32Wire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	v, err := buf.ReadInt32()
-	if err != nil {
-		return err
-	}
-	w.WriteInt32(v)
-	return nil
+	return w.CopyInt32(buf)
 }
 
 func decodeBoolWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	v, err := buf.ReadBool()
-	if err != nil {
-		return err
-	}
-	w.WriteBool(v)
-	return nil
+	return w.CopyBool(buf)
 }
 
 func decodeStringWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	v, err := buf.ReadString(maxStringLen)
-	if err != nil {
-		return err
-	}
-	w.WriteString(v)
-	return nil
+	return w.CopyString(buf, maxStringLen)
 }
 
 func decodeEmptyWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -259,155 +239,60 @@ func decodeNBTWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func decodeLoreWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(count)
-	for range int(count) {
-		if err := copyNBT(buf, w); err != nil {
-			return err
-		}
-	}
-	return nil
+	return copyVarIntPrefixedList(buf, w, copyNBT)
 }
 
 func decodeEnchantmentsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(count)
-	for range int(count) {
-		id, err := buf.ReadVarInt()
-		if err != nil {
+	if err := copyVarIntPrefixedList(buf, w, func(buf, w *ns.PacketBuffer) error {
+		if err := w.CopyVarInt(buf); err != nil {
 			return err
 		}
-		level, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(id)
-		w.WriteVarInt(level)
-	}
-	show, err := buf.ReadBool()
-	if err != nil {
+		return w.CopyVarInt(buf)
+	}); err != nil {
 		return err
 	}
-	w.WriteBool(show)
-	return nil
+	return w.CopyBool(buf)
 }
 
 func decodeBlockPredicatesWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
-	if err != nil {
+	if err := copyVarIntPrefixedList(buf, w, copyBlockPredicate); err != nil {
 		return err
 	}
-	w.WriteVarInt(count)
-	for range int(count) {
-		if err := copyBlockPredicate(buf, w); err != nil {
-			return err
-		}
-	}
-	show, err := buf.ReadBool()
-	if err != nil {
-		return err
-	}
-	w.WriteBool(show)
-	return nil
+	return w.CopyBool(buf)
 }
 
 func decodeCustomModelDataWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// floats
-	floatCount, err := buf.ReadVarInt()
-	if err != nil {
+	copyFloat32Fn := func(buf, w *ns.PacketBuffer) error { return w.CopyFloat32(buf) }
+	copyBoolFn := func(buf, w *ns.PacketBuffer) error { return w.CopyBool(buf) }
+	copyStringFn := func(buf, w *ns.PacketBuffer) error { return w.CopyString(buf, maxStringLen) }
+	copyInt32Fn := func(buf, w *ns.PacketBuffer) error { return w.CopyInt32(buf) }
+
+	if err := copyVarIntPrefixedList(buf, w, copyFloat32Fn); err != nil {
 		return err
 	}
-	w.WriteVarInt(floatCount)
-	for range int(floatCount) {
-		v, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(v)
-	}
-	// flags
-	flagCount, err := buf.ReadVarInt()
-	if err != nil {
+	if err := copyVarIntPrefixedList(buf, w, copyBoolFn); err != nil {
 		return err
 	}
-	w.WriteVarInt(flagCount)
-	for range int(flagCount) {
-		v, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(v)
-	}
-	// strings
-	stringCount, err := buf.ReadVarInt()
-	if err != nil {
+	if err := copyVarIntPrefixedList(buf, w, copyStringFn); err != nil {
 		return err
 	}
-	w.WriteVarInt(stringCount)
-	for range int(stringCount) {
-		v, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return err
-		}
-		w.WriteString(v)
-	}
-	// colors
-	colorCount, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(colorCount)
-	for range int(colorCount) {
-		v, err := buf.ReadInt32()
-		if err != nil {
-			return err
-		}
-		w.WriteInt32(v)
-	}
-	return nil
+	return copyVarIntPrefixedList(buf, w, copyInt32Fn)
 }
 
 func decodeConsumableWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// consume seconds
-	seconds, err := buf.ReadFloat32()
-	if err != nil {
+	if err := w.CopyFloat32(buf); err != nil { // consume seconds
 		return err
 	}
-	w.WriteFloat32(seconds)
-	// animation
-	animation, err := buf.ReadVarInt()
-	if err != nil {
+	if err := w.CopyVarInt(buf); err != nil { // animation
 		return err
 	}
-	w.WriteVarInt(animation)
-	// sound
 	if err := copySoundEvent(buf, w); err != nil {
 		return err
 	}
-	// has particles
-	hasParticles, err := buf.ReadBool()
-	if err != nil {
+	if err := w.CopyBool(buf); err != nil { // has particles
 		return err
 	}
-	w.WriteBool(hasParticles)
-	// on consume effects
-	effectCount, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(effectCount)
-	for range int(effectCount) {
-		if err := copyConsumeEffect(buf, w); err != nil {
-			return err
-		}
-	}
-	return nil
+	return copyVarIntPrefixedList(buf, w, copyConsumeEffect)
 }
 
 func decodeSlotWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -415,39 +300,17 @@ func decodeSlotWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func decodeSlotListWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(count)
-	for range int(count) {
-		if err := copySlot(buf, w); err != nil {
-			return err
-		}
-	}
-	return nil
+	return copyVarIntPrefixedList(buf, w, copySlot)
 }
 
 func decodeUseEffectsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// can sprint
-	canSprint, err := buf.ReadBool()
-	if err != nil {
+	if err := w.CopyBool(buf); err != nil { // can sprint
 		return err
 	}
-	w.WriteBool(canSprint)
-	// interact vibrations
-	interact, err := buf.ReadBool()
-	if err != nil {
+	if err := w.CopyBool(buf); err != nil { // interact vibrations
 		return err
 	}
-	w.WriteBool(interact)
-	// speed multiplier
-	speed, err := buf.ReadFloat32()
-	if err != nil {
-		return err
-	}
-	w.WriteFloat32(speed)
-	return nil
+	return w.CopyFloat32(buf) // speed multiplier
 }
 
 func decodeHolderSetWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -455,201 +318,107 @@ func decodeHolderSetWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func decodeToolWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// rules
-	ruleCount, err := buf.ReadVarInt()
-	if err != nil {
+	if err := copyVarIntPrefixedList(buf, w, copyToolRule); err != nil {
 		return err
 	}
-	w.WriteVarInt(ruleCount)
-	for range int(ruleCount) {
-		if err := copyToolRule(buf, w); err != nil {
-			return err
-		}
-	}
-	// default mining speed
-	speed, err := buf.ReadFloat32()
-	if err != nil {
+	if err := w.CopyFloat32(buf); err != nil { // default mining speed
 		return err
 	}
-	w.WriteFloat32(speed)
-	// damage per block
-	damage, err := buf.ReadVarInt()
-	if err != nil {
+	if err := w.CopyVarInt(buf); err != nil { // damage per block
 		return err
 	}
-	w.WriteVarInt(damage)
-	// can destroy blocks in creative
-	canDestroy, err := buf.ReadBool()
-	if err != nil {
-		return err
-	}
-	w.WriteBool(canDestroy)
-	return nil
+	return w.CopyBool(buf) // can destroy blocks in creative
 }
 
 func decodeAttackRangeWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	for range 6 {
-		v, err := buf.ReadFloat32()
-		if err != nil {
+		if err := w.CopyFloat32(buf); err != nil {
 			return err
 		}
-		w.WriteFloat32(v)
 	}
 	return nil
 }
 
 func decodeEquippableWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// slot
-	slot, err := buf.ReadVarInt()
-	if err != nil {
+	if err := w.CopyVarInt(buf); err != nil { // slot
 		return err
 	}
-	w.WriteVarInt(slot)
-	// equip sound
 	if err := copySoundEvent(buf, w); err != nil {
 		return err
 	}
-	// optional asset
-	if err := copyOptionalString(buf, w); err != nil {
+	if err := copyOptionalString(buf, w); err != nil { // optional asset
 		return err
 	}
-	// optional camera overlay
-	if err := copyOptionalIdentifier(buf, w); err != nil {
+	if err := copyOptionalIdentifier(buf, w); err != nil { // optional camera overlay
 		return err
 	}
-	// optional allowed entities
 	if err := copyOptionalHolderSet(buf, w); err != nil {
 		return err
 	}
-	// dispensable
-	dispensable, err := buf.ReadBool()
-	if err != nil {
-		return err
+	// dispensable, swappable, damages on hurt
+	for range 3 {
+		if err := w.CopyBool(buf); err != nil {
+			return err
+		}
 	}
-	w.WriteBool(dispensable)
-	// swappable
-	swappable, err := buf.ReadBool()
-	if err != nil {
-		return err
-	}
-	w.WriteBool(swappable)
-	// damages on hurt
-	damagesOnHurt, err := buf.ReadBool()
-	if err != nil {
-		return err
-	}
-	w.WriteBool(damagesOnHurt)
-	// can be sheared
+	// can be sheared (conditional)
 	canBeSheared, err := buf.ReadBool()
 	if err != nil {
 		return err
 	}
 	w.WriteBool(canBeSheared)
 	if canBeSheared {
-		if err := copySoundEvent(buf, w); err != nil {
-			return err
-		}
+		return copySoundEvent(buf, w)
 	}
 	return nil
 }
 
 func decodeDeathProtectionWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(count)
-	for range int(count) {
-		if err := copyConsumeEffect(buf, w); err != nil {
-			return err
-		}
-	}
-	return nil
+	return copyVarIntPrefixedList(buf, w, copyConsumeEffect)
 }
 
 func decodeBlocksAttacksWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// block delay seconds
-	delay, err := buf.ReadFloat32()
-	if err != nil {
+	if err := w.CopyFloat32(buf); err != nil { // block delay seconds
 		return err
 	}
-	w.WriteFloat32(delay)
-	// disable cooldown scale
-	cooldown, err := buf.ReadFloat32()
-	if err != nil {
+	if err := w.CopyFloat32(buf); err != nil { // disable cooldown scale
 		return err
 	}
-	w.WriteFloat32(cooldown)
-	// damage reductions
-	reductionCount, err := buf.ReadVarInt()
-	if err != nil {
+	if err := copyVarIntPrefixedList(buf, w, copyDamageReduction); err != nil {
 		return err
 	}
-	w.WriteVarInt(reductionCount)
-	for range int(reductionCount) {
-		if err := copyDamageReduction(buf, w); err != nil {
-			return err
-		}
-	}
-	// item damage
 	if err := copyItemDamageFunction(buf, w); err != nil {
 		return err
 	}
-	// optional bypassed by
-	if err := copyOptionalHolderSet(buf, w); err != nil {
+	if err := copyOptionalHolderSet(buf, w); err != nil { // bypassed by
 		return err
 	}
-	// optional block sound
-	if err := copyOptionalSoundEvent(buf, w); err != nil {
+	if err := copyOptionalSoundEvent(buf, w); err != nil { // block sound
 		return err
 	}
-	// optional disable sound
-	if err := copyOptionalSoundEvent(buf, w); err != nil {
-		return err
-	}
-	return nil
+	return copyOptionalSoundEvent(buf, w) // disable sound
 }
 
 func decodeKineticWeaponWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// damage multiplier
-	multiplier, err := buf.ReadFloat32()
-	if err != nil {
+	if err := w.CopyFloat32(buf); err != nil { // damage multiplier
 		return err
 	}
-	w.WriteFloat32(multiplier)
-	// optional damage conditions
-	if err := copyOptionalKineticConditions(buf, w); err != nil {
+	// damage, dismount, knockback conditions
+	for range 3 {
+		if err := copyOptionalKineticConditions(buf, w); err != nil {
+			return err
+		}
+	}
+	if err := w.CopyFloat32(buf); err != nil { // forward movement
 		return err
 	}
-	// optional dismount conditions
-	if err := copyOptionalKineticConditions(buf, w); err != nil {
+	if err := w.CopyVarInt(buf); err != nil { // delay ticks
 		return err
 	}
-	// optional knockback conditions
-	if err := copyOptionalKineticConditions(buf, w); err != nil {
+	if err := copyOptionalSoundEvent(buf, w); err != nil { // sound
 		return err
 	}
-	// forward movement
-	forward, err := buf.ReadFloat32()
-	if err != nil {
-		return err
-	}
-	w.WriteFloat32(forward)
-	// delay ticks
-	delay, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(delay)
-	// optional sound
-	if err := copyOptionalSoundEvent(buf, w); err != nil {
-		return err
-	}
-	// optional hit sound
-	if err := copyOptionalSoundEvent(buf, w); err != nil {
-		return err
-	}
-	return nil
+	return copyOptionalSoundEvent(buf, w) // hit sound
 }
 
 func decodePiercingWeaponWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -665,123 +434,58 @@ func decodePiercingWeaponWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func decodePotionContentsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// optional potion
-	if err := copyOptionalVarInt(buf, w); err != nil {
+	if err := copyOptionalVarInt(buf, w); err != nil { // potion
 		return err
 	}
-	// optional custom color
-	if err := copyOptionalInt(buf, w); err != nil {
+	if err := copyOptionalInt(buf, w); err != nil { // custom color
 		return err
 	}
-	// optional custom name
-	if err := copyOptionalString(buf, w); err != nil {
+	if err := copyOptionalString(buf, w); err != nil { // custom name
 		return err
 	}
-	// custom effects
-	effectCount, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(effectCount)
-	for range int(effectCount) {
-		if err := copyStatusEffect(buf, w); err != nil {
-			return err
-		}
-	}
-	return nil
+	return copyVarIntPrefixedList(buf, w, copyStatusEffect)
 }
 
 func decodeSuspiciousStewWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(count)
-	for range int(count) {
-		// effect ID
-		id, err := buf.ReadVarInt()
-		if err != nil {
+	return copyVarIntPrefixedList(buf, w, func(buf, w *ns.PacketBuffer) error {
+		if err := w.CopyVarInt(buf); err != nil { // effect ID
 			return err
 		}
-		w.WriteVarInt(id)
-		// duration
-		duration, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(duration)
-	}
-	return nil
+		return w.CopyVarInt(buf) // duration
+	})
 }
 
 func decodeWritableBookWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// pages
-	pageCount, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(pageCount)
-	for range int(pageCount) {
-		// raw content
-		content, err := buf.ReadString(maxStringLen)
-		if err != nil {
+	return copyVarIntPrefixedList(buf, w, func(buf, w *ns.PacketBuffer) error {
+		if err := w.CopyString(buf, maxStringLen); err != nil { // raw content
 			return err
 		}
-		w.WriteString(content)
-		// optional filtered content
-		if err := copyOptionalString(buf, w); err != nil {
-			return err
-		}
-	}
-	return nil
+		return copyOptionalString(buf, w) // optional filtered content
+	})
 }
 
 func decodeWrittenBookWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// raw title
-	title, err := buf.ReadString(maxStringLen)
-	if err != nil {
+	if err := w.CopyString(buf, maxStringLen); err != nil { // raw title
 		return err
 	}
-	w.WriteString(title)
-	// optional filtered title
-	if err := copyOptionalString(buf, w); err != nil {
+	if err := copyOptionalString(buf, w); err != nil { // filtered title
 		return err
 	}
-	// author
-	author, err := buf.ReadString(maxStringLen)
-	if err != nil {
+	if err := w.CopyString(buf, maxStringLen); err != nil { // author
 		return err
 	}
-	w.WriteString(author)
-	// generation
-	generation, err := buf.ReadVarInt()
-	if err != nil {
+	if err := w.CopyVarInt(buf); err != nil { // generation
 		return err
 	}
-	w.WriteVarInt(generation)
-	// pages
-	pageCount, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(pageCount)
-	for range int(pageCount) {
-		// raw (NBT text component)
-		if err := copyNBT(buf, w); err != nil {
+	if err := copyVarIntPrefixedList(buf, w, func(buf, w *ns.PacketBuffer) error {
+		if err := copyNBT(buf, w); err != nil { // raw NBT
 			return err
 		}
-		// optional filtered (NBT text component)
-		if err := copyOptionalNBT(buf, w); err != nil {
-			return err
-		}
-	}
-	// resolved
-	resolved, err := buf.ReadBool()
-	if err != nil {
+		return copyOptionalNBT(buf, w) // optional filtered NBT
+	}); err != nil {
 		return err
 	}
-	w.WriteBool(resolved)
-	return nil
+	return w.CopyBool(buf) // resolved
 }
 
 func decodeTrimWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -797,33 +501,16 @@ func decodeTrimWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func decodeRecipesWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(count)
-	for range int(count) {
-		recipe, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return err
-		}
-		w.WriteString(recipe)
-	}
-	return nil
+	return copyVarIntPrefixedList(buf, w, func(buf, w *ns.PacketBuffer) error {
+		return w.CopyString(buf, maxStringLen)
+	})
 }
 
 func decodeLodestoneWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// optional global pos
 	if err := copyOptionalGlobalPos(buf, w); err != nil {
 		return err
 	}
-	// tracked
-	tracked, err := buf.ReadBool()
-	if err != nil {
-		return err
-	}
-	w.WriteBool(tracked)
-	return nil
+	return w.CopyBool(buf) // tracked
 }
 
 func decodeFireworkExplosionWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -831,40 +518,17 @@ func decodeFireworkExplosionWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error
 }
 
 func decodeProfileWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// optional name
-	if err := copyOptionalString(buf, w); err != nil {
+	if err := copyOptionalString(buf, w); err != nil { // name
 		return err
 	}
-	// optional UUID
 	if err := copyOptionalUUID(buf, w); err != nil {
 		return err
 	}
-	// properties
-	propCount, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(propCount)
-	for range int(propCount) {
-		if err := copyGameProfileProperty(buf, w); err != nil {
-			return err
-		}
-	}
-	return nil
+	return copyVarIntPrefixedList(buf, w, copyGameProfileProperty)
 }
 
 func decodeBannerPatternsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(count)
-	for range int(count) {
-		if err := copyBannerPattern(buf, w); err != nil {
-			return err
-		}
-	}
-	return nil
+	return copyVarIntPrefixedList(buf, w, copyBannerPattern)
 }
 
 func decodePotDecorationsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -878,54 +542,42 @@ func decodePotDecorationsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func decodeBlockStateWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(count)
-	for range int(count) {
-		key, err := buf.ReadString(maxStringLen)
-		if err != nil {
+	return copyVarIntPrefixedList(buf, w, func(buf, w *ns.PacketBuffer) error {
+		if err := w.CopyString(buf, maxStringLen); err != nil { // key
 			return err
 		}
-		w.WriteString(key)
-		value, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return err
-		}
-		w.WriteString(value)
-	}
-	return nil
+		return w.CopyString(buf, maxStringLen) // value
+	})
 }
 
 func decodeBeesWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
+	return copyVarIntPrefixedList(buf, w, func(buf, w *ns.PacketBuffer) error {
+		if err := copyNBT(buf, w); err != nil { // entity data
+			return err
+		}
+		if err := w.CopyVarInt(buf); err != nil { // ticks in hive
+			return err
+		}
+		return w.CopyVarInt(buf) // min ticks in hive
+	})
+}
+
+// Copy helper functions
+
+// copyVarIntPrefixedList copies a VarInt count followed by that many elements using the provided copy function.
+func copyVarIntPrefixedList(buf *ns.PacketBuffer, w *ns.PacketBuffer, copyFn func(*ns.PacketBuffer, *ns.PacketBuffer) error) error {
 	count, err := buf.ReadVarInt()
 	if err != nil {
 		return err
 	}
 	w.WriteVarInt(count)
 	for range int(count) {
-		// entity data (NBT)
-		if err := copyNBT(buf, w); err != nil {
+		if err := copyFn(buf, w); err != nil {
 			return err
 		}
-		// ticks in hive
-		ticks, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(ticks)
-		// min ticks in hive
-		minTicks, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(minTicks)
 	}
 	return nil
 }
-
-// Copy helper functions
 
 func copySlot(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	count, err := buf.ReadVarInt()
@@ -994,11 +646,7 @@ func copyOptionalVarInt(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	}
 	w.WriteBool(present)
 	if present {
-		v, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(v)
+		return w.CopyVarInt(buf)
 	}
 	return nil
 }
@@ -1010,11 +658,7 @@ func copyOptionalInt(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	}
 	w.WriteBool(present)
 	if present {
-		v, err := buf.ReadInt32()
-		if err != nil {
-			return err
-		}
-		w.WriteInt32(v)
+		return w.CopyInt32(buf)
 	}
 	return nil
 }
@@ -1026,11 +670,7 @@ func copyOptionalString(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	}
 	w.WriteBool(present)
 	if present {
-		v, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return err
-		}
-		w.WriteString(v)
+		return w.CopyString(buf, maxStringLen)
 	}
 	return nil
 }
@@ -1046,9 +686,7 @@ func copyOptionalNBT(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	}
 	w.WriteBool(present)
 	if present {
-		if err := copyNBT(buf, w); err != nil {
-			return err
-		}
+		return copyNBT(buf, w)
 	}
 	return nil
 }
@@ -1060,11 +698,7 @@ func copyOptionalUUID(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	}
 	w.WriteBool(present)
 	if present {
-		uuid, err := buf.ReadUUID()
-		if err != nil {
-			return err
-		}
-		w.WriteUUID(uuid)
+		return w.CopyUUID(buf)
 	}
 	return nil
 }
@@ -1077,19 +711,11 @@ func copyHolderSet(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	w.WriteVarInt(typeID)
 
 	if typeID == 0 {
-		tag, err := buf.ReadString(maxStringLen)
-		if err != nil {
+		return w.CopyString(buf, maxStringLen)
+	}
+	for range int(typeID) - 1 {
+		if err := w.CopyVarInt(buf); err != nil {
 			return err
-		}
-		w.WriteString(tag)
-	} else {
-		count := int(typeID) - 1
-		for range count {
-			id, err := buf.ReadVarInt()
-			if err != nil {
-				return err
-			}
-			w.WriteVarInt(id)
 		}
 	}
 	return nil
@@ -1115,14 +741,10 @@ func copySoundEvent(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	w.WriteVarInt(typeID)
 
 	if typeID == 0 {
-		id, err := buf.ReadString(maxStringLen)
-		if err != nil {
+		if err := w.CopyString(buf, maxStringLen); err != nil {
 			return err
 		}
-		w.WriteString(id)
-		if err := copyOptionalVarInt(buf, w); err != nil {
-			return err
-		}
+		return copyOptionalVarInt(buf, w)
 	}
 	return nil
 }
@@ -1148,81 +770,43 @@ func copyConsumeEffect(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 
 	switch typeID {
 	case 0: // apply_effects
-		effectCount, err := buf.ReadVarInt()
-		if err != nil {
+		if err := copyVarIntPrefixedList(buf, w, copyStatusEffect); err != nil {
 			return err
 		}
-		w.WriteVarInt(effectCount)
-		for range int(effectCount) {
-			if err := copyStatusEffect(buf, w); err != nil {
-				return err
-			}
-		}
-		prob, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(prob)
+		return w.CopyFloat32(buf) // probability
 	case 1: // remove_effects
-		if err := copyHolderSet(buf, w); err != nil {
-			return err
-		}
+		return copyHolderSet(buf, w)
 	case 2: // clear_all_effects
-		// no data
+		return nil
 	case 3: // teleport_randomly
-		diameter, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(diameter)
+		return w.CopyFloat32(buf) // diameter
 	case 4: // play_sound
-		if err := copySoundEvent(buf, w); err != nil {
-			return err
-		}
+		return copySoundEvent(buf, w)
 	}
 	return nil
 }
 
 func copyStatusEffect(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	id, err := buf.ReadVarInt()
-	if err != nil {
+	if err := w.CopyVarInt(buf); err != nil {
 		return err
 	}
-	w.WriteVarInt(id)
 	return copyStatusEffectDetails(buf, w)
 }
 
 func copyStatusEffectDetails(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// amplifier
-	amplifier, err := buf.ReadVarInt()
-	if err != nil {
+	// amplifier, duration
+	if err := w.CopyVarInt(buf); err != nil {
 		return err
 	}
-	w.WriteVarInt(amplifier)
-	// duration
-	duration, err := buf.ReadVarInt()
-	if err != nil {
+	if err := w.CopyVarInt(buf); err != nil {
 		return err
 	}
-	w.WriteVarInt(duration)
-	// ambient
-	ambient, err := buf.ReadBool()
-	if err != nil {
-		return err
+	// ambient, show particles, show icon
+	for range 3 {
+		if err := w.CopyBool(buf); err != nil {
+			return err
+		}
 	}
-	w.WriteBool(ambient)
-	// show particles
-	showParticles, err := buf.ReadBool()
-	if err != nil {
-		return err
-	}
-	w.WriteBool(showParticles)
-	// show icon
-	showIcon, err := buf.ReadBool()
-	if err != nil {
-		return err
-	}
-	w.WriteBool(showIcon)
 	// hidden effect (recursive optional)
 	hasHidden, err := buf.ReadBool()
 	if err != nil {
@@ -1236,7 +820,6 @@ func copyStatusEffectDetails(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func copyToolRule(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// blocks
 	if err := copyHolderSet(buf, w); err != nil {
 		return err
 	}
@@ -1247,11 +830,9 @@ func copyToolRule(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	}
 	w.WriteBool(hasSpeed)
 	if hasSpeed {
-		speed, err := buf.ReadFloat32()
-		if err != nil {
+		if err := w.CopyFloat32(buf); err != nil {
 			return err
 		}
-		w.WriteFloat32(speed)
 	}
 	// optional correct for drops
 	hasCorrect, err := buf.ReadBool()
@@ -1260,11 +841,7 @@ func copyToolRule(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	}
 	w.WriteBool(hasCorrect)
 	if hasCorrect {
-		correct, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(correct)
+		return w.CopyBool(buf)
 	}
 	return nil
 }
@@ -1293,87 +870,47 @@ func copyBlockPredicate(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func copyPropertyMatcher(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// property name
-	name, err := buf.ReadString(maxStringLen)
-	if err != nil {
+	if err := w.CopyString(buf, maxStringLen); err != nil { // property name
 		return err
 	}
-	w.WriteString(name)
-	// is exact match
 	isExact, err := buf.ReadBool()
 	if err != nil {
 		return err
 	}
 	w.WriteBool(isExact)
 	if isExact {
-		value, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return err
-		}
-		w.WriteString(value)
-	} else {
-		// range
-		if err := copyOptionalString(buf, w); err != nil {
-			return err
-		}
-		if err := copyOptionalString(buf, w); err != nil {
-			return err
-		}
+		return w.CopyString(buf, maxStringLen) // value
 	}
-	return nil
+	// range: min, max
+	if err := copyOptionalString(buf, w); err != nil {
+		return err
+	}
+	return copyOptionalString(buf, w)
 }
 
 func copyDamageReduction(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// horizontal angle
-	angle, err := buf.ReadFloat32()
-	if err != nil {
+	if err := w.CopyFloat32(buf); err != nil { // horizontal angle
 		return err
 	}
-	w.WriteFloat32(angle)
-	// type
 	if err := copyHolderSet(buf, w); err != nil {
 		return err
 	}
-	// base
-	base, err := buf.ReadFloat32()
-	if err != nil {
-		return err
+	// base, factor, horizontal limit
+	for range 3 {
+		if err := w.CopyFloat32(buf); err != nil {
+			return err
+		}
 	}
-	w.WriteFloat32(base)
-	// factor
-	factor, err := buf.ReadFloat32()
-	if err != nil {
-		return err
-	}
-	w.WriteFloat32(factor)
-	// horizontal limit
-	limit, err := buf.ReadFloat32()
-	if err != nil {
-		return err
-	}
-	w.WriteFloat32(limit)
 	return nil
 }
 
 func copyItemDamageFunction(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// threshold
-	threshold, err := buf.ReadFloat32()
-	if err != nil {
-		return err
+	// threshold, base, factor
+	for range 3 {
+		if err := w.CopyFloat32(buf); err != nil {
+			return err
+		}
 	}
-	w.WriteFloat32(threshold)
-	// base
-	base, err := buf.ReadFloat32()
-	if err != nil {
-		return err
-	}
-	w.WriteFloat32(base)
-	// factor
-	factor, err := buf.ReadFloat32()
-	if err != nil {
-		return err
-	}
-	w.WriteFloat32(factor)
 	return nil
 }
 
@@ -1384,24 +921,13 @@ func copyOptionalKineticConditions(buf *ns.PacketBuffer, w *ns.PacketBuffer) err
 	}
 	w.WriteBool(present)
 	if present {
-		// max duration ticks
-		maxDuration, err := buf.ReadVarInt()
-		if err != nil {
+		if err := w.CopyVarInt(buf); err != nil { // max duration ticks
 			return err
 		}
-		w.WriteVarInt(maxDuration)
-		// min speed
-		minSpeed, err := buf.ReadFloat32()
-		if err != nil {
+		if err := w.CopyFloat32(buf); err != nil { // min speed
 			return err
 		}
-		w.WriteFloat32(minSpeed)
-		// min relative speed
-		minRelative, err := buf.ReadFloat32()
-		if err != nil {
-			return err
-		}
-		w.WriteFloat32(minRelative)
+		return w.CopyFloat32(buf) // min relative speed
 	}
 	return nil
 }
@@ -1414,42 +940,24 @@ func copyTrimMaterial(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	w.WriteVarInt(typeID)
 
 	if typeID == 0 {
-		// inline
-		assetName, err := buf.ReadString(maxStringLen)
-		if err != nil {
+		if err := w.CopyString(buf, maxStringLen); err != nil { // asset name
 			return err
 		}
-		w.WriteString(assetName)
-		ingredient, err := buf.ReadVarInt()
-		if err != nil {
+		if err := w.CopyVarInt(buf); err != nil { // ingredient
 			return err
 		}
-		w.WriteVarInt(ingredient)
-		itemModelIndex, err := buf.ReadFloat32()
-		if err != nil {
+		if err := w.CopyFloat32(buf); err != nil { // item model index
 			return err
 		}
-		w.WriteFloat32(itemModelIndex)
-		overrideCount, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		w.WriteVarInt(overrideCount)
-		for range int(overrideCount) {
-			armorType, err := buf.ReadVarInt()
-			if err != nil {
+		if err := copyVarIntPrefixedList(buf, w, func(buf, w *ns.PacketBuffer) error {
+			if err := w.CopyVarInt(buf); err != nil { // armor type
 				return err
 			}
-			w.WriteVarInt(armorType)
-			assetName, err := buf.ReadString(maxStringLen)
-			if err != nil {
-				return err
-			}
-			w.WriteString(assetName)
-		}
-		if err := copyNBT(buf, w); err != nil {
+			return w.CopyString(buf, maxStringLen) // asset name
+		}); err != nil {
 			return err
 		}
+		return copyNBT(buf, w)
 	}
 	return nil
 }
@@ -1462,25 +970,16 @@ func copyTrimPattern(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	w.WriteVarInt(typeID)
 
 	if typeID == 0 {
-		// inline
-		assetID, err := buf.ReadString(maxStringLen)
-		if err != nil {
+		if err := w.CopyString(buf, maxStringLen); err != nil { // asset ID
 			return err
 		}
-		w.WriteString(assetID)
-		templateItem, err := buf.ReadVarInt()
-		if err != nil {
+		if err := w.CopyVarInt(buf); err != nil { // template item
 			return err
 		}
-		w.WriteVarInt(templateItem)
 		if err := copyNBT(buf, w); err != nil {
 			return err
 		}
-		decal, err := buf.ReadBool()
-		if err != nil {
-			return err
-		}
-		w.WriteBool(decal)
+		return w.CopyBool(buf) // decal
 	}
 	return nil
 }
@@ -1493,41 +992,25 @@ func copyBannerPattern(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	w.WriteVarInt(typeID)
 
 	if typeID == 0 {
-		assetID, err := buf.ReadString(maxStringLen)
-		if err != nil {
+		if err := w.CopyString(buf, maxStringLen); err != nil { // asset ID
 			return err
 		}
-		w.WriteString(assetID)
-		translationKey, err := buf.ReadString(maxStringLen)
-		if err != nil {
+		if err := w.CopyString(buf, maxStringLen); err != nil { // translation key
 			return err
 		}
-		w.WriteString(translationKey)
 	}
 
-	color, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(color)
-	return nil
+	return w.CopyVarInt(buf) // color
 }
 
 func copyGameProfileProperty(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	name, err := buf.ReadString(maxStringLen)
-	if err != nil {
+	if err := w.CopyString(buf, maxStringLen); err != nil { // name
 		return err
 	}
-	w.WriteString(name)
-	value, err := buf.ReadString(maxStringLen)
-	if err != nil {
+	if err := w.CopyString(buf, maxStringLen); err != nil { // value
 		return err
 	}
-	w.WriteString(value)
-	if err := copyOptionalString(buf, w); err != nil {
-		return err
-	}
-	return nil
+	return copyOptionalString(buf, w) // signature
 }
 
 func copyOptionalGlobalPos(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -1537,18 +1020,10 @@ func copyOptionalGlobalPos(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	}
 	w.WriteBool(present)
 	if present {
-		// dimension
-		dimension, err := buf.ReadString(maxStringLen)
-		if err != nil {
+		if err := w.CopyString(buf, maxStringLen); err != nil { // dimension
 			return err
 		}
-		w.WriteString(dimension)
-		// position
-		pos, err := buf.ReadPosition()
-		if err != nil {
-			return err
-		}
-		w.WritePosition(pos)
+		return w.CopyPosition(buf) // position
 	}
 	return nil
 }
