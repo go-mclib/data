@@ -2,6 +2,7 @@ package items
 
 import (
 	"fmt"
+	"slices"
 
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
@@ -135,10 +136,271 @@ func (s *ItemStack) ToSlot() (ns.Slot, error) {
 	return slot, nil
 }
 
-// SetComponentOrder sets the order in which components will be written when encoding.
-// This is useful when you need to match a specific packet format.
-func (s *ItemStack) SetComponentOrder(order []int32) {
-	s.componentOrder = order
+// recordComponentOrder adds a component ID to the order list if not already present.
+// component order is DETERMINISTIC - follows insertion order into Reference2ObjectArrayMap in Java source code
+// the order depends on how the item was created:
+// - for /give commands: order components appear in the command string
+// - for UI modifications: order player modified components in creative mode
+// - for item initialization: order Item.Properties.component() was called
+func (s *ItemStack) recordComponentOrder(id int32) {
+	if slices.Contains(s.componentOrder, id) {
+		return
+	}
+	s.componentOrder = append(s.componentOrder, id)
+}
+
+// Builder methods - each sets a component and records its order for encoding.
+
+func (s *ItemStack) SetAttributeModifiers(v []AttributeModifier) *ItemStack {
+	s.Components.AttributeModifiers = v
+	s.recordComponentOrder(ComponentAttributeModifiers)
+	return s
+}
+
+func (s *ItemStack) SetBlocksAttacks(v *BlocksAttacks) *ItemStack {
+	s.Components.BlocksAttacks = v
+	s.recordComponentOrder(ComponentBlocksAttacks)
+	return s
+}
+
+func (s *ItemStack) SetBreakSound(v string) *ItemStack {
+	s.Components.BreakSound = v
+	s.recordComponentOrder(ComponentBreakSound)
+	return s
+}
+
+func (s *ItemStack) SetConsumable(v *Consumable) *ItemStack {
+	s.Components.Consumable = v
+	s.recordComponentOrder(ComponentConsumable)
+	return s
+}
+
+func (s *ItemStack) SetCustomName(v *ItemNameComponent) *ItemStack {
+	s.Components.CustomName = v
+	s.recordComponentOrder(ComponentCustomName)
+	return s
+}
+
+func (s *ItemStack) SetDamage(v int32) *ItemStack {
+	s.Components.Damage = v
+	s.recordComponentOrder(ComponentDamage)
+	return s
+}
+
+func (s *ItemStack) SetDamageResistant(v *DamageResistant) *ItemStack {
+	s.Components.DamageResistant = v
+	s.recordComponentOrder(ComponentDamageResistant)
+	return s
+}
+
+func (s *ItemStack) SetDamageType(v string) *ItemStack {
+	s.Components.DamageType = v
+	s.recordComponentOrder(ComponentDamageType)
+	return s
+}
+
+func (s *ItemStack) SetDeathProtection(v *DeathProtection) *ItemStack {
+	s.Components.DeathProtection = v
+	s.recordComponentOrder(ComponentDeathProtection)
+	return s
+}
+
+func (s *ItemStack) SetEnchantable(v *Enchantable) *ItemStack {
+	s.Components.Enchantable = v
+	s.recordComponentOrder(ComponentEnchantable)
+	return s
+}
+
+func (s *ItemStack) SetEnchantments(v map[string]int32) *ItemStack {
+	s.Components.Enchantments = v
+	s.recordComponentOrder(ComponentEnchantments)
+	return s
+}
+
+func (s *ItemStack) SetEquippable(v *Equippable) *ItemStack {
+	s.Components.Equippable = v
+	s.recordComponentOrder(ComponentEquippable)
+	return s
+}
+
+func (s *ItemStack) SetFireworks(v *Fireworks) *ItemStack {
+	s.Components.Fireworks = v
+	s.recordComponentOrder(ComponentFireworks)
+	return s
+}
+
+func (s *ItemStack) SetFood(v *Food) *ItemStack {
+	s.Components.Food = v
+	s.recordComponentOrder(ComponentFood)
+	return s
+}
+
+func (s *ItemStack) SetGlider(v bool) *ItemStack {
+	s.Components.Glider = v
+	s.recordComponentOrder(ComponentGlider)
+	return s
+}
+
+func (s *ItemStack) SetInstrument(v string) *ItemStack {
+	s.Components.Instrument = v
+	s.recordComponentOrder(ComponentInstrument)
+	return s
+}
+
+func (s *ItemStack) SetItemModel(v string) *ItemStack {
+	s.Components.ItemModel = v
+	s.recordComponentOrder(ComponentItemModel)
+	return s
+}
+
+func (s *ItemStack) SetItemName(v *ItemNameComponent) *ItemStack {
+	s.Components.ItemName = v
+	s.recordComponentOrder(ComponentItemName)
+	return s
+}
+
+func (s *ItemStack) SetJukeboxPlayable(v string) *ItemStack {
+	s.Components.JukeboxPlayable = v
+	s.recordComponentOrder(ComponentJukeboxPlayable)
+	return s
+}
+
+func (s *ItemStack) SetKineticWeapon(v *KineticWeapon) *ItemStack {
+	s.Components.KineticWeapon = v
+	s.recordComponentOrder(ComponentKineticWeapon)
+	return s
+}
+
+func (s *ItemStack) SetLore(v []string) *ItemStack {
+	s.Components.Lore = v
+	s.recordComponentOrder(ComponentLore)
+	return s
+}
+
+func (s *ItemStack) SetMapColor(v int32) *ItemStack {
+	s.Components.MapColor = v
+	s.recordComponentOrder(ComponentMapColor)
+	return s
+}
+
+func (s *ItemStack) SetMaxDamage(v int32) *ItemStack {
+	s.Components.MaxDamage = v
+	s.recordComponentOrder(ComponentMaxDamage)
+	return s
+}
+
+func (s *ItemStack) SetMaxStackSize(v int32) *ItemStack {
+	s.Components.MaxStackSize = v
+	s.recordComponentOrder(ComponentMaxStackSize)
+	return s
+}
+
+func (s *ItemStack) SetMinimumAttackCharge(v float64) *ItemStack {
+	s.Components.MinimumAttackCharge = v
+	s.recordComponentOrder(ComponentMinimumAttackCharge)
+	return s
+}
+
+func (s *ItemStack) SetOminousBottleAmplifier(v int32) *ItemStack {
+	s.Components.OminousBottleAmplifier = v
+	s.recordComponentOrder(ComponentOminousBottleAmplifier)
+	return s
+}
+
+func (s *ItemStack) SetPiercingWeapon(v *PiercingWeapon) *ItemStack {
+	s.Components.PiercingWeapon = v
+	s.recordComponentOrder(ComponentPiercingWeapon)
+	return s
+}
+
+func (s *ItemStack) SetPotionContents(v *PotionContents) *ItemStack {
+	s.Components.PotionContents = v
+	s.recordComponentOrder(ComponentPotionContents)
+	return s
+}
+
+func (s *ItemStack) SetPotionDurationScale(v float64) *ItemStack {
+	s.Components.PotionDurationScale = v
+	s.recordComponentOrder(ComponentPotionDurationScale)
+	return s
+}
+
+func (s *ItemStack) SetProvidesBannerPatterns(v string) *ItemStack {
+	s.Components.ProvidesBannerPatterns = v
+	s.recordComponentOrder(ComponentProvidesBannerPatterns)
+	return s
+}
+
+func (s *ItemStack) SetProvidesTrimMaterial(v string) *ItemStack {
+	s.Components.ProvidesTrimMaterial = v
+	s.recordComponentOrder(ComponentProvidesTrimMaterial)
+	return s
+}
+
+func (s *ItemStack) SetRarity(v string) *ItemStack {
+	s.Components.Rarity = v
+	s.recordComponentOrder(ComponentRarity)
+	return s
+}
+
+func (s *ItemStack) SetRepairable(v *Repairable) *ItemStack {
+	s.Components.Repairable = v
+	s.recordComponentOrder(ComponentRepairable)
+	return s
+}
+
+func (s *ItemStack) SetRepairCost(v int32) *ItemStack {
+	s.Components.RepairCost = v
+	s.recordComponentOrder(ComponentRepairCost)
+	return s
+}
+
+func (s *ItemStack) SetStoredEnchantments(v map[string]int32) *ItemStack {
+	s.Components.StoredEnchantments = v
+	s.recordComponentOrder(ComponentStoredEnchantments)
+	return s
+}
+
+func (s *ItemStack) SetTool(v *Tool) *ItemStack {
+	s.Components.Tool = v
+	s.recordComponentOrder(ComponentTool)
+	return s
+}
+
+func (s *ItemStack) SetTooltipDisplay(v *TooltipDisplay) *ItemStack {
+	s.Components.TooltipDisplay = v
+	s.recordComponentOrder(ComponentTooltipDisplay)
+	return s
+}
+
+func (s *ItemStack) SetUnbreakable(v bool) *ItemStack {
+	s.Components.Unbreakable = v
+	s.recordComponentOrder(ComponentUnbreakable)
+	return s
+}
+
+func (s *ItemStack) SetUseCooldown(v *UseCooldown) *ItemStack {
+	s.Components.UseCooldown = v
+	s.recordComponentOrder(ComponentUseCooldown)
+	return s
+}
+
+func (s *ItemStack) SetUseEffects(v *UseEffects) *ItemStack {
+	s.Components.UseEffects = v
+	s.recordComponentOrder(ComponentUseEffects)
+	return s
+}
+
+func (s *ItemStack) SetUseRemainder(v *UseRemainder) *ItemStack {
+	s.Components.UseRemainder = v
+	s.recordComponentOrder(ComponentUseRemainder)
+	return s
+}
+
+func (s *ItemStack) SetWeapon(v *Weapon) *ItemStack {
+	s.Components.Weapon = v
+	s.recordComponentOrder(ComponentWeapon)
+	return s
 }
 
 // Decoder returns a SlotDecoder function that can be passed to Slot.Decode.

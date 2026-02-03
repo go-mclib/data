@@ -23,5 +23,5 @@ High-level overview:
 - comments should only document parts of the code that are less obvious;
 - tests should be written in separate packages, ending with `_test`;
 - after done, format the code with `go fmt ./...`;
-- keep the API minimal, do not keep legacy code - let user know after making a breaking change, though;
+- keep the API minimal, do not keep legacy code, unused methods, etc. - only keep what is used "in the moment", however, do let the user know after making an important breaking change;
 - assume modern Go 1.25+ API, do not use older APIs;
