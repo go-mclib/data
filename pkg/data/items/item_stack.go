@@ -13,6 +13,10 @@ type ItemStack struct {
 	ID         int32
 	Count      int32
 	Components *Components
+
+	// componentOrder preserves the order components appeared in the original packet.
+	// Used to maintain byte-for-byte compatibility when re-encoding.
+	componentOrder []int32
 }
 
 // EmptyStack returns an empty item stack.
@@ -37,6 +41,7 @@ func (s *ItemStack) IsEmpty() bool {
 
 // FromSlot creates an ItemStack from a raw net_structures.Slot.
 // It applies the slot's component modifications on top of the item's defaults.
+// The component order from the slot is preserved for byte-for-byte re-encoding.
 func FromSlot(slot ns.Slot) (*ItemStack, error) {
 	if slot.IsEmpty() {
 		return EmptyStack(), nil
@@ -45,6 +50,12 @@ func FromSlot(slot ns.Slot) (*ItemStack, error) {
 	// start with default components for this item
 	defaults := DefaultComponents(int32(slot.ItemID))
 	components := defaults.Clone()
+
+	// capture component order for re-encoding
+	var order []int32
+	for _, raw := range slot.Components.Add {
+		order = append(order, int32(raw.ID))
+	}
 
 	// apply added components
 	for _, raw := range slot.Components.Add {
@@ -59,24 +70,18 @@ func FromSlot(slot ns.Slot) (*ItemStack, error) {
 	}
 
 	return &ItemStack{
-		ID:         int32(slot.ItemID),
-		Count:      int32(slot.Count),
-		Components: components,
+		ID:             int32(slot.ItemID),
+		Count:          int32(slot.Count),
+		Components:     components,
+		componentOrder: order,
 	}, nil
 }
 
 // ToSlot converts the ItemStack back to a raw net_structures.Slot.
 // Only components that differ from the item's defaults are encoded.
-// Components are written in ascending ID order.
+// If the ItemStack was created from FromSlot, the original component order is preserved.
+// Otherwise, components are written in ascending ID order.
 func (s *ItemStack) ToSlot() (ns.Slot, error) {
-	return s.ToSlotOrdered(nil)
-}
-
-// ToSlotOrdered converts the ItemStack to a Slot with components in the specified order.
-// If order is nil, components are written in ascending ID order.
-// The order slice should contain component IDs in the desired output order.
-// Components not in the order slice are appended in ascending ID order.
-func (s *ItemStack) ToSlotOrdered(order []int32) (ns.Slot, error) {
 	if s.IsEmpty() {
 		return ns.EmptySlot(), nil
 	}
@@ -113,8 +118,8 @@ func (s *ItemStack) ToSlotOrdered(order []int32) (ns.Slot, error) {
 		return nil
 	}
 
-	// add components in specified order first
-	for _, id := range order {
+	// add components in preserved order first (from original packet)
+	for _, id := range s.componentOrder {
 		if err := addComponent(id); err != nil {
 			return ns.Slot{}, err
 		}
@@ -128,6 +133,12 @@ func (s *ItemStack) ToSlotOrdered(order []int32) (ns.Slot, error) {
 	}
 
 	return slot, nil
+}
+
+// SetComponentOrder sets the order in which components will be written when encoding.
+// This is useful when you need to match a specific packet format.
+func (s *ItemStack) SetComponentOrder(order []int32) {
+	s.componentOrder = order
 }
 
 // Decoder returns a SlotDecoder function that can be passed to Slot.Decode.

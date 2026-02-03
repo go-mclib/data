@@ -33,13 +33,16 @@ func init() {
 	poSword.Components.Unbreakable = true
 
 	// component order as captured from Minecraft client (insertion order preserved)
-	componentOrder := []int32{
+	// TODO: is the order in the MC client actually deterministic? or is it random for every packet?
+	// if its random, we could just reorder the bits manually to be alphabetic and make the Go implementation always alphabetic, so its deterministic and can be validated
+	// if its not random & we can predict the order, we reverse engineer the algorithm that client uses to order the components
+	poSword.SetComponentOrder([]int32{
 		items.ComponentTooltipDisplay,     // 18
 		items.ComponentCustomName,         // 6
 		items.ComponentAttributeModifiers, // 16
 		items.ComponentUnbreakable,        // 4
-	}
-	poSwordSlot, err := poSword.ToSlotOrdered(componentOrder)
+	})
+	poSwordSlot, err := poSword.ToSlot()
 	if err != nil {
 		panic(err)
 	}
