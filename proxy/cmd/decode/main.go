@@ -326,7 +326,8 @@ func formatMetadataEntries(v reflect.Value, indent string) string {
 			serializerName = fmt.Sprintf("Unknown(%d)", serializer)
 		}
 
-		value := entities.FormatMetadataValue(serializer, data)
+		// Pass the current indentation so multiline values align properly
+		value := entities.FormatMetadataValueIndented(serializer, data, indent+"  ")
 
 		sb.WriteString(fmt.Sprintf("[%d] %s = %s", index, serializerName, value))
 

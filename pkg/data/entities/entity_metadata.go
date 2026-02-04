@@ -390,6 +390,11 @@ func SerializerWireType(id int32) string {
 
 // FormatMetadataValue returns a human-readable string representation of a metadata value.
 func FormatMetadataValue(serializerID int32, data []byte) string {
+	return FormatMetadataValueIndented(serializerID, data, "")
+}
+
+// FormatMetadataValueIndented returns a human-readable string representation of a metadata value with indentation.
+func FormatMetadataValueIndented(serializerID int32, data []byte, indent string) string {
 	if len(data) == 0 {
 		return "<empty>"
 	}
@@ -494,7 +499,15 @@ func FormatMetadataValue(serializerID int32, data []byte) string {
 			return fmt.Sprintf("Quaternion{X: %g, Y: %g, Z: %g, W: %g}", x, y, z, w)
 		}
 
-	case "slot", "nbt", "optional_nbt", "particle", "particle_list",
+	case "slot":
+		// decode slot and format it showing only wire components
+		slot, err := buf.ReadSlot(items.Decoder())
+		if err != nil {
+			return fmt.Sprintf("0x%x (decode error: %v)", data, err)
+		}
+		return items.FormatSlotForDisplay(slot, indent)
+
+	case "nbt", "optional_nbt", "particle", "particle_list",
 		"optional_global_pos", "id_or_inline", "resolvable_profile":
 		// complex types - show hex for now
 		return fmt.Sprintf("0x%x", data)
