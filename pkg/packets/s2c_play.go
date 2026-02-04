@@ -1,6 +1,7 @@
 package packets
 
 import (
+	"github.com/go-mclib/data/pkg/data/entities"
 	"github.com/go-mclib/data/pkg/data/items"
 	packets_data "github.com/go-mclib/data/pkg/data/packets"
 	jp "github.com/go-mclib/protocol/java_protocol"
@@ -3677,7 +3678,7 @@ func (p *S2CSetDisplayObjective) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Entity_Metadata
 type S2CSetEntityData struct {
 	EntityId ns.VarInt
-	Metadata ns.ByteArray
+	Metadata entities.Metadata
 }
 
 func (p *S2CSetEntityData) ID() ns.VarInt   { return ns.VarInt(packets_data.S2CSetEntityDataID) }
@@ -3689,7 +3690,7 @@ func (p *S2CSetEntityData) Read(buf *ns.PacketBuffer) error {
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.Metadata, err = buf.ReadByteArray(1048576)
+	p.Metadata, err = entities.ReadMetadata(buf)
 	return err
 }
 
@@ -3697,7 +3698,7 @@ func (p *S2CSetEntityData) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.EntityId); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Metadata)
+	return entities.WriteMetadata(buf, p.Metadata)
 }
 
 // S2CSetEntityLink represents "Link Entities".

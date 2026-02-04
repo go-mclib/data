@@ -88,7 +88,7 @@ func generatePacketFile(pktMap map[string]PacketEntryJSON, prefix, phaseSuffix s
 
 	for _, pkt := range pkts {
 		constName := packetConstName(pkt.name, prefix, phaseSuffix, needsSuffix, bound)
-		sb.WriteString(fmt.Sprintf("\t%s int32 = %d\n", constName, pkt.protocolID))
+		sb.WriteString(fmt.Sprintf("\t%s = %d\n", constName, pkt.protocolID))
 	}
 
 	sb.WriteString(")\n")

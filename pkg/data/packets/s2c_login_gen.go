@@ -4,10 +4,10 @@ package packets
 
 // Packet IDs for login phase (clientbound)
 const (
-	S2CLoginDisconnectID    int32 = 0
-	S2CHelloID              int32 = 1
-	S2CLoginFinishedID      int32 = 2
-	S2CLoginCompressionID   int32 = 3
-	S2CCustomQueryID        int32 = 4
-	S2CCookieRequestLoginID int32 = 5
+	S2CLoginDisconnectID = 0
+	S2CHelloID = 1
+	S2CLoginFinishedID = 2
+	S2CLoginCompressionID = 3
+	S2CCustomQueryID = 4
+	S2CCookieRequestLoginID = 5
 )

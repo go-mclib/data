@@ -21,7 +21,7 @@ func BenchmarkStateIDCached(b *testing.B) {
 	blocks.StateID(blockID, props)
 
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		blocks.StateID(blockID, props)
 	}
 }
@@ -40,17 +40,15 @@ func BenchmarkStateIDUncached(b *testing.B) {
 	blocks.SetCacheSize(0)
 	defer blocks.SetCacheSize(4096)
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		blocks.StateID(blockID, props)
 	}
 }
 
 func BenchmarkStateProperties(b *testing.B) {
-	stateID := int32(4020) // redstone_wire state
+	stateID := 4020 // redstone_wire state
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		blocks.StateProperties(stateID)
 	}
 }

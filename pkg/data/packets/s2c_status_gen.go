@@ -4,6 +4,6 @@ package packets
 
 // Packet IDs for status phase (clientbound)
 const (
-	S2CStatusResponseID     int32 = 0
-	S2CPongResponseStatusID int32 = 1
+	S2CStatusResponseID = 0
+	S2CPongResponseStatusID = 1
 )

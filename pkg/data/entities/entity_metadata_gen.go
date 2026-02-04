@@ -12,19 +12,19 @@ const (
 // ArmorStand metadata indices
 const (
 	ArmorStandIndexArmorStandFlags = 15
-	ArmorStandIndexHeadPose        = 16
-	ArmorStandIndexBodyPose        = 17
-	ArmorStandIndexLeftArmPose     = 18
-	ArmorStandIndexRightArmPose    = 19
-	ArmorStandIndexLeftLegPose     = 20
-	ArmorStandIndexRightLegPose    = 21
+	ArmorStandIndexHeadPose = 16
+	ArmorStandIndexBodyPose = 17
+	ArmorStandIndexLeftArmPose = 18
+	ArmorStandIndexRightArmPose = 19
+	ArmorStandIndexLeftLegPose = 20
+	ArmorStandIndexRightLegPose = 21
 )
 
 // Arrow metadata indices
 const (
-	ArrowIndexArrowFlags  = 8
+	ArrowIndexArrowFlags = 8
 	ArrowIndexPierceLevel = 9
-	ArrowIndexInGround    = 10
+	ArrowIndexInGround = 10
 )
 
 // Bat metadata indices
@@ -39,19 +39,19 @@ const (
 
 // Boat metadata indices
 const (
-	BoatIndexHurtTime    = 8
-	BoatIndexHurtDir     = 9
-	BoatIndexDamage      = 10
-	BoatIndexPaddleLeft  = 11
+	BoatIndexHurtTime = 8
+	BoatIndexHurtDir = 9
+	BoatIndexDamage = 10
+	BoatIndexPaddleLeft = 11
 	BoatIndexPaddleRight = 12
-	BoatIndexBubbleTime  = 13
+	BoatIndexBubbleTime = 13
 )
 
 // Cat metadata indices
 const (
-	CatIndexVariant     = 17
-	CatIndexIsLying     = 18
-	CatIndexIsRelaxed   = 19
+	CatIndexVariant = 17
+	CatIndexIsLying = 18
+	CatIndexIsRelaxed = 19
 	CatIndexCollarColor = 20
 )
 
@@ -67,7 +67,7 @@ const (
 
 // Creeper metadata indices
 const (
-	CreeperIndexSwellDir  = 16
+	CreeperIndexSwellDir = 16
 	CreeperIndexIsPowered = 17
 	CreeperIndexIsIgnited = 18
 )
@@ -80,20 +80,20 @@ const (
 // Enderman metadata indices
 const (
 	EndermanIndexCarriedBlock = 16
-	EndermanIndexIsScreaming  = 17
-	EndermanIndexIsStaring    = 18
+	EndermanIndexIsScreaming = 17
+	EndermanIndexIsStaring = 18
 )
 
 // Entity metadata indices
 const (
-	EntityIndexFlags             = 0
-	EntityIndexAirSupply         = 1
-	EntityIndexCustomName        = 2
+	EntityIndexFlags = 0
+	EntityIndexAirSupply = 1
+	EntityIndexCustomName = 2
 	EntityIndexCustomNameVisible = 3
-	EntityIndexSilent            = 4
-	EntityIndexNoGravity         = 5
-	EntityIndexPose              = 6
-	EntityIndexTicksFrozen       = 7
+	EntityIndexSilent = 4
+	EntityIndexNoGravity = 5
+	EntityIndexPose = 6
+	EntityIndexTicksFrozen = 7
 )
 
 // FallingBlock metadata indices
@@ -118,27 +118,27 @@ const (
 
 // ItemFrame metadata indices
 const (
-	ItemFrameIndexItem     = 8
+	ItemFrameIndexItem = 8
 	ItemFrameIndexRotation = 9
 )
 
 // LivingEntity metadata indices
 const (
-	LivingEntityIndexLivingFlags     = 8
-	LivingEntityIndexHealth          = 9
+	LivingEntityIndexLivingFlags = 8
+	LivingEntityIndexHealth = 9
 	LivingEntityIndexEffectParticles = 10
-	LivingEntityIndexEffectAmbient   = 11
-	LivingEntityIndexArrowCount      = 12
-	LivingEntityIndexStingerCount    = 13
-	LivingEntityIndexSleepingPos     = 14
+	LivingEntityIndexEffectAmbient = 11
+	LivingEntityIndexArrowCount = 12
+	LivingEntityIndexStingerCount = 13
+	LivingEntityIndexSleepingPos = 14
 )
 
 // Minecart metadata indices
 const (
-	MinecartIndexHurtTime      = 8
-	MinecartIndexHurtDir       = 9
-	MinecartIndexDamage        = 10
-	MinecartIndexDisplayBlock  = 11
+	MinecartIndexHurtTime = 8
+	MinecartIndexHurtDir = 9
+	MinecartIndexDamage = 10
+	MinecartIndexDisplayBlock = 11
 	MinecartIndexDisplayOffset = 12
 	MinecartIndexCustomDisplay = 13
 )
@@ -151,16 +151,16 @@ const (
 // Pig metadata indices
 const (
 	PigIndexBoostTime = 17
-	PigIndexVariant   = 18
+	PigIndexVariant = 18
 )
 
 // Player metadata indices
 const (
-	PlayerIndexAdditionalHearts    = 15
-	PlayerIndexScore               = 16
-	PlayerIndexSkinParts           = 17
-	PlayerIndexMainHand            = 18
-	PlayerIndexLeftShoulderEntity  = 19
+	PlayerIndexAdditionalHearts = 15
+	PlayerIndexScore = 16
+	PlayerIndexSkinParts = 17
+	PlayerIndexMainHand = 18
+	PlayerIndexLeftShoulderEntity = 19
 	PlayerIndexRightShoulderEntity = 20
 )
 
@@ -191,25 +191,25 @@ const (
 
 // Wither metadata indices
 const (
-	WitherIndexTargetA          = 16
-	WitherIndexTargetB          = 17
-	WitherIndexTargetC          = 18
+	WitherIndexTargetA = 16
+	WitherIndexTargetB = 17
+	WitherIndexTargetC = 18
 	WitherIndexInvulnerableTime = 19
 )
 
 // Wolf metadata indices
 const (
-	WolfIndexIsTamed      = 17
-	WolfIndexVariant      = 18
+	WolfIndexIsTamed = 17
+	WolfIndexVariant = 18
 	WolfIndexSoundVariant = 19
-	WolfIndexIsAngry      = 20
-	WolfIndexCollarColor  = 21
+	WolfIndexIsAngry = 20
+	WolfIndexCollarColor = 21
 )
 
 // Zombie metadata indices
 const (
-	ZombieIndexIsBaby          = 16
-	ZombieIndexSpecialType     = 17
+	ZombieIndexIsBaby = 16
+	ZombieIndexSpecialType = 17
 	ZombieIndexBecomingDrowned = 18
 )
 
@@ -223,1166 +223,1166 @@ type MetadataEntry struct {
 // AgeableMobMetadata contains metadata fields for AgeableMob entities.
 type AgeableMobMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsBaby            bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsBaby bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsBaby            bool
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsBaby bool
 }
 
 // ArmorStandMetadata contains metadata fields for ArmorStand entities.
 type ArmorStandMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasArmorStandFlags   bool
-	HasHeadPose          bool
-	HasBodyPose          bool
-	HasLeftArmPose       bool
-	HasRightArmPose      bool
-	HasLeftLegPose       bool
-	HasRightLegPose      bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasArmorStandFlags bool
+	HasHeadPose bool
+	HasBodyPose bool
+	HasLeftArmPose bool
+	HasRightArmPose bool
+	HasLeftLegPose bool
+	HasRightLegPose bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	ArmorStandFlags   byte
-	HeadPose          Rotations
-	BodyPose          Rotations
-	LeftArmPose       Rotations
-	RightArmPose      Rotations
-	LeftLegPose       Rotations
-	RightLegPose      Rotations
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	ArmorStandFlags byte
+	HeadPose Rotations
+	BodyPose Rotations
+	LeftArmPose Rotations
+	RightArmPose Rotations
+	LeftLegPose Rotations
+	RightLegPose Rotations
 }
 
 // ArrowMetadata contains metadata fields for Arrow entities.
 type ArrowMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasArrowFlags        bool
-	HasPierceLevel       bool
-	HasInGround          bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasArrowFlags bool
+	HasPierceLevel bool
+	HasInGround bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	ArrowFlags        byte
-	PierceLevel       byte
-	InGround          bool
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	ArrowFlags byte
+	PierceLevel byte
+	InGround bool
 }
 
 // BatMetadata contains metadata fields for Bat entities.
 type BatMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasBatFlags          bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasBatFlags bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	BatFlags          byte
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	BatFlags byte
 }
 
 // BlazeMetadata contains metadata fields for Blaze entities.
 type BlazeMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasBlazeFlags        bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasBlazeFlags bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	BlazeFlags        byte
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	BlazeFlags byte
 }
 
 // BoatMetadata contains metadata fields for Boat entities.
 type BoatMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasHurtTime          bool
-	HasHurtDir           bool
-	HasDamage            bool
-	HasPaddleLeft        bool
-	HasPaddleRight       bool
-	HasBubbleTime        bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasHurtTime bool
+	HasHurtDir bool
+	HasDamage bool
+	HasPaddleLeft bool
+	HasPaddleRight bool
+	HasBubbleTime bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	HurtTime          int32
-	HurtDir           int32
-	Damage            float32
-	PaddleLeft        bool
-	PaddleRight       bool
-	BubbleTime        int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	HurtTime int32
+	HurtDir int32
+	Damage float32
+	PaddleLeft bool
+	PaddleRight bool
+	BubbleTime int32
 }
 
 // CatMetadata contains metadata fields for Cat entities.
 type CatMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsBaby            bool
-	HasVariant           bool
-	HasIsLying           bool
-	HasIsRelaxed         bool
-	HasCollarColor       bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsBaby bool
+	HasVariant bool
+	HasIsLying bool
+	HasIsRelaxed bool
+	HasCollarColor bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsBaby            bool
-	Variant           int32
-	IsLying           bool
-	IsRelaxed         bool
-	CollarColor       int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsBaby bool
+	Variant int32
+	IsLying bool
+	IsRelaxed bool
+	CollarColor int32
 }
 
 // ChickenMetadata contains metadata fields for Chicken entities.
 type ChickenMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsBaby            bool
-	HasVariant           bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsBaby bool
+	HasVariant bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsBaby            bool
-	Variant           int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsBaby bool
+	Variant int32
 }
 
 // CowMetadata contains metadata fields for Cow entities.
 type CowMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsBaby            bool
-	HasVariant           bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsBaby bool
+	HasVariant bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsBaby            bool
-	Variant           int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsBaby bool
+	Variant int32
 }
 
 // CreeperMetadata contains metadata fields for Creeper entities.
 type CreeperMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasSwellDir          bool
-	HasIsPowered         bool
-	HasIsIgnited         bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasSwellDir bool
+	HasIsPowered bool
+	HasIsIgnited bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	SwellDir          int32
-	IsPowered         bool
-	IsIgnited         bool
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	SwellDir int32
+	IsPowered bool
+	IsIgnited bool
 }
 
 // EnderDragonMetadata contains metadata fields for EnderDragon entities.
 type EnderDragonMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasPhase             bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasPhase bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	Phase             int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	Phase int32
 }
 
 // EndermanMetadata contains metadata fields for Enderman entities.
 type EndermanMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsScreaming       bool
-	HasIsStaring         bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsScreaming bool
+	HasIsStaring bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	CarriedBlock      *int32
-	IsScreaming       bool
-	IsStaring         bool
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	CarriedBlock *int32
+	IsScreaming bool
+	IsStaring bool
 }
 
 // EntityMetadata contains metadata fields for Entity entities.
 type EntityMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
 }
 
 // ExperienceOrbMetadata contains metadata fields for ExperienceOrb entities.
 type ExperienceOrbMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
 }
 
 // FallingBlockMetadata contains metadata fields for FallingBlock entities.
 type FallingBlockMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasSpawnPos          bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasSpawnPos bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	SpawnPos          Position
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	SpawnPos Position
 }
 
 // FireballMetadata contains metadata fields for Fireball entities.
 type FireballMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	Item              []byte // passthrough
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	Item []byte // passthrough
 }
 
 // GhastMetadata contains metadata fields for Ghast entities.
 type GhastMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsCharging        bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsCharging bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsCharging        bool
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsCharging bool
 }
 
 // ItemEntityMetadata contains metadata fields for ItemEntity entities.
 type ItemEntityMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	Item              []byte // passthrough
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	Item []byte // passthrough
 }
 
 // ItemFrameMetadata contains metadata fields for ItemFrame entities.
 type ItemFrameMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasRotation          bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasRotation bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	Item              []byte // passthrough
-	Rotation          int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	Item []byte // passthrough
+	Rotation int32
 }
 
 // LivingEntityMetadata contains metadata fields for LivingEntity entities.
 type LivingEntityMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
 }
 
 // MinecartMetadata contains metadata fields for Minecart entities.
 type MinecartMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasHurtTime          bool
-	HasHurtDir           bool
-	HasDamage            bool
-	HasDisplayBlock      bool
-	HasDisplayOffset     bool
-	HasCustomDisplay     bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasHurtTime bool
+	HasHurtDir bool
+	HasDamage bool
+	HasDisplayBlock bool
+	HasDisplayOffset bool
+	HasCustomDisplay bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	HurtTime          int32
-	HurtDir           int32
-	Damage            float32
-	DisplayBlock      int32
-	DisplayOffset     int32
-	CustomDisplay     bool
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	HurtTime int32
+	HurtDir int32
+	Damage float32
+	DisplayBlock int32
+	DisplayOffset int32
+	CustomDisplay bool
 }
 
 // MobMetadata contains metadata fields for Mob entities.
 type MobMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
 }
 
 // PigMetadata contains metadata fields for Pig entities.
 type PigMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsBaby            bool
-	HasBoostTime         bool
-	HasVariant           bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsBaby bool
+	HasBoostTime bool
+	HasVariant bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsBaby            bool
-	BoostTime         int32
-	Variant           int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsBaby bool
+	BoostTime int32
+	Variant int32
 }
 
 // PlayerMetadata contains metadata fields for Player entities.
 type PlayerMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasAdditionalHearts  bool
-	HasScore             bool
-	HasSkinParts         bool
-	HasMainHand          bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasAdditionalHearts bool
+	HasScore bool
+	HasSkinParts bool
+	HasMainHand bool
 
 	// field values
-	Flags               byte
-	AirSupply           int32
-	CustomName          *string
-	CustomNameVisible   bool
-	Silent              bool
-	NoGravity           bool
-	Pose                int32
-	TicksFrozen         int32
-	LivingFlags         byte
-	Health              float32
-	EffectParticles     []byte // passthrough
-	EffectAmbient       bool
-	ArrowCount          int32
-	StingerCount        int32
-	SleepingPos         []byte // passthrough
-	AdditionalHearts    float32
-	Score               int32
-	SkinParts           byte
-	MainHand            byte
-	LeftShoulderEntity  []byte // passthrough
+	Flags byte
+	AirSupply int32
+	CustomName *string
+	CustomNameVisible bool
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	AdditionalHearts float32
+	Score int32
+	SkinParts byte
+	MainHand byte
+	LeftShoulderEntity []byte // passthrough
 	RightShoulderEntity []byte // passthrough
 }
 
 // SheepMetadata contains metadata fields for Sheep entities.
 type SheepMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsBaby            bool
-	HasColorFlags        bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsBaby bool
+	HasColorFlags bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsBaby            bool
-	ColorFlags        byte
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsBaby bool
+	ColorFlags byte
 }
 
 // SkeletonMetadata contains metadata fields for Skeleton entities.
 type SkeletonMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsConverting      bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsConverting bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsConverting      bool
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsConverting bool
 }
 
 // SlimeMetadata contains metadata fields for Slime entities.
 type SlimeMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasSize              bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasSize bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	Size              int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	Size int32
 }
 
 // SpiderMetadata contains metadata fields for Spider entities.
 type SpiderMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasSpiderFlags       bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasSpiderFlags bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	SpiderFlags       byte
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	SpiderFlags byte
 }
 
 // VillagerMetadata contains metadata fields for Villager entities.
 type VillagerMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsBaby            bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsBaby bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsBaby            bool
-	VillagerData      []byte // passthrough
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsBaby bool
+	VillagerData []byte // passthrough
 }
 
 // WitherMetadata contains metadata fields for Wither entities.
 type WitherMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasTargetA           bool
-	HasTargetB           bool
-	HasTargetC           bool
-	HasInvulnerableTime  bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasTargetA bool
+	HasTargetB bool
+	HasTargetC bool
+	HasInvulnerableTime bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	TargetA           int32
-	TargetB           int32
-	TargetC           int32
-	InvulnerableTime  int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	TargetA int32
+	TargetB int32
+	TargetC int32
+	InvulnerableTime int32
 }
 
 // WolfMetadata contains metadata fields for Wolf entities.
 type WolfMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsBaby            bool
-	HasIsTamed           bool
-	HasVariant           bool
-	HasSoundVariant      bool
-	HasIsAngry           bool
-	HasCollarColor       bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsBaby bool
+	HasIsTamed bool
+	HasVariant bool
+	HasSoundVariant bool
+	HasIsAngry bool
+	HasCollarColor bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsBaby            bool
-	IsTamed           bool
-	Variant           int32
-	SoundVariant      int32
-	IsAngry           bool
-	CollarColor       int32
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsBaby bool
+	IsTamed bool
+	Variant int32
+	SoundVariant int32
+	IsAngry bool
+	CollarColor int32
 }
 
 // ZombieMetadata contains metadata fields for Zombie entities.
 type ZombieMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
+	HasFlags bool
+	HasAirSupply bool
 	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsBaby            bool
-	HasSpecialType       bool
-	HasBecomingDrowned   bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasLivingFlags bool
+	HasHealth bool
+	HasEffectAmbient bool
+	HasArrowCount bool
+	HasStingerCount bool
+	HasMobFlags bool
+	HasIsBaby bool
+	HasSpecialType bool
+	HasBecomingDrowned bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
+	Flags byte
+	AirSupply int32
+	CustomName *string
 	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsBaby            bool
-	SpecialType       int32
-	BecomingDrowned   bool
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	LivingFlags byte
+	Health float32
+	EffectParticles []byte // passthrough
+	EffectAmbient bool
+	ArrowCount int32
+	StingerCount int32
+	SleepingPos []byte // passthrough
+	MobFlags byte
+	IsBaby bool
+	SpecialType int32
+	BecomingDrowned bool
 }
 
 // FieldDef describes an entity metadata field.

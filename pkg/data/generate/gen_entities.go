@@ -17,7 +17,7 @@ func generateEntities(registries map[string]RegistryJSON, outPath string) {
 	for _, name := range sortedKeys(entityRegistry.Entries) {
 		entry := entityRegistry.Entries[name]
 		goName := toGoVarName(name)
-		sb.WriteString(fmt.Sprintf("\t%s int32 = %d\n", goName, entry.ProtocolID))
+		sb.WriteString(fmt.Sprintf("\t%s = %d\n", goName, entry.ProtocolID))
 	}
 	sb.WriteString(")\n\n")
 

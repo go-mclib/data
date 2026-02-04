@@ -45,7 +45,7 @@ func ClearCache() {
 }
 
 // stateIDCacheKey creates a cache key from blockID and properties
-func stateIDCacheKey(blockID int32, props map[string]string) uint64 {
+func stateIDCacheKey(blockID int, props map[string]string) uint64 {
 	h := uint64(blockID)
 	for k, v := range props {
 		for _, c := range k {
@@ -60,7 +60,7 @@ func stateIDCacheKey(blockID int32, props map[string]string) uint64 {
 
 // StateID calculates the state protocol ID from a block ID and property values.
 // Results are cached for performance. Returns -1 if the block ID is invalid or properties are missing/invalid.
-func StateID(blockID int32, props map[string]string) int32 {
+func StateID(blockID int, props map[string]string) int32 {
 	if stateIDCacheMax > 0 {
 		key := stateIDCacheKey(blockID, props)
 		stateIDCacheMu.RLock()
@@ -92,8 +92,8 @@ func StateID(blockID int32, props map[string]string) int32 {
 }
 
 // stateIDUncached is the uncached implementation of StateID.
-func stateIDUncached(blockID int32, props map[string]string) int32 {
-	state := blockStates[blockID]
+func stateIDUncached(blockID int, props map[string]string) int32 {
+	state := blockStates[int32(blockID)]
 	if state == nil {
 		return -1
 	}
@@ -129,19 +129,20 @@ func stateIDUncached(blockID int32, props map[string]string) int32 {
 
 // StateProperties returns the block ID and property values for a given state ID.
 // Uses binary search for O(log n) block lookup. Returns -1 and nil if the state ID is invalid.
-func StateProperties(stateID int32) (blockID int32, props map[string]string) {
+func StateProperties(stateID int) (blockID int32, props map[string]string) {
+	stateID32 := int32(stateID)
 	lo, hi := 0, len(stateRanges)-1
 	for lo <= hi {
 		mid := (lo + hi) / 2
 		r := &stateRanges[mid]
-		if stateID < r.BaseID {
+		if stateID32 < r.BaseID {
 			hi = mid - 1
-		} else if stateID >= r.EndID {
+		} else if stateID32 >= r.EndID {
 			lo = mid + 1
 		} else {
 			blockID = r.BlockID
 			state := blockStates[blockID]
-			offset := stateID - state.BaseID
+			offset := stateID32 - state.BaseID
 
 			props = make(map[string]string)
 			for i := len(state.Properties) - 1; i >= 0; i-- {

@@ -46,7 +46,7 @@ func TestAllBlockStates(t *testing.T) {
 
 		for _, state := range blockData.States {
 			totalStates++
-			calculated := blocks.StateID(blockID, state.Properties)
+			calculated := blocks.StateID(int(blockID), state.Properties)
 			if calculated != state.ID {
 				failedStates++
 				if failedStates <= 10 {
@@ -118,7 +118,7 @@ func TestStateProperties(t *testing.T) {
 			}
 			state := blockData.States[idx]
 
-			gotBlockID, gotProps := blocks.StateProperties(state.ID)
+			gotBlockID, gotProps := blocks.StateProperties(int(state.ID))
 			if gotBlockID != blockID {
 				t.Errorf("StateProperties(%d): expected block %d (%s), got %d",
 					state.ID, blockID, blockName, gotBlockID)

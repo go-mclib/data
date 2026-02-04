@@ -2,6 +2,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -10,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/go-mclib/data/pkg/data/entities"
 	"github.com/go-mclib/data/pkg/data/items"
 	"github.com/go-mclib/data/pkg/packets"
 	jp "github.com/go-mclib/protocol/java_protocol"
@@ -20,7 +22,7 @@ type CapturedPacket struct {
 	Direction string `json:"direction"`
 	State     string `json:"state"`
 	PacketID  string `json:"packet_id"` // hex format "0x00"
-	RawData   string `json:"raw_data"`
+	RawData   string `json:"wire_data"`
 }
 
 func parsePacketID(s string) (int, error) {
@@ -31,6 +33,25 @@ func parsePacketID(s string) (int, error) {
 	}
 	id, err := strconv.ParseInt(s, 10, 32)
 	return int(id), err
+}
+
+// compressionThresholdForState returns the compression threshold to use when
+// parsing wire format packets for a given protocol state.
+// Returns -1 for states before compression is enabled, 0 for states after.
+func compressionThresholdForState(state string) int {
+	switch state {
+	case "handshake", "status":
+		return -1 // no compression
+	case "login":
+		// Login state is tricky - compression is enabled partway through.
+		// We use -1 (no compression) as the conservative default.
+		// This means compressed login packets won't decode correctly,
+		// but those are rare (only packets after Set Compression).
+		return -1
+	default:
+		// configuration, play - compression is always enabled
+		return 0
+	}
 }
 
 func getPacketName(p jp.Packet) string {
@@ -99,7 +120,7 @@ func formatItemStack(stack *items.ItemStack, indent string) string {
 
 func formatValue(v reflect.Value, indent string) string {
 	switch v.Kind() {
-	case reflect.Ptr:
+	case reflect.Pointer:
 		if v.IsNil() {
 			return "nil"
 		}
@@ -269,10 +290,59 @@ func formatPacket(p jp.Packet) string {
 		}
 		sb.WriteString(typeName)
 		sb.WriteString(" = ")
-		sb.WriteString(formatValue(fieldValue, "  "))
+
+		// special handling for Metadata field (entities.Metadata type)
+		if field.Name == "Metadata" && field.Type.String() == "entities.Metadata" {
+			sb.WriteString(formatMetadataEntries(fieldValue, "  "))
+		} else {
+			sb.WriteString(formatValue(fieldValue, "  "))
+		}
 		sb.WriteString("\n")
 	}
 
+	return sb.String()
+}
+
+func formatMetadataEntries(v reflect.Value, indent string) string {
+	if v.Len() == 0 {
+		return "[]"
+	}
+
+	var sb strings.Builder
+	sb.WriteString("[\n")
+	for i := 0; i < v.Len(); i++ {
+		entryVal := v.Index(i)
+
+		// Get fields from MetadataEntry struct
+		index := byte(entryVal.FieldByName("Index").Uint())
+		serializer := int32(entryVal.FieldByName("Serializer").Int())
+		dataField := entryVal.FieldByName("Data")
+
+		// Extract data bytes
+		data := make([]byte, dataField.Len())
+		for j := 0; j < dataField.Len(); j++ {
+			data[j] = byte(dataField.Index(j).Uint())
+		}
+
+		sb.WriteString(indent)
+		sb.WriteString("  ")
+
+		serializerName := entities.SerializerName(serializer)
+		if serializerName == "" {
+			serializerName = fmt.Sprintf("Unknown(%d)", serializer)
+		}
+
+		value := entities.FormatMetadataValue(serializer, data)
+
+		sb.WriteString(fmt.Sprintf("[%d] %s = %s", index, serializerName, value))
+
+		if i < v.Len()-1 {
+			sb.WriteString(",")
+		}
+		sb.WriteString("\n")
+	}
+	sb.WriteString(indent)
+	sb.WriteString("]")
 	return sb.String()
 }
 
@@ -323,9 +393,25 @@ func main() {
 			continue
 		}
 
+		// Parse wire format (includes length, compression header, packet ID)
+		compressionThreshold := compressionThresholdForState(cap.State)
+		wirePacket, err := jp.ReadWirePacketFrom(bytes.NewReader(rawData), compressionThreshold)
+		if err != nil {
+			fmt.Printf("// [%d] WARNING: failed to parse wire format: %v\n", i, err)
+			fmt.Printf("//     raw data: %s\n\n", cap.RawData)
+			continue
+		}
+
+		// Verify packet ID matches
+		if int(wirePacket.PacketID) != packetID {
+			fmt.Printf("// [%d] WARNING: packet ID mismatch: JSON says 0x%02X, wire says 0x%02X\n\n",
+				i, packetID, wirePacket.PacketID)
+			continue
+		}
+
 		p := factory()
 		packetName := getPacketName(p)
-		buf := ns.NewReader(rawData)
+		buf := ns.NewReader(wirePacket.Data)
 		if err := p.Read(buf); err != nil {
 			fmt.Printf("// [%d] WARNING: failed to decode %s: %v\n", i, packetName, err)
 			fmt.Printf("//     raw data: %s\n\n", cap.RawData)

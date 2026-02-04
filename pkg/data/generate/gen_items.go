@@ -18,7 +18,7 @@ func generateItems(items map[string]ItemJSON, registries map[string]RegistryJSON
 	for _, name := range sortedKeys(itemRegistry.Entries) {
 		entry := itemRegistry.Entries[name]
 		goName := toGoVarName(name)
-		sb.WriteString(fmt.Sprintf("\t%s int32 = %d\n", goName, entry.ProtocolID))
+		sb.WriteString(fmt.Sprintf("\t%s = %d\n", goName, entry.ProtocolID))
 	}
 	sb.WriteString(")\n\n")
 

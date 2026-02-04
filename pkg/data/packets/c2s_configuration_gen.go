@@ -4,14 +4,14 @@ package packets
 
 // Packet IDs for configuration phase (serverbound)
 const (
-	C2SClientInformationConfigurationID int32 = 0
-	C2SCookieResponseConfigurationID    int32 = 1
-	C2SCustomPayloadConfigurationID     int32 = 2
-	C2SFinishConfigurationID            int32 = 3
-	C2SKeepAliveConfigurationID         int32 = 4
-	C2SPongConfigurationID              int32 = 5
-	C2SResourcePackConfigurationID      int32 = 6
-	C2SSelectKnownPacksID               int32 = 7
-	C2SCustomClickActionConfigurationID int32 = 8
-	C2SAcceptCodeOfConductID            int32 = 9
+	C2SClientInformationConfigurationID = 0
+	C2SCookieResponseConfigurationID = 1
+	C2SCustomPayloadConfigurationID = 2
+	C2SFinishConfigurationID = 3
+	C2SKeepAliveConfigurationID = 4
+	C2SPongConfigurationID = 5
+	C2SResourcePackConfigurationID = 6
+	C2SSelectKnownPacksID = 7
+	C2SCustomClickActionConfigurationID = 8
+	C2SAcceptCodeOfConductID = 9
 )

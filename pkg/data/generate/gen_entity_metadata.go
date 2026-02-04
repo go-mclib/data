@@ -71,7 +71,7 @@ func generateSerializers(serializers map[string]SerializerJSON, outPath string) 
 
 	for _, id := range ids {
 		s := serializers[fmt.Sprintf("%d", id)]
-		sb.WriteString(fmt.Sprintf("\tSerializer%s int32 = %d\n", s.Name, id))
+		sb.WriteString(fmt.Sprintf("\tSerializer%s = %d\n", s.Name, id))
 	}
 	sb.WriteString(")\n\n")
 

@@ -4,5 +4,5 @@ package packets
 
 // Packet IDs for handshaking phase (serverbound)
 const (
-	C2SIntentionID int32 = 0
+	C2SIntentionID = 0
 )

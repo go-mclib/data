@@ -4,24 +4,24 @@ package packets
 
 // Packet IDs for configuration phase (clientbound)
 const (
-	S2CCookieRequestConfigurationID       int32 = 0
-	S2CCustomPayloadConfigurationID       int32 = 1
-	S2CDisconnectConfigurationID          int32 = 2
-	S2CFinishConfigurationID              int32 = 3
-	S2CKeepAliveConfigurationID           int32 = 4
-	S2CPingConfigurationID                int32 = 5
-	S2CResetChatID                        int32 = 6
-	S2CRegistryDataID                     int32 = 7
-	S2CResourcePackPopConfigurationID     int32 = 8
-	S2CResourcePackPushConfigurationID    int32 = 9
-	S2CStoreCookieConfigurationID         int32 = 10
-	S2CTransferConfigurationID            int32 = 11
-	S2CUpdateEnabledFeaturesID            int32 = 12
-	S2CUpdateTagsConfigurationID          int32 = 13
-	S2CSelectKnownPacksID                 int32 = 14
-	S2CCustomReportDetailsConfigurationID int32 = 15
-	S2CServerLinksConfigurationID         int32 = 16
-	S2CClearDialogConfigurationID         int32 = 17
-	S2CShowDialogConfigurationID          int32 = 18
-	S2CCodeOfConductID                    int32 = 19
+	S2CCookieRequestConfigurationID = 0
+	S2CCustomPayloadConfigurationID = 1
+	S2CDisconnectConfigurationID = 2
+	S2CFinishConfigurationID = 3
+	S2CKeepAliveConfigurationID = 4
+	S2CPingConfigurationID = 5
+	S2CResetChatID = 6
+	S2CRegistryDataID = 7
+	S2CResourcePackPopConfigurationID = 8
+	S2CResourcePackPushConfigurationID = 9
+	S2CStoreCookieConfigurationID = 10
+	S2CTransferConfigurationID = 11
+	S2CUpdateEnabledFeaturesID = 12
+	S2CUpdateTagsConfigurationID = 13
+	S2CSelectKnownPacksID = 14
+	S2CCustomReportDetailsConfigurationID = 15
+	S2CServerLinksConfigurationID = 16
+	S2CClearDialogConfigurationID = 17
+	S2CShowDialogConfigurationID = 18
+	S2CCodeOfConductID = 19
 )

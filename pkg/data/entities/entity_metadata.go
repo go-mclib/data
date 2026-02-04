@@ -371,3 +371,132 @@ func copyParticle(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	// TODO: implement Particle type, maybe in pkg/data/misc/particles_gen.go or something?
 	return nil
 }
+
+// SerializerName returns the name of a serializer by ID, or empty string if unknown.
+func SerializerName(id int32) string {
+	return serializerNames[id]
+}
+
+// SerializerWireType returns the wire type of a serializer by ID, or empty string if unknown.
+func SerializerWireType(id int32) string {
+	return serializerWireTypes[id]
+}
+
+// FormatMetadataValue returns a human-readable string representation of a metadata value.
+func FormatMetadataValue(serializerID int32, data []byte) string {
+	if len(data) == 0 {
+		return "<empty>"
+	}
+
+	wireType := serializerWireTypes[serializerID]
+	buf := ns.NewReader(data)
+
+	switch wireType {
+	case "byte":
+		if v, err := buf.ReadInt8(); err == nil {
+			return fmt.Sprintf("%d", v)
+		}
+
+	case "varint":
+		if v, err := buf.ReadVarInt(); err == nil {
+			return fmt.Sprintf("%d", v)
+		}
+
+	case "varlong":
+		if v, err := buf.ReadVarLong(); err == nil {
+			return fmt.Sprintf("%d", v)
+		}
+
+	case "float32":
+		if v, err := buf.ReadFloat32(); err == nil {
+			return fmt.Sprintf("%g", v)
+		}
+
+	case "string":
+		if v, err := buf.ReadString(32767); err == nil {
+			return fmt.Sprintf("%q", v)
+		}
+
+	case "bool":
+		if v, err := buf.ReadBool(); err == nil {
+			return fmt.Sprintf("%t", v)
+		}
+
+	case "rotations":
+		x, err1 := buf.ReadFloat32()
+		y, err2 := buf.ReadFloat32()
+		z, err3 := buf.ReadFloat32()
+		if err1 == nil && err2 == nil && err3 == nil {
+			return fmt.Sprintf("Rotations{X: %g, Y: %g, Z: %g}", x, y, z)
+		}
+
+	case "position":
+		if v, err := buf.ReadPosition(); err == nil {
+			return fmt.Sprintf("Position{X: %d, Y: %d, Z: %d}", v.X, v.Y, v.Z)
+		}
+
+	case "optional_position":
+		if present, err := buf.ReadBool(); err == nil {
+			if !present {
+				return "None"
+			}
+			if v, err := buf.ReadPosition(); err == nil {
+				return fmt.Sprintf("Position{X: %d, Y: %d, Z: %d}", v.X, v.Y, v.Z)
+			}
+		}
+
+	case "optional_uuid":
+		if present, err := buf.ReadBool(); err == nil {
+			if !present {
+				return "None"
+			}
+			if v, err := buf.ReadUUID(); err == nil {
+				return fmt.Sprintf("%x-%x-%x-%x-%x", v[0:4], v[4:6], v[6:8], v[8:10], v[10:16])
+			}
+		}
+
+	case "optional_varint":
+		if v, err := buf.ReadVarInt(); err == nil {
+			if v == 0 {
+				return "None"
+			}
+			return fmt.Sprintf("%d", v-1)
+		}
+
+	case "villager_data":
+		vType, err1 := buf.ReadVarInt()
+		profession, err2 := buf.ReadVarInt()
+		level, err3 := buf.ReadVarInt()
+		if err1 == nil && err2 == nil && err3 == nil {
+			return fmt.Sprintf("VillagerData{Type: %d, Profession: %d, Level: %d}", vType, profession, level)
+		}
+
+	case "vector3f":
+		x, err1 := buf.ReadFloat32()
+		y, err2 := buf.ReadFloat32()
+		z, err3 := buf.ReadFloat32()
+		if err1 == nil && err2 == nil && err3 == nil {
+			return fmt.Sprintf("Vec3{X: %g, Y: %g, Z: %g}", x, y, z)
+		}
+
+	case "quaternionf":
+		x, err1 := buf.ReadFloat32()
+		y, err2 := buf.ReadFloat32()
+		z, err3 := buf.ReadFloat32()
+		w, err4 := buf.ReadFloat32()
+		if err1 == nil && err2 == nil && err3 == nil && err4 == nil {
+			return fmt.Sprintf("Quaternion{X: %g, Y: %g, Z: %g, W: %g}", x, y, z, w)
+		}
+
+	case "slot", "nbt", "optional_nbt", "particle", "particle_list",
+		"optional_global_pos", "id_or_inline", "resolvable_profile":
+		// complex types - show hex for now
+		return fmt.Sprintf("0x%x", data)
+
+	case "empty":
+		return "<empty>"
+	}
+
+	// fallback: show hex
+	return fmt.Sprintf("0x%x", data)
+}

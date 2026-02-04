@@ -4,59 +4,59 @@ package entities
 
 // Entity metadata serializer type IDs.
 const (
-	SerializerBYTE                             int32 = 0
-	SerializerINT                              int32 = 1
-	SerializerLONG                             int32 = 2
-	SerializerFLOAT                            int32 = 3
-	SerializerSTRING                           int32 = 4
-	SerializerCOMPONENT                        int32 = 5
-	SerializerOPTIONAL_COMPONENT               int32 = 6
-	SerializerITEM_STACK                       int32 = 7
-	SerializerBOOLEAN                          int32 = 8
-	SerializerROTATIONS                        int32 = 9
-	SerializerBLOCK_POS                        int32 = 10
-	SerializerOPTIONAL_BLOCK_POS               int32 = 11
-	SerializerDIRECTION                        int32 = 12
-	SerializerOPTIONAL_LIVING_ENTITY_REFERENCE int32 = 13
-	SerializerBLOCK_STATE                      int32 = 14
-	SerializerOPTIONAL_BLOCK_STATE             int32 = 15
-	SerializerPARTICLE                         int32 = 16
-	SerializerPARTICLES                        int32 = 17
-	SerializerVILLAGER_DATA                    int32 = 18
-	SerializerOPTIONAL_UNSIGNED_INT            int32 = 19
-	SerializerPOSE                             int32 = 20
-	SerializerCAT_VARIANT                      int32 = 21
-	SerializerCOW_VARIANT                      int32 = 22
-	SerializerWOLF_VARIANT                     int32 = 23
-	SerializerWOLF_SOUND_VARIANT               int32 = 24
-	SerializerFROG_VARIANT                     int32 = 25
-	SerializerPIG_VARIANT                      int32 = 26
-	SerializerCHICKEN_VARIANT                  int32 = 27
-	SerializerZOMBIE_NAUTILUS_VARIANT          int32 = 28
-	SerializerOPTIONAL_GLOBAL_POS              int32 = 29
-	SerializerPAINTING_VARIANT                 int32 = 30
-	SerializerSNIFFER_STATE                    int32 = 31
-	SerializerARMADILLO_STATE                  int32 = 32
-	SerializerCOPPER_GOLEM_STATE               int32 = 33
-	SerializerWEATHERING_COPPER_STATE          int32 = 34
-	SerializerVECTOR3                          int32 = 35
-	SerializerQUATERNION                       int32 = 36
-	SerializerRESOLVABLE_PROFILE               int32 = 37
-	SerializerHUMANOID_ARM                     int32 = 38
+	SerializerBYTE = 0
+	SerializerINT = 1
+	SerializerLONG = 2
+	SerializerFLOAT = 3
+	SerializerSTRING = 4
+	SerializerCOMPONENT = 5
+	SerializerOPTIONAL_COMPONENT = 6
+	SerializerITEM_STACK = 7
+	SerializerBOOLEAN = 8
+	SerializerROTATIONS = 9
+	SerializerBLOCK_POS = 10
+	SerializerOPTIONAL_BLOCK_POS = 11
+	SerializerDIRECTION = 12
+	SerializerOPTIONAL_LIVING_ENTITY_REFERENCE = 13
+	SerializerBLOCK_STATE = 14
+	SerializerOPTIONAL_BLOCK_STATE = 15
+	SerializerPARTICLE = 16
+	SerializerPARTICLES = 17
+	SerializerVILLAGER_DATA = 18
+	SerializerOPTIONAL_UNSIGNED_INT = 19
+	SerializerPOSE = 20
+	SerializerCAT_VARIANT = 21
+	SerializerCOW_VARIANT = 22
+	SerializerWOLF_VARIANT = 23
+	SerializerWOLF_SOUND_VARIANT = 24
+	SerializerFROG_VARIANT = 25
+	SerializerPIG_VARIANT = 26
+	SerializerCHICKEN_VARIANT = 27
+	SerializerZOMBIE_NAUTILUS_VARIANT = 28
+	SerializerOPTIONAL_GLOBAL_POS = 29
+	SerializerPAINTING_VARIANT = 30
+	SerializerSNIFFER_STATE = 31
+	SerializerARMADILLO_STATE = 32
+	SerializerCOPPER_GOLEM_STATE = 33
+	SerializerWEATHERING_COPPER_STATE = 34
+	SerializerVECTOR3 = 35
+	SerializerQUATERNION = 36
+	SerializerRESOLVABLE_PROFILE = 37
+	SerializerHUMANOID_ARM = 38
 )
 
 // serializerNames maps serializer IDs to names.
 var serializerNames = map[int32]string{
-	0:  "BYTE",
-	1:  "INT",
-	2:  "LONG",
-	3:  "FLOAT",
-	4:  "STRING",
-	5:  "COMPONENT",
-	6:  "OPTIONAL_COMPONENT",
-	7:  "ITEM_STACK",
-	8:  "BOOLEAN",
-	9:  "ROTATIONS",
+	0: "BYTE",
+	1: "INT",
+	2: "LONG",
+	3: "FLOAT",
+	4: "STRING",
+	5: "COMPONENT",
+	6: "OPTIONAL_COMPONENT",
+	7: "ITEM_STACK",
+	8: "BOOLEAN",
+	9: "ROTATIONS",
 	10: "BLOCK_POS",
 	11: "OPTIONAL_BLOCK_POS",
 	12: "DIRECTION",
@@ -90,16 +90,16 @@ var serializerNames = map[int32]string{
 
 // serializerWireTypes maps serializer IDs to wire types.
 var serializerWireTypes = map[int32]string{
-	0:  "byte",
-	1:  "varint",
-	2:  "varlong",
-	3:  "float32",
-	4:  "string",
-	5:  "nbt",
-	6:  "optional_nbt",
-	7:  "slot",
-	8:  "bool",
-	9:  "rotations",
+	0: "byte",
+	1: "varint",
+	2: "varlong",
+	3: "float32",
+	4: "string",
+	5: "nbt",
+	6: "optional_nbt",
+	7: "slot",
+	8: "bool",
+	9: "rotations",
 	10: "position",
 	11: "optional_position",
 	12: "varint",

@@ -4,6 +4,6 @@ package packets
 
 // Packet IDs for status phase (serverbound)
 const (
-	C2SStatusRequestID     int32 = 0
-	C2SPingRequestStatusID int32 = 1
+	C2SStatusRequestID = 0
+	C2SPingRequestStatusID = 1
 )

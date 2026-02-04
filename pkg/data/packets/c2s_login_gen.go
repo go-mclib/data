@@ -4,9 +4,9 @@ package packets
 
 // Packet IDs for login phase (serverbound)
 const (
-	C2SHelloID               int32 = 0
-	C2SKeyID                 int32 = 1
-	C2SCustomQueryAnswerID   int32 = 2
-	C2SLoginAcknowledgedID   int32 = 3
-	C2SCookieResponseLoginID int32 = 4
+	C2SHelloID = 0
+	C2SKeyID = 1
+	C2SCustomQueryAnswerID = 2
+	C2SLoginAcknowledgedID = 3
+	C2SCookieResponseLoginID = 4
 )
