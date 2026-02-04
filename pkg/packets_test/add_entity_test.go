@@ -8,13 +8,13 @@ import (
 )
 
 func init() {
-	entityUUID, err := ns.UUIDFromString("0001d206-ae48-0592-62b4-4703b0aeeacc")
+	entityUUID, err := ns.UUIDFromString("884f5b21-b5ee-41da-b734-409451e3bc78")
 	if err != nil {
 		panic(err)
 	}
 
 	capturedPackets[&packets.S2CAddEntity{
-		EntityId:   55,
+		EntityId:   2,
 		EntityUuid: entityUUID,
 		Type:       entities.Item,
 		X:          0,
@@ -29,5 +29,5 @@ func init() {
 		Yaw:     195,
 		HeadYaw: 0,
 		Data:    0,
-	}] = hexToBytesMust("370001d206ae48059262b44703b0aeeacc24e16a3147c01571e220cc8410c04c12066fe16bfe402d4616bd4cf8e239856b93117d00d60000")
+	}] = hexToBytesMust("36000102884f5b21b5ee41dab734409451e3bc78470000000000000000c04d570a3d8000000000000000000000c1f880cee41900c30000")
 }
