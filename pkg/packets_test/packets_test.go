@@ -15,8 +15,39 @@ type packetsToBytes map[jp.Packet][]byte
 
 var capturedPackets packetsToBytes = make(packetsToBytes)
 
-// used in multiple tests
-var poSword = items.NewStack(items.IronSword, 1).
+// attribute modifiers used in test items
+var poSwordAttribs = []items.AttributeModifier{
+	{
+		Type:      "minecraft:attack_damage",
+		Amount:    1000,
+		ID:        "minecraft:2121f7b4-5985-43a0-aa3a-57717d7b15c4",
+		Operation: "add_multiplied_total",
+		Slot:      "any",
+	},
+	{
+		Type:      "minecraft:attack_speed",
+		Amount:    100,
+		ID:        "minecraft:1df199b2-3849-4112-b9f4-7f16d98d9d38",
+		Operation: "add_value",
+		Slot:      "any",
+	},
+}
+
+// NOTE: setter order determines wire encoding order, must match captured data
+// S2C order: attribute_modifiers -> unbreakable -> tooltip_display -> custom_name
+var poSwordS2C = items.NewStack(items.IronSword, 1).
+	SetAttributeModifiers(poSwordAttribs).
+	SetUnbreakable(true).
+	SetTooltipDisplay(&items.TooltipDisplay{
+		HideTooltip:      false,
+		HiddenComponents: []int32{4, 16},
+	}).
+	SetCustomName(&items.ItemNameComponent{
+		Text: "po",
+	})
+
+// C2S order: tooltip_display -> custom_name -> attribute_modifiers -> unbreakable
+var poSwordC2S = items.NewStack(items.IronSword, 1).
 	SetTooltipDisplay(&items.TooltipDisplay{
 		HideTooltip:      false,
 		HiddenComponents: []int32{4, 16},
@@ -24,22 +55,7 @@ var poSword = items.NewStack(items.IronSword, 1).
 	SetCustomName(&items.ItemNameComponent{
 		Text: "po",
 	}).
-	SetAttributeModifiers([]items.AttributeModifier{
-		{
-			Type:      "minecraft:attack_damage",
-			Amount:    1000,
-			ID:        "minecraft:2121f7b4-5985-43a0-aa3a-57717d7b15c4",
-			Operation: "add_multiplied_total",
-			Slot:      "any",
-		},
-		{
-			Type:      "minecraft:attack_speed",
-			Amount:    100,
-			ID:        "minecraft:1df199b2-3849-4112-b9f4-7f16d98d9d38",
-			Operation: "add_value",
-			Slot:      "any",
-		},
-	}).
+	SetAttributeModifiers(poSwordAttribs).
 	SetUnbreakable(true)
 
 func validatePackets(t *testing.T, packets packetsToBytes) {
