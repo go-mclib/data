@@ -40,14 +40,8 @@ func parsePacketID(s string) (int, error) {
 // Returns -1 for states before compression is enabled, 0 for states after.
 func compressionThresholdForState(state string) int {
 	switch state {
-	case "handshake", "status":
+	case "handshake", "status", "login":
 		return -1 // no compression
-	case "login":
-		// Login state is tricky - compression is enabled partway through.
-		// We use -1 (no compression) as the conservative default.
-		// This means compressed login packets won't decode correctly,
-		// but those are rare (only packets after Set Compression).
-		return -1
 	default:
 		// configuration, play - compression is always enabled
 		return 0
@@ -313,12 +307,12 @@ func formatMetadataEntries(v reflect.Value, indent string) string {
 	for i := 0; i < v.Len(); i++ {
 		entryVal := v.Index(i)
 
-		// Get fields from MetadataEntry struct
+		// get fields from MetadataEntry struct
 		index := byte(entryVal.FieldByName("Index").Uint())
 		serializer := int32(entryVal.FieldByName("Serializer").Int())
 		dataField := entryVal.FieldByName("Data")
 
-		// Extract data bytes
+		// extract data bytes
 		data := make([]byte, dataField.Len())
 		for j := 0; j < dataField.Len(); j++ {
 			data[j] = byte(dataField.Index(j).Uint())
@@ -393,7 +387,7 @@ func main() {
 			continue
 		}
 
-		// Parse wire format (includes length, compression header, packet ID)
+		// parse wire format (includes length, compression header, packet ID)
 		compressionThreshold := compressionThresholdForState(cap.State)
 		wirePacket, err := jp.ReadWirePacketFrom(bytes.NewReader(rawData), compressionThreshold)
 		if err != nil {
@@ -402,7 +396,7 @@ func main() {
 			continue
 		}
 
-		// Verify packet ID matches
+		// verify packet ID matches
 		if int(wirePacket.PacketID) != packetID {
 			fmt.Printf("// [%d] WARNING: packet ID mismatch: JSON says 0x%02X, wire says 0x%02X\n\n",
 				i, packetID, wirePacket.PacketID)

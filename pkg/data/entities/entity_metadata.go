@@ -3,6 +3,7 @@ package entities
 import (
 	"fmt"
 
+	"github.com/go-mclib/data/pkg/data/items"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/go-mclib/protocol/nbt"
 )
@@ -147,7 +148,12 @@ func readSerializerValue(buf *ns.PacketBuffer, serializerID int32) ([]byte, erro
 		}
 
 	case "slot":
-		if err := w.CopySlot(buf); err != nil {
+		// read slot with items decoder, then re-encode to bytes
+		slot, err := buf.ReadSlot(items.Decoder())
+		if err != nil {
+			return nil, err
+		}
+		if err := w.WriteSlot(slot); err != nil {
 			return nil, err
 		}
 
