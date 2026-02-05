@@ -1,6 +1,6 @@
 // Code generated for Minecraft 1.21.11 (Protocol 774); DO NOT EDIT.
 
-package packets
+package packet_ids
 
 // Packet IDs for configuration phase (clientbound)
 const (

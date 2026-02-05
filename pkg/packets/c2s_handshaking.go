@@ -1,7 +1,7 @@
 package packets
 
 import (
-	packets_data "github.com/go-mclib/data/pkg/data/packets"
+	"github.com/go-mclib/data/pkg/data/packet_ids"
 	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
@@ -23,7 +23,7 @@ type C2SIntention struct {
 	Intent ns.VarInt
 }
 
-func (p *C2SIntention) ID() ns.VarInt   { return ns.VarInt(packets_data.C2SIntentionID) }
+func (p *C2SIntention) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SIntentionID) }
 func (p *C2SIntention) State() jp.State { return jp.StateHandshake }
 func (p *C2SIntention) Bound() jp.Bound { return jp.C2S }
 

@@ -32,7 +32,7 @@ func main() {
 	generateItems(items, registries, filepath.Join(outDir, "items", "items_gen.go"))
 	generateComponentTypes(registries, filepath.Join(outDir, "items", "item_components_gen.go"))
 	generateComponentCodecs(registries, filepath.Join(genDir, "generate", "component_metadata.include.json"), filepath.Join(outDir, "items", "item_components_codec_gen.go"))
-	generatePackets(packets, filepath.Join(outDir, "packets"))
+	generatePacketIds(packets, filepath.Join(outDir, "packet_ids"))
 	generateLang(langPath, filepath.Join(outDir, "lang", "lang_gen.go"))
 	generateEntities(registries, filepath.Join(outDir, "entities", "entities_gen.go"))
 	generateEntityMetadata(filepath.Join(baseDir, "entity_metadata.include.json"), filepath.Join(outDir, "entities"))

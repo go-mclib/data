@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-// generatePackets generates packet ID constants organized by phase and bound
-func generatePackets(packets PacketsJSON, outDir string) {
+// generatePacketIds generates packet ID constants organized by phase and bound
+func generatePacketIds(packets PacketsJSON, outDir string) {
 	// first, find which packet names need phase suffixes (appear in multiple phases with same bound)
 	needsSuffix := findPacketsNeedingSuffix(packets)
 
@@ -80,7 +80,7 @@ func generatePacketFile(pktMap map[string]PacketEntryJSON, prefix, phaseSuffix s
 	})
 
 	var sb strings.Builder
-	sb.WriteString(generatedFileHeader("packets"))
+	sb.WriteString(generatedFileHeader("packet_ids"))
 	sb.WriteString("// Packet IDs for " + strings.ToLower(phaseSuffix) + " phase (" + bound + ")\n")
 	sb.WriteString("const (\n")
 

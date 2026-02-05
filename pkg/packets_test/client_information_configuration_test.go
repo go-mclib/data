@@ -5,7 +5,5 @@ import (
 )
 
 func init() {
-	capturedPackets[&packets.C2SClientInformationConfiguration{
-		
-	}] = hexToBytesMust("03")
+	capturedPackets[&packets.C2SClientInformationConfiguration{}] = hexToBytesMust("03")
 }

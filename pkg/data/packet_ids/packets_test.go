@@ -1,9 +1,9 @@
-package packets_test
+package packet_ids_test
 
 import (
 	"testing"
 
-	"github.com/go-mclib/data/pkg/data/packets"
+	"github.com/go-mclib/data/pkg/data/packet_ids"
 )
 
 func TestPlayPacketIDs(t *testing.T) {
@@ -13,11 +13,11 @@ func TestPlayPacketIDs(t *testing.T) {
 		name string
 		id   int32
 	}{
-		{"C2SClientInformationPlayID", packets.C2SClientInformationPlayID},
-		{"C2SMovePlayerPosID", packets.C2SMovePlayerPosID},
-		{"C2SChatID", packets.C2SChatID},
-		{"S2CLoginID", packets.S2CLoginID},
-		{"S2CPlayerPositionID", packets.S2CPlayerPositionID},
+		{"C2SClientInformationPlayID", packet_ids.C2SClientInformationPlayID},
+		{"C2SMovePlayerPosID", packet_ids.C2SMovePlayerPosID},
+		{"C2SChatID", packet_ids.C2SChatID},
+		{"S2CLoginID", packet_ids.S2CLoginID},
+		{"S2CPlayerPositionID", packet_ids.S2CPlayerPositionID},
 	}
 
 	for _, tt := range tests {
@@ -31,40 +31,40 @@ func TestPlayPacketIDs(t *testing.T) {
 
 func TestLoginPacketIDs(t *testing.T) {
 	// login phase packets
-	if packets.C2SHelloID < 0 {
+	if packet_ids.C2SHelloID < 0 {
 		t.Error("C2SHelloID should be non-negative")
 	}
-	if packets.S2CHelloID < 0 {
+	if packet_ids.S2CHelloID < 0 {
 		t.Error("S2CHelloID should be non-negative")
 	}
-	if packets.S2CLoginFinishedID < 0 {
+	if packet_ids.S2CLoginFinishedID < 0 {
 		t.Error("S2CLoginFinishedID should be non-negative")
 	}
 }
 
 func TestConfigurationPacketIDs(t *testing.T) {
 	// configuration phase packets
-	if packets.C2SClientInformationConfigurationID < 0 {
+	if packet_ids.C2SClientInformationConfigurationID < 0 {
 		t.Error("C2SClientInformationConfigurationID should be non-negative")
 	}
-	if packets.S2CFinishConfigurationID < 0 {
+	if packet_ids.S2CFinishConfigurationID < 0 {
 		t.Error("S2CFinishConfigurationID should be non-negative")
 	}
 }
 
 func TestHandshakingPacketIDs(t *testing.T) {
 	// handshaking phase has only client intention
-	if packets.C2SIntentionID < 0 {
+	if packet_ids.C2SIntentionID < 0 {
 		t.Error("C2SIntentionID should be non-negative")
 	}
 }
 
 func TestStatusPacketIDs(t *testing.T) {
 	// status phase packets
-	if packets.C2SStatusRequestID < 0 {
+	if packet_ids.C2SStatusRequestID < 0 {
 		t.Error("C2SStatusRequestID should be non-negative")
 	}
-	if packets.S2CStatusResponseID < 0 {
+	if packet_ids.S2CStatusResponseID < 0 {
 		t.Error("S2CStatusResponseID should be non-negative")
 	}
 }
