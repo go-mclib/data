@@ -8,14 +8,18 @@ import (
 )
 
 func init() {
-	entityUUID, err := ns.UUIDFromString("884f5b21-b5ee-41da-b734-409451e3bc78")
+	poSwordItem()
+	immortalSnailEntity()
+}
+
+func poSwordItem() {
+	poItemUUID, err := ns.UUIDFromString("884f5b21-b5ee-41da-b734-409451e3bc78")
 	if err != nil {
 		panic(err)
 	}
-
 	capturedPackets[&packets.S2CAddEntity{
 		EntityId:   2,
-		EntityUuid: entityUUID,
+		EntityUuid: poItemUUID,
 		Type:       entities.Item,
 		X:          0,
 		Y:          -58.68000000715256,
@@ -30,4 +34,8 @@ func init() {
 		HeadYaw: 0,
 		Data:    0,
 	}] = hexToBytesMust("36000102884f5b21b5ee41dab734409451e3bc78470000000000000000c04d570a3d8000000000000000000000c1f880cee41900c30000")
+}
+
+func immortalSnailEntity() {
+	
 }
