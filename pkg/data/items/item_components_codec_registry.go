@@ -13,13 +13,7 @@ func init() {
 	// struct components with dedicated codecs
 	RegisterCodec(ComponentCustomName, &customNameCodec{})
 	RegisterCodec(ComponentItemName, &itemNameCodec{})
-	RegisterCodec(ComponentTooltipDisplay, &tooltipDisplayCodec{})
 	RegisterCodec(ComponentAttributeModifiers, &attributeModifiersCodec{})
-	RegisterCodec(ComponentFood, &foodCodec{})
-	RegisterCodec(ComponentWeapon, &weaponCodec{})
-	RegisterCodec(ComponentEnchantable, &enchantableCodec{})
-	RegisterCodec(ComponentUseCooldown, &useCooldownCodec{})
-	RegisterCodec(ComponentFireworks, &fireworksCodec{})
 	RegisterCodec(ComponentRarity, &rarityCodec{})
 
 	// lore, enchantments, and tool codecs (full implementations)

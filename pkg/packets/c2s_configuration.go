@@ -1,8 +1,6 @@
 package packets
 
 import (
-	"github.com/go-mclib/data/pkg/data/packet_ids"
-	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/go-mclib/protocol/nbt"
 )
@@ -32,12 +30,6 @@ type C2SClientInformationConfiguration struct {
 	// 0: all, 1: decreased, 2: minimal.
 	ParticleStatus ns.VarInt
 }
-
-func (p *C2SClientInformationConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.C2SClientInformationConfigurationID)
-}
-func (p *C2SClientInformationConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *C2SClientInformationConfiguration) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SClientInformationConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -110,12 +102,6 @@ type C2SCookieResponseConfiguration struct {
 	Payload ns.PrefixedOptional[ns.ByteArray]
 }
 
-func (p *C2SCookieResponseConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.C2SCookieResponseConfigurationID)
-}
-func (p *C2SCookieResponseConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *C2SCookieResponseConfiguration) Bound() jp.Bound { return jp.C2S }
-
 func (p *C2SCookieResponseConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Key, err = buf.ReadIdentifier(); err != nil {
@@ -147,12 +133,6 @@ type C2SCustomPayloadConfiguration struct {
 	Data ns.ByteArray
 }
 
-func (p *C2SCustomPayloadConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.C2SCustomPayloadConfigurationID)
-}
-func (p *C2SCustomPayloadConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *C2SCustomPayloadConfiguration) Bound() jp.Bound { return jp.C2S }
-
 func (p *C2SCustomPayloadConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Channel, err = buf.ReadIdentifier(); err != nil {
@@ -177,11 +157,6 @@ func (p *C2SCustomPayloadConfiguration) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Acknowledge_Finish_Configuration
 type C2SFinishConfiguration struct{}
 
-func (p *C2SFinishConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.C2SFinishConfigurationID)
-}
-func (p *C2SFinishConfiguration) State() jp.State              { return jp.StateConfiguration }
-func (p *C2SFinishConfiguration) Bound() jp.Bound              { return jp.C2S }
 func (p *C2SFinishConfiguration) Read(*ns.PacketBuffer) error  { return nil }
 func (p *C2SFinishConfiguration) Write(*ns.PacketBuffer) error { return nil }
 
@@ -194,12 +169,6 @@ func (p *C2SFinishConfiguration) Write(*ns.PacketBuffer) error { return nil }
 type C2SKeepAliveConfiguration struct {
 	KeepAliveId ns.Int64
 }
-
-func (p *C2SKeepAliveConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.C2SKeepAliveConfigurationID)
-}
-func (p *C2SKeepAliveConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *C2SKeepAliveConfiguration) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SKeepAliveConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -220,10 +189,6 @@ type C2SPongConfiguration struct {
 	Id ns.Int32
 }
 
-func (p *C2SPongConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SPongConfigurationID) }
-func (p *C2SPongConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *C2SPongConfiguration) Bound() jp.Bound { return jp.C2S }
-
 func (p *C2SPongConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Id, err = buf.ReadInt32()
@@ -243,12 +208,6 @@ type C2SResourcePackConfiguration struct {
 	// Result ID (see protocol docs).
 	Result ns.VarInt
 }
-
-func (p *C2SResourcePackConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.C2SResourcePackConfigurationID)
-}
-func (p *C2SResourcePackConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *C2SResourcePackConfiguration) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SResourcePackConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -281,10 +240,6 @@ type KnownPack struct {
 type C2SSelectKnownPacks struct {
 	KnownPacks []KnownPack
 }
-
-func (p *C2SSelectKnownPacks) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSelectKnownPacksID) }
-func (p *C2SSelectKnownPacks) State() jp.State { return jp.StateConfiguration }
-func (p *C2SSelectKnownPacks) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SSelectKnownPacks) Read(buf *ns.PacketBuffer) error {
 	count, err := buf.ReadVarInt()
@@ -335,12 +290,6 @@ type C2SCustomClickActionConfiguration struct {
 	// The data to send with the click action. May be a TAG_END (0).
 	Payload nbt.Tag
 }
-
-func (p *C2SCustomClickActionConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.C2SCustomClickActionConfigurationID)
-}
-func (p *C2SCustomClickActionConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *C2SCustomClickActionConfiguration) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SCustomClickActionConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error

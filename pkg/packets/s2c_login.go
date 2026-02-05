@@ -1,8 +1,6 @@
 package packets
 
 import (
-	"github.com/go-mclib/data/pkg/data/packet_ids"
-	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
@@ -13,10 +11,6 @@ type S2CLoginDisconnectLogin struct {
 	// The reason why the player was disconnected.
 	Reason ns.TextComponent
 }
-
-func (p *S2CLoginDisconnectLogin) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLoginDisconnectID) }
-func (p *S2CLoginDisconnectLogin) State() jp.State { return jp.StateLogin }
-func (p *S2CLoginDisconnectLogin) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CLoginDisconnectLogin) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -43,10 +37,6 @@ type S2CHello struct {
 	// Whether the client should attempt to authenticate through mojang servers.
 	ShouldAuthenticate ns.Boolean
 }
-
-func (p *S2CHello) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CHelloID) }
-func (p *S2CHello) State() jp.State { return jp.StateLogin }
-func (p *S2CHello) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CHello) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -96,10 +86,6 @@ type GameProfile struct {
 type S2CLoginFinished struct {
 	Profile GameProfile
 }
-
-func (p *S2CLoginFinished) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLoginFinishedID) }
-func (p *S2CLoginFinished) State() jp.State { return jp.StateLogin }
-func (p *S2CLoginFinished) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CLoginFinished) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -167,10 +153,6 @@ type S2CLoginCompression struct {
 	Threshold ns.VarInt
 }
 
-func (p *S2CLoginCompression) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLoginCompressionID) }
-func (p *S2CLoginCompression) State() jp.State { return jp.StateLogin }
-func (p *S2CLoginCompression) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CLoginCompression) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Threshold, err = buf.ReadVarInt()
@@ -194,10 +176,6 @@ type S2CCustomQuery struct {
 	// Any data, depending on the channel.
 	Data ns.ByteArray
 }
-
-func (p *S2CCustomQuery) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCustomQueryID) }
-func (p *S2CCustomQuery) State() jp.State { return jp.StateLogin }
-func (p *S2CCustomQuery) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CCustomQuery) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -230,12 +208,6 @@ type S2CCookieRequestLogin struct {
 	// The identifier of the cookie.
 	Key ns.Identifier
 }
-
-func (p *S2CCookieRequestLogin) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CCookieRequestLoginID)
-}
-func (p *S2CCookieRequestLogin) State() jp.State { return jp.StateLogin }
-func (p *S2CCookieRequestLogin) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CCookieRequestLogin) Read(buf *ns.PacketBuffer) error {
 	var err error

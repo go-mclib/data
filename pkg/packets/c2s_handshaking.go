@@ -1,8 +1,8 @@
+//go:generate go run generate.go .
+
 package packets
 
 import (
-	"github.com/go-mclib/data/pkg/data/packet_ids"
-	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
@@ -22,10 +22,6 @@ type C2SIntention struct {
 	// 1 for Status, 2 for Login, 3 for Transfer.
 	Intent ns.VarInt
 }
-
-func (p *C2SIntention) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SIntentionID) }
-func (p *C2SIntention) State() jp.State { return jp.StateHandshake }
-func (p *C2SIntention) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SIntention) Read(buf *ns.PacketBuffer) error {
 	var err error

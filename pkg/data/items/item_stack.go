@@ -2,7 +2,6 @@ package items
 
 import (
 	"fmt"
-	"slices"
 
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
@@ -14,10 +13,6 @@ type ItemStack struct {
 	ID         int32
 	Count      int32
 	Components *Components
-
-	// componentOrder preserves the order components appeared in the original packet.
-	// Used to maintain byte-for-byte compatibility when re-encoding.
-	componentOrder []int32
 }
 
 // EmptyStack returns an empty item stack.
@@ -52,12 +47,6 @@ func FromSlot(slot ns.Slot) (*ItemStack, error) {
 	defaults := DefaultComponents(int32(slot.ItemID))
 	components := defaults.Clone()
 
-	// capture component order for re-encoding
-	var order []int32
-	for _, raw := range slot.Components.Add {
-		order = append(order, int32(raw.ID))
-	}
-
 	// apply added components
 	for _, raw := range slot.Components.Add {
 		if err := applyComponent(components, int32(raw.ID), raw.Data); err != nil {
@@ -71,17 +60,15 @@ func FromSlot(slot ns.Slot) (*ItemStack, error) {
 	}
 
 	return &ItemStack{
-		ID:             int32(slot.ItemID),
-		Count:          int32(slot.Count),
-		Components:     components,
-		componentOrder: order,
+		ID:         int32(slot.ItemID),
+		Count:      int32(slot.Count),
+		Components: components,
 	}, nil
 }
 
 // ToSlot converts the ItemStack back to a raw net_structures.Slot.
 // Only components that differ from the item's defaults are encoded.
-// If the ItemStack was created from FromSlot, the original component order is preserved.
-// Otherwise, components are written in ascending ID order.
+// Components are always written in ascending ID order.
 func (s *ItemStack) ToSlot() (ns.Slot, error) {
 	if s.IsEmpty() {
 		return ns.EmptySlot(), nil
@@ -90,316 +77,234 @@ func (s *ItemStack) ToSlot() (ns.Slot, error) {
 	slot := ns.NewSlot(ns.VarInt(s.ID), ns.VarInt(s.Count))
 	defaults := DefaultComponents(s.ID)
 
-	// collect which components differ
-	differing := make(map[int32]bool)
-	hasValue := make(map[int32]bool)
 	for id := int32(0); id <= MaxComponentID; id++ {
 		differs, hv := componentDiffers(s.Components, defaults, id)
-		if differs {
-			differing[id] = true
-			hasValue[id] = hv
+		if !differs {
+			continue
 		}
-	}
-
-	// helper to add a component
-	addComponent := func(id int32) error {
-		if !differing[id] {
-			return nil
-		}
-		delete(differing, id) // mark as processed
-		if hasValue[id] {
+		if hv {
 			data, err := encodeComponent(s.Components, id)
 			if err != nil {
-				return fmt.Errorf("encode component %d: %w", id, err)
+				return ns.Slot{}, fmt.Errorf("encode component %d: %w", id, err)
 			}
 			slot.AddComponent(ns.VarInt(id), data)
 		} else {
 			slot.RemoveComponent(ns.VarInt(id))
-		}
-		return nil
-	}
-
-	// add components in preserved order first (from original packet)
-	for _, id := range s.componentOrder {
-		if err := addComponent(id); err != nil {
-			return ns.Slot{}, err
-		}
-	}
-
-	// add remaining components in ID order
-	for id := int32(0); id <= MaxComponentID; id++ {
-		if err := addComponent(id); err != nil {
-			return ns.Slot{}, err
 		}
 	}
 
 	return slot, nil
 }
 
-// recordComponentOrder adds a component ID to the order list if not already present.
-// component order is DETERMINISTIC - follows insertion order into Reference2ObjectArrayMap in Java source code
-// the order depends on how the item was created:
-// - for /give commands: order components appear in the command string
-// - for UI modifications: order player modified components in creative mode
-// - for item initialization: order Item.Properties.component() was called
-func (s *ItemStack) recordComponentOrder(id int32) {
-	if slices.Contains(s.componentOrder, id) {
-		return
-	}
-	s.componentOrder = append(s.componentOrder, id)
-}
-
-// Builder methods - each sets a component and records its order for encoding.
+// Builder methods for setting components.
 
 func (s *ItemStack) SetAttributeModifiers(v []AttributeModifier) *ItemStack {
 	s.Components.AttributeModifiers = v
-	s.recordComponentOrder(ComponentAttributeModifiers)
 	return s
 }
 
 func (s *ItemStack) SetBlocksAttacks(v *BlocksAttacks) *ItemStack {
 	s.Components.BlocksAttacks = v
-	s.recordComponentOrder(ComponentBlocksAttacks)
 	return s
 }
 
 func (s *ItemStack) SetBreakSound(v string) *ItemStack {
 	s.Components.BreakSound = v
-	s.recordComponentOrder(ComponentBreakSound)
 	return s
 }
 
 func (s *ItemStack) SetConsumable(v *Consumable) *ItemStack {
 	s.Components.Consumable = v
-	s.recordComponentOrder(ComponentConsumable)
 	return s
 }
 
 func (s *ItemStack) SetCustomName(v *ItemNameComponent) *ItemStack {
 	s.Components.CustomName = v
-	s.recordComponentOrder(ComponentCustomName)
 	return s
 }
 
 func (s *ItemStack) SetDamage(v int32) *ItemStack {
 	s.Components.Damage = v
-	s.recordComponentOrder(ComponentDamage)
 	return s
 }
 
 func (s *ItemStack) SetDamageResistant(v *DamageResistant) *ItemStack {
 	s.Components.DamageResistant = v
-	s.recordComponentOrder(ComponentDamageResistant)
 	return s
 }
 
 func (s *ItemStack) SetDamageType(v string) *ItemStack {
 	s.Components.DamageType = v
-	s.recordComponentOrder(ComponentDamageType)
 	return s
 }
 
 func (s *ItemStack) SetDeathProtection(v *DeathProtection) *ItemStack {
 	s.Components.DeathProtection = v
-	s.recordComponentOrder(ComponentDeathProtection)
 	return s
 }
 
 func (s *ItemStack) SetEnchantable(v *Enchantable) *ItemStack {
 	s.Components.Enchantable = v
-	s.recordComponentOrder(ComponentEnchantable)
 	return s
 }
 
 func (s *ItemStack) SetEnchantments(v map[string]int32) *ItemStack {
 	s.Components.Enchantments = v
-	s.recordComponentOrder(ComponentEnchantments)
 	return s
 }
 
 func (s *ItemStack) SetEquippable(v *Equippable) *ItemStack {
 	s.Components.Equippable = v
-	s.recordComponentOrder(ComponentEquippable)
 	return s
 }
 
 func (s *ItemStack) SetFireworks(v *Fireworks) *ItemStack {
 	s.Components.Fireworks = v
-	s.recordComponentOrder(ComponentFireworks)
 	return s
 }
 
 func (s *ItemStack) SetFood(v *Food) *ItemStack {
 	s.Components.Food = v
-	s.recordComponentOrder(ComponentFood)
 	return s
 }
 
 func (s *ItemStack) SetGlider(v bool) *ItemStack {
 	s.Components.Glider = v
-	s.recordComponentOrder(ComponentGlider)
 	return s
 }
 
 func (s *ItemStack) SetInstrument(v string) *ItemStack {
 	s.Components.Instrument = v
-	s.recordComponentOrder(ComponentInstrument)
 	return s
 }
 
 func (s *ItemStack) SetItemModel(v string) *ItemStack {
 	s.Components.ItemModel = v
-	s.recordComponentOrder(ComponentItemModel)
 	return s
 }
 
 func (s *ItemStack) SetItemName(v *ItemNameComponent) *ItemStack {
 	s.Components.ItemName = v
-	s.recordComponentOrder(ComponentItemName)
 	return s
 }
 
 func (s *ItemStack) SetJukeboxPlayable(v string) *ItemStack {
 	s.Components.JukeboxPlayable = v
-	s.recordComponentOrder(ComponentJukeboxPlayable)
 	return s
 }
 
 func (s *ItemStack) SetKineticWeapon(v *KineticWeapon) *ItemStack {
 	s.Components.KineticWeapon = v
-	s.recordComponentOrder(ComponentKineticWeapon)
 	return s
 }
 
 func (s *ItemStack) SetLore(v []string) *ItemStack {
 	s.Components.Lore = v
-	s.recordComponentOrder(ComponentLore)
 	return s
 }
 
 func (s *ItemStack) SetMapColor(v int32) *ItemStack {
 	s.Components.MapColor = v
-	s.recordComponentOrder(ComponentMapColor)
 	return s
 }
 
 func (s *ItemStack) SetMaxDamage(v int32) *ItemStack {
 	s.Components.MaxDamage = v
-	s.recordComponentOrder(ComponentMaxDamage)
 	return s
 }
 
 func (s *ItemStack) SetMaxStackSize(v int32) *ItemStack {
 	s.Components.MaxStackSize = v
-	s.recordComponentOrder(ComponentMaxStackSize)
 	return s
 }
 
 func (s *ItemStack) SetMinimumAttackCharge(v float64) *ItemStack {
 	s.Components.MinimumAttackCharge = v
-	s.recordComponentOrder(ComponentMinimumAttackCharge)
 	return s
 }
 
 func (s *ItemStack) SetOminousBottleAmplifier(v int32) *ItemStack {
 	s.Components.OminousBottleAmplifier = v
-	s.recordComponentOrder(ComponentOminousBottleAmplifier)
 	return s
 }
 
 func (s *ItemStack) SetPiercingWeapon(v *PiercingWeapon) *ItemStack {
 	s.Components.PiercingWeapon = v
-	s.recordComponentOrder(ComponentPiercingWeapon)
 	return s
 }
 
 func (s *ItemStack) SetPotionContents(v *PotionContents) *ItemStack {
 	s.Components.PotionContents = v
-	s.recordComponentOrder(ComponentPotionContents)
 	return s
 }
 
 func (s *ItemStack) SetPotionDurationScale(v float64) *ItemStack {
 	s.Components.PotionDurationScale = v
-	s.recordComponentOrder(ComponentPotionDurationScale)
 	return s
 }
 
 func (s *ItemStack) SetProvidesBannerPatterns(v string) *ItemStack {
 	s.Components.ProvidesBannerPatterns = v
-	s.recordComponentOrder(ComponentProvidesBannerPatterns)
 	return s
 }
 
 func (s *ItemStack) SetProvidesTrimMaterial(v string) *ItemStack {
 	s.Components.ProvidesTrimMaterial = v
-	s.recordComponentOrder(ComponentProvidesTrimMaterial)
 	return s
 }
 
 func (s *ItemStack) SetRarity(v string) *ItemStack {
 	s.Components.Rarity = v
-	s.recordComponentOrder(ComponentRarity)
 	return s
 }
 
 func (s *ItemStack) SetRepairable(v *Repairable) *ItemStack {
 	s.Components.Repairable = v
-	s.recordComponentOrder(ComponentRepairable)
 	return s
 }
 
 func (s *ItemStack) SetRepairCost(v int32) *ItemStack {
 	s.Components.RepairCost = v
-	s.recordComponentOrder(ComponentRepairCost)
 	return s
 }
 
 func (s *ItemStack) SetStoredEnchantments(v map[string]int32) *ItemStack {
 	s.Components.StoredEnchantments = v
-	s.recordComponentOrder(ComponentStoredEnchantments)
 	return s
 }
 
 func (s *ItemStack) SetTool(v *Tool) *ItemStack {
 	s.Components.Tool = v
-	s.recordComponentOrder(ComponentTool)
 	return s
 }
 
 func (s *ItemStack) SetTooltipDisplay(v *TooltipDisplay) *ItemStack {
 	s.Components.TooltipDisplay = v
-	s.recordComponentOrder(ComponentTooltipDisplay)
 	return s
 }
 
 func (s *ItemStack) SetUnbreakable(v bool) *ItemStack {
 	s.Components.Unbreakable = v
-	s.recordComponentOrder(ComponentUnbreakable)
 	return s
 }
 
 func (s *ItemStack) SetUseCooldown(v *UseCooldown) *ItemStack {
 	s.Components.UseCooldown = v
-	s.recordComponentOrder(ComponentUseCooldown)
 	return s
 }
 
 func (s *ItemStack) SetUseEffects(v *UseEffects) *ItemStack {
 	s.Components.UseEffects = v
-	s.recordComponentOrder(ComponentUseEffects)
 	return s
 }
 
 func (s *ItemStack) SetUseRemainder(v *UseRemainder) *ItemStack {
 	s.Components.UseRemainder = v
-	s.recordComponentOrder(ComponentUseRemainder)
 	return s
 }
 
 func (s *ItemStack) SetWeapon(v *Weapon) *ItemStack {
 	s.Components.Weapon = v
-	s.recordComponentOrder(ComponentWeapon)
 	return s
 }
 

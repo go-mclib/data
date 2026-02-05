@@ -6,25 +6,35 @@ Update hard-coded data logic for a new Minecraft version.
 
 This prompt covers hand-written data logic that cannot be auto-generated from server reports:
 
-- **Item component encoders/decoders**: `pkg/data/items/item_stack_codecs.go`
-- **Custom packet decoders**: `pkg/decoders/`
+- **Item component codecs**: `pkg/data/items/item_components_codec.go` (hand-written), `pkg/data/items/item_components_codec_gen.go` (auto-generated from metadata)
+- **Codec registry**: `pkg/data/items/item_components_codec_registry.go`
+- **Component metadata**: `pkg/data/generate/component_metadata.include.json`
 
 ## Item Component Codecs
 
-### What needs updating
+### Architecture
 
-The codec functions handle item component wire format:
+Each component has a `ComponentCodec` implementing:
 
-- `decodeComponentWire()` - reads components from wire format
-- `encodeComponentWire()` - writes components to wire format
+- `DecodeWire(buf)` - reads wire bytes into an intermediate representation
+- `Apply(stack, decoded)` - applies decoded data to the typed `Components` struct
+- `Clear(stack)` - resets the component to zero value
+- `Differs(stack, defaults)` - checks if a component differs from defaults
+- `Encode(stack, buf)` - writes the component to wire format
 
-When Minecraft adds, removes, or changes component structures:
+Codecs are registered in `item_components_codec_registry.go` via `RegisterCodec()`.
 
-1. **New components**: Add a new `case ComponentXxx:` block to both functions
-2. **Changed format**: Update the read/write sequence in the existing case
-3. **Removed components**: Remove the case (or keep for backwards compat)
+### Auto-generated codecs
 
-### How to find changes
+Simple struct codecs (Food, Weapon, Enchantable, TooltipDisplay, UseCooldown, Fireworks) are generated from field-level metadata in `component_metadata.include.json`. To add or update these:
+
+1. Update `wireFormat` in `component_metadata.include.json` with field definitions
+2. Run `cd pkg/data && go generate ./...`
+3. The generator produces codec implementations in `item_components_codec_gen.go`
+
+### Hand-written codecs
+
+Complex codecs (enchantments, attribute modifiers, lore, tool rules, etc.) remain hand-written in `item_components_codec.go`. When Minecraft changes these:
 
 1. **Diff decompiled source**:
 
@@ -43,15 +53,6 @@ When Minecraft adds, removes, or changes component structures:
    diff ./vanilla_server_reports/generated/reports/registries.json \
         ./vanilla_server_reports_previous/generated/reports/registries.json
    ```
-
-### Typed component encoding
-
-For components that have typed Go struct fields in `Components`:
-
-1. Update `applyComponent()` to parse wire bytes into typed fields
-2. Update `encodeComponent()` to encode typed fields back to wire bytes
-3. Update `clearComponent()` to handle removal
-4. Update `componentDiffers()` to detect changes from defaults
 
 ### Wire format patterns
 

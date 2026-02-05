@@ -3,8 +3,6 @@ package packets
 import (
 	"github.com/go-mclib/data/pkg/data/entities"
 	"github.com/go-mclib/data/pkg/data/items"
-	"github.com/go-mclib/data/pkg/data/packet_ids"
-	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/go-mclib/protocol/nbt"
 )
@@ -14,9 +12,6 @@ import (
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Bundle_Delimiter
 type S2CBundleDelimiter struct{}
 
-func (p *S2CBundleDelimiter) ID() ns.VarInt                { return ns.VarInt(packet_ids.S2CBundleDelimiterID) }
-func (p *S2CBundleDelimiter) State() jp.State              { return jp.StatePlay }
-func (p *S2CBundleDelimiter) Bound() jp.Bound              { return jp.S2C }
 func (p *S2CBundleDelimiter) Read(*ns.PacketBuffer) error  { return nil }
 func (p *S2CBundleDelimiter) Write(*ns.PacketBuffer) error { return nil }
 
@@ -36,10 +31,6 @@ type S2CAddEntity struct {
 	HeadYaw    ns.Angle
 	Data       ns.VarInt
 }
-
-func (p *S2CAddEntity) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CAddEntityID) }
-func (p *S2CAddEntity) State() jp.State { return jp.StatePlay }
-func (p *S2CAddEntity) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CAddEntity) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -119,10 +110,6 @@ type S2CAnimate struct {
 	Animation ns.Uint8
 }
 
-func (p *S2CAnimate) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CAnimateID) }
-func (p *S2CAnimate) State() jp.State { return jp.StatePlay }
-func (p *S2CAnimate) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CAnimate) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
@@ -146,10 +133,6 @@ type S2CAwardStats struct {
 	Statistics ns.ByteArray
 }
 
-func (p *S2CAwardStats) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CAwardStatsID) }
-func (p *S2CAwardStats) State() jp.State { return jp.StatePlay }
-func (p *S2CAwardStats) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CAwardStats) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Statistics, err = buf.ReadByteArray(1048576)
@@ -166,10 +149,6 @@ func (p *S2CAwardStats) Write(buf *ns.PacketBuffer) error {
 type S2CBlockChangedAck struct {
 	SequenceId ns.VarInt
 }
-
-func (p *S2CBlockChangedAck) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CBlockChangedAckID) }
-func (p *S2CBlockChangedAck) State() jp.State { return jp.StatePlay }
-func (p *S2CBlockChangedAck) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CBlockChangedAck) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -189,10 +168,6 @@ type S2CBlockDestruction struct {
 	Location     ns.Position
 	DestroyStage ns.Uint8
 }
-
-func (p *S2CBlockDestruction) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CBlockDestructionID) }
-func (p *S2CBlockDestruction) State() jp.State { return jp.StatePlay }
-func (p *S2CBlockDestruction) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CBlockDestruction) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -224,10 +199,6 @@ type S2CBlockEntityData struct {
 	Type     ns.VarInt
 	NbtData  nbt.Tag
 }
-
-func (p *S2CBlockEntityData) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CBlockEntityDataID) }
-func (p *S2CBlockEntityData) State() jp.State { return jp.StatePlay }
-func (p *S2CBlockEntityData) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CBlockEntityData) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -269,10 +240,6 @@ type S2CBlockEvent struct {
 	BlockType       ns.VarInt
 }
 
-func (p *S2CBlockEvent) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CBlockEventID) }
-func (p *S2CBlockEvent) State() jp.State { return jp.StatePlay }
-func (p *S2CBlockEvent) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CBlockEvent) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Location, err = buf.ReadPosition(); err != nil {
@@ -309,10 +276,6 @@ type S2CBlockUpdate struct {
 	BlockId  ns.VarInt
 }
 
-func (p *S2CBlockUpdate) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CBlockUpdateID) }
-func (p *S2CBlockUpdate) State() jp.State { return jp.StatePlay }
-func (p *S2CBlockUpdate) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CBlockUpdate) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Location, err = buf.ReadPosition(); err != nil {
@@ -337,10 +300,6 @@ type S2CBossEvent struct {
 	Action ns.VarInt
 	Data   ns.ByteArray
 }
-
-func (p *S2CBossEvent) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CBossEventID) }
-func (p *S2CBossEvent) State() jp.State { return jp.StatePlay }
-func (p *S2CBossEvent) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CBossEvent) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -372,10 +331,6 @@ type S2CChangeDifficulty struct {
 	DifficultyLocked ns.Boolean
 }
 
-func (p *S2CChangeDifficulty) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CChangeDifficultyID) }
-func (p *S2CChangeDifficulty) State() jp.State { return jp.StatePlay }
-func (p *S2CChangeDifficulty) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CChangeDifficulty) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Difficulty, err = buf.ReadUint8(); err != nil {
@@ -399,12 +354,6 @@ type S2CChunkBatchFinished struct {
 	BatchSize ns.VarInt
 }
 
-func (p *S2CChunkBatchFinished) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CChunkBatchFinishedID)
-}
-func (p *S2CChunkBatchFinished) State() jp.State { return jp.StatePlay }
-func (p *S2CChunkBatchFinished) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CChunkBatchFinished) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.BatchSize, err = buf.ReadVarInt()
@@ -420,9 +369,6 @@ func (p *S2CChunkBatchFinished) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chunk_Batch_Start
 type S2CChunkBatchStart struct{}
 
-func (p *S2CChunkBatchStart) ID() ns.VarInt                { return ns.VarInt(packet_ids.S2CChunkBatchStartID) }
-func (p *S2CChunkBatchStart) State() jp.State              { return jp.StatePlay }
-func (p *S2CChunkBatchStart) Bound() jp.Bound              { return jp.S2C }
 func (p *S2CChunkBatchStart) Read(*ns.PacketBuffer) error  { return nil }
 func (p *S2CChunkBatchStart) Write(*ns.PacketBuffer) error { return nil }
 
@@ -432,10 +378,6 @@ func (p *S2CChunkBatchStart) Write(*ns.PacketBuffer) error { return nil }
 type S2CChunksBiomes struct {
 	ChunkBiomeData ns.ByteArray
 }
-
-func (p *S2CChunksBiomes) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CChunksBiomesID) }
-func (p *S2CChunksBiomes) State() jp.State { return jp.StatePlay }
-func (p *S2CChunksBiomes) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CChunksBiomes) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -453,10 +395,6 @@ func (p *S2CChunksBiomes) Write(buf *ns.PacketBuffer) error {
 type S2CClearTitles struct {
 	Reset ns.Boolean
 }
-
-func (p *S2CClearTitles) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CClearTitlesID) }
-func (p *S2CClearTitles) State() jp.State { return jp.StatePlay }
-func (p *S2CClearTitles) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CClearTitles) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -477,12 +415,6 @@ type S2CCommandSuggestions struct {
 	Length  ns.VarInt
 	Matches ns.ByteArray
 }
-
-func (p *S2CCommandSuggestions) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CCommandSuggestionsID)
-}
-func (p *S2CCommandSuggestions) State() jp.State { return jp.StatePlay }
-func (p *S2CCommandSuggestions) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CCommandSuggestions) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -519,10 +451,6 @@ type S2CCommands struct {
 	Data ns.ByteArray
 }
 
-func (p *S2CCommands) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCommandsID) }
-func (p *S2CCommands) State() jp.State { return jp.StatePlay }
-func (p *S2CCommands) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CCommands) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Data, err = buf.ReadByteArray(1048576)
@@ -539,10 +467,6 @@ func (p *S2CCommands) Write(buf *ns.PacketBuffer) error {
 type S2CContainerClose struct {
 	WindowId ns.VarInt
 }
-
-func (p *S2CContainerClose) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CContainerCloseID) }
-func (p *S2CContainerClose) State() jp.State { return jp.StatePlay }
-func (p *S2CContainerClose) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CContainerClose) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -563,12 +487,6 @@ type S2CContainerSetContent struct {
 	Slots       []ns.Slot
 	CarriedItem ns.Slot
 }
-
-func (p *S2CContainerSetContent) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CContainerSetContentID)
-}
-func (p *S2CContainerSetContent) State() jp.State { return jp.StatePlay }
-func (p *S2CContainerSetContent) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CContainerSetContent) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -619,10 +537,6 @@ type S2CContainerSetData struct {
 	Value    ns.Int16
 }
 
-func (p *S2CContainerSetData) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CContainerSetDataID) }
-func (p *S2CContainerSetData) State() jp.State { return jp.StatePlay }
-func (p *S2CContainerSetData) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CContainerSetData) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.WindowId, err = buf.ReadVarInt(); err != nil {
@@ -654,10 +568,6 @@ type S2CContainerSetSlot struct {
 	Slot     ns.Int16
 	SlotData ns.Slot
 }
-
-func (p *S2CContainerSetSlot) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CContainerSetSlotID) }
-func (p *S2CContainerSetSlot) State() jp.State { return jp.StatePlay }
-func (p *S2CContainerSetSlot) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CContainerSetSlot) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -694,10 +604,6 @@ type S2CCookieRequestPlay struct {
 	Key ns.Identifier
 }
 
-func (p *S2CCookieRequestPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCookieRequestPlayID) }
-func (p *S2CCookieRequestPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CCookieRequestPlay) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CCookieRequestPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Key, err = buf.ReadIdentifier()
@@ -715,10 +621,6 @@ type S2CCooldown struct {
 	CooldownGroup ns.Identifier
 	CooldownTicks ns.VarInt
 }
-
-func (p *S2CCooldown) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCooldownID) }
-func (p *S2CCooldown) State() jp.State { return jp.StatePlay }
-func (p *S2CCooldown) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CCooldown) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -744,12 +646,6 @@ type S2CCustomChatCompletions struct {
 	Entries ns.ByteArray
 }
 
-func (p *S2CCustomChatCompletions) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CCustomChatCompletionsID)
-}
-func (p *S2CCustomChatCompletions) State() jp.State { return jp.StatePlay }
-func (p *S2CCustomChatCompletions) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CCustomChatCompletions) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Action, err = buf.ReadVarInt(); err != nil {
@@ -773,10 +669,6 @@ type S2CCustomPayloadPlay struct {
 	Channel ns.Identifier
 	Data    ns.ByteArray
 }
-
-func (p *S2CCustomPayloadPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCustomPayloadPlayID) }
-func (p *S2CCustomPayloadPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CCustomPayloadPlay) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CCustomPayloadPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -804,10 +696,6 @@ type S2CDamageEvent struct {
 	SourceDirectId ns.VarInt
 	SourcePosition ns.PrefixedOptional[ns.ByteArray]
 }
-
-func (p *S2CDamageEvent) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CDamageEventID) }
-func (p *S2CDamageEvent) State() jp.State { return jp.StatePlay }
-func (p *S2CDamageEvent) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CDamageEvent) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -854,10 +742,6 @@ type S2CDebugBlockValue struct {
 	Update   ns.ByteArray
 }
 
-func (p *S2CDebugBlockValue) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CDebugBlockValueID) }
-func (p *S2CDebugBlockValue) State() jp.State { return jp.StatePlay }
-func (p *S2CDebugBlockValue) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CDebugBlockValue) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Location, err = buf.ReadPosition(); err != nil {
@@ -882,10 +766,6 @@ type S2CDebugChunkValue struct {
 	ChunkX ns.Int32
 	Update ns.ByteArray
 }
-
-func (p *S2CDebugChunkValue) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CDebugChunkValueID) }
-func (p *S2CDebugChunkValue) State() jp.State { return jp.StatePlay }
-func (p *S2CDebugChunkValue) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CDebugChunkValue) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -917,10 +797,6 @@ type S2CDebugEntityValue struct {
 	Update   ns.ByteArray
 }
 
-func (p *S2CDebugEntityValue) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CDebugEntityValueID) }
-func (p *S2CDebugEntityValue) State() jp.State { return jp.StatePlay }
-func (p *S2CDebugEntityValue) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CDebugEntityValue) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
@@ -944,10 +820,6 @@ type S2CDebugEvent struct {
 	Event ns.ByteArray
 }
 
-func (p *S2CDebugEvent) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CDebugEventID) }
-func (p *S2CDebugEvent) State() jp.State { return jp.StatePlay }
-func (p *S2CDebugEvent) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CDebugEvent) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Event, err = buf.ReadByteArray(1048576)
@@ -965,10 +837,6 @@ type S2CDebugSample struct {
 	Sample     ns.ByteArray
 	SampleType ns.VarInt
 }
-
-func (p *S2CDebugSample) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CDebugSampleID) }
-func (p *S2CDebugSample) State() jp.State { return jp.StatePlay }
-func (p *S2CDebugSample) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CDebugSample) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -993,10 +861,6 @@ type S2CDeleteChat struct {
 	MessageId ns.VarInt
 	Signature ns.ByteArray
 }
-
-func (p *S2CDeleteChat) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CDeleteChatID) }
-func (p *S2CDeleteChat) State() jp.State { return jp.StatePlay }
-func (p *S2CDeleteChat) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CDeleteChat) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1026,10 +890,6 @@ type S2CDisconnectPlay struct {
 	Reason ns.TextComponent
 }
 
-func (p *S2CDisconnectPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CDisconnectPlayID) }
-func (p *S2CDisconnectPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CDisconnectPlay) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CDisconnectPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Reason, err = buf.ReadTextComponent()
@@ -1049,10 +909,6 @@ type S2CDisguisedChat struct {
 	SenderName ns.TextComponent
 	TargetName ns.PrefixedOptional[ns.TextComponent]
 }
-
-func (p *S2CDisguisedChat) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CDisguisedChatID) }
-func (p *S2CDisguisedChat) State() jp.State { return jp.StatePlay }
-func (p *S2CDisguisedChat) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CDisguisedChat) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1093,10 +949,6 @@ type S2CEntityEvent struct {
 	EntityStatus ns.Int8
 }
 
-func (p *S2CEntityEvent) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CEntityEventID) }
-func (p *S2CEntityEvent) State() jp.State { return jp.StatePlay }
-func (p *S2CEntityEvent) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CEntityEvent) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.EntityId, err = buf.ReadInt32(); err != nil {
@@ -1128,12 +980,6 @@ type S2CEntityPositionSync struct {
 	Pitch     ns.Float32
 	OnGround  ns.Boolean
 }
-
-func (p *S2CEntityPositionSync) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CEntityPositionSyncID)
-}
-func (p *S2CEntityPositionSync) State() jp.State { return jp.StatePlay }
-func (p *S2CEntityPositionSync) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CEntityPositionSync) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1209,10 +1055,6 @@ type S2CExplode struct {
 	Data ns.ByteArray
 }
 
-func (p *S2CExplode) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CExplodeID) }
-func (p *S2CExplode) State() jp.State { return jp.StatePlay }
-func (p *S2CExplode) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CExplode) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.X, err = buf.ReadFloat64(); err != nil {
@@ -1249,10 +1091,6 @@ type S2CForgetLevelChunk struct {
 	ChunkX ns.Int32
 }
 
-func (p *S2CForgetLevelChunk) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CForgetLevelChunkID) }
-func (p *S2CForgetLevelChunk) State() jp.State { return jp.StatePlay }
-func (p *S2CForgetLevelChunk) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CForgetLevelChunk) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.ChunkZ, err = buf.ReadInt32(); err != nil {
@@ -1277,10 +1115,6 @@ type S2CGameEvent struct {
 	Value ns.Float32
 }
 
-func (p *S2CGameEvent) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CGameEventID) }
-func (p *S2CGameEvent) State() jp.State { return jp.StatePlay }
-func (p *S2CGameEvent) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CGameEvent) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Event, err = buf.ReadUint8(); err != nil {
@@ -1304,12 +1138,6 @@ type S2CGameTestHighlightPos struct {
 	Data ns.ByteArray
 }
 
-func (p *S2CGameTestHighlightPos) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CGameTestHighlightPosID)
-}
-func (p *S2CGameTestHighlightPos) State() jp.State { return jp.StatePlay }
-func (p *S2CGameTestHighlightPos) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CGameTestHighlightPos) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Data, err = buf.ReadByteArray(1048576)
@@ -1328,10 +1156,6 @@ type S2CMountScreenOpen struct {
 	InventoryColumnsCount ns.VarInt
 	EntityId              ns.Int32
 }
-
-func (p *S2CMountScreenOpen) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CMountScreenOpenID) }
-func (p *S2CMountScreenOpen) State() jp.State { return jp.StatePlay }
-func (p *S2CMountScreenOpen) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CMountScreenOpen) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1363,10 +1187,6 @@ type S2CHurtAnimation struct {
 	Yaw      ns.Float32
 }
 
-func (p *S2CHurtAnimation) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CHurtAnimationID) }
-func (p *S2CHurtAnimation) State() jp.State { return jp.StatePlay }
-func (p *S2CHurtAnimation) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CHurtAnimation) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
@@ -1396,10 +1216,6 @@ type S2CInitializeBorder struct {
 	WarningBlocks          ns.VarInt
 	WarningTime            ns.VarInt
 }
-
-func (p *S2CInitializeBorder) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CInitializeBorderID) }
-func (p *S2CInitializeBorder) State() jp.State { return jp.StatePlay }
-func (p *S2CInitializeBorder) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CInitializeBorder) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1460,10 +1276,6 @@ type S2CKeepAlivePlay struct {
 	KeepAliveId ns.Int64
 }
 
-func (p *S2CKeepAlivePlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CKeepAlivePlayID) }
-func (p *S2CKeepAlivePlay) State() jp.State { return jp.StatePlay }
-func (p *S2CKeepAlivePlay) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CKeepAlivePlay) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.KeepAliveId, err = buf.ReadInt64()
@@ -1482,12 +1294,6 @@ type S2CLevelChunkWithLight struct {
 	ChunkZ ns.Int32
 	Data   ns.ByteArray
 }
-
-func (p *S2CLevelChunkWithLight) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CLevelChunkWithLightID)
-}
-func (p *S2CLevelChunkWithLight) State() jp.State { return jp.StatePlay }
-func (p *S2CLevelChunkWithLight) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CLevelChunkWithLight) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1520,10 +1326,6 @@ type S2CLevelEvent struct {
 	Data                  ns.Int32
 	DisableRelativeVolume ns.Boolean
 }
-
-func (p *S2CLevelEvent) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLevelEventID) }
-func (p *S2CLevelEvent) State() jp.State { return jp.StatePlay }
-func (p *S2CLevelEvent) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CLevelEvent) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1570,10 +1372,6 @@ type S2CLevelParticles struct {
 	ParticleId    ns.VarInt
 	Data          ns.ByteArray
 }
-
-func (p *S2CLevelParticles) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLevelParticlesID) }
-func (p *S2CLevelParticles) State() jp.State { return jp.StatePlay }
-func (p *S2CLevelParticles) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CLevelParticles) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1660,10 +1458,6 @@ type S2CLightUpdate struct {
 	Data   ns.ByteArray
 }
 
-func (p *S2CLightUpdate) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLightUpdateID) }
-func (p *S2CLightUpdate) State() jp.State { return jp.StatePlay }
-func (p *S2CLightUpdate) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CLightUpdate) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.ChunkX, err = buf.ReadVarInt(); err != nil {
@@ -1711,10 +1505,6 @@ type S2CLogin struct {
 	SeaLevel            ns.VarInt
 	EnforcesSecureChat  ns.Boolean
 }
-
-func (p *S2CLogin) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLoginID) }
-func (p *S2CLogin) State() jp.State { return jp.StatePlay }
-func (p *S2CLogin) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CLogin) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1856,10 +1646,6 @@ type S2CMapItemData struct {
 	Data  ns.ByteArray
 }
 
-func (p *S2CMapItemData) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CMapItemDataID) }
-func (p *S2CMapItemData) State() jp.State { return jp.StatePlay }
-func (p *S2CMapItemData) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CMapItemData) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.MapId, err = buf.ReadVarInt(); err != nil {
@@ -1883,10 +1669,6 @@ type S2CMerchantOffers struct {
 	WindowId ns.VarInt
 	Data     ns.ByteArray
 }
-
-func (p *S2CMerchantOffers) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CMerchantOffersID) }
-func (p *S2CMerchantOffers) State() jp.State { return jp.StatePlay }
-func (p *S2CMerchantOffers) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CMerchantOffers) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1914,10 +1696,6 @@ type S2CMoveEntityPos struct {
 	DeltaZ   ns.Int16
 	OnGround ns.Boolean
 }
-
-func (p *S2CMoveEntityPos) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CMoveEntityPosID) }
-func (p *S2CMoveEntityPos) State() jp.State { return jp.StatePlay }
-func (p *S2CMoveEntityPos) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CMoveEntityPos) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -1965,10 +1743,6 @@ type S2CMoveEntityPosRot struct {
 	Pitch    ns.Angle
 	OnGround ns.Boolean
 }
-
-func (p *S2CMoveEntityPosRot) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CMoveEntityPosRotID) }
-func (p *S2CMoveEntityPosRot) State() jp.State { return jp.StatePlay }
-func (p *S2CMoveEntityPosRot) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CMoveEntityPosRot) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2024,12 +1798,6 @@ type S2CMoveMinecartAlongTrack struct {
 	Data     ns.ByteArray
 }
 
-func (p *S2CMoveMinecartAlongTrack) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CMoveMinecartAlongTrackID)
-}
-func (p *S2CMoveMinecartAlongTrack) State() jp.State { return jp.StatePlay }
-func (p *S2CMoveMinecartAlongTrack) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CMoveMinecartAlongTrack) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
@@ -2055,10 +1823,6 @@ type S2CMoveEntityRot struct {
 	Pitch    ns.Angle
 	OnGround ns.Boolean
 }
-
-func (p *S2CMoveEntityRot) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CMoveEntityRotID) }
-func (p *S2CMoveEntityRot) State() jp.State { return jp.StatePlay }
-func (p *S2CMoveEntityRot) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CMoveEntityRot) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2098,10 +1862,6 @@ type S2CMoveVehicle struct {
 	Yaw   ns.Float32
 	Pitch ns.Float32
 }
-
-func (p *S2CMoveVehicle) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CMoveVehicleID) }
-func (p *S2CMoveVehicle) State() jp.State { return jp.StatePlay }
-func (p *S2CMoveVehicle) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CMoveVehicle) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2144,10 +1904,6 @@ type S2COpenBook struct {
 	Hand ns.VarInt
 }
 
-func (p *S2COpenBook) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2COpenBookID) }
-func (p *S2COpenBook) State() jp.State { return jp.StatePlay }
-func (p *S2COpenBook) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2COpenBook) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Hand, err = buf.ReadVarInt()
@@ -2166,10 +1922,6 @@ type S2COpenScreen struct {
 	WindowType  ns.VarInt
 	WindowTitle ns.TextComponent
 }
-
-func (p *S2COpenScreen) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2COpenScreenID) }
-func (p *S2COpenScreen) State() jp.State { return jp.StatePlay }
-func (p *S2COpenScreen) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2COpenScreen) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2201,10 +1953,6 @@ type S2COpenSignEditor struct {
 	IsFrontText ns.Boolean
 }
 
-func (p *S2COpenSignEditor) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2COpenSignEditorID) }
-func (p *S2COpenSignEditor) State() jp.State { return jp.StatePlay }
-func (p *S2COpenSignEditor) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2COpenSignEditor) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Location, err = buf.ReadPosition(); err != nil {
@@ -2228,10 +1976,6 @@ type S2CPingPlay struct {
 	Id ns.Int32
 }
 
-func (p *S2CPingPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPingPlayID) }
-func (p *S2CPingPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CPingPlay) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CPingPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Id, err = buf.ReadInt32()
@@ -2248,10 +1992,6 @@ func (p *S2CPingPlay) Write(buf *ns.PacketBuffer) error {
 type S2CPongResponsePlay struct {
 	Payload ns.Int64
 }
-
-func (p *S2CPongResponsePlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPongResponsePlayID) }
-func (p *S2CPongResponsePlay) State() jp.State { return jp.StatePlay }
-func (p *S2CPongResponsePlay) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CPongResponsePlay) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2270,10 +2010,6 @@ type S2CPlaceGhostRecipe struct {
 	WindowId      ns.VarInt
 	RecipeDisplay ns.ByteArray
 }
-
-func (p *S2CPlaceGhostRecipe) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPlaceGhostRecipeID) }
-func (p *S2CPlaceGhostRecipe) State() jp.State { return jp.StatePlay }
-func (p *S2CPlaceGhostRecipe) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CPlaceGhostRecipe) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2299,10 +2035,6 @@ type S2CPlayerAbilities struct {
 	FlyingSpeed         ns.Float32
 	FieldOfViewModifier ns.Float32
 }
-
-func (p *S2CPlayerAbilities) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPlayerAbilitiesID) }
-func (p *S2CPlayerAbilities) State() jp.State { return jp.StatePlay }
-func (p *S2CPlayerAbilities) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CPlayerAbilities) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2385,10 +2117,6 @@ type ChatTypeBound struct {
 	Name       ns.TextComponent                      // sender's display name
 	TargetName ns.PrefixedOptional[ns.TextComponent] // target's display name (for whispers)
 }
-
-func (p *S2CPlayerChat) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPlayerChatID) }
-func (p *S2CPlayerChat) State() jp.State { return jp.StatePlay }
-func (p *S2CPlayerChat) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CPlayerChat) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2582,10 +2310,6 @@ type S2CPlayerCombatEnd struct {
 	Duration ns.VarInt
 }
 
-func (p *S2CPlayerCombatEnd) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPlayerCombatEndID) }
-func (p *S2CPlayerCombatEnd) State() jp.State { return jp.StatePlay }
-func (p *S2CPlayerCombatEnd) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CPlayerCombatEnd) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Duration, err = buf.ReadVarInt()
@@ -2601,9 +2325,6 @@ func (p *S2CPlayerCombatEnd) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Enter_Combat
 type S2CPlayerCombatEnter struct{}
 
-func (p *S2CPlayerCombatEnter) ID() ns.VarInt                { return ns.VarInt(packet_ids.S2CPlayerCombatEnterID) }
-func (p *S2CPlayerCombatEnter) State() jp.State              { return jp.StatePlay }
-func (p *S2CPlayerCombatEnter) Bound() jp.Bound              { return jp.S2C }
 func (p *S2CPlayerCombatEnter) Read(*ns.PacketBuffer) error  { return nil }
 func (p *S2CPlayerCombatEnter) Write(*ns.PacketBuffer) error { return nil }
 
@@ -2614,10 +2335,6 @@ type S2CPlayerCombatKill struct {
 	PlayerId ns.VarInt
 	Message  ns.TextComponent
 }
-
-func (p *S2CPlayerCombatKill) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPlayerCombatKillID) }
-func (p *S2CPlayerCombatKill) State() jp.State { return jp.StatePlay }
-func (p *S2CPlayerCombatKill) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CPlayerCombatKill) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2642,10 +2359,6 @@ type S2CPlayerInfoRemove struct {
 	Uuids ns.ByteArray
 }
 
-func (p *S2CPlayerInfoRemove) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPlayerInfoRemoveID) }
-func (p *S2CPlayerInfoRemove) State() jp.State { return jp.StatePlay }
-func (p *S2CPlayerInfoRemove) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CPlayerInfoRemove) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Uuids, err = buf.ReadByteArray(1048576)
@@ -2662,10 +2375,6 @@ func (p *S2CPlayerInfoRemove) Write(buf *ns.PacketBuffer) error {
 type S2CPlayerInfoUpdate struct {
 	Data ns.ByteArray
 }
-
-func (p *S2CPlayerInfoUpdate) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPlayerInfoUpdateID) }
-func (p *S2CPlayerInfoUpdate) State() jp.State { return jp.StatePlay }
-func (p *S2CPlayerInfoUpdate) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CPlayerInfoUpdate) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2689,10 +2398,6 @@ type S2CPlayerLookAt struct {
 	EntityId       ns.VarInt
 	EntityFeetEyes ns.VarInt
 }
-
-func (p *S2CPlayerLookAt) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPlayerLookAtID) }
-func (p *S2CPlayerLookAt) State() jp.State { return jp.StatePlay }
-func (p *S2CPlayerLookAt) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CPlayerLookAt) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2760,10 +2465,6 @@ type S2CPlayerPosition struct {
 	Pitch      ns.Float32
 	Flags      ns.Int32
 }
-
-func (p *S2CPlayerPosition) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPlayerPositionID) }
-func (p *S2CPlayerPosition) State() jp.State { return jp.StatePlay }
-func (p *S2CPlayerPosition) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CPlayerPosition) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2839,10 +2540,6 @@ type S2CPlayerRotation struct {
 	RelativePitch ns.Boolean
 }
 
-func (p *S2CPlayerRotation) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPlayerRotationID) }
-func (p *S2CPlayerRotation) State() jp.State { return jp.StatePlay }
-func (p *S2CPlayerRotation) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CPlayerRotation) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Yaw, err = buf.ReadFloat32(); err != nil {
@@ -2878,10 +2575,6 @@ type S2CRecipeBookAdd struct {
 	Data ns.ByteArray
 }
 
-func (p *S2CRecipeBookAdd) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CRecipeBookAddID) }
-func (p *S2CRecipeBookAdd) State() jp.State { return jp.StatePlay }
-func (p *S2CRecipeBookAdd) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CRecipeBookAdd) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Data, err = buf.ReadByteArray(1048576)
@@ -2898,10 +2591,6 @@ func (p *S2CRecipeBookAdd) Write(buf *ns.PacketBuffer) error {
 type S2CRecipeBookRemove struct {
 	Recipes ns.ByteArray
 }
-
-func (p *S2CRecipeBookRemove) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CRecipeBookRemoveID) }
-func (p *S2CRecipeBookRemove) State() jp.State { return jp.StatePlay }
-func (p *S2CRecipeBookRemove) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CRecipeBookRemove) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2926,12 +2615,6 @@ type S2CRecipeBookSettings struct {
 	SmokerRecipeBookOpen               ns.Boolean
 	SmokerRecipeBookFilterActive       ns.Boolean
 }
-
-func (p *S2CRecipeBookSettings) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CRecipeBookSettingsID)
-}
-func (p *S2CRecipeBookSettings) State() jp.State { return jp.StatePlay }
-func (p *S2CRecipeBookSettings) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CRecipeBookSettings) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -2992,10 +2675,6 @@ type S2CRemoveEntities struct {
 	EntityIds ns.ByteArray
 }
 
-func (p *S2CRemoveEntities) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CRemoveEntitiesID) }
-func (p *S2CRemoveEntities) State() jp.State { return jp.StatePlay }
-func (p *S2CRemoveEntities) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CRemoveEntities) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.EntityIds, err = buf.ReadByteArray(1048576)
@@ -3013,10 +2692,6 @@ type S2CRemoveMobEffect struct {
 	EntityId ns.VarInt
 	EffectId ns.VarInt
 }
-
-func (p *S2CRemoveMobEffect) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CRemoveMobEffectID) }
-func (p *S2CRemoveMobEffect) State() jp.State { return jp.StatePlay }
-func (p *S2CRemoveMobEffect) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CRemoveMobEffect) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3041,10 +2716,6 @@ type S2CResetScore struct {
 	EntityName    ns.String
 	ObjectiveName ns.PrefixedOptional[ns.String]
 }
-
-func (p *S2CResetScore) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CResetScoreID) }
-func (p *S2CResetScore) State() jp.State { return jp.StatePlay }
-func (p *S2CResetScore) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CResetScore) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3072,12 +2743,6 @@ type S2CResourcePackPopPlay struct {
 	Uuid ns.PrefixedOptional[ns.UUID]
 }
 
-func (p *S2CResourcePackPopPlay) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CResourcePackPopPlayID)
-}
-func (p *S2CResourcePackPopPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CResourcePackPopPlay) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CResourcePackPopPlay) Read(buf *ns.PacketBuffer) error {
 	return p.Uuid.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.UUID, error) {
 		return b.ReadUUID()
@@ -3100,12 +2765,6 @@ type S2CResourcePackPushPlay struct {
 	Forced        ns.Boolean
 	PromptMessage ns.PrefixedOptional[ns.TextComponent]
 }
-
-func (p *S2CResourcePackPushPlay) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CResourcePackPushPlayID)
-}
-func (p *S2CResourcePackPushPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CResourcePackPushPlay) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CResourcePackPushPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3160,10 +2819,6 @@ type S2CRespawn struct {
 	SeaLevel         ns.VarInt
 	DataKept         ns.Int8
 }
-
-func (p *S2CRespawn) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CRespawnID) }
-func (p *S2CRespawn) State() jp.State { return jp.StatePlay }
-func (p *S2CRespawn) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CRespawn) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3247,10 +2902,6 @@ type S2CRotateHead struct {
 	HeadYaw  ns.Angle
 }
 
-func (p *S2CRotateHead) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CRotateHeadID) }
-func (p *S2CRotateHead) State() jp.State { return jp.StatePlay }
-func (p *S2CRotateHead) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CRotateHead) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
@@ -3275,12 +2926,6 @@ type S2CSectionBlocksUpdate struct {
 	Blocks               ns.ByteArray
 }
 
-func (p *S2CSectionBlocksUpdate) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSectionBlocksUpdateID)
-}
-func (p *S2CSectionBlocksUpdate) State() jp.State { return jp.StatePlay }
-func (p *S2CSectionBlocksUpdate) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSectionBlocksUpdate) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.ChunkSectionPosition, err = buf.ReadInt64(); err != nil {
@@ -3304,12 +2949,6 @@ type S2CSelectAdvancementsTab struct {
 	Identifier ns.PrefixedOptional[ns.Identifier]
 }
 
-func (p *S2CSelectAdvancementsTab) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSelectAdvancementsTabID)
-}
-func (p *S2CSelectAdvancementsTab) State() jp.State { return jp.StatePlay }
-func (p *S2CSelectAdvancementsTab) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSelectAdvancementsTab) Read(buf *ns.PacketBuffer) error {
 	return p.Identifier.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.Identifier, error) {
 		return b.ReadIdentifier()
@@ -3329,10 +2968,6 @@ type S2CServerData struct {
 	Motd ns.TextComponent
 	Icon ns.PrefixedOptional[ns.ByteArray]
 }
-
-func (p *S2CServerData) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CServerDataID) }
-func (p *S2CServerData) State() jp.State { return jp.StatePlay }
-func (p *S2CServerData) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CServerData) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3360,10 +2995,6 @@ type S2CSetActionBarText struct {
 	Text ns.TextComponent
 }
 
-func (p *S2CSetActionBarText) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetActionBarTextID) }
-func (p *S2CSetActionBarText) State() jp.State { return jp.StatePlay }
-func (p *S2CSetActionBarText) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetActionBarText) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Text, err = buf.ReadTextComponent()
@@ -3381,10 +3012,6 @@ type S2CSetBorderCenter struct {
 	X ns.Float64
 	Z ns.Float64
 }
-
-func (p *S2CSetBorderCenter) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetBorderCenterID) }
-func (p *S2CSetBorderCenter) State() jp.State { return jp.StatePlay }
-func (p *S2CSetBorderCenter) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetBorderCenter) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3410,10 +3037,6 @@ type S2CSetBorderLerpSize struct {
 	NewDiameter ns.Float64
 	Speed       ns.VarLong
 }
-
-func (p *S2CSetBorderLerpSize) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetBorderLerpSizeID) }
-func (p *S2CSetBorderLerpSize) State() jp.State { return jp.StatePlay }
-func (p *S2CSetBorderLerpSize) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetBorderLerpSize) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3444,10 +3067,6 @@ type S2CSetBorderSize struct {
 	Diameter ns.Float64
 }
 
-func (p *S2CSetBorderSize) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetBorderSizeID) }
-func (p *S2CSetBorderSize) State() jp.State { return jp.StatePlay }
-func (p *S2CSetBorderSize) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetBorderSize) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Diameter, err = buf.ReadFloat64()
@@ -3464,12 +3083,6 @@ func (p *S2CSetBorderSize) Write(buf *ns.PacketBuffer) error {
 type S2CSetBorderWarningDelay struct {
 	WarningTime ns.VarInt
 }
-
-func (p *S2CSetBorderWarningDelay) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSetBorderWarningDelayID)
-}
-func (p *S2CSetBorderWarningDelay) State() jp.State { return jp.StatePlay }
-func (p *S2CSetBorderWarningDelay) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetBorderWarningDelay) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3488,12 +3101,6 @@ type S2CSetBorderWarningDistance struct {
 	WarningBlocks ns.VarInt
 }
 
-func (p *S2CSetBorderWarningDistance) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSetBorderWarningDistanceID)
-}
-func (p *S2CSetBorderWarningDistance) State() jp.State { return jp.StatePlay }
-func (p *S2CSetBorderWarningDistance) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetBorderWarningDistance) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.WarningBlocks, err = buf.ReadVarInt()
@@ -3510,10 +3117,6 @@ func (p *S2CSetBorderWarningDistance) Write(buf *ns.PacketBuffer) error {
 type S2CSetCamera struct {
 	CameraId ns.VarInt
 }
-
-func (p *S2CSetCamera) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetCameraID) }
-func (p *S2CSetCamera) State() jp.State { return jp.StatePlay }
-func (p *S2CSetCamera) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetCamera) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3532,12 +3135,6 @@ type S2CSetChunkCacheCenter struct {
 	ChunkX ns.VarInt
 	ChunkZ ns.VarInt
 }
-
-func (p *S2CSetChunkCacheCenter) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSetChunkCacheCenterID)
-}
-func (p *S2CSetChunkCacheCenter) State() jp.State { return jp.StatePlay }
-func (p *S2CSetChunkCacheCenter) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetChunkCacheCenter) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3562,12 +3159,6 @@ type S2CSetChunkCacheRadius struct {
 	ViewDistance ns.VarInt
 }
 
-func (p *S2CSetChunkCacheRadius) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSetChunkCacheRadiusID)
-}
-func (p *S2CSetChunkCacheRadius) State() jp.State { return jp.StatePlay }
-func (p *S2CSetChunkCacheRadius) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetChunkCacheRadius) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.ViewDistance, err = buf.ReadVarInt()
@@ -3584,10 +3175,6 @@ func (p *S2CSetChunkCacheRadius) Write(buf *ns.PacketBuffer) error {
 type S2CSetCursorItem struct {
 	CarriedItem ns.Slot
 }
-
-func (p *S2CSetCursorItem) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetCursorItemID) }
-func (p *S2CSetCursorItem) State() jp.State { return jp.StatePlay }
-func (p *S2CSetCursorItem) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetCursorItem) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3608,12 +3195,6 @@ type S2CSetDefaultSpawnPosition struct {
 	Yaw           ns.Float32
 	Pitch         ns.Float32
 }
-
-func (p *S2CSetDefaultSpawnPosition) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSetDefaultSpawnPositionID)
-}
-func (p *S2CSetDefaultSpawnPosition) State() jp.State { return jp.StatePlay }
-func (p *S2CSetDefaultSpawnPosition) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetDefaultSpawnPosition) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3651,12 +3232,6 @@ type S2CSetDisplayObjective struct {
 	ScoreName ns.String
 }
 
-func (p *S2CSetDisplayObjective) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSetDisplayObjectiveID)
-}
-func (p *S2CSetDisplayObjective) State() jp.State { return jp.StatePlay }
-func (p *S2CSetDisplayObjective) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetDisplayObjective) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Position, err = buf.ReadVarInt(); err != nil {
@@ -3680,10 +3255,6 @@ type S2CSetEntityData struct {
 	EntityId ns.VarInt
 	Metadata entities.Metadata
 }
-
-func (p *S2CSetEntityData) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetEntityDataID) }
-func (p *S2CSetEntityData) State() jp.State { return jp.StatePlay }
-func (p *S2CSetEntityData) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetEntityData) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3709,10 +3280,6 @@ type S2CSetEntityLink struct {
 	HoldingEntityId  ns.Int32
 }
 
-func (p *S2CSetEntityLink) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetEntityLinkID) }
-func (p *S2CSetEntityLink) State() jp.State { return jp.StatePlay }
-func (p *S2CSetEntityLink) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetEntityLink) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.AttachedEntityId, err = buf.ReadInt32(); err != nil {
@@ -3736,10 +3303,6 @@ type S2CSetEntityMotion struct {
 	EntityId ns.VarInt
 	Velocity ns.LpVec3
 }
-
-func (p *S2CSetEntityMotion) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetEntityMotionID) }
-func (p *S2CSetEntityMotion) State() jp.State { return jp.StatePlay }
-func (p *S2CSetEntityMotion) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetEntityMotion) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3765,10 +3328,6 @@ type S2CSetEquipment struct {
 	Data     ns.ByteArray
 }
 
-func (p *S2CSetEquipment) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetEquipmentID) }
-func (p *S2CSetEquipment) State() jp.State { return jp.StatePlay }
-func (p *S2CSetEquipment) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetEquipment) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
@@ -3793,10 +3352,6 @@ type S2CSetExperience struct {
 	Level           ns.VarInt
 	TotalExperience ns.VarInt
 }
-
-func (p *S2CSetExperience) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetExperienceID) }
-func (p *S2CSetExperience) State() jp.State { return jp.StatePlay }
-func (p *S2CSetExperience) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetExperience) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3829,10 +3384,6 @@ type S2CSetHealth struct {
 	FoodSaturation ns.Float32
 }
 
-func (p *S2CSetHealth) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetHealthID) }
-func (p *S2CSetHealth) State() jp.State { return jp.StatePlay }
-func (p *S2CSetHealth) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetHealth) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Health, err = buf.ReadFloat32(); err != nil {
@@ -3862,10 +3413,6 @@ type S2CSetHeldSlot struct {
 	Slot ns.VarInt
 }
 
-func (p *S2CSetHeldSlot) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetHeldSlotID) }
-func (p *S2CSetHeldSlot) State() jp.State { return jp.StatePlay }
-func (p *S2CSetHeldSlot) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetHeldSlot) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Slot, err = buf.ReadVarInt()
@@ -3884,10 +3431,6 @@ type S2CSetObjective struct {
 	Mode          ns.Int8
 	Data          ns.ByteArray
 }
-
-func (p *S2CSetObjective) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetObjectiveID) }
-func (p *S2CSetObjective) State() jp.State { return jp.StatePlay }
-func (p *S2CSetObjective) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetObjective) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3924,10 +3467,6 @@ type S2CSetPassengers struct {
 	Passengers ns.ByteArray
 }
 
-func (p *S2CSetPassengers) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetPassengersID) }
-func (p *S2CSetPassengers) State() jp.State { return jp.StatePlay }
-func (p *S2CSetPassengers) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetPassengers) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
@@ -3951,12 +3490,6 @@ type S2CSetPlayerInventory struct {
 	Slot     ns.VarInt
 	SlotData ns.Slot
 }
-
-func (p *S2CSetPlayerInventory) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSetPlayerInventoryID)
-}
-func (p *S2CSetPlayerInventory) State() jp.State { return jp.StatePlay }
-func (p *S2CSetPlayerInventory) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetPlayerInventory) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -3982,10 +3515,6 @@ type S2CSetPlayerTeam struct {
 	Method   ns.Int8
 	Data     ns.ByteArray
 }
-
-func (p *S2CSetPlayerTeam) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetPlayerTeamID) }
-func (p *S2CSetPlayerTeam) State() jp.State { return jp.StatePlay }
-func (p *S2CSetPlayerTeam) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetPlayerTeam) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4018,10 +3547,6 @@ type S2CSetScore struct {
 	Value         ns.VarInt
 	Data          ns.ByteArray
 }
-
-func (p *S2CSetScore) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetScoreID) }
-func (p *S2CSetScore) State() jp.State { return jp.StatePlay }
-func (p *S2CSetScore) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetScore) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4058,12 +3583,6 @@ type S2CSetSimulationDistance struct {
 	SimulationDistance ns.VarInt
 }
 
-func (p *S2CSetSimulationDistance) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSetSimulationDistanceID)
-}
-func (p *S2CSetSimulationDistance) State() jp.State { return jp.StatePlay }
-func (p *S2CSetSimulationDistance) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetSimulationDistance) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.SimulationDistance, err = buf.ReadVarInt()
@@ -4080,10 +3599,6 @@ func (p *S2CSetSimulationDistance) Write(buf *ns.PacketBuffer) error {
 type S2CSetSubtitleText struct {
 	SubtitleText ns.TextComponent
 }
-
-func (p *S2CSetSubtitleText) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetSubtitleTextID) }
-func (p *S2CSetSubtitleText) State() jp.State { return jp.StatePlay }
-func (p *S2CSetSubtitleText) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetSubtitleText) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4103,10 +3618,6 @@ type S2CSetTime struct {
 	TimeOfDay           ns.Int64
 	TimeOfDayIncreasing ns.Boolean
 }
-
-func (p *S2CSetTime) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetTimeID) }
-func (p *S2CSetTime) State() jp.State { return jp.StatePlay }
-func (p *S2CSetTime) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetTime) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4137,10 +3648,6 @@ type S2CSetTitleText struct {
 	TitleText ns.TextComponent
 }
 
-func (p *S2CSetTitleText) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetTitleTextID) }
-func (p *S2CSetTitleText) State() jp.State { return jp.StatePlay }
-func (p *S2CSetTitleText) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSetTitleText) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.TitleText, err = buf.ReadTextComponent()
@@ -4159,12 +3666,6 @@ type S2CSetTitlesAnimation struct {
 	Stay    ns.Int32
 	FadeOut ns.Int32
 }
-
-func (p *S2CSetTitlesAnimation) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CSetTitlesAnimationID)
-}
-func (p *S2CSetTitlesAnimation) State() jp.State { return jp.StatePlay }
-func (p *S2CSetTitlesAnimation) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSetTitlesAnimation) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4199,10 +3700,6 @@ type S2CSoundEntity struct {
 	Pitch         ns.Float32
 	Seed          ns.Int64
 }
-
-func (p *S2CSoundEntity) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSoundEntityID) }
-func (p *S2CSoundEntity) State() jp.State { return jp.StatePlay }
-func (p *S2CSoundEntity) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSoundEntity) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4257,10 +3754,6 @@ type S2CSound struct {
 	Pitch           ns.Float32
 	Seed            ns.Int64
 }
-
-func (p *S2CSound) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSoundID) }
-func (p *S2CSound) State() jp.State { return jp.StatePlay }
-func (p *S2CSound) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSound) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4319,11 +3812,6 @@ func (p *S2CSound) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Start_Configuration
 type S2CStartConfiguration struct{}
 
-func (p *S2CStartConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CStartConfigurationID)
-}
-func (p *S2CStartConfiguration) State() jp.State              { return jp.StatePlay }
-func (p *S2CStartConfiguration) Bound() jp.Bound              { return jp.S2C }
 func (p *S2CStartConfiguration) Read(*ns.PacketBuffer) error  { return nil }
 func (p *S2CStartConfiguration) Write(*ns.PacketBuffer) error { return nil }
 
@@ -4335,10 +3823,6 @@ type S2CStopSound struct {
 	Source ns.VarInt
 	Sound  ns.Identifier
 }
-
-func (p *S2CStopSound) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CStopSoundID) }
-func (p *S2CStopSound) State() jp.State { return jp.StatePlay }
-func (p *S2CStopSound) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CStopSound) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4379,10 +3863,6 @@ type S2CStoreCookiePlay struct {
 	Payload ns.ByteArray
 }
 
-func (p *S2CStoreCookiePlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CStoreCookiePlayID) }
-func (p *S2CStoreCookiePlay) State() jp.State { return jp.StatePlay }
-func (p *S2CStoreCookiePlay) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CStoreCookiePlay) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Key, err = buf.ReadIdentifier(); err != nil {
@@ -4406,10 +3886,6 @@ type S2CSystemChat struct {
 	Content ns.TextComponent
 	Overlay ns.Boolean
 }
-
-func (p *S2CSystemChat) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSystemChatID) }
-func (p *S2CSystemChat) State() jp.State { return jp.StatePlay }
-func (p *S2CSystemChat) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSystemChat) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4435,10 +3911,6 @@ type S2CTabList struct {
 	Footer ns.TextComponent
 }
 
-func (p *S2CTabList) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CTabListID) }
-func (p *S2CTabList) State() jp.State { return jp.StatePlay }
-func (p *S2CTabList) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CTabList) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Header, err = buf.ReadTextComponent(); err != nil {
@@ -4462,10 +3934,6 @@ type S2CTagQuery struct {
 	TransactionId ns.VarInt
 	Nbt           nbt.Tag
 }
-
-func (p *S2CTagQuery) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CTagQueryID) }
-func (p *S2CTagQuery) State() jp.State { return jp.StatePlay }
-func (p *S2CTagQuery) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CTagQuery) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4499,10 +3967,6 @@ type S2CTakeItemEntity struct {
 	CollectorEntityId ns.VarInt
 	PickupItemCount   ns.VarInt
 }
-
-func (p *S2CTakeItemEntity) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CTakeItemEntityID) }
-func (p *S2CTakeItemEntity) State() jp.State { return jp.StatePlay }
-func (p *S2CTakeItemEntity) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CTakeItemEntity) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4542,10 +4006,6 @@ type S2CTeleportEntity struct {
 	Flags     ns.Int8
 	OnGround  ns.Boolean
 }
-
-func (p *S2CTeleportEntity) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CTeleportEntityID) }
-func (p *S2CTeleportEntity) State() jp.State { return jp.StatePlay }
-func (p *S2CTeleportEntity) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CTeleportEntity) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4625,12 +4085,6 @@ type S2CTestInstanceBlockStatus struct {
 	Size   ns.PrefixedOptional[ns.ByteArray]
 }
 
-func (p *S2CTestInstanceBlockStatus) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CTestInstanceBlockStatusID)
-}
-func (p *S2CTestInstanceBlockStatus) State() jp.State { return jp.StatePlay }
-func (p *S2CTestInstanceBlockStatus) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CTestInstanceBlockStatus) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Status, err = buf.ReadTextComponent(); err != nil {
@@ -4658,10 +4112,6 @@ type S2CTickingState struct {
 	IsFrozen ns.Boolean
 }
 
-func (p *S2CTickingState) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CTickingStateID) }
-func (p *S2CTickingState) State() jp.State { return jp.StatePlay }
-func (p *S2CTickingState) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CTickingState) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.TickRate, err = buf.ReadFloat32(); err != nil {
@@ -4685,10 +4135,6 @@ type S2CTickingStep struct {
 	TickSteps ns.VarInt
 }
 
-func (p *S2CTickingStep) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CTickingStepID) }
-func (p *S2CTickingStep) State() jp.State { return jp.StatePlay }
-func (p *S2CTickingStep) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CTickingStep) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.TickSteps, err = buf.ReadVarInt()
@@ -4706,10 +4152,6 @@ type S2CTransferPlay struct {
 	Host ns.String
 	Port ns.VarInt
 }
-
-func (p *S2CTransferPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CTransferPlayID) }
-func (p *S2CTransferPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CTransferPlay) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CTransferPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4734,12 +4176,6 @@ type S2CUpdateAdvancements struct {
 	Data ns.ByteArray
 }
 
-func (p *S2CUpdateAdvancements) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CUpdateAdvancementsID)
-}
-func (p *S2CUpdateAdvancements) State() jp.State { return jp.StatePlay }
-func (p *S2CUpdateAdvancements) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CUpdateAdvancements) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Data, err = buf.ReadByteArray(1048576)
@@ -4757,10 +4193,6 @@ type S2CUpdateAttributes struct {
 	EntityId ns.VarInt
 	Data     ns.ByteArray
 }
-
-func (p *S2CUpdateAttributes) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CUpdateAttributesID) }
-func (p *S2CUpdateAttributes) State() jp.State { return jp.StatePlay }
-func (p *S2CUpdateAttributes) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CUpdateAttributes) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4788,10 +4220,6 @@ type S2CUpdateMobEffect struct {
 	Duration  ns.VarInt
 	Flags     ns.Int8
 }
-
-func (p *S2CUpdateMobEffect) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CUpdateMobEffectID) }
-func (p *S2CUpdateMobEffect) State() jp.State { return jp.StatePlay }
-func (p *S2CUpdateMobEffect) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CUpdateMobEffect) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4834,10 +4262,6 @@ type S2CUpdateRecipes struct {
 	Data ns.ByteArray
 }
 
-func (p *S2CUpdateRecipes) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CUpdateRecipesID) }
-func (p *S2CUpdateRecipes) State() jp.State { return jp.StatePlay }
-func (p *S2CUpdateRecipes) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CUpdateRecipes) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Data, err = buf.ReadByteArray(1048576)
@@ -4854,10 +4278,6 @@ func (p *S2CUpdateRecipes) Write(buf *ns.PacketBuffer) error {
 type S2CUpdateTagsPlay struct {
 	Data ns.ByteArray
 }
-
-func (p *S2CUpdateTagsPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CUpdateTagsPlayID) }
-func (p *S2CUpdateTagsPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CUpdateTagsPlay) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CUpdateTagsPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4876,10 +4296,6 @@ type S2CProjectilePower struct {
 	EntityId ns.VarInt
 	Power    ns.Float64
 }
-
-func (p *S2CProjectilePower) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CProjectilePowerID) }
-func (p *S2CProjectilePower) State() jp.State { return jp.StatePlay }
-func (p *S2CProjectilePower) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CProjectilePower) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4904,12 +4320,6 @@ type S2CCustomReportDetailsPlay struct {
 	Details ns.ByteArray
 }
 
-func (p *S2CCustomReportDetailsPlay) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CCustomReportDetailsPlayID)
-}
-func (p *S2CCustomReportDetailsPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CCustomReportDetailsPlay) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CCustomReportDetailsPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Details, err = buf.ReadByteArray(1048576)
@@ -4926,10 +4336,6 @@ func (p *S2CCustomReportDetailsPlay) Write(buf *ns.PacketBuffer) error {
 type S2CServerLinksPlay struct {
 	Links ns.ByteArray
 }
-
-func (p *S2CServerLinksPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CServerLinksPlayID) }
-func (p *S2CServerLinksPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CServerLinksPlay) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CServerLinksPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -4948,10 +4354,6 @@ type S2CWaypoint struct {
 	Data ns.ByteArray
 }
 
-func (p *S2CWaypoint) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CWaypointID) }
-func (p *S2CWaypoint) State() jp.State { return jp.StatePlay }
-func (p *S2CWaypoint) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CWaypoint) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Data, err = buf.ReadByteArray(1048576)
@@ -4967,9 +4369,6 @@ func (p *S2CWaypoint) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clear_Dialog_(Play)
 type S2CClearDialogPlay struct{}
 
-func (p *S2CClearDialogPlay) ID() ns.VarInt                { return ns.VarInt(packet_ids.S2CClearDialogPlayID) }
-func (p *S2CClearDialogPlay) State() jp.State              { return jp.StatePlay }
-func (p *S2CClearDialogPlay) Bound() jp.Bound              { return jp.S2C }
 func (p *S2CClearDialogPlay) Read(*ns.PacketBuffer) error  { return nil }
 func (p *S2CClearDialogPlay) Write(*ns.PacketBuffer) error { return nil }
 
@@ -4979,10 +4378,6 @@ func (p *S2CClearDialogPlay) Write(*ns.PacketBuffer) error { return nil }
 type S2CShowDialogPlay struct {
 	Dialog ns.ByteArray
 }
-
-func (p *S2CShowDialogPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CShowDialogPlayID) }
-func (p *S2CShowDialogPlay) State() jp.State { return jp.StatePlay }
-func (p *S2CShowDialogPlay) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CShowDialogPlay) Read(buf *ns.PacketBuffer) error {
 	var err error

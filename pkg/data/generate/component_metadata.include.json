@@ -97,8 +97,16 @@
       "goType": "*Food",
       "wireType": "struct",
       "wireFormat": [
-        {"name": "nutrition", "type": "varint", "goField": "Nutrition"},
-        {"name": "saturation", "type": "float32", "goField": "Saturation"}
+        {
+          "name": "nutrition",
+          "type": "varint",
+          "goField": "Nutrition"
+        },
+        {
+          "name": "saturation",
+          "type": "float32",
+          "goField": "Saturation"
+        }
       ]
     },
     "minecraft:weapon": {
@@ -106,8 +114,16 @@
       "goType": "*Weapon",
       "wireType": "struct",
       "wireFormat": [
-        {"name": "itemDamagePerAttack", "type": "varint", "goField": "ItemDamagePerAttack"},
-        {"name": "disableBlockingForSeconds", "type": "float32", "goField": "DisableBlockingForSeconds"}
+        {
+          "name": "itemDamagePerAttack",
+          "type": "varint",
+          "goField": "ItemDamagePerAttack"
+        },
+        {
+          "name": "disableBlockingForSeconds",
+          "type": "float32",
+          "goField": "DisableBlockingForSeconds"
+        }
       ]
     },
     "minecraft:enchantable": {
@@ -115,7 +131,11 @@
       "goType": "*Enchantable",
       "wireType": "struct",
       "wireFormat": [
-        {"name": "value", "type": "varint", "goField": "Value"}
+        {
+          "name": "value",
+          "type": "varint",
+          "goField": "Value"
+        }
       ]
     },
     "minecraft:custom_name": {
@@ -133,8 +153,16 @@
       "goType": "*TooltipDisplay",
       "wireType": "struct",
       "wireFormat": [
-        {"name": "hideTooltip", "type": "bool", "goField": "HideTooltip"},
-        {"name": "hiddenComponents", "type": "varintArray", "goField": "HiddenComponents"}
+        {
+          "name": "hideTooltip",
+          "type": "bool",
+          "goField": "HideTooltip"
+        },
+        {
+          "name": "hiddenComponents",
+          "type": "varintArray",
+          "goField": "HiddenComponents"
+        }
       ]
     },
     "minecraft:attribute_modifiers": {
@@ -147,8 +175,15 @@
       "goType": "*UseCooldown",
       "wireType": "struct",
       "wireFormat": [
-        {"name": "seconds", "type": "float32", "goField": "Seconds"},
-        {"name": "cooldownGroup", "type": "optionalIdentifier"}
+        {
+          "name": "seconds",
+          "type": "float32",
+          "goField": "Seconds"
+        },
+        {
+          "name": "cooldownGroup",
+          "type": "optionalIdentifier"
+        }
       ],
       "_comment": "cooldownGroup not yet decoded into struct"
     },
@@ -157,8 +192,15 @@
       "goType": "*Fireworks",
       "wireType": "struct",
       "wireFormat": [
-        {"name": "flightDuration", "type": "varint", "goField": "FlightDuration"},
-        {"name": "explosions", "type": "fireworkExplosionList"}
+        {
+          "name": "flightDuration",
+          "type": "varint",
+          "goField": "FlightDuration"
+        },
+        {
+          "name": "explosions",
+          "type": "fireworkExplosionList"
+        }
       ],
       "_comment": "explosions not yet decoded into struct"
     },
@@ -370,32 +412,5 @@
       "wireType": "bees",
       "passthrough": true
     }
-  },
-  "entityVariants": [
-    "minecraft:villager/variant",
-    "minecraft:wolf/variant",
-    "minecraft:wolf/sound_variant",
-    "minecraft:wolf/collar",
-    "minecraft:fox/variant",
-    "minecraft:salmon/size",
-    "minecraft:parrot/variant",
-    "minecraft:tropical_fish/pattern",
-    "minecraft:tropical_fish/base_color",
-    "minecraft:tropical_fish/pattern_color",
-    "minecraft:mooshroom/variant",
-    "minecraft:rabbit/variant",
-    "minecraft:pig/variant",
-    "minecraft:cow/variant",
-    "minecraft:chicken/variant",
-    "minecraft:zombie_nautilus/variant",
-    "minecraft:frog/variant",
-    "minecraft:horse/variant",
-    "minecraft:painting/variant",
-    "minecraft:llama/variant",
-    "minecraft:axolotl/variant",
-    "minecraft:cat/variant",
-    "minecraft:cat/collar",
-    "minecraft:sheep/color",
-    "minecraft:shulker/color"
-  ]
+  }
 }

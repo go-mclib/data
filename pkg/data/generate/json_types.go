@@ -62,6 +62,5 @@ type WireField struct {
 
 // ComponentMetadataFile is the structure of component_metadata.include.json.
 type ComponentMetadataFile struct {
-	Components     map[string]ComponentMetadata `json:"components"`
-	EntityVariants []string                     `json:"entityVariants"`
+	Components map[string]ComponentMetadata `json:"components"`
 }

@@ -16,7 +16,7 @@ Update Go packet bindings for a new Minecraft version.
 
 3. **Update Go bindings**
    - Packet definitions are in `pkg/packets/`
-   - Packet IDs are generated in `pkg/data/packets/`
+   - Packet IDs are generated in `pkg/data/packet_ids/`
    - Follow patterns in `pkg/packets/README.md`
    - Run `go fmt ./...` after changes
 

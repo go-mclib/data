@@ -258,13 +258,8 @@ func generateComponentCodecs(registries map[string]RegistryJSON, metadataPath, o
 	componentRegistry := registries["minecraft:data_component_type"]
 	metadata := loadJSON[ComponentMetadataFile](metadataPath)
 
-	var sb strings.Builder
-	sb.WriteString(generatedFileHeader("items"))
-	sb.WriteString("// Auto-generated codec registrations.\n\n")
+	// collection phase
 
-	sb.WriteString("func init() {\n")
-
-	// collect simple codecs (non-passthrough with goField defined)
 	type simpleCodec struct {
 		constName string
 		goField   string
@@ -273,10 +268,17 @@ func generateComponentCodecs(registries map[string]RegistryJSON, metadataPath, o
 	}
 	var varIntCodecs, float32Codecs, stringCodecs, emptyCodecs []simpleCodec
 
-	// group passthrough codecs by wire type
 	var varIntPassthrough, boolPassthrough, stringPassthrough, emptyPassthrough []string
 	var int32Passthrough, nbtPassthrough, holderSetPassthrough, slotListPassthrough, slotPassthrough []string
 	var entityVariants []string
+
+	type structCodecInfo struct {
+		constName string
+		goField   string
+		typeName  string
+		fields    []WireField
+	}
+	var structCodecs []structCodecInfo
 
 	for name, meta := range metadata.Components {
 		constName := "Component" + toGoVarName(name)
@@ -305,8 +307,15 @@ func generateComponentCodecs(registries map[string]RegistryJSON, metadataPath, o
 			case "slot":
 				slotPassthrough = append(slotPassthrough, constName)
 			}
+		} else if meta.WireType == "struct" && len(meta.WireFormat) > 0 && meta.GoField != "" {
+			typeName := strings.TrimPrefix(meta.GoType, "*")
+			structCodecs = append(structCodecs, structCodecInfo{
+				constName: constName,
+				goField:   meta.GoField,
+				typeName:  typeName,
+				fields:    meta.WireFormat,
+			})
 		} else if meta.GoField != "" {
-			// simple codec that can be generated
 			sc := simpleCodec{
 				constName: constName,
 				goField:   meta.GoField,
@@ -326,10 +335,11 @@ func generateComponentCodecs(registries map[string]RegistryJSON, metadataPath, o
 		}
 	}
 
-	// entity variants are all VarInt passthrough
-	for _, name := range metadata.EntityVariants {
-		constName := "Component" + toGoVarName(name)
-		if _, ok := componentRegistry.Entries[name]; ok {
+	// auto-derive entity variant components from registry
+	for name := range componentRegistry.Entries {
+		stripped := strings.TrimPrefix(name, "minecraft:")
+		if strings.Contains(stripped, "/") {
+			constName := "Component" + toGoVarName(name)
 			entityVariants = append(entityVariants, constName)
 		}
 	}
@@ -339,6 +349,7 @@ func generateComponentCodecs(registries map[string]RegistryJSON, metadataPath, o
 	sort.Slice(float32Codecs, func(i, j int) bool { return float32Codecs[i].constName < float32Codecs[j].constName })
 	sort.Slice(stringCodecs, func(i, j int) bool { return stringCodecs[i].constName < stringCodecs[j].constName })
 	sort.Slice(emptyCodecs, func(i, j int) bool { return emptyCodecs[i].constName < emptyCodecs[j].constName })
+	sort.Slice(structCodecs, func(i, j int) bool { return structCodecs[i].constName < structCodecs[j].constName })
 	sort.Strings(varIntPassthrough)
 	sort.Strings(boolPassthrough)
 	sort.Strings(stringPassthrough)
@@ -350,7 +361,33 @@ func generateComponentCodecs(registries map[string]RegistryJSON, metadataPath, o
 	sort.Strings(slotPassthrough)
 	sort.Strings(entityVariants)
 
-	// generate simple codec registrations
+	// output phase
+
+	var sb strings.Builder
+	sb.WriteString(generatedFileHeader("items"))
+
+	// imports needed for struct codecs
+	if len(structCodecs) > 0 {
+		needsSlices := false
+		for _, sc := range structCodecs {
+			for _, f := range sc.fields {
+				if f.GoField != "" && f.Type == "varintArray" {
+					needsSlices = true
+				}
+			}
+		}
+		sb.WriteString("import (\n")
+		if needsSlices {
+			sb.WriteString("\t\"slices\"\n\n")
+		}
+		sb.WriteString("\tns \"github.com/go-mclib/protocol/java_protocol/net_structures\"\n")
+		sb.WriteString(")\n\n")
+	}
+
+	sb.WriteString("// Auto-generated codec registrations.\n\n")
+	sb.WriteString("func init() {\n")
+
+	// simple codec registrations
 	if len(varIntCodecs) > 0 {
 		sb.WriteString("\t// Simple VarInt codecs\n")
 		for _, sc := range varIntCodecs {
@@ -395,7 +432,16 @@ func generateComponentCodecs(registries map[string]RegistryJSON, metadataPath, o
 		sb.WriteString("\n")
 	}
 
-	// generate passthrough registrations
+	// struct codec registrations
+	if len(structCodecs) > 0 {
+		sb.WriteString("\t// Struct codecs\n")
+		for _, sc := range structCodecs {
+			fmt.Fprintf(&sb, "\tRegisterCodec(%s, gen%sCodec{})\n", sc.constName, sc.typeName)
+		}
+		sb.WriteString("\n")
+	}
+
+	// passthrough registrations
 	writePassthroughList(&sb, "VarInt passthrough", varIntPassthrough, "registerVarIntPassthrough")
 	writePassthroughList(&sb, "Bool passthrough", boolPassthrough, "registerBoolPassthrough")
 	writePassthroughList(&sb, "String passthrough", stringPassthrough, "registerStringPassthrough")
@@ -407,7 +453,12 @@ func generateComponentCodecs(registries map[string]RegistryJSON, metadataPath, o
 	writePassthroughList(&sb, "Slot passthrough", slotPassthrough, "registerSlotPassthrough")
 	writePassthroughList(&sb, "Entity variant (VarInt) passthrough", entityVariants, "registerVarIntPassthrough")
 
-	sb.WriteString("}\n")
+	sb.WriteString("}\n\n")
+
+	// struct codec implementations
+	for _, sc := range structCodecs {
+		generateStructCodec(&sb, sc.goField, sc.typeName, sc.fields)
+	}
 
 	writeFile(outPath, sb.String())
 }
@@ -537,5 +588,162 @@ func componentKeyToGoField(key string) string {
 		return ""
 	default:
 		return ""
+	}
+}
+
+// generateStructCodec generates a full ComponentCodec implementation for a pointer-to-struct component.
+func generateStructCodec(sb *strings.Builder, goField, typeName string, fields []WireField) {
+	codec := "gen" + typeName + "Codec"
+
+	fmt.Fprintf(sb, "type %s struct{}\n\n", codec)
+
+	// DecodeWire
+	fmt.Fprintf(sb, "func (%s) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {\n", codec)
+	sb.WriteString("\tw := ns.NewWriter()\n")
+	for _, f := range fields {
+		writeDecodeWireField(sb, f)
+	}
+	sb.WriteString("\treturn w.Bytes(), nil\n}\n\n")
+
+	// Apply
+	fmt.Fprintf(sb, "func (%s) Apply(c *Components, data []byte) error {\n", codec)
+	sb.WriteString("\tbuf := ns.NewReader(data)\n")
+	fmt.Fprintf(sb, "\ts := &%s{}\n", typeName)
+	for _, f := range fields {
+		if f.GoField == "" {
+			break // trailing unmapped fields are skipped
+		}
+		writeApplyField(sb, f)
+	}
+	fmt.Fprintf(sb, "\tc.%s = s\n", goField)
+	sb.WriteString("\treturn nil\n}\n\n")
+
+	// Clear
+	fmt.Fprintf(sb, "func (%s) Clear(c *Components) { c.%s = nil }\n\n", codec, goField)
+
+	// Differs
+	hasSlice := false
+	for _, f := range fields {
+		if f.GoField != "" && f.Type == "varintArray" {
+			hasSlice = true
+			break
+		}
+	}
+	fmt.Fprintf(sb, "func (%s) Differs(c, defaults *Components) (bool, bool) {\n", codec)
+	fmt.Fprintf(sb, "\tcHas := c.%s != nil\n\tdHas := defaults.%s != nil\n", goField, goField)
+	sb.WriteString("\tif cHas != dHas {\n\t\treturn true, cHas\n\t}\n")
+	sb.WriteString("\tif cHas && dHas {\n")
+	if hasSlice {
+		for _, f := range fields {
+			if f.GoField == "" {
+				continue
+			}
+			if f.Type == "varintArray" {
+				fmt.Fprintf(sb, "\t\tif !slices.Equal(c.%s.%s, defaults.%s.%s) {\n\t\t\treturn true, true\n\t\t}\n",
+					goField, f.GoField, goField, f.GoField)
+			} else {
+				fmt.Fprintf(sb, "\t\tif c.%s.%s != defaults.%s.%s {\n\t\t\treturn true, true\n\t\t}\n",
+					goField, f.GoField, goField, f.GoField)
+			}
+		}
+		sb.WriteString("\t\treturn false, true\n")
+	} else {
+		fmt.Fprintf(sb, "\t\treturn *c.%s != *defaults.%s, true\n", goField, goField)
+	}
+	sb.WriteString("\t}\n\treturn false, false\n}\n\n")
+
+	// Encode
+	fmt.Fprintf(sb, "func (%s) Encode(c *Components) ([]byte, error) {\n", codec)
+	fmt.Fprintf(sb, "\tif c.%s == nil {\n\t\treturn nil, nil\n\t}\n", goField)
+	sb.WriteString("\tw := ns.NewWriter()\n")
+	for _, f := range fields {
+		writeEncodeField(sb, goField, f)
+	}
+	sb.WriteString("\treturn w.Bytes(), nil\n}\n\n")
+}
+
+func writeDecodeWireField(sb *strings.Builder, f WireField) {
+	switch f.Type {
+	case "varint":
+		sb.WriteString("\tif err := w.CopyVarInt(buf); err != nil {\n\t\treturn nil, err\n\t}\n")
+	case "float32":
+		sb.WriteString("\tif err := w.CopyFloat32(buf); err != nil {\n\t\treturn nil, err\n\t}\n")
+	case "bool":
+		sb.WriteString("\tif err := w.CopyBool(buf); err != nil {\n\t\treturn nil, err\n\t}\n")
+	case "varintArray":
+		sb.WriteString("\t{\n")
+		sb.WriteString("\t\tcount, err := buf.ReadVarInt()\n")
+		sb.WriteString("\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n")
+		sb.WriteString("\t\tw.WriteVarInt(count)\n")
+		sb.WriteString("\t\tfor range int(count) {\n")
+		sb.WriteString("\t\t\tif err := w.CopyVarInt(buf); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n")
+		sb.WriteString("\t\t}\n\t}\n")
+	case "optionalIdentifier":
+		sb.WriteString("\t{\n")
+		sb.WriteString("\t\tpresent, err := buf.ReadBool()\n")
+		sb.WriteString("\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n")
+		sb.WriteString("\t\tw.WriteBool(present)\n")
+		sb.WriteString("\t\tif present {\n")
+		sb.WriteString("\t\t\tif err := w.CopyString(buf, maxStringLen); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n")
+		sb.WriteString("\t\t}\n\t}\n")
+	case "fireworkExplosionList":
+		sb.WriteString("\t{\n")
+		sb.WriteString("\t\tcount, err := buf.ReadVarInt()\n")
+		sb.WriteString("\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n")
+		sb.WriteString("\t\tw.WriteVarInt(count)\n")
+		sb.WriteString("\t\tfor range int(count) {\n")
+		sb.WriteString("\t\t\tif err := copyFireworkExplosion(buf, w); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n")
+		sb.WriteString("\t\t}\n\t}\n")
+	}
+}
+
+func writeApplyField(sb *strings.Builder, f WireField) {
+	switch f.Type {
+	case "varint":
+		sb.WriteString("\t{\n\t\tv, err := buf.ReadVarInt()\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n")
+		fmt.Fprintf(sb, "\t\ts.%s = int32(v)\n\t}\n", f.GoField)
+	case "float32":
+		sb.WriteString("\t{\n\t\tv, err := buf.ReadFloat32()\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n")
+		fmt.Fprintf(sb, "\t\ts.%s = float64(v)\n\t}\n", f.GoField)
+	case "bool":
+		sb.WriteString("\t{\n\t\tv, err := buf.ReadBool()\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n")
+		fmt.Fprintf(sb, "\t\ts.%s = bool(v)\n\t}\n", f.GoField)
+	case "varintArray":
+		sb.WriteString("\t{\n\t\tcount, err := buf.ReadVarInt()\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n")
+		sb.WriteString("\t\tarr := make([]int32, 0, count)\n")
+		sb.WriteString("\t\tfor range int(count) {\n")
+		sb.WriteString("\t\t\tv, err := buf.ReadVarInt()\n\t\t\tif err != nil {\n\t\t\t\treturn err\n\t\t\t}\n")
+		sb.WriteString("\t\t\tarr = append(arr, int32(v))\n\t\t}\n")
+		fmt.Fprintf(sb, "\t\ts.%s = arr\n\t}\n", f.GoField)
+	}
+}
+
+func writeEncodeField(sb *strings.Builder, goField string, f WireField) {
+	if f.GoField != "" {
+		switch f.Type {
+		case "varint":
+			fmt.Fprintf(sb, "\tw.WriteVarInt(ns.VarInt(c.%s.%s))\n", goField, f.GoField)
+		case "float32":
+			fmt.Fprintf(sb, "\tw.WriteFloat32(ns.Float32(c.%s.%s))\n", goField, f.GoField)
+		case "bool":
+			fmt.Fprintf(sb, "\tw.WriteBool(ns.Boolean(c.%s.%s))\n", goField, f.GoField)
+		case "varintArray":
+			fmt.Fprintf(sb, "\tw.WriteVarInt(ns.VarInt(len(c.%s.%s)))\n", goField, f.GoField)
+			fmt.Fprintf(sb, "\tfor _, v := range c.%s.%s {\n\t\tw.WriteVarInt(ns.VarInt(v))\n\t}\n", goField, f.GoField)
+		}
+	} else {
+		// unmapped field: write zero/default value
+		switch f.Type {
+		case "varint":
+			sb.WriteString("\tw.WriteVarInt(0)\n")
+		case "float32":
+			sb.WriteString("\tw.WriteFloat32(0)\n")
+		case "bool":
+			sb.WriteString("\tw.WriteBool(false)\n")
+		case "optionalIdentifier":
+			sb.WriteString("\tw.WriteBool(false)\n")
+		case "fireworkExplosionList":
+			sb.WriteString("\tw.WriteVarInt(0)\n")
+		}
 	}
 }

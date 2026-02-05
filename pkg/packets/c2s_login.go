@@ -1,8 +1,6 @@
 package packets
 
 import (
-	"github.com/go-mclib/data/pkg/data/packet_ids"
-	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
@@ -15,10 +13,6 @@ type C2SHello struct {
 	// The UUID of the player logging in. Unused by the vanilla server.
 	PlayerUuid ns.UUID
 }
-
-func (p *C2SHello) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SHelloID) }
-func (p *C2SHello) State() jp.State { return jp.StateLogin }
-func (p *C2SHello) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SHello) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -48,10 +42,6 @@ type C2SKey struct {
 	VerifyToken ns.ByteArray
 }
 
-func (p *C2SKey) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SKeyID) }
-func (p *C2SKey) State() jp.State { return jp.StateLogin }
-func (p *C2SKey) Bound() jp.Bound { return jp.C2S }
-
 func (p *C2SKey) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.SharedSecret, err = buf.ReadByteArray(256); err != nil {
@@ -77,10 +67,6 @@ type C2SCustomQueryAnswer struct {
 	// Any data, depending on the channel. Only present if the client understood the request.
 	Data ns.PrefixedOptional[ns.ByteArray]
 }
-
-func (p *C2SCustomQueryAnswer) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SCustomQueryAnswerID) }
-func (p *C2SCustomQueryAnswer) State() jp.State { return jp.StateLogin }
-func (p *C2SCustomQueryAnswer) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SCustomQueryAnswer) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -109,9 +95,6 @@ func (p *C2SCustomQueryAnswer) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Login_Acknowledged
 type C2SLoginAcknowledged struct{}
 
-func (p *C2SLoginAcknowledged) ID() ns.VarInt                { return ns.VarInt(packet_ids.C2SLoginAcknowledgedID) }
-func (p *C2SLoginAcknowledged) State() jp.State              { return jp.StateLogin }
-func (p *C2SLoginAcknowledged) Bound() jp.Bound              { return jp.C2S }
 func (p *C2SLoginAcknowledged) Read(*ns.PacketBuffer) error  { return nil }
 func (p *C2SLoginAcknowledged) Write(*ns.PacketBuffer) error { return nil }
 
@@ -127,12 +110,6 @@ type C2SCookieResponseLogin struct {
 	// The data of the cookie.
 	Payload ns.PrefixedOptional[ns.ByteArray]
 }
-
-func (p *C2SCookieResponseLogin) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.C2SCookieResponseLoginID)
-}
-func (p *C2SCookieResponseLogin) State() jp.State { return jp.StateLogin }
-func (p *C2SCookieResponseLogin) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SCookieResponseLogin) Read(buf *ns.PacketBuffer) error {
 	var err error

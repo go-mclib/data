@@ -1,8 +1,6 @@
 package packets
 
 import (
-	"github.com/go-mclib/data/pkg/data/packet_ids"
-	jp "github.com/go-mclib/protocol/java_protocol"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/go-mclib/protocol/nbt"
 )
@@ -16,12 +14,6 @@ type S2CCookieRequestConfiguration struct {
 	// The identifier of the cookie.
 	Key ns.Identifier
 }
-
-func (p *S2CCookieRequestConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CCookieRequestConfigurationID)
-}
-func (p *S2CCookieRequestConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CCookieRequestConfiguration) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CCookieRequestConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -44,12 +36,6 @@ type S2CCustomPayloadConfiguration struct {
 	// Any data, depending on the channel.
 	Data ns.ByteArray
 }
-
-func (p *S2CCustomPayloadConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CCustomPayloadConfigurationID)
-}
-func (p *S2CCustomPayloadConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CCustomPayloadConfiguration) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CCustomPayloadConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -75,12 +61,6 @@ type S2CDisconnectConfiguration struct {
 	Reason ns.TextComponent
 }
 
-func (p *S2CDisconnectConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CDisconnectConfigurationID)
-}
-func (p *S2CDisconnectConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CDisconnectConfiguration) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CDisconnectConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Reason, err = buf.ReadTextComponent()
@@ -99,11 +79,6 @@ func (p *S2CDisconnectConfiguration) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Finish_Configuration
 type S2CFinishConfiguration struct{}
 
-func (p *S2CFinishConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CFinishConfigurationID)
-}
-func (p *S2CFinishConfiguration) State() jp.State              { return jp.StateConfiguration }
-func (p *S2CFinishConfiguration) Bound() jp.Bound              { return jp.S2C }
 func (p *S2CFinishConfiguration) Read(*ns.PacketBuffer) error  { return nil }
 func (p *S2CFinishConfiguration) Write(*ns.PacketBuffer) error { return nil }
 
@@ -115,12 +90,6 @@ func (p *S2CFinishConfiguration) Write(*ns.PacketBuffer) error { return nil }
 type S2CKeepAliveConfiguration struct {
 	KeepAliveId ns.Int64
 }
-
-func (p *S2CKeepAliveConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CKeepAliveConfigurationID)
-}
-func (p *S2CKeepAliveConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CKeepAliveConfiguration) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CKeepAliveConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -141,10 +110,6 @@ type S2CPingConfiguration struct {
 	Id ns.Int32
 }
 
-func (p *S2CPingConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPingConfigurationID) }
-func (p *S2CPingConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CPingConfiguration) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CPingConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
 	p.Id, err = buf.ReadInt32()
@@ -160,9 +125,6 @@ func (p *S2CPingConfiguration) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Reset_Chat
 type S2CResetChat struct{}
 
-func (p *S2CResetChat) ID() ns.VarInt                { return ns.VarInt(packet_ids.S2CResetChatID) }
-func (p *S2CResetChat) State() jp.State              { return jp.StateConfiguration }
-func (p *S2CResetChat) Bound() jp.Bound              { return jp.S2C }
 func (p *S2CResetChat) Read(*ns.PacketBuffer) error  { return nil }
 func (p *S2CResetChat) Write(*ns.PacketBuffer) error { return nil }
 
@@ -182,10 +144,6 @@ type S2CRegistryData struct {
 	RegistryId ns.Identifier
 	Entries    []RegistryEntry
 }
-
-func (p *S2CRegistryData) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CRegistryDataID) }
-func (p *S2CRegistryData) State() jp.State { return jp.StateConfiguration }
-func (p *S2CRegistryData) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CRegistryData) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -255,12 +213,6 @@ type S2CResourcePackPopConfiguration struct {
 	Uuid ns.PrefixedOptional[ns.UUID]
 }
 
-func (p *S2CResourcePackPopConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CResourcePackPopConfigurationID)
-}
-func (p *S2CResourcePackPopConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CResourcePackPopConfiguration) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CResourcePackPopConfiguration) Read(buf *ns.PacketBuffer) error {
 	return p.Uuid.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.UUID, error) {
 		return b.ReadUUID()
@@ -288,12 +240,6 @@ type S2CResourcePackPushConfiguration struct {
 	// This is shown in the prompt making the client accept or decline the resource pack.
 	PromptMessage ns.PrefixedOptional[ns.TextComponent]
 }
-
-func (p *S2CResourcePackPushConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CResourcePackPushConfigurationID)
-}
-func (p *S2CResourcePackPushConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CResourcePackPushConfiguration) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CResourcePackPushConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
@@ -344,12 +290,6 @@ type S2CStoreCookieConfiguration struct {
 	Payload ns.ByteArray
 }
 
-func (p *S2CStoreCookieConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CStoreCookieConfigurationID)
-}
-func (p *S2CStoreCookieConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CStoreCookieConfiguration) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CStoreCookieConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Key, err = buf.ReadIdentifier(); err != nil {
@@ -378,12 +318,6 @@ type S2CTransferConfiguration struct {
 	Port ns.VarInt
 }
 
-func (p *S2CTransferConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CTransferConfigurationID)
-}
-func (p *S2CTransferConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CTransferConfiguration) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CTransferConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Host, err = buf.ReadString(32767); err != nil {
@@ -408,12 +342,6 @@ func (p *S2CTransferConfiguration) Write(buf *ns.PacketBuffer) error {
 type S2CUpdateEnabledFeatures struct {
 	FeatureFlags []ns.Identifier
 }
-
-func (p *S2CUpdateEnabledFeatures) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CUpdateEnabledFeaturesID)
-}
-func (p *S2CUpdateEnabledFeatures) State() jp.State { return jp.StateConfiguration }
-func (p *S2CUpdateEnabledFeatures) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CUpdateEnabledFeatures) Read(buf *ns.PacketBuffer) error {
 	count, err := buf.ReadVarInt()
@@ -459,12 +387,6 @@ type TagRegistry struct {
 type S2CUpdateTagsConfiguration struct {
 	ArrayOfTags []TagRegistry
 }
-
-func (p *S2CUpdateTagsConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CUpdateTagsConfigurationID)
-}
-func (p *S2CUpdateTagsConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CUpdateTagsConfiguration) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CUpdateTagsConfiguration) Read(buf *ns.PacketBuffer) error {
 	registryCount, err := buf.ReadVarInt()
@@ -537,10 +459,6 @@ type S2CSelectKnownPacks struct {
 	KnownPacks []KnownPack
 }
 
-func (p *S2CSelectKnownPacks) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSelectKnownPacksID) }
-func (p *S2CSelectKnownPacks) State() jp.State { return jp.StateConfiguration }
-func (p *S2CSelectKnownPacks) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CSelectKnownPacks) Read(buf *ns.PacketBuffer) error {
 	count, err := buf.ReadVarInt()
 	if err != nil {
@@ -594,12 +512,6 @@ type S2CCustomReportDetailsConfiguration struct {
 	Details []CustomReportDetail
 }
 
-func (p *S2CCustomReportDetailsConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CCustomReportDetailsConfigurationID)
-}
-func (p *S2CCustomReportDetailsConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CCustomReportDetailsConfiguration) Bound() jp.Bound { return jp.S2C }
-
 func (p *S2CCustomReportDetailsConfiguration) Read(buf *ns.PacketBuffer) error {
 	count, err := buf.ReadVarInt()
 	if err != nil {
@@ -650,12 +562,6 @@ type ServerLink struct {
 type S2CServerLinksConfiguration struct {
 	Links []ServerLink
 }
-
-func (p *S2CServerLinksConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CServerLinksConfigurationID)
-}
-func (p *S2CServerLinksConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CServerLinksConfiguration) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CServerLinksConfiguration) Read(buf *ns.PacketBuffer) error {
 	count, err := buf.ReadVarInt()
@@ -714,11 +620,6 @@ func (p *S2CServerLinksConfiguration) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clear_Dialog_(Configuration)
 type S2CClearDialogConfiguration struct{}
 
-func (p *S2CClearDialogConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CClearDialogConfigurationID)
-}
-func (p *S2CClearDialogConfiguration) State() jp.State              { return jp.StateConfiguration }
-func (p *S2CClearDialogConfiguration) Bound() jp.Bound              { return jp.S2C }
 func (p *S2CClearDialogConfiguration) Read(*ns.PacketBuffer) error  { return nil }
 func (p *S2CClearDialogConfiguration) Write(*ns.PacketBuffer) error { return nil }
 
@@ -731,12 +632,6 @@ type S2CShowDialogConfiguration struct {
 	// Inline definition as described at Java Edition protocol/Registry data#Dialog.
 	Dialog nbt.Tag
 }
-
-func (p *S2CShowDialogConfiguration) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.S2CShowDialogConfigurationID)
-}
-func (p *S2CShowDialogConfiguration) State() jp.State { return jp.StateConfiguration }
-func (p *S2CShowDialogConfiguration) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CShowDialogConfiguration) Read(buf *ns.PacketBuffer) error {
 	// read remaining bytes as NBT
@@ -765,10 +660,6 @@ type S2CCodeOfConduct struct {
 	// Code of Conduct of the server.
 	Codeofconduct ns.String
 }
-
-func (p *S2CCodeOfConduct) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCodeOfConductID) }
-func (p *S2CCodeOfConduct) State() jp.State { return jp.StateConfiguration }
-func (p *S2CCodeOfConduct) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CCodeOfConduct) Read(buf *ns.PacketBuffer) error {
 	var err error
