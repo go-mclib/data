@@ -1,5 +1,5 @@
 {
-  "_comment": "see ./main.go:generateComponentCodecs()",
+  "_comment": "Wire format metadata for item components. Used by go generate to auto-generate codec registrations.",
   "components": {
     "minecraft:max_stack_size": {
       "goField": "MaxStackSize",
@@ -85,6 +85,82 @@
       "goField": "Glider",
       "goType": "bool",
       "wireType": "empty"
+    },
+    "minecraft:rarity": {
+      "goField": "Rarity",
+      "goType": "string",
+      "wireType": "varintEnum",
+      "_comment": "Enum: 0=common, 1=uncommon, 2=rare, 3=epic"
+    },
+    "minecraft:food": {
+      "goField": "Food",
+      "goType": "*Food",
+      "wireType": "struct",
+      "wireFormat": [
+        {"name": "nutrition", "type": "varint", "goField": "Nutrition"},
+        {"name": "saturation", "type": "float32", "goField": "Saturation"}
+      ]
+    },
+    "minecraft:weapon": {
+      "goField": "Weapon",
+      "goType": "*Weapon",
+      "wireType": "struct",
+      "wireFormat": [
+        {"name": "itemDamagePerAttack", "type": "varint", "goField": "ItemDamagePerAttack"},
+        {"name": "disableBlockingForSeconds", "type": "float32", "goField": "DisableBlockingForSeconds"}
+      ]
+    },
+    "minecraft:enchantable": {
+      "goField": "Enchantable",
+      "goType": "*Enchantable",
+      "wireType": "struct",
+      "wireFormat": [
+        {"name": "value", "type": "varint", "goField": "Value"}
+      ]
+    },
+    "minecraft:custom_name": {
+      "goField": "CustomName",
+      "goType": "*ItemNameComponent",
+      "wireType": "nbtTextComponent"
+    },
+    "minecraft:item_name": {
+      "goField": "ItemName",
+      "goType": "*ItemNameComponent",
+      "wireType": "nbtTextComponent"
+    },
+    "minecraft:tooltip_display": {
+      "goField": "TooltipDisplay",
+      "goType": "*TooltipDisplay",
+      "wireType": "struct",
+      "wireFormat": [
+        {"name": "hideTooltip", "type": "bool", "goField": "HideTooltip"},
+        {"name": "hiddenComponents", "type": "varintArray", "goField": "HiddenComponents"}
+      ]
+    },
+    "minecraft:attribute_modifiers": {
+      "goField": "AttributeModifiers",
+      "goType": "[]AttributeModifier",
+      "wireType": "attributeModifierList"
+    },
+    "minecraft:use_cooldown": {
+      "goField": "UseCooldown",
+      "goType": "*UseCooldown",
+      "wireType": "struct",
+      "wireFormat": [
+        {"name": "seconds", "type": "float32", "goField": "Seconds"},
+        {"name": "cooldownGroup", "type": "optionalIdentifier"}
+      ],
+      "_comment": "cooldownGroup not yet decoded into struct"
+    },
+    "minecraft:fireworks": {
+      "goField": "Fireworks",
+      "goType": "*Fireworks",
+      "wireType": "struct",
+      "wireFormat": [
+        {"name": "flightDuration", "type": "varint", "goField": "FlightDuration"},
+        {"name": "explosions", "type": "fireworkExplosionList"}
+      ],
+      "_comment": "explosions not yet decoded into struct"
     },
     "minecraft:map_id": {
       "wireType": "varint",
@@ -181,9 +257,120 @@
     "minecraft:use_remainder": {
       "wireType": "slot",
       "passthrough": true
+    },
+    "minecraft:lore": {
+      "wireType": "loreList",
+      "passthrough": true
+    },
+    "minecraft:enchantments": {
+      "wireType": "enchantmentMap",
+      "passthrough": true
+    },
+    "minecraft:stored_enchantments": {
+      "wireType": "enchantmentMap",
+      "passthrough": true
+    },
+    "minecraft:can_break": {
+      "wireType": "blockPredicates",
+      "passthrough": true
+    },
+    "minecraft:can_place_on": {
+      "wireType": "blockPredicates",
+      "passthrough": true
+    },
+    "minecraft:custom_model_data": {
+      "wireType": "customModelData",
+      "passthrough": true
+    },
+    "minecraft:consumable": {
+      "wireType": "consumable",
+      "passthrough": true
+    },
+    "minecraft:use_effects": {
+      "wireType": "useEffects",
+      "passthrough": true
+    },
+    "minecraft:tool": {
+      "wireType": "tool",
+      "passthrough": true
+    },
+    "minecraft:attack_range": {
+      "wireType": "attackRange",
+      "passthrough": true
+    },
+    "minecraft:equippable": {
+      "wireType": "equippable",
+      "passthrough": true
+    },
+    "minecraft:death_protection": {
+      "wireType": "deathProtection",
+      "passthrough": true
+    },
+    "minecraft:blocks_attacks": {
+      "wireType": "blocksAttacks",
+      "passthrough": true
+    },
+    "minecraft:kinetic_weapon": {
+      "wireType": "kineticWeapon",
+      "passthrough": true
+    },
+    "minecraft:piercing_weapon": {
+      "wireType": "piercingWeapon",
+      "passthrough": true
+    },
+    "minecraft:potion_contents": {
+      "wireType": "potionContents",
+      "passthrough": true
+    },
+    "minecraft:suspicious_stew_effects": {
+      "wireType": "suspiciousStew",
+      "passthrough": true
+    },
+    "minecraft:writable_book_content": {
+      "wireType": "writableBook",
+      "passthrough": true
+    },
+    "minecraft:written_book_content": {
+      "wireType": "writtenBook",
+      "passthrough": true
+    },
+    "minecraft:trim": {
+      "wireType": "trim",
+      "passthrough": true
+    },
+    "minecraft:recipes": {
+      "wireType": "recipes",
+      "passthrough": true
+    },
+    "minecraft:lodestone_tracker": {
+      "wireType": "lodestone",
+      "passthrough": true
+    },
+    "minecraft:firework_explosion": {
+      "wireType": "fireworkExplosion",
+      "passthrough": true
+    },
+    "minecraft:profile": {
+      "wireType": "profile",
+      "passthrough": true
+    },
+    "minecraft:banner_patterns": {
+      "wireType": "bannerPatterns",
+      "passthrough": true
+    },
+    "minecraft:pot_decorations": {
+      "wireType": "potDecorations",
+      "passthrough": true
+    },
+    "minecraft:block_state": {
+      "wireType": "blockState",
+      "passthrough": true
+    },
+    "minecraft:bees": {
+      "wireType": "bees",
+      "passthrough": true
     }
   },
-  "# TODO": "entity variants are in JSON data, fetch from there?",
   "entityVariants": [
     "minecraft:villager/variant",
     "minecraft:wolf/variant",

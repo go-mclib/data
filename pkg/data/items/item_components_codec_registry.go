@@ -1,6 +1,7 @@
 package items
 
-// Component codec registration - registers all component codecs at init time.
+// Component codec registration - registers complex component codecs at init time.
+// Simple codecs (varint, float32, string, empty) are auto-generated in item_components_codec_gen.go.
 
 import (
 	"fmt"
@@ -9,82 +10,6 @@ import (
 )
 
 func init() {
-	// simple VarInt components
-	RegisterCodec(ComponentMaxStackSize, &varIntCodec{
-		get: func(c *Components) int32 { return c.MaxStackSize },
-		set: func(c *Components, v int32) { c.MaxStackSize = v },
-	})
-	RegisterCodec(ComponentMaxDamage, &varIntCodec{
-		get: func(c *Components) int32 { return c.MaxDamage },
-		set: func(c *Components, v int32) { c.MaxDamage = v },
-	})
-	RegisterCodec(ComponentDamage, &varIntCodec{
-		get: func(c *Components) int32 { return c.Damage },
-		set: func(c *Components, v int32) { c.Damage = v },
-	})
-	RegisterCodec(ComponentRepairCost, &varIntCodec{
-		get: func(c *Components) int32 { return c.RepairCost },
-		set: func(c *Components, v int32) { c.RepairCost = v },
-	})
-	RegisterCodec(ComponentMapColor, &varIntCodec{
-		get: func(c *Components) int32 { return c.MapColor },
-		set: func(c *Components, v int32) { c.MapColor = v },
-	})
-	RegisterCodec(ComponentOminousBottleAmplifier, &varIntCodec{
-		get: func(c *Components) int32 { return c.OminousBottleAmplifier },
-		set: func(c *Components, v int32) { c.OminousBottleAmplifier = v },
-	})
-
-	// simple Float32 components
-	RegisterCodec(ComponentMinimumAttackCharge, &float32Codec{
-		get: func(c *Components) float64 { return c.MinimumAttackCharge },
-		set: func(c *Components, v float64) { c.MinimumAttackCharge = v },
-	})
-	RegisterCodec(ComponentPotionDurationScale, &float32Codec{
-		get: func(c *Components) float64 { return c.PotionDurationScale },
-		set: func(c *Components, v float64) { c.PotionDurationScale = v },
-	})
-
-	// simple string/identifier components
-	RegisterCodec(ComponentDamageType, &stringCodec{
-		get: func(c *Components) string { return c.DamageType },
-		set: func(c *Components, v string) { c.DamageType = v },
-	})
-	RegisterCodec(ComponentItemModel, &stringCodec{
-		get: func(c *Components) string { return c.ItemModel },
-		set: func(c *Components, v string) { c.ItemModel = v },
-	})
-	RegisterCodec(ComponentInstrument, &stringCodec{
-		get: func(c *Components) string { return c.Instrument },
-		set: func(c *Components, v string) { c.Instrument = v },
-	})
-	RegisterCodec(ComponentProvidesTrimMaterial, &stringCodec{
-		get: func(c *Components) string { return c.ProvidesTrimMaterial },
-		set: func(c *Components, v string) { c.ProvidesTrimMaterial = v },
-	})
-	RegisterCodec(ComponentJukeboxPlayable, &stringCodec{
-		get: func(c *Components) string { return c.JukeboxPlayable },
-		set: func(c *Components, v string) { c.JukeboxPlayable = v },
-	})
-	RegisterCodec(ComponentProvidesBannerPatterns, &stringCodec{
-		get: func(c *Components) string { return c.ProvidesBannerPatterns },
-		set: func(c *Components, v string) { c.ProvidesBannerPatterns = v },
-	})
-	RegisterCodec(ComponentBreakSound, &stringCodec{
-		get: func(c *Components) string { return c.BreakSound },
-		set: func(c *Components, v string) { c.BreakSound = v },
-	})
-
-	// empty marker components (bool flags)
-	RegisterCodec(ComponentUnbreakable, &emptyMarkerCodec{
-		get: func(c *Components) bool { return c.Unbreakable },
-		set: func(c *Components, v bool) { c.Unbreakable = v },
-	})
-	RegisterCodec(ComponentGlider, &emptyMarkerCodec{
-		get: func(c *Components) bool { return c.Glider },
-		set: func(c *Components, v bool) { c.Glider = v },
-	})
-
 	// struct components with dedicated codecs
 	RegisterCodec(ComponentCustomName, &customNameCodec{})
 	RegisterCodec(ComponentItemName, &itemNameCodec{})
@@ -97,19 +22,26 @@ func init() {
 	RegisterCodec(ComponentFireworks, &fireworksCodec{})
 	RegisterCodec(ComponentRarity, &rarityCodec{})
 
+	// lore, enchantments, and tool codecs (full implementations)
+	RegisterCodec(ComponentLore, &loreCodec{})
+	RegisterCodec(ComponentEnchantments, &enchantmentsCodec{
+		get: func(c *Components) map[string]int32 { return c.Enchantments },
+		set: func(c *Components, v map[string]int32) { c.Enchantments = v },
+	})
+	RegisterCodec(ComponentStoredEnchantments, &enchantmentsCodec{
+		get: func(c *Components) map[string]int32 { return c.StoredEnchantments },
+		set: func(c *Components, v map[string]int32) { c.StoredEnchantments = v },
+	})
+	RegisterCodec(ComponentTool, &toolCodec{})
+
 	// complex passthrough codecs - these have custom decoders
 	// simple passthroughs (varint, bool, string, empty, int32, nbt, holderSet, slot, slotList)
 	// are registered in item_components_codec_gen.go
-
-	RegisterCodec(ComponentLore, &passthroughCodec{decode: decodeLoreWire})
-	RegisterCodec(ComponentEnchantments, &passthroughCodec{decode: decodeEnchantmentsWire})
-	RegisterCodec(ComponentStoredEnchantments, &passthroughCodec{decode: decodeEnchantmentsWire})
 	RegisterCodec(ComponentCanBreak, &passthroughCodec{decode: decodeBlockPredicatesWire})
 	RegisterCodec(ComponentCanPlaceOn, &passthroughCodec{decode: decodeBlockPredicatesWire})
 	RegisterCodec(ComponentCustomModelData, &passthroughCodec{decode: decodeCustomModelDataWire})
 	RegisterCodec(ComponentConsumable, &passthroughCodec{decode: decodeConsumableWire})
 	RegisterCodec(ComponentUseEffects, &passthroughCodec{decode: decodeUseEffectsWire})
-	RegisterCodec(ComponentTool, &passthroughCodec{decode: decodeToolWire})
 	RegisterCodec(ComponentAttackRange, &passthroughCodec{decode: decodeAttackRangeWire})
 	RegisterCodec(ComponentEquippable, &passthroughCodec{decode: decodeEquippableWire})
 	RegisterCodec(ComponentDeathProtection, &passthroughCodec{decode: decodeDeathProtectionWire})
@@ -195,22 +127,6 @@ func decodeNBTWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return copyNBT(buf, w)
 }
 
-func decodeLoreWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	return copyVarIntPrefixedList(buf, w, copyNBT)
-}
-
-func decodeEnchantmentsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	if err := copyVarIntPrefixedList(buf, w, func(buf, w *ns.PacketBuffer) error {
-		if err := w.CopyVarInt(buf); err != nil {
-			return err
-		}
-		return w.CopyVarInt(buf)
-	}); err != nil {
-		return err
-	}
-	return w.CopyBool(buf)
-}
-
 func decodeBlockPredicatesWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	if err := copyVarIntPrefixedList(buf, w, copyBlockPredicate); err != nil {
 		return err
@@ -272,19 +188,6 @@ func decodeUseEffectsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 
 func decodeHolderSetWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return copyHolderSet(buf, w)
-}
-
-func decodeToolWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	if err := copyVarIntPrefixedList(buf, w, copyToolRule); err != nil {
-		return err
-	}
-	if err := w.CopyFloat32(buf); err != nil { // default mining speed
-		return err
-	}
-	if err := w.CopyVarInt(buf); err != nil { // damage per block
-		return err
-	}
-	return w.CopyBool(buf) // can destroy blocks in creative
 }
 
 func decodeAttackRangeWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {

@@ -22,6 +22,9 @@ func main() {
 	outDir := filepath.Dir(baseDir)
 	genDir := filepath.Dir(outDir) // go back one level to generate/
 
+	// generate version info
+	generateVersion(filepath.Join(outDir, "version_gen.go"))
+
 	// generate packages
 	generateRegistries(registries, filepath.Join(outDir, "registries", "registries_gen.go"))
 	generateBlocks(registries, filepath.Join(outDir, "blocks", "blocks_gen.go"))

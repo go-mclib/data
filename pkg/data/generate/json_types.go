@@ -41,8 +41,23 @@ type PacketEntryJSON struct {
 
 // ComponentMetadata defines wire format info for a component.
 type ComponentMetadata struct {
-	WireType    string `json:"wireType"`
-	Passthrough bool   `json:"passthrough,omitempty"`
+	// GoField is the field name in the Components struct (e.g., "MaxStackSize")
+	GoField string `json:"goField,omitempty"`
+	// GoType is the Go type (e.g., "int32", "*Food")
+	GoType string `json:"goType,omitempty"`
+	// WireType is the basic wire format type (varint, float32, identifier, empty, nbt, etc.)
+	WireType string `json:"wireType"`
+	// Passthrough means the component is decoded but not interpreted into a struct
+	Passthrough bool `json:"passthrough,omitempty"`
+	// WireFormat defines the detailed wire structure for complex components
+	WireFormat []WireField `json:"wireFormat,omitempty"`
+}
+
+// WireField defines a single field in a complex component's wire format.
+type WireField struct {
+	Name    string `json:"name"`              // wire name for documentation
+	Type    string `json:"type"`              // wire type: varint, float32, bool, nbt, etc.
+	GoField string `json:"goField,omitempty"` // corresponding Go struct field
 }
 
 // ComponentMetadataFile is the structure of component_metadata.include.json.

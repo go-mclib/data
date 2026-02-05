@@ -10,6 +10,21 @@ import (
 	"unicode"
 )
 
+// Protocol version info - update these when regenerating for a new Minecraft version
+const (
+	ProtocolVersion  = 774
+	MinecraftVersion = "1.21.11"
+)
+
+// generatedFileHeader returns the standard header for generated Go files.
+func generatedFileHeader(pkg string) string {
+	return fmt.Sprintf(`// Code generated for Minecraft %s (Protocol %d); DO NOT EDIT.
+
+package %s
+
+`, MinecraftVersion, ProtocolVersion, pkg)
+}
+
 func loadJSON[T any](path string) T {
 	data, err := os.ReadFile(path)
 	if err != nil {
@@ -69,4 +84,18 @@ func sortedKeys[V any](m map[string]V) []string {
 	}
 	sort.Strings(keys)
 	return keys
+}
+
+// generateVersion creates version_gen.go with protocol version constants.
+func generateVersion(outPath string) {
+	var sb strings.Builder
+	sb.WriteString(generatedFileHeader("data"))
+	sb.WriteString(fmt.Sprintf(`// ProtocolVersion is the Minecraft protocol version this package was generated for.
+const ProtocolVersion = %d
+
+// MinecraftVersion is the Minecraft game version this package was generated for.
+const MinecraftVersion = "%s"
+`, ProtocolVersion, MinecraftVersion))
+
+	writeFile(outPath, sb.String())
 }

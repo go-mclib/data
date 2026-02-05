@@ -838,6 +838,355 @@ func (codec *rarityCodec) Encode(c *Components) ([]byte, error) {
 }
 
 // ============================================================================
+// Lore codec
+// ============================================================================
+
+// loreCodec handles Lore component (list of NBT text components).
+type loreCodec struct{}
+
+func (codec *loreCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	w := ns.NewWriter()
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return nil, err
+	}
+	w.WriteVarInt(count)
+	for range int(count) {
+		if err := copyNBT(buf, w); err != nil {
+			return nil, err
+		}
+	}
+	return w.Bytes(), nil
+}
+
+func (codec *loreCodec) Apply(c *Components, data []byte) error {
+	buf := ns.NewReader(data)
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	lore := make([]string, 0, count)
+	for range int(count) {
+		name, err := decodeItemName(buf)
+		if err != nil {
+			return err
+		}
+		if name.Translate != "" {
+			lore = append(lore, name.Translate)
+		} else {
+			lore = append(lore, name.Text)
+		}
+	}
+	c.Lore = lore
+	return nil
+}
+
+func (codec *loreCodec) Clear(c *Components) {
+	c.Lore = nil
+}
+
+func (codec *loreCodec) Differs(c, defaults *Components) (bool, bool) {
+	cHas := len(c.Lore) > 0
+	dHas := len(defaults.Lore) > 0
+	if cHas != dHas {
+		return true, cHas
+	}
+	if cHas && dHas {
+		return !slices.Equal(c.Lore, defaults.Lore), true
+	}
+	return false, false
+}
+
+func (codec *loreCodec) Encode(c *Components) ([]byte, error) {
+	w := ns.NewWriter()
+	w.WriteVarInt(ns.VarInt(len(c.Lore)))
+	for _, line := range c.Lore {
+		if err := encodeItemName(w, &ItemNameComponent{Text: line}); err != nil {
+			return nil, err
+		}
+	}
+	return w.Bytes(), nil
+}
+
+// ============================================================================
+// Enchantments codec
+// ============================================================================
+
+// enchantmentsCodec handles Enchantments and StoredEnchantments components.
+type enchantmentsCodec struct {
+	get func(c *Components) map[string]int32
+	set func(c *Components, v map[string]int32)
+}
+
+func (codec *enchantmentsCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	w := ns.NewWriter()
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return nil, err
+	}
+	w.WriteVarInt(count)
+	for range int(count) {
+		// enchantment ID
+		if err := w.CopyVarInt(buf); err != nil {
+			return nil, err
+		}
+		// level
+		if err := w.CopyVarInt(buf); err != nil {
+			return nil, err
+		}
+	}
+	// show in tooltip
+	if err := w.CopyBool(buf); err != nil {
+		return nil, err
+	}
+	return w.Bytes(), nil
+}
+
+func (codec *enchantmentsCodec) Apply(c *Components, data []byte) error {
+	buf := ns.NewReader(data)
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	enchants := make(map[string]int32, count)
+	for range int(count) {
+		enchID, err := buf.ReadVarInt()
+		if err != nil {
+			return err
+		}
+		level, err := buf.ReadVarInt()
+		if err != nil {
+			return err
+		}
+		// store as "id:<num>" for now since enchantments are data-driven
+		enchants[fmt.Sprintf("id:%d", enchID)] = int32(level)
+	}
+	// skip show in tooltip flag for now
+	codec.set(c, enchants)
+	return nil
+}
+
+func (codec *enchantmentsCodec) Clear(c *Components) {
+	codec.set(c, nil)
+}
+
+func (codec *enchantmentsCodec) Differs(c, defaults *Components) (bool, bool) {
+	cv := codec.get(c)
+	dv := codec.get(defaults)
+	cHas := len(cv) > 0
+	dHas := len(dv) > 0
+	if cHas != dHas {
+		return true, cHas
+	}
+	if cHas && dHas {
+		// compare maps
+		if len(cv) != len(dv) {
+			return true, true
+		}
+		for k, v := range cv {
+			if dv[k] != v {
+				return true, true
+			}
+		}
+		return false, true
+	}
+	return false, false
+}
+
+func (codec *enchantmentsCodec) Encode(c *Components) ([]byte, error) {
+	m := codec.get(c)
+	w := ns.NewWriter()
+	w.WriteVarInt(ns.VarInt(len(m)))
+	for name, level := range m {
+		// parse "id:<num>" format or treat as raw ID
+		var enchID int32
+		if _, err := fmt.Sscanf(name, "id:%d", &enchID); err != nil {
+			return nil, fmt.Errorf("invalid enchantment format: %s (expected id:<num>)", name)
+		}
+		w.WriteVarInt(ns.VarInt(enchID))
+		w.WriteVarInt(ns.VarInt(level))
+	}
+	w.WriteBool(true) // show in tooltip
+	return w.Bytes(), nil
+}
+
+// ============================================================================
+// Tool codec
+// ============================================================================
+
+// toolCodec handles Tool component.
+type toolCodec struct{}
+
+func (codec *toolCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	w := ns.NewWriter()
+	// rules
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return nil, err
+	}
+	w.WriteVarInt(count)
+	for range int(count) {
+		if err := copyToolRule(buf, w); err != nil {
+			return nil, err
+		}
+	}
+	// default mining speed
+	if err := w.CopyFloat32(buf); err != nil {
+		return nil, err
+	}
+	// damage per block
+	if err := w.CopyVarInt(buf); err != nil {
+		return nil, err
+	}
+	// can destroy blocks in creative
+	if err := w.CopyBool(buf); err != nil {
+		return nil, err
+	}
+	return w.Bytes(), nil
+}
+
+func (codec *toolCodec) Apply(c *Components, data []byte) error {
+	buf := ns.NewReader(data)
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	tool := &Tool{
+		Rules: make([]ToolRule, 0, count),
+	}
+	for range int(count) {
+		rule, err := decodeToolRule(buf)
+		if err != nil {
+			return err
+		}
+		tool.Rules = append(tool.Rules, rule)
+	}
+	defaultSpeed, err := buf.ReadFloat32()
+	if err != nil {
+		return err
+	}
+	_ = defaultSpeed // stored in rules, not in struct
+	damagePerBlock, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	tool.DamagePerBlock = int32(damagePerBlock)
+	canDestroy, err := buf.ReadBool()
+	if err != nil {
+		return err
+	}
+	tool.CanDestroyBlocksInCreative = bool(canDestroy)
+	c.Tool = tool
+	return nil
+}
+
+func (codec *toolCodec) Clear(c *Components) {
+	c.Tool = nil
+}
+
+func (codec *toolCodec) Differs(c, defaults *Components) (bool, bool) {
+	cHas := c.Tool != nil
+	dHas := defaults.Tool != nil
+	if cHas != dHas {
+		return true, cHas
+	}
+	if cHas && dHas {
+		// simple comparison - check if rules differ
+		if len(c.Tool.Rules) != len(defaults.Tool.Rules) {
+			return true, true
+		}
+		return c.Tool.DamagePerBlock != defaults.Tool.DamagePerBlock ||
+			c.Tool.CanDestroyBlocksInCreative != defaults.Tool.CanDestroyBlocksInCreative, true
+	}
+	return false, false
+}
+
+func (codec *toolCodec) Encode(c *Components) ([]byte, error) {
+	if c.Tool == nil {
+		return nil, nil
+	}
+	w := ns.NewWriter()
+	w.WriteVarInt(ns.VarInt(len(c.Tool.Rules)))
+	for _, rule := range c.Tool.Rules {
+		if err := encodeToolRule(w, rule); err != nil {
+			return nil, err
+		}
+	}
+	w.WriteFloat32(1.0) // default mining speed
+	w.WriteVarInt(ns.VarInt(c.Tool.DamagePerBlock))
+	w.WriteBool(ns.Boolean(c.Tool.CanDestroyBlocksInCreative))
+	return w.Bytes(), nil
+}
+
+// decodeToolRule reads a tool rule from the buffer.
+func decodeToolRule(buf *ns.PacketBuffer) (ToolRule, error) {
+	var rule ToolRule
+	// blocks (holder set)
+	typeID, err := buf.ReadVarInt()
+	if err != nil {
+		return rule, err
+	}
+	if typeID == 0 {
+		// tag reference
+		tag, err := buf.ReadString(maxStringLen)
+		if err != nil {
+			return rule, err
+		}
+		rule.Blocks = string(tag)
+	} else {
+		// list of block IDs - skip for now
+		for range int(typeID) - 1 {
+			if _, err := buf.ReadVarInt(); err != nil {
+				return rule, err
+			}
+		}
+	}
+	// optional speed
+	hasSpeed, err := buf.ReadBool()
+	if err != nil {
+		return rule, err
+	}
+	if hasSpeed {
+		speed, err := buf.ReadFloat32()
+		if err != nil {
+			return rule, err
+		}
+		rule.Speed = float64(speed)
+	}
+	// optional correct for drops
+	hasCorrect, err := buf.ReadBool()
+	if err != nil {
+		return rule, err
+	}
+	if hasCorrect {
+		correct, err := buf.ReadBool()
+		if err != nil {
+			return rule, err
+		}
+		rule.CorrectForDrops = bool(correct)
+	}
+	return rule, nil
+}
+
+// encodeToolRule writes a tool rule to the buffer.
+func encodeToolRule(w *ns.PacketBuffer, rule ToolRule) error {
+	// blocks as tag reference
+	w.WriteVarInt(0)
+	w.WriteString(ns.String(rule.Blocks))
+	// speed
+	if rule.Speed > 0 {
+		w.WriteBool(true)
+		w.WriteFloat32(ns.Float32(rule.Speed))
+	} else {
+		w.WriteBool(false)
+	}
+	// correct for drops
+	w.WriteBool(true)
+	w.WriteBool(ns.Boolean(rule.CorrectForDrops))
+	return nil
+}
+
+// ============================================================================
 // Passthrough codec for components we don't fully decode yet
 // ============================================================================
 

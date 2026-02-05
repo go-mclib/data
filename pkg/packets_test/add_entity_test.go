@@ -37,5 +37,5 @@ func poSwordItem() {
 }
 
 func immortalSnailEntity() {
-	
+
 }
