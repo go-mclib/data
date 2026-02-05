@@ -13,6 +13,7 @@ import (
 
 type packetsToBytes map[jp.Packet][]byte
 
+// maps packet structs to their data bytes (excluding length and id)
 var capturedPackets packetsToBytes = make(packetsToBytes)
 
 // attribute modifiers used in test items
@@ -57,6 +58,9 @@ var poSwordC2S = items.NewStack(items.IronSword, 1).
 	}).
 	SetAttributeModifiers(poSwordAttribs).
 	SetUnbreakable(true)
+
+var GoMclibPlayerName = ns.String("GoMclib")
+var GoMclibPlayerUUID, _ = ns.UUIDFromString("f8ccd41b-3ab8-32d1-a575-afb9913101d6")
 
 func validatePackets(t *testing.T, packets packetsToBytes) {
 	for packet, capture := range packets {
