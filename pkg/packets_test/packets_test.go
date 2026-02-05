@@ -1,13 +1,13 @@
 package packets_test
 
 import (
-	"bytes"
 	"encoding/hex"
 	"reflect"
 	"testing"
 
 	"github.com/go-mclib/data/pkg/data/items"
 	jp "github.com/go-mclib/protocol/java_protocol"
+	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -65,28 +65,19 @@ func validatePackets(t *testing.T, packets packetsToBytes) {
 }
 
 func validatePacket(t *testing.T, packet jp.Packet, capture []byte) {
-	const compressionThreshold = 256 // default vanilla threshold
-
-	// encode
+	// encode packet data only (no wire framing)
 	wirePacket, err := jp.ToWire(packet)
 	if err != nil {
 		t.Fatalf("failed to convert packet %T to wire: %v", packet, err)
 	}
-	buf := bytes.NewBuffer(nil)
-	wirePacket.WriteTo(buf, compressionThreshold)
-	if !assert.Equal(t, capture, buf.Bytes()) {
+	if !assert.Equal(t, capture, wirePacket.Data) {
 		t.Fatalf("packet `%T` does not match captured bytes", packet)
 	}
 
 	// decode: read captured bytes back into a new packet instance
-	wire, err := jp.ReadWirePacketFrom(bytes.NewReader(capture), compressionThreshold)
-	if err != nil {
-		t.Fatalf("failed to read wire packet from captured bytes: %v", err)
-	}
-
-	// create new instance of same type and decode into it
 	decoded := reflect.New(reflect.TypeOf(packet).Elem()).Interface().(jp.Packet)
-	if err := wire.ReadInto(decoded); err != nil {
+	buf := ns.NewReader(capture)
+	if err := decoded.Read(buf); err != nil {
 		t.Fatalf("failed to decode packet %T: %v", packet, err)
 	}
 
@@ -95,9 +86,7 @@ func validatePacket(t *testing.T, packet jp.Packet, capture []byte) {
 	if err != nil {
 		t.Fatalf("failed to re-encode decoded packet %T: %v", decoded, err)
 	}
-	reBuf := bytes.NewBuffer(nil)
-	reEncoded.WriteTo(reBuf, compressionThreshold)
-	if !assert.Equal(t, capture, reBuf.Bytes()) {
+	if !assert.Equal(t, capture, reEncoded.Data) {
 		t.Fatalf("re-encoded packet `%T` does not match original bytes", decoded)
 	}
 }

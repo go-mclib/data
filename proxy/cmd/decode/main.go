@@ -2,7 +2,6 @@
 package main
 
 import (
-	"bytes"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -33,19 +32,6 @@ func parsePacketID(s string) (int, error) {
 	}
 	id, err := strconv.ParseInt(s, 10, 32)
 	return int(id), err
-}
-
-// compressionThresholdForState returns the compression threshold to use when
-// parsing wire format packets for a given protocol state.
-// Returns -1 for states before compression is enabled, 0 for states after.
-func compressionThresholdForState(state string) int {
-	switch state {
-	case "handshake", "status", "login":
-		return -1 // no compression
-	default:
-		// configuration, play - compression is always enabled
-		return 0
-	}
 }
 
 func getPacketName(p jp.Packet) string {
@@ -382,31 +368,16 @@ func main() {
 			continue
 		}
 
-		rawData, err := hex.DecodeString(cap.RawData)
+		// wire_data is the raw packet data (excludes length, compression, packet ID)
+		packetData, err := hex.DecodeString(cap.RawData)
 		if err != nil {
 			fmt.Printf("// [%d] WARNING: invalid hex data: %v\n\n", i, err)
 			continue
 		}
 
-		// parse wire format (includes length, compression header, packet ID)
-		compressionThreshold := compressionThresholdForState(cap.State)
-		wirePacket, err := jp.ReadWirePacketFrom(bytes.NewReader(rawData), compressionThreshold)
-		if err != nil {
-			fmt.Printf("// [%d] WARNING: failed to parse wire format: %v\n", i, err)
-			fmt.Printf("//     raw data: %s\n\n", cap.RawData)
-			continue
-		}
-
-		// verify packet ID matches
-		if int(wirePacket.PacketID) != packetID {
-			fmt.Printf("// [%d] WARNING: packet ID mismatch: JSON says 0x%02X, wire says 0x%02X\n\n",
-				i, packetID, wirePacket.PacketID)
-			continue
-		}
-
 		p := factory()
 		packetName := getPacketName(p)
-		buf := ns.NewReader(wirePacket.Data)
+		buf := ns.NewReader(packetData)
 		if err := p.Read(buf); err != nil {
 			fmt.Printf("// [%d] WARNING: failed to decode %s: %v\n", i, packetName, err)
 			fmt.Printf("//     raw data: %s\n\n", cap.RawData)
