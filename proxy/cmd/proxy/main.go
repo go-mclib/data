@@ -106,10 +106,17 @@ type ProxySession struct {
 	verbose    bool
 	logger     *log.Logger
 
-	// protocol state tracking (shared between directions)
+	// protocol state tracking per direction (transitions happen independently)
 	mu                   sync.RWMutex
-	state                jp.State
+	c2sState             jp.State // state for client-to-server packets
+	s2cState             jp.State // state for server-to-client packets
 	compressionThreshold int
+
+	// compressionReady is closed when compression settings are finalized
+	// (after S2C LoginFinished). C2S goroutine waits on this before reading
+	// LoginAcknowledged to avoid race condition with compression format.
+	compressionReady     chan struct{}
+	compressionReadyOnce sync.Once
 }
 
 func NewProxySession(clientConn, serverConn net.Conn, capture *PacketCapture, verbose bool) *ProxySession {
@@ -119,21 +126,49 @@ func NewProxySession(clientConn, serverConn net.Conn, capture *PacketCapture, ve
 		capture:              capture,
 		verbose:              verbose,
 		logger:               log.New(os.Stdout, "[proxy] ", log.LstdFlags),
-		state:                jp.StateHandshake,
+		c2sState:             jp.StateHandshake,
+		s2cState:             jp.StateHandshake,
 		compressionThreshold: -1,
+		compressionReady:     make(chan struct{}),
 	}
 }
 
-func (s *ProxySession) setState(state jp.State) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	s.state = state
+// signalCompressionReady signals that compression settings are finalized
+func (s *ProxySession) signalCompressionReady() {
+	s.compressionReadyOnce.Do(func() {
+		close(s.compressionReady)
+	})
 }
 
-func (s *ProxySession) getState() jp.State {
+// waitCompressionReady waits until compression settings are finalized
+func (s *ProxySession) waitCompressionReady() {
+	<-s.compressionReady
+}
+
+func (s *ProxySession) setState(direction string, state jp.State) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if direction == "c2s" {
+		s.c2sState = state
+	} else {
+		s.s2cState = state
+	}
+}
+
+func (s *ProxySession) setBothStates(state jp.State) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.c2sState = state
+	s.s2cState = state
+}
+
+func (s *ProxySession) getState(direction string) jp.State {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.state
+	if direction == "c2s" {
+		return s.c2sState
+	}
+	return s.s2cState
 }
 
 func (s *ProxySession) setCompression(threshold int) {
@@ -191,7 +226,16 @@ func (s *ProxySession) forward(src, dst *jp.Conn, direction string) {
 		_ = dst.Close()
 	}()
 
+	// Track if we need to wait for compression sync (C2S only)
+	waitForCompression := false
+
 	for {
+		// C2S: wait for compression settings before reading LoginAcknowledged
+		if waitForCompression {
+			s.waitCompressionReady()
+			waitForCompression = false
+		}
+
 		compression := s.getCompression()
 		wire, err := jp.ReadWirePacketFrom(src, compression)
 		if err != nil {
@@ -201,7 +245,7 @@ func (s *ProxySession) forward(src, dst *jp.Conn, direction string) {
 			return
 		}
 
-		state := s.getState()
+		state := s.getState(direction)
 		packetID := int(wire.PacketID)
 		if s.verbose {
 			s.logger.Printf("%s: state=%s id=0x%02X len=%d",
@@ -218,6 +262,18 @@ func (s *ProxySession) forward(src, dst *jp.Conn, direction string) {
 		// handle state transitions based on packet type
 		s.handleStateTransition(wire, direction)
 
+		// C2S: after Login Hello, wait for compression before reading next packet
+		// This ensures compression is set before reading LoginAcknowledged
+		if direction == "c2s" && state == jp.StateLogin && packetID == 0x00 {
+			waitForCompression = true
+		}
+
+		// S2C: after LoginFinished, signal that compression is ready
+		// (compression was set by LoginCompression, or not used)
+		if direction == "s2c" && state == jp.StateLogin && packetID == 0x02 {
+			s.signalCompressionReady()
+		}
+
 		// forward packet
 		if err := wire.WriteTo(dst, compression); err != nil {
 			if s.verbose {
@@ -228,15 +284,16 @@ func (s *ProxySession) forward(src, dst *jp.Conn, direction string) {
 	}
 }
 
-// handleStateTransition updates protocol state based on special packets
+// handleStateTransition updates protocol state based on terminal packets.
+// State is tracked per direction since transitions happen independently.
 func (s *ProxySession) handleStateTransition(wire *jp.WirePacket, direction string) {
-	state := s.getState()
+	state := s.getState(direction)
+	packetID := int(wire.PacketID)
 
 	switch state {
 	case jp.StateHandshake:
-		// C2S Handshake (0x00) contains intent field
-		if direction == "c2s" && wire.PacketID == 0x00 {
-			// parse intent from handshake packet
+		// C2S Handshake (0x00) contains intent field - both directions transition together
+		if direction == "c2s" && packetID == 0x00 {
 			buf := ns.NewReader(wire.Data)
 			_, _ = buf.ReadVarInt()    // protocol version
 			_, _ = buf.ReadString(255) // server address
@@ -245,12 +302,12 @@ func (s *ProxySession) handleStateTransition(wire *jp.WirePacket, direction stri
 			if err == nil {
 				switch intent {
 				case 1:
-					s.setState(jp.StateStatus)
+					s.setBothStates(jp.StateStatus)
 					if s.verbose {
 						s.logger.Printf("state -> status")
 					}
 				case 2:
-					s.setState(jp.StateLogin)
+					s.setBothStates(jp.StateLogin)
 					if s.verbose {
 						s.logger.Printf("state -> login")
 					}
@@ -259,38 +316,61 @@ func (s *ProxySession) handleStateTransition(wire *jp.WirePacket, direction stri
 		}
 
 	case jp.StateLogin:
-		if direction == "s2c" {
-			switch wire.PacketID {
-			case 0x03: // set compression
-				buf := ns.NewReader(wire.Data)
-				threshold, err := buf.ReadVarInt()
-				if err == nil {
-					s.setCompression(int(threshold))
-					if s.verbose {
-						s.logger.Printf("compression threshold -> %d", threshold)
-					}
-				}
-			case 0x02: // login success
-				s.setState(jp.StateConfiguration)
+		// S2C LoginCompression (0x03): set compression threshold
+		if direction == "s2c" && packetID == 0x03 {
+			buf := ns.NewReader(wire.Data)
+			threshold, err := buf.ReadVarInt()
+			if err == nil {
+				s.setCompression(int(threshold))
 				if s.verbose {
-					s.logger.Printf("state -> configuration")
+					s.logger.Printf("compression threshold -> %d", threshold)
 				}
+			}
+		}
+		// S2C LoginFinished (0x02): server transitions to configuration
+		if direction == "s2c" && packetID == 0x02 {
+			s.setState("s2c", jp.StateConfiguration)
+			if s.verbose {
+				s.logger.Printf("s2c state -> configuration")
+			}
+		}
+		// C2S LoginAcknowledged (0x03): client transitions to configuration
+		if direction == "c2s" && packetID == 0x03 {
+			s.setState("c2s", jp.StateConfiguration)
+			if s.verbose {
+				s.logger.Printf("c2s state -> configuration")
 			}
 		}
 
 	case jp.StateConfiguration:
-		// finish configuration packet transitions to play
-		if direction == "s2c" && wire.PacketID == 0x03 {
-			s.setState(jp.StatePlay)
+		// S2C FinishConfiguration (0x03): server transitions to play
+		if direction == "s2c" && packetID == 0x03 {
+			s.setState("s2c", jp.StatePlay)
 			if s.verbose {
-				s.logger.Printf("state -> play")
+				s.logger.Printf("s2c state -> play")
 			}
 		}
-		// client can also trigger config->play with finish config ack
-		if direction == "c2s" && wire.PacketID == 0x03 {
-			s.setState(jp.StatePlay)
+		// C2S FinishConfiguration (0x03): client transitions to play
+		if direction == "c2s" && packetID == 0x03 {
+			s.setState("c2s", jp.StatePlay)
 			if s.verbose {
-				s.logger.Printf("state -> play (client ack)")
+				s.logger.Printf("c2s state -> play")
+			}
+		}
+
+	case jp.StatePlay:
+		// S2C StartConfiguration (0x74): server transitions to configuration
+		if direction == "s2c" && packetID == 0x74 {
+			s.setState("s2c", jp.StateConfiguration)
+			if s.verbose {
+				s.logger.Printf("s2c state -> configuration (from play)")
+			}
+		}
+		// C2S ConfigurationAcknowledged (0x0F): client transitions to configuration
+		if direction == "c2s" && packetID == 0x0F {
+			s.setState("c2s", jp.StateConfiguration)
+			if s.verbose {
+				s.logger.Printf("c2s state -> configuration (from play)")
 			}
 		}
 	}
