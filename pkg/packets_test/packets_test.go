@@ -36,7 +36,7 @@ var poSwordAttribs = []items.AttributeModifier{
 
 var poSword = items.NewStackWithComponents(items.IronSword, 1, &items.Components{
 	AttributeModifiers: poSwordAttribs,
-	Unbreakable: true,
+	Unbreakable:        true,
 	TooltipDisplay: &items.TooltipDisplay{
 		HideTooltip:      false,
 		HiddenComponents: []int32{4, 16},

@@ -1,7 +1,12 @@
 package items
 
 // Components holds all item component data.
+// The present bitset tracks which component IDs are explicitly set,
+// mirroring Java's DataComponentPatch — only present components are
+// encoded on the wire as adds or removes relative to the item's defaults.
 type Components struct {
+	present [2]uint64 // bitset: which component IDs are explicitly set
+
 	AttributeModifiers     []AttributeModifier
 	BlocksAttacks          *BlocksAttacks
 	BreakSound             string
@@ -206,6 +211,28 @@ type AttackRange struct {
 	MobFactor        float64
 }
 
+// HasComponent returns true if the given component ID is marked as present.
+func (c *Components) HasComponent(id int32) bool {
+	if id < 0 || id >= 128 {
+		return false
+	}
+	return c.present[id/64]&(1<<uint(id%64)) != 0
+}
+
+// SetPresent marks the given component ID as present.
+func (c *Components) SetPresent(id int32) {
+	if id >= 0 && id < 128 {
+		c.present[id/64] |= 1 << uint(id%64)
+	}
+}
+
+// ClearPresent marks the given component ID as not present.
+func (c *Components) ClearPresent(id int32) {
+	if id >= 0 && id < 128 {
+		c.present[id/64] &^= 1 << uint(id%64)
+	}
+}
+
 // Clone returns a deep copy of the Components struct.
 func (c *Components) Clone() *Components {
 	if c == nil {
@@ -213,6 +240,7 @@ func (c *Components) Clone() *Components {
 	}
 
 	clone := &Components{
+		present:                c.present,
 		BreakSound:             c.BreakSound,
 		Damage:                 c.Damage,
 		DamageType:             c.DamageType,

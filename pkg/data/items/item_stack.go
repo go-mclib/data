@@ -7,8 +7,8 @@ import (
 )
 
 // ItemStack represents a fully decoded item stack with typed components.
-// It acts as middleware over net_structures.Slot, merging default
-// components with slot-specific modifications.
+// It acts as middleware over net_structures.Slot, encoding components
+// as a DataComponentPatch (adds/removes) relative to the item's defaults.
 type ItemStack struct {
 	ID         int32
 	Count      int32
@@ -21,23 +21,39 @@ func EmptyStack() *ItemStack {
 }
 
 // NewStack creates a new item stack with the given item ID and count.
-// Components are initialized to the item's defaults.
+// Components are initialized to the item's defaults, all marked as present.
 func NewStack(itemID int32, count int32) *ItemStack {
-	return &ItemStack{
-		ID:         itemID,
-		Count:      count,
-		Components: DefaultComponents(itemID).Clone(),
-	}
-}
-
-// NewStackWithComponents creates a new item stack with the given item ID, count, and components.
-// The components do not include the item's default components.
-func NewStackWithComponents(itemID int32, count int32, components *Components) *ItemStack {
+	components := DefaultComponents(itemID).Clone()
+	markAllPresent(components)
 	return &ItemStack{
 		ID:         itemID,
 		Count:      count,
 		Components: components,
 	}
+}
+
+// NewStackWithComponents creates a new item stack with the given item ID, count, and components.
+// Only non-zero fields in the provided Components are marked as present and
+// encoded on the wire; the item's default components are not included.
+func NewStackWithComponents(itemID int32, count int32, components *Components) *ItemStack {
+	detectPresent(components)
+	return &ItemStack{
+		ID:         itemID,
+		Count:      count,
+		Components: components,
+	}
+}
+
+// SetDefaultComponents overwrites the stack's components with the item's
+// defaults and marks all of them as present.
+func (s *ItemStack) SetDefaultComponents() {
+	defaults := DefaultComponents(s.ID)
+	if defaults != nil {
+		s.Components = defaults.Clone()
+	} else {
+		s.Components = &Components{}
+	}
+	markAllPresent(s.Components)
 }
 
 // IsEmpty returns true if the stack is empty.
@@ -46,27 +62,29 @@ func (s *ItemStack) IsEmpty() bool {
 }
 
 // FromSlot creates an ItemStack from a raw net_structures.Slot.
-// It applies the slot's component modifications on top of the item's defaults.
-// The component order from the slot is preserved for byte-for-byte re-encoding.
+// It applies the slot's component patch on top of the item's defaults.
+// All default and patched components are marked as present.
 func FromSlot(slot ns.Slot) (*ItemStack, error) {
 	if slot.IsEmpty() {
 		return EmptyStack(), nil
 	}
 
-	// start with default components for this item
 	defaults := DefaultComponents(int32(slot.ItemID))
 	components := defaults.Clone()
+	markAllPresent(components)
 
 	// apply added components
 	for _, raw := range slot.Components.Add {
 		if err := applyComponent(components, int32(raw.ID), raw.Data); err != nil {
 			return nil, fmt.Errorf("component %d: %w", raw.ID, err)
 		}
+		components.SetPresent(int32(raw.ID))
 	}
 
-	// apply removals (set to zero values)
+	// apply removals (set to zero values, keep present so they encode as removes)
 	for _, id := range slot.Components.Remove {
 		clearComponent(components, int32(id))
+		components.SetPresent(int32(id))
 	}
 
 	return &ItemStack{
@@ -77,8 +95,8 @@ func FromSlot(slot ns.Slot) (*ItemStack, error) {
 }
 
 // ToSlot converts the ItemStack back to a raw net_structures.Slot.
-// Only components that differ from the item's defaults are encoded.
-// Components are always written in ascending ID order.
+// Only present components that differ from the item's defaults are encoded,
+// mirroring Java's DataComponentPatch serialization.
 func (s *ItemStack) ToSlot() (ns.Slot, error) {
 	if s.IsEmpty() {
 		return ns.EmptySlot(), nil
@@ -88,6 +106,9 @@ func (s *ItemStack) ToSlot() (ns.Slot, error) {
 	defaults := DefaultComponents(s.ID)
 
 	for id := int32(0); id <= MaxComponentID; id++ {
+		if !s.Components.HasComponent(id) {
+			continue
+		}
 		differs, hv := componentDiffers(s.Components, defaults, id)
 		if !differs {
 			continue
@@ -104,6 +125,31 @@ func (s *ItemStack) ToSlot() (ns.Slot, error) {
 	}
 
 	return slot, nil
+}
+
+// markAllPresent marks all registered component IDs as present.
+func markAllPresent(c *Components) {
+	for id := int32(0); id <= MaxComponentID; id++ {
+		if componentCodecs[id] != nil {
+			c.SetPresent(id)
+		}
+	}
+}
+
+// detectPresent scans a Components struct and marks any non-zero fields as present.
+// Used for sparse structs where only some fields are intentionally set.
+func detectPresent(c *Components) {
+	zero := &Components{}
+	for id := int32(0); id <= MaxComponentID; id++ {
+		codec := componentCodecs[id]
+		if codec == nil {
+			continue
+		}
+		differs, _ := codec.Differs(c, zero)
+		if differs {
+			c.SetPresent(id)
+		}
+	}
 }
 
 // Decoder returns a SlotDecoder function that can be passed to Slot.Decode.

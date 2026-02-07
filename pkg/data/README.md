@@ -84,23 +84,41 @@ if comps.Food != nil {
 }
 ```
 
-#### ItemStack
+#### ItemStack and the Component Patch Model
 
-`ItemStack` provides middleware over `net_structures.Slot` for typed component access:
+In the Minecraft protocol, an item on the wire is not sent as a full component list.
+Instead, the Java client uses a `DataComponentPatch` system: each item type has a
+*prototype* (default components), and the wire format only carries a **patch** — a list
+of component **adds** (overrides) and **removes** (deletions) relative to that prototype.
+Components that match the prototype are never sent.
+
+`ItemStack` mirrors this model. Each `Components` struct carries an internal bitset that
+tracks which component IDs are explicitly *present*. `ToSlot()` only encodes present
+components that differ from the item's defaults:
 
 ```go
-// read a slot from wire and convert to typed ItemStack
-stack, err := items.ReadSlot(buf)
-if !stack.IsEmpty() {
-    fmt.Printf("item: %s x%d\n", items.ItemName(stack.ID), stack.Count)
-    if stack.Components.Food != nil {
-        fmt.Printf("nutrition: %d\n", stack.Components.Food.Nutrition)
-    }
-}
+// create a stack with only specific components (sparse patch)
+stack := items.NewStackWithComponents(items.DiamondSword, 1, &items.Components{
+    CustomName: &items.ItemNameComponent{Text: "Excalibur"},
+    Unbreakable: true,
+})
+// ToSlot() encodes just these 2 components; defaults are untouched
 
-// create a new stack with default components
+// create a stack from defaults (full component set)
 stack := items.NewStack(items.DiamondSword, 1)
-stack.Components.Damage = 100  // modify durability
+stack.Components.Damage = 100
+// ToSlot() encodes only Damage (the one field that differs from defaults)
+
+// opt in to full defaults at any time
+stack := items.NewStackWithComponents(items.DiamondSword, 1, &items.Components{
+    Unbreakable: true,
+})
+stack.SetDefaultComponents() // load all defaults, mark all present
+
+// read from wire — full state reconstruction
+stack, err := items.ReadSlot(buf)
+// FromSlot applies the incoming patch on top of defaults;
+// all components are marked as present for faithful re-encoding
 
 // write back to wire
 err := stack.WriteSlot(buf)
@@ -108,6 +126,15 @@ err := stack.WriteSlot(buf)
 // convert from/to raw Slot
 stack, err := items.FromSlot(rawSlot)
 rawSlot, err := stack.ToSlot()
+```
+
+For advanced use, the presence bitset can be manipulated directly using the
+component ID constants:
+
+```go
+stack.Components.SetPresent(items.ComponentDamage)   // mark as present
+stack.Components.ClearPresent(items.ComponentDamage)  // mark as absent
+stack.Components.HasComponent(items.ComponentDamage)   // query
 ```
 
 Component type constants (104 types) are generated from the registry:
