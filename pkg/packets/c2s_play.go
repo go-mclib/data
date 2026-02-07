@@ -481,13 +481,19 @@ func (p *C2SContainerButtonClick) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Click_Container
 type C2SContainerClick struct {
-	WindowId    ns.VarInt
-	StateId     ns.VarInt
-	Slot        ns.Int16
-	Button      ns.Int8
-	Mode        ns.VarInt
-	SlotData    ns.Slot
-	CarriedItem ns.Slot
+	WindowId     ns.VarInt
+	StateId      ns.VarInt
+	Slot         ns.Int16
+	Button       ns.Int8
+	Mode         ns.VarInt
+	ChangedSlots []ChangedSlot
+	CarriedItem  ns.HashedSlot
+}
+
+// ChangedSlot represents a slot that was modified by a container click.
+type ChangedSlot struct {
+	SlotNum ns.Int16
+	Item    ns.HashedSlot
 }
 
 func (p *C2SContainerClick) Read(buf *ns.PacketBuffer) error {
@@ -507,10 +513,23 @@ func (p *C2SContainerClick) Read(buf *ns.PacketBuffer) error {
 	if p.Mode, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.SlotData, err = buf.ReadSlot(items.Decoder()); err != nil {
+
+	// changed slots: VarInt count, then (Int16 slotNum + HashedSlot) pairs
+	count, err := buf.ReadVarInt()
+	if err != nil {
 		return err
 	}
-	p.CarriedItem, err = buf.ReadSlot(items.Decoder())
+	p.ChangedSlots = make([]ChangedSlot, count)
+	for i := range p.ChangedSlots {
+		if p.ChangedSlots[i].SlotNum, err = buf.ReadInt16(); err != nil {
+			return err
+		}
+		if p.ChangedSlots[i].Item, err = buf.ReadHashedSlot(); err != nil {
+			return err
+		}
+	}
+
+	p.CarriedItem, err = buf.ReadHashedSlot()
 	return err
 }
 
@@ -530,10 +549,20 @@ func (p *C2SContainerClick) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.Mode); err != nil {
 		return err
 	}
-	if err := buf.WriteSlot(p.SlotData); err != nil {
+
+	if err := buf.WriteVarInt(ns.VarInt(len(p.ChangedSlots))); err != nil {
 		return err
 	}
-	return buf.WriteSlot(p.CarriedItem)
+	for _, cs := range p.ChangedSlots {
+		if err := buf.WriteInt16(cs.SlotNum); err != nil {
+			return err
+		}
+		if err := buf.WriteHashedSlot(cs.Item); err != nil {
+			return err
+		}
+	}
+
+	return buf.WriteHashedSlot(p.CarriedItem)
 }
 
 // C2SContainerClose represents "Close Container".
@@ -1475,7 +1504,7 @@ func (p *C2SSetBeacon) Write(buf *ns.PacketBuffer) error {
 
 // C2SSetCarriedItem represents "Set Held Item (serverbound)".
 //
-// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Held_Item_(Serverbound)
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Held_Item_(serverbound)
 type C2SSetCarriedItem struct {
 	Slot ns.Int16
 }

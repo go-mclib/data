@@ -135,6 +135,10 @@ func formatValue(v reflect.Value, indent string) string {
 				}
 				return formatItemStack(stack, indent)
 			}
+		case "HashedSlot":
+			if hs, ok := v.Interface().(ns.HashedSlot); ok {
+				return formatHashedSlot(hs, indent)
+			}
 		}
 
 		// check for PrefixedOptional
@@ -248,6 +252,54 @@ func formatValue(v reflect.Value, indent string) string {
 	}
 }
 
+var clickTypeNames = []string{
+	"PICKUP", "QUICK_MOVE", "SWAP", "CLONE", "THROW", "QUICK_CRAFT", "PICKUP_ALL",
+}
+
+func formatHashedSlot(hs ns.HashedSlot, _ string) string {
+	if !hs.Present {
+		return "Empty"
+	}
+
+	var sb strings.Builder
+	sb.WriteString(fmt.Sprintf("HashedSlot{id=%d, count=%d", hs.ItemID, hs.Count))
+
+	if len(hs.Components.Add) > 0 {
+		sb.WriteString(", add=[")
+		for i, comp := range hs.Components.Add {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(fmt.Sprintf("%d:0x%08x", comp.ID, uint32(comp.Hash)))
+		}
+		sb.WriteString("]")
+	}
+	if len(hs.Components.Remove) > 0 {
+		sb.WriteString(", remove=[")
+		for i, id := range hs.Components.Remove {
+			if i > 0 {
+				sb.WriteString(", ")
+			}
+			sb.WriteString(fmt.Sprintf("%d", id))
+		}
+		sb.WriteString("]")
+	}
+
+	sb.WriteString("}")
+	return sb.String()
+}
+
+func formatContainerClick(p jp.Packet) string {
+	pkt := p.(*packets.C2SContainerClick)
+
+	var sb strings.Builder
+	mode := int(pkt.Mode)
+	if mode >= 0 && mode < len(clickTypeNames) {
+		sb.WriteString(fmt.Sprintf("  // click type: %s\n", clickTypeNames[mode]))
+	}
+	return sb.String()
+}
+
 func formatPacket(p jp.Packet) string {
 	v := reflect.ValueOf(p)
 	if v.Kind() == reflect.Pointer {
@@ -335,6 +387,7 @@ var detailFormatters = map[string]func(jp.Packet) string{
 	"S2CLevelChunkWithLight": formatChunkWithLight,
 	"S2CSectionBlocksUpdate": formatSectionBlocksUpdate,
 	"S2CLightUpdate":         formatLightUpdate,
+	"C2SContainerClick":      formatContainerClick,
 }
 
 func formatChunkWithLight(p jp.Packet) string {
