@@ -55,47 +55,51 @@ func validatePackets(t *testing.T, packets packetsToBytes) {
 	}
 }
 
-// validatePacket uses round-trip validation to ensure the packet decoder and encoder are working correctly
-// why not compare against the captured bytes directly? because the field order e.g. in NBT tags, text components etc.
-// is not consistent (its order is determined e.g. by the order the components appear in /give command), and
-// our library cannot predict that. we could add ordered encoding via builder pattern for these fields, but that adds
-// complexity, so instead we just simplify the tests to validate that the packet encodes into something meaningful.
-// NB the protocol will still understand the packet regardless of the order *in the packet fields* (NBT, etc.) -
-// the order of the packet fields themselves (in packet "root") is important!
+// validatePacket validates that a packet decodes and encodes correctly via struct-level comparison.
+// we compare decoded structs (not encoded bytes) because encoding can be non-deterministic:
+// Go maps have random iteration order (e.g. heightmaps), and NBT field order depends on
+// how the data was originally created. reflect.DeepEqual handles maps by key-value equality,
+// making struct comparison robust against all ordering variations.
+// both sides are normalized through encode→decode to eliminate nil vs empty slice differences.
 func validatePacket(t *testing.T, packet jp.Packet, capture []byte) {
 	// decode captured bytes (validates decoder handles real traffic)
-	decoded := reflect.New(reflect.TypeOf(packet).Elem()).Interface().(jp.Packet)
+	decoded := newPacketLike(packet)
 	if err := decoded.Read(ns.NewReader(capture)); err != nil {
 		t.Fatalf("failed to decode captured %T: %v", packet, err)
 	}
 
-	// encode both structs through our encoder and compare bytes;
-	// this validates decoding correctness while normalizing
-	// nil vs empty slice differences
-	expectedBytes, err := jp.ToWire(packet)
-	if err != nil {
-		t.Fatalf("failed to encode expected %T: %v", packet, err)
-	}
-	decodedBytes, err := jp.ToWire(decoded)
-	if err != nil {
-		t.Fatalf("failed to encode decoded %T: %v", decoded, err)
-	}
-	if !assert.Equal(t, expectedBytes.Data, decodedBytes.Data) {
+	// normalize both through encode→decode to handle nil vs empty slice differences
+	expected := encodeDecodePacket(t, packet)
+	actual := encodeDecodePacket(t, decoded)
+
+	// struct-level comparison handles non-deterministic encoding (map ordering, NBT field order)
+	if !assert.Equal(t, expected, actual) {
 		t.Fatalf("decoded packet `%T` does not match expected", packet)
 	}
 
-	// round-trip: encode -> decode -> re-encode (validates encoder determinism)
-	roundTripped := reflect.New(reflect.TypeOf(packet).Elem()).Interface().(jp.Packet)
-	if err := roundTripped.Read(ns.NewReader(expectedBytes.Data)); err != nil {
-		t.Fatalf("failed to decode round-trip %T: %v", packet, err)
+	// verify round-trip is idempotent: encode→decode→encode→decode produces the same struct
+	reRoundTripped := encodeDecodePacket(t, expected)
+	if !assert.Equal(t, expected, reRoundTripped) {
+		t.Fatalf("round-trip not idempotent for `%T`", packet)
 	}
-	reEncoded, err := jp.ToWire(roundTripped)
+}
+
+// encodeDecodePacket normalizes a packet through an encode→decode cycle.
+func encodeDecodePacket(t *testing.T, packet jp.Packet) jp.Packet {
+	t.Helper()
+	wire, err := jp.ToWire(packet)
 	if err != nil {
-		t.Fatalf("failed to re-encode round-trip %T: %v", roundTripped, err)
+		t.Fatalf("failed to encode %T: %v", packet, err)
 	}
-	if !assert.Equal(t, expectedBytes.Data, reEncoded.Data) {
-		t.Fatalf("round-trip failed for packet `%T`", packet)
+	result := newPacketLike(packet)
+	if err := result.Read(ns.NewReader(wire.Data)); err != nil {
+		t.Fatalf("failed to decode encoded %T: %v", packet, err)
 	}
+	return result
+}
+
+func newPacketLike(packet jp.Packet) jp.Packet {
+	return reflect.New(reflect.TypeOf(packet).Elem()).Interface().(jp.Packet)
 }
 
 func hexToBytesMust(hexData string) []byte {

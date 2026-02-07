@@ -33,31 +33,14 @@ func init() {
 	}] = hexToBytesMust("09")
 
 	// S2CLevelChunkWithLight: chunk at (1, 1) with 50 hay bales and a sign
-	// not registered in capturedPackets because heightmaps use map[int32][]int64,
-	// and Go map iteration order is non-deterministic, causing byte-level mismatches
-	// in the round-trip comparison. instead, we validate decode + content separately.
-	validateChunkPacket()
-}
-
-func validateChunkPacket() {
 	chunkRaw := hexToBytesMust(chunkHex)
-	var pkt packets.S2CLevelChunkWithLight
-	if err := pkt.Read(ns.NewReader(chunkRaw)); err != nil {
+	var chunkPkt packets.S2CLevelChunkWithLight
+	if err := chunkPkt.Read(ns.NewReader(chunkRaw)); err != nil {
 		panic(fmt.Errorf("failed to decode chunk packet: %w", err))
 	}
+	capturedPackets[&chunkPkt] = chunkRaw
 
-	// encode → decode round-trip
-	buf := ns.NewWriter()
-	if err := pkt.Write(buf); err != nil {
-		panic(fmt.Errorf("failed to encode chunk packet: %w", err))
-	}
-	var roundTripped packets.S2CLevelChunkWithLight
-	if err := roundTripped.Read(ns.NewReader(buf.Bytes())); err != nil {
-		panic(fmt.Errorf("failed to decode round-tripped chunk packet: %w", err))
-	}
-
-	validateChunkContents(&pkt)
-	validateChunkContents(&roundTripped)
+	validateChunkContents(&chunkPkt)
 }
 
 func validateChunkContents(pkt *packets.S2CLevelChunkWithLight) {
