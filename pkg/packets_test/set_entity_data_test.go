@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	poSwordSlot, err := poSwordS2C.ToSlot()
+	poSwordSlot, err := poSword.ToSlot()
 	if err != nil {
 		panic(err)
 	}
