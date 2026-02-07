@@ -1,0 +1,7 @@
+[
+  {"direction": "c2s", "state": "handshake", "packet_id": "0x00", "wire_data": "8606096c6f63616c686f737463dd01"},
+  {"direction": "c2s", "state": "status", "packet_id": "0x00", "wire_data": ""},
+  {"direction": "s2c", "state": "status", "packet_id": "0x00", "wire_data": "767b226465736372697074696f6e223a22676f2d6d636c69622f64617461207465737420736572766572222c22706c6179657273223a7b226d6178223a352c226f6e6c696e65223a307d2c2276657273696f6e223a7b226e616d65223a22312e32312e3131222c2270726f746f636f6c223a3737347d7d"},
+  {"direction": "c2s", "state": "status", "packet_id": "0x01", "wire_data": "000000000007e85c"},
+  {"direction": "s2c", "state": "status", "packet_id": "0x01", "wire_data": "000000000007e85c"}
+]

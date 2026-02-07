@@ -9,5 +9,5 @@ import (
 func init() {
 	capturedPackets[&packets.C2SPingRequestStatus{
 		Timestamp: ns.Int64(518236),
-	}] = hexToBytesMust("000000000007e85c")
+	}] = capturedBytes["c2s_ping_request_status"]
 }

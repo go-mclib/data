@@ -9,5 +9,5 @@ import (
 func init() {
 	capturedPackets[&packets.S2CLoginCompression{
 		Threshold: ns.VarInt(256),
-	}] = hexToBytesMust("8002")
+	}] = capturedBytes["s2c_login_compression"]
 }

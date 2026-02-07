@@ -9,5 +9,5 @@ import (
 func init() {
 	capturedPackets[&packets.S2CPongResponseStatus{
 		Timestamp: ns.Int64(518236),
-	}] = hexToBytesMust("000000000007e85c")
+	}] = capturedBytes["s2c_pong_response_status"]
 }

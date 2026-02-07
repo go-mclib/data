@@ -32,5 +32,5 @@ func poSwordItem() {
 		Yaw:     195,
 		HeadYaw: 0,
 		Data:    0,
-	}] = hexToBytesMust("02884f5b21b5ee41dab734409451e3bc78470000000000000000c04d570a3d8000000000000000000000c1f880cee41900c30000")
+	}] = capturedBytes["s2c_add_entity_item"]
 }

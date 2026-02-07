@@ -5,5 +5,5 @@ import (
 )
 
 func init() {
-	capturedPackets[&packets.C2SStatusRequest{}] = nil
+	capturedPackets[&packets.C2SStatusRequest{}] = capturedBytes["c2s_status_request"]
 }

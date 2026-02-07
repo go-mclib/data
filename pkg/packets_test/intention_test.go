@@ -10,5 +10,5 @@ func init() {
 		ServerAddress:   "localhost",
 		ServerPort:      25565,
 		Intent:          1,
-	}] = hexToBytesMust("8606096c6f63616c686f737463dd01")
+	}] = capturedBytes["c2s_intention_status"]
 }

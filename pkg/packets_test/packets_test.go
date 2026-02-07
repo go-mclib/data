@@ -2,6 +2,7 @@ package packets_test
 
 import (
 	"encoding/hex"
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -15,6 +16,23 @@ type packetsToBytes map[jp.Packet][]byte
 
 // maps packet structs to their data bytes (excluding length and id)
 var capturedPackets packetsToBytes = make(packetsToBytes)
+
+// capturedBytes provides raw packet bytes by test name, decoded from capturedHex.
+var capturedBytes = func() map[string][]byte {
+	result := make(map[string][]byte, len(capturedHex))
+	for name, hexStr := range capturedHex {
+		if hexStr == "" {
+			result[name] = nil
+			continue
+		}
+		b, err := hex.DecodeString(hexStr)
+		if err != nil {
+			panic(fmt.Sprintf("bad hex for %q: %v", name, err))
+		}
+		result[name] = b
+	}
+	return result
+}()
 
 // attribute modifiers used in test items
 var poSwordAttribs = []items.AttributeModifier{

@@ -1,0 +1,6 @@
+[
+  {"direction": "c2s", "state": "login", "packet_id": "0x00", "wire_data": "07476f4d636c6962f8ccd41b3ab832d1a575afb9913101d6"},
+  {"direction": "s2c", "state": "login", "packet_id": "0x03", "wire_data": "8002"},
+  {"direction": "s2c", "state": "login", "packet_id": "0x02", "wire_data": "f8ccd41b3ab832d1a575afb9913101d607476f4d636c696200"},
+  {"direction": "c2s", "state": "configuration", "packet_id": "0x00", "wire_data": "000000000000000000"}
+]

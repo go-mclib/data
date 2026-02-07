@@ -1,0 +1,171 @@
+{
+  "captures": {
+    "status": "../../proxy/captures/status.json",
+    "login": "../../proxy/captures/login.json",
+    "chunks": "../../proxy/captures/chunks.json",
+    "inventory": "../../proxy/captures/inventory.json",
+    "entities": "../../proxy/captures/entities.json"
+  },
+  "packets": {
+    "c2s_intention_status": {
+      "capture": "status", "direction": "c2s", "state": "handshake",
+      "packet_id": "0x00", "index": 0
+    },
+    "c2s_status_request": {
+      "capture": "status", "direction": "c2s", "state": "status",
+      "packet_id": "0x00", "index": 0
+    },
+    "s2c_status_response": {
+      "capture": "status", "direction": "s2c", "state": "status",
+      "packet_id": "0x00", "index": 0
+    },
+    "c2s_ping_request_status": {
+      "capture": "status", "direction": "c2s", "state": "status",
+      "packet_id": "0x01", "index": 0
+    },
+    "s2c_pong_response_status": {
+      "capture": "status", "direction": "s2c", "state": "status",
+      "packet_id": "0x01", "index": 0
+    },
+    "c2s_hello": {
+      "capture": "login", "direction": "c2s", "state": "login",
+      "packet_id": "0x00", "index": 0
+    },
+    "s2c_login_compression": {
+      "capture": "login", "direction": "s2c", "state": "login",
+      "packet_id": "0x03", "index": 0
+    },
+    "s2c_login_finished": {
+      "capture": "login", "direction": "s2c", "state": "login",
+      "packet_id": "0x02", "index": 0
+    },
+    "c2s_client_information_configuration": {
+      "capture": "login", "direction": "c2s", "state": "configuration",
+      "packet_id": "0x00", "index": 0
+    },
+    "s2c_set_chunk_cache_center": {
+      "capture": "chunks", "direction": "s2c", "state": "play",
+      "packet_id": "0x5c", "index": 0
+    },
+    "s2c_chunk_batch_start": {
+      "capture": "chunks", "direction": "s2c", "state": "play",
+      "packet_id": "0x0c", "index": 0
+    },
+    "s2c_level_chunk_with_light": {
+      "capture": "chunks", "direction": "s2c", "state": "play",
+      "packet_id": "0x2c", "index": 0
+    },
+    "s2c_chunk_batch_finished": {
+      "capture": "chunks", "direction": "s2c", "state": "play",
+      "packet_id": "0x0b", "index": 0
+    },
+    "s2c_set_held_slot": {
+      "capture": "inventory", "direction": "s2c", "state": "play",
+      "packet_id": "0x67", "index": 0
+    },
+    "s2c_recipe_book_settings": {
+      "capture": "inventory", "direction": "s2c", "state": "play",
+      "packet_id": "0x4a", "index": 0
+    },
+    "s2c_container_set_content_empty": {
+      "capture": "inventory", "direction": "s2c", "state": "play",
+      "packet_id": "0x12", "index": 0
+    },
+    "s2c_open_screen_chest": {
+      "capture": "inventory", "direction": "s2c", "state": "play",
+      "packet_id": "0x39", "index": 0
+    },
+    "s2c_open_screen_crafting": {
+      "capture": "inventory", "direction": "s2c", "state": "play",
+      "packet_id": "0x39", "index": 1
+    },
+    "s2c_open_screen_beacon": {
+      "capture": "inventory", "direction": "s2c", "state": "play",
+      "packet_id": "0x39", "index": 2
+    },
+    "s2c_container_set_slot_crafting_result": {
+      "capture": "inventory", "direction": "s2c", "state": "play",
+      "packet_id": "0x14", "index": 0
+    },
+    "s2c_container_set_slot_clear": {
+      "capture": "inventory", "direction": "s2c", "state": "play",
+      "packet_id": "0x14", "index": 1
+    },
+    "s2c_container_set_data_beacon": {
+      "capture": "inventory", "direction": "s2c", "state": "play",
+      "packet_id": "0x13", "index": 0
+    },
+    "s2c_set_player_inventory_emeralds": {
+      "capture": "inventory", "direction": "s2c", "state": "play",
+      "packet_id": "0x6a", "index": 0
+    },
+    "c2s_container_close": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x12", "index": 0
+    },
+    "c2s_container_click_pickup_chest": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x11", "index": 0
+    },
+    "c2s_container_click_place_hotbar": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x11", "index": 1
+    },
+    "c2s_container_click_crafting_result": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x11", "index": 2
+    },
+    "c2s_container_click_drag_start": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x11", "index": 3
+    },
+    "c2s_container_click_drag_end": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x11", "index": 4
+    },
+    "c2s_container_click_place_crafted": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x11", "index": 5
+    },
+    "c2s_container_click_shift_click": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x11", "index": 6
+    },
+    "c2s_place_recipe": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x26", "index": 0
+    },
+    "c2s_recipe_book_seen_recipe": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x2e", "index": 0
+    },
+    "c2s_set_beacon": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x33", "index": 0
+    },
+    "c2s_set_carried_item": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x34", "index": 0
+    },
+    "c2s_select_trade": {
+      "capture": "inventory", "direction": "c2s", "state": "play",
+      "packet_id": "0x32", "index": 0
+    },
+    "s2c_add_entity_item": {
+      "capture": "entities", "direction": "s2c", "state": "play",
+      "packet_id": "0x01", "index": 0
+    },
+    "s2c_set_entity_data_item": {
+      "capture": "entities", "direction": "s2c", "state": "play",
+      "packet_id": "0x61", "index": 0
+    },
+    "c2s_set_creative_mode_slot": {
+      "capture": "entities", "direction": "c2s", "state": "play",
+      "packet_id": "0x37", "index": 0
+    },
+    "s2c_boss_event_update_title": {
+      "capture": "entities", "direction": "s2c", "state": "play",
+      "packet_id": "0x09", "index": 0
+    }
+  }
+}
