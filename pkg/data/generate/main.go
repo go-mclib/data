@@ -37,6 +37,10 @@ func main() {
 	generateEntities(registries, filepath.Join(outDir, "entities", "entities_gen.go"))
 	generateEntityMetadata(filepath.Join(baseDir, "entity_metadata.include.json"), filepath.Join(outDir, "entities"))
 	generateBlockShapes(blocks, filepath.Join(baseDir, "prismarine_block_collision_shapes.json"), filepath.Join(outDir, "hitboxes", "blocks", "block_shapes_gen.go"))
+	generateEntityHitboxes(
+		filepath.Join(outDir, "..", "..", "decompiled", "current", "net", "minecraft", "world", "entity", "EntityType.java"),
+		filepath.Join(outDir, "hitboxes", "entities", "entity_hitboxes_gen.go"),
+	)
 
 	fmt.Println("generation complete")
 }
