@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-mclib/data/pkg/data/blocks"
 	"github.com/go-mclib/data/pkg/data/chunks"
+	"github.com/go-mclib/data/pkg/data/registries"
 	"github.com/go-mclib/data/pkg/packets"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/go-mclib/protocol/nbt"
@@ -32,15 +33,31 @@ func init() {
 	}] = hexToBytesMust("09")
 
 	// S2CLevelChunkWithLight: chunk at (1, 1) with 50 hay bales and a sign
+	// not registered in capturedPackets because heightmaps use map[int32][]int64,
+	// and Go map iteration order is non-deterministic, causing byte-level mismatches
+	// in the round-trip comparison. instead, we validate decode + content separately.
+	validateChunkPacket()
+}
+
+func validateChunkPacket() {
 	chunkRaw := hexToBytesMust(chunkHex)
-	var chunkPkt packets.S2CLevelChunkWithLight
-	if err := chunkPkt.Read(ns.NewReader(chunkRaw)); err != nil {
+	var pkt packets.S2CLevelChunkWithLight
+	if err := pkt.Read(ns.NewReader(chunkRaw)); err != nil {
 		panic(fmt.Errorf("failed to decode chunk packet: %w", err))
 	}
-	capturedPackets[&chunkPkt] = chunkRaw
 
-	// validate chunk contents
-	validateChunkContents(&chunkPkt)
+	// encode → decode round-trip
+	buf := ns.NewWriter()
+	if err := pkt.Write(buf); err != nil {
+		panic(fmt.Errorf("failed to encode chunk packet: %w", err))
+	}
+	var roundTripped packets.S2CLevelChunkWithLight
+	if err := roundTripped.Read(ns.NewReader(buf.Bytes())); err != nil {
+		panic(fmt.Errorf("failed to decode round-tripped chunk packet: %w", err))
+	}
+
+	validateChunkContents(&pkt)
+	validateChunkContents(&roundTripped)
 }
 
 func validateChunkContents(pkt *packets.S2CLevelChunkWithLight) {
@@ -84,8 +101,10 @@ func validateChunkContents(pkt *packets.S2CLevelChunkWithLight) {
 		panic(fmt.Errorf("block entity count: got %d, want 1", len(pkt.ChunkData.BlockEntities)))
 	}
 	be := pkt.ChunkData.BlockEntities[0]
-	if be.Type != 7 {
-		panic(fmt.Errorf("block entity type: got %d, want 7 (sign)", be.Type))
+	// has to be minecraft:sign even if it's pale_oak_wall_sign - they're generic in the registry
+	signEntityType := ns.VarInt(registries.BlockEntityType.Get("minecraft:sign"))
+	if be.Type != signEntityType {
+		panic(fmt.Errorf("block entity type: got %d, want %d (sign)", be.Type, signEntityType))
 	}
 
 	// validate sign front text messages: "needle", "in", "a", "haystack"
