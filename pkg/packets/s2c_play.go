@@ -1448,9 +1448,10 @@ func (p *S2CKeepAlivePlay) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Chunk_Data_And_Update_Light
 type S2CLevelChunkWithLight struct {
-	ChunkX ns.Int32
-	ChunkZ ns.Int32
-	Data   ns.ByteArray
+	ChunkX    ns.Int32
+	ChunkZ    ns.Int32
+	ChunkData ns.ChunkData
+	LightData ns.LightData
 }
 
 func (p *S2CLevelChunkWithLight) Read(buf *ns.PacketBuffer) error {
@@ -1461,8 +1462,10 @@ func (p *S2CLevelChunkWithLight) Read(buf *ns.PacketBuffer) error {
 	if p.ChunkZ, err = buf.ReadInt32(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(2097152)
-	return err
+	if err := p.ChunkData.Decode(buf); err != nil {
+		return err
+	}
+	return p.LightData.Decode(buf)
 }
 
 func (p *S2CLevelChunkWithLight) Write(buf *ns.PacketBuffer) error {
@@ -1472,7 +1475,10 @@ func (p *S2CLevelChunkWithLight) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt32(p.ChunkZ); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	if err := p.ChunkData.Encode(buf); err != nil {
+		return err
+	}
+	return p.LightData.Encode(buf)
 }
 
 // S2CLevelEvent represents "World Event".
@@ -1611,9 +1617,9 @@ func (p *S2CLevelParticles) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Light
 type S2CLightUpdate struct {
-	ChunkX ns.VarInt
-	ChunkZ ns.VarInt
-	Data   ns.ByteArray
+	ChunkX    ns.VarInt
+	ChunkZ    ns.VarInt
+	LightData ns.LightData
 }
 
 func (p *S2CLightUpdate) Read(buf *ns.PacketBuffer) error {
@@ -1624,8 +1630,7 @@ func (p *S2CLightUpdate) Read(buf *ns.PacketBuffer) error {
 	if p.ChunkZ, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(1048576)
-	return err
+	return p.LightData.Decode(buf)
 }
 
 func (p *S2CLightUpdate) Write(buf *ns.PacketBuffer) error {
@@ -1635,7 +1640,7 @@ func (p *S2CLightUpdate) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.ChunkZ); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	return p.LightData.Encode(buf)
 }
 
 // S2CLogin represents "Login (play)".
@@ -3081,7 +3086,7 @@ func (p *S2CRotateHead) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Section_Blocks
 type S2CSectionBlocksUpdate struct {
 	ChunkSectionPosition ns.Int64
-	Blocks               ns.ByteArray
+	Blocks               ns.PrefixedArray[ns.VarLong]
 }
 
 func (p *S2CSectionBlocksUpdate) Read(buf *ns.PacketBuffer) error {
@@ -3089,15 +3094,18 @@ func (p *S2CSectionBlocksUpdate) Read(buf *ns.PacketBuffer) error {
 	if p.ChunkSectionPosition, err = buf.ReadInt64(); err != nil {
 		return err
 	}
-	p.Blocks, err = buf.ReadByteArray(1048576)
-	return err
+	return p.Blocks.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.VarLong, error) {
+		return b.ReadVarLong()
+	})
 }
 
 func (p *S2CSectionBlocksUpdate) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt64(p.ChunkSectionPosition); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Blocks)
+	return p.Blocks.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.VarLong) error {
+		return b.WriteVarLong(v)
+	})
 }
 
 // S2CSelectAdvancementsTab represents "Select Advancements Tab".

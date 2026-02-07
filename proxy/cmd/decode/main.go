@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/go-mclib/data/pkg/data/chunks"
 	"github.com/go-mclib/data/pkg/data/entities"
 	"github.com/go-mclib/data/pkg/data/items"
 	"github.com/go-mclib/data/pkg/packets"
@@ -37,7 +38,7 @@ func parsePacketID(s string) (int, error) {
 
 func getPacketName(p jp.Packet) string {
 	t := reflect.TypeOf(p)
-	if t.Kind() == reflect.Ptr {
+	if t.Kind() == reflect.Pointer {
 		t = t.Elem()
 	}
 	return t.Name()
@@ -249,7 +250,7 @@ func formatValue(v reflect.Value, indent string) string {
 
 func formatPacket(p jp.Packet) string {
 	v := reflect.ValueOf(p)
-	if v.Kind() == reflect.Ptr {
+	if v.Kind() == reflect.Pointer {
 		v = v.Elem()
 	}
 
@@ -328,14 +329,123 @@ func formatMetadataEntries(v reflect.Value, indent string) string {
 	return sb.String()
 }
 
+// detail formatters provide human-readable decoding for packets with opaque Data fields.
+// each returns extra lines to append after the normal packet output, or "" if nothing to add.
+var detailFormatters = map[string]func(jp.Packet) string{
+	"S2CLevelChunkWithLight": formatChunkWithLight,
+	"S2CSectionBlocksUpdate": formatSectionBlocksUpdate,
+	"S2CLightUpdate":         formatLightUpdate,
+}
+
+func formatChunkWithLight(p jp.Packet) string {
+	pkt := p.(*packets.S2CLevelChunkWithLight)
+
+	col, err := chunks.ParseChunkColumn(int32(pkt.ChunkX), int32(pkt.ChunkZ), pkt.ChunkData, &pkt.LightData)
+	if err != nil {
+		return fmt.Sprintf("  // chunk parse error: %v\n", err)
+	}
+
+	var sb strings.Builder
+	sb.WriteString("  // --- decoded chunk data ---\n")
+	sb.WriteString(fmt.Sprintf("  // block entities: %d\n", len(col.BlockEntities)))
+	for i, be := range col.BlockEntities {
+		sb.WriteString(fmt.Sprintf("  //   [%d] type=%d at rel(%d,%d) y=%d\n", i, int(be.Type), be.X(), be.Z(), int(be.Y)))
+	}
+
+	sb.WriteString("  // sections:\n")
+	for i, sec := range col.Sections {
+		if sec == nil {
+			continue
+		}
+		sectionY := chunks.MinY/16 + i
+		bpe := sec.BlockStates.BitsPerEntry()
+		biomeBpe := sec.Biomes.BitsPerEntry()
+		if sec.BlockCount == 0 && bpe == 0 {
+			sb.WriteString(fmt.Sprintf("  //   [%d] y=%d: empty (air)\n", i, sectionY))
+		} else {
+			sb.WriteString(fmt.Sprintf("  //   [%d] y=%d: %d blocks, bpe=%d, biome_bpe=%d\n",
+				i, sectionY, sec.BlockCount, bpe, biomeBpe))
+		}
+	}
+
+	sb.WriteString(fmt.Sprintf("  // light: %d sky arrays, %d block arrays\n",
+		len(pkt.LightData.SkyLightArrays), len(pkt.LightData.BlockLightArrays)))
+	return sb.String()
+}
+
+func formatSectionBlocksUpdate(p jp.Packet) string {
+	pkt := p.(*packets.S2CSectionBlocksUpdate)
+	sx, sy, sz := chunks.DecodeSectionPosition(int64(pkt.ChunkSectionPosition))
+
+	var sb strings.Builder
+	sb.WriteString("  // --- decoded section blocks update ---\n")
+	sb.WriteString(fmt.Sprintf("  // section: (%d, %d, %d)\n", sx, sy, sz))
+	sb.WriteString(fmt.Sprintf("  // %d block changes:\n", len(pkt.Blocks)))
+	for i, entry := range pkt.Blocks {
+		stateID, lx, ly, lz := chunks.DecodeBlockEntry(int64(entry))
+		sb.WriteString(fmt.Sprintf("  //   [%d] state=%d at (%d,%d,%d)\n", i, stateID, lx, ly, lz))
+	}
+	return sb.String()
+}
+
+func formatLightUpdate(p jp.Packet) string {
+	pkt := p.(*packets.S2CLightUpdate)
+	return fmt.Sprintf("  // --- decoded light ---\n  // %d sky arrays, %d block arrays\n",
+		len(pkt.LightData.SkyLightArrays), len(pkt.LightData.BlockLightArrays))
+}
+
+// parseIDList parses a comma-separated list of packet IDs (hex or decimal).
+func parseIDList(s string) (map[int]bool, error) {
+	if s == "" {
+		return nil, nil
+	}
+	result := make(map[int]bool)
+	for part := range strings.SplitSeq(s, ",") {
+		id, err := parsePacketID(part)
+		if err != nil {
+			return nil, fmt.Errorf("invalid packet ID %q: %w", part, err)
+		}
+		result[id] = true
+	}
+	return result, nil
+}
+
+// parseStateList parses a comma-separated list of states.
+func parseStateList(s string) map[string]bool {
+	if s == "" {
+		return nil
+	}
+	result := make(map[string]bool)
+	for part := range strings.SplitSeq(s, ",") {
+		result[strings.TrimSpace(part)] = true
+	}
+	return result
+}
+
 var fullOutput bool
 
 func main() {
+	var maxPackets int
+	var stateFilter string
+	var packetIDFilter string
+
 	flag.BoolVar(&fullOutput, "full", false, "show full byte arrays without truncation")
+	flag.IntVar(&maxPackets, "max", 0, "decode only the first n packets (0 = all)")
+	flag.StringVar(&stateFilter, "state", "", "only decode packets in these states (comma-separated, e.g. play,configuration)")
+	flag.StringVar(&packetIDFilter, "packetId", "", "only decode packets with these IDs (comma-separated, hex or decimal, e.g. 0x2C,0x08)")
 	flag.Parse()
 
 	if flag.NArg() < 1 {
-		fmt.Fprintf(os.Stderr, "Usage: decode [-full] <capture.json>\n")
+		fmt.Fprintf(os.Stderr, "Usage: decode [flags] <capture.json>\n")
+		fmt.Fprintf(os.Stderr, "Flags:\n")
+		flag.PrintDefaults()
+		os.Exit(1)
+	}
+
+	states := parseStateList(stateFilter)
+	packetIDs, err := parseIDList(packetIDFilter)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}
 
@@ -354,10 +464,23 @@ func main() {
 
 	fmt.Printf("Decoding %d packets from %s\n\n", len(captured), filename)
 
+	decoded := 0
 	for i, cap := range captured {
+		if maxPackets > 0 && decoded >= maxPackets {
+			break
+		}
+
 		packetID, err := parsePacketID(cap.PacketID)
 		if err != nil {
 			fmt.Printf("// [%d] WARNING: invalid packet ID %q\n\n", i, cap.PacketID)
+			continue
+		}
+
+		// apply filters
+		if states != nil && !states[cap.State] {
+			continue
+		}
+		if packetIDs != nil && !packetIDs[packetID] {
 			continue
 		}
 
@@ -393,6 +516,13 @@ func main() {
 		fmt.Printf("// [%d] %s %s\n", i, cap.Direction, cap.PacketID)
 		fmt.Printf("%s {\n", packetName)
 		fmt.Print(formatPacket(p))
+
+		// apply detail formatter if available
+		if formatter, ok := detailFormatters[packetName]; ok {
+			fmt.Print(formatter(p))
+		}
+
 		fmt.Printf("}\n\n")
+		decoded++
 	}
 }
