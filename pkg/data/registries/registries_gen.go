@@ -4,102 +4,228 @@ package registries
 
 // Registry instances
 var (
-	Activity                           = newRegistry(28, activityEntries)
-	Attribute                          = newRegistry(19, attributeEntries)
-	AttributeType                      = newRegistry(92, attributeTypeEntries)
-	Block                              = newRegistry(4, blockEntries)
-	BlockEntityType                    = newRegistry(10, blockEntityTypeEntries)
-	BlockPredicateType                 = newRegistry(38, blockPredicateTypeEntries)
-	BlockType                          = newRegistry(56, blockTypeEntries)
-	ChunkStatus                        = newRegistry(12, chunkStatusEntries)
-	CommandArgumentType                = newRegistry(21, commandArgumentTypeEntries)
-	ConsumeEffectType                  = newRegistry(75, consumeEffectTypeEntries)
-	CreativeModeTab                    = newRegistry(61, creativeModeTabEntries)
-	CustomStat                         = newRegistry(11, customStatEntries)
-	DataComponentPredicateType         = newRegistry(67, dataComponentPredicateTypeEntries)
-	DataComponentType                  = newRegistry(64, dataComponentTypeEntries)
-	DebugSubscription                  = newRegistry(5, debugSubscriptionEntries)
-	DecoratedPotPattern                = newRegistry(60, decoratedPotPatternEntries)
-	DialogActionType                   = newRegistry(86, dialogActionTypeEntries)
-	DialogBodyType                     = newRegistry(88, dialogBodyTypeEntries)
-	DialogType                         = newRegistry(85, dialogTypeEntries)
-	EnchantmentEffectComponentType     = newRegistry(69, enchantmentEffectComponentTypeEntries)
-	EnchantmentEntityEffectType        = newRegistry(71, enchantmentEntityEffectTypeEntries)
-	EnchantmentLevelBasedValueType     = newRegistry(70, enchantmentLevelBasedValueTypeEntries)
-	EnchantmentLocationBasedEffectType = newRegistry(72, enchantmentLocationBasedEffectTypeEntries)
-	EnchantmentProviderType            = newRegistry(74, enchantmentProviderTypeEntries)
-	EnchantmentValueEffectType         = newRegistry(73, enchantmentValueEffectTypeEntries)
-	EntitySubPredicateType             = newRegistry(66, entitySubPredicateTypeEntries)
-	EntityType                         = newRegistry(6, entityTypeEntries)
-	EnvironmentAttribute               = newRegistry(91, environmentAttributeEntries)
-	FloatProviderType                  = newRegistry(35, floatProviderTypeEntries)
-	Fluid                              = newRegistry(2, fluidEntries)
-	GameEvent                          = newRegistry(0, gameEventEntries)
-	GameRule                           = newRegistry(65, gameRuleEntries)
-	HeightProviderType                 = newRegistry(37, heightProviderTypeEntries)
-	IncomingRpcMethods                 = newRegistry(80, incomingRpcMethodsEntries)
-	InputControlType                   = newRegistry(87, inputControlTypeEntries)
-	IntProviderType                    = newRegistry(36, intProviderTypeEntries)
-	Item                               = newRegistry(7, itemEntries)
-	LootConditionType                  = newRegistry(31, lootConditionTypeEntries)
-	LootFunctionType                   = newRegistry(30, lootFunctionTypeEntries)
-	LootNbtProviderType                = newRegistry(33, lootNbtProviderTypeEntries)
-	LootNumberProviderType             = newRegistry(32, lootNumberProviderTypeEntries)
-	LootPoolEntryType                  = newRegistry(29, lootPoolEntryTypeEntries)
-	LootScoreProviderType              = newRegistry(34, lootScoreProviderTypeEntries)
-	MapDecorationType                  = newRegistry(68, mapDecorationTypeEntries)
-	MemoryModuleType                   = newRegistry(26, memoryModuleTypeEntries)
-	Menu                               = newRegistry(16, menuEntries)
-	MobEffect                          = newRegistry(3, mobEffectEntries)
-	NumberFormatType                   = newRegistry(63, numberFormatTypeEntries)
-	OutgoingRpcMethods                 = newRegistry(81, outgoingRpcMethodsEntries)
-	ParticleType                       = newRegistry(9, particleTypeEntries)
-	PermissionCheckType                = newRegistry(90, permissionCheckTypeEntries)
-	PermissionType                     = newRegistry(89, permissionTypeEntries)
-	PointOfInterestType                = newRegistry(25, pointOfInterestTypeEntries)
-	PosRuleTest                        = newRegistry(15, posRuleTestEntries)
-	PositionSourceType                 = newRegistry(20, positionSourceTypeEntries)
-	Potion                             = newRegistry(8, potionEntries)
-	RecipeBookCategory                 = newRegistry(78, recipeBookCategoryEntries)
-	RecipeDisplay                      = newRegistry(76, recipeDisplayEntries)
-	RecipeSerializer                   = newRegistry(18, recipeSerializerEntries)
-	RecipeType                         = newRegistry(17, recipeTypeEntries)
-	RuleBlockEntityModifier            = newRegistry(14, ruleBlockEntityModifierEntries)
-	RuleTest                           = newRegistry(13, ruleTestEntries)
-	SensorType                         = newRegistry(27, sensorTypeEntries)
-	SlotDisplay                        = newRegistry(77, slotDisplayEntries)
-	SlotSourceType                     = newRegistry(93, slotSourceTypeEntries)
-	SoundEvent                         = newRegistry(1, soundEventEntries)
-	SpawnConditionType                 = newRegistry(84, spawnConditionTypeEntries)
-	StatType                           = newRegistry(22, statTypeEntries)
-	TestEnvironmentDefinitionType      = newRegistry(82, testEnvironmentDefinitionTypeEntries)
-	TestFunction                       = newRegistry(94, testFunctionEntries)
-	TestInstanceType                   = newRegistry(83, testInstanceTypeEntries)
-	TicketType                         = newRegistry(79, ticketTypeEntries)
-	TriggerType                        = newRegistry(62, triggerTypeEntries)
-	VillagerProfession                 = newRegistry(24, villagerProfessionEntries)
-	VillagerType                       = newRegistry(23, villagerTypeEntries)
-	WorldgenBiomeSource                = newRegistry(51, worldgenBiomeSourceEntries)
-	WorldgenBlockStateProviderType     = newRegistry(45, worldgenBlockStateProviderTypeEntries)
-	WorldgenCarver                     = newRegistry(39, worldgenCarverEntries)
-	WorldgenChunkGenerator             = newRegistry(52, worldgenChunkGeneratorEntries)
-	WorldgenDensityFunctionType        = newRegistry(55, worldgenDensityFunctionTypeEntries)
-	WorldgenFeature                    = newRegistry(40, worldgenFeatureEntries)
-	WorldgenFeatureSizeType            = newRegistry(50, worldgenFeatureSizeTypeEntries)
-	WorldgenFoliagePlacerType          = newRegistry(46, worldgenFoliagePlacerTypeEntries)
-	WorldgenMaterialCondition          = newRegistry(53, worldgenMaterialConditionEntries)
-	WorldgenMaterialRule               = newRegistry(54, worldgenMaterialRuleEntries)
-	WorldgenPlacementModifierType      = newRegistry(44, worldgenPlacementModifierTypeEntries)
-	WorldgenPoolAliasBinding           = newRegistry(59, worldgenPoolAliasBindingEntries)
-	WorldgenRootPlacerType             = newRegistry(48, worldgenRootPlacerTypeEntries)
-	WorldgenStructurePiece             = newRegistry(42, worldgenStructurePieceEntries)
-	WorldgenStructurePlacement         = newRegistry(41, worldgenStructurePlacementEntries)
-	WorldgenStructurePoolElement       = newRegistry(58, worldgenStructurePoolElementEntries)
-	WorldgenStructureProcessor         = newRegistry(57, worldgenStructureProcessorEntries)
-	WorldgenStructureType              = newRegistry(43, worldgenStructureTypeEntries)
-	WorldgenTreeDecoratorType          = newRegistry(49, worldgenTreeDecoratorTypeEntries)
-	WorldgenTrunkPlacerType            = newRegistry(47, worldgenTrunkPlacerTypeEntries)
+	Activity                           = newRegistry("minecraft:activity", 28, activityEntries)
+	Attribute                          = newRegistry("minecraft:attribute", 19, attributeEntries)
+	AttributeType                      = newRegistry("minecraft:attribute_type", 92, attributeTypeEntries)
+	Block                              = newRegistry("minecraft:block", 4, blockEntries)
+	BlockEntityType                    = newRegistry("minecraft:block_entity_type", 10, blockEntityTypeEntries)
+	BlockPredicateType                 = newRegistry("minecraft:block_predicate_type", 38, blockPredicateTypeEntries)
+	BlockType                          = newRegistry("minecraft:block_type", 56, blockTypeEntries)
+	ChunkStatus                        = newRegistry("minecraft:chunk_status", 12, chunkStatusEntries)
+	CommandArgumentType                = newRegistry("minecraft:command_argument_type", 21, commandArgumentTypeEntries)
+	ConsumeEffectType                  = newRegistry("minecraft:consume_effect_type", 75, consumeEffectTypeEntries)
+	CreativeModeTab                    = newRegistry("minecraft:creative_mode_tab", 61, creativeModeTabEntries)
+	CustomStat                         = newRegistry("minecraft:custom_stat", 11, customStatEntries)
+	DataComponentPredicateType         = newRegistry("minecraft:data_component_predicate_type", 67, dataComponentPredicateTypeEntries)
+	DataComponentType                  = newRegistry("minecraft:data_component_type", 64, dataComponentTypeEntries)
+	DebugSubscription                  = newRegistry("minecraft:debug_subscription", 5, debugSubscriptionEntries)
+	DecoratedPotPattern                = newRegistry("minecraft:decorated_pot_pattern", 60, decoratedPotPatternEntries)
+	DialogActionType                   = newRegistry("minecraft:dialog_action_type", 86, dialogActionTypeEntries)
+	DialogBodyType                     = newRegistry("minecraft:dialog_body_type", 88, dialogBodyTypeEntries)
+	DialogType                         = newRegistry("minecraft:dialog_type", 85, dialogTypeEntries)
+	EnchantmentEffectComponentType     = newRegistry("minecraft:enchantment_effect_component_type", 69, enchantmentEffectComponentTypeEntries)
+	EnchantmentEntityEffectType        = newRegistry("minecraft:enchantment_entity_effect_type", 71, enchantmentEntityEffectTypeEntries)
+	EnchantmentLevelBasedValueType     = newRegistry("minecraft:enchantment_level_based_value_type", 70, enchantmentLevelBasedValueTypeEntries)
+	EnchantmentLocationBasedEffectType = newRegistry("minecraft:enchantment_location_based_effect_type", 72, enchantmentLocationBasedEffectTypeEntries)
+	EnchantmentProviderType            = newRegistry("minecraft:enchantment_provider_type", 74, enchantmentProviderTypeEntries)
+	EnchantmentValueEffectType         = newRegistry("minecraft:enchantment_value_effect_type", 73, enchantmentValueEffectTypeEntries)
+	EntitySubPredicateType             = newRegistry("minecraft:entity_sub_predicate_type", 66, entitySubPredicateTypeEntries)
+	EntityType                         = newRegistry("minecraft:entity_type", 6, entityTypeEntries)
+	EnvironmentAttribute               = newRegistry("minecraft:environment_attribute", 91, environmentAttributeEntries)
+	FloatProviderType                  = newRegistry("minecraft:float_provider_type", 35, floatProviderTypeEntries)
+	Fluid                              = newRegistry("minecraft:fluid", 2, fluidEntries)
+	GameEvent                          = newRegistry("minecraft:game_event", 0, gameEventEntries)
+	GameRule                           = newRegistry("minecraft:game_rule", 65, gameRuleEntries)
+	HeightProviderType                 = newRegistry("minecraft:height_provider_type", 37, heightProviderTypeEntries)
+	IncomingRpcMethods                 = newRegistry("minecraft:incoming_rpc_methods", 80, incomingRpcMethodsEntries)
+	InputControlType                   = newRegistry("minecraft:input_control_type", 87, inputControlTypeEntries)
+	IntProviderType                    = newRegistry("minecraft:int_provider_type", 36, intProviderTypeEntries)
+	Item                               = newRegistry("minecraft:item", 7, itemEntries)
+	LootConditionType                  = newRegistry("minecraft:loot_condition_type", 31, lootConditionTypeEntries)
+	LootFunctionType                   = newRegistry("minecraft:loot_function_type", 30, lootFunctionTypeEntries)
+	LootNbtProviderType                = newRegistry("minecraft:loot_nbt_provider_type", 33, lootNbtProviderTypeEntries)
+	LootNumberProviderType             = newRegistry("minecraft:loot_number_provider_type", 32, lootNumberProviderTypeEntries)
+	LootPoolEntryType                  = newRegistry("minecraft:loot_pool_entry_type", 29, lootPoolEntryTypeEntries)
+	LootScoreProviderType              = newRegistry("minecraft:loot_score_provider_type", 34, lootScoreProviderTypeEntries)
+	MapDecorationType                  = newRegistry("minecraft:map_decoration_type", 68, mapDecorationTypeEntries)
+	MemoryModuleType                   = newRegistry("minecraft:memory_module_type", 26, memoryModuleTypeEntries)
+	Menu                               = newRegistry("minecraft:menu", 16, menuEntries)
+	MobEffect                          = newRegistry("minecraft:mob_effect", 3, mobEffectEntries)
+	NumberFormatType                   = newRegistry("minecraft:number_format_type", 63, numberFormatTypeEntries)
+	OutgoingRpcMethods                 = newRegistry("minecraft:outgoing_rpc_methods", 81, outgoingRpcMethodsEntries)
+	ParticleType                       = newRegistry("minecraft:particle_type", 9, particleTypeEntries)
+	PermissionCheckType                = newRegistry("minecraft:permission_check_type", 90, permissionCheckTypeEntries)
+	PermissionType                     = newRegistry("minecraft:permission_type", 89, permissionTypeEntries)
+	PointOfInterestType                = newRegistry("minecraft:point_of_interest_type", 25, pointOfInterestTypeEntries)
+	PosRuleTest                        = newRegistry("minecraft:pos_rule_test", 15, posRuleTestEntries)
+	PositionSourceType                 = newRegistry("minecraft:position_source_type", 20, positionSourceTypeEntries)
+	Potion                             = newRegistry("minecraft:potion", 8, potionEntries)
+	RecipeBookCategory                 = newRegistry("minecraft:recipe_book_category", 78, recipeBookCategoryEntries)
+	RecipeDisplay                      = newRegistry("minecraft:recipe_display", 76, recipeDisplayEntries)
+	RecipeSerializer                   = newRegistry("minecraft:recipe_serializer", 18, recipeSerializerEntries)
+	RecipeType                         = newRegistry("minecraft:recipe_type", 17, recipeTypeEntries)
+	RuleBlockEntityModifier            = newRegistry("minecraft:rule_block_entity_modifier", 14, ruleBlockEntityModifierEntries)
+	RuleTest                           = newRegistry("minecraft:rule_test", 13, ruleTestEntries)
+	SensorType                         = newRegistry("minecraft:sensor_type", 27, sensorTypeEntries)
+	SlotDisplay                        = newRegistry("minecraft:slot_display", 77, slotDisplayEntries)
+	SlotSourceType                     = newRegistry("minecraft:slot_source_type", 93, slotSourceTypeEntries)
+	SoundEvent                         = newRegistry("minecraft:sound_event", 1, soundEventEntries)
+	SpawnConditionType                 = newRegistry("minecraft:spawn_condition_type", 84, spawnConditionTypeEntries)
+	StatType                           = newRegistry("minecraft:stat_type", 22, statTypeEntries)
+	TestEnvironmentDefinitionType      = newRegistry("minecraft:test_environment_definition_type", 82, testEnvironmentDefinitionTypeEntries)
+	TestFunction                       = newRegistry("minecraft:test_function", 94, testFunctionEntries)
+	TestInstanceType                   = newRegistry("minecraft:test_instance_type", 83, testInstanceTypeEntries)
+	TicketType                         = newRegistry("minecraft:ticket_type", 79, ticketTypeEntries)
+	TriggerType                        = newRegistry("minecraft:trigger_type", 62, triggerTypeEntries)
+	VillagerProfession                 = newRegistry("minecraft:villager_profession", 24, villagerProfessionEntries)
+	VillagerType                       = newRegistry("minecraft:villager_type", 23, villagerTypeEntries)
+	WorldgenBiomeSource                = newRegistry("minecraft:worldgen/biome_source", 51, worldgenBiomeSourceEntries)
+	WorldgenBlockStateProviderType     = newRegistry("minecraft:worldgen/block_state_provider_type", 45, worldgenBlockStateProviderTypeEntries)
+	WorldgenCarver                     = newRegistry("minecraft:worldgen/carver", 39, worldgenCarverEntries)
+	WorldgenChunkGenerator             = newRegistry("minecraft:worldgen/chunk_generator", 52, worldgenChunkGeneratorEntries)
+	WorldgenDensityFunctionType        = newRegistry("minecraft:worldgen/density_function_type", 55, worldgenDensityFunctionTypeEntries)
+	WorldgenFeature                    = newRegistry("minecraft:worldgen/feature", 40, worldgenFeatureEntries)
+	WorldgenFeatureSizeType            = newRegistry("minecraft:worldgen/feature_size_type", 50, worldgenFeatureSizeTypeEntries)
+	WorldgenFoliagePlacerType          = newRegistry("minecraft:worldgen/foliage_placer_type", 46, worldgenFoliagePlacerTypeEntries)
+	WorldgenMaterialCondition          = newRegistry("minecraft:worldgen/material_condition", 53, worldgenMaterialConditionEntries)
+	WorldgenMaterialRule               = newRegistry("minecraft:worldgen/material_rule", 54, worldgenMaterialRuleEntries)
+	WorldgenPlacementModifierType      = newRegistry("minecraft:worldgen/placement_modifier_type", 44, worldgenPlacementModifierTypeEntries)
+	WorldgenPoolAliasBinding           = newRegistry("minecraft:worldgen/pool_alias_binding", 59, worldgenPoolAliasBindingEntries)
+	WorldgenRootPlacerType             = newRegistry("minecraft:worldgen/root_placer_type", 48, worldgenRootPlacerTypeEntries)
+	WorldgenStructurePiece             = newRegistry("minecraft:worldgen/structure_piece", 42, worldgenStructurePieceEntries)
+	WorldgenStructurePlacement         = newRegistry("minecraft:worldgen/structure_placement", 41, worldgenStructurePlacementEntries)
+	WorldgenStructurePoolElement       = newRegistry("minecraft:worldgen/structure_pool_element", 58, worldgenStructurePoolElementEntries)
+	WorldgenStructureProcessor         = newRegistry("minecraft:worldgen/structure_processor", 57, worldgenStructureProcessorEntries)
+	WorldgenStructureType              = newRegistry("minecraft:worldgen/structure_type", 43, worldgenStructureTypeEntries)
+	WorldgenTreeDecoratorType          = newRegistry("minecraft:worldgen/tree_decorator_type", 49, worldgenTreeDecoratorTypeEntries)
+	WorldgenTrunkPlacerType            = newRegistry("minecraft:worldgen/trunk_placer_type", 47, worldgenTrunkPlacerTypeEntries)
 )
+
+// ByIdentifier maps registry identifier strings to registry instances.
+var ByIdentifier = map[string]*Registry{
+	"minecraft:activity":                               Activity,
+	"minecraft:attribute":                              Attribute,
+	"minecraft:attribute_type":                         AttributeType,
+	"minecraft:block":                                  Block,
+	"minecraft:block_entity_type":                      BlockEntityType,
+	"minecraft:block_predicate_type":                   BlockPredicateType,
+	"minecraft:block_type":                             BlockType,
+	"minecraft:chunk_status":                           ChunkStatus,
+	"minecraft:command_argument_type":                  CommandArgumentType,
+	"minecraft:consume_effect_type":                    ConsumeEffectType,
+	"minecraft:creative_mode_tab":                      CreativeModeTab,
+	"minecraft:custom_stat":                            CustomStat,
+	"minecraft:data_component_predicate_type":          DataComponentPredicateType,
+	"minecraft:data_component_type":                    DataComponentType,
+	"minecraft:debug_subscription":                     DebugSubscription,
+	"minecraft:decorated_pot_pattern":                  DecoratedPotPattern,
+	"minecraft:dialog_action_type":                     DialogActionType,
+	"minecraft:dialog_body_type":                       DialogBodyType,
+	"minecraft:dialog_type":                            DialogType,
+	"minecraft:enchantment_effect_component_type":      EnchantmentEffectComponentType,
+	"minecraft:enchantment_entity_effect_type":         EnchantmentEntityEffectType,
+	"minecraft:enchantment_level_based_value_type":     EnchantmentLevelBasedValueType,
+	"minecraft:enchantment_location_based_effect_type": EnchantmentLocationBasedEffectType,
+	"minecraft:enchantment_provider_type":              EnchantmentProviderType,
+	"minecraft:enchantment_value_effect_type":          EnchantmentValueEffectType,
+	"minecraft:entity_sub_predicate_type":              EntitySubPredicateType,
+	"minecraft:entity_type":                            EntityType,
+	"minecraft:environment_attribute":                  EnvironmentAttribute,
+	"minecraft:float_provider_type":                    FloatProviderType,
+	"minecraft:fluid":                                  Fluid,
+	"minecraft:game_event":                             GameEvent,
+	"minecraft:game_rule":                              GameRule,
+	"minecraft:height_provider_type":                   HeightProviderType,
+	"minecraft:incoming_rpc_methods":                   IncomingRpcMethods,
+	"minecraft:input_control_type":                     InputControlType,
+	"minecraft:int_provider_type":                      IntProviderType,
+	"minecraft:item":                                   Item,
+	"minecraft:loot_condition_type":                    LootConditionType,
+	"minecraft:loot_function_type":                     LootFunctionType,
+	"minecraft:loot_nbt_provider_type":                 LootNbtProviderType,
+	"minecraft:loot_number_provider_type":              LootNumberProviderType,
+	"minecraft:loot_pool_entry_type":                   LootPoolEntryType,
+	"minecraft:loot_score_provider_type":               LootScoreProviderType,
+	"minecraft:map_decoration_type":                    MapDecorationType,
+	"minecraft:memory_module_type":                     MemoryModuleType,
+	"minecraft:menu":                                   Menu,
+	"minecraft:mob_effect":                             MobEffect,
+	"minecraft:number_format_type":                     NumberFormatType,
+	"minecraft:outgoing_rpc_methods":                   OutgoingRpcMethods,
+	"minecraft:particle_type":                          ParticleType,
+	"minecraft:permission_check_type":                  PermissionCheckType,
+	"minecraft:permission_type":                        PermissionType,
+	"minecraft:point_of_interest_type":                 PointOfInterestType,
+	"minecraft:pos_rule_test":                          PosRuleTest,
+	"minecraft:position_source_type":                   PositionSourceType,
+	"minecraft:potion":                                 Potion,
+	"minecraft:recipe_book_category":                   RecipeBookCategory,
+	"minecraft:recipe_display":                         RecipeDisplay,
+	"minecraft:recipe_serializer":                      RecipeSerializer,
+	"minecraft:recipe_type":                            RecipeType,
+	"minecraft:rule_block_entity_modifier":             RuleBlockEntityModifier,
+	"minecraft:rule_test":                              RuleTest,
+	"minecraft:sensor_type":                            SensorType,
+	"minecraft:slot_display":                           SlotDisplay,
+	"minecraft:slot_source_type":                       SlotSourceType,
+	"minecraft:sound_event":                            SoundEvent,
+	"minecraft:spawn_condition_type":                   SpawnConditionType,
+	"minecraft:stat_type":                              StatType,
+	"minecraft:test_environment_definition_type":       TestEnvironmentDefinitionType,
+	"minecraft:test_function":                          TestFunction,
+	"minecraft:test_instance_type":                     TestInstanceType,
+	"minecraft:ticket_type":                            TicketType,
+	"minecraft:trigger_type":                           TriggerType,
+	"minecraft:villager_profession":                    VillagerProfession,
+	"minecraft:villager_type":                          VillagerType,
+	"minecraft:worldgen/biome_source":                  WorldgenBiomeSource,
+	"minecraft:worldgen/block_state_provider_type":     WorldgenBlockStateProviderType,
+	"minecraft:worldgen/carver":                        WorldgenCarver,
+	"minecraft:worldgen/chunk_generator":               WorldgenChunkGenerator,
+	"minecraft:worldgen/density_function_type":         WorldgenDensityFunctionType,
+	"minecraft:worldgen/feature":                       WorldgenFeature,
+	"minecraft:worldgen/feature_size_type":             WorldgenFeatureSizeType,
+	"minecraft:worldgen/foliage_placer_type":           WorldgenFoliagePlacerType,
+	"minecraft:worldgen/material_condition":            WorldgenMaterialCondition,
+	"minecraft:worldgen/material_rule":                 WorldgenMaterialRule,
+	"minecraft:worldgen/placement_modifier_type":       WorldgenPlacementModifierType,
+	"minecraft:worldgen/pool_alias_binding":            WorldgenPoolAliasBinding,
+	"minecraft:worldgen/root_placer_type":              WorldgenRootPlacerType,
+	"minecraft:worldgen/structure_piece":               WorldgenStructurePiece,
+	"minecraft:worldgen/structure_placement":           WorldgenStructurePlacement,
+	"minecraft:worldgen/structure_pool_element":        WorldgenStructurePoolElement,
+	"minecraft:worldgen/structure_processor":           WorldgenStructureProcessor,
+	"minecraft:worldgen/structure_type":                WorldgenStructureType,
+	"minecraft:worldgen/tree_decorator_type":           WorldgenTreeDecoratorType,
+	"minecraft:worldgen/trunk_placer_type":             WorldgenTrunkPlacerType,
+}
+
+// SynchronizedRegistryIDs lists registry identifiers sent over the network during configuration.
+var SynchronizedRegistryIDs = [...]string{
+	"minecraft:worldgen/biome",
+	"minecraft:chat_type",
+	"minecraft:trim_pattern",
+	"minecraft:trim_material",
+	"minecraft:wolf_variant",
+	"minecraft:wolf_sound_variant",
+	"minecraft:pig_variant",
+	"minecraft:frog_variant",
+	"minecraft:cat_variant",
+	"minecraft:cow_variant",
+	"minecraft:chicken_variant",
+	"minecraft:zombie_nautilus_variant",
+	"minecraft:painting_variant",
+	"minecraft:dimension_type",
+	"minecraft:damage_type",
+	"minecraft:banner_pattern",
+	"minecraft:enchantment",
+	"minecraft:jukebox_song",
+	"minecraft:instrument",
+	"minecraft:test_environment",
+	"minecraft:test_instance",
+	"minecraft:dialog",
+	"minecraft:timeline",
+}
 
 var activityEntries = map[string]int32{
 	"minecraft:admire_item": 12,

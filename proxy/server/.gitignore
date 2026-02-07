@@ -3,7 +3,16 @@
 *.dat*
 *.lock
 
+config/
+paper/
+plugins/
 logs/
 versions/
 libraries/
+
+bukkit.yml
+commands.yml
 eula.txt
+help.yml
+permissions.yml
+spigot.yml

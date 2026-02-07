@@ -1,6 +1,9 @@
 package packets
 
 import (
+	"bytes"
+	"io"
+
 	"github.com/go-mclib/data/pkg/data/entities"
 	"github.com/go-mclib/data/pkg/data/items"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
@@ -292,12 +295,23 @@ func (p *S2CBlockUpdate) Write(buf *ns.PacketBuffer) error {
 	return buf.WriteVarInt(p.BlockId)
 }
 
+type BossEventActionEnum ns.VarInt
+
+const (
+	BossEventActionAdd = iota
+	BossEventActionRemove
+	BossEventActionUpdateHealth
+	BossEventActionUpdateTitle
+	BossEventActionUpdateStyle
+	BossEventActionUpdateFlags
+)
+
 // S2CBossEvent represents "Boss Bar".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Boss_Bar
 type S2CBossEvent struct {
 	Uuid   ns.UUID
-	Action ns.VarInt
+	Action BossEventActionEnum
 	Data   ns.ByteArray
 }
 
@@ -306,10 +320,12 @@ func (p *S2CBossEvent) Read(buf *ns.PacketBuffer) error {
 	if p.Uuid, err = buf.ReadUUID(); err != nil {
 		return err
 	}
-	if p.Action, err = buf.ReadVarInt(); err != nil {
+	if action, err := buf.ReadVarInt(); err != nil {
 		return err
+	} else {
+		p.Action = BossEventActionEnum(action)
 	}
-	p.Data, err = buf.ReadByteArray(1048576)
+	p.Data, err = io.ReadAll(buf.Reader())
 	return err
 }
 
@@ -317,10 +333,152 @@ func (p *S2CBossEvent) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteUUID(p.Uuid); err != nil {
 		return err
 	}
-	if err := buf.WriteVarInt(p.Action); err != nil {
+	if err := buf.WriteVarInt(ns.VarInt(p.Action)); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	return buf.WriteFixedByteArray(p.Data)
+}
+
+type BossEventActionAddData struct {
+	Title    ns.TextComponent
+	Health   ns.Float32
+	Color    ns.VarInt
+	Division ns.VarInt
+	// bit mask: 0x01 darken sky, 0x02 dragon bar (boss music), 0x04 create fog
+	Flags ns.Uint8
+}
+
+func (d *BossEventActionAddData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if d.Title, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	if d.Health, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	if d.Color, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if d.Division, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	d.Flags, err = buf.ReadUint8()
+	return err
+}
+
+func (d *BossEventActionAddData) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteTextComponent(d.Title); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(d.Health); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(d.Color); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(d.Division); err != nil {
+		return err
+	}
+	return buf.WriteUint8(d.Flags)
+}
+
+// DataActionAdd decodes Data assuming action 0 (Add).
+func (p *S2CBossEvent) DataActionAdd() (BossEventActionAddData, error) {
+	var data BossEventActionAddData
+	err := data.Read(ns.NewReaderFrom(bytes.NewBuffer(p.Data)))
+	return data, err
+}
+
+type BossEventActionUpdateHealthData struct {
+	Health ns.Float32
+}
+
+func (d *BossEventActionUpdateHealthData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	d.Health, err = buf.ReadFloat32()
+	return err
+}
+
+func (d *BossEventActionUpdateHealthData) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteFloat32(d.Health)
+}
+
+// DataActionUpdateHealth decodes Data assuming action 2 (Update Health).
+func (p *S2CBossEvent) DataActionUpdateHealth() (BossEventActionUpdateHealthData, error) {
+	var data BossEventActionUpdateHealthData
+	err := data.Read(ns.NewReaderFrom(bytes.NewBuffer(p.Data)))
+	return data, err
+}
+
+type BossEventActionUpdateTitleData struct {
+	Title ns.TextComponent
+}
+
+func (d *BossEventActionUpdateTitleData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	d.Title, err = buf.ReadTextComponent()
+	return err
+}
+
+func (d *BossEventActionUpdateTitleData) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteTextComponent(d.Title)
+}
+
+// DataActionUpdateTitle decodes Data assuming action 3 (Update Title).
+func (p *S2CBossEvent) DataActionUpdateTitle() (BossEventActionUpdateTitleData, error) {
+	var data BossEventActionUpdateTitleData
+	err := data.Read(ns.NewReaderFrom(bytes.NewBuffer(p.Data)))
+	return data, err
+}
+
+type BossEventActionUpdateStyleData struct {
+	Color    ns.VarInt
+	Division ns.VarInt
+}
+
+func (d *BossEventActionUpdateStyleData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if d.Color, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	d.Division, err = buf.ReadVarInt()
+	return err
+}
+
+func (d *BossEventActionUpdateStyleData) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(d.Color); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(d.Division)
+}
+
+// DataActionUpdateStyle decodes Data assuming action 4 (Update Style).
+func (p *S2CBossEvent) DataActionUpdateStyle() (BossEventActionUpdateStyleData, error) {
+	var data BossEventActionUpdateStyleData
+	err := data.Read(ns.NewReaderFrom(bytes.NewBuffer(p.Data)))
+	return data, err
+}
+
+type BossEventActionUpdateFlagsData struct {
+	// bit mask: 0x01 darken sky, 0x02 dragon bar (boss music), 0x04 create fog
+	Flags ns.Uint8
+}
+
+func (d *BossEventActionUpdateFlagsData) Read(buf *ns.PacketBuffer) error {
+	var err error
+	d.Flags, err = buf.ReadUint8()
+	return err
+}
+
+func (d *BossEventActionUpdateFlagsData) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteUint8(d.Flags)
+}
+
+// DataActionUpdateFlags decodes Data assuming action 5 (Update Flags).
+func (p *S2CBossEvent) DataActionUpdateFlags() (BossEventActionUpdateFlagsData, error) {
+	var data BossEventActionUpdateFlagsData
+	err := data.Read(ns.NewReaderFrom(bytes.NewBuffer(p.Data)))
+	return data, err
 }
 
 // S2CChangeDifficulty represents "Change Difficulty".

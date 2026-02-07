@@ -4,6 +4,7 @@ package main
 import (
 	"encoding/hex"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"os"
 	"reflect"
@@ -180,7 +181,7 @@ func formatValue(v reflect.Value, indent string) string {
 			for i := 0; i < v.Len(); i++ {
 				bytes[i] = byte(v.Index(i).Uint())
 			}
-			if len(bytes) > 64 {
+			if !fullOutput && len(bytes) > 64 {
 				return fmt.Sprintf("0x%s... (%d bytes)", hex.EncodeToString(bytes[:64]), len(bytes))
 			}
 			return fmt.Sprintf("0x%s", hex.EncodeToString(bytes))
@@ -327,13 +328,18 @@ func formatMetadataEntries(v reflect.Value, indent string) string {
 	return sb.String()
 }
 
+var fullOutput bool
+
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Fprintf(os.Stderr, "Usage: decode <capture.json>\n")
+	flag.BoolVar(&fullOutput, "full", false, "show full byte arrays without truncation")
+	flag.Parse()
+
+	if flag.NArg() < 1 {
+		fmt.Fprintf(os.Stderr, "Usage: decode [-full] <capture.json>\n")
 		os.Exit(1)
 	}
 
-	filename := os.Args[1]
+	filename := flag.Arg(0)
 	data, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error reading file: %v\n", err)
