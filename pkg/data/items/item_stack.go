@@ -30,6 +30,16 @@ func NewStack(itemID int32, count int32) *ItemStack {
 	}
 }
 
+// NewStackWithComponents creates a new item stack with the given item ID, count, and components.
+// The components do not include the item's default components.
+func NewStackWithComponents(itemID int32, count int32, components *Components) *ItemStack {
+	return &ItemStack{
+		ID:         itemID,
+		Count:      count,
+		Components: components,
+	}
+}
+
 // IsEmpty returns true if the stack is empty.
 func (s *ItemStack) IsEmpty() bool {
 	return s == nil || s.Count <= 0
@@ -94,218 +104,6 @@ func (s *ItemStack) ToSlot() (ns.Slot, error) {
 	}
 
 	return slot, nil
-}
-
-// Builder methods for setting components.
-
-func (s *ItemStack) SetAttributeModifiers(v []AttributeModifier) *ItemStack {
-	s.Components.AttributeModifiers = v
-	return s
-}
-
-func (s *ItemStack) SetBlocksAttacks(v *BlocksAttacks) *ItemStack {
-	s.Components.BlocksAttacks = v
-	return s
-}
-
-func (s *ItemStack) SetBreakSound(v string) *ItemStack {
-	s.Components.BreakSound = v
-	return s
-}
-
-func (s *ItemStack) SetConsumable(v *Consumable) *ItemStack {
-	s.Components.Consumable = v
-	return s
-}
-
-func (s *ItemStack) SetCustomName(v *ItemNameComponent) *ItemStack {
-	s.Components.CustomName = v
-	return s
-}
-
-func (s *ItemStack) SetDamage(v int32) *ItemStack {
-	s.Components.Damage = v
-	return s
-}
-
-func (s *ItemStack) SetDamageResistant(v *DamageResistant) *ItemStack {
-	s.Components.DamageResistant = v
-	return s
-}
-
-func (s *ItemStack) SetDamageType(v string) *ItemStack {
-	s.Components.DamageType = v
-	return s
-}
-
-func (s *ItemStack) SetDeathProtection(v *DeathProtection) *ItemStack {
-	s.Components.DeathProtection = v
-	return s
-}
-
-func (s *ItemStack) SetEnchantable(v *Enchantable) *ItemStack {
-	s.Components.Enchantable = v
-	return s
-}
-
-func (s *ItemStack) SetEnchantments(v map[string]int32) *ItemStack {
-	s.Components.Enchantments = v
-	return s
-}
-
-func (s *ItemStack) SetEquippable(v *Equippable) *ItemStack {
-	s.Components.Equippable = v
-	return s
-}
-
-func (s *ItemStack) SetFireworks(v *Fireworks) *ItemStack {
-	s.Components.Fireworks = v
-	return s
-}
-
-func (s *ItemStack) SetFood(v *Food) *ItemStack {
-	s.Components.Food = v
-	return s
-}
-
-func (s *ItemStack) SetGlider(v bool) *ItemStack {
-	s.Components.Glider = v
-	return s
-}
-
-func (s *ItemStack) SetInstrument(v string) *ItemStack {
-	s.Components.Instrument = v
-	return s
-}
-
-func (s *ItemStack) SetItemModel(v string) *ItemStack {
-	s.Components.ItemModel = v
-	return s
-}
-
-func (s *ItemStack) SetItemName(v *ItemNameComponent) *ItemStack {
-	s.Components.ItemName = v
-	return s
-}
-
-func (s *ItemStack) SetJukeboxPlayable(v string) *ItemStack {
-	s.Components.JukeboxPlayable = v
-	return s
-}
-
-func (s *ItemStack) SetKineticWeapon(v *KineticWeapon) *ItemStack {
-	s.Components.KineticWeapon = v
-	return s
-}
-
-func (s *ItemStack) SetLore(v []string) *ItemStack {
-	s.Components.Lore = v
-	return s
-}
-
-func (s *ItemStack) SetMapColor(v int32) *ItemStack {
-	s.Components.MapColor = v
-	return s
-}
-
-func (s *ItemStack) SetMaxDamage(v int32) *ItemStack {
-	s.Components.MaxDamage = v
-	return s
-}
-
-func (s *ItemStack) SetMaxStackSize(v int32) *ItemStack {
-	s.Components.MaxStackSize = v
-	return s
-}
-
-func (s *ItemStack) SetMinimumAttackCharge(v float64) *ItemStack {
-	s.Components.MinimumAttackCharge = v
-	return s
-}
-
-func (s *ItemStack) SetOminousBottleAmplifier(v int32) *ItemStack {
-	s.Components.OminousBottleAmplifier = v
-	return s
-}
-
-func (s *ItemStack) SetPiercingWeapon(v *PiercingWeapon) *ItemStack {
-	s.Components.PiercingWeapon = v
-	return s
-}
-
-func (s *ItemStack) SetPotionContents(v *PotionContents) *ItemStack {
-	s.Components.PotionContents = v
-	return s
-}
-
-func (s *ItemStack) SetPotionDurationScale(v float64) *ItemStack {
-	s.Components.PotionDurationScale = v
-	return s
-}
-
-func (s *ItemStack) SetProvidesBannerPatterns(v string) *ItemStack {
-	s.Components.ProvidesBannerPatterns = v
-	return s
-}
-
-func (s *ItemStack) SetProvidesTrimMaterial(v string) *ItemStack {
-	s.Components.ProvidesTrimMaterial = v
-	return s
-}
-
-func (s *ItemStack) SetRarity(v string) *ItemStack {
-	s.Components.Rarity = v
-	return s
-}
-
-func (s *ItemStack) SetRepairable(v *Repairable) *ItemStack {
-	s.Components.Repairable = v
-	return s
-}
-
-func (s *ItemStack) SetRepairCost(v int32) *ItemStack {
-	s.Components.RepairCost = v
-	return s
-}
-
-func (s *ItemStack) SetStoredEnchantments(v map[string]int32) *ItemStack {
-	s.Components.StoredEnchantments = v
-	return s
-}
-
-func (s *ItemStack) SetTool(v *Tool) *ItemStack {
-	s.Components.Tool = v
-	return s
-}
-
-func (s *ItemStack) SetTooltipDisplay(v *TooltipDisplay) *ItemStack {
-	s.Components.TooltipDisplay = v
-	return s
-}
-
-func (s *ItemStack) SetUnbreakable(v bool) *ItemStack {
-	s.Components.Unbreakable = v
-	return s
-}
-
-func (s *ItemStack) SetUseCooldown(v *UseCooldown) *ItemStack {
-	s.Components.UseCooldown = v
-	return s
-}
-
-func (s *ItemStack) SetUseEffects(v *UseEffects) *ItemStack {
-	s.Components.UseEffects = v
-	return s
-}
-
-func (s *ItemStack) SetUseRemainder(v *UseRemainder) *ItemStack {
-	s.Components.UseRemainder = v
-	return s
-}
-
-func (s *ItemStack) SetWeapon(v *Weapon) *ItemStack {
-	s.Components.Weapon = v
-	return s
 }
 
 // Decoder returns a SlotDecoder function that can be passed to Slot.Decode.

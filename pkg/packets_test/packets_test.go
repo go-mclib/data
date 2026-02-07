@@ -34,16 +34,17 @@ var poSwordAttribs = []items.AttributeModifier{
 	},
 }
 
-var poSword = items.NewStack(items.IronSword, 1).
-	SetAttributeModifiers(poSwordAttribs).
-	SetUnbreakable(true).
-	SetTooltipDisplay(&items.TooltipDisplay{
+var poSword = items.NewStackWithComponents(items.IronSword, 1, &items.Components{
+	AttributeModifiers: poSwordAttribs,
+	Unbreakable: true,
+	TooltipDisplay: &items.TooltipDisplay{
 		HideTooltip:      false,
 		HiddenComponents: []int32{4, 16},
-	}).
-	SetCustomName(&items.ItemNameComponent{
+	},
+	CustomName: &items.ItemNameComponent{
 		Text: "po",
-	})
+	},
+})
 
 var GoMclibPlayerName = ns.String("GoMclib")
 var GoMclibPlayerUUID, _ = ns.UUIDFromString("f8ccd41b-3ab8-32d1-a575-afb9913101d6")
