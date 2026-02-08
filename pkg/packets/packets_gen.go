@@ -20,6 +20,12 @@ func (p *C2SCookieResponseConfiguration) ID() ns.VarInt {
 func (p *C2SCookieResponseConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SCookieResponseConfiguration) Bound() jp.Bound { return jp.C2S }
 
+func (p *C2SAcceptCodeOfConduct) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SAcceptCodeOfConductID)
+}
+func (p *C2SAcceptCodeOfConduct) State() jp.State { return jp.StateConfiguration }
+func (p *C2SAcceptCodeOfConduct) Bound() jp.Bound { return jp.C2S }
+
 func (p *C2SCustomClickActionConfiguration) ID() ns.VarInt {
 	return ns.VarInt(packet_ids.C2SCustomClickActionConfigurationID)
 }

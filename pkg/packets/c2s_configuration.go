@@ -279,6 +279,16 @@ func (p *C2SSelectKnownPacks) Write(buf *ns.PacketBuffer) error {
 	return nil
 }
 
+// C2SAcceptCodeOfConduct represents "Accept Code of Conduct".
+//
+// Sent by the client to accept the server's code of conduct.
+//
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Accept_Code_Of_Conduct
+type C2SAcceptCodeOfConduct struct{}
+
+func (p *C2SAcceptCodeOfConduct) Read(*ns.PacketBuffer) error  { return nil }
+func (p *C2SAcceptCodeOfConduct) Write(*ns.PacketBuffer) error { return nil }
+
 // C2SCustomClickActionConfiguration represents "Custom Click Action (configuration)".
 //
 // Sent when the client clicks a Text Component with the minecraft:custom click action.

@@ -14,6 +14,7 @@ type PacketFactory func() jp.Packet
 // Keys are in format "phase_bound" like "configuration_c2s" or "play_s2c".
 var PacketRegistries = map[string]map[int]PacketFactory{
 	"configuration_c2s": {
+		int(packet_ids.C2SAcceptCodeOfConductID):            func() jp.Packet { return &C2SAcceptCodeOfConduct{} },
 		int(packet_ids.C2SClientInformationConfigurationID): func() jp.Packet { return &C2SClientInformationConfiguration{} },
 		int(packet_ids.C2SCookieResponseConfigurationID):    func() jp.Packet { return &C2SCookieResponseConfiguration{} },
 		int(packet_ids.C2SCustomClickActionConfigurationID): func() jp.Packet { return &C2SCustomClickActionConfiguration{} },
