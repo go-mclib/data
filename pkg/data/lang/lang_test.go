@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/go-mclib/data/pkg/data/lang"
+	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
 func TestTranslate(t *testing.T) {
@@ -36,6 +37,58 @@ func TestTranslate(t *testing.T) {
 func TestTranslateNotFound(t *testing.T) {
 	if got := lang.Translate("nonexistent.translation.key"); got != "" {
 		t.Errorf("Translate for nonexistent key = %q, want empty string", got)
+	}
+}
+
+func TestTranslateComponent(t *testing.T) {
+	tests := []struct {
+		name string
+		tc   ns.TextComponent
+		want string
+	}{
+		{
+			"plain text",
+			ns.TextComponent{Text: "Hello"},
+			"Hello",
+		},
+		{
+			"chat message",
+			ns.TextComponent{
+				Translate: "chat.type.text",
+				With:      []ns.TextComponent{{Text: "Steve"}, {Text: "Hello world"}},
+			},
+			"<Steve> Hello world",
+		},
+		{
+			"nested translate",
+			ns.TextComponent{
+				Translate: "chat.type.announcement",
+				With:      []ns.TextComponent{{Text: "Server"}, {Text: "Welcome!"}},
+			},
+			"[Server] Welcome!",
+		},
+		{
+			"with extra",
+			ns.TextComponent{
+				Text:  "Hello ",
+				Extra: []ns.TextComponent{{Text: "World"}},
+			},
+			"Hello World",
+		},
+		{
+			"unknown key",
+			ns.TextComponent{Translate: "nonexistent.key"},
+			"nonexistent.key",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := lang.TranslateComponent(tt.tc)
+			if got != tt.want {
+				t.Errorf("TranslateComponent() = %q, want %q", got, tt.want)
+			}
+		})
 	}
 }
 

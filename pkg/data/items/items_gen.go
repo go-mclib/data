@@ -6181,6 +6181,9 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	357: { // minecraft:carved_pumpkin
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:carved_pumpkin",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.carved_pumpkin"},
@@ -6221,6 +6224,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	965: { // minecraft:chainmail_boots
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 1, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 12},
@@ -6233,6 +6240,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_chain_armor"},
 	},
 	963: { // minecraft:chainmail_chestplate
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 5, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 12},
@@ -6245,6 +6256,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_chain_armor"},
 	},
 	962: { // minecraft:chainmail_helmet
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 12},
@@ -6257,6 +6272,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_chain_armor"},
 	},
 	964: { // minecraft:chainmail_leggings
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 4, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 12},
@@ -6918,6 +6937,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	919: { // minecraft:copper_axe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 8, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3.200000047683716, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 13},
@@ -6956,6 +6979,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	961: { // minecraft:copper_boots
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 1, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 8},
@@ -6992,6 +7019,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	959: { // minecraft:copper_chestplate
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 4, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 8},
@@ -7036,6 +7067,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	958: { // minecraft:copper_helmet
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 8},
@@ -7048,6 +7083,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_copper_armor"},
 	},
 	920: { // minecraft:copper_hoe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 13},
@@ -7069,6 +7108,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1255: { // minecraft:copper_horse_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 4, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_horse_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_horse_armor"},
@@ -7094,6 +7137,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	960: { // minecraft:copper_leggings
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 8},
@@ -7106,6 +7153,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_copper_armor"},
 	},
 	1337: { // minecraft:copper_nautilus_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 4, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_nautilus_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_nautilus_armor"},
@@ -7130,6 +7181,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	918: { // minecraft:copper_pickaxe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 2, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 13},
@@ -7151,6 +7206,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	917: { // minecraft:copper_shovel
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 2.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 13},
@@ -7172,6 +7231,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1298: { // minecraft:copper_spear
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 1, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.8235294818878174, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:          "minecraft:entity.item.break",
 		Damage:              0,
 		DamageType:          "minecraft:spear",
@@ -7187,6 +7250,10 @@ var defaultComponents = map[int32]*Components{
 		Weapon:              &Weapon{},
 	},
 	916: { // minecraft:copper_sword
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 4, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 13},
@@ -7320,6 +7387,9 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:             0,
 	},
 	1237: { // minecraft:creeper_head
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:creeper_head",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.creeper_head"},
@@ -8164,6 +8234,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:           0,
 	},
 	939: { // minecraft:diamond_axe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 8, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
@@ -8194,6 +8268,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	973: { // minecraft:diamond_boots
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
@@ -8206,6 +8284,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_diamond_armor"},
 	},
 	971: { // minecraft:diamond_chestplate
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 8, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
@@ -8218,6 +8300,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_diamond_armor"},
 	},
 	970: { // minecraft:diamond_helmet
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
@@ -8230,6 +8316,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_diamond_armor"},
 	},
 	940: { // minecraft:diamond_hoe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: 0, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
@@ -8251,6 +8341,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1258: { // minecraft:diamond_horse_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 11, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:diamond_horse_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.diamond_horse_armor"},
@@ -8259,6 +8353,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	972: { // minecraft:diamond_leggings
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 6, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
@@ -8271,6 +8369,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_diamond_armor"},
 	},
 	1335: { // minecraft:diamond_nautilus_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 11, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:diamond_nautilus_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.diamond_nautilus_armor"},
@@ -8287,6 +8389,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	938: { // minecraft:diamond_pickaxe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 4, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
@@ -8308,6 +8414,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	937: { // minecraft:diamond_shovel
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 4.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
@@ -8329,6 +8439,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1301: { // minecraft:diamond_spear
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 3, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3.0476189851760864, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:          "minecraft:entity.item.break",
 		Damage:              0,
 		DamageType:          "minecraft:spear",
@@ -8344,6 +8458,10 @@ var defaultComponents = map[int32]*Components{
 		Weapon:              &Weapon{},
 	},
 	936: { // minecraft:diamond_sword
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 6, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
@@ -8460,6 +8578,9 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1238: { // minecraft:dragon_head
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dragon_head",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dragon_head"},
@@ -9319,6 +9440,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	929: { // minecraft:golden_axe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 6, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 22},
@@ -9341,6 +9466,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	977: { // minecraft:golden_boots
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 1, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 25},
@@ -9365,6 +9494,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	975: { // minecraft:golden_chestplate
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 5, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 25},
@@ -9377,6 +9510,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_gold_armor"},
 	},
 	974: { // minecraft:golden_helmet
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 25},
@@ -9389,6 +9526,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_gold_armor"},
 	},
 	930: { // minecraft:golden_hoe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 22},
@@ -9410,6 +9551,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1257: { // minecraft:golden_horse_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 7, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:golden_horse_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.golden_horse_armor"},
@@ -9418,6 +9563,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	976: { // minecraft:golden_leggings
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 25},
@@ -9430,6 +9579,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_gold_armor"},
 	},
 	1334: { // minecraft:golden_nautilus_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 7, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:golden_nautilus_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.golden_nautilus_armor"},
@@ -9438,6 +9591,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	928: { // minecraft:golden_pickaxe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 1, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 22},
@@ -9459,6 +9616,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	927: { // minecraft:golden_shovel
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 1.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 22},
@@ -9480,6 +9641,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1300: { // minecraft:golden_spear
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.9473683834075928, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:          "minecraft:entity.item.break",
 		Damage:              0,
 		DamageType:          "minecraft:spear",
@@ -9495,6 +9660,10 @@ var defaultComponents = map[int32]*Components{
 		Weapon:              &Weapon{},
 	},
 	926: { // minecraft:golden_sword
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 3, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 22},
@@ -10100,6 +10269,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	934: { // minecraft:iron_axe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 8, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3.0999999046325684, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 14},
@@ -10138,6 +10311,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	969: { // minecraft:iron_boots
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 9},
@@ -10158,6 +10335,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	967: { // minecraft:iron_chestplate
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 6, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 9},
@@ -10186,6 +10367,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	966: { // minecraft:iron_helmet
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 9},
@@ -10198,6 +10383,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_iron_armor"},
 	},
 	935: { // minecraft:iron_hoe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -1, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 14},
@@ -10219,6 +10408,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1256: { // minecraft:iron_horse_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 5, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:iron_horse_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_horse_armor"},
@@ -10236,6 +10429,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:           0,
 	},
 	968: { // minecraft:iron_leggings
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 5, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 9},
@@ -10248,6 +10445,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_iron_armor"},
 	},
 	1333: { // minecraft:iron_nautilus_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 5, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:iron_nautilus_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_nautilus_armor"},
@@ -10272,6 +10473,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	933: { // minecraft:iron_pickaxe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 3, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 14},
@@ -10293,6 +10498,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	932: { // minecraft:iron_shovel
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 3.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 14},
@@ -10314,6 +10523,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1299: { // minecraft:iron_spear
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 2, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.9473683834075928, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:          "minecraft:entity.item.break",
 		Damage:              0,
 		DamageType:          "minecraft:spear",
@@ -10329,6 +10542,10 @@ var defaultComponents = map[int32]*Components{
 		Weapon:              &Weapon{},
 	},
 	931: { // minecraft:iron_sword
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 14},
@@ -10638,6 +10855,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	957: { // minecraft:leather_boots
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 1, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
@@ -10650,6 +10871,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_leather_armor"},
 	},
 	955: { // minecraft:leather_chestplate
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
@@ -10662,6 +10887,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_leather_armor"},
 	},
 	954: { // minecraft:leather_helmet
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 1, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
@@ -10674,6 +10903,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:   &Repairable{Items: "#minecraft:repairs_leather_armor"},
 	},
 	1260: { // minecraft:leather_horse_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:leather_horse_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.leather_horse_armor"},
@@ -10682,6 +10915,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	956: { // minecraft:leather_leggings
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
@@ -11151,6 +11388,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1223: { // minecraft:mace
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
@@ -12048,6 +12289,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	944: { // minecraft:netherite_axe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 9, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
@@ -12080,6 +12325,11 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 	},
 	981: { // minecraft:netherite_boots
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+			{Type: "minecraft:knockback_resistance", Amount: 0.10000000149011612, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
@@ -12093,6 +12343,11 @@ var defaultComponents = map[int32]*Components{
 		Repairable:      &Repairable{Items: "#minecraft:repairs_netherite_armor"},
 	},
 	979: { // minecraft:netherite_chestplate
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 8, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+			{Type: "minecraft:knockback_resistance", Amount: 0.10000000149011612, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
@@ -12106,6 +12361,11 @@ var defaultComponents = map[int32]*Components{
 		Repairable:      &Repairable{Items: "#minecraft:repairs_netherite_armor"},
 	},
 	978: { // minecraft:netherite_helmet
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+			{Type: "minecraft:knockback_resistance", Amount: 0.10000000149011612, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
@@ -12119,6 +12379,10 @@ var defaultComponents = map[int32]*Components{
 		Repairable:      &Repairable{Items: "#minecraft:repairs_netherite_armor"},
 	},
 	945: { // minecraft:netherite_hoe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: 0, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
@@ -12141,6 +12405,11 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1259: { // minecraft:netherite_horse_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 19, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:knockback_resistance", Amount: 0.10000000149011612, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
 		ItemModel:       "minecraft:netherite_horse_armor",
@@ -12160,6 +12429,11 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:           0,
 	},
 	980: { // minecraft:netherite_leggings
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 6, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+			{Type: "minecraft:knockback_resistance", Amount: 0.10000000149011612, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
@@ -12173,6 +12447,11 @@ var defaultComponents = map[int32]*Components{
 		Repairable:      &Repairable{Items: "#minecraft:repairs_netherite_armor"},
 	},
 	1336: { // minecraft:netherite_nautilus_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 19, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:knockback_resistance", Amount: 0.10000000149011612, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
 		ItemModel:       "minecraft:netherite_nautilus_armor",
@@ -12182,6 +12461,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 	},
 	943: { // minecraft:netherite_pickaxe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
@@ -12213,6 +12496,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 	},
 	942: { // minecraft:netherite_shovel
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 5.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
@@ -12235,6 +12522,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1302: { // minecraft:netherite_spear
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 4, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3.13043475151062, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:          "minecraft:entity.item.break",
 		Damage:              0,
 		DamageResistant:     &DamageResistant{Types: "#minecraft:is_fire"},
@@ -12251,6 +12542,10 @@ var defaultComponents = map[int32]*Components{
 		Weapon:              &Weapon{},
 	},
 	941: { // minecraft:netherite_sword
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 7, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:      "minecraft:entity.item.break",
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
@@ -13042,6 +13337,9 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1239: { // minecraft:piglin_head
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:piglin_head",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.piglin_head"},
@@ -13226,6 +13524,9 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1235: { // minecraft:player_head
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:player_head",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.player_head"},
@@ -14726,6 +15027,9 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1233: { // minecraft:skeleton_skull
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:skeleton_skull",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.skeleton_skull"},
@@ -15267,6 +15571,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	924: { // minecraft:stone_axe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 8, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3.200000047683716, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 5},
@@ -15329,6 +15637,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	925: { // minecraft:stone_hoe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 5},
@@ -15350,6 +15662,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	923: { // minecraft:stone_pickaxe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 2, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 5},
@@ -15379,6 +15695,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	922: { // minecraft:stone_shovel
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 2.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 5},
@@ -15408,6 +15728,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1297: { // minecraft:stone_spear
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 1, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.666666626930237, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:          "minecraft:entity.item.break",
 		Damage:              0,
 		DamageType:          "minecraft:spear",
@@ -15431,6 +15755,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	921: { // minecraft:stone_sword
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 4, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 5},
@@ -15920,6 +16248,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1331: { // minecraft:trident
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 8, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.9000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 1},
@@ -16069,6 +16401,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	887: { // minecraft:turtle_helmet
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 9},
@@ -17156,6 +17492,9 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1234: { // minecraft:wither_skeleton_skull
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wither_skeleton_skull",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.wither_skeleton_skull"},
@@ -17180,6 +17519,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	890: { // minecraft:wolf_armor
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:armor", Amount: 11, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
+		},
 		BreakSound:   "minecraft:item.wolf_armor.break",
 		Damage:       0,
 		ItemModel:    "minecraft:wolf_armor",
@@ -17199,6 +17542,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	914: { // minecraft:wooden_axe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 6, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3.200000047683716, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
@@ -17221,6 +17568,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	915: { // minecraft:wooden_hoe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
@@ -17242,6 +17593,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	913: { // minecraft:wooden_pickaxe
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 1, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
@@ -17263,6 +17618,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	912: { // minecraft:wooden_shovel
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 1.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
@@ -17284,6 +17643,10 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1296: { // minecraft:wooden_spear
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.4615384340286255, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:          "minecraft:entity.item.break",
 		Damage:              0,
 		DamageType:          "minecraft:spear",
@@ -17299,6 +17662,10 @@ var defaultComponents = map[int32]*Components{
 		Weapon:              &Weapon{},
 	},
 	911: { // minecraft:wooden_sword
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:attack_damage", Amount: 3, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
+			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
@@ -17463,6 +17830,9 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1236: { // minecraft:zombie_head
+		AttributeModifiers: []AttributeModifier{
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:zombie_head",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.zombie_head"},

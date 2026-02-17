@@ -20,7 +20,7 @@ func main() {
 	langPath := filepath.Join(baseDir, "en_us.json")
 
 	outDir := filepath.Dir(baseDir)
-	genDir := filepath.Dir(outDir) // go back one level to generate/
+	decompiledEntityType := filepath.Join(outDir, "..", "..", "decompiled", "current", "net", "minecraft", "world", "entity", "EntityType.java")
 
 	// generate version info
 	generateVersion(filepath.Join(outDir, "version_gen.go"))
@@ -31,16 +31,13 @@ func main() {
 	generateBlockStates(blocks, registries, filepath.Join(outDir, "blocks", "block_states_gen.go"))
 	generateItems(items, registries, filepath.Join(outDir, "items", "items_gen.go"))
 	generateComponentTypes(registries, filepath.Join(outDir, "items", "item_components_gen.go"))
-	generateComponentCodecs(registries, filepath.Join(genDir, "generate", "component_metadata.include.json"), filepath.Join(outDir, "items", "item_components_codec_gen.go"))
+	generateComponentCodecs(registries, filepath.Join(baseDir, "component_metadata.include.json"), filepath.Join(outDir, "items", "item_components_codec_gen.go"))
 	generatePacketIds(packets, filepath.Join(outDir, "packet_ids"))
 	generateLang(langPath, filepath.Join(outDir, "lang", "lang_gen.go"))
-	generateEntities(registries, filepath.Join(outDir, "entities", "entities_gen.go"))
+	generateEntities(registries, decompiledEntityType, filepath.Join(outDir, "entities", "entities_gen.go"))
 	generateEntityMetadata(filepath.Join(baseDir, "entity_metadata.include.json"), filepath.Join(outDir, "entities"))
 	generateBlockShapes(blocks, filepath.Join(baseDir, "prismarine_block_collision_shapes.json"), filepath.Join(outDir, "hitboxes", "blocks", "block_shapes_gen.go"))
-	generateEntityHitboxes(
-		filepath.Join(outDir, "..", "..", "decompiled", "current", "net", "minecraft", "world", "entity", "EntityType.java"),
-		filepath.Join(outDir, "hitboxes", "entities", "entity_hitboxes_gen.go"),
-	)
+	generateEntityHitboxes(decompiledEntityType, filepath.Join(outDir, "hitboxes", "entities", "entity_hitboxes_gen.go"))
 
 	fmt.Println("generation complete")
 }

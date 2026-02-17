@@ -222,6 +222,32 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 		case "minecraft:glider":
 			// marker component
 			sb.WriteString(fmt.Sprintf("%sGlider: true,\n", indent))
+		case "minecraft:attribute_modifiers":
+			if arr, ok := value.([]any); ok && len(arr) > 0 {
+				sb.WriteString(fmt.Sprintf("%sAttributeModifiers: []AttributeModifier{\n", indent))
+				for _, entry := range arr {
+					if m, ok := entry.(map[string]any); ok {
+						sb.WriteString(fmt.Sprintf("%s\t{", indent))
+						if t, ok := m["type"].(string); ok {
+							sb.WriteString(fmt.Sprintf("Type: %q, ", t))
+						}
+						if a, ok := m["amount"].(float64); ok {
+							sb.WriteString(fmt.Sprintf("Amount: %v, ", a))
+						}
+						if id, ok := m["id"].(string); ok {
+							sb.WriteString(fmt.Sprintf("ID: %q, ", id))
+						}
+						if op, ok := m["operation"].(string); ok {
+							sb.WriteString(fmt.Sprintf("Operation: %q, ", op))
+						}
+						if s, ok := m["slot"].(string); ok {
+							sb.WriteString(fmt.Sprintf("Slot: %q", s))
+						}
+						sb.WriteString("},\n")
+					}
+				}
+				sb.WriteString(fmt.Sprintf("%s},\n", indent))
+			}
 		}
 	}
 }
@@ -533,10 +559,11 @@ func componentKeyToGoField(key string) string {
 		return "MinimumAttackCharge"
 	case "minecraft:glider":
 		return "Glider"
+	case "minecraft:attribute_modifiers":
+		return "AttributeModifiers"
 	// skip these for now as they're empty or complex
 	case "minecraft:enchantments",
 		"minecraft:lore",
-		"minecraft:attribute_modifiers",
 		"minecraft:swing_animation",
 		"minecraft:tooltip_display",
 		"minecraft:use_effects",
