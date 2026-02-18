@@ -20,7 +20,9 @@ func main() {
 	langPath := filepath.Join(baseDir, "en_us.json")
 
 	outDir := filepath.Dir(baseDir)
-	decompiledEntityType := filepath.Join(outDir, "..", "..", "decompiled", "current", "net", "minecraft", "world", "entity", "EntityType.java")
+	decompiledDir := filepath.Join(outDir, "..", "..", "decompiled", "current")
+	decompiledEntityType := filepath.Join(decompiledDir, "net", "minecraft", "world", "entity", "EntityType.java")
+	itemTagsDir := filepath.Join(decompiledDir, "data", "minecraft", "tags", "item")
 
 	// generate version info
 	generateVersion(filepath.Join(outDir, "version_gen.go"))
@@ -38,6 +40,7 @@ func main() {
 	generateEntityMetadata(filepath.Join(baseDir, "entity_metadata.include.json"), filepath.Join(outDir, "entities"))
 	generateBlockShapes(blocks, filepath.Join(baseDir, "prismarine_block_collision_shapes.json"), filepath.Join(outDir, "hitboxes", "blocks", "block_shapes_gen.go"))
 	generateEntityHitboxes(decompiledEntityType, filepath.Join(outDir, "hitboxes", "entities", "entity_hitboxes_gen.go"))
+	generateItemTags(itemTagsDir, registries, filepath.Join(outDir, "items", "tags_gen.go"))
 
 	fmt.Println("generation complete")
 }

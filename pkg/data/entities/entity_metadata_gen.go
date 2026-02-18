@@ -116,26 +116,10 @@ const (
 	ItemEntityIndexItem = 8
 )
 
-// HangingEntity metadata indices
-const (
-	HangingEntityIndexDirection = 8
-)
-
 // ItemFrame metadata indices
 const (
-	ItemFrameIndexItem     = 9
-	ItemFrameIndexRotation = 10
-)
-
-// GlowItemFrame metadata indices (same as ItemFrame)
-const (
-	GlowItemFrameIndexItem     = 9
-	GlowItemFrameIndexRotation = 10
-)
-
-// Painting metadata indices
-const (
-	PaintingIndexVariant = 9
+	ItemFrameIndexItem     = 8
+	ItemFrameIndexRotation = 9
 )
 
 // LivingEntity metadata indices
@@ -869,7 +853,6 @@ type ItemFrameMetadata struct {
 	HasNoGravity         bool
 	HasPose              bool
 	HasTicksFrozen       bool
-	HasDirection         bool
 	HasRotation          bool
 
 	// field values
@@ -881,38 +864,8 @@ type ItemFrameMetadata struct {
 	NoGravity         bool
 	Pose              int32
 	TicksFrozen       int32
-	Direction         int32
 	Item              []byte // passthrough
 	Rotation          int32
-}
-
-// GlowItemFrameMetadata contains metadata fields for GlowItemFrame entities.
-// GlowItemFrame has the same fields as ItemFrame.
-type GlowItemFrameMetadata = ItemFrameMetadata
-
-// PaintingMetadata contains metadata fields for Painting entities.
-type PaintingMetadata struct {
-	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
-	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasDirection         bool
-
-	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
-	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	Direction         int32
-	Variant           []byte // passthrough
 }
 
 // LivingEntityMetadata contains metadata fields for LivingEntity entities.
@@ -1757,34 +1710,8 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
 		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
 		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
-		{Index: 8, Serializer: 12, Name: "Direction", Passthrough: false},
-		{Index: 9, Serializer: 7, Name: "Item", Passthrough: true},
-		{Index: 10, Serializer: 1, Name: "Rotation", Passthrough: false},
-	},
-	"GlowItemFrame": {
-		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
-		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
-		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
-		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
-		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
-		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
-		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
-		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
-		{Index: 8, Serializer: 12, Name: "Direction", Passthrough: false},
-		{Index: 9, Serializer: 7, Name: "Item", Passthrough: true},
-		{Index: 10, Serializer: 1, Name: "Rotation", Passthrough: false},
-	},
-	"Painting": {
-		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
-		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
-		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
-		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
-		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
-		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
-		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
-		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
-		{Index: 8, Serializer: 12, Name: "Direction", Passthrough: false},
-		{Index: 9, Serializer: 30, Name: "Variant", Passthrough: true},
+		{Index: 8, Serializer: 7, Name: "Item", Passthrough: true},
+		{Index: 9, Serializer: 1, Name: "Rotation", Passthrough: false},
 	},
 	"LivingEntity": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},

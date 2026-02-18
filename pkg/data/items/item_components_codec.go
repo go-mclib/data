@@ -559,10 +559,6 @@ func (codec *enchantmentsCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error)
 			return nil, err
 		}
 	}
-	// show in tooltip
-	if err := w.CopyBool(buf); err != nil {
-		return nil, err
-	}
 	return w.Bytes(), nil
 }
 
@@ -585,7 +581,6 @@ func (codec *enchantmentsCodec) Apply(c *Components, data []byte) error {
 		// store as "id:<num>" for now since enchantments are data-driven
 		enchants[fmt.Sprintf("id:%d", enchID)] = int32(level)
 	}
-	// skip show in tooltip flag for now
 	codec.set(c, enchants)
 	return nil
 }
@@ -630,7 +625,6 @@ func (codec *enchantmentsCodec) Encode(c *Components) ([]byte, error) {
 		w.WriteVarInt(ns.VarInt(enchID))
 		w.WriteVarInt(ns.VarInt(level))
 	}
-	w.WriteBool(true) // show in tooltip
 	return w.Bytes(), nil
 }
 

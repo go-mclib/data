@@ -294,10 +294,10 @@ func decodePotionContentsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	if err := copyOptionalInt(buf, w); err != nil { // custom color
 		return err
 	}
-	if err := copyOptionalString(buf, w); err != nil { // custom name
+	if err := copyVarIntPrefixedList(buf, w, copyStatusEffect); err != nil { // custom effects
 		return err
 	}
-	return copyVarIntPrefixedList(buf, w, copyStatusEffect)
+	return copyOptionalString(buf, w) // custom name
 }
 
 func decodeSuspiciousStewWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
