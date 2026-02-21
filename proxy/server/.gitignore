@@ -3,6 +3,7 @@
 *.dat*
 *.lock
 
+.console_history
 config/
 paper/
 plugins/
