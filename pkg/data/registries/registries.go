@@ -1,5 +1,7 @@
 package registries
 
+import "maps"
+
 import "iter"
 
 // Registry represents a Minecraft registry.
@@ -42,9 +44,7 @@ func (r *Registry) Entries() iter.Seq2[string, int32] {
 // Clone returns an independent copy of the registry.
 func (r *Registry) Clone() *Registry {
 	entries := make(map[string]int32, len(r.entries))
-	for k, v := range r.entries {
-		entries[k] = v
-	}
+	maps.Copy(entries, r.entries)
 	return newRegistry(r.Identifier, r.ProtocolID, entries)
 }
 

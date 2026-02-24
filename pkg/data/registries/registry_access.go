@@ -1,5 +1,7 @@
 package registries
 
+import "maps"
+
 import "fmt"
 
 var synchronizedSet = func() map[string]struct{} {
@@ -33,9 +35,7 @@ func NewRegistryAccess() *RegistryAccess {
 		registries: make(map[string]*Registry, len(ByIdentifier)+len(SynchronizedRegistryIDs)),
 	}
 	// add static registries (shared, immutable)
-	for id, reg := range ByIdentifier {
-		ra.registries[id] = reg
-	}
+	maps.Copy(ra.registries, ByIdentifier)
 	// add empty placeholders for synchronized registries
 	for _, id := range SynchronizedRegistryIDs {
 		ra.registries[id] = newRegistry(id, -1, nil)

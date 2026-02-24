@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 )
@@ -109,7 +110,7 @@ func generateItemTags(tagsDir string, registries map[string]RegistryJSON, outPat
 		if len(ids) == 0 {
 			continue
 		}
-		sort.Slice(ids, func(i, j int) bool { return ids[i] < ids[j] })
+		slices.Sort(ids)
 		sb.WriteString(fmt.Sprintf("\t%q: {", name))
 		for i, id := range ids {
 			if i > 0 {
@@ -127,7 +128,7 @@ func generateItemTags(tagsDir string, registries map[string]RegistryJSON, outPat
 	for id := range reverse {
 		sortedIDs = append(sortedIDs, id)
 	}
-	sort.Slice(sortedIDs, func(i, j int) bool { return sortedIDs[i] < sortedIDs[j] })
+	slices.Sort(sortedIDs)
 	for _, id := range sortedIDs {
 		tags := reverse[id]
 		sb.WriteString(fmt.Sprintf("\t%d: {", id))

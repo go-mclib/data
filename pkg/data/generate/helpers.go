@@ -56,8 +56,8 @@ func toGoName(id string) string {
 	for _, part := range parts {
 		if len(part) > 0 {
 			// handle special cases like worldgen/biome_source
-			subparts := strings.Split(part, "/")
-			for _, sp := range subparts {
+			subparts := strings.SplitSeq(part, "/")
+			for sp := range subparts {
 				if len(sp) > 0 {
 					result.WriteString(strings.ToUpper(sp[:1]))
 					result.WriteString(sp[1:])

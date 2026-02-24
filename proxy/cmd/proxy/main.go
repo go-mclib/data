@@ -381,7 +381,7 @@ func parseStates(s string) map[string]bool {
 		return nil
 	}
 	states := make(map[string]bool)
-	for _, state := range strings.Split(s, ",") {
+	for state := range strings.SplitSeq(s, ",") {
 		state = strings.TrimSpace(strings.ToLower(state))
 		if state != "" {
 			states[state] = true
@@ -398,7 +398,7 @@ func parsePacketIDs(s string) map[int]bool {
 		return nil
 	}
 	ids := make(map[int]bool)
-	for _, idStr := range strings.Split(s, ",") {
+	for idStr := range strings.SplitSeq(s, ",") {
 		idStr = strings.TrimSpace(idStr)
 		if idStr == "" {
 			continue

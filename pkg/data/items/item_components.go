@@ -1,5 +1,7 @@
 package items
 
+import "maps"
+
 // Components holds all item component data.
 // The present bitset tracks which component IDs are explicitly set,
 // mirroring Java's DataComponentPatch — only present components are
@@ -281,15 +283,11 @@ func (c *Components) Clone() *Components {
 	// clone maps
 	if c.Enchantments != nil {
 		clone.Enchantments = make(map[string]int32, len(c.Enchantments))
-		for k, v := range c.Enchantments {
-			clone.Enchantments[k] = v
-		}
+		maps.Copy(clone.Enchantments, c.Enchantments)
 	}
 	if c.StoredEnchantments != nil {
 		clone.StoredEnchantments = make(map[string]int32, len(c.StoredEnchantments))
-		for k, v := range c.StoredEnchantments {
-			clone.StoredEnchantments[k] = v
-		}
+		maps.Copy(clone.StoredEnchantments, c.StoredEnchantments)
 	}
 
 	// clone pointer types
