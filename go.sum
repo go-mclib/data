@@ -8,6 +8,8 @@ github.com/go-mclib/protocol v0.0.0-20260221084331-0f65a16be910 h1:qgJNXqhfG38/g
 github.com/go-mclib/protocol v0.0.0-20260221084331-0f65a16be910/go.mod h1:aVfH1TFVFv7ksiVmFKyWctJTws2MvXjnAJprdx9/5gw=
 github.com/go-mclib/protocol v0.0.0-20260224123639-a42deff9a295 h1:oGZmRAEQQPtnMc9LZuLwxkTi3N8NermutbNZbP1GvfQ=
 github.com/go-mclib/protocol v0.0.0-20260224123639-a42deff9a295/go.mod h1:aVfH1TFVFv7ksiVmFKyWctJTws2MvXjnAJprdx9/5gw=
+github.com/go-mclib/protocol v0.0.0-20260227203816-4b8ce83a8500 h1:lWfy5UsyBdEdxNc4j99d0us719PiA+RBYsPNRB7JZME=
+github.com/go-mclib/protocol v0.0.0-20260227203816-4b8ce83a8500/go.mod h1:aVfH1TFVFv7ksiVmFKyWctJTws2MvXjnAJprdx9/5gw=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
