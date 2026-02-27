@@ -5,6 +5,7 @@ import (
 )
 
 // S2CLoginDisconnectLogin represents "Disconnect (login)".
+// Unlike play/config disconnect (NBT), login uses JSON (ByteBufCodecs.lenientJson).
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Disconnect_(Login)
 type S2CLoginDisconnectLogin struct {
@@ -14,12 +15,12 @@ type S2CLoginDisconnectLogin struct {
 
 func (p *S2CLoginDisconnectLogin) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.Reason, err = buf.ReadTextComponent()
+	p.Reason, err = buf.ReadJsonTextComponent()
 	return err
 }
 
 func (p *S2CLoginDisconnectLogin) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteTextComponent(p.Reason)
+	return buf.WriteJsonTextComponent(p.Reason)
 }
 
 // S2CHello represents "Encryption Request".
