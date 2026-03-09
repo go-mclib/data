@@ -312,7 +312,10 @@ func formatComponentValue(id int32, data []byte, indent string) string {
 		reader := nbt.NewReaderFrom(buf.Reader())
 		tag, _, err := reader.ReadTag(true) // network format
 		if err == nil {
-			return formatNBTTextComponent(tag)
+			var tc ns.TextComponent
+			if err := tc.UnmarshalNBT(tag); err == nil {
+				return fmt.Sprintf("%q", tc.String())
+			}
 		}
 	}
 
@@ -321,27 +324,4 @@ func formatComponentValue(id int32, data []byte, indent string) string {
 		return fmt.Sprintf("0x%x... (%d bytes)", data[:32], len(data))
 	}
 	return fmt.Sprintf("0x%x", data)
-}
-
-// formatNBTTextComponent formats an NBT text component tag for display.
-func formatNBTTextComponent(tag nbt.Tag) string {
-	switch v := tag.(type) {
-	case nbt.String:
-		// literal text
-		return fmt.Sprintf("%q", string(v))
-	case nbt.Compound:
-		// structured text component
-		if text, ok := v["text"].(nbt.String); ok {
-			return fmt.Sprintf("{text: %q}", string(text))
-		}
-		if translate, ok := v["translate"].(nbt.String); ok {
-			return fmt.Sprintf("{translate: %q}", string(translate))
-		}
-		// fallback: show type
-		return fmt.Sprintf("{compound with %d keys}", len(v))
-	case nbt.List:
-		return fmt.Sprintf("[list of %d elements]", len(v.Elements))
-	default:
-		return fmt.Sprintf("%v", tag)
-	}
 }
