@@ -16,30 +16,6 @@ func generateEntities(registries map[string]RegistryJSON, entityTypeJavaPath, ou
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("entities"))
 
-	// entity type ID constants
-	sb.WriteString("// Entity type protocol IDs\nconst (\n")
-	for _, name := range sortedKeys(entityRegistry.Entries) {
-		entry := entityRegistry.Entries[name]
-		goName := toGoVarName(name)
-		sb.WriteString(fmt.Sprintf("\t%s = %d\n", goName, entry.ProtocolID))
-	}
-	sb.WriteString(")\n\n")
-
-	// lookup maps
-	sb.WriteString("var entityByName = map[string]int32{\n")
-	for _, name := range sortedKeys(entityRegistry.Entries) {
-		entry := entityRegistry.Entries[name]
-		sb.WriteString(fmt.Sprintf("\t%q: %d,\n", name, entry.ProtocolID))
-	}
-	sb.WriteString("}\n\n")
-
-	sb.WriteString("var entityByID = map[int32]string{\n")
-	for _, name := range sortedKeys(entityRegistry.Entries) {
-		entry := entityRegistry.Entries[name]
-		sb.WriteString(fmt.Sprintf("\t%d: %q,\n", entry.ProtocolID, name))
-	}
-	sb.WriteString("}\n\n")
-
 	// mob category map
 	sb.WriteString("var entityCategory = map[string]string{\n")
 	for _, name := range sortedKeys(entityRegistry.Entries) {

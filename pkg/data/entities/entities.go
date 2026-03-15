@@ -1,16 +1,15 @@
 package entities
 
-// EntityTypeID returns the protocol ID for an entity type string identifier, or -1 if not found.
+import "github.com/go-mclib/data/pkg/data/registries"
+
+// EntityTypeID returns the protocol ID for an entity type identifier, or -1 if not found.
 func EntityTypeID(name string) int32 {
-	if v, ok := entityByName[name]; ok {
-		return v
-	}
-	return -1
+	return registries.EntityType.Get(name)
 }
 
-// EntityTypeName returns the string identifier for an entity type protocol ID, or empty string if not found.
+// EntityTypeName returns the identifier for an entity type protocol ID, or empty string if not found.
 func EntityTypeName(protocolID int32) string {
-	return entityByID[protocolID]
+	return registries.EntityType.ByID(protocolID)
 }
 
 // EntityCategory returns the mob category for an entity type (e.g. "monster", "creature", "misc").

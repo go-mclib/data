@@ -6,37 +6,9 @@ import (
 	"strings"
 )
 
-func generateBlocks(registries map[string]RegistryJSON, outPath string) {
-	blockRegistry := registries["minecraft:block"]
-
-	var sb strings.Builder
-	sb.WriteString(generatedFileHeader("blocks"))
-
-	// block ID constants
-	sb.WriteString("// Block protocol IDs\nconst (\n")
-	for _, name := range sortedKeys(blockRegistry.Entries) {
-		entry := blockRegistry.Entries[name]
-		goName := toGoVarName(name)
-		sb.WriteString(fmt.Sprintf("\t%s = %d\n", goName, entry.ProtocolID))
-	}
-	sb.WriteString(")\n\n")
-
-	// lookup maps
-	sb.WriteString("var blockByName = map[string]int32{\n")
-	for _, name := range sortedKeys(blockRegistry.Entries) {
-		entry := blockRegistry.Entries[name]
-		sb.WriteString(fmt.Sprintf("\t%q: %d,\n", name, entry.ProtocolID))
-	}
-	sb.WriteString("}\n\n")
-
-	sb.WriteString("var blockByID = map[int32]string{\n")
-	for _, name := range sortedKeys(blockRegistry.Entries) {
-		entry := blockRegistry.Entries[name]
-		sb.WriteString(fmt.Sprintf("\t%d: %q,\n", entry.ProtocolID, name))
-	}
-	sb.WriteString("}\n")
-
-	writeFile(outPath, sb.String())
+func generateBlocks(_ map[string]RegistryJSON, outPath string) {
+	// block IDs now live in registries.Block — no duplicates needed here.
+	writeFile(outPath, generatedFileHeader("blocks"))
 }
 
 func generateBlockStates(blocks map[string]BlockJSON, registries map[string]RegistryJSON, outPath string) {
@@ -108,8 +80,8 @@ func generateBlockStates(blocks map[string]BlockJSON, registries map[string]Regi
 			propOrder = getPropertyOrder(block)
 		}
 
-		goName := toGoVarName(blockName)
-		sb.WriteString(fmt.Sprintf("\t%s: {\n", goName))
+		blockID := blockRegistry.Entries[blockName].ProtocolID
+		sb.WriteString(fmt.Sprintf("\t%d: { // %s\n", blockID, blockName))
 		sb.WriteString(fmt.Sprintf("\t\tBaseID:    %d,\n", baseID))
 		sb.WriteString(fmt.Sprintf("\t\tDefaultID: %d,\n", defaultID))
 

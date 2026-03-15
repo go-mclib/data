@@ -7,29 +7,21 @@ import (
 )
 
 func TestEntityTypeIDLookup(t *testing.T) {
-	tests := []struct {
-		name string
-		id   int32
-	}{
-		{"minecraft:player", entities.Player},
-		{"minecraft:zombie", entities.Zombie},
-		{"minecraft:creeper", entities.Creeper},
-		{"minecraft:skeleton", entities.Skeleton},
-		{"minecraft:spider", entities.Spider},
-		{"minecraft:pig", entities.Pig},
-		{"minecraft:cow", entities.Cow},
-		{"minecraft:sheep", entities.Sheep},
-		{"minecraft:chicken", entities.Chicken},
-		{"minecraft:villager", entities.Villager},
+	names := []string{
+		"minecraft:player", "minecraft:zombie", "minecraft:creeper",
+		"minecraft:skeleton", "minecraft:spider", "minecraft:pig",
+		"minecraft:cow", "minecraft:sheep", "minecraft:chicken",
+		"minecraft:villager",
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := entities.EntityTypeID(tt.name); got != tt.id {
-				t.Errorf("EntityTypeID(%q) = %d, want %d", tt.name, got, tt.id)
+	for _, name := range names {
+		t.Run(name, func(t *testing.T) {
+			id := entities.EntityTypeID(name)
+			if id < 0 {
+				t.Fatalf("EntityTypeID(%q) = %d, want >= 0", name, id)
 			}
-			if got := entities.EntityTypeName(tt.id); got != tt.name {
-				t.Errorf("EntityTypeName(%d) = %q, want %q", tt.id, got, tt.name)
+			if got := entities.EntityTypeName(id); got != name {
+				t.Errorf("EntityTypeName(%d) = %q, want %q", id, got, name)
 			}
 		})
 	}
@@ -45,33 +37,25 @@ func TestEntityTypeIDNotFound(t *testing.T) {
 }
 
 func TestCommonEntityTypes(t *testing.T) {
-	// verify some well-known entity types have non-negative IDs
-	commonTypes := []int32{
-		entities.Player,
-		entities.Zombie,
-		entities.Creeper,
-		entities.Skeleton,
-		entities.EnderDragon,
-		entities.Wither,
-		entities.Item,
-		entities.ExperienceOrb,
-		entities.Arrow,
-		entities.Fireball,
+	commonTypes := []string{
+		"minecraft:player", "minecraft:zombie", "minecraft:creeper",
+		"minecraft:skeleton", "minecraft:ender_dragon", "minecraft:wither",
+		"minecraft:item", "minecraft:experience_orb", "minecraft:arrow",
+		"minecraft:fireball",
 	}
 
-	for _, id := range commonTypes {
+	for _, name := range commonTypes {
+		id := entities.EntityTypeID(name)
 		if id < 0 {
-			t.Errorf("entity type ID %d should be non-negative", id)
+			t.Errorf("EntityTypeID(%q) = %d, want >= 0", name, id)
 		}
-		name := entities.EntityTypeName(id)
-		if name == "" {
-			t.Errorf("entity type ID %d should have a name", id)
+		if got := entities.EntityTypeName(id); got != name {
+			t.Errorf("EntityTypeName(%d) = %q, want %q", id, got, name)
 		}
 	}
 }
 
 func TestMetadataSerializerConstants(t *testing.T) {
-	// verify well-known serializer constants
 	tests := []struct {
 		name string
 		id   int32
@@ -95,7 +79,6 @@ func TestMetadataSerializerConstants(t *testing.T) {
 }
 
 func TestMetadataFieldIndices(t *testing.T) {
-	// verify base Entity metadata indices
 	if entities.EntityIndexFlags != 0 {
 		t.Errorf("EntityIndexFlags = %d, want 0", entities.EntityIndexFlags)
 	}
@@ -103,12 +86,10 @@ func TestMetadataFieldIndices(t *testing.T) {
 		t.Errorf("EntityIndexAirSupply = %d, want 1", entities.EntityIndexAirSupply)
 	}
 
-	// verify Player-specific indices start after LivingEntity
 	if entities.PlayerIndexAdditionalHearts < 8 {
 		t.Errorf("PlayerIndexAdditionalHearts = %d, should be >= 8", entities.PlayerIndexAdditionalHearts)
 	}
 
-	// verify Creeper-specific indices
 	if entities.CreeperIndexSwellDir < 8 {
 		t.Errorf("CreeperIndexSwellDir = %d, should be >= 8", entities.CreeperIndexSwellDir)
 	}
@@ -117,9 +98,8 @@ func TestMetadataFieldIndices(t *testing.T) {
 func TestMetadataOperations(t *testing.T) {
 	var m entities.Metadata
 
-	// test Set and Get
 	m.Set(0, entities.SerializerBYTE, []byte{0x01})
-	m.Set(1, entities.SerializerINT, []byte{0x64}) // VarInt 100
+	m.Set(1, entities.SerializerINT, []byte{0x64})
 
 	if data := m.Get(0); data == nil || data[0] != 0x01 {
 		t.Errorf("Get(0) failed")
@@ -131,7 +111,6 @@ func TestMetadataOperations(t *testing.T) {
 		t.Errorf("Get(99) should return nil for missing index")
 	}
 
-	// test update
 	m.Set(0, entities.SerializerBYTE, []byte{0x02})
 	if data := m.Get(0); data == nil || data[0] != 0x02 {
 		t.Errorf("Set update failed")

@@ -1,16 +1,15 @@
 package items
 
-// ItemID returns the protocol ID for an item string identifier, or -1 if not found.
+import "github.com/go-mclib/data/pkg/data/registries"
+
+// ItemID returns the protocol ID for an item identifier, or -1 if not found.
 func ItemID(id string) int32 {
-	if v, ok := itemByName[id]; ok {
-		return v
-	}
-	return -1
+	return registries.Item.Get(id)
 }
 
-// ItemName returns the string identifier for an item protocol ID, or empty string if not found.
+// ItemName returns the identifier for an item protocol ID, or empty string if not found.
 func ItemName(protocolID int32) string {
-	return itemByID[protocolID]
+	return registries.Item.ByID(protocolID)
 }
 
 // DefaultComponents returns the default components for an item, or nil if not found.

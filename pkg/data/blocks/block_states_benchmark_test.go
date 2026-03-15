@@ -8,7 +8,7 @@ import (
 )
 
 func BenchmarkStateIDCached(b *testing.B) {
-	blockID := blocks.RedstoneWire
+	blockID := int(blocks.BlockID("minecraft:redstone_wire"))
 	props := map[string]string{
 		"east":  "side",
 		"north": "up",
@@ -27,7 +27,7 @@ func BenchmarkStateIDCached(b *testing.B) {
 }
 
 func BenchmarkStateIDUncached(b *testing.B) {
-	blockID := blocks.RedstoneWire
+	blockID := int(blocks.BlockID("minecraft:redstone_wire"))
 	props := map[string]string{
 		"east":  "side",
 		"north": "up",

@@ -48,8 +48,8 @@ func validateChunkContents(pkt *packets.S2CLevelChunkWithLight) {
 		panic(fmt.Errorf("failed to parse chunk column: %w", err))
 	}
 
-	hayBlockState := blocks.StateID(blocks.HayBlock, map[string]string{"axis": "y"})
-	signBlockState := blocks.StateID(blocks.PaleOakWallSign, map[string]string{"facing": "west", "waterlogged": "false"})
+	hayBlockState := blocks.StateID(int(blocks.BlockID("minecraft:hay_block")), map[string]string{"axis": "y"})
+	signBlockState := blocks.StateID(int(blocks.BlockID("minecraft:pale_oak_wall_sign")), map[string]string{"facing": "west", "waterlogged": "false"})
 
 	hayCount := 0
 	signCount := 0

@@ -23,12 +23,13 @@ func main() {
 	decompiledDir := filepath.Join(outDir, "..", "..", "decompiled", "current")
 	decompiledEntityType := filepath.Join(decompiledDir, "net", "minecraft", "world", "entity", "EntityType.java")
 	itemTagsDir := filepath.Join(decompiledDir, "data", "minecraft", "tags", "item")
+	datapackDir := filepath.Join(decompiledDir, "data", "minecraft")
 
 	// generate version info
 	generateVersion(filepath.Join(outDir, "version_gen.go"))
 
 	// generate packages
-	generateRegistries(registries, filepath.Join(outDir, "registries", "registries_gen.go"))
+	generateRegistries(registries, datapackDir, filepath.Join(outDir, "registries", "registries_gen.go"))
 	generateBlocks(registries, filepath.Join(outDir, "blocks", "blocks_gen.go"))
 	generateBlockStates(blocks, registries, filepath.Join(outDir, "blocks", "block_states_gen.go"))
 	generateItems(items, registries, filepath.Join(outDir, "items", "items_gen.go"))

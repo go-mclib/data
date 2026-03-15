@@ -7,27 +7,25 @@ import (
 )
 
 func TestItemIDLookup(t *testing.T) {
-	tests := []struct {
-		name string
-		id   int32
-	}{
-		{"minecraft:diamond_sword", items.DiamondSword},
-		{"minecraft:iron_sword", items.IronSword},
-		{"minecraft:apple", items.Apple},
-		{"minecraft:golden_apple", items.GoldenApple},
-		{"minecraft:diamond_pickaxe", items.DiamondPickaxe},
-		{"minecraft:iron_pickaxe", items.IronPickaxe},
-		{"minecraft:stick", items.Stick},
-		{"minecraft:diamond", items.Diamond},
+	tests := []string{
+		"minecraft:diamond_sword",
+		"minecraft:iron_sword",
+		"minecraft:apple",
+		"minecraft:golden_apple",
+		"minecraft:diamond_pickaxe",
+		"minecraft:iron_pickaxe",
+		"minecraft:stick",
+		"minecraft:diamond",
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := items.ItemID(tt.name); got != tt.id {
-				t.Errorf("ItemID(%q) = %d, want %d", tt.name, got, tt.id)
+	for _, name := range tests {
+		t.Run(name, func(t *testing.T) {
+			id := items.ItemID(name)
+			if id < 0 {
+				t.Fatalf("ItemID(%q) = %d, want >= 0", name, id)
 			}
-			if got := items.ItemName(tt.id); got != tt.name {
-				t.Errorf("ItemName(%d) = %q, want %q", tt.id, got, tt.name)
+			if got := items.ItemName(id); got != name {
+				t.Errorf("ItemName(%d) = %q, want %q", id, got, name)
 			}
 		})
 	}
@@ -43,29 +41,28 @@ func TestItemIDNotFound(t *testing.T) {
 }
 
 func TestDefaultComponents(t *testing.T) {
-	// apple has food component
-	apple := items.DefaultComponents(items.Apple)
+	appleID := items.ItemID("minecraft:apple")
+	apple := items.DefaultComponents(appleID)
 	if apple == nil {
-		t.Fatal("DefaultComponents(Apple) = nil")
+		t.Fatal("DefaultComponents(apple) = nil")
 	}
 	if apple.Food == nil {
-		t.Error("Apple should have Food component")
+		t.Error("apple should have Food component")
 	} else if apple.Food.Nutrition != 4 {
-		t.Errorf("Apple nutrition = %d, want 4", apple.Food.Nutrition)
+		t.Errorf("apple nutrition = %d, want 4", apple.Food.Nutrition)
 	}
 
-	// diamond sword has max damage (durability)
-	sword := items.DefaultComponents(items.DiamondSword)
+	swordID := items.ItemID("minecraft:diamond_sword")
+	sword := items.DefaultComponents(swordID)
 	if sword == nil {
-		t.Fatal("DefaultComponents(DiamondSword) = nil")
+		t.Fatal("DefaultComponents(diamond_sword) = nil")
 	}
 	if sword.MaxDamage != 1561 {
-		t.Errorf("DiamondSword max damage = %d, want 1561", sword.MaxDamage)
+		t.Errorf("diamond_sword max damage = %d, want 1561", sword.MaxDamage)
 	}
 }
 
 func TestComponentConstants(t *testing.T) {
-	// verify some well-known component IDs exist
 	if items.ComponentDamage < 0 {
 		t.Error("ComponentDamage should be non-negative")
 	}

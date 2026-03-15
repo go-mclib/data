@@ -12,30 +12,6 @@ func generateItems(items map[string]ItemJSON, registries map[string]RegistryJSON
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("items"))
 
-	// item ID constants
-	sb.WriteString("// Item protocol IDs\nconst (\n")
-	for _, name := range sortedKeys(itemRegistry.Entries) {
-		entry := itemRegistry.Entries[name]
-		goName := toGoVarName(name)
-		sb.WriteString(fmt.Sprintf("\t%s = %d\n", goName, entry.ProtocolID))
-	}
-	sb.WriteString(")\n\n")
-
-	// lookup maps
-	sb.WriteString("var itemByName = map[string]int32{\n")
-	for _, name := range sortedKeys(itemRegistry.Entries) {
-		entry := itemRegistry.Entries[name]
-		sb.WriteString(fmt.Sprintf("\t%q: %d,\n", name, entry.ProtocolID))
-	}
-	sb.WriteString("}\n\n")
-
-	sb.WriteString("var itemByID = map[int32]string{\n")
-	for _, name := range sortedKeys(itemRegistry.Entries) {
-		entry := itemRegistry.Entries[name]
-		sb.WriteString(fmt.Sprintf("\t%d: %q,\n", entry.ProtocolID, name))
-	}
-	sb.WriteString("}\n\n")
-
 	// generate default components data
 	sb.WriteString("// defaultComponents maps item IDs to their default components.\n")
 	sb.WriteString("var defaultComponents = map[int32]*Components{\n")

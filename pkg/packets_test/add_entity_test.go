@@ -19,7 +19,7 @@ func poSwordItem() {
 	capturedPackets[&packets.S2CAddEntity{
 		EntityId:   2,
 		EntityUuid: poItemUUID,
-		Type:       entities.Item,
+		Type:       ns.VarInt(entities.EntityTypeID("minecraft:item")),
 		X:          0,
 		Y:          -58.68000000715256,
 		Z:          0,

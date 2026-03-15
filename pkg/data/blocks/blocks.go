@@ -1,14 +1,13 @@
 package blocks
 
-// BlockID returns the protocol ID for a block string identifier, or -1 if not found.
+import "github.com/go-mclib/data/pkg/data/registries"
+
+// BlockID returns the protocol ID for a block identifier, or -1 if not found.
 func BlockID(id string) int32 {
-	if v, ok := blockByName[id]; ok {
-		return v
-	}
-	return -1
+	return registries.Block.Get(id)
 }
 
-// BlockName returns the string identifier for a block protocol ID, or empty string if not found.
+// BlockName returns the identifier for a block protocol ID, or empty string if not found.
 func BlockName(protocolID int32) string {
-	return blockByID[protocolID]
+	return registries.Block.ByID(protocolID)
 }

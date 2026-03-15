@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -34,7 +36,7 @@ var synchronizedRegistryIDs = []string{
 	"minecraft:timeline",
 }
 
-func generateRegistries(registries map[string]RegistryJSON, outPath string) {
+func generateRegistries(registries map[string]RegistryJSON, datapackDir string, outPath string) {
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("registries"))
 
@@ -78,6 +80,44 @@ func generateRegistries(registries map[string]RegistryJSON, outPath string) {
 		}
 		sb.WriteString("}\n\n")
 	}
+
+	// generate SynchronizedEntries: entry names for data-driven registries
+	// scanned from the vanilla datapack (data/minecraft/<registry>/*.json)
+	sb.WriteString("// SynchronizedEntries maps synchronized registry identifiers to their\n")
+	sb.WriteString("// vanilla datapack entry names. For registries that also appear in\n")
+	sb.WriteString("// ByIdentifier (static registries), entries come from there instead.\n")
+	sb.WriteString("var SynchronizedEntries = map[string][]string{\n")
+	for _, regID := range synchronizedRegistryIDs {
+		// strip "minecraft:" prefix to get relative path
+		relPath := strings.TrimPrefix(regID, "minecraft:")
+		dir := filepath.Join(datapackDir, relPath)
+
+		dirEntries, err := os.ReadDir(dir)
+		if err != nil {
+			fmt.Printf("  warn: no datapack dir for %s: %v\n", regID, err)
+			continue
+		}
+
+		var names []string
+		for _, e := range dirEntries {
+			if e.IsDir() || !strings.HasSuffix(e.Name(), ".json") {
+				continue
+			}
+			name := "minecraft:" + strings.TrimSuffix(e.Name(), ".json")
+			names = append(names, name)
+		}
+
+		if len(names) == 0 {
+			continue
+		}
+
+		sb.WriteString(fmt.Sprintf("\t%q: {\n", regID))
+		for _, name := range names {
+			sb.WriteString(fmt.Sprintf("\t\t%q,\n", name))
+		}
+		sb.WriteString("\t},\n")
+	}
+	sb.WriteString("}\n\n")
 
 	writeFile(outPath, sb.String())
 }

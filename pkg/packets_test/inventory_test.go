@@ -7,13 +7,13 @@ import (
 )
 
 func init() {
-	oakPlanks := items.NewStack(items.OakPlanks, 4)
+	oakPlanks := items.NewStack(items.ItemID("minecraft:oak_planks"), 4)
 	oakPlanksSlot, err := oakPlanks.ToSlot()
 	if err != nil {
 		panic(err)
 	}
 
-	emeralds55 := items.NewStack(items.Emerald, 55)
+	emeralds55 := items.NewStack(items.ItemID("minecraft:emerald"), 55)
 	emeralds55Slot, err := emeralds55.ToSlot()
 	if err != nil {
 		panic(err)

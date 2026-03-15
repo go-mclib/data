@@ -52,7 +52,7 @@ var poSwordAttribs = []items.AttributeModifier{
 	},
 }
 
-var poSword = items.NewStackWithComponents(items.IronSword, 1, &items.Components{
+var poSword = items.NewStackWithComponents(items.ItemID("minecraft:iron_sword"), 1, &items.Components{
 	AttributeModifiers: poSwordAttribs,
 	Unbreakable:        true,
 	TooltipDisplay: &items.TooltipDisplay{

@@ -7,26 +7,24 @@ import (
 )
 
 func TestBlockIDLookup(t *testing.T) {
-	tests := []struct {
-		name string
-		id   int32
-	}{
-		{"minecraft:air", blocks.Air},
-		{"minecraft:stone", blocks.Stone},
-		{"minecraft:dirt", blocks.Dirt},
-		{"minecraft:oak_planks", blocks.OakPlanks},
-		{"minecraft:diamond_block", blocks.DiamondBlock},
-		{"minecraft:iron_block", blocks.IronBlock},
-		{"minecraft:gold_block", blocks.GoldBlock},
+	names := []string{
+		"minecraft:air",
+		"minecraft:stone",
+		"minecraft:dirt",
+		"minecraft:oak_planks",
+		"minecraft:diamond_block",
+		"minecraft:iron_block",
+		"minecraft:gold_block",
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := blocks.BlockID(tt.name); got != tt.id {
-				t.Errorf("BlockID(%q) = %d, want %d", tt.name, got, tt.id)
+	for _, name := range names {
+		t.Run(name, func(t *testing.T) {
+			id := blocks.BlockID(name)
+			if id < 0 {
+				t.Fatalf("BlockID(%q) = %d, want >= 0", name, id)
 			}
-			if got := blocks.BlockName(tt.id); got != tt.name {
-				t.Errorf("BlockName(%d) = %q, want %q", tt.id, got, tt.name)
+			if got := blocks.BlockName(id); got != name {
+				t.Errorf("BlockName(%d) = %q, want %q", id, got, name)
 			}
 		})
 	}
