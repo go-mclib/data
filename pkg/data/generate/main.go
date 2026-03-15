@@ -42,6 +42,8 @@ func main() {
 	generateBlockShapes(blocks, filepath.Join(baseDir, "prismarine_block_collision_shapes.json"), filepath.Join(outDir, "hitboxes", "blocks", "block_shapes_gen.go"))
 	generateEntityHitboxes(decompiledEntityType, filepath.Join(outDir, "hitboxes", "entities", "entity_hitboxes_gen.go"))
 	generateItemTags(itemTagsDir, registries, filepath.Join(outDir, "items", "tags_gen.go"))
+	generateRegistryData(datapackDir, filepath.Join(outDir, "registries", "registry_data_gen.go"))
+	generateTagData(filepath.Join(decompiledDir, "data", "minecraft", "tags"), filepath.Join(outDir, "registries", "tag_data_gen.go"))
 
 	fmt.Println("generation complete")
 }
