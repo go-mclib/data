@@ -12,7 +12,7 @@ const (
 	PlayerArmorChest     = 6
 	PlayerArmorLegs      = 7
 	PlayerArmorFeet      = 8
-	PlayerInventory0     = 9  // top-left of main inventory
+	PlayerInventory0     = 9 // top-left of main inventory
 	PlayerInventory1     = 10
 	PlayerInventory2     = 11
 	PlayerInventory3     = 12

@@ -79,13 +79,18 @@
         {"index": 16, "name": "IsBaby", "serializer": 8, "goField": "IsBaby", "goType": "bool"}
       ]
     },
-    "Player": {
+    "Avatar": {
       "parent": "LivingEntity",
       "fields": [
-        {"index": 15, "name": "AdditionalHearts", "serializer": 3, "goField": "AdditionalHearts", "goType": "float32"},
-        {"index": 16, "name": "Score", "serializer": 1, "goField": "Score", "goType": "int32"},
-        {"index": 17, "name": "DisplayedSkinParts", "serializer": 0, "goField": "SkinParts", "goType": "byte", "description": "cape|jacket|left_sleeve|right_sleeve|left_pants|right_pants|hat"},
-        {"index": 18, "name": "MainHand", "serializer": 0, "goField": "MainHand", "goType": "byte", "description": "0=left,1=right"},
+        {"index": 15, "name": "MainHand", "serializer": 38, "goField": "MainHand", "goType": "byte", "description": "0=left,1=right (HUMANOID_ARM)"},
+        {"index": 16, "name": "DisplayedSkinParts", "serializer": 0, "goField": "SkinParts", "goType": "byte", "description": "cape|jacket|left_sleeve|right_sleeve|left_pants|right_pants|hat"}
+      ]
+    },
+    "Player": {
+      "parent": "Avatar",
+      "fields": [
+        {"index": 17, "name": "AdditionalHearts", "serializer": 3, "goField": "AdditionalHearts", "goType": "float32"},
+        {"index": 18, "name": "Score", "serializer": 1, "goField": "Score", "goType": "int32"},
         {"index": 19, "name": "ShoulderEntityLeft", "serializer": 19, "goField": "LeftShoulderEntity", "goType": "*int32", "passthrough": true},
         {"index": 20, "name": "ShoulderEntityRight", "serializer": 19, "goField": "RightShoulderEntity", "goType": "*int32", "passthrough": true}
       ]
