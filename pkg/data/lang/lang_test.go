@@ -3,7 +3,7 @@ package lang_test
 import (
 	"testing"
 
-	_ "github.com/go-mclib/data/pkg/data/lang" // sets ns.TranslateFunc
+	"github.com/go-mclib/data/pkg/data/lang"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
@@ -27,7 +27,7 @@ func TestTranslate(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.key, func(t *testing.T) {
-			if got := ns.TranslateFunc(tt.key); got != tt.want {
+			if got := lang.Translate(tt.key); got != tt.want {
 				t.Errorf("Translate(%q) = %q, want %q", tt.key, got, tt.want)
 			}
 		})
@@ -35,7 +35,7 @@ func TestTranslate(t *testing.T) {
 }
 
 func TestTranslateNotFound(t *testing.T) {
-	if got := ns.TranslateFunc("nonexistent.translation.key"); got != "" {
+	if got := lang.Translate("nonexistent.translation.key"); got != "" {
 		t.Errorf("Translate for nonexistent key = %q, want empty string", got)
 	}
 }
@@ -84,9 +84,9 @@ func TestTextComponentString(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := tt.tc.String()
+			got := tt.tc.Render(lang.Translate)
 			if got != tt.want {
-				t.Errorf("String() = %q, want %q", got, tt.want)
+				t.Errorf("Render() = %q, want %q", got, tt.want)
 			}
 		})
 	}
@@ -105,7 +105,7 @@ func TestTranslateUI(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.key, func(t *testing.T) {
-			if got := ns.TranslateFunc(tt.key); got != tt.want {
+			if got := lang.Translate(tt.key); got != tt.want {
 				t.Errorf("Translate(%q) = %q, want %q", tt.key, got, tt.want)
 			}
 		})

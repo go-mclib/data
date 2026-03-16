@@ -44,6 +44,7 @@ func main() {
 	generateItemTags(itemTagsDir, registries, filepath.Join(outDir, "items", "tags_gen.go"))
 	generateRegistryData(datapackDir, filepath.Join(outDir, "registries", "registry_data_gen.go"))
 	generateTagData(filepath.Join(decompiledDir, "data", "minecraft", "tags"), filepath.Join(outDir, "registries", "tag_data_gen.go"))
+	generateBlockHardness(decompiledDir, filepath.Join(outDir, "blocks", "block_hardness_gen.go"))
 
 	fmt.Println("generation complete")
 }

@@ -1307,8 +1307,7 @@ var TagData = map[string]map[string][]string{
 			"minecraft:redstone_ore",
 			"minecraft:deepslate_redstone_ore",
 		},
-		"minecraft:incorrect_for_diamond_tool": {
-		},
+		"minecraft:incorrect_for_diamond_tool": {},
 		"minecraft:incorrect_for_gold_tool": {
 			"minecraft:obsidian",
 			"minecraft:crying_obsidian",
@@ -1426,8 +1425,7 @@ var TagData = map[string]map[string][]string{
 			"minecraft:respawn_anchor",
 			"minecraft:ancient_debris",
 		},
-		"minecraft:incorrect_for_netherite_tool": {
-		},
+		"minecraft:incorrect_for_netherite_tool": {},
 		"minecraft:incorrect_for_stone_tool": {
 			"minecraft:obsidian",
 			"minecraft:crying_obsidian",
@@ -4401,10 +4399,8 @@ var TagData = map[string]map[string][]string{
 		},
 	},
 	"minecraft:dialog": {
-		"minecraft:pause_screen_additions": {
-		},
-		"minecraft:quick_actions": {
-		},
+		"minecraft:pause_screen_additions": {},
+		"minecraft:quick_actions":          {},
 	},
 	"minecraft:enchantment": {
 		"minecraft:curse": {
