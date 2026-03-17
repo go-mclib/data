@@ -2361,10 +2361,11 @@ func (p *S2CPlayerChat) Read(buf *ns.PacketBuffer) error {
 		p.FilterMask.Mask = bitset
 	}
 
-	// ChatType
+	// ChatType (holder format: VarInt(id + 1) for registry reference)
 	if p.ChatType.ChatType, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
+	p.ChatType.ChatType-- // convert from wire (id+1) to logical id
 	if p.ChatType.Name, err = buf.ReadTextComponent(); err != nil {
 		return err
 	}
@@ -2436,8 +2437,8 @@ func (p *S2CPlayerChat) Write(buf *ns.PacketBuffer) error {
 		}
 	}
 
-	// ChatType
-	if err := buf.WriteVarInt(p.ChatType.ChatType); err != nil {
+	// ChatType (holder format: VarInt(id + 1) for registry reference, 0 = direct/inline)
+	if err := buf.WriteVarInt(p.ChatType.ChatType + 1); err != nil {
 		return err
 	}
 	if err := buf.WriteTextComponent(p.ChatType.Name); err != nil {
