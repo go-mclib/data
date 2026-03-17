@@ -71,6 +71,8 @@ func generateBlockHardness(decompiledDir, outPath string) {
 }
 
 // parseBlockProps extracts block name -> props from Blocks.java source.
+// Also resolves helper methods (e.g. logProperties, leavesProperties) that
+// contain .strength() calls referenced from register() statements.
 func parseBlockProps(src string) map[string]*blockProps {
 	result := make(map[string]*blockProps)
 
@@ -78,6 +80,10 @@ func parseBlockProps(src string) map[string]*blockProps {
 	strengthRe := regexp.MustCompile(`\.strength\(\s*(-?[0-9.]+)F?`)
 	indestructibleRe := regexp.MustCompile(`\.indestructible\(\)`)
 	requiresToolRe := regexp.MustCompile(`\.requiresCorrectToolForDrops\(\)`)
+
+	// first pass: extract helper methods that return BlockBehaviour.Properties
+	// pattern: private static ... methodName(...) { return BlockBehaviour.Properties... .strength(X)... }
+	helpers := parseHelperMethods(src, strengthRe, indestructibleRe, requiresToolRe)
 
 	matches := registerRe.FindAllStringSubmatchIndex(src, -1)
 
@@ -108,11 +114,74 @@ func parseBlockProps(src string) map[string]*blockProps {
 			if f, err := strconv.ParseFloat(val, 32); err == nil {
 				bp.hardness = float32(f)
 			}
+		} else {
+			// try resolving helper method calls
+			for helperName, helperProps := range helpers {
+				if strings.Contains(stmt, helperName+"(") {
+					bp.hardness = helperProps.hardness
+					if helperProps.requiresCorrectTool {
+						bp.requiresCorrectTool = true
+					}
+					break
+				}
+			}
 		}
 
-		bp.requiresCorrectTool = requiresToolRe.MatchString(stmt)
+		if requiresToolRe.MatchString(stmt) {
+			bp.requiresCorrectTool = true
+		}
 		result[name] = bp
 	}
 
 	return result
+}
+
+// parseHelperMethods extracts private/static methods in Blocks.java that build
+// BlockBehaviour.Properties and contain .strength() calls.
+func parseHelperMethods(src string, strengthRe, indestructibleRe, requiresToolRe *regexp.Regexp) map[string]*blockProps {
+	helpers := make(map[string]*blockProps)
+
+	// match: private static ... methodName(
+	methodRe := regexp.MustCompile(`private\s+static\s+\S+\s+(\w+)\s*\(`)
+	methodMatches := methodRe.FindAllStringSubmatchIndex(src, -1)
+
+	for _, mm := range methodMatches {
+		methodName := src[mm[2]:mm[3]]
+		// find the method body: from the opening { to the matching }
+		bodyStart := strings.Index(src[mm[0]:], "{")
+		if bodyStart == -1 {
+			continue
+		}
+		bodyStart += mm[0]
+		depth := 1
+		bodyEnd := bodyStart + 1
+		for bodyEnd < len(src) && depth > 0 {
+			switch src[bodyEnd] {
+			case '{':
+				depth++
+			case '}':
+				depth--
+			}
+			bodyEnd++
+		}
+		body := src[bodyStart:bodyEnd]
+
+		bp := &blockProps{}
+		if indestructibleRe.MatchString(body) {
+			bp.hardness = -1
+		} else if sm := strengthRe.FindStringSubmatch(body); sm != nil {
+			val := strings.TrimSuffix(sm[1], "F")
+			val = strings.TrimSuffix(val, "f")
+			if f, err := strconv.ParseFloat(val, 32); err == nil {
+				bp.hardness = float32(f)
+			}
+		}
+		bp.requiresCorrectTool = requiresToolRe.MatchString(body)
+
+		if bp.hardness != 0 || bp.requiresCorrectTool {
+			helpers[methodName] = bp
+		}
+	}
+
+	return helpers
 }
