@@ -2,7 +2,7 @@
 set -e
 cd "$(dirname "$0")"
 
-VERSION="${1:-1.21.11}"
+VERSION="${1:-26.1.1}"
 PRISM_META="https://meta.prismlauncher.org/v1"
 
 echo "Downloading Minecraft $VERSION..."
