@@ -1,4 +1,4 @@
-// Code generated for Minecraft 1.21.11 (Protocol 774); DO NOT EDIT.
+// Code generated for Minecraft 26.1 (Protocol 775); DO NOT EDIT.
 
 package blocks
 
@@ -345,7 +345,6 @@ var blockHardness = map[string]float32{
 	"minecraft:diorite":                             1.5,
 	"minecraft:diorite_slab":                        0.0,
 	"minecraft:diorite_wall":                        0.0,
-	"minecraft:dirt":                                0.5,
 	"minecraft:dirt_path":                           0.65,
 	"minecraft:dispenser":                           3.5,
 	"minecraft:dragon_egg":                          3.0,
@@ -401,6 +400,7 @@ var blockHardness = map[string]float32{
 	"minecraft:glowstone":                           0.3,
 	"minecraft:gold_block":                          3.0,
 	"minecraft:gold_ore":                            3.0,
+	"minecraft:golden_dandelion":                    0.0,
 	"minecraft:granite":                             1.5,
 	"minecraft:granite_slab":                        0.0,
 	"minecraft:granite_wall":                        0.0,
@@ -733,6 +733,7 @@ var blockHardness = map[string]float32{
 	"minecraft:potted_dead_bush":                    0.0,
 	"minecraft:potted_fern":                         0.0,
 	"minecraft:potted_flowering_azalea_bush":        0.0,
+	"minecraft:potted_golden_dandelion":             0.0,
 	"minecraft:potted_jungle_sapling":               0.0,
 	"minecraft:potted_lily_of_the_valley":           0.0,
 	"minecraft:potted_mangrove_propagule":           0.0,

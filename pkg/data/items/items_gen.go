@@ -1,10 +1,10 @@
-// Code generated for Minecraft 1.21.11 (Protocol 774); DO NOT EDIT.
+// Code generated for Minecraft 26.1 (Protocol 775); DO NOT EDIT.
 
 package items
 
 // defaultComponents maps item IDs to their default components.
 var defaultComponents = map[int32]*Components{
-	871: { // minecraft:acacia_boat
+	872: { // minecraft:acacia_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.acacia_boat"},
@@ -12,7 +12,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	755: { // minecraft:acacia_button
+	756: { // minecraft:acacia_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_button"},
@@ -20,7 +20,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	872: { // minecraft:acacia_chest_boat
+	873: { // minecraft:acacia_chest_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_chest_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.acacia_chest_boat"},
@@ -28,7 +28,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	784: { // minecraft:acacia_door
+	785: { // minecraft:acacia_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_door"},
@@ -36,7 +36,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	348: { // minecraft:acacia_fence
+	349: { // minecraft:acacia_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_fence"},
@@ -44,7 +44,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	825: { // minecraft:acacia_fence_gate
+	826: { // minecraft:acacia_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_fence_gate"},
@@ -52,7 +52,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1004: { // minecraft:acacia_hanging_sign
+	1005: { // minecraft:acacia_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_hanging_sign"},
@@ -84,7 +84,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	771: { // minecraft:acacia_pressure_plate
+	772: { // minecraft:acacia_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_pressure_plate"},
@@ -100,7 +100,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	305: { // minecraft:acacia_shelf
+	306: { // minecraft:acacia_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_shelf"},
@@ -108,7 +108,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	992: { // minecraft:acacia_sign
+	993: { // minecraft:acacia_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_sign"},
@@ -116,7 +116,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	274: { // minecraft:acacia_slab
+	275: { // minecraft:acacia_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_slab"},
@@ -124,7 +124,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	445: { // minecraft:acacia_stairs
+	446: { // minecraft:acacia_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_stairs"},
@@ -132,7 +132,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	805: { // minecraft:acacia_trapdoor
+	806: { // minecraft:acacia_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:acacia_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.acacia_trapdoor"},
@@ -148,7 +148,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	836: { // minecraft:activator_rail
+	837: { // minecraft:activator_rail
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:activator_rail",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.activator_rail"},
@@ -164,7 +164,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1163: { // minecraft:allay_spawn_egg
+	1164: { // minecraft:allay_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:allay_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.allay_spawn_egg"},
@@ -172,7 +172,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	234: { // minecraft:allium
+	235: { // minecraft:allium
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:allium",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.allium"},
@@ -188,7 +188,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1418: { // minecraft:amethyst_cluster
+	1419: { // minecraft:amethyst_cluster
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:amethyst_cluster",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.amethyst_cluster"},
@@ -196,7 +196,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	902: { // minecraft:amethyst_shard
+	903: { // minecraft:amethyst_shard
 		BreakSound:           "minecraft:entity.item.break",
 		ItemModel:            "minecraft:amethyst_shard",
 		ItemName:             &ItemNameComponent{Translate: "item.minecraft.amethyst_shard"},
@@ -222,7 +222,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	708: { // minecraft:andesite_slab
+	709: { // minecraft:andesite_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:andesite_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.andesite_slab"},
@@ -230,7 +230,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	691: { // minecraft:andesite_stairs
+	692: { // minecraft:andesite_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:andesite_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.andesite_stairs"},
@@ -238,7 +238,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	466: { // minecraft:andesite_wall
+	467: { // minecraft:andesite_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:andesite_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.andesite_wall"},
@@ -246,7 +246,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1445: { // minecraft:angler_pottery_sherd
+	1446: { // minecraft:angler_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:angler_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.angler_pottery_sherd"},
@@ -254,7 +254,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	478: { // minecraft:anvil
+	479: { // minecraft:anvil
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:anvil",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.anvil"},
@@ -262,7 +262,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	893: { // minecraft:apple
+	894: { // minecraft:apple
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  4,
@@ -274,7 +274,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1446: { // minecraft:archer_pottery_sherd
+	1447: { // minecraft:archer_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:archer_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.archer_pottery_sherd"},
@@ -282,7 +282,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	889: { // minecraft:armadillo_scute
+	890: { // minecraft:armadillo_scute
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:armadillo_scute",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.armadillo_scute"},
@@ -290,7 +290,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1141: { // minecraft:armadillo_spawn_egg
+	1142: { // minecraft:armadillo_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:armadillo_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.armadillo_spawn_egg"},
@@ -298,7 +298,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1254: { // minecraft:armor_stand
+	1255: { // minecraft:armor_stand
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:armor_stand",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.armor_stand"},
@@ -306,7 +306,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1447: { // minecraft:arms_up_pottery_sherd
+	1448: { // minecraft:arms_up_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:arms_up_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.arms_up_pottery_sherd"},
@@ -314,7 +314,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	895: { // minecraft:arrow
+	896: { // minecraft:arrow
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:arrow",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.arrow"},
@@ -322,7 +322,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1023: { // minecraft:axolotl_bucket
+	1024: { // minecraft:axolotl_bucket
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:axolotl_bucket",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.axolotl_bucket"},
@@ -330,7 +330,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1151: { // minecraft:axolotl_spawn_egg
+	1152: { // minecraft:axolotl_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:axolotl_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.axolotl_spawn_egg"},
@@ -354,7 +354,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	235: { // minecraft:azure_bluet
+	236: { // minecraft:azure_bluet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:azure_bluet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.azure_bluet"},
@@ -362,7 +362,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1229: { // minecraft:baked_potato
+	1230: { // minecraft:baked_potato
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  5,
@@ -374,7 +374,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	269: { // minecraft:bamboo
+	270: { // minecraft:bamboo
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo"},
@@ -390,7 +390,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	760: { // minecraft:bamboo_button
+	761: { // minecraft:bamboo_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_button"},
@@ -398,7 +398,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	882: { // minecraft:bamboo_chest_raft
+	883: { // minecraft:bamboo_chest_raft
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_chest_raft",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bamboo_chest_raft"},
@@ -406,7 +406,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	789: { // minecraft:bamboo_door
+	790: { // minecraft:bamboo_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_door"},
@@ -414,7 +414,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	353: { // minecraft:bamboo_fence
+	354: { // minecraft:bamboo_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_fence"},
@@ -422,7 +422,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	830: { // minecraft:bamboo_fence_gate
+	831: { // minecraft:bamboo_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_fence_gate"},
@@ -430,7 +430,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1009: { // minecraft:bamboo_hanging_sign
+	1010: { // minecraft:bamboo_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_hanging_sign"},
@@ -446,7 +446,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	280: { // minecraft:bamboo_mosaic_slab
+	281: { // minecraft:bamboo_mosaic_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_mosaic_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_mosaic_slab"},
@@ -454,7 +454,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	451: { // minecraft:bamboo_mosaic_stairs
+	452: { // minecraft:bamboo_mosaic_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_mosaic_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_mosaic_stairs"},
@@ -470,7 +470,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	776: { // minecraft:bamboo_pressure_plate
+	777: { // minecraft:bamboo_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_pressure_plate"},
@@ -478,7 +478,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	881: { // minecraft:bamboo_raft
+	882: { // minecraft:bamboo_raft
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_raft",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bamboo_raft"},
@@ -486,7 +486,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	306: { // minecraft:bamboo_shelf
+	307: { // minecraft:bamboo_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_shelf"},
@@ -494,7 +494,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	997: { // minecraft:bamboo_sign
+	998: { // minecraft:bamboo_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_sign"},
@@ -502,7 +502,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	279: { // minecraft:bamboo_slab
+	280: { // minecraft:bamboo_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_slab"},
@@ -510,7 +510,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	450: { // minecraft:bamboo_stairs
+	451: { // minecraft:bamboo_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_stairs"},
@@ -518,7 +518,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	810: { // minecraft:bamboo_trapdoor
+	811: { // minecraft:bamboo_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bamboo_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bamboo_trapdoor"},
@@ -526,7 +526,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1354: { // minecraft:barrel
+	1355: { // minecraft:barrel
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:barrel",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.barrel"},
@@ -534,7 +534,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	502: { // minecraft:barrier
+	503: { // minecraft:barrier
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:barrier",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.barrier"},
@@ -542,7 +542,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	362: { // minecraft:basalt
+	363: { // minecraft:basalt
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:basalt",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.basalt"},
@@ -550,7 +550,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1142: { // minecraft:bat_spawn_egg
+	1143: { // minecraft:bat_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bat_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bat_spawn_egg"},
@@ -558,7 +558,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	455: { // minecraft:beacon
+	456: { // minecraft:beacon
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:beacon",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.beacon"},
@@ -574,7 +574,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1379: { // minecraft:bee_nest
+	1380: { // minecraft:bee_nest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bee_nest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bee_nest"},
@@ -582,7 +582,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1143: { // minecraft:bee_spawn_egg
+	1144: { // minecraft:bee_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bee_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bee_spawn_egg"},
@@ -590,7 +590,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1110: { // minecraft:beef
+	1111: { // minecraft:beef
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  3,
@@ -602,7 +602,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1380: { // minecraft:beehive
+	1381: { // minecraft:beehive
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:beehive",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.beehive"},
@@ -610,7 +610,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1287: { // minecraft:beetroot
+	1288: { // minecraft:beetroot
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  1,
@@ -622,7 +622,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1288: { // minecraft:beetroot_seeds
+	1289: { // minecraft:beetroot_seeds
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:beetroot_seeds",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.beetroot_seeds"},
@@ -630,7 +630,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1289: { // minecraft:beetroot_soup
+	1290: { // minecraft:beetroot_soup
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  6,
@@ -642,11 +642,10 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 		UseRemainder: &UseRemainder{
-			Count: 1,
-			ID:    "minecraft:bowl",
+			ID: "minecraft:bowl",
 		},
 	},
-	1362: { // minecraft:bell
+	1363: { // minecraft:bell
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bell",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bell"},
@@ -654,7 +653,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	267: { // minecraft:big_dripleaf
+	268: { // minecraft:big_dripleaf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:big_dripleaf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.big_dripleaf"},
@@ -662,7 +661,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	867: { // minecraft:birch_boat
+	868: { // minecraft:birch_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.birch_boat"},
@@ -670,7 +669,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	753: { // minecraft:birch_button
+	754: { // minecraft:birch_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_button"},
@@ -678,7 +677,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	868: { // minecraft:birch_chest_boat
+	869: { // minecraft:birch_chest_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_chest_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.birch_chest_boat"},
@@ -686,7 +685,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	782: { // minecraft:birch_door
+	783: { // minecraft:birch_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_door"},
@@ -694,7 +693,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	346: { // minecraft:birch_fence
+	347: { // minecraft:birch_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_fence"},
@@ -702,7 +701,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	823: { // minecraft:birch_fence_gate
+	824: { // minecraft:birch_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_fence_gate"},
@@ -710,7 +709,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1002: { // minecraft:birch_hanging_sign
+	1003: { // minecraft:birch_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_hanging_sign"},
@@ -742,7 +741,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	769: { // minecraft:birch_pressure_plate
+	770: { // minecraft:birch_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_pressure_plate"},
@@ -758,7 +757,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	307: { // minecraft:birch_shelf
+	308: { // minecraft:birch_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_shelf"},
@@ -766,7 +765,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	990: { // minecraft:birch_sign
+	991: { // minecraft:birch_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_sign"},
@@ -774,7 +773,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	272: { // minecraft:birch_slab
+	273: { // minecraft:birch_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_slab"},
@@ -782,7 +781,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	443: { // minecraft:birch_stairs
+	444: { // minecraft:birch_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_stairs"},
@@ -790,7 +789,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	803: { // minecraft:birch_trapdoor
+	804: { // minecraft:birch_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:birch_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.birch_trapdoor"},
@@ -806,7 +805,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1281: { // minecraft:black_banner
+	1282: { // minecraft:black_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_banner"},
@@ -814,7 +813,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1101: { // minecraft:black_bed
+	1102: { // minecraft:black_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_bed"},
@@ -822,7 +821,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1052: { // minecraft:black_bundle
+	1053: { // minecraft:black_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.black_bundle"},
@@ -830,7 +829,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1414: { // minecraft:black_candle
+	1415: { // minecraft:black_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_candle"},
@@ -838,7 +837,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	520: { // minecraft:black_carpet
+	521: { // minecraft:black_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_carpet"},
@@ -846,7 +845,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	629: { // minecraft:black_concrete
+	630: { // minecraft:black_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_concrete"},
@@ -854,7 +853,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	645: { // minecraft:black_concrete_powder
+	646: { // minecraft:black_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_concrete_powder"},
@@ -862,7 +861,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1081: { // minecraft:black_dye
+	1082: { // minecraft:black_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.black_dye"},
@@ -870,7 +869,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	613: { // minecraft:black_glazed_terracotta
+	614: { // minecraft:black_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_glazed_terracotta"},
@@ -878,7 +877,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	853: { // minecraft:black_harness
+	854: { // minecraft:black_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.black_harness"},
@@ -886,7 +885,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	597: { // minecraft:black_shulker_box
+	598: { // minecraft:black_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_shulker_box"},
@@ -894,7 +893,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	545: { // minecraft:black_stained_glass
+	546: { // minecraft:black_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_stained_glass"},
@@ -902,7 +901,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	561: { // minecraft:black_stained_glass_pane
+	562: { // minecraft:black_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_stained_glass_pane"},
@@ -910,7 +909,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	501: { // minecraft:black_terracotta
+	502: { // minecraft:black_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:black_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_terracotta"},
@@ -926,7 +925,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1385: { // minecraft:blackstone
+	1386: { // minecraft:blackstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blackstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blackstone"},
@@ -934,7 +933,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1386: { // minecraft:blackstone_slab
+	1387: { // minecraft:blackstone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blackstone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blackstone_slab"},
@@ -942,7 +941,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1387: { // minecraft:blackstone_stairs
+	1388: { // minecraft:blackstone_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blackstone_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blackstone_stairs"},
@@ -950,7 +949,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	471: { // minecraft:blackstone_wall
+	472: { // minecraft:blackstone_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blackstone_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blackstone_wall"},
@@ -958,7 +957,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1448: { // minecraft:blade_pottery_sherd
+	1449: { // minecraft:blade_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blade_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.blade_pottery_sherd"},
@@ -966,7 +965,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1356: { // minecraft:blast_furnace
+	1357: { // minecraft:blast_furnace
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blast_furnace",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blast_furnace"},
@@ -974,7 +973,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1124: { // minecraft:blaze_powder
+	1125: { // minecraft:blaze_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blaze_powder",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.blaze_powder"},
@@ -982,7 +981,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1116: { // minecraft:blaze_rod
+	1117: { // minecraft:blaze_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blaze_rod",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.blaze_rod"},
@@ -990,7 +989,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1203: { // minecraft:blaze_spawn_egg
+	1204: { // minecraft:blaze_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blaze_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.blaze_spawn_egg"},
@@ -998,7 +997,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1277: { // minecraft:blue_banner
+	1278: { // minecraft:blue_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_banner"},
@@ -1006,7 +1005,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1097: { // minecraft:blue_bed
+	1098: { // minecraft:blue_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_bed"},
@@ -1014,7 +1013,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1048: { // minecraft:blue_bundle
+	1049: { // minecraft:blue_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.blue_bundle"},
@@ -1022,7 +1021,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1410: { // minecraft:blue_candle
+	1411: { // minecraft:blue_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_candle"},
@@ -1030,7 +1029,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	516: { // minecraft:blue_carpet
+	517: { // minecraft:blue_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_carpet"},
@@ -1038,7 +1037,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	625: { // minecraft:blue_concrete
+	626: { // minecraft:blue_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_concrete"},
@@ -1046,7 +1045,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	641: { // minecraft:blue_concrete_powder
+	642: { // minecraft:blue_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_concrete_powder"},
@@ -1054,7 +1053,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1077: { // minecraft:blue_dye
+	1078: { // minecraft:blue_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.blue_dye"},
@@ -1062,7 +1061,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1032: { // minecraft:blue_egg
+	1033: { // minecraft:blue_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.blue_egg"},
@@ -1070,7 +1069,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	609: { // minecraft:blue_glazed_terracotta
+	610: { // minecraft:blue_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_glazed_terracotta"},
@@ -1078,7 +1077,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	849: { // minecraft:blue_harness
+	850: { // minecraft:blue_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.blue_harness"},
@@ -1086,7 +1085,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	679: { // minecraft:blue_ice
+	680: { // minecraft:blue_ice
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_ice",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_ice"},
@@ -1094,7 +1093,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	233: { // minecraft:blue_orchid
+	234: { // minecraft:blue_orchid
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_orchid",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_orchid"},
@@ -1102,7 +1101,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	593: { // minecraft:blue_shulker_box
+	594: { // minecraft:blue_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_shulker_box"},
@@ -1110,7 +1109,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	541: { // minecraft:blue_stained_glass
+	542: { // minecraft:blue_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_stained_glass"},
@@ -1118,7 +1117,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	557: { // minecraft:blue_stained_glass_pane
+	558: { // minecraft:blue_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_stained_glass_pane"},
@@ -1126,7 +1125,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	497: { // minecraft:blue_terracotta
+	498: { // minecraft:blue_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:blue_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_terracotta"},
@@ -1142,7 +1141,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1172: { // minecraft:bogged_spawn_egg
+	1173: { // minecraft:bogged_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bogged_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bogged_spawn_egg"},
@@ -1150,7 +1149,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1444: { // minecraft:bolt_armor_trim_smithing_template
+	1445: { // minecraft:bolt_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bolt_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bolt_armor_trim_smithing_template"},
@@ -1158,7 +1157,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1083: { // minecraft:bone
+	1084: { // minecraft:bone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bone",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bone"},
@@ -1166,7 +1165,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	579: { // minecraft:bone_block
+	580: { // minecraft:bone_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bone_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bone_block"},
@@ -1174,7 +1173,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1082: { // minecraft:bone_meal
+	1083: { // minecraft:bone_meal
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bone_meal",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bone_meal"},
@@ -1182,7 +1181,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1029: { // minecraft:book
+	1030: { // minecraft:book
 		BreakSound:   "minecraft:entity.item.break",
 		Enchantable:  &Enchantable{Value: 1},
 		ItemModel:    "minecraft:book",
@@ -1191,7 +1190,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	317: { // minecraft:bookshelf
+	318: { // minecraft:bookshelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bookshelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bookshelf"},
@@ -1199,7 +1198,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1351: { // minecraft:bordure_indented_banner_pattern
+	1352: { // minecraft:bordure_indented_banner_pattern
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:bordure_indented_banner_pattern",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.bordure_indented_banner_pattern"},
@@ -1208,7 +1207,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "common",
 		RepairCost:             0,
 	},
-	894: { // minecraft:bow
+	895: { // minecraft:bow
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 1},
@@ -1219,7 +1218,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	892: { // minecraft:bowl
+	893: { // minecraft:bowl
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bowl",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bowl"},
@@ -1227,7 +1226,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	660: { // minecraft:brain_coral
+	661: { // minecraft:brain_coral
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brain_coral",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brain_coral"},
@@ -1235,7 +1234,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	655: { // minecraft:brain_coral_block
+	656: { // minecraft:brain_coral_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brain_coral_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brain_coral_block"},
@@ -1243,7 +1242,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	670: { // minecraft:brain_coral_fan
+	671: { // minecraft:brain_coral_fan
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brain_coral_fan",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brain_coral_fan"},
@@ -1251,7 +1250,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	953: { // minecraft:bread
+	954: { // minecraft:bread
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  5,
@@ -1263,7 +1262,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1222: { // minecraft:breeze_rod
+	1223: { // minecraft:breeze_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:breeze_rod",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.breeze_rod"},
@@ -1271,7 +1270,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1188: { // minecraft:breeze_spawn_egg
+	1189: { // minecraft:breeze_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:breeze_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.breeze_spawn_egg"},
@@ -1279,7 +1278,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1449: { // minecraft:brewer_pottery_sherd
+	1450: { // minecraft:brewer_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brewer_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.brewer_pottery_sherd"},
@@ -1287,7 +1286,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1126: { // minecraft:brewing_stand
+	1127: { // minecraft:brewing_stand
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brewing_stand",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brewing_stand"},
@@ -1295,7 +1294,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1025: { // minecraft:brick
+	1026: { // minecraft:brick
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brick",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.brick"},
@@ -1303,7 +1302,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	289: { // minecraft:brick_slab
+	290: { // minecraft:brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brick_slab"},
@@ -1311,7 +1310,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	419: { // minecraft:brick_stairs
+	420: { // minecraft:brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brick_stairs"},
@@ -1319,7 +1318,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	458: { // minecraft:brick_wall
+	459: { // minecraft:brick_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brick_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brick_wall"},
@@ -1327,7 +1326,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	304: { // minecraft:bricks
+	305: { // minecraft:bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bricks"},
@@ -1335,7 +1334,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1278: { // minecraft:brown_banner
+	1279: { // minecraft:brown_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_banner"},
@@ -1343,7 +1342,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1098: { // minecraft:brown_bed
+	1099: { // minecraft:brown_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_bed"},
@@ -1351,7 +1350,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1049: { // minecraft:brown_bundle
+	1050: { // minecraft:brown_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.brown_bundle"},
@@ -1359,7 +1358,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1411: { // minecraft:brown_candle
+	1412: { // minecraft:brown_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_candle"},
@@ -1367,7 +1366,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	517: { // minecraft:brown_carpet
+	518: { // minecraft:brown_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_carpet"},
@@ -1375,7 +1374,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	626: { // minecraft:brown_concrete
+	627: { // minecraft:brown_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_concrete"},
@@ -1383,7 +1382,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	642: { // minecraft:brown_concrete_powder
+	643: { // minecraft:brown_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_concrete_powder"},
@@ -1391,7 +1390,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1078: { // minecraft:brown_dye
+	1079: { // minecraft:brown_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.brown_dye"},
@@ -1399,7 +1398,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1033: { // minecraft:brown_egg
+	1034: { // minecraft:brown_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.brown_egg"},
@@ -1407,7 +1406,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	610: { // minecraft:brown_glazed_terracotta
+	611: { // minecraft:brown_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_glazed_terracotta"},
@@ -1415,7 +1414,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	850: { // minecraft:brown_harness
+	851: { // minecraft:brown_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.brown_harness"},
@@ -1423,7 +1422,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	247: { // minecraft:brown_mushroom
+	248: { // minecraft:brown_mushroom
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_mushroom",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_mushroom"},
@@ -1431,7 +1430,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	387: { // minecraft:brown_mushroom_block
+	388: { // minecraft:brown_mushroom_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_mushroom_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_mushroom_block"},
@@ -1439,7 +1438,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	594: { // minecraft:brown_shulker_box
+	595: { // minecraft:brown_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_shulker_box"},
@@ -1447,7 +1446,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	542: { // minecraft:brown_stained_glass
+	543: { // minecraft:brown_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_stained_glass"},
@@ -1455,7 +1454,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	558: { // minecraft:brown_stained_glass_pane
+	559: { // minecraft:brown_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_stained_glass_pane"},
@@ -1463,7 +1462,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	498: { // minecraft:brown_terracotta
+	499: { // minecraft:brown_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:brown_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_terracotta"},
@@ -1479,7 +1478,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1425: { // minecraft:brush
+	1426: { // minecraft:brush
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		ItemModel:    "minecraft:brush",
@@ -1489,7 +1488,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	661: { // minecraft:bubble_coral
+	662: { // minecraft:bubble_coral
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bubble_coral",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bubble_coral"},
@@ -1497,7 +1496,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	656: { // minecraft:bubble_coral_block
+	657: { // minecraft:bubble_coral_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bubble_coral_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bubble_coral_block"},
@@ -1505,7 +1504,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	671: { // minecraft:bubble_coral_fan
+	672: { // minecraft:bubble_coral_fan
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bubble_coral_fan",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.bubble_coral_fan"},
@@ -1513,7 +1512,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1012: { // minecraft:bucket
+	1013: { // minecraft:bucket
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bucket",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bucket"},
@@ -1529,7 +1528,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1036: { // minecraft:bundle
+	1037: { // minecraft:bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bundle"},
@@ -1537,7 +1536,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1450: { // minecraft:burn_pottery_sherd
+	1451: { // minecraft:burn_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:burn_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.burn_pottery_sherd"},
@@ -1553,7 +1552,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	340: { // minecraft:cactus
+	341: { // minecraft:cactus
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cactus",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cactus"},
@@ -1561,7 +1560,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	341: { // minecraft:cactus_flower
+	342: { // minecraft:cactus_flower
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cactus_flower",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cactus_flower"},
@@ -1569,7 +1568,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1085: { // minecraft:cake
+	1086: { // minecraft:cake
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cake",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cake"},
@@ -1585,7 +1584,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	743: { // minecraft:calibrated_sculk_sensor
+	744: { // minecraft:calibrated_sculk_sensor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:calibrated_sculk_sensor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.calibrated_sculk_sensor"},
@@ -1593,7 +1592,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1173: { // minecraft:camel_husk_spawn_egg
+	1174: { // minecraft:camel_husk_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:camel_husk_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.camel_husk_spawn_egg"},
@@ -1601,7 +1600,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1134: { // minecraft:camel_spawn_egg
+	1135: { // minecraft:camel_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:camel_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.camel_spawn_egg"},
@@ -1609,7 +1608,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1375: { // minecraft:campfire
+	1376: { // minecraft:campfire
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:campfire",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.campfire"},
@@ -1617,7 +1616,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1398: { // minecraft:candle
+	1399: { // minecraft:candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.candle"},
@@ -1625,7 +1624,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1227: { // minecraft:carrot
+	1228: { // minecraft:carrot
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  3,
@@ -1637,7 +1636,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	859: { // minecraft:carrot_on_a_stick
+	860: { // minecraft:carrot_on_a_stick
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		ItemModel:    "minecraft:carrot_on_a_stick",
@@ -1647,7 +1646,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1357: { // minecraft:cartography_table
+	1358: { // minecraft:cartography_table
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cartography_table",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cartography_table"},
@@ -1655,7 +1654,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	357: { // minecraft:carved_pumpkin
+	358: { // minecraft:carved_pumpkin
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
 		},
@@ -1666,7 +1665,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1138: { // minecraft:cat_spawn_egg
+	1139: { // minecraft:cat_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cat_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cat_spawn_egg"},
@@ -1674,7 +1673,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1127: { // minecraft:cauldron
+	1128: { // minecraft:cauldron
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cauldron",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cauldron"},
@@ -1682,7 +1681,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1186: { // minecraft:cave_spider_spawn_egg
+	1187: { // minecraft:cave_spider_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cave_spider_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cave_spider_spawn_egg"},
@@ -1690,7 +1689,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	574: { // minecraft:chain_command_block
+	575: { // minecraft:chain_command_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chain_command_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chain_command_block"},
@@ -1698,7 +1697,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	965: { // minecraft:chainmail_boots
+	966: { // minecraft:chainmail_boots
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 1, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
@@ -1714,7 +1713,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_chain_armor"},
 	},
-	963: { // minecraft:chainmail_chestplate
+	964: { // minecraft:chainmail_chestplate
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 5, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
@@ -1730,7 +1729,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_chain_armor"},
 	},
-	962: { // minecraft:chainmail_helmet
+	963: { // minecraft:chainmail_helmet
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
@@ -1746,7 +1745,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_chain_armor"},
 	},
-	964: { // minecraft:chainmail_leggings
+	965: { // minecraft:chainmail_leggings
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 4, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
@@ -1762,7 +1761,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_chain_armor"},
 	},
-	897: { // minecraft:charcoal
+	898: { // minecraft:charcoal
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:charcoal",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.charcoal"},
@@ -1770,7 +1769,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	873: { // minecraft:cherry_boat
+	874: { // minecraft:cherry_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cherry_boat"},
@@ -1778,7 +1777,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	756: { // minecraft:cherry_button
+	757: { // minecraft:cherry_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_button"},
@@ -1786,7 +1785,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	874: { // minecraft:cherry_chest_boat
+	875: { // minecraft:cherry_chest_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_chest_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cherry_chest_boat"},
@@ -1794,7 +1793,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	785: { // minecraft:cherry_door
+	786: { // minecraft:cherry_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_door"},
@@ -1802,7 +1801,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	349: { // minecraft:cherry_fence
+	350: { // minecraft:cherry_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_fence"},
@@ -1810,7 +1809,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	826: { // minecraft:cherry_fence_gate
+	827: { // minecraft:cherry_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_fence_gate"},
@@ -1818,7 +1817,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1005: { // minecraft:cherry_hanging_sign
+	1006: { // minecraft:cherry_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_hanging_sign"},
@@ -1850,7 +1849,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	772: { // minecraft:cherry_pressure_plate
+	773: { // minecraft:cherry_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_pressure_plate"},
@@ -1866,7 +1865,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	308: { // minecraft:cherry_shelf
+	309: { // minecraft:cherry_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_shelf"},
@@ -1874,7 +1873,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	993: { // minecraft:cherry_sign
+	994: { // minecraft:cherry_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_sign"},
@@ -1882,7 +1881,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	275: { // minecraft:cherry_slab
+	276: { // minecraft:cherry_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_slab"},
@@ -1890,7 +1889,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	446: { // minecraft:cherry_stairs
+	447: { // minecraft:cherry_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_stairs"},
@@ -1898,7 +1897,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	806: { // minecraft:cherry_trapdoor
+	807: { // minecraft:cherry_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cherry_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cherry_trapdoor"},
@@ -1914,7 +1913,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	331: { // minecraft:chest
+	332: { // minecraft:chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chest"},
@@ -1922,7 +1921,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	855: { // minecraft:chest_minecart
+	856: { // minecraft:chest_minecart
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chest_minecart",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.chest_minecart"},
@@ -1930,7 +1929,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1112: { // minecraft:chicken
+	1113: { // minecraft:chicken
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -1942,7 +1941,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1130: { // minecraft:chicken_spawn_egg
+	1131: { // minecraft:chicken_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chicken_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.chicken_spawn_egg"},
@@ -1950,7 +1949,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	479: { // minecraft:chipped_anvil
+	480: { // minecraft:chipped_anvil
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chipped_anvil",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chipped_anvil"},
@@ -1958,7 +1957,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	318: { // minecraft:chiseled_bookshelf
+	319: { // minecraft:chiseled_bookshelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chiseled_bookshelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chiseled_bookshelf"},
@@ -1974,7 +1973,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	385: { // minecraft:chiseled_deepslate
+	386: { // minecraft:chiseled_deepslate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chiseled_deepslate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chiseled_deepslate"},
@@ -1982,7 +1981,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	426: { // minecraft:chiseled_nether_bricks
+	427: { // minecraft:chiseled_nether_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chiseled_nether_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chiseled_nether_bricks"},
@@ -1990,7 +1989,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1392: { // minecraft:chiseled_polished_blackstone
+	1393: { // minecraft:chiseled_polished_blackstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chiseled_polished_blackstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chiseled_polished_blackstone"},
@@ -1998,7 +1997,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	481: { // minecraft:chiseled_quartz_block
+	482: { // minecraft:chiseled_quartz_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chiseled_quartz_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chiseled_quartz_block"},
@@ -2006,7 +2005,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	570: { // minecraft:chiseled_red_sandstone
+	571: { // minecraft:chiseled_red_sandstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chiseled_red_sandstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chiseled_red_sandstone"},
@@ -2014,7 +2013,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	418: { // minecraft:chiseled_resin_bricks
+	419: { // minecraft:chiseled_resin_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chiseled_resin_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chiseled_resin_bricks"},
@@ -2030,7 +2029,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	378: { // minecraft:chiseled_stone_bricks
+	379: { // minecraft:chiseled_stone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chiseled_stone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chiseled_stone_bricks"},
@@ -2054,7 +2053,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	325: { // minecraft:chorus_flower
+	326: { // minecraft:chorus_flower
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chorus_flower",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chorus_flower"},
@@ -2062,7 +2061,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1283: { // minecraft:chorus_fruit
+	1284: { // minecraft:chorus_fruit
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  4,
@@ -2075,7 +2074,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		UseCooldown:  &UseCooldown{Seconds: 1},
 	},
-	324: { // minecraft:chorus_plant
+	325: { // minecraft:chorus_plant
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:chorus_plant",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.chorus_plant"},
@@ -2083,7 +2082,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	342: { // minecraft:clay
+	343: { // minecraft:clay
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:clay",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.clay"},
@@ -2091,7 +2090,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1026: { // minecraft:clay_ball
+	1027: { // minecraft:clay_ball
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:clay_ball",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.clay_ball"},
@@ -2099,7 +2098,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1054: { // minecraft:clock
+	1055: { // minecraft:clock
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:clock",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.clock"},
@@ -2107,7 +2106,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	231: { // minecraft:closed_eyeblossom
+	232: { // minecraft:closed_eyeblossom
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:closed_eyeblossom",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.closed_eyeblossom"},
@@ -2115,7 +2114,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	896: { // minecraft:coal
+	897: { // minecraft:coal
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:coal",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.coal"},
@@ -2147,7 +2146,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1429: { // minecraft:coast_armor_trim_smithing_template
+	1430: { // minecraft:coast_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:coast_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.coast_armor_trim_smithing_template"},
@@ -2163,7 +2162,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	712: { // minecraft:cobbled_deepslate_slab
+	713: { // minecraft:cobbled_deepslate_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cobbled_deepslate_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cobbled_deepslate_slab"},
@@ -2171,7 +2170,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	695: { // minecraft:cobbled_deepslate_stairs
+	696: { // minecraft:cobbled_deepslate_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cobbled_deepslate_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cobbled_deepslate_stairs"},
@@ -2179,7 +2178,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	474: { // minecraft:cobbled_deepslate_wall
+	475: { // minecraft:cobbled_deepslate_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cobbled_deepslate_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cobbled_deepslate_wall"},
@@ -2195,7 +2194,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	288: { // minecraft:cobblestone_slab
+	289: { // minecraft:cobblestone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cobblestone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cobblestone_slab"},
@@ -2203,7 +2202,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	336: { // minecraft:cobblestone_stairs
+	337: { // minecraft:cobblestone_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cobblestone_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cobblestone_stairs"},
@@ -2211,7 +2210,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	456: { // minecraft:cobblestone_wall
+	457: { // minecraft:cobblestone_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cobblestone_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cobblestone_wall"},
@@ -2227,7 +2226,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1065: { // minecraft:cocoa_beans
+	1066: { // minecraft:cocoa_beans
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cocoa_beans",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cocoa_beans"},
@@ -2235,7 +2234,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1057: { // minecraft:cod
+	1058: { // minecraft:cod
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -2247,7 +2246,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1021: { // minecraft:cod_bucket
+	1022: { // minecraft:cod_bucket
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -2259,7 +2258,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1152: { // minecraft:cod_spawn_egg
+	1153: { // minecraft:cod_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cod_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cod_spawn_egg"},
@@ -2267,7 +2266,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	454: { // minecraft:command_block
+	455: { // minecraft:command_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:command_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.command_block"},
@@ -2275,7 +2274,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	1263: { // minecraft:command_block_minecart
+	1264: { // minecraft:command_block_minecart
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:command_block_minecart",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.command_block_minecart"},
@@ -2283,7 +2282,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	721: { // minecraft:comparator
+	722: { // minecraft:comparator
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:comparator",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.comparator"},
@@ -2291,7 +2290,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1034: { // minecraft:compass
+	1035: { // minecraft:compass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:compass",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.compass"},
@@ -2299,7 +2298,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1353: { // minecraft:composter
+	1354: { // minecraft:composter
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:composter",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.composter"},
@@ -2307,7 +2306,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	680: { // minecraft:conduit
+	681: { // minecraft:conduit
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:conduit",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.conduit"},
@@ -2315,7 +2314,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1111: { // minecraft:cooked_beef
+	1112: { // minecraft:cooked_beef
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  8,
@@ -2327,7 +2326,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1113: { // minecraft:cooked_chicken
+	1114: { // minecraft:cooked_chicken
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  6,
@@ -2339,7 +2338,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1061: { // minecraft:cooked_cod
+	1062: { // minecraft:cooked_cod
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  5,
@@ -2351,7 +2350,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1265: { // minecraft:cooked_mutton
+	1266: { // minecraft:cooked_mutton
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  6,
@@ -2363,7 +2362,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	984: { // minecraft:cooked_porkchop
+	985: { // minecraft:cooked_porkchop
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  8,
@@ -2375,7 +2374,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1250: { // minecraft:cooked_rabbit
+	1251: { // minecraft:cooked_rabbit
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  5,
@@ -2387,7 +2386,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1062: { // minecraft:cooked_salmon
+	1063: { // minecraft:cooked_salmon
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  6,
@@ -2399,7 +2398,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1102: { // minecraft:cookie
+	1103: { // minecraft:cookie
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -2411,7 +2410,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	919: { // minecraft:copper_axe
+	920: { // minecraft:copper_axe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 8, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3.200000047683716, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -2437,7 +2436,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack:       2,
 		},
 	},
-	391: { // minecraft:copper_bars
+	392: { // minecraft:copper_bars
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_bars",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.copper_bars"},
@@ -2453,7 +2452,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	961: { // minecraft:copper_boots
+	962: { // minecraft:copper_boots
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 1, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
@@ -2469,7 +2468,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_copper_armor"},
 	},
-	1476: { // minecraft:copper_bulb
+	1477: { // minecraft:copper_bulb
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_bulb",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.copper_bulb"},
@@ -2477,7 +2476,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	400: { // minecraft:copper_chain
+	401: { // minecraft:copper_chain
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_chain",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.copper_chain"},
@@ -2485,7 +2484,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1484: { // minecraft:copper_chest
+	1485: { // minecraft:copper_chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.copper_chest"},
@@ -2493,7 +2492,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	959: { // minecraft:copper_chestplate
+	960: { // minecraft:copper_chestplate
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 4, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
@@ -2509,7 +2508,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_copper_armor"},
 	},
-	792: { // minecraft:copper_door
+	793: { // minecraft:copper_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.copper_door"},
@@ -2517,7 +2516,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1166: { // minecraft:copper_golem_spawn_egg
+	1167: { // minecraft:copper_golem_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_golem_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_golem_spawn_egg"},
@@ -2525,7 +2524,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1492: { // minecraft:copper_golem_statue
+	1493: { // minecraft:copper_golem_statue
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_golem_statue",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.copper_golem_statue"},
@@ -2533,7 +2532,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1468: { // minecraft:copper_grate
+	1469: { // minecraft:copper_grate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_grate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.copper_grate"},
@@ -2541,7 +2540,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	958: { // minecraft:copper_helmet
+	959: { // minecraft:copper_helmet
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
@@ -2557,7 +2556,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_copper_armor"},
 	},
-	920: { // minecraft:copper_hoe
+	921: { // minecraft:copper_hoe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -2582,7 +2581,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1255: { // minecraft:copper_horse_armor
+	1256: { // minecraft:copper_horse_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 4, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -2594,7 +2593,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	906: { // minecraft:copper_ingot
+	907: { // minecraft:copper_ingot
 		BreakSound:           "minecraft:entity.item.break",
 		ItemModel:            "minecraft:copper_ingot",
 		ItemName:             &ItemNameComponent{Translate: "item.minecraft.copper_ingot"},
@@ -2603,7 +2602,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:               "common",
 		RepairCost:           0,
 	},
-	1365: { // minecraft:copper_lantern
+	1366: { // minecraft:copper_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.copper_lantern"},
@@ -2611,7 +2610,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	960: { // minecraft:copper_leggings
+	961: { // minecraft:copper_leggings
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
@@ -2627,7 +2626,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_copper_armor"},
 	},
-	1337: { // minecraft:copper_nautilus_armor
+	1338: { // minecraft:copper_nautilus_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 4, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -2639,7 +2638,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1306: { // minecraft:copper_nugget
+	1307: { // minecraft:copper_nugget
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_nugget",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_nugget"},
@@ -2655,7 +2654,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	918: { // minecraft:copper_pickaxe
+	919: { // minecraft:copper_pickaxe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 2, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -2680,7 +2679,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	917: { // minecraft:copper_shovel
+	918: { // minecraft:copper_shovel
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 2.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -2705,7 +2704,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1298: { // minecraft:copper_spear
+	1299: { // minecraft:copper_spear
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 1, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.8235294818878174, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -2724,7 +2723,7 @@ var defaultComponents = map[int32]*Components{
 		Repairable:          &Repairable{Items: "#minecraft:copper_tool_materials"},
 		Weapon:              &Weapon{},
 	},
-	916: { // minecraft:copper_sword
+	917: { // minecraft:copper_sword
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 4, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -2748,7 +2747,7 @@ var defaultComponents = map[int32]*Components{
 		},
 		Weapon: &Weapon{},
 	},
-	366: { // minecraft:copper_torch
+	367: { // minecraft:copper_torch
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_torch",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.copper_torch"},
@@ -2756,7 +2755,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	813: { // minecraft:copper_trapdoor
+	814: { // minecraft:copper_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:copper_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.copper_trapdoor"},
@@ -2764,7 +2763,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	241: { // minecraft:cornflower
+	242: { // minecraft:cornflower
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cornflower",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cornflower"},
@@ -2772,7 +2771,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1131: { // minecraft:cow_spawn_egg
+	1132: { // minecraft:cow_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cow_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cow_spawn_egg"},
@@ -2780,7 +2779,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	382: { // minecraft:cracked_deepslate_bricks
+	383: { // minecraft:cracked_deepslate_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cracked_deepslate_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cracked_deepslate_bricks"},
@@ -2788,7 +2787,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	384: { // minecraft:cracked_deepslate_tiles
+	385: { // minecraft:cracked_deepslate_tiles
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cracked_deepslate_tiles",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cracked_deepslate_tiles"},
@@ -2796,7 +2795,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	425: { // minecraft:cracked_nether_bricks
+	426: { // minecraft:cracked_nether_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cracked_nether_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cracked_nether_bricks"},
@@ -2804,7 +2803,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1396: { // minecraft:cracked_polished_blackstone_bricks
+	1397: { // minecraft:cracked_polished_blackstone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cracked_polished_blackstone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cracked_polished_blackstone_bricks"},
@@ -2812,7 +2811,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	377: { // minecraft:cracked_stone_bricks
+	378: { // minecraft:cracked_stone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cracked_stone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cracked_stone_bricks"},
@@ -2820,7 +2819,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1103: { // minecraft:crafter
+	1104: { // minecraft:crafter
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crafter",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crafter"},
@@ -2828,7 +2827,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	332: { // minecraft:crafting_table
+	333: { // minecraft:crafting_table
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crafting_table",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crafting_table"},
@@ -2836,7 +2835,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	330: { // minecraft:creaking_heart
+	331: { // minecraft:creaking_heart
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:creaking_heart",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.creaking_heart"},
@@ -2844,7 +2843,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1189: { // minecraft:creaking_spawn_egg
+	1190: { // minecraft:creaking_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:creaking_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.creaking_spawn_egg"},
@@ -2852,7 +2851,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1343: { // minecraft:creeper_banner_pattern
+	1344: { // minecraft:creeper_banner_pattern
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:creeper_banner_pattern",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.creeper_banner_pattern"},
@@ -2861,7 +2860,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "uncommon",
 		RepairCost:             0,
 	},
-	1237: { // minecraft:creeper_head
+	1238: { // minecraft:creeper_head
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
 		},
@@ -2872,7 +2871,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1190: { // minecraft:creeper_spawn_egg
+	1191: { // minecraft:creeper_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:creeper_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.creeper_spawn_egg"},
@@ -2880,7 +2879,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	761: { // minecraft:crimson_button
+	762: { // minecraft:crimson_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_button"},
@@ -2888,7 +2887,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	790: { // minecraft:crimson_door
+	791: { // minecraft:crimson_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_door"},
@@ -2896,7 +2895,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	354: { // minecraft:crimson_fence
+	355: { // minecraft:crimson_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_fence"},
@@ -2904,7 +2903,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	831: { // minecraft:crimson_fence_gate
+	832: { // minecraft:crimson_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_fence_gate"},
@@ -2912,7 +2911,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	249: { // minecraft:crimson_fungus
+	250: { // minecraft:crimson_fungus
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_fungus",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_fungus"},
@@ -2920,7 +2919,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1010: { // minecraft:crimson_hanging_sign
+	1011: { // minecraft:crimson_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_hanging_sign"},
@@ -2952,7 +2951,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	777: { // minecraft:crimson_pressure_plate
+	778: { // minecraft:crimson_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_pressure_plate"},
@@ -2960,7 +2959,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	251: { // minecraft:crimson_roots
+	252: { // minecraft:crimson_roots
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_roots",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_roots"},
@@ -2968,7 +2967,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	309: { // minecraft:crimson_shelf
+	310: { // minecraft:crimson_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_shelf"},
@@ -2976,7 +2975,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	998: { // minecraft:crimson_sign
+	999: { // minecraft:crimson_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_sign"},
@@ -2984,7 +2983,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	281: { // minecraft:crimson_slab
+	282: { // minecraft:crimson_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_slab"},
@@ -2992,7 +2991,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	452: { // minecraft:crimson_stairs
+	453: { // minecraft:crimson_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_stairs"},
@@ -3008,7 +3007,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	811: { // minecraft:crimson_trapdoor
+	812: { // minecraft:crimson_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crimson_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crimson_trapdoor"},
@@ -3016,7 +3015,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1339: { // minecraft:crossbow
+	1340: { // minecraft:crossbow
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 1},
@@ -3027,7 +3026,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1384: { // minecraft:crying_obsidian
+	1385: { // minecraft:crying_obsidian
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:crying_obsidian",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.crying_obsidian"},
@@ -3059,7 +3058,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	571: { // minecraft:cut_red_sandstone
+	572: { // minecraft:cut_red_sandstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cut_red_sandstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cut_red_sandstone"},
@@ -3067,7 +3066,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	295: { // minecraft:cut_red_sandstone_slab
+	296: { // minecraft:cut_red_sandstone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cut_red_sandstone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cut_red_sandstone_slab"},
@@ -3083,7 +3082,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	286: { // minecraft:cut_sandstone_slab
+	287: { // minecraft:cut_sandstone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cut_sandstone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cut_sandstone_slab"},
@@ -3091,7 +3090,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1275: { // minecraft:cyan_banner
+	1276: { // minecraft:cyan_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_banner"},
@@ -3099,7 +3098,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1095: { // minecraft:cyan_bed
+	1096: { // minecraft:cyan_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_bed"},
@@ -3107,7 +3106,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1046: { // minecraft:cyan_bundle
+	1047: { // minecraft:cyan_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cyan_bundle"},
@@ -3115,7 +3114,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1408: { // minecraft:cyan_candle
+	1409: { // minecraft:cyan_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_candle"},
@@ -3123,7 +3122,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	514: { // minecraft:cyan_carpet
+	515: { // minecraft:cyan_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_carpet"},
@@ -3131,7 +3130,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	623: { // minecraft:cyan_concrete
+	624: { // minecraft:cyan_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_concrete"},
@@ -3139,7 +3138,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	639: { // minecraft:cyan_concrete_powder
+	640: { // minecraft:cyan_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_concrete_powder"},
@@ -3147,7 +3146,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1075: { // minecraft:cyan_dye
+	1076: { // minecraft:cyan_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cyan_dye"},
@@ -3155,7 +3154,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	607: { // minecraft:cyan_glazed_terracotta
+	608: { // minecraft:cyan_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_glazed_terracotta"},
@@ -3163,7 +3162,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	847: { // minecraft:cyan_harness
+	848: { // minecraft:cyan_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cyan_harness"},
@@ -3171,7 +3170,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	591: { // minecraft:cyan_shulker_box
+	592: { // minecraft:cyan_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_shulker_box"},
@@ -3179,7 +3178,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	539: { // minecraft:cyan_stained_glass
+	540: { // minecraft:cyan_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_stained_glass"},
@@ -3187,7 +3186,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	555: { // minecraft:cyan_stained_glass_pane
+	556: { // minecraft:cyan_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_stained_glass_pane"},
@@ -3195,7 +3194,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	495: { // minecraft:cyan_terracotta
+	496: { // minecraft:cyan_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:cyan_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_terracotta"},
@@ -3211,7 +3210,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	480: { // minecraft:damaged_anvil
+	481: { // minecraft:damaged_anvil
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:damaged_anvil",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.damaged_anvil"},
@@ -3227,7 +3226,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1451: { // minecraft:danger_pottery_sherd
+	1452: { // minecraft:danger_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:danger_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.danger_pottery_sherd"},
@@ -3235,7 +3234,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	875: { // minecraft:dark_oak_boat
+	876: { // minecraft:dark_oak_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.dark_oak_boat"},
@@ -3243,7 +3242,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	757: { // minecraft:dark_oak_button
+	758: { // minecraft:dark_oak_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_button"},
@@ -3251,7 +3250,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	876: { // minecraft:dark_oak_chest_boat
+	877: { // minecraft:dark_oak_chest_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_chest_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.dark_oak_chest_boat"},
@@ -3259,7 +3258,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	786: { // minecraft:dark_oak_door
+	787: { // minecraft:dark_oak_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_door"},
@@ -3267,7 +3266,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	350: { // minecraft:dark_oak_fence
+	351: { // minecraft:dark_oak_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_fence"},
@@ -3275,7 +3274,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	827: { // minecraft:dark_oak_fence_gate
+	828: { // minecraft:dark_oak_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_fence_gate"},
@@ -3283,7 +3282,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1006: { // minecraft:dark_oak_hanging_sign
+	1007: { // minecraft:dark_oak_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_hanging_sign"},
@@ -3315,7 +3314,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	773: { // minecraft:dark_oak_pressure_plate
+	774: { // minecraft:dark_oak_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_pressure_plate"},
@@ -3331,7 +3330,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	310: { // minecraft:dark_oak_shelf
+	311: { // minecraft:dark_oak_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_shelf"},
@@ -3339,7 +3338,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	994: { // minecraft:dark_oak_sign
+	995: { // minecraft:dark_oak_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_sign"},
@@ -3347,7 +3346,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	276: { // minecraft:dark_oak_slab
+	277: { // minecraft:dark_oak_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_slab"},
@@ -3355,7 +3354,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	447: { // minecraft:dark_oak_stairs
+	448: { // minecraft:dark_oak_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_stairs"},
@@ -3363,7 +3362,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	807: { // minecraft:dark_oak_trapdoor
+	808: { // minecraft:dark_oak_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_oak_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_oak_trapdoor"},
@@ -3379,7 +3378,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	564: { // minecraft:dark_prismarine
+	565: { // minecraft:dark_prismarine
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_prismarine",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_prismarine"},
@@ -3387,7 +3386,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	299: { // minecraft:dark_prismarine_slab
+	300: { // minecraft:dark_prismarine_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_prismarine_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_prismarine_slab"},
@@ -3395,7 +3394,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	567: { // minecraft:dark_prismarine_stairs
+	568: { // minecraft:dark_prismarine_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dark_prismarine_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dark_prismarine_stairs"},
@@ -3403,7 +3402,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	741: { // minecraft:daylight_detector
+	742: { // minecraft:daylight_detector
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:daylight_detector",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.daylight_detector"},
@@ -3411,7 +3410,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	664: { // minecraft:dead_brain_coral
+	665: { // minecraft:dead_brain_coral
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_brain_coral",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_brain_coral"},
@@ -3419,7 +3418,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	650: { // minecraft:dead_brain_coral_block
+	651: { // minecraft:dead_brain_coral_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_brain_coral_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_brain_coral_block"},
@@ -3427,7 +3426,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	675: { // minecraft:dead_brain_coral_fan
+	676: { // minecraft:dead_brain_coral_fan
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_brain_coral_fan",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_brain_coral_fan"},
@@ -3435,7 +3434,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	665: { // minecraft:dead_bubble_coral
+	666: { // minecraft:dead_bubble_coral
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_bubble_coral",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_bubble_coral"},
@@ -3443,7 +3442,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	651: { // minecraft:dead_bubble_coral_block
+	652: { // minecraft:dead_bubble_coral_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_bubble_coral_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_bubble_coral_block"},
@@ -3451,7 +3450,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	676: { // minecraft:dead_bubble_coral_fan
+	677: { // minecraft:dead_bubble_coral_fan
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_bubble_coral_fan",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_bubble_coral_fan"},
@@ -3467,7 +3466,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	666: { // minecraft:dead_fire_coral
+	667: { // minecraft:dead_fire_coral
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_fire_coral",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_fire_coral"},
@@ -3475,7 +3474,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	652: { // minecraft:dead_fire_coral_block
+	653: { // minecraft:dead_fire_coral_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_fire_coral_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_fire_coral_block"},
@@ -3483,7 +3482,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	677: { // minecraft:dead_fire_coral_fan
+	678: { // minecraft:dead_fire_coral_fan
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_fire_coral_fan",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_fire_coral_fan"},
@@ -3491,7 +3490,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	667: { // minecraft:dead_horn_coral
+	668: { // minecraft:dead_horn_coral
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_horn_coral",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_horn_coral"},
@@ -3499,7 +3498,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	653: { // minecraft:dead_horn_coral_block
+	654: { // minecraft:dead_horn_coral_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_horn_coral_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_horn_coral_block"},
@@ -3507,7 +3506,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	678: { // minecraft:dead_horn_coral_fan
+	679: { // minecraft:dead_horn_coral_fan
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_horn_coral_fan",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_horn_coral_fan"},
@@ -3515,7 +3514,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	668: { // minecraft:dead_tube_coral
+	669: { // minecraft:dead_tube_coral
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_tube_coral",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_tube_coral"},
@@ -3523,7 +3522,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	649: { // minecraft:dead_tube_coral_block
+	650: { // minecraft:dead_tube_coral_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_tube_coral_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_tube_coral_block"},
@@ -3531,7 +3530,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	674: { // minecraft:dead_tube_coral_fan
+	675: { // minecraft:dead_tube_coral_fan
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dead_tube_coral_fan",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dead_tube_coral_fan"},
@@ -3539,7 +3538,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1308: { // minecraft:debug_stick
+	1309: { // minecraft:debug_stick
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:debug_stick",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.debug_stick"},
@@ -3547,7 +3546,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	319: { // minecraft:decorated_pot
+	320: { // minecraft:decorated_pot
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:decorated_pot",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.decorated_pot"},
@@ -3563,7 +3562,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	714: { // minecraft:deepslate_brick_slab
+	715: { // minecraft:deepslate_brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:deepslate_brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.deepslate_brick_slab"},
@@ -3571,7 +3570,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	697: { // minecraft:deepslate_brick_stairs
+	698: { // minecraft:deepslate_brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:deepslate_brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.deepslate_brick_stairs"},
@@ -3579,7 +3578,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	476: { // minecraft:deepslate_brick_wall
+	477: { // minecraft:deepslate_brick_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:deepslate_brick_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.deepslate_brick_wall"},
@@ -3587,7 +3586,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	381: { // minecraft:deepslate_bricks
+	382: { // minecraft:deepslate_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:deepslate_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.deepslate_bricks"},
@@ -3659,7 +3658,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	715: { // minecraft:deepslate_tile_slab
+	716: { // minecraft:deepslate_tile_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:deepslate_tile_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.deepslate_tile_slab"},
@@ -3667,7 +3666,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	698: { // minecraft:deepslate_tile_stairs
+	699: { // minecraft:deepslate_tile_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:deepslate_tile_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.deepslate_tile_stairs"},
@@ -3675,7 +3674,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	477: { // minecraft:deepslate_tile_wall
+	478: { // minecraft:deepslate_tile_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:deepslate_tile_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.deepslate_tile_wall"},
@@ -3683,7 +3682,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	383: { // minecraft:deepslate_tiles
+	384: { // minecraft:deepslate_tiles
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:deepslate_tiles",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.deepslate_tiles"},
@@ -3691,7 +3690,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	834: { // minecraft:detector_rail
+	835: { // minecraft:detector_rail
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:detector_rail",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.detector_rail"},
@@ -3699,7 +3698,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	898: { // minecraft:diamond
+	899: { // minecraft:diamond
 		BreakSound:           "minecraft:entity.item.break",
 		ItemModel:            "minecraft:diamond",
 		ItemName:             &ItemNameComponent{Translate: "item.minecraft.diamond"},
@@ -3708,7 +3707,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:               "common",
 		RepairCost:           0,
 	},
-	939: { // minecraft:diamond_axe
+	940: { // minecraft:diamond_axe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 8, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -3742,7 +3741,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	973: { // minecraft:diamond_boots
+	974: { // minecraft:diamond_boots
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
 			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
@@ -3758,7 +3757,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_diamond_armor"},
 	},
-	971: { // minecraft:diamond_chestplate
+	972: { // minecraft:diamond_chestplate
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 8, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
 			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
@@ -3774,7 +3773,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_diamond_armor"},
 	},
-	970: { // minecraft:diamond_helmet
+	971: { // minecraft:diamond_helmet
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
 			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
@@ -3790,7 +3789,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_diamond_armor"},
 	},
-	940: { // minecraft:diamond_hoe
+	941: { // minecraft:diamond_hoe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: 0, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -3815,7 +3814,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1258: { // minecraft:diamond_horse_armor
+	1259: { // minecraft:diamond_horse_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 11, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -3827,7 +3826,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	972: { // minecraft:diamond_leggings
+	973: { // minecraft:diamond_leggings
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 6, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
 			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
@@ -3843,7 +3842,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_diamond_armor"},
 	},
-	1335: { // minecraft:diamond_nautilus_armor
+	1336: { // minecraft:diamond_nautilus_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 11, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -3863,7 +3862,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	938: { // minecraft:diamond_pickaxe
+	939: { // minecraft:diamond_pickaxe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 4, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -3888,7 +3887,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	937: { // minecraft:diamond_shovel
+	938: { // minecraft:diamond_shovel
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 4.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -3913,7 +3912,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1301: { // minecraft:diamond_spear
+	1302: { // minecraft:diamond_spear
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 3, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3.0476189851760864, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -3932,7 +3931,7 @@ var defaultComponents = map[int32]*Components{
 		Repairable:          &Repairable{Items: "#minecraft:diamond_tool_materials"},
 		Weapon:              &Weapon{},
 	},
-	936: { // minecraft:diamond_sword
+	937: { // minecraft:diamond_sword
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 6, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -3964,7 +3963,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	711: { // minecraft:diorite_slab
+	712: { // minecraft:diorite_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:diorite_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.diorite_slab"},
@@ -3972,7 +3971,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	694: { // minecraft:diorite_stairs
+	695: { // minecraft:diorite_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:diorite_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.diorite_stairs"},
@@ -3980,7 +3979,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	470: { // minecraft:diorite_wall
+	471: { // minecraft:diorite_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:diorite_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.diorite_wall"},
@@ -3996,7 +3995,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	523: { // minecraft:dirt_path
+	524: { // minecraft:dirt_path
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dirt_path",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dirt_path"},
@@ -4004,7 +4003,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1330: { // minecraft:disc_fragment_5
+	1331: { // minecraft:disc_fragment_5
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:disc_fragment_5",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.disc_fragment_5"},
@@ -4012,7 +4011,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	728: { // minecraft:dispenser
+	729: { // minecraft:dispenser
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dispenser",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dispenser"},
@@ -4020,7 +4019,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1153: { // minecraft:dolphin_spawn_egg
+	1154: { // minecraft:dolphin_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dolphin_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.dolphin_spawn_egg"},
@@ -4028,7 +4027,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1135: { // minecraft:donkey_spawn_egg
+	1136: { // minecraft:donkey_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:donkey_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.donkey_spawn_egg"},
@@ -4036,7 +4035,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1290: { // minecraft:dragon_breath
+	1291: { // minecraft:dragon_breath
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dragon_breath",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.dragon_breath"},
@@ -4044,7 +4043,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	437: { // minecraft:dragon_egg
+	438: { // minecraft:dragon_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dragon_egg",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dragon_egg"},
@@ -4052,7 +4051,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	1238: { // minecraft:dragon_head
+	1239: { // minecraft:dragon_head
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
 		},
@@ -4063,7 +4062,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	648: { // minecraft:dried_ghast
+	649: { // minecraft:dried_ghast
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dried_ghast",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dried_ghast"},
@@ -4071,7 +4070,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1107: { // minecraft:dried_kelp
+	1108: { // minecraft:dried_kelp
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  1,
@@ -4083,7 +4082,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1027: { // minecraft:dried_kelp_block
+	1028: { // minecraft:dried_kelp_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dried_kelp_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dried_kelp_block"},
@@ -4099,7 +4098,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	729: { // minecraft:dropper
+	730: { // minecraft:dropper
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dropper",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dropper"},
@@ -4107,7 +4106,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1174: { // minecraft:drowned_spawn_egg
+	1175: { // minecraft:drowned_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:drowned_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.drowned_spawn_egg"},
@@ -4115,7 +4114,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1428: { // minecraft:dune_armor_trim_smithing_template
+	1429: { // minecraft:dune_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dune_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.dune_armor_trim_smithing_template"},
@@ -4123,7 +4122,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1424: { // minecraft:echo_shard
+	1425: { // minecraft:echo_shard
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:echo_shard",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.echo_shard"},
@@ -4131,7 +4130,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1031: { // minecraft:egg
+	1032: { // minecraft:egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.egg"},
@@ -4139,7 +4138,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1191: { // minecraft:elder_guardian_spawn_egg
+	1192: { // minecraft:elder_guardian_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:elder_guardian_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.elder_guardian_spawn_egg"},
@@ -4147,7 +4146,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	862: { // minecraft:elytra
+	863: { // minecraft:elytra
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Glider:       true,
@@ -4159,7 +4158,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "minecraft:phantom_membrane"},
 	},
-	899: { // minecraft:emerald
+	900: { // minecraft:emerald
 		BreakSound:           "minecraft:entity.item.break",
 		ItemModel:            "minecraft:emerald",
 		ItemName:             &ItemNameComponent{Translate: "item.minecraft.emerald"},
@@ -4168,7 +4167,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:               "common",
 		RepairCost:           0,
 	},
-	440: { // minecraft:emerald_block
+	441: { // minecraft:emerald_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:emerald_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.emerald_block"},
@@ -4184,7 +4183,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1244: { // minecraft:enchanted_book
+	1245: { // minecraft:enchanted_book
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:enchanted_book",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.enchanted_book"},
@@ -4192,7 +4191,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "rare",
 		RepairCost:   0,
 	},
-	987: { // minecraft:enchanted_golden_apple
+	988: { // minecraft:enchanted_golden_apple
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  4,
@@ -4204,7 +4203,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "rare",
 		RepairCost:   0,
 	},
-	433: { // minecraft:enchanting_table
+	434: { // minecraft:enchanting_table
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:enchanting_table",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.enchanting_table"},
@@ -4212,7 +4211,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1282: { // minecraft:end_crystal
+	1283: { // minecraft:end_crystal
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:end_crystal",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.end_crystal"},
@@ -4220,7 +4219,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	434: { // minecraft:end_portal_frame
+	435: { // minecraft:end_portal_frame
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:end_portal_frame",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.end_portal_frame"},
@@ -4228,7 +4227,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	323: { // minecraft:end_rod
+	324: { // minecraft:end_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:end_rod",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.end_rod"},
@@ -4236,7 +4235,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	435: { // minecraft:end_stone
+	436: { // minecraft:end_stone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:end_stone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.end_stone"},
@@ -4244,7 +4243,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	704: { // minecraft:end_stone_brick_slab
+	705: { // minecraft:end_stone_brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:end_stone_brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.end_stone_brick_slab"},
@@ -4252,7 +4251,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	686: { // minecraft:end_stone_brick_stairs
+	687: { // minecraft:end_stone_brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:end_stone_brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.end_stone_brick_stairs"},
@@ -4260,7 +4259,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	469: { // minecraft:end_stone_brick_wall
+	470: { // minecraft:end_stone_brick_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:end_stone_brick_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.end_stone_brick_wall"},
@@ -4268,7 +4267,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	436: { // minecraft:end_stone_bricks
+	437: { // minecraft:end_stone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:end_stone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.end_stone_bricks"},
@@ -4276,7 +4275,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	439: { // minecraft:ender_chest
+	440: { // minecraft:ender_chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ender_chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.ender_chest"},
@@ -4284,7 +4283,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1213: { // minecraft:ender_dragon_spawn_egg
+	1214: { // minecraft:ender_dragon_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ender_dragon_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ender_dragon_spawn_egg"},
@@ -4292,7 +4291,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1128: { // minecraft:ender_eye
+	1129: { // minecraft:ender_eye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ender_eye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ender_eye"},
@@ -4300,7 +4299,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1115: { // minecraft:ender_pearl
+	1116: { // minecraft:ender_pearl
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ender_pearl",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ender_pearl"},
@@ -4309,7 +4308,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		UseCooldown:  &UseCooldown{Seconds: 1},
 	},
-	1214: { // minecraft:enderman_spawn_egg
+	1215: { // minecraft:enderman_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:enderman_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.enderman_spawn_egg"},
@@ -4317,7 +4316,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1215: { // minecraft:endermite_spawn_egg
+	1216: { // minecraft:endermite_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:endermite_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.endermite_spawn_egg"},
@@ -4325,7 +4324,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1198: { // minecraft:evoker_spawn_egg
+	1199: { // minecraft:evoker_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:evoker_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.evoker_spawn_egg"},
@@ -4333,7 +4332,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1217: { // minecraft:experience_bottle
+	1218: { // minecraft:experience_bottle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:experience_bottle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.experience_bottle"},
@@ -4341,7 +4340,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1452: { // minecraft:explorer_pottery_sherd
+	1453: { // minecraft:explorer_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:explorer_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.explorer_pottery_sherd"},
@@ -4365,7 +4364,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	392: { // minecraft:exposed_copper_bars
+	393: { // minecraft:exposed_copper_bars
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:exposed_copper_bars",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.exposed_copper_bars"},
@@ -4373,7 +4372,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1477: { // minecraft:exposed_copper_bulb
+	1478: { // minecraft:exposed_copper_bulb
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:exposed_copper_bulb",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.exposed_copper_bulb"},
@@ -4381,7 +4380,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	401: { // minecraft:exposed_copper_chain
+	402: { // minecraft:exposed_copper_chain
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:exposed_copper_chain",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.exposed_copper_chain"},
@@ -4389,7 +4388,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1485: { // minecraft:exposed_copper_chest
+	1486: { // minecraft:exposed_copper_chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:exposed_copper_chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.exposed_copper_chest"},
@@ -4397,7 +4396,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	793: { // minecraft:exposed_copper_door
+	794: { // minecraft:exposed_copper_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:exposed_copper_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.exposed_copper_door"},
@@ -4405,7 +4404,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1493: { // minecraft:exposed_copper_golem_statue
+	1494: { // minecraft:exposed_copper_golem_statue
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:exposed_copper_golem_statue",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.exposed_copper_golem_statue"},
@@ -4413,7 +4412,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1469: { // minecraft:exposed_copper_grate
+	1470: { // minecraft:exposed_copper_grate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:exposed_copper_grate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.exposed_copper_grate"},
@@ -4421,7 +4420,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1366: { // minecraft:exposed_copper_lantern
+	1367: { // minecraft:exposed_copper_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:exposed_copper_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.exposed_copper_lantern"},
@@ -4429,7 +4428,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	814: { // minecraft:exposed_copper_trapdoor
+	815: { // minecraft:exposed_copper_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:exposed_copper_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.exposed_copper_trapdoor"},
@@ -4461,7 +4460,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	734: { // minecraft:exposed_lightning_rod
+	735: { // minecraft:exposed_lightning_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:exposed_lightning_rod",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.exposed_lightning_rod"},
@@ -4469,7 +4468,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1432: { // minecraft:eye_armor_trim_smithing_template
+	1433: { // minecraft:eye_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:eye_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.eye_armor_trim_smithing_template"},
@@ -4477,7 +4476,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "rare",
 		RepairCost:   0,
 	},
-	333: { // minecraft:farmland
+	334: { // minecraft:farmland
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:farmland",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.farmland"},
@@ -4485,7 +4484,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	949: { // minecraft:feather
+	950: { // minecraft:feather
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:feather",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.feather"},
@@ -4493,7 +4492,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1123: { // minecraft:fermented_spider_eye
+	1124: { // minecraft:fermented_spider_eye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:fermented_spider_eye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.fermented_spider_eye"},
@@ -4509,7 +4508,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1350: { // minecraft:field_masoned_banner_pattern
+	1351: { // minecraft:field_masoned_banner_pattern
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:field_masoned_banner_pattern",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.field_masoned_banner_pattern"},
@@ -4518,7 +4517,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "common",
 		RepairCost:             0,
 	},
-	1104: { // minecraft:filled_map
+	1105: { // minecraft:filled_map
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:filled_map",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.filled_map"},
@@ -4527,7 +4526,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1218: { // minecraft:fire_charge
+	1219: { // minecraft:fire_charge
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:fire_charge",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.fire_charge"},
@@ -4535,7 +4534,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	662: { // minecraft:fire_coral
+	663: { // minecraft:fire_coral
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:fire_coral",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.fire_coral"},
@@ -4543,7 +4542,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	657: { // minecraft:fire_coral_block
+	658: { // minecraft:fire_coral_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:fire_coral_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.fire_coral_block"},
@@ -4551,7 +4550,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	672: { // minecraft:fire_coral_fan
+	673: { // minecraft:fire_coral_fan
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:fire_coral_fan",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.fire_coral_fan"},
@@ -4567,7 +4566,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1242: { // minecraft:firework_rocket
+	1243: { // minecraft:firework_rocket
 		BreakSound:   "minecraft:entity.item.break",
 		Fireworks:    &Fireworks{FlightDuration: 1},
 		ItemModel:    "minecraft:firework_rocket",
@@ -4576,7 +4575,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1243: { // minecraft:firework_star
+	1244: { // minecraft:firework_star
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:firework_star",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.firework_star"},
@@ -4584,7 +4583,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1053: { // minecraft:fishing_rod
+	1054: { // minecraft:fishing_rod
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 1},
@@ -4595,7 +4594,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1358: { // minecraft:fletching_table
+	1359: { // minecraft:fletching_table
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:fletching_table",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.fletching_table"},
@@ -4603,7 +4602,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	982: { // minecraft:flint
+	983: { // minecraft:flint
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:flint",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.flint"},
@@ -4611,7 +4610,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	891: { // minecraft:flint_and_steel
+	892: { // minecraft:flint_and_steel
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		ItemModel:    "minecraft:flint_and_steel",
@@ -4621,7 +4620,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1443: { // minecraft:flow_armor_trim_smithing_template
+	1444: { // minecraft:flow_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:flow_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.flow_armor_trim_smithing_template"},
@@ -4629,7 +4628,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1348: { // minecraft:flow_banner_pattern
+	1349: { // minecraft:flow_banner_pattern
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:flow_banner_pattern",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.flow_banner_pattern"},
@@ -4638,7 +4637,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "rare",
 		RepairCost:             0,
 	},
-	1453: { // minecraft:flow_pottery_sherd
+	1454: { // minecraft:flow_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:flow_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.flow_pottery_sherd"},
@@ -4646,7 +4645,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1342: { // minecraft:flower_banner_pattern
+	1343: { // minecraft:flower_banner_pattern
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:flower_banner_pattern",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.flower_banner_pattern"},
@@ -4655,7 +4654,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "common",
 		RepairCost:             0,
 	},
-	1226: { // minecraft:flower_pot
+	1227: { // minecraft:flower_pot
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:flower_pot",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.flower_pot"},
@@ -4679,7 +4678,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1144: { // minecraft:fox_spawn_egg
+	1145: { // minecraft:fox_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:fox_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.fox_spawn_egg"},
@@ -4687,7 +4686,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1454: { // minecraft:friend_pottery_sherd
+	1455: { // minecraft:friend_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:friend_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.friend_pottery_sherd"},
@@ -4695,7 +4694,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1154: { // minecraft:frog_spawn_egg
+	1155: { // minecraft:frog_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:frog_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.frog_spawn_egg"},
@@ -4703,7 +4702,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1423: { // minecraft:frogspawn
+	1424: { // minecraft:frogspawn
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:frogspawn",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.frogspawn"},
@@ -4711,7 +4710,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	334: { // minecraft:furnace
+	335: { // minecraft:furnace
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:furnace",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.furnace"},
@@ -4719,7 +4718,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	856: { // minecraft:furnace_minecart
+	857: { // minecraft:furnace_minecart
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:furnace_minecart",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.furnace_minecart"},
@@ -4727,7 +4726,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1204: { // minecraft:ghast_spawn_egg
+	1205: { // minecraft:ghast_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ghast_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ghast_spawn_egg"},
@@ -4735,7 +4734,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1117: { // minecraft:ghast_tear
+	1118: { // minecraft:ghast_tear
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ghast_tear",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ghast_tear"},
@@ -4743,7 +4742,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1388: { // minecraft:gilded_blackstone
+	1389: { // minecraft:gilded_blackstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gilded_blackstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gilded_blackstone"},
@@ -4759,7 +4758,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1120: { // minecraft:glass_bottle
+	1121: { // minecraft:glass_bottle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:glass_bottle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.glass_bottle"},
@@ -4767,7 +4766,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	408: { // minecraft:glass_pane
+	409: { // minecraft:glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.glass_pane"},
@@ -4775,7 +4774,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1129: { // minecraft:glistering_melon_slice
+	1130: { // minecraft:glistering_melon_slice
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:glistering_melon_slice",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.glistering_melon_slice"},
@@ -4783,7 +4782,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1346: { // minecraft:globe_banner_pattern
+	1347: { // minecraft:globe_banner_pattern
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:globe_banner_pattern",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.globe_banner_pattern"},
@@ -4792,7 +4791,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "common",
 		RepairCost:             0,
 	},
-	1374: { // minecraft:glow_berries
+	1375: { // minecraft:glow_berries
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -4804,7 +4803,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1064: { // minecraft:glow_ink_sac
+	1065: { // minecraft:glow_ink_sac
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:glow_ink_sac",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.glow_ink_sac"},
@@ -4812,7 +4811,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1225: { // minecraft:glow_item_frame
+	1226: { // minecraft:glow_item_frame
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:glow_item_frame",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.glow_item_frame"},
@@ -4820,7 +4819,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	411: { // minecraft:glow_lichen
+	412: { // minecraft:glow_lichen
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:glow_lichen",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.glow_lichen"},
@@ -4828,7 +4827,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1155: { // minecraft:glow_squid_spawn_egg
+	1156: { // minecraft:glow_squid_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:glow_squid_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.glow_squid_spawn_egg"},
@@ -4836,7 +4835,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	367: { // minecraft:glowstone
+	368: { // minecraft:glowstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:glowstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.glowstone"},
@@ -4844,7 +4843,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1056: { // minecraft:glowstone_dust
+	1057: { // minecraft:glowstone_dust
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:glowstone_dust",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.glowstone_dust"},
@@ -4852,7 +4851,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1352: { // minecraft:goat_horn
+	1353: { // minecraft:goat_horn
 		BreakSound:   "minecraft:entity.item.break",
 		Instrument:   "minecraft:ponder_goat_horn",
 		ItemModel:    "minecraft:goat_horn",
@@ -4861,7 +4860,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1145: { // minecraft:goat_spawn_egg
+	1146: { // minecraft:goat_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:goat_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.goat_spawn_egg"},
@@ -4877,7 +4876,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	908: { // minecraft:gold_ingot
+	909: { // minecraft:gold_ingot
 		BreakSound:           "minecraft:entity.item.break",
 		ItemModel:            "minecraft:gold_ingot",
 		ItemName:             &ItemNameComponent{Translate: "item.minecraft.gold_ingot"},
@@ -4886,7 +4885,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:               "common",
 		RepairCost:           0,
 	},
-	1118: { // minecraft:gold_nugget
+	1119: { // minecraft:gold_nugget
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gold_nugget",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.gold_nugget"},
@@ -4902,7 +4901,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	986: { // minecraft:golden_apple
+	987: { // minecraft:golden_apple
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  4,
@@ -4914,7 +4913,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	929: { // minecraft:golden_axe
+	930: { // minecraft:golden_axe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 6, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -4940,7 +4939,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack:       2,
 		},
 	},
-	977: { // minecraft:golden_boots
+	978: { // minecraft:golden_boots
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 1, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
@@ -4956,7 +4955,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_gold_armor"},
 	},
-	1232: { // minecraft:golden_carrot
+	1233: { // minecraft:golden_carrot
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  6,
@@ -4968,7 +4967,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	975: { // minecraft:golden_chestplate
+	976: { // minecraft:golden_chestplate
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 5, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
@@ -4984,7 +4983,15 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_gold_armor"},
 	},
-	974: { // minecraft:golden_helmet
+	230: { // minecraft:golden_dandelion
+		BreakSound:   "minecraft:entity.item.break",
+		ItemModel:    "minecraft:golden_dandelion",
+		ItemName:     &ItemNameComponent{Translate: "block.minecraft.golden_dandelion"},
+		MaxStackSize: 64,
+		Rarity:       "common",
+		RepairCost:   0,
+	},
+	975: { // minecraft:golden_helmet
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
@@ -5000,7 +5007,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_gold_armor"},
 	},
-	930: { // minecraft:golden_hoe
+	931: { // minecraft:golden_hoe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -5025,7 +5032,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1257: { // minecraft:golden_horse_armor
+	1258: { // minecraft:golden_horse_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 7, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -5037,7 +5044,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	976: { // minecraft:golden_leggings
+	977: { // minecraft:golden_leggings
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
@@ -5053,7 +5060,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_gold_armor"},
 	},
-	1334: { // minecraft:golden_nautilus_armor
+	1335: { // minecraft:golden_nautilus_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 7, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -5065,7 +5072,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	928: { // minecraft:golden_pickaxe
+	929: { // minecraft:golden_pickaxe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 1, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -5090,7 +5097,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	927: { // minecraft:golden_shovel
+	928: { // minecraft:golden_shovel
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 1.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -5115,7 +5122,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1300: { // minecraft:golden_spear
+	1301: { // minecraft:golden_spear
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.9473683834075928, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -5134,7 +5141,7 @@ var defaultComponents = map[int32]*Components{
 		Repairable:          &Repairable{Items: "#minecraft:gold_tool_materials"},
 		Weapon:              &Weapon{},
 	},
-	926: { // minecraft:golden_sword
+	927: { // minecraft:golden_sword
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 3, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -5166,7 +5173,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	707: { // minecraft:granite_slab
+	708: { // minecraft:granite_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:granite_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.granite_slab"},
@@ -5174,7 +5181,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	690: { // minecraft:granite_stairs
+	691: { // minecraft:granite_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:granite_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.granite_stairs"},
@@ -5182,7 +5189,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	462: { // minecraft:granite_wall
+	463: { // minecraft:granite_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:granite_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.granite_wall"},
@@ -5206,7 +5213,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1273: { // minecraft:gray_banner
+	1274: { // minecraft:gray_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_banner"},
@@ -5214,7 +5221,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1093: { // minecraft:gray_bed
+	1094: { // minecraft:gray_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_bed"},
@@ -5222,7 +5229,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1044: { // minecraft:gray_bundle
+	1045: { // minecraft:gray_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.gray_bundle"},
@@ -5230,7 +5237,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1406: { // minecraft:gray_candle
+	1407: { // minecraft:gray_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_candle"},
@@ -5238,7 +5245,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	512: { // minecraft:gray_carpet
+	513: { // minecraft:gray_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_carpet"},
@@ -5246,7 +5253,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	621: { // minecraft:gray_concrete
+	622: { // minecraft:gray_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_concrete"},
@@ -5254,7 +5261,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	637: { // minecraft:gray_concrete_powder
+	638: { // minecraft:gray_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_concrete_powder"},
@@ -5262,7 +5269,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1073: { // minecraft:gray_dye
+	1074: { // minecraft:gray_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.gray_dye"},
@@ -5270,7 +5277,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	605: { // minecraft:gray_glazed_terracotta
+	606: { // minecraft:gray_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_glazed_terracotta"},
@@ -5278,7 +5285,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	845: { // minecraft:gray_harness
+	846: { // minecraft:gray_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.gray_harness"},
@@ -5286,7 +5293,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	589: { // minecraft:gray_shulker_box
+	590: { // minecraft:gray_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_shulker_box"},
@@ -5294,7 +5301,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	537: { // minecraft:gray_stained_glass
+	538: { // minecraft:gray_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_stained_glass"},
@@ -5302,7 +5309,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	553: { // minecraft:gray_stained_glass_pane
+	554: { // minecraft:gray_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_stained_glass_pane"},
@@ -5310,7 +5317,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	493: { // minecraft:gray_terracotta
+	494: { // minecraft:gray_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gray_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_terracotta"},
@@ -5326,7 +5333,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1279: { // minecraft:green_banner
+	1280: { // minecraft:green_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_banner"},
@@ -5334,7 +5341,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1099: { // minecraft:green_bed
+	1100: { // minecraft:green_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_bed"},
@@ -5342,7 +5349,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1050: { // minecraft:green_bundle
+	1051: { // minecraft:green_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.green_bundle"},
@@ -5350,7 +5357,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1412: { // minecraft:green_candle
+	1413: { // minecraft:green_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_candle"},
@@ -5358,7 +5365,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	518: { // minecraft:green_carpet
+	519: { // minecraft:green_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_carpet"},
@@ -5366,7 +5373,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	627: { // minecraft:green_concrete
+	628: { // minecraft:green_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_concrete"},
@@ -5374,7 +5381,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	643: { // minecraft:green_concrete_powder
+	644: { // minecraft:green_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_concrete_powder"},
@@ -5382,7 +5389,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1079: { // minecraft:green_dye
+	1080: { // minecraft:green_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.green_dye"},
@@ -5390,7 +5397,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	611: { // minecraft:green_glazed_terracotta
+	612: { // minecraft:green_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_glazed_terracotta"},
@@ -5398,7 +5405,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	851: { // minecraft:green_harness
+	852: { // minecraft:green_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.green_harness"},
@@ -5406,7 +5413,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	595: { // minecraft:green_shulker_box
+	596: { // minecraft:green_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_shulker_box"},
@@ -5414,7 +5421,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	543: { // minecraft:green_stained_glass
+	544: { // minecraft:green_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_stained_glass"},
@@ -5422,7 +5429,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	559: { // minecraft:green_stained_glass_pane
+	560: { // minecraft:green_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_stained_glass_pane"},
@@ -5430,7 +5437,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	499: { // minecraft:green_terracotta
+	500: { // minecraft:green_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:green_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_terracotta"},
@@ -5446,7 +5453,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1359: { // minecraft:grindstone
+	1360: { // minecraft:grindstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:grindstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.grindstone"},
@@ -5454,7 +5461,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1192: { // minecraft:guardian_spawn_egg
+	1193: { // minecraft:guardian_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:guardian_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.guardian_spawn_egg"},
@@ -5462,7 +5469,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	950: { // minecraft:gunpowder
+	951: { // minecraft:gunpowder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:gunpowder",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.gunpowder"},
@@ -5470,7 +5477,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1349: { // minecraft:guster_banner_pattern
+	1350: { // minecraft:guster_banner_pattern
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:guster_banner_pattern",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.guster_banner_pattern"},
@@ -5479,7 +5486,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "rare",
 		RepairCost:             0,
 	},
-	1455: { // minecraft:guster_pottery_sherd
+	1456: { // minecraft:guster_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:guster_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.guster_pottery_sherd"},
@@ -5487,7 +5494,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	266: { // minecraft:hanging_roots
+	267: { // minecraft:hanging_roots
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:hanging_roots",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.hanging_roots"},
@@ -5495,7 +5502,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1205: { // minecraft:happy_ghast_spawn_egg
+	1206: { // minecraft:happy_ghast_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:happy_ghast_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.happy_ghast_spawn_egg"},
@@ -5503,7 +5510,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	504: { // minecraft:hay_block
+	505: { // minecraft:hay_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:hay_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.hay_block"},
@@ -5511,7 +5518,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1338: { // minecraft:heart_of_the_sea
+	1339: { // minecraft:heart_of_the_sea
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:heart_of_the_sea",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.heart_of_the_sea"},
@@ -5519,7 +5526,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1456: { // minecraft:heart_pottery_sherd
+	1457: { // minecraft:heart_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:heart_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.heart_pottery_sherd"},
@@ -5527,7 +5534,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1457: { // minecraft:heartbreak_pottery_sherd
+	1458: { // minecraft:heartbreak_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:heartbreak_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.heartbreak_pottery_sherd"},
@@ -5543,7 +5550,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	766: { // minecraft:heavy_weighted_pressure_plate
+	767: { // minecraft:heavy_weighted_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:heavy_weighted_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.heavy_weighted_pressure_plate"},
@@ -5551,7 +5558,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1206: { // minecraft:hoglin_spawn_egg
+	1207: { // minecraft:hoglin_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:hoglin_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.hoglin_spawn_egg"},
@@ -5559,7 +5566,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	725: { // minecraft:honey_block
+	726: { // minecraft:honey_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:honey_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.honey_block"},
@@ -5567,7 +5574,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1381: { // minecraft:honey_bottle
+	1382: { // minecraft:honey_bottle
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  6,
@@ -5579,11 +5586,10 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 		UseRemainder: &UseRemainder{
-			Count: 1,
-			ID:    "minecraft:glass_bottle",
+			ID: "minecraft:glass_bottle",
 		},
 	},
-	1378: { // minecraft:honeycomb
+	1379: { // minecraft:honeycomb
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:honeycomb",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.honeycomb"},
@@ -5591,7 +5597,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1382: { // minecraft:honeycomb_block
+	1383: { // minecraft:honeycomb_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:honeycomb_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.honeycomb_block"},
@@ -5599,7 +5605,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	727: { // minecraft:hopper
+	728: { // minecraft:hopper
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:hopper",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.hopper"},
@@ -5607,7 +5613,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	858: { // minecraft:hopper_minecart
+	859: { // minecraft:hopper_minecart
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:hopper_minecart",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.hopper_minecart"},
@@ -5615,7 +5621,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	663: { // minecraft:horn_coral
+	664: { // minecraft:horn_coral
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:horn_coral",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.horn_coral"},
@@ -5623,7 +5629,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	658: { // minecraft:horn_coral_block
+	659: { // minecraft:horn_coral_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:horn_coral_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.horn_coral_block"},
@@ -5631,7 +5637,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	673: { // minecraft:horn_coral_fan
+	674: { // minecraft:horn_coral_fan
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:horn_coral_fan",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.horn_coral_fan"},
@@ -5639,7 +5645,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1136: { // minecraft:horse_spawn_egg
+	1137: { // minecraft:horse_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:horse_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.horse_spawn_egg"},
@@ -5647,7 +5653,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1442: { // minecraft:host_armor_trim_smithing_template
+	1443: { // minecraft:host_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:host_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.host_armor_trim_smithing_template"},
@@ -5655,7 +5661,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1458: { // minecraft:howl_pottery_sherd
+	1459: { // minecraft:howl_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:howl_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.howl_pottery_sherd"},
@@ -5663,7 +5669,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1175: { // minecraft:husk_spawn_egg
+	1176: { // minecraft:husk_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:husk_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.husk_spawn_egg"},
@@ -5671,7 +5677,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	338: { // minecraft:ice
+	339: { // minecraft:ice
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ice",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.ice"},
@@ -5679,7 +5685,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	373: { // minecraft:infested_chiseled_stone_bricks
+	374: { // minecraft:infested_chiseled_stone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:infested_chiseled_stone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.infested_chiseled_stone_bricks"},
@@ -5687,7 +5693,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	369: { // minecraft:infested_cobblestone
+	370: { // minecraft:infested_cobblestone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:infested_cobblestone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.infested_cobblestone"},
@@ -5695,7 +5701,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	372: { // minecraft:infested_cracked_stone_bricks
+	373: { // minecraft:infested_cracked_stone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:infested_cracked_stone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.infested_cracked_stone_bricks"},
@@ -5703,7 +5709,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	374: { // minecraft:infested_deepslate
+	375: { // minecraft:infested_deepslate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:infested_deepslate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.infested_deepslate"},
@@ -5711,7 +5717,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	371: { // minecraft:infested_mossy_stone_bricks
+	372: { // minecraft:infested_mossy_stone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:infested_mossy_stone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.infested_mossy_stone_bricks"},
@@ -5719,7 +5725,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	368: { // minecraft:infested_stone
+	369: { // minecraft:infested_stone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:infested_stone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.infested_stone"},
@@ -5727,7 +5733,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	370: { // minecraft:infested_stone_bricks
+	371: { // minecraft:infested_stone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:infested_stone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.infested_stone_bricks"},
@@ -5735,7 +5741,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1063: { // minecraft:ink_sac
+	1064: { // minecraft:ink_sac
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ink_sac",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ink_sac"},
@@ -5743,7 +5749,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	934: { // minecraft:iron_axe
+	935: { // minecraft:iron_axe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 8, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3.0999999046325684, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -5769,7 +5775,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack:       2,
 		},
 	},
-	390: { // minecraft:iron_bars
+	391: { // minecraft:iron_bars
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:iron_bars",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.iron_bars"},
@@ -5785,7 +5791,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	969: { // minecraft:iron_boots
+	970: { // minecraft:iron_boots
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
@@ -5801,7 +5807,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_iron_armor"},
 	},
-	399: { // minecraft:iron_chain
+	400: { // minecraft:iron_chain
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:iron_chain",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.iron_chain"},
@@ -5809,7 +5815,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	967: { // minecraft:iron_chestplate
+	968: { // minecraft:iron_chestplate
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 6, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
@@ -5825,7 +5831,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_iron_armor"},
 	},
-	779: { // minecraft:iron_door
+	780: { // minecraft:iron_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:iron_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.iron_door"},
@@ -5833,7 +5839,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1167: { // minecraft:iron_golem_spawn_egg
+	1168: { // minecraft:iron_golem_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:iron_golem_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_golem_spawn_egg"},
@@ -5841,7 +5847,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	966: { // minecraft:iron_helmet
+	967: { // minecraft:iron_helmet
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
@@ -5857,7 +5863,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_iron_armor"},
 	},
-	935: { // minecraft:iron_hoe
+	936: { // minecraft:iron_hoe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -1, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -5882,7 +5888,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1256: { // minecraft:iron_horse_armor
+	1257: { // minecraft:iron_horse_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 5, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -5894,7 +5900,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	904: { // minecraft:iron_ingot
+	905: { // minecraft:iron_ingot
 		BreakSound:           "minecraft:entity.item.break",
 		ItemModel:            "minecraft:iron_ingot",
 		ItemName:             &ItemNameComponent{Translate: "item.minecraft.iron_ingot"},
@@ -5903,7 +5909,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:               "common",
 		RepairCost:           0,
 	},
-	968: { // minecraft:iron_leggings
+	969: { // minecraft:iron_leggings
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 5, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
@@ -5919,7 +5925,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_iron_armor"},
 	},
-	1333: { // minecraft:iron_nautilus_armor
+	1334: { // minecraft:iron_nautilus_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 5, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -5931,7 +5937,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1305: { // minecraft:iron_nugget
+	1306: { // minecraft:iron_nugget
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:iron_nugget",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_nugget"},
@@ -5947,7 +5953,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	933: { // minecraft:iron_pickaxe
+	934: { // minecraft:iron_pickaxe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 3, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -5972,7 +5978,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	932: { // minecraft:iron_shovel
+	933: { // minecraft:iron_shovel
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 3.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -5997,7 +6003,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1299: { // minecraft:iron_spear
+	1300: { // minecraft:iron_spear
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 2, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.9473683834075928, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -6016,7 +6022,7 @@ var defaultComponents = map[int32]*Components{
 		Repairable:          &Repairable{Items: "#minecraft:iron_tool_materials"},
 		Weapon:              &Weapon{},
 	},
-	931: { // minecraft:iron_sword
+	932: { // minecraft:iron_sword
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -6040,7 +6046,7 @@ var defaultComponents = map[int32]*Components{
 		},
 		Weapon: &Weapon{},
 	},
-	800: { // minecraft:iron_trapdoor
+	801: { // minecraft:iron_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:iron_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.iron_trapdoor"},
@@ -6048,7 +6054,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1224: { // minecraft:item_frame
+	1225: { // minecraft:item_frame
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:item_frame",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.item_frame"},
@@ -6056,7 +6062,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	358: { // minecraft:jack_o_lantern
+	359: { // minecraft:jack_o_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jack_o_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jack_o_lantern"},
@@ -6064,7 +6070,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	884: { // minecraft:jigsaw
+	885: { // minecraft:jigsaw
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jigsaw",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jigsaw"},
@@ -6072,7 +6078,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	343: { // minecraft:jukebox
+	344: { // minecraft:jukebox
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jukebox",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jukebox"},
@@ -6080,7 +6086,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	869: { // minecraft:jungle_boat
+	870: { // minecraft:jungle_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.jungle_boat"},
@@ -6088,7 +6094,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	754: { // minecraft:jungle_button
+	755: { // minecraft:jungle_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_button"},
@@ -6096,7 +6102,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	870: { // minecraft:jungle_chest_boat
+	871: { // minecraft:jungle_chest_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_chest_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.jungle_chest_boat"},
@@ -6104,7 +6110,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	783: { // minecraft:jungle_door
+	784: { // minecraft:jungle_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_door"},
@@ -6112,7 +6118,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	347: { // minecraft:jungle_fence
+	348: { // minecraft:jungle_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_fence"},
@@ -6120,7 +6126,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	824: { // minecraft:jungle_fence_gate
+	825: { // minecraft:jungle_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_fence_gate"},
@@ -6128,7 +6134,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1003: { // minecraft:jungle_hanging_sign
+	1004: { // minecraft:jungle_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_hanging_sign"},
@@ -6160,7 +6166,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	770: { // minecraft:jungle_pressure_plate
+	771: { // minecraft:jungle_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_pressure_plate"},
@@ -6176,7 +6182,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	311: { // minecraft:jungle_shelf
+	312: { // minecraft:jungle_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_shelf"},
@@ -6184,7 +6190,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	991: { // minecraft:jungle_sign
+	992: { // minecraft:jungle_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_sign"},
@@ -6192,7 +6198,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	273: { // minecraft:jungle_slab
+	274: { // minecraft:jungle_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_slab"},
@@ -6200,7 +6206,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	444: { // minecraft:jungle_stairs
+	445: { // minecraft:jungle_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_stairs"},
@@ -6208,7 +6214,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	804: { // minecraft:jungle_trapdoor
+	805: { // minecraft:jungle_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:jungle_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.jungle_trapdoor"},
@@ -6224,7 +6230,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	257: { // minecraft:kelp
+	258: { // minecraft:kelp
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:kelp",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.kelp"},
@@ -6232,7 +6238,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1307: { // minecraft:knowledge_book
+	1308: { // minecraft:knowledge_book
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:knowledge_book",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.knowledge_book"},
@@ -6240,7 +6246,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	335: { // minecraft:ladder
+	336: { // minecraft:ladder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ladder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.ladder"},
@@ -6248,7 +6254,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1363: { // minecraft:lantern
+	1364: { // minecraft:lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lantern"},
@@ -6264,7 +6270,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	900: { // minecraft:lapis_lazuli
+	901: { // minecraft:lapis_lazuli
 		BreakSound:           "minecraft:entity.item.break",
 		ItemModel:            "minecraft:lapis_lazuli",
 		ItemName:             &ItemNameComponent{Translate: "item.minecraft.lapis_lazuli"},
@@ -6281,7 +6287,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1417: { // minecraft:large_amethyst_bud
+	1418: { // minecraft:large_amethyst_bud
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:large_amethyst_bud",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.large_amethyst_bud"},
@@ -6289,7 +6295,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	529: { // minecraft:large_fern
+	530: { // minecraft:large_fern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:large_fern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.large_fern"},
@@ -6297,7 +6303,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1014: { // minecraft:lava_bucket
+	1015: { // minecraft:lava_bucket
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lava_bucket",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.lava_bucket"},
@@ -6305,7 +6311,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1261: { // minecraft:lead
+	1262: { // minecraft:lead
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lead",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.lead"},
@@ -6313,7 +6319,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	260: { // minecraft:leaf_litter
+	261: { // minecraft:leaf_litter
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:leaf_litter",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.leaf_litter"},
@@ -6321,7 +6327,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1017: { // minecraft:leather
+	1018: { // minecraft:leather
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:leather",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.leather"},
@@ -6329,7 +6335,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	957: { // minecraft:leather_boots
+	958: { // minecraft:leather_boots
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 1, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
@@ -6345,7 +6351,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_leather_armor"},
 	},
-	955: { // minecraft:leather_chestplate
+	956: { // minecraft:leather_chestplate
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
@@ -6361,7 +6367,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_leather_armor"},
 	},
-	954: { // minecraft:leather_helmet
+	955: { // minecraft:leather_helmet
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 1, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
@@ -6377,7 +6383,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_leather_armor"},
 	},
-	1260: { // minecraft:leather_horse_armor
+	1261: { // minecraft:leather_horse_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -6389,7 +6395,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	956: { // minecraft:leather_leggings
+	957: { // minecraft:leather_leggings
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
@@ -6405,7 +6411,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_leather_armor"},
 	},
-	730: { // minecraft:lectern
+	731: { // minecraft:lectern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lectern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lectern"},
@@ -6413,7 +6419,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	732: { // minecraft:lever
+	733: { // minecraft:lever
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lever",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lever"},
@@ -6421,7 +6427,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	503: { // minecraft:light
+	504: { // minecraft:light
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light"},
@@ -6429,7 +6435,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	1269: { // minecraft:light_blue_banner
+	1270: { // minecraft:light_blue_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_banner"},
@@ -6437,7 +6443,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1089: { // minecraft:light_blue_bed
+	1090: { // minecraft:light_blue_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_bed"},
@@ -6445,7 +6451,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1040: { // minecraft:light_blue_bundle
+	1041: { // minecraft:light_blue_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.light_blue_bundle"},
@@ -6453,7 +6459,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1402: { // minecraft:light_blue_candle
+	1403: { // minecraft:light_blue_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_candle"},
@@ -6461,7 +6467,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	508: { // minecraft:light_blue_carpet
+	509: { // minecraft:light_blue_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_carpet"},
@@ -6469,7 +6475,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	617: { // minecraft:light_blue_concrete
+	618: { // minecraft:light_blue_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_concrete"},
@@ -6477,7 +6483,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	633: { // minecraft:light_blue_concrete_powder
+	634: { // minecraft:light_blue_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_concrete_powder"},
@@ -6485,7 +6491,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1069: { // minecraft:light_blue_dye
+	1070: { // minecraft:light_blue_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.light_blue_dye"},
@@ -6493,7 +6499,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	601: { // minecraft:light_blue_glazed_terracotta
+	602: { // minecraft:light_blue_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_glazed_terracotta"},
@@ -6501,7 +6507,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	841: { // minecraft:light_blue_harness
+	842: { // minecraft:light_blue_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.light_blue_harness"},
@@ -6509,7 +6515,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	585: { // minecraft:light_blue_shulker_box
+	586: { // minecraft:light_blue_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_shulker_box"},
@@ -6517,7 +6523,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	533: { // minecraft:light_blue_stained_glass
+	534: { // minecraft:light_blue_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_stained_glass"},
@@ -6525,7 +6531,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	549: { // minecraft:light_blue_stained_glass_pane
+	550: { // minecraft:light_blue_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_stained_glass_pane"},
@@ -6533,7 +6539,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	489: { // minecraft:light_blue_terracotta
+	490: { // minecraft:light_blue_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_blue_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_terracotta"},
@@ -6549,7 +6555,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1274: { // minecraft:light_gray_banner
+	1275: { // minecraft:light_gray_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_banner"},
@@ -6557,7 +6563,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1094: { // minecraft:light_gray_bed
+	1095: { // minecraft:light_gray_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_bed"},
@@ -6565,7 +6571,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1045: { // minecraft:light_gray_bundle
+	1046: { // minecraft:light_gray_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.light_gray_bundle"},
@@ -6573,7 +6579,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1407: { // minecraft:light_gray_candle
+	1408: { // minecraft:light_gray_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_candle"},
@@ -6581,7 +6587,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	513: { // minecraft:light_gray_carpet
+	514: { // minecraft:light_gray_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_carpet"},
@@ -6589,7 +6595,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	622: { // minecraft:light_gray_concrete
+	623: { // minecraft:light_gray_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_concrete"},
@@ -6597,7 +6603,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	638: { // minecraft:light_gray_concrete_powder
+	639: { // minecraft:light_gray_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_concrete_powder"},
@@ -6605,7 +6611,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1074: { // minecraft:light_gray_dye
+	1075: { // minecraft:light_gray_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.light_gray_dye"},
@@ -6613,7 +6619,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	606: { // minecraft:light_gray_glazed_terracotta
+	607: { // minecraft:light_gray_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_glazed_terracotta"},
@@ -6621,7 +6627,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	846: { // minecraft:light_gray_harness
+	847: { // minecraft:light_gray_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.light_gray_harness"},
@@ -6629,7 +6635,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	590: { // minecraft:light_gray_shulker_box
+	591: { // minecraft:light_gray_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_shulker_box"},
@@ -6637,7 +6643,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	538: { // minecraft:light_gray_stained_glass
+	539: { // minecraft:light_gray_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_stained_glass"},
@@ -6645,7 +6651,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	554: { // minecraft:light_gray_stained_glass_pane
+	555: { // minecraft:light_gray_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_stained_glass_pane"},
@@ -6653,7 +6659,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	494: { // minecraft:light_gray_terracotta
+	495: { // minecraft:light_gray_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_gray_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_terracotta"},
@@ -6669,7 +6675,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	765: { // minecraft:light_weighted_pressure_plate
+	766: { // minecraft:light_weighted_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:light_weighted_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_weighted_pressure_plate"},
@@ -6677,7 +6683,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	733: { // minecraft:lightning_rod
+	734: { // minecraft:lightning_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lightning_rod",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lightning_rod"},
@@ -6685,7 +6691,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	525: { // minecraft:lilac
+	526: { // minecraft:lilac
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lilac",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lilac"},
@@ -6693,7 +6699,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	242: { // minecraft:lily_of_the_valley
+	243: { // minecraft:lily_of_the_valley
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lily_of_the_valley",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lily_of_the_valley"},
@@ -6701,7 +6707,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	423: { // minecraft:lily_pad
+	424: { // minecraft:lily_pad
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lily_pad",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lily_pad"},
@@ -6709,7 +6715,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1271: { // minecraft:lime_banner
+	1272: { // minecraft:lime_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_banner"},
@@ -6717,7 +6723,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1091: { // minecraft:lime_bed
+	1092: { // minecraft:lime_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_bed"},
@@ -6725,7 +6731,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1042: { // minecraft:lime_bundle
+	1043: { // minecraft:lime_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.lime_bundle"},
@@ -6733,7 +6739,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1404: { // minecraft:lime_candle
+	1405: { // minecraft:lime_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_candle"},
@@ -6741,7 +6747,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	510: { // minecraft:lime_carpet
+	511: { // minecraft:lime_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_carpet"},
@@ -6749,7 +6755,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	619: { // minecraft:lime_concrete
+	620: { // minecraft:lime_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_concrete"},
@@ -6757,7 +6763,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	635: { // minecraft:lime_concrete_powder
+	636: { // minecraft:lime_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_concrete_powder"},
@@ -6765,7 +6771,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1071: { // minecraft:lime_dye
+	1072: { // minecraft:lime_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.lime_dye"},
@@ -6773,7 +6779,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	603: { // minecraft:lime_glazed_terracotta
+	604: { // minecraft:lime_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_glazed_terracotta"},
@@ -6781,7 +6787,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	843: { // minecraft:lime_harness
+	844: { // minecraft:lime_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.lime_harness"},
@@ -6789,7 +6795,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	587: { // minecraft:lime_shulker_box
+	588: { // minecraft:lime_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_shulker_box"},
@@ -6797,7 +6803,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	535: { // minecraft:lime_stained_glass
+	536: { // minecraft:lime_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_stained_glass"},
@@ -6805,7 +6811,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	551: { // minecraft:lime_stained_glass_pane
+	552: { // minecraft:lime_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_stained_glass_pane"},
@@ -6813,7 +6819,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	491: { // minecraft:lime_terracotta
+	492: { // minecraft:lime_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lime_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_terracotta"},
@@ -6829,7 +6835,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1294: { // minecraft:lingering_potion
+	1295: { // minecraft:lingering_potion
 		BreakSound:          "minecraft:entity.item.break",
 		ItemModel:           "minecraft:lingering_potion",
 		ItemName:            &ItemNameComponent{Translate: "item.minecraft.lingering_potion"},
@@ -6838,7 +6844,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:              "common",
 		RepairCost:          0,
 	},
-	1146: { // minecraft:llama_spawn_egg
+	1147: { // minecraft:llama_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:llama_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.llama_spawn_egg"},
@@ -6846,7 +6852,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1383: { // minecraft:lodestone
+	1384: { // minecraft:lodestone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:lodestone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lodestone"},
@@ -6854,7 +6860,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1341: { // minecraft:loom
+	1342: { // minecraft:loom
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:loom",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.loom"},
@@ -6862,7 +6868,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1223: { // minecraft:mace
+	1224: { // minecraft:mace
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -6880,7 +6886,7 @@ var defaultComponents = map[int32]*Components{
 		Tool:         &Tool{},
 		Weapon:       &Weapon{},
 	},
-	1268: { // minecraft:magenta_banner
+	1269: { // minecraft:magenta_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_banner"},
@@ -6888,7 +6894,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1088: { // minecraft:magenta_bed
+	1089: { // minecraft:magenta_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_bed"},
@@ -6896,7 +6902,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1039: { // minecraft:magenta_bundle
+	1040: { // minecraft:magenta_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.magenta_bundle"},
@@ -6904,7 +6910,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1401: { // minecraft:magenta_candle
+	1402: { // minecraft:magenta_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_candle"},
@@ -6912,7 +6918,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	507: { // minecraft:magenta_carpet
+	508: { // minecraft:magenta_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_carpet"},
@@ -6920,7 +6926,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	616: { // minecraft:magenta_concrete
+	617: { // minecraft:magenta_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_concrete"},
@@ -6928,7 +6934,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	632: { // minecraft:magenta_concrete_powder
+	633: { // minecraft:magenta_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_concrete_powder"},
@@ -6936,7 +6942,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1068: { // minecraft:magenta_dye
+	1069: { // minecraft:magenta_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.magenta_dye"},
@@ -6944,7 +6950,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	600: { // minecraft:magenta_glazed_terracotta
+	601: { // minecraft:magenta_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_glazed_terracotta"},
@@ -6952,7 +6958,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	840: { // minecraft:magenta_harness
+	841: { // minecraft:magenta_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.magenta_harness"},
@@ -6960,7 +6966,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	584: { // minecraft:magenta_shulker_box
+	585: { // minecraft:magenta_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_shulker_box"},
@@ -6968,7 +6974,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	532: { // minecraft:magenta_stained_glass
+	533: { // minecraft:magenta_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_stained_glass"},
@@ -6976,7 +6982,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	548: { // minecraft:magenta_stained_glass_pane
+	549: { // minecraft:magenta_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_stained_glass_pane"},
@@ -6984,7 +6990,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	488: { // minecraft:magenta_terracotta
+	489: { // minecraft:magenta_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magenta_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_terracotta"},
@@ -7000,7 +7006,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	575: { // minecraft:magma_block
+	576: { // minecraft:magma_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magma_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magma_block"},
@@ -7008,7 +7014,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1125: { // minecraft:magma_cream
+	1126: { // minecraft:magma_cream
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magma_cream",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.magma_cream"},
@@ -7016,7 +7022,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1207: { // minecraft:magma_cube_spawn_egg
+	1208: { // minecraft:magma_cube_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:magma_cube_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.magma_cube_spawn_egg"},
@@ -7024,7 +7030,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	879: { // minecraft:mangrove_boat
+	880: { // minecraft:mangrove_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.mangrove_boat"},
@@ -7032,7 +7038,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	759: { // minecraft:mangrove_button
+	760: { // minecraft:mangrove_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_button"},
@@ -7040,7 +7046,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	880: { // minecraft:mangrove_chest_boat
+	881: { // minecraft:mangrove_chest_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_chest_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.mangrove_chest_boat"},
@@ -7048,7 +7054,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	788: { // minecraft:mangrove_door
+	789: { // minecraft:mangrove_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_door"},
@@ -7056,7 +7062,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	352: { // minecraft:mangrove_fence
+	353: { // minecraft:mangrove_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_fence"},
@@ -7064,7 +7070,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	829: { // minecraft:mangrove_fence_gate
+	830: { // minecraft:mangrove_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_fence_gate"},
@@ -7072,7 +7078,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1008: { // minecraft:mangrove_hanging_sign
+	1009: { // minecraft:mangrove_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_hanging_sign"},
@@ -7104,7 +7110,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	775: { // minecraft:mangrove_pressure_plate
+	776: { // minecraft:mangrove_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_pressure_plate"},
@@ -7128,7 +7134,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	312: { // minecraft:mangrove_shelf
+	313: { // minecraft:mangrove_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_shelf"},
@@ -7136,7 +7142,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	996: { // minecraft:mangrove_sign
+	997: { // minecraft:mangrove_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_sign"},
@@ -7144,7 +7150,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	278: { // minecraft:mangrove_slab
+	279: { // minecraft:mangrove_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_slab"},
@@ -7152,7 +7158,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	449: { // minecraft:mangrove_stairs
+	450: { // minecraft:mangrove_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_stairs"},
@@ -7160,7 +7166,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	809: { // minecraft:mangrove_trapdoor
+	810: { // minecraft:mangrove_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mangrove_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mangrove_trapdoor"},
@@ -7176,7 +7182,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1231: { // minecraft:map
+	1232: { // minecraft:map
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:map",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.map"},
@@ -7184,7 +7190,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1416: { // minecraft:medium_amethyst_bud
+	1417: { // minecraft:medium_amethyst_bud
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:medium_amethyst_bud",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.medium_amethyst_bud"},
@@ -7192,7 +7198,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	409: { // minecraft:melon
+	410: { // minecraft:melon
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:melon",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.melon"},
@@ -7200,7 +7206,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1109: { // minecraft:melon_seeds
+	1110: { // minecraft:melon_seeds
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:melon_seeds",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.melon_seeds"},
@@ -7208,7 +7214,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1106: { // minecraft:melon_slice
+	1107: { // minecraft:melon_slice
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -7220,7 +7226,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1018: { // minecraft:milk_bucket
+	1019: { // minecraft:milk_bucket
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:milk_bucket",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.milk_bucket"},
@@ -7228,11 +7234,10 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 		UseRemainder: &UseRemainder{
-			Count: 1,
-			ID:    "minecraft:bucket",
+			ID: "minecraft:bucket",
 		},
 	},
-	854: { // minecraft:minecart
+	855: { // minecraft:minecart
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:minecart",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.minecart"},
@@ -7240,7 +7245,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1459: { // minecraft:miner_pottery_sherd
+	1460: { // minecraft:miner_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:miner_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.miner_pottery_sherd"},
@@ -7248,7 +7253,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1345: { // minecraft:mojang_banner_pattern
+	1346: { // minecraft:mojang_banner_pattern
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:mojang_banner_pattern",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.mojang_banner_pattern"},
@@ -7257,7 +7262,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "rare",
 		RepairCost:             0,
 	},
-	1164: { // minecraft:mooshroom_spawn_egg
+	1165: { // minecraft:mooshroom_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mooshroom_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.mooshroom_spawn_egg"},
@@ -7265,7 +7270,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	262: { // minecraft:moss_block
+	263: { // minecraft:moss_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:moss_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.moss_block"},
@@ -7273,7 +7278,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	261: { // minecraft:moss_carpet
+	262: { // minecraft:moss_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:moss_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.moss_carpet"},
@@ -7281,7 +7286,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	320: { // minecraft:mossy_cobblestone
+	321: { // minecraft:mossy_cobblestone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mossy_cobblestone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mossy_cobblestone"},
@@ -7289,7 +7294,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	703: { // minecraft:mossy_cobblestone_slab
+	704: { // minecraft:mossy_cobblestone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mossy_cobblestone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mossy_cobblestone_slab"},
@@ -7297,7 +7302,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	685: { // minecraft:mossy_cobblestone_stairs
+	686: { // minecraft:mossy_cobblestone_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mossy_cobblestone_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mossy_cobblestone_stairs"},
@@ -7305,7 +7310,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	457: { // minecraft:mossy_cobblestone_wall
+	458: { // minecraft:mossy_cobblestone_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mossy_cobblestone_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mossy_cobblestone_wall"},
@@ -7313,7 +7318,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	701: { // minecraft:mossy_stone_brick_slab
+	702: { // minecraft:mossy_stone_brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mossy_stone_brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mossy_stone_brick_slab"},
@@ -7321,7 +7326,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	683: { // minecraft:mossy_stone_brick_stairs
+	684: { // minecraft:mossy_stone_brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mossy_stone_brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mossy_stone_brick_stairs"},
@@ -7329,7 +7334,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	461: { // minecraft:mossy_stone_brick_wall
+	462: { // minecraft:mossy_stone_brick_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mossy_stone_brick_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mossy_stone_brick_wall"},
@@ -7337,7 +7342,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	376: { // minecraft:mossy_stone_bricks
+	377: { // minecraft:mossy_stone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mossy_stone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mossy_stone_bricks"},
@@ -7345,7 +7350,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1460: { // minecraft:mourner_pottery_sherd
+	1461: { // minecraft:mourner_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mourner_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.mourner_pottery_sherd"},
@@ -7361,7 +7366,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	291: { // minecraft:mud_brick_slab
+	292: { // minecraft:mud_brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mud_brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mud_brick_slab"},
@@ -7369,7 +7374,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	421: { // minecraft:mud_brick_stairs
+	422: { // minecraft:mud_brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mud_brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mud_brick_stairs"},
@@ -7377,7 +7382,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	464: { // minecraft:mud_brick_wall
+	465: { // minecraft:mud_brick_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mud_brick_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mud_brick_wall"},
@@ -7385,7 +7390,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	380: { // minecraft:mud_bricks
+	381: { // minecraft:mud_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mud_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mud_bricks"},
@@ -7401,7 +7406,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1137: { // minecraft:mule_spawn_egg
+	1138: { // minecraft:mule_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mule_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.mule_spawn_egg"},
@@ -7409,7 +7414,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	389: { // minecraft:mushroom_stem
+	390: { // minecraft:mushroom_stem
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mushroom_stem",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mushroom_stem"},
@@ -7417,7 +7422,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	947: { // minecraft:mushroom_stew
+	948: { // minecraft:mushroom_stew
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  6,
@@ -7429,11 +7434,10 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 		UseRemainder: &UseRemainder{
-			Count: 1,
-			ID:    "minecraft:bowl",
+			ID: "minecraft:bowl",
 		},
 	},
-	1322: { // minecraft:music_disc_11
+	1323: { // minecraft:music_disc_11
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_11",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_11"},
@@ -7442,7 +7446,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1309: { // minecraft:music_disc_13
+	1310: { // minecraft:music_disc_13
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_13",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_13"},
@@ -7451,7 +7455,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1326: { // minecraft:music_disc_5
+	1327: { // minecraft:music_disc_5
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_5",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_5"},
@@ -7460,7 +7464,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1311: { // minecraft:music_disc_blocks
+	1312: { // minecraft:music_disc_blocks
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_blocks",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_blocks"},
@@ -7469,7 +7473,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1310: { // minecraft:music_disc_cat
+	1311: { // minecraft:music_disc_cat
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_cat",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_cat"},
@@ -7478,7 +7482,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1312: { // minecraft:music_disc_chirp
+	1313: { // minecraft:music_disc_chirp
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_chirp",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_chirp"},
@@ -7487,7 +7491,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1313: { // minecraft:music_disc_creator
+	1314: { // minecraft:music_disc_creator
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_creator",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_creator"},
@@ -7496,7 +7500,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "rare",
 		RepairCost:      0,
 	},
-	1314: { // minecraft:music_disc_creator_music_box
+	1315: { // minecraft:music_disc_creator_music_box
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_creator_music_box",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_creator_music_box"},
@@ -7505,7 +7509,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1315: { // minecraft:music_disc_far
+	1316: { // minecraft:music_disc_far
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_far",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_far"},
@@ -7514,7 +7518,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1316: { // minecraft:music_disc_lava_chicken
+	1317: { // minecraft:music_disc_lava_chicken
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_lava_chicken",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_lava_chicken"},
@@ -7523,7 +7527,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "rare",
 		RepairCost:      0,
 	},
-	1317: { // minecraft:music_disc_mall
+	1318: { // minecraft:music_disc_mall
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_mall",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_mall"},
@@ -7532,7 +7536,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1318: { // minecraft:music_disc_mellohi
+	1319: { // minecraft:music_disc_mellohi
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_mellohi",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_mellohi"},
@@ -7541,7 +7545,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1324: { // minecraft:music_disc_otherside
+	1325: { // minecraft:music_disc_otherside
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_otherside",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_otherside"},
@@ -7550,7 +7554,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "rare",
 		RepairCost:      0,
 	},
-	1327: { // minecraft:music_disc_pigstep
+	1328: { // minecraft:music_disc_pigstep
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_pigstep",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_pigstep"},
@@ -7559,7 +7563,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "rare",
 		RepairCost:      0,
 	},
-	1328: { // minecraft:music_disc_precipice
+	1329: { // minecraft:music_disc_precipice
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_precipice",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_precipice"},
@@ -7568,7 +7572,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1325: { // minecraft:music_disc_relic
+	1326: { // minecraft:music_disc_relic
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_relic",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_relic"},
@@ -7577,7 +7581,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1319: { // minecraft:music_disc_stal
+	1320: { // minecraft:music_disc_stal
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_stal",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_stal"},
@@ -7586,7 +7590,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1320: { // minecraft:music_disc_strad
+	1321: { // minecraft:music_disc_strad
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_strad",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_strad"},
@@ -7595,7 +7599,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1329: { // minecraft:music_disc_tears
+	1330: { // minecraft:music_disc_tears
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_tears",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_tears"},
@@ -7604,7 +7608,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1323: { // minecraft:music_disc_wait
+	1324: { // minecraft:music_disc_wait
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_wait",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_wait"},
@@ -7613,7 +7617,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1321: { // minecraft:music_disc_ward
+	1322: { // minecraft:music_disc_ward
 		BreakSound:      "minecraft:entity.item.break",
 		ItemModel:       "minecraft:music_disc_ward",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.music_disc_ward"},
@@ -7622,7 +7626,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "uncommon",
 		RepairCost:      0,
 	},
-	1264: { // minecraft:mutton
+	1265: { // minecraft:mutton
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -7634,7 +7638,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	422: { // minecraft:mycelium
+	423: { // minecraft:mycelium
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:mycelium",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.mycelium"},
@@ -7642,7 +7646,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1262: { // minecraft:name_tag
+	1263: { // minecraft:name_tag
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:name_tag",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.name_tag"},
@@ -7650,7 +7654,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1332: { // minecraft:nautilus_shell
+	1333: { // minecraft:nautilus_shell
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nautilus_shell",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.nautilus_shell"},
@@ -7658,7 +7662,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1156: { // minecraft:nautilus_spawn_egg
+	1157: { // minecraft:nautilus_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nautilus_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.nautilus_spawn_egg"},
@@ -7666,7 +7670,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1245: { // minecraft:nether_brick
+	1246: { // minecraft:nether_brick
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nether_brick",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.nether_brick"},
@@ -7674,7 +7678,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	427: { // minecraft:nether_brick_fence
+	428: { // minecraft:nether_brick_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nether_brick_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.nether_brick_fence"},
@@ -7682,7 +7686,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	292: { // minecraft:nether_brick_slab
+	293: { // minecraft:nether_brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nether_brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.nether_brick_slab"},
@@ -7690,7 +7694,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	428: { // minecraft:nether_brick_stairs
+	429: { // minecraft:nether_brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nether_brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.nether_brick_stairs"},
@@ -7698,7 +7702,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	465: { // minecraft:nether_brick_wall
+	466: { // minecraft:nether_brick_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nether_brick_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.nether_brick_wall"},
@@ -7706,7 +7710,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	424: { // minecraft:nether_bricks
+	425: { // minecraft:nether_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nether_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.nether_bricks"},
@@ -7730,7 +7734,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	253: { // minecraft:nether_sprouts
+	254: { // minecraft:nether_sprouts
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nether_sprouts",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.nether_sprouts"},
@@ -7738,7 +7742,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1240: { // minecraft:nether_star
+	1241: { // minecraft:nether_star
 		BreakSound:      "minecraft:entity.item.break",
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_explosion"},
 		ItemModel:       "minecraft:nether_star",
@@ -7747,7 +7751,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "rare",
 		RepairCost:      0,
 	},
-	1119: { // minecraft:nether_wart
+	1120: { // minecraft:nether_wart
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nether_wart",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.nether_wart"},
@@ -7755,7 +7759,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	576: { // minecraft:nether_wart_block
+	577: { // minecraft:nether_wart_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:nether_wart_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.nether_wart_block"},
@@ -7763,7 +7767,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	944: { // minecraft:netherite_axe
+	945: { // minecraft:netherite_axe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 9, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -7799,7 +7803,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "common",
 		RepairCost:      0,
 	},
-	981: { // minecraft:netherite_boots
+	982: { // minecraft:netherite_boots
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
 			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.boots", Operation: "add_value", Slot: "feet"},
@@ -7817,7 +7821,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 		Repairable:      &Repairable{Items: "#minecraft:repairs_netherite_armor"},
 	},
-	979: { // minecraft:netherite_chestplate
+	980: { // minecraft:netherite_chestplate
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 8, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
 			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.chestplate", Operation: "add_value", Slot: "chest"},
@@ -7835,7 +7839,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 		Repairable:      &Repairable{Items: "#minecraft:repairs_netherite_armor"},
 	},
-	978: { // minecraft:netherite_helmet
+	979: { // minecraft:netherite_helmet
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 3, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
 			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
@@ -7853,7 +7857,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 		Repairable:      &Repairable{Items: "#minecraft:repairs_netherite_armor"},
 	},
-	945: { // minecraft:netherite_hoe
+	946: { // minecraft:netherite_hoe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: 0, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -7879,7 +7883,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1259: { // minecraft:netherite_horse_armor
+	1260: { // minecraft:netherite_horse_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 19, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -7893,7 +7897,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "common",
 		RepairCost:      0,
 	},
-	909: { // minecraft:netherite_ingot
+	910: { // minecraft:netherite_ingot
 		BreakSound:           "minecraft:entity.item.break",
 		DamageResistant:      &DamageResistant{Types: "#minecraft:is_fire"},
 		ItemModel:            "minecraft:netherite_ingot",
@@ -7903,7 +7907,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:               "common",
 		RepairCost:           0,
 	},
-	980: { // minecraft:netherite_leggings
+	981: { // minecraft:netherite_leggings
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 6, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
 			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.leggings", Operation: "add_value", Slot: "legs"},
@@ -7921,7 +7925,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 		Repairable:      &Repairable{Items: "#minecraft:repairs_netherite_armor"},
 	},
-	1336: { // minecraft:netherite_nautilus_armor
+	1337: { // minecraft:netherite_nautilus_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 19, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 3, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -7935,7 +7939,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "common",
 		RepairCost:      0,
 	},
-	943: { // minecraft:netherite_pickaxe
+	944: { // minecraft:netherite_pickaxe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -7961,7 +7965,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	910: { // minecraft:netherite_scrap
+	911: { // minecraft:netherite_scrap
 		BreakSound:      "minecraft:entity.item.break",
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
 		ItemModel:       "minecraft:netherite_scrap",
@@ -7970,7 +7974,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:          "common",
 		RepairCost:      0,
 	},
-	942: { // minecraft:netherite_shovel
+	943: { // minecraft:netherite_shovel
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 5.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -7996,7 +8000,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1302: { // minecraft:netherite_spear
+	1303: { // minecraft:netherite_spear
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 4, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3.13043475151062, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -8016,7 +8020,7 @@ var defaultComponents = map[int32]*Components{
 		Repairable:          &Repairable{Items: "#minecraft:netherite_tool_materials"},
 		Weapon:              &Weapon{},
 	},
-	941: { // minecraft:netherite_sword
+	942: { // minecraft:netherite_sword
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 7, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -8041,7 +8045,7 @@ var defaultComponents = map[int32]*Components{
 		},
 		Weapon: &Weapon{},
 	},
-	1426: { // minecraft:netherite_upgrade_smithing_template
+	1427: { // minecraft:netherite_upgrade_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:netherite_upgrade_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.netherite_upgrade_smithing_template"},
@@ -8049,7 +8053,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	359: { // minecraft:netherrack
+	360: { // minecraft:netherrack
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:netherrack",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.netherrack"},
@@ -8057,7 +8061,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	748: { // minecraft:note_block
+	749: { // minecraft:note_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:note_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.note_block"},
@@ -8065,7 +8069,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	863: { // minecraft:oak_boat
+	864: { // minecraft:oak_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.oak_boat"},
@@ -8073,7 +8077,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	751: { // minecraft:oak_button
+	752: { // minecraft:oak_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_button"},
@@ -8081,7 +8085,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	864: { // minecraft:oak_chest_boat
+	865: { // minecraft:oak_chest_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_chest_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.oak_chest_boat"},
@@ -8089,7 +8093,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	780: { // minecraft:oak_door
+	781: { // minecraft:oak_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_door"},
@@ -8097,7 +8101,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	344: { // minecraft:oak_fence
+	345: { // minecraft:oak_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_fence"},
@@ -8105,7 +8109,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	821: { // minecraft:oak_fence_gate
+	822: { // minecraft:oak_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_fence_gate"},
@@ -8113,7 +8117,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1000: { // minecraft:oak_hanging_sign
+	1001: { // minecraft:oak_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_hanging_sign"},
@@ -8145,7 +8149,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	767: { // minecraft:oak_pressure_plate
+	768: { // minecraft:oak_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_pressure_plate"},
@@ -8161,7 +8165,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	313: { // minecraft:oak_shelf
+	314: { // minecraft:oak_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_shelf"},
@@ -8169,7 +8173,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	988: { // minecraft:oak_sign
+	989: { // minecraft:oak_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_sign"},
@@ -8177,7 +8181,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	270: { // minecraft:oak_slab
+	271: { // minecraft:oak_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_slab"},
@@ -8185,7 +8189,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	441: { // minecraft:oak_stairs
+	442: { // minecraft:oak_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_stairs"},
@@ -8193,7 +8197,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	801: { // minecraft:oak_trapdoor
+	802: { // minecraft:oak_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oak_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oak_trapdoor"},
@@ -8209,7 +8213,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	726: { // minecraft:observer
+	727: { // minecraft:observer
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:observer",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.observer"},
@@ -8217,7 +8221,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	321: { // minecraft:obsidian
+	322: { // minecraft:obsidian
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:obsidian",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.obsidian"},
@@ -8225,7 +8229,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1147: { // minecraft:ocelot_spawn_egg
+	1148: { // minecraft:ocelot_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ocelot_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ocelot_spawn_egg"},
@@ -8233,7 +8237,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1420: { // minecraft:ochre_froglight
+	1421: { // minecraft:ochre_froglight
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ochre_froglight",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.ochre_froglight"},
@@ -8241,7 +8245,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1504: { // minecraft:ominous_bottle
+	1505: { // minecraft:ominous_bottle
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:ominous_bottle",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.ominous_bottle"},
@@ -8250,7 +8254,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "uncommon",
 		RepairCost:             0,
 	},
-	1502: { // minecraft:ominous_trial_key
+	1503: { // minecraft:ominous_trial_key
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ominous_trial_key",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ominous_trial_key"},
@@ -8258,7 +8262,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	230: { // minecraft:open_eyeblossom
+	231: { // minecraft:open_eyeblossom
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:open_eyeblossom",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.open_eyeblossom"},
@@ -8266,7 +8270,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1267: { // minecraft:orange_banner
+	1268: { // minecraft:orange_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_banner"},
@@ -8274,7 +8278,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1087: { // minecraft:orange_bed
+	1088: { // minecraft:orange_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_bed"},
@@ -8282,7 +8286,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1038: { // minecraft:orange_bundle
+	1039: { // minecraft:orange_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.orange_bundle"},
@@ -8290,7 +8294,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1400: { // minecraft:orange_candle
+	1401: { // minecraft:orange_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_candle"},
@@ -8298,7 +8302,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	506: { // minecraft:orange_carpet
+	507: { // minecraft:orange_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_carpet"},
@@ -8306,7 +8310,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	615: { // minecraft:orange_concrete
+	616: { // minecraft:orange_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_concrete"},
@@ -8314,7 +8318,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	631: { // minecraft:orange_concrete_powder
+	632: { // minecraft:orange_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_concrete_powder"},
@@ -8322,7 +8326,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1067: { // minecraft:orange_dye
+	1068: { // minecraft:orange_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.orange_dye"},
@@ -8330,7 +8334,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	599: { // minecraft:orange_glazed_terracotta
+	600: { // minecraft:orange_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_glazed_terracotta"},
@@ -8338,7 +8342,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	839: { // minecraft:orange_harness
+	840: { // minecraft:orange_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.orange_harness"},
@@ -8346,7 +8350,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	583: { // minecraft:orange_shulker_box
+	584: { // minecraft:orange_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_shulker_box"},
@@ -8354,7 +8358,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	531: { // minecraft:orange_stained_glass
+	532: { // minecraft:orange_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_stained_glass"},
@@ -8362,7 +8366,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	547: { // minecraft:orange_stained_glass_pane
+	548: { // minecraft:orange_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_stained_glass_pane"},
@@ -8370,7 +8374,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	487: { // minecraft:orange_terracotta
+	488: { // minecraft:orange_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_terracotta"},
@@ -8378,7 +8382,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	237: { // minecraft:orange_tulip
+	238: { // minecraft:orange_tulip
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:orange_tulip",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_tulip"},
@@ -8394,7 +8398,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	240: { // minecraft:oxeye_daisy
+	241: { // minecraft:oxeye_daisy
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxeye_daisy",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxeye_daisy"},
@@ -8418,7 +8422,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	394: { // minecraft:oxidized_copper_bars
+	395: { // minecraft:oxidized_copper_bars
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxidized_copper_bars",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxidized_copper_bars"},
@@ -8426,7 +8430,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1479: { // minecraft:oxidized_copper_bulb
+	1480: { // minecraft:oxidized_copper_bulb
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxidized_copper_bulb",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxidized_copper_bulb"},
@@ -8434,7 +8438,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	403: { // minecraft:oxidized_copper_chain
+	404: { // minecraft:oxidized_copper_chain
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxidized_copper_chain",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxidized_copper_chain"},
@@ -8442,7 +8446,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1487: { // minecraft:oxidized_copper_chest
+	1488: { // minecraft:oxidized_copper_chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxidized_copper_chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxidized_copper_chest"},
@@ -8450,7 +8454,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	795: { // minecraft:oxidized_copper_door
+	796: { // minecraft:oxidized_copper_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxidized_copper_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxidized_copper_door"},
@@ -8458,7 +8462,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1495: { // minecraft:oxidized_copper_golem_statue
+	1496: { // minecraft:oxidized_copper_golem_statue
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxidized_copper_golem_statue",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxidized_copper_golem_statue"},
@@ -8466,7 +8470,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1471: { // minecraft:oxidized_copper_grate
+	1472: { // minecraft:oxidized_copper_grate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxidized_copper_grate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxidized_copper_grate"},
@@ -8474,7 +8478,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1368: { // minecraft:oxidized_copper_lantern
+	1369: { // minecraft:oxidized_copper_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxidized_copper_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxidized_copper_lantern"},
@@ -8482,7 +8486,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	816: { // minecraft:oxidized_copper_trapdoor
+	817: { // minecraft:oxidized_copper_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxidized_copper_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxidized_copper_trapdoor"},
@@ -8514,7 +8518,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	736: { // minecraft:oxidized_lightning_rod
+	737: { // minecraft:oxidized_lightning_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:oxidized_lightning_rod",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.oxidized_lightning_rod"},
@@ -8522,7 +8526,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	522: { // minecraft:packed_ice
+	523: { // minecraft:packed_ice
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:packed_ice",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.packed_ice"},
@@ -8530,7 +8534,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	379: { // minecraft:packed_mud
+	380: { // minecraft:packed_mud
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:packed_mud",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.packed_mud"},
@@ -8538,7 +8542,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	985: { // minecraft:painting
+	986: { // minecraft:painting
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:painting",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.painting"},
@@ -8546,7 +8550,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	264: { // minecraft:pale_hanging_moss
+	265: { // minecraft:pale_hanging_moss
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_hanging_moss",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_hanging_moss"},
@@ -8554,7 +8558,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	265: { // minecraft:pale_moss_block
+	266: { // minecraft:pale_moss_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_moss_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_moss_block"},
@@ -8562,7 +8566,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	263: { // minecraft:pale_moss_carpet
+	264: { // minecraft:pale_moss_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_moss_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_moss_carpet"},
@@ -8570,7 +8574,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	877: { // minecraft:pale_oak_boat
+	878: { // minecraft:pale_oak_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pale_oak_boat"},
@@ -8578,7 +8582,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	758: { // minecraft:pale_oak_button
+	759: { // minecraft:pale_oak_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_button"},
@@ -8586,7 +8590,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	878: { // minecraft:pale_oak_chest_boat
+	879: { // minecraft:pale_oak_chest_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_chest_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pale_oak_chest_boat"},
@@ -8594,7 +8598,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	787: { // minecraft:pale_oak_door
+	788: { // minecraft:pale_oak_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_door"},
@@ -8602,7 +8606,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	351: { // minecraft:pale_oak_fence
+	352: { // minecraft:pale_oak_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_fence"},
@@ -8610,7 +8614,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	828: { // minecraft:pale_oak_fence_gate
+	829: { // minecraft:pale_oak_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_fence_gate"},
@@ -8618,7 +8622,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1007: { // minecraft:pale_oak_hanging_sign
+	1008: { // minecraft:pale_oak_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_hanging_sign"},
@@ -8650,7 +8654,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	774: { // minecraft:pale_oak_pressure_plate
+	775: { // minecraft:pale_oak_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_pressure_plate"},
@@ -8666,7 +8670,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	314: { // minecraft:pale_oak_shelf
+	315: { // minecraft:pale_oak_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_shelf"},
@@ -8674,7 +8678,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	995: { // minecraft:pale_oak_sign
+	996: { // minecraft:pale_oak_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_sign"},
@@ -8682,7 +8686,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	277: { // minecraft:pale_oak_slab
+	278: { // minecraft:pale_oak_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_slab"},
@@ -8690,7 +8694,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	448: { // minecraft:pale_oak_stairs
+	449: { // minecraft:pale_oak_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_stairs"},
@@ -8698,7 +8702,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	808: { // minecraft:pale_oak_trapdoor
+	809: { // minecraft:pale_oak_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pale_oak_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pale_oak_trapdoor"},
@@ -8714,7 +8718,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1148: { // minecraft:panda_spawn_egg
+	1149: { // minecraft:panda_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:panda_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.panda_spawn_egg"},
@@ -8722,7 +8726,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1028: { // minecraft:paper
+	1029: { // minecraft:paper
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:paper",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.paper"},
@@ -8730,7 +8734,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1176: { // minecraft:parched_spawn_egg
+	1177: { // minecraft:parched_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:parched_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.parched_spawn_egg"},
@@ -8738,7 +8742,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1139: { // minecraft:parrot_spawn_egg
+	1140: { // minecraft:parrot_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:parrot_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.parrot_spawn_egg"},
@@ -8746,7 +8750,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1422: { // minecraft:pearlescent_froglight
+	1423: { // minecraft:pearlescent_froglight
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pearlescent_froglight",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pearlescent_froglight"},
@@ -8754,7 +8758,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	527: { // minecraft:peony
+	528: { // minecraft:peony
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:peony",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.peony"},
@@ -8762,7 +8766,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	287: { // minecraft:petrified_oak_slab
+	288: { // minecraft:petrified_oak_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:petrified_oak_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.petrified_oak_slab"},
@@ -8770,7 +8774,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	861: { // minecraft:phantom_membrane
+	862: { // minecraft:phantom_membrane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:phantom_membrane",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.phantom_membrane"},
@@ -8778,7 +8782,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1193: { // minecraft:phantom_spawn_egg
+	1194: { // minecraft:phantom_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:phantom_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.phantom_spawn_egg"},
@@ -8786,7 +8790,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1132: { // minecraft:pig_spawn_egg
+	1133: { // minecraft:pig_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pig_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pig_spawn_egg"},
@@ -8794,7 +8798,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1347: { // minecraft:piglin_banner_pattern
+	1348: { // minecraft:piglin_banner_pattern
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:piglin_banner_pattern",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.piglin_banner_pattern"},
@@ -8803,7 +8807,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "uncommon",
 		RepairCost:             0,
 	},
-	1209: { // minecraft:piglin_brute_spawn_egg
+	1210: { // minecraft:piglin_brute_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:piglin_brute_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.piglin_brute_spawn_egg"},
@@ -8811,7 +8815,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1239: { // minecraft:piglin_head
+	1240: { // minecraft:piglin_head
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
 		},
@@ -8822,7 +8826,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1208: { // minecraft:piglin_spawn_egg
+	1209: { // minecraft:piglin_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:piglin_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.piglin_spawn_egg"},
@@ -8830,7 +8834,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1199: { // minecraft:pillager_spawn_egg
+	1200: { // minecraft:pillager_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pillager_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pillager_spawn_egg"},
@@ -8838,7 +8842,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1272: { // minecraft:pink_banner
+	1273: { // minecraft:pink_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_banner"},
@@ -8846,7 +8850,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1092: { // minecraft:pink_bed
+	1093: { // minecraft:pink_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_bed"},
@@ -8854,7 +8858,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1043: { // minecraft:pink_bundle
+	1044: { // minecraft:pink_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pink_bundle"},
@@ -8862,7 +8866,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1405: { // minecraft:pink_candle
+	1406: { // minecraft:pink_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_candle"},
@@ -8870,7 +8874,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	511: { // minecraft:pink_carpet
+	512: { // minecraft:pink_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_carpet"},
@@ -8878,7 +8882,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	620: { // minecraft:pink_concrete
+	621: { // minecraft:pink_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_concrete"},
@@ -8886,7 +8890,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	636: { // minecraft:pink_concrete_powder
+	637: { // minecraft:pink_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_concrete_powder"},
@@ -8894,7 +8898,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1072: { // minecraft:pink_dye
+	1073: { // minecraft:pink_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pink_dye"},
@@ -8902,7 +8906,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	604: { // minecraft:pink_glazed_terracotta
+	605: { // minecraft:pink_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_glazed_terracotta"},
@@ -8910,7 +8914,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	844: { // minecraft:pink_harness
+	845: { // minecraft:pink_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pink_harness"},
@@ -8918,7 +8922,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	258: { // minecraft:pink_petals
+	259: { // minecraft:pink_petals
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_petals",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_petals"},
@@ -8926,7 +8930,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	588: { // minecraft:pink_shulker_box
+	589: { // minecraft:pink_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_shulker_box"},
@@ -8934,7 +8938,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	536: { // minecraft:pink_stained_glass
+	537: { // minecraft:pink_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_stained_glass"},
@@ -8942,7 +8946,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	552: { // minecraft:pink_stained_glass_pane
+	553: { // minecraft:pink_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_stained_glass_pane"},
@@ -8950,7 +8954,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	492: { // minecraft:pink_terracotta
+	493: { // minecraft:pink_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_terracotta"},
@@ -8958,7 +8962,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	239: { // minecraft:pink_tulip
+	240: { // minecraft:pink_tulip
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pink_tulip",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_tulip"},
@@ -8974,7 +8978,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	722: { // minecraft:piston
+	723: { // minecraft:piston
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:piston",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.piston"},
@@ -8982,7 +8986,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	245: { // minecraft:pitcher_plant
+	246: { // minecraft:pitcher_plant
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pitcher_plant",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pitcher_plant"},
@@ -8990,7 +8994,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1286: { // minecraft:pitcher_pod
+	1287: { // minecraft:pitcher_pod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pitcher_pod",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pitcher_pod"},
@@ -8998,7 +9002,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1235: { // minecraft:player_head
+	1236: { // minecraft:player_head
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
 		},
@@ -9009,7 +9013,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1461: { // minecraft:plenty_pottery_sherd
+	1462: { // minecraft:plenty_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:plenty_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.plenty_pottery_sherd"},
@@ -9025,7 +9029,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1419: { // minecraft:pointed_dripstone
+	1420: { // minecraft:pointed_dripstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pointed_dripstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pointed_dripstone"},
@@ -9033,7 +9037,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1230: { // minecraft:poisonous_potato
+	1231: { // minecraft:poisonous_potato
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -9045,7 +9049,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1149: { // minecraft:polar_bear_spawn_egg
+	1150: { // minecraft:polar_bear_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polar_bear_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.polar_bear_spawn_egg"},
@@ -9061,7 +9065,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	710: { // minecraft:polished_andesite_slab
+	711: { // minecraft:polished_andesite_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_andesite_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_andesite_slab"},
@@ -9069,7 +9073,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	693: { // minecraft:polished_andesite_stairs
+	694: { // minecraft:polished_andesite_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_andesite_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_andesite_stairs"},
@@ -9077,7 +9081,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	363: { // minecraft:polished_basalt
+	364: { // minecraft:polished_basalt
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_basalt",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_basalt"},
@@ -9085,7 +9089,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1389: { // minecraft:polished_blackstone
+	1390: { // minecraft:polished_blackstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_blackstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_blackstone"},
@@ -9093,7 +9097,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1394: { // minecraft:polished_blackstone_brick_slab
+	1395: { // minecraft:polished_blackstone_brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_blackstone_brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_blackstone_brick_slab"},
@@ -9101,7 +9105,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1395: { // minecraft:polished_blackstone_brick_stairs
+	1396: { // minecraft:polished_blackstone_brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_blackstone_brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_blackstone_brick_stairs"},
@@ -9109,7 +9113,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	473: { // minecraft:polished_blackstone_brick_wall
+	474: { // minecraft:polished_blackstone_brick_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_blackstone_brick_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_blackstone_brick_wall"},
@@ -9117,7 +9121,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1393: { // minecraft:polished_blackstone_bricks
+	1394: { // minecraft:polished_blackstone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_blackstone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_blackstone_bricks"},
@@ -9125,7 +9129,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	750: { // minecraft:polished_blackstone_button
+	751: { // minecraft:polished_blackstone_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_blackstone_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_blackstone_button"},
@@ -9133,7 +9137,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	764: { // minecraft:polished_blackstone_pressure_plate
+	765: { // minecraft:polished_blackstone_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_blackstone_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_blackstone_pressure_plate"},
@@ -9141,7 +9145,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1390: { // minecraft:polished_blackstone_slab
+	1391: { // minecraft:polished_blackstone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_blackstone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_blackstone_slab"},
@@ -9149,7 +9153,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1391: { // minecraft:polished_blackstone_stairs
+	1392: { // minecraft:polished_blackstone_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_blackstone_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_blackstone_stairs"},
@@ -9157,7 +9161,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	472: { // minecraft:polished_blackstone_wall
+	473: { // minecraft:polished_blackstone_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_blackstone_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_blackstone_wall"},
@@ -9173,7 +9177,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	713: { // minecraft:polished_deepslate_slab
+	714: { // minecraft:polished_deepslate_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_deepslate_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_deepslate_slab"},
@@ -9181,7 +9185,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	696: { // minecraft:polished_deepslate_stairs
+	697: { // minecraft:polished_deepslate_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_deepslate_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_deepslate_stairs"},
@@ -9189,7 +9193,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	475: { // minecraft:polished_deepslate_wall
+	476: { // minecraft:polished_deepslate_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_deepslate_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_deepslate_wall"},
@@ -9205,7 +9209,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	702: { // minecraft:polished_diorite_slab
+	703: { // minecraft:polished_diorite_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_diorite_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_diorite_slab"},
@@ -9213,7 +9217,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	684: { // minecraft:polished_diorite_stairs
+	685: { // minecraft:polished_diorite_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_diorite_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_diorite_stairs"},
@@ -9229,7 +9233,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	699: { // minecraft:polished_granite_slab
+	700: { // minecraft:polished_granite_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_granite_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_granite_slab"},
@@ -9237,7 +9241,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	681: { // minecraft:polished_granite_stairs
+	682: { // minecraft:polished_granite_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:polished_granite_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.polished_granite_stairs"},
@@ -9277,7 +9281,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1284: { // minecraft:popped_chorus_fruit
+	1285: { // minecraft:popped_chorus_fruit
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:popped_chorus_fruit",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.popped_chorus_fruit"},
@@ -9285,7 +9289,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	232: { // minecraft:poppy
+	233: { // minecraft:poppy
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:poppy",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.poppy"},
@@ -9293,7 +9297,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	983: { // minecraft:porkchop
+	984: { // minecraft:porkchop
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  3,
@@ -9305,7 +9309,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1228: { // minecraft:potato
+	1229: { // minecraft:potato
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  1,
@@ -9317,7 +9321,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1121: { // minecraft:potion
+	1122: { // minecraft:potion
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:potion",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.potion"},
@@ -9325,11 +9329,10 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 		UseRemainder: &UseRemainder{
-			Count: 1,
-			ID:    "minecraft:glass_bottle",
+			ID: "minecraft:glass_bottle",
 		},
 	},
-	1015: { // minecraft:powder_snow_bucket
+	1016: { // minecraft:powder_snow_bucket
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:powder_snow_bucket",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.powder_snow_bucket"},
@@ -9337,7 +9340,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	833: { // minecraft:powered_rail
+	834: { // minecraft:powered_rail
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:powered_rail",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.powered_rail"},
@@ -9345,7 +9348,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	562: { // minecraft:prismarine
+	563: { // minecraft:prismarine
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:prismarine",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.prismarine"},
@@ -9353,7 +9356,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	298: { // minecraft:prismarine_brick_slab
+	299: { // minecraft:prismarine_brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:prismarine_brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.prismarine_brick_slab"},
@@ -9361,7 +9364,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	566: { // minecraft:prismarine_brick_stairs
+	567: { // minecraft:prismarine_brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:prismarine_brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.prismarine_brick_stairs"},
@@ -9369,7 +9372,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	563: { // minecraft:prismarine_bricks
+	564: { // minecraft:prismarine_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:prismarine_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.prismarine_bricks"},
@@ -9377,7 +9380,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1248: { // minecraft:prismarine_crystals
+	1249: { // minecraft:prismarine_crystals
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:prismarine_crystals",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.prismarine_crystals"},
@@ -9385,7 +9388,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1247: { // minecraft:prismarine_shard
+	1248: { // minecraft:prismarine_shard
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:prismarine_shard",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.prismarine_shard"},
@@ -9393,7 +9396,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	297: { // minecraft:prismarine_slab
+	298: { // minecraft:prismarine_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:prismarine_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.prismarine_slab"},
@@ -9401,7 +9404,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	565: { // minecraft:prismarine_stairs
+	566: { // minecraft:prismarine_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:prismarine_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.prismarine_stairs"},
@@ -9409,7 +9412,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	459: { // minecraft:prismarine_wall
+	460: { // minecraft:prismarine_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:prismarine_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.prismarine_wall"},
@@ -9417,7 +9420,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1462: { // minecraft:prize_pottery_sherd
+	1463: { // minecraft:prize_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:prize_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.prize_pottery_sherd"},
@@ -9425,7 +9428,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1060: { // minecraft:pufferfish
+	1061: { // minecraft:pufferfish
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  1,
@@ -9437,7 +9440,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1019: { // minecraft:pufferfish_bucket
+	1020: { // minecraft:pufferfish_bucket
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  1,
@@ -9449,7 +9452,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1157: { // minecraft:pufferfish_spawn_egg
+	1158: { // minecraft:pufferfish_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pufferfish_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pufferfish_spawn_egg"},
@@ -9457,7 +9460,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	356: { // minecraft:pumpkin
+	357: { // minecraft:pumpkin
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pumpkin",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pumpkin"},
@@ -9465,7 +9468,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1241: { // minecraft:pumpkin_pie
+	1242: { // minecraft:pumpkin_pie
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  8,
@@ -9477,7 +9480,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1108: { // minecraft:pumpkin_seeds
+	1109: { // minecraft:pumpkin_seeds
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:pumpkin_seeds",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pumpkin_seeds"},
@@ -9485,7 +9488,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1276: { // minecraft:purple_banner
+	1277: { // minecraft:purple_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_banner"},
@@ -9493,7 +9496,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1096: { // minecraft:purple_bed
+	1097: { // minecraft:purple_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_bed"},
@@ -9501,7 +9504,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1047: { // minecraft:purple_bundle
+	1048: { // minecraft:purple_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.purple_bundle"},
@@ -9509,7 +9512,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1409: { // minecraft:purple_candle
+	1410: { // minecraft:purple_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_candle"},
@@ -9517,7 +9520,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	515: { // minecraft:purple_carpet
+	516: { // minecraft:purple_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_carpet"},
@@ -9525,7 +9528,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	624: { // minecraft:purple_concrete
+	625: { // minecraft:purple_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_concrete"},
@@ -9533,7 +9536,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	640: { // minecraft:purple_concrete_powder
+	641: { // minecraft:purple_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_concrete_powder"},
@@ -9541,7 +9544,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1076: { // minecraft:purple_dye
+	1077: { // minecraft:purple_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.purple_dye"},
@@ -9549,7 +9552,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	608: { // minecraft:purple_glazed_terracotta
+	609: { // minecraft:purple_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_glazed_terracotta"},
@@ -9557,7 +9560,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	848: { // minecraft:purple_harness
+	849: { // minecraft:purple_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.purple_harness"},
@@ -9565,7 +9568,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	592: { // minecraft:purple_shulker_box
+	593: { // minecraft:purple_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_shulker_box"},
@@ -9573,7 +9576,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	540: { // minecraft:purple_stained_glass
+	541: { // minecraft:purple_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_stained_glass"},
@@ -9581,7 +9584,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	556: { // minecraft:purple_stained_glass_pane
+	557: { // minecraft:purple_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_stained_glass_pane"},
@@ -9589,7 +9592,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	496: { // minecraft:purple_terracotta
+	497: { // minecraft:purple_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purple_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_terracotta"},
@@ -9605,7 +9608,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	326: { // minecraft:purpur_block
+	327: { // minecraft:purpur_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purpur_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purpur_block"},
@@ -9613,7 +9616,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	327: { // minecraft:purpur_pillar
+	328: { // minecraft:purpur_pillar
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purpur_pillar",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purpur_pillar"},
@@ -9621,7 +9624,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	296: { // minecraft:purpur_slab
+	297: { // minecraft:purpur_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purpur_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purpur_slab"},
@@ -9629,7 +9632,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	328: { // minecraft:purpur_stairs
+	329: { // minecraft:purpur_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:purpur_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purpur_stairs"},
@@ -9637,7 +9640,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	901: { // minecraft:quartz
+	902: { // minecraft:quartz
 		BreakSound:           "minecraft:entity.item.break",
 		ItemModel:            "minecraft:quartz",
 		ItemName:             &ItemNameComponent{Translate: "item.minecraft.quartz"},
@@ -9646,7 +9649,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:               "common",
 		RepairCost:           0,
 	},
-	482: { // minecraft:quartz_block
+	483: { // minecraft:quartz_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:quartz_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.quartz_block"},
@@ -9654,7 +9657,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	483: { // minecraft:quartz_bricks
+	484: { // minecraft:quartz_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:quartz_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.quartz_bricks"},
@@ -9662,7 +9665,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	484: { // minecraft:quartz_pillar
+	485: { // minecraft:quartz_pillar
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:quartz_pillar",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.quartz_pillar"},
@@ -9670,7 +9673,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	293: { // minecraft:quartz_slab
+	294: { // minecraft:quartz_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:quartz_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.quartz_slab"},
@@ -9678,7 +9681,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	485: { // minecraft:quartz_stairs
+	486: { // minecraft:quartz_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:quartz_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.quartz_stairs"},
@@ -9686,7 +9689,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1249: { // minecraft:rabbit
+	1250: { // minecraft:rabbit
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  3,
@@ -9698,7 +9701,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1252: { // minecraft:rabbit_foot
+	1253: { // minecraft:rabbit_foot
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:rabbit_foot",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.rabbit_foot"},
@@ -9706,7 +9709,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1253: { // minecraft:rabbit_hide
+	1254: { // minecraft:rabbit_hide
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:rabbit_hide",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.rabbit_hide"},
@@ -9714,7 +9717,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1150: { // minecraft:rabbit_spawn_egg
+	1151: { // minecraft:rabbit_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:rabbit_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.rabbit_spawn_egg"},
@@ -9722,7 +9725,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1251: { // minecraft:rabbit_stew
+	1252: { // minecraft:rabbit_stew
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  10,
@@ -9734,11 +9737,10 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 		UseRemainder: &UseRemainder{
-			Count: 1,
-			ID:    "minecraft:bowl",
+			ID: "minecraft:bowl",
 		},
 	},
-	835: { // minecraft:rail
+	836: { // minecraft:rail
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:rail",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.rail"},
@@ -9746,7 +9748,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1441: { // minecraft:raiser_armor_trim_smithing_template
+	1442: { // minecraft:raiser_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:raiser_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.raiser_armor_trim_smithing_template"},
@@ -9754,7 +9756,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1200: { // minecraft:ravager_spawn_egg
+	1201: { // minecraft:ravager_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ravager_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ravager_spawn_egg"},
@@ -9762,7 +9764,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	905: { // minecraft:raw_copper
+	906: { // minecraft:raw_copper
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:raw_copper",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.raw_copper"},
@@ -9778,7 +9780,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	907: { // minecraft:raw_gold
+	908: { // minecraft:raw_gold
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:raw_gold",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.raw_gold"},
@@ -9794,7 +9796,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	903: { // minecraft:raw_iron
+	904: { // minecraft:raw_iron
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:raw_iron",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.raw_iron"},
@@ -9810,7 +9812,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1035: { // minecraft:recovery_compass
+	1036: { // minecraft:recovery_compass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:recovery_compass",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.recovery_compass"},
@@ -9818,7 +9820,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1280: { // minecraft:red_banner
+	1281: { // minecraft:red_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_banner"},
@@ -9826,7 +9828,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1100: { // minecraft:red_bed
+	1101: { // minecraft:red_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_bed"},
@@ -9834,7 +9836,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1051: { // minecraft:red_bundle
+	1052: { // minecraft:red_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.red_bundle"},
@@ -9842,7 +9844,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1413: { // minecraft:red_candle
+	1414: { // minecraft:red_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_candle"},
@@ -9850,7 +9852,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	519: { // minecraft:red_carpet
+	520: { // minecraft:red_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_carpet"},
@@ -9858,7 +9860,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	628: { // minecraft:red_concrete
+	629: { // minecraft:red_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_concrete"},
@@ -9866,7 +9868,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	644: { // minecraft:red_concrete_powder
+	645: { // minecraft:red_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_concrete_powder"},
@@ -9874,7 +9876,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1080: { // minecraft:red_dye
+	1081: { // minecraft:red_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.red_dye"},
@@ -9882,7 +9884,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	612: { // minecraft:red_glazed_terracotta
+	613: { // minecraft:red_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_glazed_terracotta"},
@@ -9890,7 +9892,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	852: { // minecraft:red_harness
+	853: { // minecraft:red_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.red_harness"},
@@ -9898,7 +9900,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	248: { // minecraft:red_mushroom
+	249: { // minecraft:red_mushroom
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_mushroom",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_mushroom"},
@@ -9906,7 +9908,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	388: { // minecraft:red_mushroom_block
+	389: { // minecraft:red_mushroom_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_mushroom_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_mushroom_block"},
@@ -9914,7 +9916,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	709: { // minecraft:red_nether_brick_slab
+	710: { // minecraft:red_nether_brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_nether_brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_nether_brick_slab"},
@@ -9922,7 +9924,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	692: { // minecraft:red_nether_brick_stairs
+	693: { // minecraft:red_nether_brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_nether_brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_nether_brick_stairs"},
@@ -9930,7 +9932,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	467: { // minecraft:red_nether_brick_wall
+	468: { // minecraft:red_nether_brick_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_nether_brick_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_nether_brick_wall"},
@@ -9938,7 +9940,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	578: { // minecraft:red_nether_bricks
+	579: { // minecraft:red_nether_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_nether_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_nether_bricks"},
@@ -9954,7 +9956,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	569: { // minecraft:red_sandstone
+	570: { // minecraft:red_sandstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_sandstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_sandstone"},
@@ -9962,7 +9964,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	294: { // minecraft:red_sandstone_slab
+	295: { // minecraft:red_sandstone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_sandstone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_sandstone_slab"},
@@ -9970,7 +9972,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	572: { // minecraft:red_sandstone_stairs
+	573: { // minecraft:red_sandstone_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_sandstone_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_sandstone_stairs"},
@@ -9978,7 +9980,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	460: { // minecraft:red_sandstone_wall
+	461: { // minecraft:red_sandstone_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_sandstone_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_sandstone_wall"},
@@ -9986,7 +9988,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	596: { // minecraft:red_shulker_box
+	597: { // minecraft:red_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_shulker_box"},
@@ -9994,7 +9996,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	544: { // minecraft:red_stained_glass
+	545: { // minecraft:red_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_stained_glass"},
@@ -10002,7 +10004,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	560: { // minecraft:red_stained_glass_pane
+	561: { // minecraft:red_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_stained_glass_pane"},
@@ -10010,7 +10012,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	500: { // minecraft:red_terracotta
+	501: { // minecraft:red_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_terracotta"},
@@ -10018,7 +10020,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	236: { // minecraft:red_tulip
+	237: { // minecraft:red_tulip
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:red_tulip",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_tulip"},
@@ -10034,7 +10036,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	717: { // minecraft:redstone
+	718: { // minecraft:redstone
 		BreakSound:           "minecraft:entity.item.break",
 		ItemModel:            "minecraft:redstone",
 		ItemName:             &ItemNameComponent{Translate: "item.minecraft.redstone"},
@@ -10043,7 +10045,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:               "common",
 		RepairCost:           0,
 	},
-	719: { // minecraft:redstone_block
+	720: { // minecraft:redstone_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:redstone_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.redstone_block"},
@@ -10051,7 +10053,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	747: { // minecraft:redstone_lamp
+	748: { // minecraft:redstone_lamp
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:redstone_lamp",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.redstone_lamp"},
@@ -10067,7 +10069,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	718: { // minecraft:redstone_torch
+	719: { // minecraft:redstone_torch
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:redstone_torch",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.redstone_torch"},
@@ -10075,7 +10077,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	386: { // minecraft:reinforced_deepslate
+	387: { // minecraft:reinforced_deepslate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:reinforced_deepslate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.reinforced_deepslate"},
@@ -10083,7 +10085,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	720: { // minecraft:repeater
+	721: { // minecraft:repeater
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:repeater",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.repeater"},
@@ -10091,7 +10093,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	573: { // minecraft:repeating_command_block
+	574: { // minecraft:repeating_command_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:repeating_command_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.repeating_command_block"},
@@ -10099,7 +10101,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	413: { // minecraft:resin_block
+	414: { // minecraft:resin_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:resin_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.resin_block"},
@@ -10107,7 +10109,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1246: { // minecraft:resin_brick
+	1247: { // minecraft:resin_brick
 		BreakSound:           "minecraft:entity.item.break",
 		ItemModel:            "minecraft:resin_brick",
 		ItemName:             &ItemNameComponent{Translate: "item.minecraft.resin_brick"},
@@ -10116,7 +10118,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:               "common",
 		RepairCost:           0,
 	},
-	416: { // minecraft:resin_brick_slab
+	417: { // minecraft:resin_brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:resin_brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.resin_brick_slab"},
@@ -10124,7 +10126,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	415: { // minecraft:resin_brick_stairs
+	416: { // minecraft:resin_brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:resin_brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.resin_brick_stairs"},
@@ -10132,7 +10134,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	417: { // minecraft:resin_brick_wall
+	418: { // minecraft:resin_brick_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:resin_brick_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.resin_brick_wall"},
@@ -10140,7 +10142,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	414: { // minecraft:resin_bricks
+	415: { // minecraft:resin_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:resin_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.resin_bricks"},
@@ -10148,7 +10150,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	412: { // minecraft:resin_clump
+	413: { // minecraft:resin_clump
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:resin_clump",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.resin_clump"},
@@ -10156,7 +10158,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1397: { // minecraft:respawn_anchor
+	1398: { // minecraft:respawn_anchor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:respawn_anchor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.respawn_anchor"},
@@ -10164,7 +10166,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1436: { // minecraft:rib_armor_trim_smithing_template
+	1437: { // minecraft:rib_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:rib_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.rib_armor_trim_smithing_template"},
@@ -10180,7 +10182,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	526: { // minecraft:rose_bush
+	527: { // minecraft:rose_bush
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:rose_bush",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.rose_bush"},
@@ -10188,7 +10190,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1114: { // minecraft:rotten_flesh
+	1115: { // minecraft:rotten_flesh
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  4,
@@ -10200,7 +10202,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	837: { // minecraft:saddle
+	838: { // minecraft:saddle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:saddle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.saddle"},
@@ -10208,7 +10210,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1058: { // minecraft:salmon
+	1059: { // minecraft:salmon
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -10220,7 +10222,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1020: { // minecraft:salmon_bucket
+	1021: { // minecraft:salmon_bucket
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -10232,7 +10234,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1158: { // minecraft:salmon_spawn_egg
+	1159: { // minecraft:salmon_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:salmon_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.salmon_spawn_egg"},
@@ -10256,7 +10258,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	285: { // minecraft:sandstone_slab
+	286: { // minecraft:sandstone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sandstone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sandstone_slab"},
@@ -10264,7 +10266,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	438: { // minecraft:sandstone_stairs
+	439: { // minecraft:sandstone_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sandstone_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sandstone_stairs"},
@@ -10272,7 +10274,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	468: { // minecraft:sandstone_wall
+	469: { // minecraft:sandstone_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sandstone_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sandstone_wall"},
@@ -10280,7 +10282,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	716: { // minecraft:scaffolding
+	717: { // minecraft:scaffolding
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:scaffolding",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.scaffolding"},
@@ -10288,7 +10290,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1463: { // minecraft:scrape_pottery_sherd
+	1464: { // minecraft:scrape_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:scrape_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.scrape_pottery_sherd"},
@@ -10296,7 +10298,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	429: { // minecraft:sculk
+	430: { // minecraft:sculk
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sculk",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sculk"},
@@ -10304,7 +10306,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	431: { // minecraft:sculk_catalyst
+	432: { // minecraft:sculk_catalyst
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sculk_catalyst",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sculk_catalyst"},
@@ -10312,7 +10314,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	742: { // minecraft:sculk_sensor
+	743: { // minecraft:sculk_sensor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sculk_sensor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sculk_sensor"},
@@ -10320,7 +10322,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	432: { // minecraft:sculk_shrieker
+	433: { // minecraft:sculk_shrieker
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sculk_shrieker",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sculk_shrieker"},
@@ -10328,7 +10330,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	430: { // minecraft:sculk_vein
+	431: { // minecraft:sculk_vein
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sculk_vein",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sculk_vein"},
@@ -10336,7 +10338,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	568: { // minecraft:sea_lantern
+	569: { // minecraft:sea_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sea_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sea_lantern"},
@@ -10360,7 +10362,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1427: { // minecraft:sentry_armor_trim_smithing_template
+	1428: { // minecraft:sentry_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sentry_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.sentry_armor_trim_smithing_template"},
@@ -10368,7 +10370,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1439: { // minecraft:shaper_armor_trim_smithing_template
+	1440: { // minecraft:shaper_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:shaper_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.shaper_armor_trim_smithing_template"},
@@ -10376,7 +10378,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1464: { // minecraft:sheaf_pottery_sherd
+	1465: { // minecraft:sheaf_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sheaf_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.sheaf_pottery_sherd"},
@@ -10384,7 +10386,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1105: { // minecraft:shears
+	1106: { // minecraft:shears
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		ItemModel:    "minecraft:shears",
@@ -10402,7 +10404,7 @@ var defaultComponents = map[int32]*Components{
 			},
 		},
 	},
-	1133: { // minecraft:sheep_spawn_egg
+	1134: { // minecraft:sheep_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sheep_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.sheep_spawn_egg"},
@@ -10410,7 +10412,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1465: { // minecraft:shelter_pottery_sherd
+	1466: { // minecraft:shelter_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:shelter_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.shelter_pottery_sherd"},
@@ -10418,7 +10420,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1295: { // minecraft:shield
+	1296: { // minecraft:shield
 		BreakSound:   "minecraft:item.shield.break",
 		Damage:       0,
 		ItemModel:    "minecraft:shield",
@@ -10445,7 +10447,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1377: { // minecraft:shroomlight
+	1378: { // minecraft:shroomlight
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:shroomlight",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.shroomlight"},
@@ -10453,7 +10455,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	581: { // minecraft:shulker_box
+	582: { // minecraft:shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.shulker_box"},
@@ -10461,7 +10463,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1304: { // minecraft:shulker_shell
+	1305: { // minecraft:shulker_shell
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:shulker_shell",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.shulker_shell"},
@@ -10469,7 +10471,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1216: { // minecraft:shulker_spawn_egg
+	1217: { // minecraft:shulker_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:shulker_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.shulker_spawn_egg"},
@@ -10477,7 +10479,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1440: { // minecraft:silence_armor_trim_smithing_template
+	1441: { // minecraft:silence_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:silence_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.silence_armor_trim_smithing_template"},
@@ -10485,7 +10487,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	1194: { // minecraft:silverfish_spawn_egg
+	1195: { // minecraft:silverfish_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:silverfish_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.silverfish_spawn_egg"},
@@ -10493,7 +10495,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1178: { // minecraft:skeleton_horse_spawn_egg
+	1179: { // minecraft:skeleton_horse_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:skeleton_horse_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.skeleton_horse_spawn_egg"},
@@ -10501,7 +10503,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1233: { // minecraft:skeleton_skull
+	1234: { // minecraft:skeleton_skull
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
 		},
@@ -10512,7 +10514,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1177: { // minecraft:skeleton_spawn_egg
+	1178: { // minecraft:skeleton_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:skeleton_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.skeleton_spawn_egg"},
@@ -10520,7 +10522,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1344: { // minecraft:skull_banner_pattern
+	1345: { // minecraft:skull_banner_pattern
 		BreakSound:             "minecraft:entity.item.break",
 		ItemModel:              "minecraft:skull_banner_pattern",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.skull_banner_pattern"},
@@ -10529,7 +10531,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:                 "rare",
 		RepairCost:             0,
 	},
-	1466: { // minecraft:skull_pottery_sherd
+	1467: { // minecraft:skull_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:skull_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.skull_pottery_sherd"},
@@ -10537,7 +10539,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1030: { // minecraft:slime_ball
+	1031: { // minecraft:slime_ball
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:slime_ball",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.slime_ball"},
@@ -10545,7 +10547,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	724: { // minecraft:slime_block
+	725: { // minecraft:slime_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:slime_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.slime_block"},
@@ -10553,7 +10555,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1195: { // minecraft:slime_spawn_egg
+	1196: { // minecraft:slime_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:slime_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.slime_spawn_egg"},
@@ -10561,7 +10563,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1415: { // minecraft:small_amethyst_bud
+	1416: { // minecraft:small_amethyst_bud
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:small_amethyst_bud",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.small_amethyst_bud"},
@@ -10569,7 +10571,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	268: { // minecraft:small_dripleaf
+	269: { // minecraft:small_dripleaf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:small_dripleaf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.small_dripleaf"},
@@ -10577,7 +10579,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1360: { // minecraft:smithing_table
+	1361: { // minecraft:smithing_table
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smithing_table",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smithing_table"},
@@ -10585,7 +10587,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1355: { // minecraft:smoker
+	1356: { // minecraft:smoker
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smoker",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smoker"},
@@ -10593,7 +10595,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	364: { // minecraft:smooth_basalt
+	365: { // minecraft:smooth_basalt
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_basalt",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_basalt"},
@@ -10601,7 +10603,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	300: { // minecraft:smooth_quartz
+	301: { // minecraft:smooth_quartz
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_quartz",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_quartz"},
@@ -10609,7 +10611,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	706: { // minecraft:smooth_quartz_slab
+	707: { // minecraft:smooth_quartz_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_quartz_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_quartz_slab"},
@@ -10617,7 +10619,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	689: { // minecraft:smooth_quartz_stairs
+	690: { // minecraft:smooth_quartz_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_quartz_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_quartz_stairs"},
@@ -10625,7 +10627,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	301: { // minecraft:smooth_red_sandstone
+	302: { // minecraft:smooth_red_sandstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_red_sandstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_red_sandstone"},
@@ -10633,7 +10635,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	700: { // minecraft:smooth_red_sandstone_slab
+	701: { // minecraft:smooth_red_sandstone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_red_sandstone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_red_sandstone_slab"},
@@ -10641,7 +10643,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	682: { // minecraft:smooth_red_sandstone_stairs
+	683: { // minecraft:smooth_red_sandstone_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_red_sandstone_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_red_sandstone_stairs"},
@@ -10649,7 +10651,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	302: { // minecraft:smooth_sandstone
+	303: { // minecraft:smooth_sandstone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_sandstone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_sandstone"},
@@ -10657,7 +10659,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	705: { // minecraft:smooth_sandstone_slab
+	706: { // minecraft:smooth_sandstone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_sandstone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_sandstone_slab"},
@@ -10665,7 +10667,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	688: { // minecraft:smooth_sandstone_stairs
+	689: { // minecraft:smooth_sandstone_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_sandstone_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_sandstone_stairs"},
@@ -10673,7 +10675,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	303: { // minecraft:smooth_stone
+	304: { // minecraft:smooth_stone
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_stone",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_stone"},
@@ -10681,7 +10683,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	284: { // minecraft:smooth_stone_slab
+	285: { // minecraft:smooth_stone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:smooth_stone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.smooth_stone_slab"},
@@ -10689,7 +10691,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	647: { // minecraft:sniffer_egg
+	648: { // minecraft:sniffer_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sniffer_egg",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sniffer_egg"},
@@ -10697,7 +10699,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1165: { // minecraft:sniffer_spawn_egg
+	1166: { // minecraft:sniffer_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sniffer_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.sniffer_spawn_egg"},
@@ -10705,7 +10707,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1467: { // minecraft:snort_pottery_sherd
+	1468: { // minecraft:snort_pottery_sherd
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:snort_pottery_sherd",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.snort_pottery_sherd"},
@@ -10713,7 +10715,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1435: { // minecraft:snout_armor_trim_smithing_template
+	1436: { // minecraft:snout_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:snout_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.snout_armor_trim_smithing_template"},
@@ -10721,7 +10723,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	337: { // minecraft:snow
+	338: { // minecraft:snow
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:snow",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.snow"},
@@ -10729,7 +10731,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	339: { // minecraft:snow_block
+	340: { // minecraft:snow_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:snow_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.snow_block"},
@@ -10737,7 +10739,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1168: { // minecraft:snow_golem_spawn_egg
+	1169: { // minecraft:snow_golem_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:snow_golem_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.snow_golem_spawn_egg"},
@@ -10745,7 +10747,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1016: { // minecraft:snowball
+	1017: { // minecraft:snowball
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:snowball",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.snowball"},
@@ -10753,7 +10755,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1376: { // minecraft:soul_campfire
+	1377: { // minecraft:soul_campfire
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:soul_campfire",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.soul_campfire"},
@@ -10761,7 +10763,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1364: { // minecraft:soul_lantern
+	1365: { // minecraft:soul_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:soul_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.soul_lantern"},
@@ -10769,7 +10771,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	360: { // minecraft:soul_sand
+	361: { // minecraft:soul_sand
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:soul_sand",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.soul_sand"},
@@ -10777,7 +10779,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	361: { // minecraft:soul_soil
+	362: { // minecraft:soul_soil
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:soul_soil",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.soul_soil"},
@@ -10785,7 +10787,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	365: { // minecraft:soul_torch
+	366: { // minecraft:soul_torch
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:soul_torch",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.soul_torch"},
@@ -10793,7 +10795,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	329: { // minecraft:spawner
+	330: { // minecraft:spawner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spawner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spawner"},
@@ -10801,7 +10803,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1292: { // minecraft:spectral_arrow
+	1293: { // minecraft:spectral_arrow
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spectral_arrow",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.spectral_arrow"},
@@ -10809,7 +10811,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1122: { // minecraft:spider_eye
+	1123: { // minecraft:spider_eye
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -10821,7 +10823,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1187: { // minecraft:spider_spawn_egg
+	1188: { // minecraft:spider_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spider_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.spider_spawn_egg"},
@@ -10829,7 +10831,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1437: { // minecraft:spire_armor_trim_smithing_template
+	1438: { // minecraft:spire_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spire_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.spire_armor_trim_smithing_template"},
@@ -10837,7 +10839,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "rare",
 		RepairCost:   0,
 	},
-	1291: { // minecraft:splash_potion
+	1292: { // minecraft:splash_potion
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:splash_potion",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.splash_potion"},
@@ -10853,7 +10855,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	246: { // minecraft:spore_blossom
+	247: { // minecraft:spore_blossom
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spore_blossom",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spore_blossom"},
@@ -10861,7 +10863,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	865: { // minecraft:spruce_boat
+	866: { // minecraft:spruce_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.spruce_boat"},
@@ -10869,7 +10871,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	752: { // minecraft:spruce_button
+	753: { // minecraft:spruce_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_button"},
@@ -10877,7 +10879,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	866: { // minecraft:spruce_chest_boat
+	867: { // minecraft:spruce_chest_boat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_chest_boat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.spruce_chest_boat"},
@@ -10885,7 +10887,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	781: { // minecraft:spruce_door
+	782: { // minecraft:spruce_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_door"},
@@ -10893,7 +10895,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	345: { // minecraft:spruce_fence
+	346: { // minecraft:spruce_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_fence"},
@@ -10901,7 +10903,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	822: { // minecraft:spruce_fence_gate
+	823: { // minecraft:spruce_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_fence_gate"},
@@ -10909,7 +10911,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1001: { // minecraft:spruce_hanging_sign
+	1002: { // minecraft:spruce_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_hanging_sign"},
@@ -10941,7 +10943,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	768: { // minecraft:spruce_pressure_plate
+	769: { // minecraft:spruce_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_pressure_plate"},
@@ -10957,7 +10959,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	315: { // minecraft:spruce_shelf
+	316: { // minecraft:spruce_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_shelf"},
@@ -10965,7 +10967,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	989: { // minecraft:spruce_sign
+	990: { // minecraft:spruce_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_sign"},
@@ -10973,7 +10975,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	271: { // minecraft:spruce_slab
+	272: { // minecraft:spruce_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_slab"},
@@ -10981,7 +10983,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	442: { // minecraft:spruce_stairs
+	443: { // minecraft:spruce_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_stairs"},
@@ -10989,7 +10991,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	802: { // minecraft:spruce_trapdoor
+	803: { // minecraft:spruce_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spruce_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.spruce_trapdoor"},
@@ -11005,7 +11007,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1055: { // minecraft:spyglass
+	1056: { // minecraft:spyglass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:spyglass",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.spyglass"},
@@ -11013,7 +11015,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1159: { // minecraft:squid_spawn_egg
+	1160: { // minecraft:squid_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:squid_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.squid_spawn_egg"},
@@ -11021,7 +11023,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	946: { // minecraft:stick
+	947: { // minecraft:stick
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stick",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.stick"},
@@ -11029,7 +11031,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	723: { // minecraft:sticky_piston
+	724: { // minecraft:sticky_piston
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sticky_piston",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sticky_piston"},
@@ -11045,7 +11047,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	924: { // minecraft:stone_axe
+	925: { // minecraft:stone_axe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 8, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3.200000047683716, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -11071,7 +11073,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack:       2,
 		},
 	},
-	290: { // minecraft:stone_brick_slab
+	291: { // minecraft:stone_brick_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stone_brick_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.stone_brick_slab"},
@@ -11079,7 +11081,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	420: { // minecraft:stone_brick_stairs
+	421: { // minecraft:stone_brick_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stone_brick_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.stone_brick_stairs"},
@@ -11087,7 +11089,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	463: { // minecraft:stone_brick_wall
+	464: { // minecraft:stone_brick_wall
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stone_brick_wall",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.stone_brick_wall"},
@@ -11095,7 +11097,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	375: { // minecraft:stone_bricks
+	376: { // minecraft:stone_bricks
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stone_bricks",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.stone_bricks"},
@@ -11103,7 +11105,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	749: { // minecraft:stone_button
+	750: { // minecraft:stone_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stone_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.stone_button"},
@@ -11111,7 +11113,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	925: { // minecraft:stone_hoe
+	926: { // minecraft:stone_hoe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -11136,7 +11138,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	923: { // minecraft:stone_pickaxe
+	924: { // minecraft:stone_pickaxe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 2, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -11161,7 +11163,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	763: { // minecraft:stone_pressure_plate
+	764: { // minecraft:stone_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stone_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.stone_pressure_plate"},
@@ -11169,7 +11171,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	922: { // minecraft:stone_shovel
+	923: { // minecraft:stone_shovel
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 2.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -11194,7 +11196,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	283: { // minecraft:stone_slab
+	284: { // minecraft:stone_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stone_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.stone_slab"},
@@ -11202,7 +11204,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1297: { // minecraft:stone_spear
+	1298: { // minecraft:stone_spear
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 1, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.666666626930237, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -11221,7 +11223,7 @@ var defaultComponents = map[int32]*Components{
 		Repairable:          &Repairable{Items: "#minecraft:stone_tool_materials"},
 		Weapon:              &Weapon{},
 	},
-	687: { // minecraft:stone_stairs
+	688: { // minecraft:stone_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stone_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.stone_stairs"},
@@ -11229,7 +11231,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	921: { // minecraft:stone_sword
+	922: { // minecraft:stone_sword
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 4, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -11253,7 +11255,7 @@ var defaultComponents = map[int32]*Components{
 		},
 		Weapon: &Weapon{},
 	},
-	1361: { // minecraft:stonecutter
+	1362: { // minecraft:stonecutter
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stonecutter",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.stonecutter"},
@@ -11261,7 +11263,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1179: { // minecraft:stray_spawn_egg
+	1180: { // minecraft:stray_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:stray_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.stray_spawn_egg"},
@@ -11269,7 +11271,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1210: { // minecraft:strider_spawn_egg
+	1211: { // minecraft:strider_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:strider_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.strider_spawn_egg"},
@@ -11277,7 +11279,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	948: { // minecraft:string
+	949: { // minecraft:string
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:string",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.string"},
@@ -11469,7 +11471,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	883: { // minecraft:structure_block
+	884: { // minecraft:structure_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:structure_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.structure_block"},
@@ -11477,7 +11479,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	580: { // minecraft:structure_void
+	581: { // minecraft:structure_void
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:structure_void",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.structure_void"},
@@ -11485,7 +11487,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	1084: { // minecraft:sugar
+	1085: { // minecraft:sugar
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sugar",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.sugar"},
@@ -11493,7 +11495,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	256: { // minecraft:sugar_cane
+	257: { // minecraft:sugar_cane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sugar_cane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sugar_cane"},
@@ -11501,7 +11503,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	524: { // minecraft:sunflower
+	525: { // minecraft:sunflower
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:sunflower",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.sunflower"},
@@ -11525,7 +11527,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1340: { // minecraft:suspicious_stew
+	1341: { // minecraft:suspicious_stew
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  6,
@@ -11537,11 +11539,10 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 		UseRemainder: &UseRemainder{
-			Count: 1,
-			ID:    "minecraft:bowl",
+			ID: "minecraft:bowl",
 		},
 	},
-	1373: { // minecraft:sweet_berries
+	1374: { // minecraft:sweet_berries
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  2,
@@ -11553,7 +11554,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1024: { // minecraft:tadpole_bucket
+	1025: { // minecraft:tadpole_bucket
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tadpole_bucket",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.tadpole_bucket"},
@@ -11561,7 +11562,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1160: { // minecraft:tadpole_spawn_egg
+	1161: { // minecraft:tadpole_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tadpole_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.tadpole_spawn_egg"},
@@ -11577,7 +11578,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	528: { // minecraft:tall_grass
+	529: { // minecraft:tall_grass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tall_grass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.tall_grass"},
@@ -11585,7 +11586,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	731: { // minecraft:target
+	732: { // minecraft:target
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:target",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.target"},
@@ -11593,7 +11594,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	521: { // minecraft:terracotta
+	522: { // minecraft:terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.terracotta"},
@@ -11601,7 +11602,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	885: { // minecraft:test_block
+	886: { // minecraft:test_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:test_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.test_block"},
@@ -11609,7 +11610,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	886: { // minecraft:test_instance_block
+	887: { // minecraft:test_instance_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:test_instance_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.test_instance_block"},
@@ -11617,7 +11618,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 	},
-	1434: { // minecraft:tide_armor_trim_smithing_template
+	1435: { // minecraft:tide_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tide_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.tide_armor_trim_smithing_template"},
@@ -11633,7 +11634,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1293: { // minecraft:tipped_arrow
+	1294: { // minecraft:tipped_arrow
 		BreakSound:          "minecraft:entity.item.break",
 		ItemModel:           "minecraft:tipped_arrow",
 		ItemName:            &ItemNameComponent{Translate: "item.minecraft.tipped_arrow"},
@@ -11642,7 +11643,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:              "common",
 		RepairCost:          0,
 	},
-	746: { // minecraft:tnt
+	747: { // minecraft:tnt
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tnt",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.tnt"},
@@ -11650,7 +11651,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	857: { // minecraft:tnt_minecart
+	858: { // minecraft:tnt_minecart
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tnt_minecart",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.tnt_minecart"},
@@ -11658,7 +11659,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	322: { // minecraft:torch
+	323: { // minecraft:torch
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:torch",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.torch"},
@@ -11666,7 +11667,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	244: { // minecraft:torchflower
+	245: { // minecraft:torchflower
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:torchflower",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.torchflower"},
@@ -11674,7 +11675,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1285: { // minecraft:torchflower_seeds
+	1286: { // minecraft:torchflower_seeds
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:torchflower_seeds",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.torchflower_seeds"},
@@ -11682,7 +11683,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1303: { // minecraft:totem_of_undying
+	1304: { // minecraft:totem_of_undying
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:totem_of_undying",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.totem_of_undying"},
@@ -11690,7 +11691,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1169: { // minecraft:trader_llama_spawn_egg
+	1170: { // minecraft:trader_llama_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:trader_llama_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.trader_llama_spawn_egg"},
@@ -11698,7 +11699,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	745: { // minecraft:trapped_chest
+	746: { // minecraft:trapped_chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:trapped_chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.trapped_chest"},
@@ -11706,7 +11707,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1501: { // minecraft:trial_key
+	1502: { // minecraft:trial_key
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:trial_key",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.trial_key"},
@@ -11714,7 +11715,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1500: { // minecraft:trial_spawner
+	1501: { // minecraft:trial_spawner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:trial_spawner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.trial_spawner"},
@@ -11722,7 +11723,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1331: { // minecraft:trident
+	1332: { // minecraft:trident
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 8, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.9000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -11739,7 +11740,7 @@ var defaultComponents = map[int32]*Components{
 		Tool:         &Tool{},
 		Weapon:       &Weapon{},
 	},
-	744: { // minecraft:tripwire_hook
+	745: { // minecraft:tripwire_hook
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tripwire_hook",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.tripwire_hook"},
@@ -11747,7 +11748,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1059: { // minecraft:tropical_fish
+	1060: { // minecraft:tropical_fish
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  1,
@@ -11759,7 +11760,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1022: { // minecraft:tropical_fish_bucket
+	1023: { // minecraft:tropical_fish_bucket
 		BreakSound: "minecraft:entity.item.break",
 		Food: &Food{
 			Nutrition:  1,
@@ -11771,7 +11772,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1161: { // minecraft:tropical_fish_spawn_egg
+	1162: { // minecraft:tropical_fish_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tropical_fish_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.tropical_fish_spawn_egg"},
@@ -11779,7 +11780,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	659: { // minecraft:tube_coral
+	660: { // minecraft:tube_coral
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tube_coral",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.tube_coral"},
@@ -11787,7 +11788,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	654: { // minecraft:tube_coral_block
+	655: { // minecraft:tube_coral_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tube_coral_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.tube_coral_block"},
@@ -11795,7 +11796,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	669: { // minecraft:tube_coral_fan
+	670: { // minecraft:tube_coral_fan
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:tube_coral_fan",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.tube_coral_fan"},
@@ -11867,7 +11868,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	646: { // minecraft:turtle_egg
+	647: { // minecraft:turtle_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:turtle_egg",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.turtle_egg"},
@@ -11875,7 +11876,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	887: { // minecraft:turtle_helmet
+	888: { // minecraft:turtle_helmet
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 2, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.helmet", Operation: "add_value", Slot: "head"},
@@ -11891,7 +11892,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_turtle_helmet"},
 	},
-	888: { // minecraft:turtle_scute
+	889: { // minecraft:turtle_scute
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:turtle_scute",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.turtle_scute"},
@@ -11899,7 +11900,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1162: { // minecraft:turtle_spawn_egg
+	1163: { // minecraft:turtle_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:turtle_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.turtle_spawn_egg"},
@@ -11907,7 +11908,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	255: { // minecraft:twisting_vines
+	256: { // minecraft:twisting_vines
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:twisting_vines",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.twisting_vines"},
@@ -11915,7 +11916,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1503: { // minecraft:vault
+	1504: { // minecraft:vault
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:vault",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.vault"},
@@ -11923,7 +11924,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1421: { // minecraft:verdant_froglight
+	1422: { // minecraft:verdant_froglight
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:verdant_froglight",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.verdant_froglight"},
@@ -11931,7 +11932,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1433: { // minecraft:vex_armor_trim_smithing_template
+	1434: { // minecraft:vex_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:vex_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.vex_armor_trim_smithing_template"},
@@ -11939,7 +11940,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "rare",
 		RepairCost:   0,
 	},
-	1202: { // minecraft:vex_spawn_egg
+	1203: { // minecraft:vex_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:vex_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.vex_spawn_egg"},
@@ -11947,7 +11948,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1170: { // minecraft:villager_spawn_egg
+	1171: { // minecraft:villager_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:villager_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.villager_spawn_egg"},
@@ -11955,7 +11956,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1201: { // minecraft:vindicator_spawn_egg
+	1202: { // minecraft:vindicator_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:vindicator_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.vindicator_spawn_egg"},
@@ -11963,7 +11964,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	410: { // minecraft:vine
+	411: { // minecraft:vine
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:vine",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.vine"},
@@ -11971,7 +11972,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1171: { // minecraft:wandering_trader_spawn_egg
+	1172: { // minecraft:wandering_trader_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wandering_trader_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wandering_trader_spawn_egg"},
@@ -11979,7 +11980,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1431: { // minecraft:ward_armor_trim_smithing_template
+	1432: { // minecraft:ward_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:ward_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ward_armor_trim_smithing_template"},
@@ -11987,7 +11988,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "rare",
 		RepairCost:   0,
 	},
-	1196: { // minecraft:warden_spawn_egg
+	1197: { // minecraft:warden_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warden_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.warden_spawn_egg"},
@@ -11995,7 +11996,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	762: { // minecraft:warped_button
+	763: { // minecraft:warped_button
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_button",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_button"},
@@ -12003,7 +12004,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	791: { // minecraft:warped_door
+	792: { // minecraft:warped_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_door"},
@@ -12011,7 +12012,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	355: { // minecraft:warped_fence
+	356: { // minecraft:warped_fence
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_fence",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_fence"},
@@ -12019,7 +12020,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	832: { // minecraft:warped_fence_gate
+	833: { // minecraft:warped_fence_gate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_fence_gate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_fence_gate"},
@@ -12027,7 +12028,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	250: { // minecraft:warped_fungus
+	251: { // minecraft:warped_fungus
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_fungus",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_fungus"},
@@ -12035,7 +12036,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	860: { // minecraft:warped_fungus_on_a_stick
+	861: { // minecraft:warped_fungus_on_a_stick
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		ItemModel:    "minecraft:warped_fungus_on_a_stick",
@@ -12045,7 +12046,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1011: { // minecraft:warped_hanging_sign
+	1012: { // minecraft:warped_hanging_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_hanging_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_hanging_sign"},
@@ -12077,7 +12078,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	778: { // minecraft:warped_pressure_plate
+	779: { // minecraft:warped_pressure_plate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_pressure_plate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_pressure_plate"},
@@ -12085,7 +12086,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	252: { // minecraft:warped_roots
+	253: { // minecraft:warped_roots
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_roots",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_roots"},
@@ -12093,7 +12094,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	316: { // minecraft:warped_shelf
+	317: { // minecraft:warped_shelf
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_shelf",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_shelf"},
@@ -12101,7 +12102,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	999: { // minecraft:warped_sign
+	1000: { // minecraft:warped_sign
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_sign",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_sign"},
@@ -12109,7 +12110,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	282: { // minecraft:warped_slab
+	283: { // minecraft:warped_slab
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_slab",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_slab"},
@@ -12117,7 +12118,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	453: { // minecraft:warped_stairs
+	454: { // minecraft:warped_stairs
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_stairs",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_stairs"},
@@ -12133,7 +12134,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	812: { // minecraft:warped_trapdoor
+	813: { // minecraft:warped_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_trapdoor"},
@@ -12141,7 +12142,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	577: { // minecraft:warped_wart_block
+	578: { // minecraft:warped_wart_block
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:warped_wart_block",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.warped_wart_block"},
@@ -12149,7 +12150,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1013: { // minecraft:water_bucket
+	1014: { // minecraft:water_bucket
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:water_bucket",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.water_bucket"},
@@ -12165,7 +12166,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	395: { // minecraft:waxed_copper_bars
+	396: { // minecraft:waxed_copper_bars
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_copper_bars",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_copper_bars"},
@@ -12181,7 +12182,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1480: { // minecraft:waxed_copper_bulb
+	1481: { // minecraft:waxed_copper_bulb
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_copper_bulb",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_copper_bulb"},
@@ -12189,7 +12190,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	404: { // minecraft:waxed_copper_chain
+	405: { // minecraft:waxed_copper_chain
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_copper_chain",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_copper_chain"},
@@ -12197,7 +12198,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1488: { // minecraft:waxed_copper_chest
+	1489: { // minecraft:waxed_copper_chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_copper_chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_copper_chest"},
@@ -12205,7 +12206,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	796: { // minecraft:waxed_copper_door
+	797: { // minecraft:waxed_copper_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_copper_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_copper_door"},
@@ -12213,7 +12214,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1496: { // minecraft:waxed_copper_golem_statue
+	1497: { // minecraft:waxed_copper_golem_statue
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_copper_golem_statue",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_copper_golem_statue"},
@@ -12221,7 +12222,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1472: { // minecraft:waxed_copper_grate
+	1473: { // minecraft:waxed_copper_grate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_copper_grate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_copper_grate"},
@@ -12229,7 +12230,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1369: { // minecraft:waxed_copper_lantern
+	1370: { // minecraft:waxed_copper_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_copper_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_copper_lantern"},
@@ -12237,7 +12238,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	817: { // minecraft:waxed_copper_trapdoor
+	818: { // minecraft:waxed_copper_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_copper_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_copper_trapdoor"},
@@ -12285,7 +12286,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	396: { // minecraft:waxed_exposed_copper_bars
+	397: { // minecraft:waxed_exposed_copper_bars
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_exposed_copper_bars",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_exposed_copper_bars"},
@@ -12293,7 +12294,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1481: { // minecraft:waxed_exposed_copper_bulb
+	1482: { // minecraft:waxed_exposed_copper_bulb
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_exposed_copper_bulb",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_exposed_copper_bulb"},
@@ -12301,7 +12302,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	405: { // minecraft:waxed_exposed_copper_chain
+	406: { // minecraft:waxed_exposed_copper_chain
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_exposed_copper_chain",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_exposed_copper_chain"},
@@ -12309,7 +12310,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1489: { // minecraft:waxed_exposed_copper_chest
+	1490: { // minecraft:waxed_exposed_copper_chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_exposed_copper_chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_exposed_copper_chest"},
@@ -12317,7 +12318,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	797: { // minecraft:waxed_exposed_copper_door
+	798: { // minecraft:waxed_exposed_copper_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_exposed_copper_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_exposed_copper_door"},
@@ -12325,7 +12326,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1497: { // minecraft:waxed_exposed_copper_golem_statue
+	1498: { // minecraft:waxed_exposed_copper_golem_statue
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_exposed_copper_golem_statue",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_exposed_copper_golem_statue"},
@@ -12333,7 +12334,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1473: { // minecraft:waxed_exposed_copper_grate
+	1474: { // minecraft:waxed_exposed_copper_grate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_exposed_copper_grate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_exposed_copper_grate"},
@@ -12341,7 +12342,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1370: { // minecraft:waxed_exposed_copper_lantern
+	1371: { // minecraft:waxed_exposed_copper_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_exposed_copper_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_exposed_copper_lantern"},
@@ -12349,7 +12350,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	818: { // minecraft:waxed_exposed_copper_trapdoor
+	819: { // minecraft:waxed_exposed_copper_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_exposed_copper_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_exposed_copper_trapdoor"},
@@ -12381,7 +12382,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	738: { // minecraft:waxed_exposed_lightning_rod
+	739: { // minecraft:waxed_exposed_lightning_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_exposed_lightning_rod",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_exposed_lightning_rod"},
@@ -12389,7 +12390,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	737: { // minecraft:waxed_lightning_rod
+	738: { // minecraft:waxed_lightning_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_lightning_rod",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_lightning_rod"},
@@ -12413,7 +12414,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	398: { // minecraft:waxed_oxidized_copper_bars
+	399: { // minecraft:waxed_oxidized_copper_bars
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_oxidized_copper_bars",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_oxidized_copper_bars"},
@@ -12421,7 +12422,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1483: { // minecraft:waxed_oxidized_copper_bulb
+	1484: { // minecraft:waxed_oxidized_copper_bulb
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_oxidized_copper_bulb",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_oxidized_copper_bulb"},
@@ -12429,7 +12430,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	407: { // minecraft:waxed_oxidized_copper_chain
+	408: { // minecraft:waxed_oxidized_copper_chain
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_oxidized_copper_chain",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_oxidized_copper_chain"},
@@ -12437,7 +12438,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1491: { // minecraft:waxed_oxidized_copper_chest
+	1492: { // minecraft:waxed_oxidized_copper_chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_oxidized_copper_chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_oxidized_copper_chest"},
@@ -12445,7 +12446,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	799: { // minecraft:waxed_oxidized_copper_door
+	800: { // minecraft:waxed_oxidized_copper_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_oxidized_copper_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_oxidized_copper_door"},
@@ -12453,7 +12454,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1499: { // minecraft:waxed_oxidized_copper_golem_statue
+	1500: { // minecraft:waxed_oxidized_copper_golem_statue
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_oxidized_copper_golem_statue",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_oxidized_copper_golem_statue"},
@@ -12461,7 +12462,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1475: { // minecraft:waxed_oxidized_copper_grate
+	1476: { // minecraft:waxed_oxidized_copper_grate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_oxidized_copper_grate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_oxidized_copper_grate"},
@@ -12469,7 +12470,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1372: { // minecraft:waxed_oxidized_copper_lantern
+	1373: { // minecraft:waxed_oxidized_copper_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_oxidized_copper_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_oxidized_copper_lantern"},
@@ -12477,7 +12478,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	820: { // minecraft:waxed_oxidized_copper_trapdoor
+	821: { // minecraft:waxed_oxidized_copper_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_oxidized_copper_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_oxidized_copper_trapdoor"},
@@ -12509,7 +12510,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	740: { // minecraft:waxed_oxidized_lightning_rod
+	741: { // minecraft:waxed_oxidized_lightning_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_oxidized_lightning_rod",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_oxidized_lightning_rod"},
@@ -12533,7 +12534,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	397: { // minecraft:waxed_weathered_copper_bars
+	398: { // minecraft:waxed_weathered_copper_bars
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_weathered_copper_bars",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_weathered_copper_bars"},
@@ -12541,7 +12542,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1482: { // minecraft:waxed_weathered_copper_bulb
+	1483: { // minecraft:waxed_weathered_copper_bulb
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_weathered_copper_bulb",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_weathered_copper_bulb"},
@@ -12549,7 +12550,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	406: { // minecraft:waxed_weathered_copper_chain
+	407: { // minecraft:waxed_weathered_copper_chain
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_weathered_copper_chain",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_weathered_copper_chain"},
@@ -12557,7 +12558,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1490: { // minecraft:waxed_weathered_copper_chest
+	1491: { // minecraft:waxed_weathered_copper_chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_weathered_copper_chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_weathered_copper_chest"},
@@ -12565,7 +12566,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	798: { // minecraft:waxed_weathered_copper_door
+	799: { // minecraft:waxed_weathered_copper_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_weathered_copper_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_weathered_copper_door"},
@@ -12573,7 +12574,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1498: { // minecraft:waxed_weathered_copper_golem_statue
+	1499: { // minecraft:waxed_weathered_copper_golem_statue
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_weathered_copper_golem_statue",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_weathered_copper_golem_statue"},
@@ -12581,7 +12582,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1474: { // minecraft:waxed_weathered_copper_grate
+	1475: { // minecraft:waxed_weathered_copper_grate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_weathered_copper_grate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_weathered_copper_grate"},
@@ -12589,7 +12590,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1371: { // minecraft:waxed_weathered_copper_lantern
+	1372: { // minecraft:waxed_weathered_copper_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_weathered_copper_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_weathered_copper_lantern"},
@@ -12597,7 +12598,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	819: { // minecraft:waxed_weathered_copper_trapdoor
+	820: { // minecraft:waxed_weathered_copper_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_weathered_copper_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_weathered_copper_trapdoor"},
@@ -12629,7 +12630,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	739: { // minecraft:waxed_weathered_lightning_rod
+	740: { // minecraft:waxed_weathered_lightning_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:waxed_weathered_lightning_rod",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.waxed_weathered_lightning_rod"},
@@ -12637,7 +12638,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1438: { // minecraft:wayfinder_armor_trim_smithing_template
+	1439: { // minecraft:wayfinder_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wayfinder_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wayfinder_armor_trim_smithing_template"},
@@ -12661,7 +12662,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	393: { // minecraft:weathered_copper_bars
+	394: { // minecraft:weathered_copper_bars
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weathered_copper_bars",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weathered_copper_bars"},
@@ -12669,7 +12670,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1478: { // minecraft:weathered_copper_bulb
+	1479: { // minecraft:weathered_copper_bulb
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weathered_copper_bulb",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weathered_copper_bulb"},
@@ -12677,7 +12678,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	402: { // minecraft:weathered_copper_chain
+	403: { // minecraft:weathered_copper_chain
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weathered_copper_chain",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weathered_copper_chain"},
@@ -12685,7 +12686,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1486: { // minecraft:weathered_copper_chest
+	1487: { // minecraft:weathered_copper_chest
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weathered_copper_chest",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weathered_copper_chest"},
@@ -12693,7 +12694,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	794: { // minecraft:weathered_copper_door
+	795: { // minecraft:weathered_copper_door
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weathered_copper_door",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weathered_copper_door"},
@@ -12701,7 +12702,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1494: { // minecraft:weathered_copper_golem_statue
+	1495: { // minecraft:weathered_copper_golem_statue
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weathered_copper_golem_statue",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weathered_copper_golem_statue"},
@@ -12709,7 +12710,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1470: { // minecraft:weathered_copper_grate
+	1471: { // minecraft:weathered_copper_grate
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weathered_copper_grate",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weathered_copper_grate"},
@@ -12717,7 +12718,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1367: { // minecraft:weathered_copper_lantern
+	1368: { // minecraft:weathered_copper_lantern
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weathered_copper_lantern",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weathered_copper_lantern"},
@@ -12725,7 +12726,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	815: { // minecraft:weathered_copper_trapdoor
+	816: { // minecraft:weathered_copper_trapdoor
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weathered_copper_trapdoor",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weathered_copper_trapdoor"},
@@ -12757,7 +12758,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	735: { // minecraft:weathered_lightning_rod
+	736: { // minecraft:weathered_lightning_rod
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weathered_lightning_rod",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weathered_lightning_rod"},
@@ -12765,7 +12766,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	254: { // minecraft:weeping_vines
+	255: { // minecraft:weeping_vines
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:weeping_vines",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.weeping_vines"},
@@ -12781,7 +12782,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	952: { // minecraft:wheat
+	953: { // minecraft:wheat
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wheat",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wheat"},
@@ -12789,7 +12790,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	951: { // minecraft:wheat_seeds
+	952: { // minecraft:wheat_seeds
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wheat_seeds",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wheat_seeds"},
@@ -12797,7 +12798,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1266: { // minecraft:white_banner
+	1267: { // minecraft:white_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_banner"},
@@ -12805,7 +12806,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1086: { // minecraft:white_bed
+	1087: { // minecraft:white_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_bed"},
@@ -12813,7 +12814,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1037: { // minecraft:white_bundle
+	1038: { // minecraft:white_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.white_bundle"},
@@ -12821,7 +12822,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1399: { // minecraft:white_candle
+	1400: { // minecraft:white_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_candle"},
@@ -12829,7 +12830,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	505: { // minecraft:white_carpet
+	506: { // minecraft:white_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_carpet"},
@@ -12837,7 +12838,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	614: { // minecraft:white_concrete
+	615: { // minecraft:white_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_concrete"},
@@ -12845,7 +12846,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	630: { // minecraft:white_concrete_powder
+	631: { // minecraft:white_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_concrete_powder"},
@@ -12853,7 +12854,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1066: { // minecraft:white_dye
+	1067: { // minecraft:white_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.white_dye"},
@@ -12861,7 +12862,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	598: { // minecraft:white_glazed_terracotta
+	599: { // minecraft:white_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_glazed_terracotta"},
@@ -12869,7 +12870,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	838: { // minecraft:white_harness
+	839: { // minecraft:white_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.white_harness"},
@@ -12877,7 +12878,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	582: { // minecraft:white_shulker_box
+	583: { // minecraft:white_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_shulker_box"},
@@ -12885,7 +12886,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	530: { // minecraft:white_stained_glass
+	531: { // minecraft:white_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_stained_glass"},
@@ -12893,7 +12894,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	546: { // minecraft:white_stained_glass_pane
+	547: { // minecraft:white_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_stained_glass_pane"},
@@ -12901,7 +12902,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	486: { // minecraft:white_terracotta
+	487: { // minecraft:white_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_terracotta"},
@@ -12909,7 +12910,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	238: { // minecraft:white_tulip
+	239: { // minecraft:white_tulip
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:white_tulip",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_tulip"},
@@ -12925,7 +12926,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1430: { // minecraft:wild_armor_trim_smithing_template
+	1431: { // minecraft:wild_armor_trim_smithing_template
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wild_armor_trim_smithing_template",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wild_armor_trim_smithing_template"},
@@ -12933,7 +12934,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	259: { // minecraft:wildflowers
+	260: { // minecraft:wildflowers
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wildflowers",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.wildflowers"},
@@ -12941,7 +12942,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1219: { // minecraft:wind_charge
+	1220: { // minecraft:wind_charge
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wind_charge",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wind_charge"},
@@ -12950,7 +12951,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		UseCooldown:  &UseCooldown{Seconds: 0.5},
 	},
-	1197: { // minecraft:witch_spawn_egg
+	1198: { // minecraft:witch_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:witch_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.witch_spawn_egg"},
@@ -12958,7 +12959,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	243: { // minecraft:wither_rose
+	244: { // minecraft:wither_rose
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wither_rose",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.wither_rose"},
@@ -12966,7 +12967,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1234: { // minecraft:wither_skeleton_skull
+	1235: { // minecraft:wither_skeleton_skull
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
 		},
@@ -12977,7 +12978,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "rare",
 		RepairCost:   0,
 	},
-	1181: { // minecraft:wither_skeleton_spawn_egg
+	1182: { // minecraft:wither_skeleton_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wither_skeleton_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wither_skeleton_spawn_egg"},
@@ -12985,7 +12986,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1180: { // minecraft:wither_spawn_egg
+	1181: { // minecraft:wither_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wither_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wither_spawn_egg"},
@@ -12993,7 +12994,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	890: { // minecraft:wolf_armor
+	891: { // minecraft:wolf_armor
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:armor", Amount: 11, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
@@ -13008,7 +13009,7 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:repairs_wolf_armor"},
 	},
-	1140: { // minecraft:wolf_spawn_egg
+	1141: { // minecraft:wolf_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wolf_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wolf_spawn_egg"},
@@ -13016,7 +13017,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	914: { // minecraft:wooden_axe
+	915: { // minecraft:wooden_axe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 6, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3.200000047683716, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -13042,7 +13043,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack:       2,
 		},
 	},
-	915: { // minecraft:wooden_hoe
+	916: { // minecraft:wooden_hoe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -13067,7 +13068,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	913: { // minecraft:wooden_pickaxe
+	914: { // minecraft:wooden_pickaxe
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 1, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.799999952316284, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -13092,7 +13093,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	912: { // minecraft:wooden_shovel
+	913: { // minecraft:wooden_shovel
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 1.5, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -13117,7 +13118,7 @@ var defaultComponents = map[int32]*Components{
 			ItemDamagePerAttack: 2,
 		},
 	},
-	1296: { // minecraft:wooden_spear
+	1297: { // minecraft:wooden_spear
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.4615384340286255, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -13136,7 +13137,7 @@ var defaultComponents = map[int32]*Components{
 		Repairable:          &Repairable{Items: "#minecraft:wooden_tool_materials"},
 		Weapon:              &Weapon{},
 	},
-	911: { // minecraft:wooden_sword
+	912: { // minecraft:wooden_sword
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 3, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.4000000953674316, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -13160,7 +13161,7 @@ var defaultComponents = map[int32]*Components{
 		},
 		Weapon: &Weapon{},
 	},
-	1220: { // minecraft:writable_book
+	1221: { // minecraft:writable_book
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:writable_book",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.writable_book"},
@@ -13168,7 +13169,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1221: { // minecraft:written_book
+	1222: { // minecraft:written_book
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:written_book",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.written_book"},
@@ -13176,7 +13177,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1270: { // minecraft:yellow_banner
+	1271: { // minecraft:yellow_banner
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_banner",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_banner"},
@@ -13184,7 +13185,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1090: { // minecraft:yellow_bed
+	1091: { // minecraft:yellow_bed
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_bed",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_bed"},
@@ -13192,7 +13193,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1041: { // minecraft:yellow_bundle
+	1042: { // minecraft:yellow_bundle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_bundle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.yellow_bundle"},
@@ -13200,7 +13201,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1403: { // minecraft:yellow_candle
+	1404: { // minecraft:yellow_candle
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_candle",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_candle"},
@@ -13208,7 +13209,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	509: { // minecraft:yellow_carpet
+	510: { // minecraft:yellow_carpet
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_carpet"},
@@ -13216,7 +13217,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	618: { // minecraft:yellow_concrete
+	619: { // minecraft:yellow_concrete
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_concrete",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_concrete"},
@@ -13224,7 +13225,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	634: { // minecraft:yellow_concrete_powder
+	635: { // minecraft:yellow_concrete_powder
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_concrete_powder",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_concrete_powder"},
@@ -13232,7 +13233,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1070: { // minecraft:yellow_dye
+	1071: { // minecraft:yellow_dye
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_dye",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.yellow_dye"},
@@ -13240,7 +13241,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	602: { // minecraft:yellow_glazed_terracotta
+	603: { // minecraft:yellow_glazed_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_glazed_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_glazed_terracotta"},
@@ -13248,7 +13249,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	842: { // minecraft:yellow_harness
+	843: { // minecraft:yellow_harness
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.yellow_harness"},
@@ -13256,7 +13257,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	586: { // minecraft:yellow_shulker_box
+	587: { // minecraft:yellow_shulker_box
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_shulker_box",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_shulker_box"},
@@ -13264,7 +13265,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	534: { // minecraft:yellow_stained_glass
+	535: { // minecraft:yellow_stained_glass
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_stained_glass",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_stained_glass"},
@@ -13272,7 +13273,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	550: { // minecraft:yellow_stained_glass_pane
+	551: { // minecraft:yellow_stained_glass_pane
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_stained_glass_pane",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_stained_glass_pane"},
@@ -13280,7 +13281,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	490: { // minecraft:yellow_terracotta
+	491: { // minecraft:yellow_terracotta
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:yellow_terracotta",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_terracotta"},
@@ -13296,7 +13297,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1211: { // minecraft:zoglin_spawn_egg
+	1212: { // minecraft:zoglin_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:zoglin_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zoglin_spawn_egg"},
@@ -13304,7 +13305,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1236: { // minecraft:zombie_head
+	1237: { // minecraft:zombie_head
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
 		},
@@ -13315,7 +13316,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "uncommon",
 		RepairCost:   0,
 	},
-	1183: { // minecraft:zombie_horse_spawn_egg
+	1184: { // minecraft:zombie_horse_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:zombie_horse_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zombie_horse_spawn_egg"},
@@ -13323,7 +13324,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1184: { // minecraft:zombie_nautilus_spawn_egg
+	1185: { // minecraft:zombie_nautilus_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:zombie_nautilus_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zombie_nautilus_spawn_egg"},
@@ -13331,7 +13332,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1182: { // minecraft:zombie_spawn_egg
+	1183: { // minecraft:zombie_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:zombie_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zombie_spawn_egg"},
@@ -13339,7 +13340,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1185: { // minecraft:zombie_villager_spawn_egg
+	1186: { // minecraft:zombie_villager_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:zombie_villager_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zombie_villager_spawn_egg"},
@@ -13347,7 +13348,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 	},
-	1212: { // minecraft:zombified_piglin_spawn_egg
+	1213: { // minecraft:zombified_piglin_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:zombified_piglin_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zombified_piglin_spawn_egg"},

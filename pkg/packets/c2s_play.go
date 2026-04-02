@@ -770,14 +770,15 @@ func (p *C2SEntityTagQuery) Write(buf *ns.PacketBuffer) error {
 // C2SInteract represents "Interact".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Interact
+// C2SInteract represents "Interact".
+// In 26.1, this was simplified to a flat record. Attack is now a separate packet (C2SAttack).
+//
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Interact
 type C2SInteract struct {
-	EntityId        ns.VarInt
-	Type            ns.VarInt
-	TargetX         ns.Float32 // only if Type is 2 (interact at)
-	TargetY         ns.Float32 // only if Type is 2
-	TargetZ         ns.Float32 // only if Type is 2
-	Hand            ns.VarInt  // only if Type is 0 or 2
-	SneakKeyPressed ns.Boolean
+	EntityId             ns.VarInt
+	Hand                 ns.VarInt
+	Location             ns.LpVec3
+	UsingSecondaryAction ns.Boolean
 }
 
 func (p *C2SInteract) Read(buf *ns.PacketBuffer) error {
@@ -785,26 +786,13 @@ func (p *C2SInteract) Read(buf *ns.PacketBuffer) error {
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.Type, err = buf.ReadVarInt(); err != nil {
+	if p.Hand, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.Type == 2 {
-		if p.TargetX, err = buf.ReadFloat32(); err != nil {
-			return err
-		}
-		if p.TargetY, err = buf.ReadFloat32(); err != nil {
-			return err
-		}
-		if p.TargetZ, err = buf.ReadFloat32(); err != nil {
-			return err
-		}
+	if p.Location, err = buf.ReadLpVec3(); err != nil {
+		return err
 	}
-	if p.Type == 0 || p.Type == 2 {
-		if p.Hand, err = buf.ReadVarInt(); err != nil {
-			return err
-		}
-	}
-	p.SneakKeyPressed, err = buf.ReadBool()
+	p.UsingSecondaryAction, err = buf.ReadBool()
 	return err
 }
 
@@ -812,26 +800,30 @@ func (p *C2SInteract) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.EntityId); err != nil {
 		return err
 	}
-	if err := buf.WriteVarInt(p.Type); err != nil {
+	if err := buf.WriteVarInt(p.Hand); err != nil {
 		return err
 	}
-	if p.Type == 2 {
-		if err := buf.WriteFloat32(p.TargetX); err != nil {
-			return err
-		}
-		if err := buf.WriteFloat32(p.TargetY); err != nil {
-			return err
-		}
-		if err := buf.WriteFloat32(p.TargetZ); err != nil {
-			return err
-		}
+	if err := buf.WriteLpVec3(p.Location); err != nil {
+		return err
 	}
-	if p.Type == 0 || p.Type == 2 {
-		if err := buf.WriteVarInt(p.Hand); err != nil {
-			return err
-		}
-	}
-	return buf.WriteBool(p.SneakKeyPressed)
+	return buf.WriteBool(p.UsingSecondaryAction)
+}
+
+// C2SAttack represents "Attack" (new in 26.1, split from Interact).
+//
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Attack
+type C2SAttack struct {
+	EntityId ns.VarInt
+}
+
+func (p *C2SAttack) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.EntityId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SAttack) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.EntityId)
 }
 
 // C2SJigsawGenerate represents "Jigsaw Generate".
@@ -2147,4 +2139,66 @@ func (p *C2SCustomClickActionPlay) Write(buf *ns.PacketBuffer) error {
 		return err
 	}
 	return buf.WriteFixedByteArray(data)
+}
+
+// C2SSetGameRule represents "Set Game Rule" (new in 26.1).
+//
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Game_Rule
+type C2SSetGameRule struct {
+	Entries []GameRuleSetEntry
+}
+
+// GameRuleSetEntry represents a game rule key-value pair to set.
+type GameRuleSetEntry struct {
+	Key   ns.Identifier
+	Value ns.String
+}
+
+func (p *C2SSetGameRule) Read(buf *ns.PacketBuffer) error {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.Entries = make([]GameRuleSetEntry, count)
+	for i := range p.Entries {
+		if p.Entries[i].Key, err = buf.ReadIdentifier(); err != nil {
+			return err
+		}
+		if p.Entries[i].Value, err = buf.ReadString(32767); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (p *C2SSetGameRule) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Entries))); err != nil {
+		return err
+	}
+	for _, e := range p.Entries {
+		if err := buf.WriteIdentifier(e.Key); err != nil {
+			return err
+		}
+		if err := buf.WriteString(e.Value); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// C2SSpectateEntity represents "Spectate Entity" (new in 26.1).
+//
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Spectate_Entity
+type C2SSpectateEntity struct {
+	EntityId ns.VarInt
+}
+
+func (p *C2SSpectateEntity) Read(buf *ns.PacketBuffer) error {
+	var err error
+	p.EntityId, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *C2SSpectateEntity) Write(buf *ns.PacketBuffer) error {
+	return buf.WriteVarInt(p.EntityId)
 }

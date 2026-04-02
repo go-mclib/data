@@ -1,4 +1,4 @@
-// Code generated for Minecraft 1.21.11 (Protocol 774); DO NOT EDIT.
+// Code generated for Minecraft 26.1 (Protocol 775); DO NOT EDIT.
 
 package entities
 
@@ -26,23 +26,27 @@ const (
 	SerializerOPTIONAL_UNSIGNED_INT            = 19
 	SerializerPOSE                             = 20
 	SerializerCAT_VARIANT                      = 21
-	SerializerCOW_VARIANT                      = 22
-	SerializerWOLF_VARIANT                     = 23
-	SerializerWOLF_SOUND_VARIANT               = 24
-	SerializerFROG_VARIANT                     = 25
-	SerializerPIG_VARIANT                      = 26
-	SerializerCHICKEN_VARIANT                  = 27
-	SerializerZOMBIE_NAUTILUS_VARIANT          = 28
-	SerializerOPTIONAL_GLOBAL_POS              = 29
-	SerializerPAINTING_VARIANT                 = 30
-	SerializerSNIFFER_STATE                    = 31
-	SerializerARMADILLO_STATE                  = 32
-	SerializerCOPPER_GOLEM_STATE               = 33
-	SerializerWEATHERING_COPPER_STATE          = 34
-	SerializerVECTOR3                          = 35
-	SerializerQUATERNION                       = 36
-	SerializerRESOLVABLE_PROFILE               = 37
-	SerializerHUMANOID_ARM                     = 38
+	SerializerCAT_SOUND_VARIANT                = 22
+	SerializerCOW_VARIANT                      = 23
+	SerializerCOW_SOUND_VARIANT                = 24
+	SerializerWOLF_VARIANT                     = 25
+	SerializerWOLF_SOUND_VARIANT               = 26
+	SerializerFROG_VARIANT                     = 27
+	SerializerPIG_VARIANT                      = 28
+	SerializerPIG_SOUND_VARIANT                = 29
+	SerializerCHICKEN_VARIANT                  = 30
+	SerializerCHICKEN_SOUND_VARIANT            = 31
+	SerializerZOMBIE_NAUTILUS_VARIANT          = 32
+	SerializerOPTIONAL_GLOBAL_POS              = 33
+	SerializerPAINTING_VARIANT                 = 34
+	SerializerSNIFFER_STATE                    = 35
+	SerializerARMADILLO_STATE                  = 36
+	SerializerCOPPER_GOLEM_STATE               = 37
+	SerializerWEATHERING_COPPER_STATE          = 38
+	SerializerVECTOR3                          = 39
+	SerializerQUATERNION                       = 40
+	SerializerRESOLVABLE_PROFILE               = 41
+	SerializerHUMANOID_ARM                     = 42
 )
 
 // serializerNames maps serializer IDs to names.
@@ -69,23 +73,27 @@ var serializerNames = map[int32]string{
 	19: "OPTIONAL_UNSIGNED_INT",
 	20: "POSE",
 	21: "CAT_VARIANT",
-	22: "COW_VARIANT",
-	23: "WOLF_VARIANT",
-	24: "WOLF_SOUND_VARIANT",
-	25: "FROG_VARIANT",
-	26: "PIG_VARIANT",
-	27: "CHICKEN_VARIANT",
-	28: "ZOMBIE_NAUTILUS_VARIANT",
-	29: "OPTIONAL_GLOBAL_POS",
-	30: "PAINTING_VARIANT",
-	31: "SNIFFER_STATE",
-	32: "ARMADILLO_STATE",
-	33: "COPPER_GOLEM_STATE",
-	34: "WEATHERING_COPPER_STATE",
-	35: "VECTOR3",
-	36: "QUATERNION",
-	37: "RESOLVABLE_PROFILE",
-	38: "HUMANOID_ARM",
+	22: "CAT_SOUND_VARIANT",
+	23: "COW_VARIANT",
+	24: "COW_SOUND_VARIANT",
+	25: "WOLF_VARIANT",
+	26: "WOLF_SOUND_VARIANT",
+	27: "FROG_VARIANT",
+	28: "PIG_VARIANT",
+	29: "PIG_SOUND_VARIANT",
+	30: "CHICKEN_VARIANT",
+	31: "CHICKEN_SOUND_VARIANT",
+	32: "ZOMBIE_NAUTILUS_VARIANT",
+	33: "OPTIONAL_GLOBAL_POS",
+	34: "PAINTING_VARIANT",
+	35: "SNIFFER_STATE",
+	36: "ARMADILLO_STATE",
+	37: "COPPER_GOLEM_STATE",
+	38: "WEATHERING_COPPER_STATE",
+	39: "VECTOR3",
+	40: "QUATERNION",
+	41: "RESOLVABLE_PROFILE",
+	42: "HUMANOID_ARM",
 }
 
 // serializerWireTypes maps serializer IDs to wire types.
@@ -119,14 +127,18 @@ var serializerWireTypes = map[int32]string{
 	26: "varint",
 	27: "varint",
 	28: "varint",
-	29: "optional_global_pos",
-	30: "id_or_inline",
+	29: "varint",
+	30: "varint",
 	31: "varint",
 	32: "varint",
-	33: "varint",
-	34: "varint",
-	35: "vector3f",
-	36: "quaternionf",
-	37: "resolvable_profile",
+	33: "optional_global_pos",
+	34: "id_or_inline",
+	35: "varint",
+	36: "varint",
+	37: "varint",
 	38: "varint",
+	39: "vector3f",
+	40: "quaternionf",
+	41: "resolvable_profile",
+	42: "varint",
 }

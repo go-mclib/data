@@ -1,4 +1,4 @@
-// Code generated for Minecraft 1.21.11 (Protocol 774); DO NOT EDIT.
+// Code generated for Minecraft 26.1 (Protocol 775); DO NOT EDIT.
 
 package entities
 
@@ -120,7 +120,7 @@ var dimensions = [...]struct {
 	{"minecraft:player", 0.6, 1.8, 1.62},
 	{"minecraft:polar_bear", 1.4, 1.4, -1.0},
 	{"minecraft:pufferfish", 0.7, 0.7, 0.455},
-	{"minecraft:rabbit", 0.4, 0.5, -1.0},
+	{"minecraft:rabbit", 0.49, 0.6, 0.59},
 	{"minecraft:ravager", 1.95, 2.2, -1.0},
 	{"minecraft:salmon", 0.7, 0.4, 0.26},
 	{"minecraft:sheep", 0.9, 1.3, 1.235},

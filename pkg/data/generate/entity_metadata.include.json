@@ -23,23 +23,27 @@
     "19": {"name": "OPTIONAL_UNSIGNED_INT", "wireType": "optional_varint"},
     "20": {"name": "POSE", "wireType": "varint"},
     "21": {"name": "CAT_VARIANT", "wireType": "varint"},
-    "22": {"name": "COW_VARIANT", "wireType": "varint"},
-    "23": {"name": "WOLF_VARIANT", "wireType": "varint"},
-    "24": {"name": "WOLF_SOUND_VARIANT", "wireType": "varint"},
-    "25": {"name": "FROG_VARIANT", "wireType": "varint"},
-    "26": {"name": "PIG_VARIANT", "wireType": "varint"},
-    "27": {"name": "CHICKEN_VARIANT", "wireType": "varint"},
-    "28": {"name": "ZOMBIE_NAUTILUS_VARIANT", "wireType": "varint"},
-    "29": {"name": "OPTIONAL_GLOBAL_POS", "wireType": "optional_global_pos"},
-    "30": {"name": "PAINTING_VARIANT", "wireType": "id_or_inline"},
-    "31": {"name": "SNIFFER_STATE", "wireType": "varint"},
-    "32": {"name": "ARMADILLO_STATE", "wireType": "varint"},
-    "33": {"name": "COPPER_GOLEM_STATE", "wireType": "varint"},
-    "34": {"name": "WEATHERING_COPPER_STATE", "wireType": "varint"},
-    "35": {"name": "VECTOR3", "wireType": "vector3f"},
-    "36": {"name": "QUATERNION", "wireType": "quaternionf"},
-    "37": {"name": "RESOLVABLE_PROFILE", "wireType": "resolvable_profile"},
-    "38": {"name": "HUMANOID_ARM", "wireType": "varint"}
+    "22": {"name": "CAT_SOUND_VARIANT", "wireType": "varint"},
+    "23": {"name": "COW_VARIANT", "wireType": "varint"},
+    "24": {"name": "COW_SOUND_VARIANT", "wireType": "varint"},
+    "25": {"name": "WOLF_VARIANT", "wireType": "varint"},
+    "26": {"name": "WOLF_SOUND_VARIANT", "wireType": "varint"},
+    "27": {"name": "FROG_VARIANT", "wireType": "varint"},
+    "28": {"name": "PIG_VARIANT", "wireType": "varint"},
+    "29": {"name": "PIG_SOUND_VARIANT", "wireType": "varint"},
+    "30": {"name": "CHICKEN_VARIANT", "wireType": "varint"},
+    "31": {"name": "CHICKEN_SOUND_VARIANT", "wireType": "varint"},
+    "32": {"name": "ZOMBIE_NAUTILUS_VARIANT", "wireType": "varint"},
+    "33": {"name": "OPTIONAL_GLOBAL_POS", "wireType": "optional_global_pos"},
+    "34": {"name": "PAINTING_VARIANT", "wireType": "id_or_inline"},
+    "35": {"name": "SNIFFER_STATE", "wireType": "varint"},
+    "36": {"name": "ARMADILLO_STATE", "wireType": "varint"},
+    "37": {"name": "COPPER_GOLEM_STATE", "wireType": "varint"},
+    "38": {"name": "WEATHERING_COPPER_STATE", "wireType": "varint"},
+    "39": {"name": "VECTOR3", "wireType": "vector3f"},
+    "40": {"name": "QUATERNION", "wireType": "quaternionf"},
+    "41": {"name": "RESOLVABLE_PROFILE", "wireType": "resolvable_profile"},
+    "42": {"name": "HUMANOID_ARM", "wireType": "varint"}
   },
   "entities": {
     "Entity": {
@@ -82,7 +86,7 @@
     "Avatar": {
       "parent": "LivingEntity",
       "fields": [
-        {"index": 15, "name": "MainHand", "serializer": 38, "goField": "MainHand", "goType": "byte", "description": "0=left,1=right (HUMANOID_ARM)"},
+        {"index": 15, "name": "MainHand", "serializer": 42, "goField": "MainHand", "goType": "byte", "description": "0=left,1=right (HUMANOID_ARM)"},
         {"index": 16, "name": "DisplayedSkinParts", "serializer": 0, "goField": "SkinParts", "goType": "byte", "description": "cape|jacket|left_sleeve|right_sleeve|left_pants|right_pants|hat"}
       ]
     },
@@ -115,7 +119,8 @@
       "parent": "AgeableMob",
       "fields": [
         {"index": 17, "name": "BoostTime", "serializer": 1, "goField": "BoostTime", "goType": "int32"},
-        {"index": 18, "name": "Variant", "serializer": 26, "goField": "Variant", "goType": "int32"}
+        {"index": 18, "name": "Variant", "serializer": 28, "goField": "Variant", "goType": "int32"},
+        {"index": 19, "name": "SoundVariant", "serializer": 29, "goField": "SoundVariant", "goType": "int32"}
       ]
     },
     "ArmorStand": {
@@ -153,8 +158,8 @@
       "parent": "AgeableMob",
       "fields": [
         {"index": 17, "name": "IsTamed", "serializer": 8, "goField": "IsTamed", "goType": "bool"},
-        {"index": 18, "name": "Variant", "serializer": 23, "goField": "Variant", "goType": "int32"},
-        {"index": 19, "name": "SoundVariant", "serializer": 24, "goField": "SoundVariant", "goType": "int32"},
+        {"index": 18, "name": "Variant", "serializer": 25, "goField": "Variant", "goType": "int32"},
+        {"index": 19, "name": "SoundVariant", "serializer": 26, "goField": "SoundVariant", "goType": "int32"},
         {"index": 20, "name": "IsAngry", "serializer": 8, "goField": "IsAngry", "goType": "bool"},
         {"index": 21, "name": "CollarColor", "serializer": 1, "goField": "CollarColor", "goType": "int32"}
       ]
@@ -165,7 +170,8 @@
         {"index": 17, "name": "Variant", "serializer": 21, "goField": "Variant", "goType": "int32"},
         {"index": 18, "name": "IsLying", "serializer": 8, "goField": "IsLying", "goType": "bool"},
         {"index": 19, "name": "IsRelaxed", "serializer": 8, "goField": "IsRelaxed", "goType": "bool"},
-        {"index": 20, "name": "CollarColor", "serializer": 1, "goField": "CollarColor", "goType": "int32"}
+        {"index": 20, "name": "CollarColor", "serializer": 1, "goField": "CollarColor", "goType": "int32"},
+        {"index": 21, "name": "SoundVariant", "serializer": 22, "goField": "SoundVariant", "goType": "int32"}
       ]
     },
     "Sheep": {
@@ -177,13 +183,15 @@
     "Cow": {
       "parent": "AgeableMob",
       "fields": [
-        {"index": 17, "name": "Variant", "serializer": 22, "goField": "Variant", "goType": "int32"}
+        {"index": 17, "name": "Variant", "serializer": 23, "goField": "Variant", "goType": "int32"},
+        {"index": 18, "name": "SoundVariant", "serializer": 24, "goField": "SoundVariant", "goType": "int32"}
       ]
     },
     "Chicken": {
       "parent": "AgeableMob",
       "fields": [
-        {"index": 17, "name": "Variant", "serializer": 27, "goField": "Variant", "goType": "int32"}
+        {"index": 17, "name": "Variant", "serializer": 30, "goField": "Variant", "goType": "int32"},
+        {"index": 18, "name": "SoundVariant", "serializer": 31, "goField": "SoundVariant", "goType": "int32"}
       ]
     },
     "Skeleton": {

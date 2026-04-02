@@ -109,7 +109,7 @@ Decoding 5 packets from captures/session_1_20260201_143052.json
 
 // [0] c2s 0x00
 C2SIntention {
-  ProtocolVersion VarInt = 774
+  ProtocolVersion VarInt = 775
   ServerAddress String = "localhost"
   ServerPort Uint16 = 25565
   Intent VarInt = 2

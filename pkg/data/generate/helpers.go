@@ -12,8 +12,8 @@ import (
 
 // Protocol version info - update these when regenerating for a new Minecraft version
 const (
-	ProtocolVersion  = 774
-	MinecraftVersion = "1.21.11"
+	ProtocolVersion  = 775
+	MinecraftVersion = "26.1"
 )
 
 // generatedFileHeader returns the standard header for generated Go files.
@@ -75,6 +75,32 @@ func toGoVarName(id string) string {
 		name = "N" + name
 	}
 	return name
+}
+
+// loadItems loads item component data. It supports both the legacy single-file
+// format (items.json) and the 26.1+ per-item file format (items/ directory).
+func loadItems(baseDir string) map[string]ItemJSON {
+	// try legacy single-file format first
+	legacyPath := filepath.Join(baseDir, "items.json")
+	if _, err := os.Stat(legacyPath); err == nil {
+		return loadJSON[map[string]ItemJSON](legacyPath)
+	}
+
+	// 26.1+ per-item file format: items/<item_name>.json
+	itemsDir := filepath.Join(baseDir, "items")
+	entries, err := os.ReadDir(itemsDir)
+	if err != nil {
+		panic(fmt.Sprintf("failed to read items directory %s: %v", itemsDir, err))
+	}
+	items := make(map[string]ItemJSON, len(entries))
+	for _, entry := range entries {
+		if !strings.HasSuffix(entry.Name(), ".json") {
+			continue
+		}
+		name := "minecraft:" + strings.TrimSuffix(entry.Name(), ".json")
+		items[name] = loadJSON[ItemJSON](filepath.Join(itemsDir, entry.Name()))
+	}
+	return items
 }
 
 func sortedKeys[V any](m map[string]V) []string {

@@ -8,6 +8,12 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
+func (p *C2SAcceptCodeOfConduct) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SAcceptCodeOfConductID)
+}
+func (p *C2SAcceptCodeOfConduct) State() jp.State { return jp.StateConfiguration }
+func (p *C2SAcceptCodeOfConduct) Bound() jp.Bound { return jp.C2S }
+
 func (p *C2SClientInformationConfiguration) ID() ns.VarInt {
 	return ns.VarInt(packet_ids.C2SClientInformationConfigurationID)
 }
@@ -19,12 +25,6 @@ func (p *C2SCookieResponseConfiguration) ID() ns.VarInt {
 }
 func (p *C2SCookieResponseConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SCookieResponseConfiguration) Bound() jp.Bound { return jp.C2S }
-
-func (p *C2SAcceptCodeOfConduct) ID() ns.VarInt {
-	return ns.VarInt(packet_ids.C2SAcceptCodeOfConductID)
-}
-func (p *C2SAcceptCodeOfConduct) State() jp.State { return jp.StateConfiguration }
-func (p *C2SAcceptCodeOfConduct) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SCustomClickActionConfiguration) ID() ns.VarInt {
 	return ns.VarInt(packet_ids.C2SCustomClickActionConfigurationID)
@@ -229,6 +229,10 @@ func (p *C2SAcceptTeleportation) ID() ns.VarInt {
 }
 func (p *C2SAcceptTeleportation) State() jp.State { return jp.StatePlay }
 func (p *C2SAcceptTeleportation) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SAttack) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SAttackID) }
+func (p *C2SAttack) State() jp.State { return jp.StatePlay }
+func (p *C2SAttack) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SBlockEntityTagQuery) ID() ns.VarInt {
 	return ns.VarInt(packet_ids.C2SBlockEntityTagQueryID)
@@ -476,6 +480,10 @@ func (p *C2SSetCreativeModeSlot) ID() ns.VarInt {
 func (p *C2SSetCreativeModeSlot) State() jp.State { return jp.StatePlay }
 func (p *C2SSetCreativeModeSlot) Bound() jp.Bound { return jp.C2S }
 
+func (p *C2SSetGameRule) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSetGameRuleID) }
+func (p *C2SSetGameRule) State() jp.State { return jp.StatePlay }
+func (p *C2SSetGameRule) Bound() jp.Bound { return jp.C2S }
+
 func (p *C2SSetJigsawBlock) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSetJigsawBlockID) }
 func (p *C2SSetJigsawBlock) State() jp.State { return jp.StatePlay }
 func (p *C2SSetJigsawBlock) Bound() jp.Bound { return jp.C2S }
@@ -491,6 +499,10 @@ func (p *C2SSetTestBlock) Bound() jp.Bound { return jp.C2S }
 func (p *C2SSignUpdate) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSignUpdateID) }
 func (p *C2SSignUpdate) State() jp.State { return jp.StatePlay }
 func (p *C2SSignUpdate) Bound() jp.Bound { return jp.C2S }
+
+func (p *C2SSpectateEntity) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSpectateEntityID) }
+func (p *C2SSpectateEntity) State() jp.State { return jp.StatePlay }
+func (p *C2SSpectateEntity) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SSwing) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSwingID) }
 func (p *C2SSwing) State() jp.State { return jp.StatePlay }
@@ -684,6 +696,10 @@ func (p *S2CGameEvent) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CGameEve
 func (p *S2CGameEvent) State() jp.State { return jp.StatePlay }
 func (p *S2CGameEvent) Bound() jp.Bound { return jp.S2C }
 
+func (p *S2CGameRuleValues) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CGameRuleValuesID) }
+func (p *S2CGameRuleValues) State() jp.State { return jp.StatePlay }
+func (p *S2CGameRuleValues) Bound() jp.Bound { return jp.S2C }
+
 func (p *S2CGameTestHighlightPos) ID() ns.VarInt {
 	return ns.VarInt(packet_ids.S2CGameTestHighlightPosID)
 }
@@ -723,6 +739,12 @@ func (p *S2CLightUpdate) Bound() jp.Bound { return jp.S2C }
 func (p *S2CLogin) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLoginID) }
 func (p *S2CLogin) State() jp.State { return jp.StatePlay }
 func (p *S2CLogin) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CLowDiskSpaceWarning) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CLowDiskSpaceWarningID)
+}
+func (p *S2CLowDiskSpaceWarning) State() jp.State { return jp.StatePlay }
+func (p *S2CLowDiskSpaceWarning) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CMapItemData) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CMapItemDataID) }
 func (p *S2CMapItemData) State() jp.State { return jp.StatePlay }

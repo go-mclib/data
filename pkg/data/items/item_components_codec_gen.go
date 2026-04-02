@@ -1,4 +1,4 @@
-// Code generated for Minecraft 1.21.11 (Protocol 774); DO NOT EDIT.
+// Code generated for Minecraft 26.1 (Protocol 775); DO NOT EDIT.
 
 package items
 
@@ -12,6 +12,10 @@ import (
 
 func init() {
 	// Simple VarInt codecs
+	RegisterCodec(ComponentAdditionalTradeCost, &varIntCodec{
+		get: func(c *Components) int32 { return c.AdditionalTradeCost },
+		set: func(c *Components, v int32) { c.AdditionalTradeCost = v },
+	})
 	RegisterCodec(ComponentDamage, &varIntCodec{
 		get: func(c *Components) int32 { return c.Damage },
 		set: func(c *Components, v int32) { c.Damage = v },
@@ -52,10 +56,6 @@ func init() {
 		get: func(c *Components) string { return c.BreakSound },
 		set: func(c *Components, v string) { c.BreakSound = v },
 	})
-	RegisterCodec(ComponentDamageType, &stringCodec{
-		get: func(c *Components) string { return c.DamageType },
-		set: func(c *Components, v string) { c.DamageType = v },
-	})
 	RegisterCodec(ComponentInstrument, &stringCodec{
 		get: func(c *Components) string { return c.Instrument },
 		set: func(c *Components, v string) { c.Instrument = v },
@@ -67,14 +67,6 @@ func init() {
 	RegisterCodec(ComponentJukeboxPlayable, &stringCodec{
 		get: func(c *Components) string { return c.JukeboxPlayable },
 		set: func(c *Components, v string) { c.JukeboxPlayable = v },
-	})
-	RegisterCodec(ComponentProvidesBannerPatterns, &stringCodec{
-		get: func(c *Components) string { return c.ProvidesBannerPatterns },
-		set: func(c *Components, v string) { c.ProvidesBannerPatterns = v },
-	})
-	RegisterCodec(ComponentProvidesTrimMaterial, &stringCodec{
-		get: func(c *Components) string { return c.ProvidesTrimMaterial },
-		set: func(c *Components, v string) { c.ProvidesTrimMaterial = v },
 	})
 
 	// Empty marker codecs (bool flags)
@@ -98,6 +90,8 @@ func init() {
 	// VarInt passthrough
 	for _, id := range []int32{
 		ComponentBaseColor,
+		ComponentDamageType,
+		ComponentDye,
 		ComponentMapId,
 		ComponentMapPostProcessing,
 		ComponentSwingAnimation,
@@ -152,6 +146,7 @@ func init() {
 	// HolderSet passthrough
 	for _, id := range []int32{
 		ComponentDamageResistant,
+		ComponentProvidesBannerPatterns,
 		ComponentRepairable,
 	} {
 		registerHolderSetPassthrough(id)
@@ -177,8 +172,11 @@ func init() {
 	for _, id := range []int32{
 		ComponentAxolotlVariant,
 		ComponentCatCollar,
+		ComponentCatSoundVariant,
 		ComponentCatVariant,
+		ComponentChickenSoundVariant,
 		ComponentChickenVariant,
+		ComponentCowSoundVariant,
 		ComponentCowVariant,
 		ComponentFoxVariant,
 		ComponentFrogVariant,
@@ -187,6 +185,7 @@ func init() {
 		ComponentMooshroomVariant,
 		ComponentPaintingVariant,
 		ComponentParrotVariant,
+		ComponentPigSoundVariant,
 		ComponentPigVariant,
 		ComponentRabbitVariant,
 		ComponentSalmonSize,

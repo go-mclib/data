@@ -13,7 +13,7 @@ import (
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Handshake
 type C2SIntention struct {
-	// See protocol version numbers (currently 774 in Minecraft 1.21.11).
+	// See protocol version numbers (currently 775 in Minecraft 26.1).
 	ProtocolVersion ns.VarInt
 	// Hostname or IP, e.g. localhost or 127.0.0.1, that was used to connect.
 	ServerAddress ns.String

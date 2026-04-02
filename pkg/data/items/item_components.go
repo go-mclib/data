@@ -9,6 +9,7 @@ import "maps"
 type Components struct {
 	present [2]uint64 // bitset: which component IDs are explicitly set
 
+	AdditionalTradeCost    int32
 	AttributeModifiers     []AttributeModifier
 	BlocksAttacks          *BlocksAttacks
 	BreakSound             string

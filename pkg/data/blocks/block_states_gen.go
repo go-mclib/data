@@ -1,4 +1,4 @@
-// Code generated for Minecraft 1.21.11 (Protocol 774); DO NOT EDIT.
+// Code generated for Minecraft 26.1 (Protocol 775); DO NOT EDIT.
 
 package blocks
 
@@ -175,9 +175,9 @@ var propertyValueIndices = map[string]map[string]int{
 	},
 	"facing": {
 		"north": 0,
-		"south": 1,
-		"west":  2,
-		"east":  3,
+		"east":  1,
+		"south": 2,
+		"west":  3,
 		"up":    4,
 		"down":  5,
 	},
@@ -245,29 +245,33 @@ var propertyValueIndices = map[string]map[string]int{
 		"false": 1,
 	},
 	"instrument": {
-		"harp":            0,
-		"basedrum":        1,
-		"snare":           2,
-		"hat":             3,
-		"bass":            4,
-		"flute":           5,
-		"bell":            6,
-		"guitar":          7,
-		"chime":           8,
-		"xylophone":       9,
-		"iron_xylophone":  10,
-		"cow_bell":        11,
-		"didgeridoo":      12,
-		"bit":             13,
-		"banjo":           14,
-		"pling":           15,
-		"zombie":          16,
-		"skeleton":        17,
-		"creeper":         18,
-		"dragon":          19,
-		"wither_skeleton": 20,
-		"piglin":          21,
-		"custom_head":     22,
+		"harp":              0,
+		"basedrum":          1,
+		"snare":             2,
+		"hat":               3,
+		"bass":              4,
+		"flute":             5,
+		"bell":              6,
+		"guitar":            7,
+		"chime":             8,
+		"xylophone":         9,
+		"iron_xylophone":    10,
+		"cow_bell":          11,
+		"didgeridoo":        12,
+		"bit":               13,
+		"banjo":             14,
+		"pling":             15,
+		"trumpet":           16,
+		"trumpet_exposed":   17,
+		"trumpet_oxidized":  18,
+		"trumpet_weathered": 19,
+		"zombie":            20,
+		"skeleton":          21,
+		"creeper":           22,
+		"dragon":            23,
+		"wither_skeleton":   24,
+		"piglin":            25,
+		"custom_head":       26,
 	},
 	"inverted": {
 		"true":  0,
@@ -616,18 +620,18 @@ var propertyValueIndices = map[string]map[string]int{
 }
 
 var blockStates = map[int32]*blockStateData{
-	445: { // minecraft:acacia_button
-		BaseID:    10569,
-		DefaultID: 10578,
+	447: { // minecraft:acacia_button
+		BaseID:    10771,
+		DefaultID: 10780,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	647: { // minecraft:acacia_door
-		BaseID:    14050,
-		DefaultID: 14061,
+	649: { // minecraft:acacia_door
+		BaseID:    14252,
+		DefaultID: 14263,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -636,9 +640,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	638: { // minecraft:acacia_fence
-		BaseID:    13666,
-		DefaultID: 13697,
+	640: { // minecraft:acacia_fence
+		BaseID:    13868,
+		DefaultID: 13899,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -647,9 +651,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	629: { // minecraft:acacia_fence_gate
-		BaseID:    13378,
-		DefaultID: 13385,
+	631: { // minecraft:acacia_fence_gate
+		BaseID:    13580,
+		DefaultID: 13587,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -657,9 +661,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	236: { // minecraft:acacia_hanging_sign
-		BaseID:    5898,
-		DefaultID: 5931,
+	237: { // minecraft:acacia_hanging_sign
+		BaseID:    6099,
+		DefaultID: 6148,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -686,9 +690,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    19,
 		DefaultID: 19,
 	},
-	264: { // minecraft:acacia_pressure_plate
-		BaseID:    6668,
-		DefaultID: 6669,
+	265: { // minecraft:acacia_pressure_plate
+		BaseID:    6869,
+		DefaultID: 6870,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
@@ -700,9 +704,9 @@ var blockStates = map[int32]*blockStateData{
 			{"stage", []string{"0", "1"}, 2},
 		},
 	},
-	179: { // minecraft:acacia_shelf
-		BaseID:    2399,
-		DefaultID: 2408,
+	180: { // minecraft:acacia_shelf
+		BaseID:    2600,
+		DefaultID: 2609,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -710,25 +714,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	212: { // minecraft:acacia_sign
-		BaseID:    5230,
-		DefaultID: 5231,
+	213: { // minecraft:acacia_sign
+		BaseID:    5431,
+		DefaultID: 5448,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	601: { // minecraft:acacia_slab
-		BaseID:    13152,
-		DefaultID: 13155,
+	603: { // minecraft:acacia_slab
+		BaseID:    13354,
+		DefaultID: 13357,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	514: { // minecraft:acacia_stairs
-		BaseID:    11770,
-		DefaultID: 11781,
+	516: { // minecraft:acacia_stairs
+		BaseID:    11972,
+		DefaultID: 11983,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -736,9 +740,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	319: { // minecraft:acacia_trapdoor
-		BaseID:    7169,
-		DefaultID: 7184,
+	320: { // minecraft:acacia_trapdoor
+		BaseID:    7370,
+		DefaultID: 7385,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -747,17 +751,17 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	248: { // minecraft:acacia_wall_hanging_sign
-		BaseID:    6498,
-		DefaultID: 6499,
+	249: { // minecraft:acacia_wall_hanging_sign
+		BaseID:    6699,
+		DefaultID: 6700,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	226: { // minecraft:acacia_wall_sign
-		BaseID:    5650,
-		DefaultID: 5651,
+	227: { // minecraft:acacia_wall_sign
+		BaseID:    5851,
+		DefaultID: 5852,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -770,9 +774,9 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	480: { // minecraft:activator_rail
-		BaseID:    11206,
-		DefaultID: 11219,
+	482: { // minecraft:activator_rail
+		BaseID:    11408,
+		DefaultID: 11421,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 			{"shape", []string{"north_south", "east_west", "ascending_east", "ascending_west", "ascending_north", "ascending_south"}, 6},
@@ -783,41 +787,41 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    0,
 		DefaultID: 0,
 	},
-	161: { // minecraft:allium
-		BaseID:    2125,
-		DefaultID: 2125,
+	162: { // minecraft:allium
+		BaseID:    2326,
+		DefaultID: 2326,
 	},
-	976: { // minecraft:amethyst_block
-		BaseID:    23200,
-		DefaultID: 23200,
+	978: { // minecraft:amethyst_block
+		BaseID:    23402,
+		DefaultID: 23402,
 	},
-	978: { // minecraft:amethyst_cluster
-		BaseID:    23202,
-		DefaultID: 23211,
+	980: { // minecraft:amethyst_cluster
+		BaseID:    23404,
+		DefaultID: 23413,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	914: { // minecraft:ancient_debris
-		BaseID:    21617,
-		DefaultID: 21617,
+	916: { // minecraft:ancient_debris
+		BaseID:    21819,
+		DefaultID: 21819,
 	},
 	6: { // minecraft:andesite
 		BaseID:    6,
 		DefaultID: 6,
 	},
-	818: { // minecraft:andesite_slab
-		BaseID:    16268,
-		DefaultID: 16271,
+	820: { // minecraft:andesite_slab
+		BaseID:    16470,
+		DefaultID: 16473,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	805: { // minecraft:andesite_stairs
-		BaseID:    15894,
-		DefaultID: 15905,
+	807: { // minecraft:andesite_stairs
+		BaseID:    16096,
+		DefaultID: 16107,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -825,9 +829,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	830: { // minecraft:andesite_wall
-		BaseID:    18884,
-		DefaultID: 18887,
+	832: { // minecraft:andesite_wall
+		BaseID:    19086,
+		DefaultID: 19089,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -837,30 +841,30 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	465: { // minecraft:anvil
-		BaseID:    10993,
-		DefaultID: 10993,
+	467: { // minecraft:anvil
+		BaseID:    11195,
+		DefaultID: 11195,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	362: { // minecraft:attached_melon_stem
-		BaseID:    8137,
-		DefaultID: 8137,
+	363: { // minecraft:attached_melon_stem
+		BaseID:    8338,
+		DefaultID: 8338,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	361: { // minecraft:attached_pumpkin_stem
-		BaseID:    8133,
-		DefaultID: 8133,
+	362: { // minecraft:attached_pumpkin_stem
+		BaseID:    8334,
+		DefaultID: 8334,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	1108: { // minecraft:azalea
-		BaseID:    27609,
-		DefaultID: 27609,
+	1110: { // minecraft:azalea
+		BaseID:    27811,
+		DefaultID: 27811,
 	},
 	97: { // minecraft:azalea_leaves
 		BaseID:    504,
@@ -871,13 +875,13 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	162: { // minecraft:azure_bluet
-		BaseID:    2126,
-		DefaultID: 2126,
+	163: { // minecraft:azure_bluet
+		BaseID:    2327,
+		DefaultID: 2327,
 	},
-	790: { // minecraft:bamboo
-		BaseID:    15077,
-		DefaultID: 15077,
+	792: { // minecraft:bamboo
+		BaseID:    15279,
+		DefaultID: 15279,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1"}, 2},
 			{"leaves", []string{"none", "small", "large"}, 3},
@@ -891,18 +895,18 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	450: { // minecraft:bamboo_button
-		BaseID:    10689,
-		DefaultID: 10698,
+	452: { // minecraft:bamboo_button
+		BaseID:    10891,
+		DefaultID: 10900,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	652: { // minecraft:bamboo_door
-		BaseID:    14370,
-		DefaultID: 14381,
+	654: { // minecraft:bamboo_door
+		BaseID:    14572,
+		DefaultID: 14583,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -911,9 +915,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	643: { // minecraft:bamboo_fence
-		BaseID:    13826,
-		DefaultID: 13857,
+	645: { // minecraft:bamboo_fence
+		BaseID:    14028,
+		DefaultID: 14059,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -922,9 +926,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	634: { // minecraft:bamboo_fence_gate
-		BaseID:    13538,
-		DefaultID: 13545,
+	636: { // minecraft:bamboo_fence_gate
+		BaseID:    13740,
+		DefaultID: 13747,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -932,9 +936,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	244: { // minecraft:bamboo_hanging_sign
-		BaseID:    6410,
-		DefaultID: 6443,
+	245: { // minecraft:bamboo_hanging_sign
+		BaseID:    6611,
+		DefaultID: 6660,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -945,17 +949,17 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    28,
 		DefaultID: 28,
 	},
-	607: { // minecraft:bamboo_mosaic_slab
-		BaseID:    13188,
-		DefaultID: 13191,
+	609: { // minecraft:bamboo_mosaic_slab
+		BaseID:    13390,
+		DefaultID: 13393,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	520: { // minecraft:bamboo_mosaic_stairs
-		BaseID:    12250,
-		DefaultID: 12261,
+	522: { // minecraft:bamboo_mosaic_stairs
+		BaseID:    12452,
+		DefaultID: 12463,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -967,20 +971,20 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    27,
 		DefaultID: 27,
 	},
-	269: { // minecraft:bamboo_pressure_plate
-		BaseID:    6678,
-		DefaultID: 6679,
+	270: { // minecraft:bamboo_pressure_plate
+		BaseID:    6879,
+		DefaultID: 6880,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	789: { // minecraft:bamboo_sapling
-		BaseID:    15076,
-		DefaultID: 15076,
+	791: { // minecraft:bamboo_sapling
+		BaseID:    15278,
+		DefaultID: 15278,
 	},
-	180: { // minecraft:bamboo_shelf
-		BaseID:    2463,
-		DefaultID: 2472,
+	181: { // minecraft:bamboo_shelf
+		BaseID:    2664,
+		DefaultID: 2673,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -988,25 +992,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	218: { // minecraft:bamboo_sign
-		BaseID:    5422,
-		DefaultID: 5423,
+	219: { // minecraft:bamboo_sign
+		BaseID:    5623,
+		DefaultID: 5640,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	606: { // minecraft:bamboo_slab
-		BaseID:    13182,
-		DefaultID: 13185,
+	608: { // minecraft:bamboo_slab
+		BaseID:    13384,
+		DefaultID: 13387,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	519: { // minecraft:bamboo_stairs
-		BaseID:    12170,
-		DefaultID: 12181,
+	521: { // minecraft:bamboo_stairs
+		BaseID:    12372,
+		DefaultID: 12383,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -1014,9 +1018,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	324: { // minecraft:bamboo_trapdoor
-		BaseID:    7489,
-		DefaultID: 7504,
+	325: { // minecraft:bamboo_trapdoor
+		BaseID:    7690,
+		DefaultID: 7705,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -1025,113 +1029,113 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	256: { // minecraft:bamboo_wall_hanging_sign
-		BaseID:    6562,
-		DefaultID: 6563,
+	257: { // minecraft:bamboo_wall_hanging_sign
+		BaseID:    6763,
+		DefaultID: 6764,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	232: { // minecraft:bamboo_wall_sign
-		BaseID:    5698,
-		DefaultID: 5699,
+	233: { // minecraft:bamboo_wall_sign
+		BaseID:    5899,
+		DefaultID: 5900,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	837: { // minecraft:barrel
-		BaseID:    20540,
-		DefaultID: 20541,
+	839: { // minecraft:barrel
+		BaseID:    20742,
+		DefaultID: 20743,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"open", []string{"true", "false"}, 2},
 		},
 	},
-	522: { // minecraft:barrier
-		BaseID:    12331,
-		DefaultID: 12332,
+	524: { // minecraft:barrier
+		BaseID:    12533,
+		DefaultID: 12534,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	287: { // minecraft:basalt
-		BaseID:    6799,
-		DefaultID: 6800,
+	288: { // minecraft:basalt
+		BaseID:    7000,
+		DefaultID: 7001,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	407: { // minecraft:beacon
-		BaseID:    9779,
-		DefaultID: 9779,
+	408: { // minecraft:beacon
+		BaseID:    9980,
+		DefaultID: 9980,
 	},
 	34: { // minecraft:bedrock
 		BaseID:    85,
 		DefaultID: 85,
 	},
-	909: { // minecraft:bee_nest
-		BaseID:    21566,
-		DefaultID: 21566,
+	911: { // minecraft:bee_nest
+		BaseID:    21768,
+		DefaultID: 21768,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"honey_level", []string{"0", "1", "2", "3", "4", "5"}, 6},
 		},
 	},
-	910: { // minecraft:beehive
-		BaseID:    21590,
-		DefaultID: 21590,
+	912: { // minecraft:beehive
+		BaseID:    21792,
+		DefaultID: 21792,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"honey_level", []string{"0", "1", "2", "3", "4", "5"}, 6},
 		},
 	},
-	663: { // minecraft:beetroots
-		BaseID:    14609,
-		DefaultID: 14609,
+	665: { // minecraft:beetroots
+		BaseID:    14811,
+		DefaultID: 14811,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3"}, 4},
 		},
 	},
-	846: { // minecraft:bell
-		BaseID:    20603,
-		DefaultID: 20604,
+	848: { // minecraft:bell
+		BaseID:    20805,
+		DefaultID: 20806,
 		Properties: []blockProperty{
 			{"attachment", []string{"floor", "ceiling", "single_wall", "double_wall"}, 4},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	1115: { // minecraft:big_dripleaf
-		BaseID:    27661,
-		DefaultID: 27662,
+	1117: { // minecraft:big_dripleaf
+		BaseID:    27863,
+		DefaultID: 27864,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"tilt", []string{"none", "unstable", "partial", "full"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1116: { // minecraft:big_dripleaf_stem
-		BaseID:    27693,
-		DefaultID: 27694,
+	1118: { // minecraft:big_dripleaf_stem
+		BaseID:    27895,
+		DefaultID: 27896,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	443: { // minecraft:birch_button
-		BaseID:    10521,
-		DefaultID: 10530,
+	445: { // minecraft:birch_button
+		BaseID:    10723,
+		DefaultID: 10732,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	645: { // minecraft:birch_door
-		BaseID:    13922,
-		DefaultID: 13933,
+	647: { // minecraft:birch_door
+		BaseID:    14124,
+		DefaultID: 14135,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -1140,9 +1144,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	636: { // minecraft:birch_fence
-		BaseID:    13602,
-		DefaultID: 13633,
+	638: { // minecraft:birch_fence
+		BaseID:    13804,
+		DefaultID: 13835,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -1151,9 +1155,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	627: { // minecraft:birch_fence_gate
-		BaseID:    13314,
-		DefaultID: 13321,
+	629: { // minecraft:birch_fence_gate
+		BaseID:    13516,
+		DefaultID: 13523,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -1161,9 +1165,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	235: { // minecraft:birch_hanging_sign
-		BaseID:    5834,
-		DefaultID: 5867,
+	236: { // minecraft:birch_hanging_sign
+		BaseID:    6035,
+		DefaultID: 6084,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -1190,9 +1194,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    17,
 		DefaultID: 17,
 	},
-	262: { // minecraft:birch_pressure_plate
-		BaseID:    6664,
-		DefaultID: 6665,
+	263: { // minecraft:birch_pressure_plate
+		BaseID:    6865,
+		DefaultID: 6866,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
@@ -1204,9 +1208,9 @@ var blockStates = map[int32]*blockStateData{
 			{"stage", []string{"0", "1"}, 2},
 		},
 	},
-	181: { // minecraft:birch_shelf
-		BaseID:    2527,
-		DefaultID: 2536,
+	182: { // minecraft:birch_shelf
+		BaseID:    2728,
+		DefaultID: 2737,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -1214,25 +1218,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	211: { // minecraft:birch_sign
-		BaseID:    5198,
-		DefaultID: 5199,
+	212: { // minecraft:birch_sign
+		BaseID:    5399,
+		DefaultID: 5416,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	599: { // minecraft:birch_slab
-		BaseID:    13140,
-		DefaultID: 13143,
+	601: { // minecraft:birch_slab
+		BaseID:    13342,
+		DefaultID: 13345,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	404: { // minecraft:birch_stairs
-		BaseID:    9607,
-		DefaultID: 9618,
+	405: { // minecraft:birch_stairs
+		BaseID:    9808,
+		DefaultID: 9819,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -1240,9 +1244,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	317: { // minecraft:birch_trapdoor
-		BaseID:    7041,
-		DefaultID: 7056,
+	318: { // minecraft:birch_trapdoor
+		BaseID:    7242,
+		DefaultID: 7257,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -1251,17 +1255,17 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	247: { // minecraft:birch_wall_hanging_sign
-		BaseID:    6490,
-		DefaultID: 6491,
+	248: { // minecraft:birch_wall_hanging_sign
+		BaseID:    6691,
+		DefaultID: 6692,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	225: { // minecraft:birch_wall_sign
-		BaseID:    5642,
-		DefaultID: 5643,
+	226: { // minecraft:birch_wall_sign
+		BaseID:    5843,
+		DefaultID: 5844,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -1274,71 +1278,71 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	576: { // minecraft:black_banner
-		BaseID:    12965,
-		DefaultID: 12965,
+	578: { // minecraft:black_banner
+		BaseID:    13167,
+		DefaultID: 13175,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	125: { // minecraft:black_bed
-		BaseID:    1971,
-		DefaultID: 1974,
+		BaseID:    2171,
+		DefaultID: 2174,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	958: { // minecraft:black_candle
-		BaseID:    23150,
-		DefaultID: 23153,
+	960: { // minecraft:black_candle
+		BaseID:    23352,
+		DefaultID: 23355,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	975: { // minecraft:black_candle_cake
-		BaseID:    23198,
-		DefaultID: 23199,
+	977: { // minecraft:black_candle_cake
+		BaseID:    23400,
+		DefaultID: 23401,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	551: { // minecraft:black_carpet
-		BaseID:    12709,
-		DefaultID: 12709,
+	553: { // minecraft:black_carpet
+		BaseID:    12911,
+		DefaultID: 12911,
 	},
-	723: { // minecraft:black_concrete
-		BaseID:    14843,
-		DefaultID: 14843,
+	725: { // minecraft:black_concrete
+		BaseID:    15045,
+		DefaultID: 15045,
 	},
-	739: { // minecraft:black_concrete_powder
-		BaseID:    14859,
-		DefaultID: 14859,
+	741: { // minecraft:black_concrete_powder
+		BaseID:    15061,
+		DefaultID: 15061,
 	},
-	707: { // minecraft:black_glazed_terracotta
-		BaseID:    14824,
-		DefaultID: 14824,
+	709: { // minecraft:black_glazed_terracotta
+		BaseID:    15026,
+		DefaultID: 15026,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	691: { // minecraft:black_shulker_box
-		BaseID:    14758,
-		DefaultID: 14762,
+	693: { // minecraft:black_shulker_box
+		BaseID:    14960,
+		DefaultID: 14964,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	314: { // minecraft:black_stained_glass
-		BaseID:    6912,
-		DefaultID: 6912,
+	315: { // minecraft:black_stained_glass
+		BaseID:    7113,
+		DefaultID: 7113,
 	},
-	513: { // minecraft:black_stained_glass_pane
-		BaseID:    11738,
-		DefaultID: 11769,
+	515: { // minecraft:black_stained_glass_pane
+		BaseID:    11940,
+		DefaultID: 11971,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -1347,36 +1351,36 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	497: { // minecraft:black_terracotta
-		BaseID:    11257,
-		DefaultID: 11257,
+	499: { // minecraft:black_terracotta
+		BaseID:    11459,
+		DefaultID: 11459,
 	},
-	592: { // minecraft:black_wall_banner
-		BaseID:    13041,
-		DefaultID: 13041,
+	594: { // minecraft:black_wall_banner
+		BaseID:    13243,
+		DefaultID: 13243,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	155: { // minecraft:black_wool
-		BaseID:    2108,
-		DefaultID: 2108,
+		BaseID:    2308,
+		DefaultID: 2308,
 	},
-	922: { // minecraft:blackstone
-		BaseID:    21629,
-		DefaultID: 21629,
+	924: { // minecraft:blackstone
+		BaseID:    21831,
+		DefaultID: 21831,
 	},
-	925: { // minecraft:blackstone_slab
-		BaseID:    22034,
-		DefaultID: 22037,
+	927: { // minecraft:blackstone_slab
+		BaseID:    22236,
+		DefaultID: 22239,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	923: { // minecraft:blackstone_stairs
-		BaseID:    21630,
-		DefaultID: 21641,
+	925: { // minecraft:blackstone_stairs
+		BaseID:    21832,
+		DefaultID: 21843,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -1384,9 +1388,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	924: { // minecraft:blackstone_wall
-		BaseID:    21710,
-		DefaultID: 21713,
+	926: { // minecraft:blackstone_wall
+		BaseID:    21912,
+		DefaultID: 21915,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -1396,87 +1400,87 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	839: { // minecraft:blast_furnace
-		BaseID:    20560,
-		DefaultID: 20561,
+	841: { // minecraft:blast_furnace
+		BaseID:    20762,
+		DefaultID: 20763,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	572: { // minecraft:blue_banner
-		BaseID:    12901,
-		DefaultID: 12901,
+	574: { // minecraft:blue_banner
+		BaseID:    13103,
+		DefaultID: 13111,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	121: { // minecraft:blue_bed
-		BaseID:    1907,
-		DefaultID: 1910,
+		BaseID:    2107,
+		DefaultID: 2110,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	954: { // minecraft:blue_candle
-		BaseID:    23086,
-		DefaultID: 23089,
+	956: { // minecraft:blue_candle
+		BaseID:    23288,
+		DefaultID: 23291,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	971: { // minecraft:blue_candle_cake
-		BaseID:    23190,
-		DefaultID: 23191,
+	973: { // minecraft:blue_candle_cake
+		BaseID:    23392,
+		DefaultID: 23393,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	547: { // minecraft:blue_carpet
-		BaseID:    12705,
-		DefaultID: 12705,
+	549: { // minecraft:blue_carpet
+		BaseID:    12907,
+		DefaultID: 12907,
 	},
-	719: { // minecraft:blue_concrete
-		BaseID:    14839,
-		DefaultID: 14839,
+	721: { // minecraft:blue_concrete
+		BaseID:    15041,
+		DefaultID: 15041,
 	},
-	735: { // minecraft:blue_concrete_powder
-		BaseID:    14855,
-		DefaultID: 14855,
+	737: { // minecraft:blue_concrete_powder
+		BaseID:    15057,
+		DefaultID: 15057,
 	},
-	703: { // minecraft:blue_glazed_terracotta
-		BaseID:    14808,
-		DefaultID: 14808,
+	705: { // minecraft:blue_glazed_terracotta
+		BaseID:    15010,
+		DefaultID: 15010,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	787: { // minecraft:blue_ice
-		BaseID:    15073,
-		DefaultID: 15073,
+	789: { // minecraft:blue_ice
+		BaseID:    15275,
+		DefaultID: 15275,
 	},
-	160: { // minecraft:blue_orchid
-		BaseID:    2124,
-		DefaultID: 2124,
+	161: { // minecraft:blue_orchid
+		BaseID:    2325,
+		DefaultID: 2325,
 	},
-	687: { // minecraft:blue_shulker_box
-		BaseID:    14734,
-		DefaultID: 14738,
+	689: { // minecraft:blue_shulker_box
+		BaseID:    14936,
+		DefaultID: 14940,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	310: { // minecraft:blue_stained_glass
-		BaseID:    6908,
-		DefaultID: 6908,
+	311: { // minecraft:blue_stained_glass
+		BaseID:    7109,
+		DefaultID: 7109,
 	},
-	509: { // minecraft:blue_stained_glass_pane
-		BaseID:    11610,
-		DefaultID: 11641,
+	511: { // minecraft:blue_stained_glass_pane
+		BaseID:    11812,
+		DefaultID: 11843,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -1485,78 +1489,78 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	493: { // minecraft:blue_terracotta
-		BaseID:    11253,
-		DefaultID: 11253,
+	495: { // minecraft:blue_terracotta
+		BaseID:    11455,
+		DefaultID: 11455,
 	},
-	588: { // minecraft:blue_wall_banner
-		BaseID:    13025,
-		DefaultID: 13025,
+	590: { // minecraft:blue_wall_banner
+		BaseID:    13227,
+		DefaultID: 13227,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	151: { // minecraft:blue_wool
-		BaseID:    2104,
-		DefaultID: 2104,
+		BaseID:    2304,
+		DefaultID: 2304,
 	},
-	672: { // minecraft:bone_block
-		BaseID:    14646,
-		DefaultID: 14647,
+	674: { // minecraft:bone_block
+		BaseID:    14848,
+		DefaultID: 14849,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	177: { // minecraft:bookshelf
-		BaseID:    2142,
-		DefaultID: 2142,
+	178: { // minecraft:bookshelf
+		BaseID:    2343,
+		DefaultID: 2343,
 	},
-	762: { // minecraft:brain_coral
-		BaseID:    14957,
-		DefaultID: 14957,
+	764: { // minecraft:brain_coral
+		BaseID:    15159,
+		DefaultID: 15159,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	752: { // minecraft:brain_coral_block
-		BaseID:    14941,
-		DefaultID: 14941,
+	754: { // minecraft:brain_coral_block
+		BaseID:    15143,
+		DefaultID: 15143,
 	},
-	772: { // minecraft:brain_coral_fan
-		BaseID:    14977,
-		DefaultID: 14977,
+	774: { // minecraft:brain_coral_fan
+		BaseID:    15179,
+		DefaultID: 15179,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	782: { // minecraft:brain_coral_wall_fan
-		BaseID:    15033,
-		DefaultID: 15033,
+	784: { // minecraft:brain_coral_wall_fan
+		BaseID:    15235,
+		DefaultID: 15235,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	385: { // minecraft:brewing_stand
-		BaseID:    9251,
-		DefaultID: 9258,
+	386: { // minecraft:brewing_stand
+		BaseID:    9452,
+		DefaultID: 9459,
 		Properties: []blockProperty{
 			{"has_bottle_0", []string{"true", "false"}, 2},
 			{"has_bottle_1", []string{"true", "false"}, 2},
 			{"has_bottle_2", []string{"true", "false"}, 2},
 		},
 	},
-	614: { // minecraft:brick_slab
-		BaseID:    13230,
-		DefaultID: 13233,
+	616: { // minecraft:brick_slab
+		BaseID:    13432,
+		DefaultID: 13435,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	369: { // minecraft:brick_stairs
-		BaseID:    8477,
-		DefaultID: 8488,
+	370: { // minecraft:brick_stairs
+		BaseID:    8678,
+		DefaultID: 8689,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -1564,9 +1568,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	822: { // minecraft:brick_wall
-		BaseID:    16292,
-		DefaultID: 16295,
+	824: { // minecraft:brick_wall
+		BaseID:    16494,
+		DefaultID: 16497,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -1576,68 +1580,68 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	175: { // minecraft:bricks
-		BaseID:    2139,
-		DefaultID: 2139,
+	176: { // minecraft:bricks
+		BaseID:    2340,
+		DefaultID: 2340,
 	},
-	573: { // minecraft:brown_banner
-		BaseID:    12917,
-		DefaultID: 12917,
+	575: { // minecraft:brown_banner
+		BaseID:    13119,
+		DefaultID: 13127,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	122: { // minecraft:brown_bed
-		BaseID:    1923,
-		DefaultID: 1926,
+		BaseID:    2123,
+		DefaultID: 2126,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	955: { // minecraft:brown_candle
-		BaseID:    23102,
-		DefaultID: 23105,
+	957: { // minecraft:brown_candle
+		BaseID:    23304,
+		DefaultID: 23307,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	972: { // minecraft:brown_candle_cake
-		BaseID:    23192,
-		DefaultID: 23193,
+	974: { // minecraft:brown_candle_cake
+		BaseID:    23394,
+		DefaultID: 23395,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	548: { // minecraft:brown_carpet
-		BaseID:    12706,
-		DefaultID: 12706,
+	550: { // minecraft:brown_carpet
+		BaseID:    12908,
+		DefaultID: 12908,
 	},
-	720: { // minecraft:brown_concrete
-		BaseID:    14840,
-		DefaultID: 14840,
+	722: { // minecraft:brown_concrete
+		BaseID:    15042,
+		DefaultID: 15042,
 	},
-	736: { // minecraft:brown_concrete_powder
-		BaseID:    14856,
-		DefaultID: 14856,
+	738: { // minecraft:brown_concrete_powder
+		BaseID:    15058,
+		DefaultID: 15058,
 	},
-	704: { // minecraft:brown_glazed_terracotta
-		BaseID:    14812,
-		DefaultID: 14812,
+	706: { // minecraft:brown_glazed_terracotta
+		BaseID:    15014,
+		DefaultID: 15014,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	171: { // minecraft:brown_mushroom
-		BaseID:    2135,
-		DefaultID: 2135,
+	172: { // minecraft:brown_mushroom
+		BaseID:    2336,
+		DefaultID: 2336,
 	},
-	337: { // minecraft:brown_mushroom_block
-		BaseID:    7565,
-		DefaultID: 7565,
+	338: { // minecraft:brown_mushroom_block
+		BaseID:    7766,
+		DefaultID: 7766,
 		Properties: []blockProperty{
 			{"down", []string{"true", "false"}, 2},
 			{"east", []string{"true", "false"}, 2},
@@ -1647,20 +1651,20 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	688: { // minecraft:brown_shulker_box
-		BaseID:    14740,
-		DefaultID: 14744,
+	690: { // minecraft:brown_shulker_box
+		BaseID:    14942,
+		DefaultID: 14946,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	311: { // minecraft:brown_stained_glass
-		BaseID:    6909,
-		DefaultID: 6909,
+	312: { // minecraft:brown_stained_glass
+		BaseID:    7110,
+		DefaultID: 7110,
 	},
-	510: { // minecraft:brown_stained_glass_pane
-		BaseID:    11642,
-		DefaultID: 11673,
+	512: { // minecraft:brown_stained_glass_pane
+		BaseID:    11844,
+		DefaultID: 11875,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -1669,87 +1673,87 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	494: { // minecraft:brown_terracotta
-		BaseID:    11254,
-		DefaultID: 11254,
+	496: { // minecraft:brown_terracotta
+		BaseID:    11456,
+		DefaultID: 11456,
 	},
-	589: { // minecraft:brown_wall_banner
-		BaseID:    13029,
-		DefaultID: 13029,
+	591: { // minecraft:brown_wall_banner
+		BaseID:    13231,
+		DefaultID: 13231,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	152: { // minecraft:brown_wool
-		BaseID:    2105,
-		DefaultID: 2105,
+		BaseID:    2305,
+		DefaultID: 2305,
 	},
-	794: { // minecraft:bubble_column
-		BaseID:    15092,
-		DefaultID: 15092,
+	796: { // minecraft:bubble_column
+		BaseID:    15294,
+		DefaultID: 15294,
 		Properties: []blockProperty{
 			{"drag", []string{"true", "false"}, 2},
 		},
 	},
-	763: { // minecraft:bubble_coral
-		BaseID:    14959,
-		DefaultID: 14959,
+	765: { // minecraft:bubble_coral
+		BaseID:    15161,
+		DefaultID: 15161,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	753: { // minecraft:bubble_coral_block
-		BaseID:    14942,
-		DefaultID: 14942,
+	755: { // minecraft:bubble_coral_block
+		BaseID:    15144,
+		DefaultID: 15144,
 	},
-	773: { // minecraft:bubble_coral_fan
-		BaseID:    14979,
-		DefaultID: 14979,
+	775: { // minecraft:bubble_coral_fan
+		BaseID:    15181,
+		DefaultID: 15181,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	783: { // minecraft:bubble_coral_wall_fan
-		BaseID:    15041,
-		DefaultID: 15041,
+	785: { // minecraft:bubble_coral_wall_fan
+		BaseID:    15243,
+		DefaultID: 15243,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	977: { // minecraft:budding_amethyst
-		BaseID:    23201,
-		DefaultID: 23201,
+	979: { // minecraft:budding_amethyst
+		BaseID:    23403,
+		DefaultID: 23403,
 	},
 	133: { // minecraft:bush
-		BaseID:    2051,
-		DefaultID: 2051,
+		BaseID:    2251,
+		DefaultID: 2251,
 	},
-	278: { // minecraft:cactus
-		BaseID:    6728,
-		DefaultID: 6728,
+	279: { // minecraft:cactus
+		BaseID:    6929,
+		DefaultID: 6929,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	279: { // minecraft:cactus_flower
-		BaseID:    6744,
-		DefaultID: 6744,
+	280: { // minecraft:cactus_flower
+		BaseID:    6945,
+		DefaultID: 6945,
 	},
-	297: { // minecraft:cake
-		BaseID:    6826,
-		DefaultID: 6826,
+	298: { // minecraft:cake
+		BaseID:    7027,
+		DefaultID: 7027,
 		Properties: []blockProperty{
 			{"bites", []string{"0", "1", "2", "3", "4", "5", "6"}, 7},
 		},
 	},
-	996: { // minecraft:calcite
-		BaseID:    24485,
-		DefaultID: 24485,
+	998: { // minecraft:calcite
+		BaseID:    24687,
+		DefaultID: 24687,
 	},
-	1000: { // minecraft:calibrated_sculk_sensor
-		BaseID:    24584,
-		DefaultID: 24585,
+	1002: { // minecraft:calibrated_sculk_sensor
+		BaseID:    24786,
+		DefaultID: 24787,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"power", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -1757,9 +1761,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	857: { // minecraft:campfire
-		BaseID:    20675,
-		DefaultID: 20678,
+	859: { // minecraft:campfire
+		BaseID:    20877,
+		DefaultID: 20880,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"lit", []string{"true", "false"}, 2},
@@ -1767,83 +1771,83 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	942: { // minecraft:candle
-		BaseID:    22894,
-		DefaultID: 22897,
+	944: { // minecraft:candle
+		BaseID:    23096,
+		DefaultID: 23099,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	959: { // minecraft:candle_cake
-		BaseID:    23166,
-		DefaultID: 23167,
+	961: { // minecraft:candle_cake
+		BaseID:    23368,
+		DefaultID: 23369,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	439: { // minecraft:carrots
-		BaseID:    10457,
-		DefaultID: 10457,
+	441: { // minecraft:carrots
+		BaseID:    10659,
+		DefaultID: 10659,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7"}, 8},
 		},
 	},
-	840: { // minecraft:cartography_table
-		BaseID:    20568,
-		DefaultID: 20568,
+	842: { // minecraft:cartography_table
+		BaseID:    20770,
+		DefaultID: 20770,
 	},
-	295: { // minecraft:carved_pumpkin
-		BaseID:    6818,
-		DefaultID: 6818,
+	296: { // minecraft:carved_pumpkin
+		BaseID:    7019,
+		DefaultID: 7019,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	386: { // minecraft:cauldron
-		BaseID:    9259,
-		DefaultID: 9259,
+	387: { // minecraft:cauldron
+		BaseID:    9460,
+		DefaultID: 9460,
 	},
-	793: { // minecraft:cave_air
-		BaseID:    15091,
-		DefaultID: 15091,
+	795: { // minecraft:cave_air
+		BaseID:    15293,
+		DefaultID: 15293,
 	},
-	1105: { // minecraft:cave_vines
-		BaseID:    27554,
-		DefaultID: 27555,
+	1107: { // minecraft:cave_vines
+		BaseID:    27756,
+		DefaultID: 27757,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"}, 26},
 			{"berries", []string{"true", "false"}, 2},
 		},
 	},
-	1106: { // minecraft:cave_vines_plant
-		BaseID:    27606,
-		DefaultID: 27607,
+	1108: { // minecraft:cave_vines_plant
+		BaseID:    27808,
+		DefaultID: 27809,
 		Properties: []blockProperty{
 			{"berries", []string{"true", "false"}, 2},
 		},
 	},
-	667: { // minecraft:chain_command_block
-		BaseID:    14627,
-		DefaultID: 14633,
+	669: { // minecraft:chain_command_block
+		BaseID:    14829,
+		DefaultID: 14835,
 		Properties: []blockProperty{
 			{"conditional", []string{"true", "false"}, 2},
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	446: { // minecraft:cherry_button
-		BaseID:    10593,
-		DefaultID: 10602,
+	448: { // minecraft:cherry_button
+		BaseID:    10795,
+		DefaultID: 10804,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	648: { // minecraft:cherry_door
-		BaseID:    14114,
-		DefaultID: 14125,
+	650: { // minecraft:cherry_door
+		BaseID:    14316,
+		DefaultID: 14327,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -1852,9 +1856,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	639: { // minecraft:cherry_fence
-		BaseID:    13698,
-		DefaultID: 13729,
+	641: { // minecraft:cherry_fence
+		BaseID:    13900,
+		DefaultID: 13931,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -1863,9 +1867,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	630: { // minecraft:cherry_fence_gate
-		BaseID:    13410,
-		DefaultID: 13417,
+	632: { // minecraft:cherry_fence_gate
+		BaseID:    13612,
+		DefaultID: 13619,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -1873,9 +1877,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	237: { // minecraft:cherry_hanging_sign
-		BaseID:    5962,
-		DefaultID: 5995,
+	238: { // minecraft:cherry_hanging_sign
+		BaseID:    6163,
+		DefaultID: 6212,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -1902,9 +1906,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    20,
 		DefaultID: 20,
 	},
-	265: { // minecraft:cherry_pressure_plate
-		BaseID:    6670,
-		DefaultID: 6671,
+	266: { // minecraft:cherry_pressure_plate
+		BaseID:    6871,
+		DefaultID: 6872,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
@@ -1916,9 +1920,9 @@ var blockStates = map[int32]*blockStateData{
 			{"stage", []string{"0", "1"}, 2},
 		},
 	},
-	182: { // minecraft:cherry_shelf
-		BaseID:    2591,
-		DefaultID: 2600,
+	183: { // minecraft:cherry_shelf
+		BaseID:    2792,
+		DefaultID: 2801,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -1926,25 +1930,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	213: { // minecraft:cherry_sign
-		BaseID:    5262,
-		DefaultID: 5263,
+	214: { // minecraft:cherry_sign
+		BaseID:    5463,
+		DefaultID: 5480,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	602: { // minecraft:cherry_slab
-		BaseID:    13158,
-		DefaultID: 13161,
+	604: { // minecraft:cherry_slab
+		BaseID:    13360,
+		DefaultID: 13363,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	515: { // minecraft:cherry_stairs
-		BaseID:    11850,
-		DefaultID: 11861,
+	517: { // minecraft:cherry_stairs
+		BaseID:    12052,
+		DefaultID: 12063,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -1952,9 +1956,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	320: { // minecraft:cherry_trapdoor
-		BaseID:    7233,
-		DefaultID: 7248,
+	321: { // minecraft:cherry_trapdoor
+		BaseID:    7434,
+		DefaultID: 7449,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -1963,17 +1967,17 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	249: { // minecraft:cherry_wall_hanging_sign
-		BaseID:    6506,
-		DefaultID: 6507,
+	250: { // minecraft:cherry_wall_hanging_sign
+		BaseID:    6707,
+		DefaultID: 6708,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	227: { // minecraft:cherry_wall_sign
-		BaseID:    5658,
-		DefaultID: 5659,
+	228: { // minecraft:cherry_wall_sign
+		BaseID:    5859,
+		DefaultID: 5860,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -1986,25 +1990,25 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	200: { // minecraft:chest
-		BaseID:    3786,
-		DefaultID: 3787,
+	201: { // minecraft:chest
+		BaseID:    3987,
+		DefaultID: 3988,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"type", []string{"single", "left", "right"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	466: { // minecraft:chipped_anvil
-		BaseID:    10997,
-		DefaultID: 10997,
+	468: { // minecraft:chipped_anvil
+		BaseID:    11199,
+		DefaultID: 11199,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	178: { // minecraft:chiseled_bookshelf
-		BaseID:    2143,
-		DefaultID: 2206,
+	179: { // minecraft:chiseled_bookshelf
+		BaseID:    2344,
+		DefaultID: 2407,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"slot_0_occupied", []string{"true", "false"}, 2},
@@ -2015,60 +2019,60 @@ var blockStates = map[int32]*blockStateData{
 			{"slot_5_occupied", []string{"true", "false"}, 2},
 		},
 	},
-	1018: { // minecraft:chiseled_copper
-		BaseID:    25120,
-		DefaultID: 25120,
+	1020: { // minecraft:chiseled_copper
+		BaseID:    25322,
+		DefaultID: 25322,
 	},
-	1138: { // minecraft:chiseled_deepslate
-		BaseID:    29368,
-		DefaultID: 29368,
+	1140: { // minecraft:chiseled_deepslate
+		BaseID:    29570,
+		DefaultID: 29570,
 	},
-	939: { // minecraft:chiseled_nether_bricks
-		BaseID:    22891,
-		DefaultID: 22891,
+	941: { // minecraft:chiseled_nether_bricks
+		BaseID:    23093,
+		DefaultID: 23093,
 	},
-	929: { // minecraft:chiseled_polished_blackstone
-		BaseID:    22043,
-		DefaultID: 22043,
+	931: { // minecraft:chiseled_polished_blackstone
+		BaseID:    22245,
+		DefaultID: 22245,
 	},
-	477: { // minecraft:chiseled_quartz_block
-		BaseID:    11122,
-		DefaultID: 11122,
+	479: { // minecraft:chiseled_quartz_block
+		BaseID:    11324,
+		DefaultID: 11324,
 	},
-	594: { // minecraft:chiseled_red_sandstone
-		BaseID:    13046,
-		DefaultID: 13046,
+	596: { // minecraft:chiseled_red_sandstone
+		BaseID:    13248,
+		DefaultID: 13248,
 	},
-	379: { // minecraft:chiseled_resin_bricks
-		BaseID:    9132,
-		DefaultID: 9132,
+	380: { // minecraft:chiseled_resin_bricks
+		BaseID:    9333,
+		DefaultID: 9333,
 	},
 	107: { // minecraft:chiseled_sandstone
 		BaseID:    579,
 		DefaultID: 579,
 	},
-	328: { // minecraft:chiseled_stone_bricks
-		BaseID:    7556,
-		DefaultID: 7556,
+	329: { // minecraft:chiseled_stone_bricks
+		BaseID:    7757,
+		DefaultID: 7757,
 	},
-	990: { // minecraft:chiseled_tuff
-		BaseID:    24072,
-		DefaultID: 24072,
+	992: { // minecraft:chiseled_tuff
+		BaseID:    24274,
+		DefaultID: 24274,
 	},
-	995: { // minecraft:chiseled_tuff_bricks
-		BaseID:    24484,
-		DefaultID: 24484,
+	997: { // minecraft:chiseled_tuff_bricks
+		BaseID:    24686,
+		DefaultID: 24686,
 	},
-	655: { // minecraft:chorus_flower
-		BaseID:    14504,
-		DefaultID: 14504,
+	657: { // minecraft:chorus_flower
+		BaseID:    14706,
+		DefaultID: 14706,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5"}, 6},
 		},
 	},
-	654: { // minecraft:chorus_plant
-		BaseID:    14440,
-		DefaultID: 14503,
+	656: { // minecraft:chorus_plant
+		BaseID:    14642,
+		DefaultID: 14705,
 		Properties: []blockProperty{
 			{"down", []string{"true", "false"}, 2},
 			{"east", []string{"true", "false"}, 2},
@@ -2078,17 +2082,17 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	280: { // minecraft:clay
-		BaseID:    6745,
-		DefaultID: 6745,
+	281: { // minecraft:clay
+		BaseID:    6946,
+		DefaultID: 6946,
 	},
-	1162: { // minecraft:closed_eyeblossom
-		BaseID:    29667,
-		DefaultID: 29667,
+	1164: { // minecraft:closed_eyeblossom
+		BaseID:    29869,
+		DefaultID: 29869,
 	},
-	553: { // minecraft:coal_block
-		BaseID:    12711,
-		DefaultID: 12711,
+	555: { // minecraft:coal_block
+		BaseID:    12913,
+		DefaultID: 12913,
 	},
 	46: { // minecraft:coal_ore
 		BaseID:    133,
@@ -2098,21 +2102,21 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    11,
 		DefaultID: 11,
 	},
-	1122: { // minecraft:cobbled_deepslate
-		BaseID:    27724,
-		DefaultID: 27724,
+	1124: { // minecraft:cobbled_deepslate
+		BaseID:    27926,
+		DefaultID: 27926,
 	},
-	1124: { // minecraft:cobbled_deepslate_slab
-		BaseID:    27805,
-		DefaultID: 27808,
+	1126: { // minecraft:cobbled_deepslate_slab
+		BaseID:    28007,
+		DefaultID: 28010,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1123: { // minecraft:cobbled_deepslate_stairs
-		BaseID:    27725,
-		DefaultID: 27736,
+	1125: { // minecraft:cobbled_deepslate_stairs
+		BaseID:    27927,
+		DefaultID: 27938,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -2120,9 +2124,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1125: { // minecraft:cobbled_deepslate_wall
-		BaseID:    27811,
-		DefaultID: 27814,
+	1127: { // minecraft:cobbled_deepslate_wall
+		BaseID:    28013,
+		DefaultID: 28016,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -2136,17 +2140,17 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    14,
 		DefaultID: 14,
 	},
-	613: { // minecraft:cobblestone_slab
-		BaseID:    13224,
-		DefaultID: 13227,
+	615: { // minecraft:cobblestone_slab
+		BaseID:    13426,
+		DefaultID: 13429,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	222: { // minecraft:cobblestone_stairs
-		BaseID:    5546,
-		DefaultID: 5557,
+	223: { // minecraft:cobblestone_stairs
+		BaseID:    5747,
+		DefaultID: 5758,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -2154,9 +2158,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	408: { // minecraft:cobblestone_wall
-		BaseID:    9780,
-		DefaultID: 9783,
+	409: { // minecraft:cobblestone_wall
+		BaseID:    9981,
+		DefaultID: 9984,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -2167,51 +2171,51 @@ var blockStates = map[int32]*blockStateData{
 		},
 	},
 	129: { // minecraft:cobweb
-		BaseID:    2047,
-		DefaultID: 2047,
+		BaseID:    2247,
+		DefaultID: 2247,
 	},
-	395: { // minecraft:cocoa
-		BaseID:    9280,
-		DefaultID: 9280,
+	396: { // minecraft:cocoa
+		BaseID:    9481,
+		DefaultID: 9481,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	406: { // minecraft:command_block
-		BaseID:    9767,
-		DefaultID: 9773,
+	407: { // minecraft:command_block
+		BaseID:    9968,
+		DefaultID: 9974,
 		Properties: []blockProperty{
 			{"conditional", []string{"true", "false"}, 2},
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	471: { // minecraft:comparator
-		BaseID:    11061,
-		DefaultID: 11062,
+	473: { // minecraft:comparator
+		BaseID:    11263,
+		DefaultID: 11264,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"mode", []string{"compare", "subtract"}, 2},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	907: { // minecraft:composter
-		BaseID:    21541,
-		DefaultID: 21541,
+	909: { // minecraft:composter
+		BaseID:    21743,
+		DefaultID: 21743,
 		Properties: []blockProperty{
 			{"level", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8"}, 9},
 		},
 	},
-	788: { // minecraft:conduit
-		BaseID:    15074,
-		DefaultID: 15074,
+	790: { // minecraft:conduit
+		BaseID:    15276,
+		DefaultID: 15276,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	341: { // minecraft:copper_bars
-		BaseID:    7789,
-		DefaultID: 7820,
+	342: { // minecraft:copper_bars
+		BaseID:    7990,
+		DefaultID: 8021,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -2220,38 +2224,38 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	1005: { // minecraft:copper_block
-		BaseID:    25107,
-		DefaultID: 25107,
+	1007: { // minecraft:copper_block
+		BaseID:    25309,
+		DefaultID: 25309,
 	},
-	1071: { // minecraft:copper_bulb
-		BaseID:    26861,
-		DefaultID: 26864,
+	1073: { // minecraft:copper_bulb
+		BaseID:    27063,
+		DefaultID: 27066,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	350: { // minecraft:copper_chain
-		BaseID:    8051,
-		DefaultID: 8054,
+	351: { // minecraft:copper_chain
+		BaseID:    8252,
+		DefaultID: 8255,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1079: { // minecraft:copper_chest
-		BaseID:    26893,
-		DefaultID: 26894,
+	1081: { // minecraft:copper_chest
+		BaseID:    27095,
+		DefaultID: 27096,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"type", []string{"single", "left", "right"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1047: { // minecraft:copper_door
-		BaseID:    25821,
-		DefaultID: 25832,
+	1049: { // minecraft:copper_door
+		BaseID:    26023,
+		DefaultID: 26034,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -2260,41 +2264,41 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	1087: { // minecraft:copper_golem_statue
-		BaseID:    27085,
-		DefaultID: 27086,
+	1089: { // minecraft:copper_golem_statue
+		BaseID:    27287,
+		DefaultID: 27288,
 		Properties: []blockProperty{
 			{"copper_golem_pose", []string{"standing", "sitting", "running", "star"}, 4},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1063: { // minecraft:copper_grate
-		BaseID:    26845,
-		DefaultID: 26846,
+	1065: { // minecraft:copper_grate
+		BaseID:    27047,
+		DefaultID: 27048,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	849: { // minecraft:copper_lantern
-		BaseID:    20643,
-		DefaultID: 20646,
+	851: { // minecraft:copper_lantern
+		BaseID:    20845,
+		DefaultID: 20848,
 		Properties: []blockProperty{
 			{"hanging", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1009: { // minecraft:copper_ore
-		BaseID:    25111,
-		DefaultID: 25111,
+	1011: { // minecraft:copper_ore
+		BaseID:    25313,
+		DefaultID: 25313,
 	},
-	291: { // minecraft:copper_torch
-		BaseID:    6810,
-		DefaultID: 6810,
+	292: { // minecraft:copper_torch
+		BaseID:    7011,
+		DefaultID: 7011,
 	},
-	1055: { // minecraft:copper_trapdoor
-		BaseID:    26333,
-		DefaultID: 26348,
+	1057: { // minecraft:copper_trapdoor
+		BaseID:    26535,
+		DefaultID: 26550,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -2303,87 +2307,87 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	292: { // minecraft:copper_wall_torch
-		BaseID:    6811,
-		DefaultID: 6811,
+	293: { // minecraft:copper_wall_torch
+		BaseID:    7012,
+		DefaultID: 7012,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	168: { // minecraft:cornflower
-		BaseID:    2132,
-		DefaultID: 2132,
+	169: { // minecraft:cornflower
+		BaseID:    2333,
+		DefaultID: 2333,
 	},
-	1139: { // minecraft:cracked_deepslate_bricks
-		BaseID:    29369,
-		DefaultID: 29369,
+	1141: { // minecraft:cracked_deepslate_bricks
+		BaseID:    29571,
+		DefaultID: 29571,
 	},
-	1140: { // minecraft:cracked_deepslate_tiles
-		BaseID:    29370,
-		DefaultID: 29370,
+	1142: { // minecraft:cracked_deepslate_tiles
+		BaseID:    29572,
+		DefaultID: 29572,
 	},
-	940: { // minecraft:cracked_nether_bricks
-		BaseID:    22892,
-		DefaultID: 22892,
+	942: { // minecraft:cracked_nether_bricks
+		BaseID:    23094,
+		DefaultID: 23094,
 	},
-	928: { // minecraft:cracked_polished_blackstone_bricks
-		BaseID:    22042,
-		DefaultID: 22042,
+	930: { // minecraft:cracked_polished_blackstone_bricks
+		BaseID:    22244,
+		DefaultID: 22244,
 	},
-	327: { // minecraft:cracked_stone_bricks
-		BaseID:    7555,
-		DefaultID: 7555,
+	328: { // minecraft:cracked_stone_bricks
+		BaseID:    7756,
+		DefaultID: 7756,
 	},
-	1154: { // minecraft:crafter
-		BaseID:    29407,
-		DefaultID: 29452,
+	1156: { // minecraft:crafter
+		BaseID:    29609,
+		DefaultID: 29654,
 		Properties: []blockProperty{
 			{"crafting", []string{"true", "false"}, 2},
 			{"orientation", []string{"down_east", "down_north", "down_south", "down_west", "up_east", "up_north", "up_south", "up_west", "west_up", "east_up", "north_up", "south_up"}, 12},
 			{"triggered", []string{"true", "false"}, 2},
 		},
 	},
-	205: { // minecraft:crafting_table
-		BaseID:    5109,
-		DefaultID: 5109,
+	206: { // minecraft:crafting_table
+		BaseID:    5310,
+		DefaultID: 5310,
 	},
-	198: { // minecraft:creaking_heart
-		BaseID:    3688,
-		DefaultID: 3695,
+	199: { // minecraft:creaking_heart
+		BaseID:    3889,
+		DefaultID: 3896,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 			{"creaking_heart_state", []string{"uprooted", "dormant", "awake"}, 3},
 			{"natural", []string{"true", "false"}, 2},
 		},
 	},
-	459: { // minecraft:creeper_head
-		BaseID:    10873,
-		DefaultID: 10889,
+	461: { // minecraft:creeper_head
+		BaseID:    11075,
+		DefaultID: 11091,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	460: { // minecraft:creeper_wall_head
-		BaseID:    10905,
-		DefaultID: 10906,
+	462: { // minecraft:creeper_wall_head
+		BaseID:    11107,
+		DefaultID: 11108,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	895: { // minecraft:crimson_button
-		BaseID:    21264,
-		DefaultID: 21273,
+	897: { // minecraft:crimson_button
+		BaseID:    21466,
+		DefaultID: 21475,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	897: { // minecraft:crimson_door
-		BaseID:    21312,
-		DefaultID: 21323,
+	899: { // minecraft:crimson_door
+		BaseID:    21514,
+		DefaultID: 21525,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -2392,9 +2396,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	887: { // minecraft:crimson_fence
-		BaseID:    20848,
-		DefaultID: 20879,
+	889: { // minecraft:crimson_fence
+		BaseID:    21050,
+		DefaultID: 21081,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -2403,9 +2407,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	891: { // minecraft:crimson_fence_gate
-		BaseID:    21040,
-		DefaultID: 21047,
+	893: { // minecraft:crimson_fence_gate
+		BaseID:    21242,
+		DefaultID: 21249,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -2413,48 +2417,48 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	874: { // minecraft:crimson_fungus
-		BaseID:    20773,
-		DefaultID: 20773,
+	876: { // minecraft:crimson_fungus
+		BaseID:    20975,
+		DefaultID: 20975,
 	},
-	241: { // minecraft:crimson_hanging_sign
-		BaseID:    6218,
-		DefaultID: 6251,
+	242: { // minecraft:crimson_hanging_sign
+		BaseID:    6419,
+		DefaultID: 6468,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	871: { // minecraft:crimson_hyphae
-		BaseID:    20766,
-		DefaultID: 20767,
+	873: { // minecraft:crimson_hyphae
+		BaseID:    20968,
+		DefaultID: 20969,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	873: { // minecraft:crimson_nylium
-		BaseID:    20772,
-		DefaultID: 20772,
+	875: { // minecraft:crimson_nylium
+		BaseID:    20974,
+		DefaultID: 20974,
 	},
-	881: { // minecraft:crimson_planks
-		BaseID:    20830,
-		DefaultID: 20830,
+	883: { // minecraft:crimson_planks
+		BaseID:    21032,
+		DefaultID: 21032,
 	},
-	885: { // minecraft:crimson_pressure_plate
-		BaseID:    20844,
-		DefaultID: 20845,
+	887: { // minecraft:crimson_pressure_plate
+		BaseID:    21046,
+		DefaultID: 21047,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	880: { // minecraft:crimson_roots
-		BaseID:    20829,
-		DefaultID: 20829,
+	882: { // minecraft:crimson_roots
+		BaseID:    21031,
+		DefaultID: 21031,
 	},
-	183: { // minecraft:crimson_shelf
-		BaseID:    2655,
-		DefaultID: 2664,
+	184: { // minecraft:crimson_shelf
+		BaseID:    2856,
+		DefaultID: 2865,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -2462,25 +2466,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	899: { // minecraft:crimson_sign
-		BaseID:    21440,
-		DefaultID: 21441,
+	901: { // minecraft:crimson_sign
+		BaseID:    21642,
+		DefaultID: 21659,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	883: { // minecraft:crimson_slab
-		BaseID:    20832,
-		DefaultID: 20835,
+	885: { // minecraft:crimson_slab
+		BaseID:    21034,
+		DefaultID: 21037,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	893: { // minecraft:crimson_stairs
-		BaseID:    21104,
-		DefaultID: 21115,
+	895: { // minecraft:crimson_stairs
+		BaseID:    21306,
+		DefaultID: 21317,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -2488,16 +2492,16 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	869: { // minecraft:crimson_stem
-		BaseID:    20760,
-		DefaultID: 20761,
+	871: { // minecraft:crimson_stem
+		BaseID:    20962,
+		DefaultID: 20963,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	889: { // minecraft:crimson_trapdoor
-		BaseID:    20912,
-		DefaultID: 20927,
+	891: { // minecraft:crimson_trapdoor
+		BaseID:    21114,
+		DefaultID: 21129,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -2506,41 +2510,41 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	254: { // minecraft:crimson_wall_hanging_sign
-		BaseID:    6546,
-		DefaultID: 6547,
+	255: { // minecraft:crimson_wall_hanging_sign
+		BaseID:    6747,
+		DefaultID: 6748,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	901: { // minecraft:crimson_wall_sign
-		BaseID:    21504,
-		DefaultID: 21505,
+	903: { // minecraft:crimson_wall_sign
+		BaseID:    21706,
+		DefaultID: 21707,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	915: { // minecraft:crying_obsidian
-		BaseID:    21618,
-		DefaultID: 21618,
+	917: { // minecraft:crying_obsidian
+		BaseID:    21820,
+		DefaultID: 21820,
 	},
-	1014: { // minecraft:cut_copper
-		BaseID:    25116,
-		DefaultID: 25116,
+	1016: { // minecraft:cut_copper
+		BaseID:    25318,
+		DefaultID: 25318,
 	},
-	1030: { // minecraft:cut_copper_slab
-		BaseID:    25463,
-		DefaultID: 25466,
+	1032: { // minecraft:cut_copper_slab
+		BaseID:    25665,
+		DefaultID: 25668,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1026: { // minecraft:cut_copper_stairs
-		BaseID:    25365,
-		DefaultID: 25376,
+	1028: { // minecraft:cut_copper_stairs
+		BaseID:    25567,
+		DefaultID: 25578,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -2548,13 +2552,13 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	595: { // minecraft:cut_red_sandstone
-		BaseID:    13047,
-		DefaultID: 13047,
+	597: { // minecraft:cut_red_sandstone
+		BaseID:    13249,
+		DefaultID: 13249,
 	},
-	620: { // minecraft:cut_red_sandstone_slab
-		BaseID:    13266,
-		DefaultID: 13269,
+	622: { // minecraft:cut_red_sandstone_slab
+		BaseID:    13468,
+		DefaultID: 13471,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -2564,79 +2568,79 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    580,
 		DefaultID: 580,
 	},
-	611: { // minecraft:cut_sandstone_slab
-		BaseID:    13212,
-		DefaultID: 13215,
+	613: { // minecraft:cut_sandstone_slab
+		BaseID:    13414,
+		DefaultID: 13417,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	570: { // minecraft:cyan_banner
-		BaseID:    12869,
-		DefaultID: 12869,
+	572: { // minecraft:cyan_banner
+		BaseID:    13071,
+		DefaultID: 13079,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	119: { // minecraft:cyan_bed
-		BaseID:    1875,
-		DefaultID: 1878,
+		BaseID:    2075,
+		DefaultID: 2078,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	952: { // minecraft:cyan_candle
-		BaseID:    23054,
-		DefaultID: 23057,
+	954: { // minecraft:cyan_candle
+		BaseID:    23256,
+		DefaultID: 23259,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	969: { // minecraft:cyan_candle_cake
-		BaseID:    23186,
-		DefaultID: 23187,
+	971: { // minecraft:cyan_candle_cake
+		BaseID:    23388,
+		DefaultID: 23389,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	545: { // minecraft:cyan_carpet
-		BaseID:    12703,
-		DefaultID: 12703,
+	547: { // minecraft:cyan_carpet
+		BaseID:    12905,
+		DefaultID: 12905,
 	},
-	717: { // minecraft:cyan_concrete
-		BaseID:    14837,
-		DefaultID: 14837,
+	719: { // minecraft:cyan_concrete
+		BaseID:    15039,
+		DefaultID: 15039,
 	},
-	733: { // minecraft:cyan_concrete_powder
-		BaseID:    14853,
-		DefaultID: 14853,
+	735: { // minecraft:cyan_concrete_powder
+		BaseID:    15055,
+		DefaultID: 15055,
 	},
-	701: { // minecraft:cyan_glazed_terracotta
-		BaseID:    14800,
-		DefaultID: 14800,
+	703: { // minecraft:cyan_glazed_terracotta
+		BaseID:    15002,
+		DefaultID: 15002,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	685: { // minecraft:cyan_shulker_box
-		BaseID:    14722,
-		DefaultID: 14726,
+	687: { // minecraft:cyan_shulker_box
+		BaseID:    14924,
+		DefaultID: 14928,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	308: { // minecraft:cyan_stained_glass
-		BaseID:    6906,
-		DefaultID: 6906,
+	309: { // minecraft:cyan_stained_glass
+		BaseID:    7107,
+		DefaultID: 7107,
 	},
-	507: { // minecraft:cyan_stained_glass_pane
-		BaseID:    11546,
-		DefaultID: 11577,
+	509: { // minecraft:cyan_stained_glass_pane
+		BaseID:    11748,
+		DefaultID: 11779,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -2645,44 +2649,44 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	491: { // minecraft:cyan_terracotta
-		BaseID:    11251,
-		DefaultID: 11251,
+	493: { // minecraft:cyan_terracotta
+		BaseID:    11453,
+		DefaultID: 11453,
 	},
-	586: { // minecraft:cyan_wall_banner
-		BaseID:    13017,
-		DefaultID: 13017,
+	588: { // minecraft:cyan_wall_banner
+		BaseID:    13219,
+		DefaultID: 13219,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	149: { // minecraft:cyan_wool
-		BaseID:    2102,
-		DefaultID: 2102,
+		BaseID:    2302,
+		DefaultID: 2302,
 	},
-	467: { // minecraft:damaged_anvil
-		BaseID:    11001,
-		DefaultID: 11001,
+	469: { // minecraft:damaged_anvil
+		BaseID:    11203,
+		DefaultID: 11203,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	157: { // minecraft:dandelion
-		BaseID:    2121,
-		DefaultID: 2121,
+		BaseID:    2321,
+		DefaultID: 2321,
 	},
-	447: { // minecraft:dark_oak_button
-		BaseID:    10617,
-		DefaultID: 10626,
+	449: { // minecraft:dark_oak_button
+		BaseID:    10819,
+		DefaultID: 10828,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	649: { // minecraft:dark_oak_door
-		BaseID:    14178,
-		DefaultID: 14189,
+	651: { // minecraft:dark_oak_door
+		BaseID:    14380,
+		DefaultID: 14391,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -2691,9 +2695,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	640: { // minecraft:dark_oak_fence
-		BaseID:    13730,
-		DefaultID: 13761,
+	642: { // minecraft:dark_oak_fence
+		BaseID:    13932,
+		DefaultID: 13963,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -2702,9 +2706,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	631: { // minecraft:dark_oak_fence_gate
-		BaseID:    13442,
-		DefaultID: 13449,
+	633: { // minecraft:dark_oak_fence_gate
+		BaseID:    13644,
+		DefaultID: 13651,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -2712,9 +2716,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	239: { // minecraft:dark_oak_hanging_sign
-		BaseID:    6090,
-		DefaultID: 6123,
+	240: { // minecraft:dark_oak_hanging_sign
+		BaseID:    6291,
+		DefaultID: 6340,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -2741,9 +2745,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    21,
 		DefaultID: 21,
 	},
-	266: { // minecraft:dark_oak_pressure_plate
-		BaseID:    6672,
-		DefaultID: 6673,
+	267: { // minecraft:dark_oak_pressure_plate
+		BaseID:    6873,
+		DefaultID: 6874,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
@@ -2755,9 +2759,9 @@ var blockStates = map[int32]*blockStateData{
 			{"stage", []string{"0", "1"}, 2},
 		},
 	},
-	184: { // minecraft:dark_oak_shelf
-		BaseID:    2719,
-		DefaultID: 2728,
+	185: { // minecraft:dark_oak_shelf
+		BaseID:    2920,
+		DefaultID: 2929,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -2765,25 +2769,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	215: { // minecraft:dark_oak_sign
-		BaseID:    5326,
-		DefaultID: 5327,
+	216: { // minecraft:dark_oak_sign
+		BaseID:    5527,
+		DefaultID: 5544,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	603: { // minecraft:dark_oak_slab
-		BaseID:    13164,
-		DefaultID: 13167,
+	605: { // minecraft:dark_oak_slab
+		BaseID:    13366,
+		DefaultID: 13369,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	516: { // minecraft:dark_oak_stairs
-		BaseID:    11930,
-		DefaultID: 11941,
+	518: { // minecraft:dark_oak_stairs
+		BaseID:    12132,
+		DefaultID: 12143,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -2791,9 +2795,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	321: { // minecraft:dark_oak_trapdoor
-		BaseID:    7297,
-		DefaultID: 7312,
+	322: { // minecraft:dark_oak_trapdoor
+		BaseID:    7498,
+		DefaultID: 7513,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -2802,17 +2806,17 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	251: { // minecraft:dark_oak_wall_hanging_sign
-		BaseID:    6522,
-		DefaultID: 6523,
+	252: { // minecraft:dark_oak_wall_hanging_sign
+		BaseID:    6723,
+		DefaultID: 6724,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	229: { // minecraft:dark_oak_wall_sign
-		BaseID:    5674,
-		DefaultID: 5675,
+	230: { // minecraft:dark_oak_wall_sign
+		BaseID:    5875,
+		DefaultID: 5876,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -2825,21 +2829,21 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	527: { // minecraft:dark_prismarine
-		BaseID:    12431,
-		DefaultID: 12431,
+	529: { // minecraft:dark_prismarine
+		BaseID:    12633,
+		DefaultID: 12633,
 	},
-	533: { // minecraft:dark_prismarine_slab
-		BaseID:    12684,
-		DefaultID: 12687,
+	535: { // minecraft:dark_prismarine_slab
+		BaseID:    12886,
+		DefaultID: 12889,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	530: { // minecraft:dark_prismarine_stairs
-		BaseID:    12592,
-		DefaultID: 12603,
+	532: { // minecraft:dark_prismarine_stairs
+		BaseID:    12794,
+		DefaultID: 12805,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -2847,175 +2851,175 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	472: { // minecraft:daylight_detector
-		BaseID:    11077,
-		DefaultID: 11093,
+	474: { // minecraft:daylight_detector
+		BaseID:    11279,
+		DefaultID: 11295,
 		Properties: []blockProperty{
 			{"inverted", []string{"true", "false"}, 2},
 			{"power", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	757: { // minecraft:dead_brain_coral
-		BaseID:    14947,
-		DefaultID: 14947,
+	759: { // minecraft:dead_brain_coral
+		BaseID:    15149,
+		DefaultID: 15149,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	747: { // minecraft:dead_brain_coral_block
-		BaseID:    14936,
-		DefaultID: 14936,
+	749: { // minecraft:dead_brain_coral_block
+		BaseID:    15138,
+		DefaultID: 15138,
 	},
-	767: { // minecraft:dead_brain_coral_fan
-		BaseID:    14967,
-		DefaultID: 14967,
+	769: { // minecraft:dead_brain_coral_fan
+		BaseID:    15169,
+		DefaultID: 15169,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	777: { // minecraft:dead_brain_coral_wall_fan
-		BaseID:    14993,
-		DefaultID: 14993,
+	779: { // minecraft:dead_brain_coral_wall_fan
+		BaseID:    15195,
+		DefaultID: 15195,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	758: { // minecraft:dead_bubble_coral
-		BaseID:    14949,
-		DefaultID: 14949,
+	760: { // minecraft:dead_bubble_coral
+		BaseID:    15151,
+		DefaultID: 15151,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	748: { // minecraft:dead_bubble_coral_block
-		BaseID:    14937,
-		DefaultID: 14937,
+	750: { // minecraft:dead_bubble_coral_block
+		BaseID:    15139,
+		DefaultID: 15139,
 	},
-	768: { // minecraft:dead_bubble_coral_fan
-		BaseID:    14969,
-		DefaultID: 14969,
+	770: { // minecraft:dead_bubble_coral_fan
+		BaseID:    15171,
+		DefaultID: 15171,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	778: { // minecraft:dead_bubble_coral_wall_fan
-		BaseID:    15001,
-		DefaultID: 15001,
+	780: { // minecraft:dead_bubble_coral_wall_fan
+		BaseID:    15203,
+		DefaultID: 15203,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
 	132: { // minecraft:dead_bush
-		BaseID:    2050,
-		DefaultID: 2050,
+		BaseID:    2250,
+		DefaultID: 2250,
 	},
-	759: { // minecraft:dead_fire_coral
-		BaseID:    14951,
-		DefaultID: 14951,
+	761: { // minecraft:dead_fire_coral
+		BaseID:    15153,
+		DefaultID: 15153,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	749: { // minecraft:dead_fire_coral_block
-		BaseID:    14938,
-		DefaultID: 14938,
+	751: { // minecraft:dead_fire_coral_block
+		BaseID:    15140,
+		DefaultID: 15140,
 	},
-	769: { // minecraft:dead_fire_coral_fan
-		BaseID:    14971,
-		DefaultID: 14971,
+	771: { // minecraft:dead_fire_coral_fan
+		BaseID:    15173,
+		DefaultID: 15173,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	779: { // minecraft:dead_fire_coral_wall_fan
-		BaseID:    15009,
-		DefaultID: 15009,
-		Properties: []blockProperty{
-			{"facing", []string{"north", "south", "west", "east"}, 4},
-			{"waterlogged", []string{"true", "false"}, 2},
-		},
-	},
-	760: { // minecraft:dead_horn_coral
-		BaseID:    14953,
-		DefaultID: 14953,
-		Properties: []blockProperty{
-			{"waterlogged", []string{"true", "false"}, 2},
-		},
-	},
-	750: { // minecraft:dead_horn_coral_block
-		BaseID:    14939,
-		DefaultID: 14939,
-	},
-	770: { // minecraft:dead_horn_coral_fan
-		BaseID:    14973,
-		DefaultID: 14973,
-		Properties: []blockProperty{
-			{"waterlogged", []string{"true", "false"}, 2},
-		},
-	},
-	780: { // minecraft:dead_horn_coral_wall_fan
-		BaseID:    15017,
-		DefaultID: 15017,
+	781: { // minecraft:dead_fire_coral_wall_fan
+		BaseID:    15211,
+		DefaultID: 15211,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	756: { // minecraft:dead_tube_coral
-		BaseID:    14945,
-		DefaultID: 14945,
+	762: { // minecraft:dead_horn_coral
+		BaseID:    15155,
+		DefaultID: 15155,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	746: { // minecraft:dead_tube_coral_block
-		BaseID:    14935,
-		DefaultID: 14935,
+	752: { // minecraft:dead_horn_coral_block
+		BaseID:    15141,
+		DefaultID: 15141,
 	},
-	766: { // minecraft:dead_tube_coral_fan
-		BaseID:    14965,
-		DefaultID: 14965,
+	772: { // minecraft:dead_horn_coral_fan
+		BaseID:    15175,
+		DefaultID: 15175,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	776: { // minecraft:dead_tube_coral_wall_fan
-		BaseID:    14985,
-		DefaultID: 14985,
+	782: { // minecraft:dead_horn_coral_wall_fan
+		BaseID:    15219,
+		DefaultID: 15219,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1153: { // minecraft:decorated_pot
-		BaseID:    29391,
-		DefaultID: 29400,
+	758: { // minecraft:dead_tube_coral
+		BaseID:    15147,
+		DefaultID: 15147,
+		Properties: []blockProperty{
+			{"waterlogged", []string{"true", "false"}, 2},
+		},
+	},
+	748: { // minecraft:dead_tube_coral_block
+		BaseID:    15137,
+		DefaultID: 15137,
+	},
+	768: { // minecraft:dead_tube_coral_fan
+		BaseID:    15167,
+		DefaultID: 15167,
+		Properties: []blockProperty{
+			{"waterlogged", []string{"true", "false"}, 2},
+		},
+	},
+	778: { // minecraft:dead_tube_coral_wall_fan
+		BaseID:    15187,
+		DefaultID: 15187,
+		Properties: []blockProperty{
+			{"facing", []string{"north", "south", "west", "east"}, 4},
+			{"waterlogged", []string{"true", "false"}, 2},
+		},
+	},
+	1155: { // minecraft:decorated_pot
+		BaseID:    29593,
+		DefaultID: 29602,
 		Properties: []blockProperty{
 			{"cracked", []string{"true", "false"}, 2},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1121: { // minecraft:deepslate
-		BaseID:    27721,
-		DefaultID: 27722,
+	1123: { // minecraft:deepslate
+		BaseID:    27923,
+		DefaultID: 27924,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	1136: { // minecraft:deepslate_brick_slab
-		BaseID:    29038,
-		DefaultID: 29041,
+	1138: { // minecraft:deepslate_brick_slab
+		BaseID:    29240,
+		DefaultID: 29243,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1135: { // minecraft:deepslate_brick_stairs
-		BaseID:    28958,
-		DefaultID: 28969,
+	1137: { // minecraft:deepslate_brick_stairs
+		BaseID:    29160,
+		DefaultID: 29171,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -3023,9 +3027,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1137: { // minecraft:deepslate_brick_wall
-		BaseID:    29044,
-		DefaultID: 29047,
+	1139: { // minecraft:deepslate_brick_wall
+		BaseID:    29246,
+		DefaultID: 29249,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -3035,25 +3039,25 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	1134: { // minecraft:deepslate_bricks
-		BaseID:    28957,
-		DefaultID: 28957,
+	1136: { // minecraft:deepslate_bricks
+		BaseID:    29159,
+		DefaultID: 29159,
 	},
 	47: { // minecraft:deepslate_coal_ore
 		BaseID:    134,
 		DefaultID: 134,
 	},
-	1010: { // minecraft:deepslate_copper_ore
-		BaseID:    25112,
-		DefaultID: 25112,
+	1012: { // minecraft:deepslate_copper_ore
+		BaseID:    25314,
+		DefaultID: 25314,
 	},
-	203: { // minecraft:deepslate_diamond_ore
-		BaseID:    5107,
-		DefaultID: 5107,
+	204: { // minecraft:deepslate_diamond_ore
+		BaseID:    5308,
+		DefaultID: 5308,
 	},
-	398: { // minecraft:deepslate_emerald_ore
-		BaseID:    9373,
-		DefaultID: 9373,
+	399: { // minecraft:deepslate_emerald_ore
+		BaseID:    9574,
+		DefaultID: 9574,
 	},
 	43: { // minecraft:deepslate_gold_ore
 		BaseID:    130,
@@ -3067,24 +3071,24 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    564,
 		DefaultID: 564,
 	},
-	271: { // minecraft:deepslate_redstone_ore
-		BaseID:    6682,
-		DefaultID: 6683,
+	272: { // minecraft:deepslate_redstone_ore
+		BaseID:    6883,
+		DefaultID: 6884,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	1132: { // minecraft:deepslate_tile_slab
-		BaseID:    28627,
-		DefaultID: 28630,
+	1134: { // minecraft:deepslate_tile_slab
+		BaseID:    28829,
+		DefaultID: 28832,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1131: { // minecraft:deepslate_tile_stairs
-		BaseID:    28547,
-		DefaultID: 28558,
+	1133: { // minecraft:deepslate_tile_stairs
+		BaseID:    28749,
+		DefaultID: 28760,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -3092,9 +3096,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1133: { // minecraft:deepslate_tile_wall
-		BaseID:    28633,
-		DefaultID: 28636,
+	1135: { // minecraft:deepslate_tile_wall
+		BaseID:    28835,
+		DefaultID: 28838,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -3104,42 +3108,42 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	1130: { // minecraft:deepslate_tiles
-		BaseID:    28546,
-		DefaultID: 28546,
+	1132: { // minecraft:deepslate_tiles
+		BaseID:    28748,
+		DefaultID: 28748,
 	},
 	127: { // minecraft:detector_rail
-		BaseID:    2011,
-		DefaultID: 2024,
+		BaseID:    2211,
+		DefaultID: 2224,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 			{"shape", []string{"north_south", "east_west", "ascending_east", "ascending_west", "ascending_north", "ascending_south"}, 6},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	204: { // minecraft:diamond_block
-		BaseID:    5108,
-		DefaultID: 5108,
+	205: { // minecraft:diamond_block
+		BaseID:    5309,
+		DefaultID: 5309,
 	},
-	202: { // minecraft:diamond_ore
-		BaseID:    5106,
-		DefaultID: 5106,
+	203: { // minecraft:diamond_ore
+		BaseID:    5307,
+		DefaultID: 5307,
 	},
 	4: { // minecraft:diorite
 		BaseID:    4,
 		DefaultID: 4,
 	},
-	821: { // minecraft:diorite_slab
-		BaseID:    16286,
-		DefaultID: 16289,
+	823: { // minecraft:diorite_slab
+		BaseID:    16488,
+		DefaultID: 16491,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	808: { // minecraft:diorite_stairs
-		BaseID:    16134,
-		DefaultID: 16145,
+	810: { // minecraft:diorite_stairs
+		BaseID:    16336,
+		DefaultID: 16347,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -3147,9 +3151,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	834: { // minecraft:diorite_wall
-		BaseID:    20180,
-		DefaultID: 20183,
+	836: { // minecraft:diorite_wall
+		BaseID:    20382,
+		DefaultID: 20385,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -3163,9 +3167,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    10,
 		DefaultID: 10,
 	},
-	664: { // minecraft:dirt_path
-		BaseID:    14613,
-		DefaultID: 14613,
+	666: { // minecraft:dirt_path
+		BaseID:    14815,
+		DefaultID: 14815,
 	},
 	105: { // minecraft:dispenser
 		BaseID:    566,
@@ -3175,101 +3179,101 @@ var blockStates = map[int32]*blockStateData{
 			{"triggered", []string{"true", "false"}, 2},
 		},
 	},
-	393: { // minecraft:dragon_egg
-		BaseID:    9277,
-		DefaultID: 9277,
+	394: { // minecraft:dragon_egg
+		BaseID:    9478,
+		DefaultID: 9478,
 	},
-	461: { // minecraft:dragon_head
-		BaseID:    10913,
-		DefaultID: 10929,
+	463: { // minecraft:dragon_head
+		BaseID:    11115,
+		DefaultID: 11131,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	462: { // minecraft:dragon_wall_head
-		BaseID:    10945,
-		DefaultID: 10946,
+	464: { // minecraft:dragon_wall_head
+		BaseID:    11147,
+		DefaultID: 11148,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	745: { // minecraft:dried_ghast
-		BaseID:    14903,
-		DefaultID: 14904,
+	747: { // minecraft:dried_ghast
+		BaseID:    15105,
+		DefaultID: 15106,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"hydration", []string{"0", "1", "2", "3"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	742: { // minecraft:dried_kelp_block
-		BaseID:    14887,
-		DefaultID: 14887,
+	744: { // minecraft:dried_kelp_block
+		BaseID:    15089,
+		DefaultID: 15089,
 	},
-	1104: { // minecraft:dripstone_block
-		BaseID:    27553,
-		DefaultID: 27553,
+	1106: { // minecraft:dripstone_block
+		BaseID:    27755,
+		DefaultID: 27755,
 	},
-	481: { // minecraft:dropper
-		BaseID:    11230,
-		DefaultID: 11231,
+	483: { // minecraft:dropper
+		BaseID:    11432,
+		DefaultID: 11433,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"triggered", []string{"true", "false"}, 2},
 		},
 	},
-	402: { // minecraft:emerald_block
-		BaseID:    9526,
-		DefaultID: 9526,
+	403: { // minecraft:emerald_block
+		BaseID:    9727,
+		DefaultID: 9727,
 	},
-	397: { // minecraft:emerald_ore
-		BaseID:    9372,
-		DefaultID: 9372,
+	398: { // minecraft:emerald_ore
+		BaseID:    9573,
+		DefaultID: 9573,
 	},
-	384: { // minecraft:enchanting_table
-		BaseID:    9250,
-		DefaultID: 9250,
+	385: { // minecraft:enchanting_table
+		BaseID:    9451,
+		DefaultID: 9451,
 	},
-	665: { // minecraft:end_gateway
-		BaseID:    14614,
-		DefaultID: 14614,
+	667: { // minecraft:end_gateway
+		BaseID:    14816,
+		DefaultID: 14816,
 	},
-	390: { // minecraft:end_portal
-		BaseID:    9267,
-		DefaultID: 9267,
+	391: { // minecraft:end_portal
+		BaseID:    9468,
+		DefaultID: 9468,
 	},
-	391: { // minecraft:end_portal_frame
-		BaseID:    9268,
-		DefaultID: 9272,
+	392: { // minecraft:end_portal_frame
+		BaseID:    9469,
+		DefaultID: 9473,
 		Properties: []blockProperty{
 			{"eye", []string{"true", "false"}, 2},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	653: { // minecraft:end_rod
-		BaseID:    14434,
-		DefaultID: 14438,
+	655: { // minecraft:end_rod
+		BaseID:    14636,
+		DefaultID: 14640,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	392: { // minecraft:end_stone
-		BaseID:    9276,
-		DefaultID: 9276,
+	393: { // minecraft:end_stone
+		BaseID:    9477,
+		DefaultID: 9477,
 	},
-	814: { // minecraft:end_stone_brick_slab
-		BaseID:    16244,
-		DefaultID: 16247,
+	816: { // minecraft:end_stone_brick_slab
+		BaseID:    16446,
+		DefaultID: 16449,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	800: { // minecraft:end_stone_brick_stairs
-		BaseID:    15494,
-		DefaultID: 15505,
+	802: { // minecraft:end_stone_brick_stairs
+		BaseID:    15696,
+		DefaultID: 15707,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -3277,9 +3281,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	833: { // minecraft:end_stone_brick_wall
-		BaseID:    19856,
-		DefaultID: 19859,
+	835: { // minecraft:end_stone_brick_wall
+		BaseID:    20058,
+		DefaultID: 20061,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -3289,29 +3293,29 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	659: { // minecraft:end_stone_bricks
-		BaseID:    14594,
-		DefaultID: 14594,
+	661: { // minecraft:end_stone_bricks
+		BaseID:    14796,
+		DefaultID: 14796,
 	},
-	399: { // minecraft:ender_chest
-		BaseID:    9374,
-		DefaultID: 9375,
+	400: { // minecraft:ender_chest
+		BaseID:    9575,
+		DefaultID: 9576,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1017: { // minecraft:exposed_chiseled_copper
-		BaseID:    25119,
-		DefaultID: 25119,
+	1019: { // minecraft:exposed_chiseled_copper
+		BaseID:    25321,
+		DefaultID: 25321,
 	},
-	1006: { // minecraft:exposed_copper
-		BaseID:    25108,
-		DefaultID: 25108,
+	1008: { // minecraft:exposed_copper
+		BaseID:    25310,
+		DefaultID: 25310,
 	},
-	342: { // minecraft:exposed_copper_bars
-		BaseID:    7821,
-		DefaultID: 7852,
+	343: { // minecraft:exposed_copper_bars
+		BaseID:    8022,
+		DefaultID: 8053,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -3320,34 +3324,34 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	1072: { // minecraft:exposed_copper_bulb
-		BaseID:    26865,
-		DefaultID: 26868,
+	1074: { // minecraft:exposed_copper_bulb
+		BaseID:    27067,
+		DefaultID: 27070,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	351: { // minecraft:exposed_copper_chain
-		BaseID:    8057,
-		DefaultID: 8060,
+	352: { // minecraft:exposed_copper_chain
+		BaseID:    8258,
+		DefaultID: 8261,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1080: { // minecraft:exposed_copper_chest
-		BaseID:    26917,
-		DefaultID: 26918,
+	1082: { // minecraft:exposed_copper_chest
+		BaseID:    27119,
+		DefaultID: 27120,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"type", []string{"single", "left", "right"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1048: { // minecraft:exposed_copper_door
-		BaseID:    25885,
-		DefaultID: 25896,
+	1050: { // minecraft:exposed_copper_door
+		BaseID:    26087,
+		DefaultID: 26098,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -3356,33 +3360,33 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	1088: { // minecraft:exposed_copper_golem_statue
-		BaseID:    27117,
-		DefaultID: 27118,
+	1090: { // minecraft:exposed_copper_golem_statue
+		BaseID:    27319,
+		DefaultID: 27320,
 		Properties: []blockProperty{
 			{"copper_golem_pose", []string{"standing", "sitting", "running", "star"}, 4},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1064: { // minecraft:exposed_copper_grate
-		BaseID:    26847,
-		DefaultID: 26848,
+	1066: { // minecraft:exposed_copper_grate
+		BaseID:    27049,
+		DefaultID: 27050,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	850: { // minecraft:exposed_copper_lantern
-		BaseID:    20647,
-		DefaultID: 20650,
+	852: { // minecraft:exposed_copper_lantern
+		BaseID:    20849,
+		DefaultID: 20852,
 		Properties: []blockProperty{
 			{"hanging", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1056: { // minecraft:exposed_copper_trapdoor
-		BaseID:    26397,
-		DefaultID: 26412,
+	1058: { // minecraft:exposed_copper_trapdoor
+		BaseID:    26599,
+		DefaultID: 26614,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -3391,21 +3395,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1013: { // minecraft:exposed_cut_copper
-		BaseID:    25115,
-		DefaultID: 25115,
+	1015: { // minecraft:exposed_cut_copper
+		BaseID:    25317,
+		DefaultID: 25317,
 	},
-	1029: { // minecraft:exposed_cut_copper_slab
-		BaseID:    25457,
-		DefaultID: 25460,
+	1031: { // minecraft:exposed_cut_copper_slab
+		BaseID:    25659,
+		DefaultID: 25662,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1025: { // minecraft:exposed_cut_copper_stairs
-		BaseID:    25285,
-		DefaultID: 25296,
+	1027: { // minecraft:exposed_cut_copper_stairs
+		BaseID:    25487,
+		DefaultID: 25498,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -3413,29 +3417,29 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1096: { // minecraft:exposed_lightning_rod
-		BaseID:    27365,
-		DefaultID: 27384,
+	1098: { // minecraft:exposed_lightning_rod
+		BaseID:    27567,
+		DefaultID: 27586,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"powered", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	207: { // minecraft:farmland
-		BaseID:    5118,
-		DefaultID: 5118,
+	208: { // minecraft:farmland
+		BaseID:    5319,
+		DefaultID: 5319,
 		Properties: []blockProperty{
 			{"moisture", []string{"0", "1", "2", "3", "4", "5", "6", "7"}, 8},
 		},
 	},
 	131: { // minecraft:fern
-		BaseID:    2049,
-		DefaultID: 2049,
+		BaseID:    2249,
+		DefaultID: 2249,
 	},
-	195: { // minecraft:fire
-		BaseID:    3174,
-		DefaultID: 3205,
+	196: { // minecraft:fire
+		BaseID:    3375,
+		DefaultID: 3406,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"east", []string{"true", "false"}, 2},
@@ -3445,47 +3449,47 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	764: { // minecraft:fire_coral
-		BaseID:    14961,
-		DefaultID: 14961,
+	766: { // minecraft:fire_coral
+		BaseID:    15163,
+		DefaultID: 15163,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	754: { // minecraft:fire_coral_block
-		BaseID:    14943,
-		DefaultID: 14943,
+	756: { // minecraft:fire_coral_block
+		BaseID:    15145,
+		DefaultID: 15145,
 	},
-	774: { // minecraft:fire_coral_fan
-		BaseID:    14981,
-		DefaultID: 14981,
+	776: { // minecraft:fire_coral_fan
+		BaseID:    15183,
+		DefaultID: 15183,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	784: { // minecraft:fire_coral_wall_fan
-		BaseID:    15049,
-		DefaultID: 15049,
+	786: { // minecraft:fire_coral_wall_fan
+		BaseID:    15251,
+		DefaultID: 15251,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1165: { // minecraft:firefly_bush
-		BaseID:    29670,
-		DefaultID: 29670,
+	1167: { // minecraft:firefly_bush
+		BaseID:    29872,
+		DefaultID: 29872,
 	},
-	841: { // minecraft:fletching_table
-		BaseID:    20569,
-		DefaultID: 20569,
+	843: { // minecraft:fletching_table
+		BaseID:    20771,
+		DefaultID: 20771,
 	},
-	410: { // minecraft:flower_pot
-		BaseID:    10428,
-		DefaultID: 10428,
+	411: { // minecraft:flower_pot
+		BaseID:    10629,
+		DefaultID: 10629,
 	},
-	1109: { // minecraft:flowering_azalea
-		BaseID:    27610,
-		DefaultID: 27610,
+	1111: { // minecraft:flowering_azalea
+		BaseID:    27812,
+		DefaultID: 27812,
 	},
 	98: { // minecraft:flowering_azalea_leaves
 		BaseID:    532,
@@ -3496,36 +3500,36 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1151: { // minecraft:frogspawn
-		BaseID:    29389,
-		DefaultID: 29389,
+	1153: { // minecraft:frogspawn
+		BaseID:    29591,
+		DefaultID: 29591,
 	},
-	668: { // minecraft:frosted_ice
-		BaseID:    14639,
-		DefaultID: 14639,
+	670: { // minecraft:frosted_ice
+		BaseID:    14841,
+		DefaultID: 14841,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3"}, 4},
 		},
 	},
-	208: { // minecraft:furnace
-		BaseID:    5126,
-		DefaultID: 5127,
+	209: { // minecraft:furnace
+		BaseID:    5327,
+		DefaultID: 5328,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	933: { // minecraft:gilded_blackstone
-		BaseID:    22454,
-		DefaultID: 22454,
+	935: { // minecraft:gilded_blackstone
+		BaseID:    22656,
+		DefaultID: 22656,
 	},
 	101: { // minecraft:glass
 		BaseID:    562,
 		DefaultID: 562,
 	},
-	358: { // minecraft:glass_pane
-		BaseID:    8099,
-		DefaultID: 8130,
+	359: { // minecraft:glass_pane
+		BaseID:    8300,
+		DefaultID: 8331,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -3534,9 +3538,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	366: { // minecraft:glow_lichen
-		BaseID:    8189,
-		DefaultID: 8316,
+	367: { // minecraft:glow_lichen
+		BaseID:    8390,
+		DefaultID: 8517,
 		Properties: []blockProperty{
 			{"down", []string{"true", "false"}, 2},
 			{"east", []string{"true", "false"}, 2},
@@ -3547,33 +3551,37 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	293: { // minecraft:glowstone
-		BaseID:    6815,
-		DefaultID: 6815,
+	294: { // minecraft:glowstone
+		BaseID:    7016,
+		DefaultID: 7016,
 	},
-	173: { // minecraft:gold_block
-		BaseID:    2137,
-		DefaultID: 2137,
+	174: { // minecraft:gold_block
+		BaseID:    2338,
+		DefaultID: 2338,
 	},
 	42: { // minecraft:gold_ore
 		BaseID:    129,
 		DefaultID: 129,
 	},
+	158: { // minecraft:golden_dandelion
+		BaseID:    2322,
+		DefaultID: 2322,
+	},
 	2: { // minecraft:granite
 		BaseID:    2,
 		DefaultID: 2,
 	},
-	817: { // minecraft:granite_slab
-		BaseID:    16262,
-		DefaultID: 16265,
+	819: { // minecraft:granite_slab
+		BaseID:    16464,
+		DefaultID: 16467,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	804: { // minecraft:granite_stairs
-		BaseID:    15814,
-		DefaultID: 15825,
+	806: { // minecraft:granite_stairs
+		BaseID:    16016,
+		DefaultID: 16027,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -3581,9 +3589,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	826: { // minecraft:granite_wall
-		BaseID:    17588,
-		DefaultID: 17591,
+	828: { // minecraft:granite_wall
+		BaseID:    17790,
+		DefaultID: 17793,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -3604,71 +3612,71 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    124,
 		DefaultID: 124,
 	},
-	568: { // minecraft:gray_banner
-		BaseID:    12837,
-		DefaultID: 12837,
+	570: { // minecraft:gray_banner
+		BaseID:    13039,
+		DefaultID: 13047,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	117: { // minecraft:gray_bed
-		BaseID:    1843,
-		DefaultID: 1846,
+		BaseID:    2043,
+		DefaultID: 2046,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	950: { // minecraft:gray_candle
-		BaseID:    23022,
-		DefaultID: 23025,
+	952: { // minecraft:gray_candle
+		BaseID:    23224,
+		DefaultID: 23227,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	967: { // minecraft:gray_candle_cake
-		BaseID:    23182,
-		DefaultID: 23183,
+	969: { // minecraft:gray_candle_cake
+		BaseID:    23384,
+		DefaultID: 23385,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	543: { // minecraft:gray_carpet
-		BaseID:    12701,
-		DefaultID: 12701,
+	545: { // minecraft:gray_carpet
+		BaseID:    12903,
+		DefaultID: 12903,
 	},
-	715: { // minecraft:gray_concrete
-		BaseID:    14835,
-		DefaultID: 14835,
+	717: { // minecraft:gray_concrete
+		BaseID:    15037,
+		DefaultID: 15037,
 	},
-	731: { // minecraft:gray_concrete_powder
-		BaseID:    14851,
-		DefaultID: 14851,
+	733: { // minecraft:gray_concrete_powder
+		BaseID:    15053,
+		DefaultID: 15053,
 	},
-	699: { // minecraft:gray_glazed_terracotta
-		BaseID:    14792,
-		DefaultID: 14792,
+	701: { // minecraft:gray_glazed_terracotta
+		BaseID:    14994,
+		DefaultID: 14994,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	683: { // minecraft:gray_shulker_box
-		BaseID:    14710,
-		DefaultID: 14714,
+	685: { // minecraft:gray_shulker_box
+		BaseID:    14912,
+		DefaultID: 14916,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	306: { // minecraft:gray_stained_glass
-		BaseID:    6904,
-		DefaultID: 6904,
+	307: { // minecraft:gray_stained_glass
+		BaseID:    7105,
+		DefaultID: 7105,
 	},
-	505: { // minecraft:gray_stained_glass_pane
-		BaseID:    11482,
-		DefaultID: 11513,
+	507: { // minecraft:gray_stained_glass_pane
+		BaseID:    11684,
+		DefaultID: 11715,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -3677,86 +3685,86 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	489: { // minecraft:gray_terracotta
-		BaseID:    11249,
-		DefaultID: 11249,
+	491: { // minecraft:gray_terracotta
+		BaseID:    11451,
+		DefaultID: 11451,
 	},
-	584: { // minecraft:gray_wall_banner
-		BaseID:    13009,
-		DefaultID: 13009,
+	586: { // minecraft:gray_wall_banner
+		BaseID:    13211,
+		DefaultID: 13211,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	147: { // minecraft:gray_wool
-		BaseID:    2100,
-		DefaultID: 2100,
+		BaseID:    2300,
+		DefaultID: 2300,
 	},
-	574: { // minecraft:green_banner
-		BaseID:    12933,
-		DefaultID: 12933,
+	576: { // minecraft:green_banner
+		BaseID:    13135,
+		DefaultID: 13143,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	123: { // minecraft:green_bed
-		BaseID:    1939,
-		DefaultID: 1942,
+		BaseID:    2139,
+		DefaultID: 2142,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	956: { // minecraft:green_candle
-		BaseID:    23118,
-		DefaultID: 23121,
+	958: { // minecraft:green_candle
+		BaseID:    23320,
+		DefaultID: 23323,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	973: { // minecraft:green_candle_cake
-		BaseID:    23194,
-		DefaultID: 23195,
+	975: { // minecraft:green_candle_cake
+		BaseID:    23396,
+		DefaultID: 23397,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	549: { // minecraft:green_carpet
-		BaseID:    12707,
-		DefaultID: 12707,
+	551: { // minecraft:green_carpet
+		BaseID:    12909,
+		DefaultID: 12909,
 	},
-	721: { // minecraft:green_concrete
-		BaseID:    14841,
-		DefaultID: 14841,
+	723: { // minecraft:green_concrete
+		BaseID:    15043,
+		DefaultID: 15043,
 	},
-	737: { // minecraft:green_concrete_powder
-		BaseID:    14857,
-		DefaultID: 14857,
+	739: { // minecraft:green_concrete_powder
+		BaseID:    15059,
+		DefaultID: 15059,
 	},
-	705: { // minecraft:green_glazed_terracotta
-		BaseID:    14816,
-		DefaultID: 14816,
+	707: { // minecraft:green_glazed_terracotta
+		BaseID:    15018,
+		DefaultID: 15018,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	689: { // minecraft:green_shulker_box
-		BaseID:    14746,
-		DefaultID: 14750,
+	691: { // minecraft:green_shulker_box
+		BaseID:    14948,
+		DefaultID: 14952,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	312: { // minecraft:green_stained_glass
-		BaseID:    6910,
-		DefaultID: 6910,
+	313: { // minecraft:green_stained_glass
+		BaseID:    7111,
+		DefaultID: 7111,
 	},
-	511: { // minecraft:green_stained_glass_pane
-		BaseID:    11674,
-		DefaultID: 11705,
+	513: { // minecraft:green_stained_glass_pane
+		BaseID:    11876,
+		DefaultID: 11907,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -3765,137 +3773,137 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	495: { // minecraft:green_terracotta
-		BaseID:    11255,
-		DefaultID: 11255,
+	497: { // minecraft:green_terracotta
+		BaseID:    11457,
+		DefaultID: 11457,
 	},
-	590: { // minecraft:green_wall_banner
-		BaseID:    13033,
-		DefaultID: 13033,
+	592: { // minecraft:green_wall_banner
+		BaseID:    13235,
+		DefaultID: 13235,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	153: { // minecraft:green_wool
-		BaseID:    2106,
-		DefaultID: 2106,
+		BaseID:    2306,
+		DefaultID: 2306,
 	},
-	842: { // minecraft:grindstone
-		BaseID:    20570,
-		DefaultID: 20574,
+	844: { // minecraft:grindstone
+		BaseID:    20772,
+		DefaultID: 20776,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	1118: { // minecraft:hanging_roots
-		BaseID:    27717,
-		DefaultID: 27718,
+	1120: { // minecraft:hanging_roots
+		BaseID:    27919,
+		DefaultID: 27920,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	535: { // minecraft:hay_block
-		BaseID:    12691,
-		DefaultID: 12692,
+	537: { // minecraft:hay_block
+		BaseID:    12893,
+		DefaultID: 12894,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	1157: { // minecraft:heavy_core
-		BaseID:    29499,
-		DefaultID: 29500,
+	1159: { // minecraft:heavy_core
+		BaseID:    29701,
+		DefaultID: 29702,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	470: { // minecraft:heavy_weighted_pressure_plate
-		BaseID:    11045,
-		DefaultID: 11045,
+	472: { // minecraft:heavy_weighted_pressure_plate
+		BaseID:    11247,
+		DefaultID: 11247,
 		Properties: []blockProperty{
 			{"power", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	911: { // minecraft:honey_block
-		BaseID:    21614,
-		DefaultID: 21614,
+	913: { // minecraft:honey_block
+		BaseID:    21816,
+		DefaultID: 21816,
 	},
-	912: { // minecraft:honeycomb_block
-		BaseID:    21615,
-		DefaultID: 21615,
+	914: { // minecraft:honeycomb_block
+		BaseID:    21817,
+		DefaultID: 21817,
 	},
-	475: { // minecraft:hopper
-		BaseID:    11111,
-		DefaultID: 11111,
+	477: { // minecraft:hopper
+		BaseID:    11313,
+		DefaultID: 11313,
 		Properties: []blockProperty{
 			{"enabled", []string{"true", "false"}, 2},
 			{"facing", []string{"down", "north", "south", "west", "east"}, 5},
 		},
 	},
-	765: { // minecraft:horn_coral
-		BaseID:    14963,
-		DefaultID: 14963,
+	767: { // minecraft:horn_coral
+		BaseID:    15165,
+		DefaultID: 15165,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	755: { // minecraft:horn_coral_block
-		BaseID:    14944,
-		DefaultID: 14944,
+	757: { // minecraft:horn_coral_block
+		BaseID:    15146,
+		DefaultID: 15146,
 	},
-	775: { // minecraft:horn_coral_fan
-		BaseID:    14983,
-		DefaultID: 14983,
+	777: { // minecraft:horn_coral_fan
+		BaseID:    15185,
+		DefaultID: 15185,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	785: { // minecraft:horn_coral_wall_fan
-		BaseID:    15057,
-		DefaultID: 15057,
+	787: { // minecraft:horn_coral_wall_fan
+		BaseID:    15259,
+		DefaultID: 15259,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	276: { // minecraft:ice
-		BaseID:    6726,
-		DefaultID: 6726,
+	277: { // minecraft:ice
+		BaseID:    6927,
+		DefaultID: 6927,
 	},
-	336: { // minecraft:infested_chiseled_stone_bricks
-		BaseID:    7564,
-		DefaultID: 7564,
+	337: { // minecraft:infested_chiseled_stone_bricks
+		BaseID:    7765,
+		DefaultID: 7765,
 	},
-	332: { // minecraft:infested_cobblestone
-		BaseID:    7560,
-		DefaultID: 7560,
+	333: { // minecraft:infested_cobblestone
+		BaseID:    7761,
+		DefaultID: 7761,
 	},
-	335: { // minecraft:infested_cracked_stone_bricks
-		BaseID:    7563,
-		DefaultID: 7563,
+	336: { // minecraft:infested_cracked_stone_bricks
+		BaseID:    7764,
+		DefaultID: 7764,
 	},
-	1141: { // minecraft:infested_deepslate
-		BaseID:    29371,
-		DefaultID: 29372,
+	1143: { // minecraft:infested_deepslate
+		BaseID:    29573,
+		DefaultID: 29574,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	334: { // minecraft:infested_mossy_stone_bricks
-		BaseID:    7562,
-		DefaultID: 7562,
+	335: { // minecraft:infested_mossy_stone_bricks
+		BaseID:    7763,
+		DefaultID: 7763,
 	},
-	331: { // minecraft:infested_stone
-		BaseID:    7559,
-		DefaultID: 7559,
+	332: { // minecraft:infested_stone
+		BaseID:    7760,
+		DefaultID: 7760,
 	},
-	333: { // minecraft:infested_stone_bricks
-		BaseID:    7561,
-		DefaultID: 7561,
+	334: { // minecraft:infested_stone_bricks
+		BaseID:    7762,
+		DefaultID: 7762,
 	},
-	340: { // minecraft:iron_bars
-		BaseID:    7757,
-		DefaultID: 7788,
+	341: { // minecraft:iron_bars
+		BaseID:    7958,
+		DefaultID: 7989,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -3904,21 +3912,21 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	174: { // minecraft:iron_block
-		BaseID:    2138,
-		DefaultID: 2138,
+	175: { // minecraft:iron_block
+		BaseID:    2339,
+		DefaultID: 2339,
 	},
-	349: { // minecraft:iron_chain
-		BaseID:    8045,
-		DefaultID: 8048,
+	350: { // minecraft:iron_chain
+		BaseID:    8246,
+		DefaultID: 8249,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	259: { // minecraft:iron_door
-		BaseID:    6596,
-		DefaultID: 6607,
+	260: { // minecraft:iron_door
+		BaseID:    6797,
+		DefaultID: 6808,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -3931,9 +3939,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    131,
 		DefaultID: 131,
 	},
-	524: { // minecraft:iron_trapdoor
-		BaseID:    12365,
-		DefaultID: 12380,
+	526: { // minecraft:iron_trapdoor
+		BaseID:    12567,
+		DefaultID: 12582,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -3942,39 +3950,39 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	296: { // minecraft:jack_o_lantern
-		BaseID:    6822,
-		DefaultID: 6822,
+	297: { // minecraft:jack_o_lantern
+		BaseID:    7023,
+		DefaultID: 7023,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	904: { // minecraft:jigsaw
-		BaseID:    21524,
-		DefaultID: 21534,
+	906: { // minecraft:jigsaw
+		BaseID:    21726,
+		DefaultID: 21736,
 		Properties: []blockProperty{
 			{"orientation", []string{"down_east", "down_north", "down_south", "down_west", "up_east", "up_north", "up_south", "up_west", "west_up", "east_up", "north_up", "south_up"}, 12},
 		},
 	},
-	282: { // minecraft:jukebox
-		BaseID:    6762,
-		DefaultID: 6763,
+	283: { // minecraft:jukebox
+		BaseID:    6963,
+		DefaultID: 6964,
 		Properties: []blockProperty{
 			{"has_record", []string{"true", "false"}, 2},
 		},
 	},
-	444: { // minecraft:jungle_button
-		BaseID:    10545,
-		DefaultID: 10554,
+	446: { // minecraft:jungle_button
+		BaseID:    10747,
+		DefaultID: 10756,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	646: { // minecraft:jungle_door
-		BaseID:    13986,
-		DefaultID: 13997,
+	648: { // minecraft:jungle_door
+		BaseID:    14188,
+		DefaultID: 14199,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -3983,9 +3991,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	637: { // minecraft:jungle_fence
-		BaseID:    13634,
-		DefaultID: 13665,
+	639: { // minecraft:jungle_fence
+		BaseID:    13836,
+		DefaultID: 13867,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -3994,9 +4002,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	628: { // minecraft:jungle_fence_gate
-		BaseID:    13346,
-		DefaultID: 13353,
+	630: { // minecraft:jungle_fence_gate
+		BaseID:    13548,
+		DefaultID: 13555,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -4004,9 +4012,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	238: { // minecraft:jungle_hanging_sign
-		BaseID:    6026,
-		DefaultID: 6059,
+	239: { // minecraft:jungle_hanging_sign
+		BaseID:    6227,
+		DefaultID: 6276,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -4033,9 +4041,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    18,
 		DefaultID: 18,
 	},
-	263: { // minecraft:jungle_pressure_plate
-		BaseID:    6666,
-		DefaultID: 6667,
+	264: { // minecraft:jungle_pressure_plate
+		BaseID:    6867,
+		DefaultID: 6868,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
@@ -4047,9 +4055,9 @@ var blockStates = map[int32]*blockStateData{
 			{"stage", []string{"0", "1"}, 2},
 		},
 	},
-	185: { // minecraft:jungle_shelf
-		BaseID:    2783,
-		DefaultID: 2792,
+	186: { // minecraft:jungle_shelf
+		BaseID:    2984,
+		DefaultID: 2993,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -4057,25 +4065,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	214: { // minecraft:jungle_sign
-		BaseID:    5294,
-		DefaultID: 5295,
+	215: { // minecraft:jungle_sign
+		BaseID:    5495,
+		DefaultID: 5512,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	600: { // minecraft:jungle_slab
-		BaseID:    13146,
-		DefaultID: 13149,
+	602: { // minecraft:jungle_slab
+		BaseID:    13348,
+		DefaultID: 13351,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	405: { // minecraft:jungle_stairs
-		BaseID:    9687,
-		DefaultID: 9698,
+	406: { // minecraft:jungle_stairs
+		BaseID:    9888,
+		DefaultID: 9899,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -4083,9 +4091,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	318: { // minecraft:jungle_trapdoor
-		BaseID:    7105,
-		DefaultID: 7120,
+	319: { // minecraft:jungle_trapdoor
+		BaseID:    7306,
+		DefaultID: 7321,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -4094,17 +4102,17 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	250: { // minecraft:jungle_wall_hanging_sign
-		BaseID:    6514,
-		DefaultID: 6515,
+	251: { // minecraft:jungle_wall_hanging_sign
+		BaseID:    6715,
+		DefaultID: 6716,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	228: { // minecraft:jungle_wall_sign
-		BaseID:    5666,
-		DefaultID: 5667,
+	229: { // minecraft:jungle_wall_sign
+		BaseID:    5867,
+		DefaultID: 5868,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -4117,28 +4125,28 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	740: { // minecraft:kelp
-		BaseID:    14860,
-		DefaultID: 14860,
+	742: { // minecraft:kelp
+		BaseID:    15062,
+		DefaultID: 15062,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"}, 26},
 		},
 	},
-	741: { // minecraft:kelp_plant
-		BaseID:    14886,
-		DefaultID: 14886,
+	743: { // minecraft:kelp_plant
+		BaseID:    15088,
+		DefaultID: 15088,
 	},
-	220: { // minecraft:ladder
-		BaseID:    5518,
-		DefaultID: 5519,
+	221: { // minecraft:ladder
+		BaseID:    5719,
+		DefaultID: 5720,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	847: { // minecraft:lantern
-		BaseID:    20635,
-		DefaultID: 20638,
+	849: { // minecraft:lantern
+		BaseID:    20837,
+		DefaultID: 20840,
 		Properties: []blockProperty{
 			{"hanging", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -4152,17 +4160,17 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    563,
 		DefaultID: 563,
 	},
-	979: { // minecraft:large_amethyst_bud
-		BaseID:    23214,
-		DefaultID: 23223,
+	981: { // minecraft:large_amethyst_bud
+		BaseID:    23416,
+		DefaultID: 23425,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	560: { // minecraft:large_fern
-		BaseID:    12723,
-		DefaultID: 12724,
+	562: { // minecraft:large_fern
+		BaseID:    12925,
+		DefaultID: 12926,
 		Properties: []blockProperty{
 			{"half", []string{"upper", "lower"}, 2},
 		},
@@ -4174,109 +4182,109 @@ var blockStates = map[int32]*blockStateData{
 			{"level", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	388: { // minecraft:lava_cauldron
-		BaseID:    9263,
-		DefaultID: 9263,
+	389: { // minecraft:lava_cauldron
+		BaseID:    9464,
+		DefaultID: 9464,
 	},
-	1113: { // minecraft:leaf_litter
-		BaseID:    27644,
-		DefaultID: 27644,
+	1115: { // minecraft:leaf_litter
+		BaseID:    27846,
+		DefaultID: 27846,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"segment_amount", []string{"1", "2", "3", "4"}, 4},
 		},
 	},
-	843: { // minecraft:lectern
-		BaseID:    20582,
-		DefaultID: 20585,
+	845: { // minecraft:lectern
+		BaseID:    20784,
+		DefaultID: 20787,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"has_book", []string{"true", "false"}, 2},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	257: { // minecraft:lever
-		BaseID:    6570,
-		DefaultID: 6579,
+	258: { // minecraft:lever
+		BaseID:    6771,
+		DefaultID: 6780,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	523: { // minecraft:light
-		BaseID:    12333,
-		DefaultID: 12364,
+	525: { // minecraft:light
+		BaseID:    12535,
+		DefaultID: 12566,
 		Properties: []blockProperty{
 			{"level", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	564: { // minecraft:light_blue_banner
-		BaseID:    12773,
-		DefaultID: 12773,
+	566: { // minecraft:light_blue_banner
+		BaseID:    12975,
+		DefaultID: 12983,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	113: { // minecraft:light_blue_bed
-		BaseID:    1779,
-		DefaultID: 1782,
+		BaseID:    1979,
+		DefaultID: 1982,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	946: { // minecraft:light_blue_candle
-		BaseID:    22958,
-		DefaultID: 22961,
+	948: { // minecraft:light_blue_candle
+		BaseID:    23160,
+		DefaultID: 23163,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	963: { // minecraft:light_blue_candle_cake
-		BaseID:    23174,
-		DefaultID: 23175,
+	965: { // minecraft:light_blue_candle_cake
+		BaseID:    23376,
+		DefaultID: 23377,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	539: { // minecraft:light_blue_carpet
-		BaseID:    12697,
-		DefaultID: 12697,
+	541: { // minecraft:light_blue_carpet
+		BaseID:    12899,
+		DefaultID: 12899,
 	},
-	711: { // minecraft:light_blue_concrete
-		BaseID:    14831,
-		DefaultID: 14831,
+	713: { // minecraft:light_blue_concrete
+		BaseID:    15033,
+		DefaultID: 15033,
 	},
-	727: { // minecraft:light_blue_concrete_powder
-		BaseID:    14847,
-		DefaultID: 14847,
+	729: { // minecraft:light_blue_concrete_powder
+		BaseID:    15049,
+		DefaultID: 15049,
 	},
-	695: { // minecraft:light_blue_glazed_terracotta
-		BaseID:    14776,
-		DefaultID: 14776,
+	697: { // minecraft:light_blue_glazed_terracotta
+		BaseID:    14978,
+		DefaultID: 14978,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	679: { // minecraft:light_blue_shulker_box
-		BaseID:    14686,
-		DefaultID: 14690,
+	681: { // minecraft:light_blue_shulker_box
+		BaseID:    14888,
+		DefaultID: 14892,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	302: { // minecraft:light_blue_stained_glass
-		BaseID:    6900,
-		DefaultID: 6900,
+	303: { // minecraft:light_blue_stained_glass
+		BaseID:    7101,
+		DefaultID: 7101,
 	},
-	501: { // minecraft:light_blue_stained_glass_pane
-		BaseID:    11354,
-		DefaultID: 11385,
+	503: { // minecraft:light_blue_stained_glass_pane
+		BaseID:    11556,
+		DefaultID: 11587,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -4285,86 +4293,86 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	485: { // minecraft:light_blue_terracotta
-		BaseID:    11245,
-		DefaultID: 11245,
+	487: { // minecraft:light_blue_terracotta
+		BaseID:    11447,
+		DefaultID: 11447,
 	},
-	580: { // minecraft:light_blue_wall_banner
-		BaseID:    12993,
-		DefaultID: 12993,
+	582: { // minecraft:light_blue_wall_banner
+		BaseID:    13195,
+		DefaultID: 13195,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	143: { // minecraft:light_blue_wool
-		BaseID:    2096,
-		DefaultID: 2096,
+		BaseID:    2296,
+		DefaultID: 2296,
 	},
-	569: { // minecraft:light_gray_banner
-		BaseID:    12853,
-		DefaultID: 12853,
+	571: { // minecraft:light_gray_banner
+		BaseID:    13055,
+		DefaultID: 13063,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	118: { // minecraft:light_gray_bed
-		BaseID:    1859,
-		DefaultID: 1862,
+		BaseID:    2059,
+		DefaultID: 2062,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	951: { // minecraft:light_gray_candle
-		BaseID:    23038,
-		DefaultID: 23041,
+	953: { // minecraft:light_gray_candle
+		BaseID:    23240,
+		DefaultID: 23243,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	968: { // minecraft:light_gray_candle_cake
-		BaseID:    23184,
-		DefaultID: 23185,
+	970: { // minecraft:light_gray_candle_cake
+		BaseID:    23386,
+		DefaultID: 23387,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	544: { // minecraft:light_gray_carpet
-		BaseID:    12702,
-		DefaultID: 12702,
+	546: { // minecraft:light_gray_carpet
+		BaseID:    12904,
+		DefaultID: 12904,
 	},
-	716: { // minecraft:light_gray_concrete
-		BaseID:    14836,
-		DefaultID: 14836,
+	718: { // minecraft:light_gray_concrete
+		BaseID:    15038,
+		DefaultID: 15038,
 	},
-	732: { // minecraft:light_gray_concrete_powder
-		BaseID:    14852,
-		DefaultID: 14852,
+	734: { // minecraft:light_gray_concrete_powder
+		BaseID:    15054,
+		DefaultID: 15054,
 	},
-	700: { // minecraft:light_gray_glazed_terracotta
-		BaseID:    14796,
-		DefaultID: 14796,
+	702: { // minecraft:light_gray_glazed_terracotta
+		BaseID:    14998,
+		DefaultID: 14998,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	684: { // minecraft:light_gray_shulker_box
-		BaseID:    14716,
-		DefaultID: 14720,
+	686: { // minecraft:light_gray_shulker_box
+		BaseID:    14918,
+		DefaultID: 14922,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	307: { // minecraft:light_gray_stained_glass
-		BaseID:    6905,
-		DefaultID: 6905,
+	308: { // minecraft:light_gray_stained_glass
+		BaseID:    7106,
+		DefaultID: 7106,
 	},
-	506: { // minecraft:light_gray_stained_glass_pane
-		BaseID:    11514,
-		DefaultID: 11545,
+	508: { // minecraft:light_gray_stained_glass_pane
+		BaseID:    11716,
+		DefaultID: 11747,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -4373,117 +4381,117 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	490: { // minecraft:light_gray_terracotta
-		BaseID:    11250,
-		DefaultID: 11250,
+	492: { // minecraft:light_gray_terracotta
+		BaseID:    11452,
+		DefaultID: 11452,
 	},
-	585: { // minecraft:light_gray_wall_banner
-		BaseID:    13013,
-		DefaultID: 13013,
+	587: { // minecraft:light_gray_wall_banner
+		BaseID:    13215,
+		DefaultID: 13215,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	148: { // minecraft:light_gray_wool
-		BaseID:    2101,
-		DefaultID: 2101,
+		BaseID:    2301,
+		DefaultID: 2301,
 	},
-	469: { // minecraft:light_weighted_pressure_plate
-		BaseID:    11029,
-		DefaultID: 11029,
+	471: { // minecraft:light_weighted_pressure_plate
+		BaseID:    11231,
+		DefaultID: 11231,
 		Properties: []blockProperty{
 			{"power", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	1095: { // minecraft:lightning_rod
-		BaseID:    27341,
-		DefaultID: 27360,
+	1097: { // minecraft:lightning_rod
+		BaseID:    27543,
+		DefaultID: 27562,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"powered", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	556: { // minecraft:lilac
-		BaseID:    12715,
-		DefaultID: 12716,
+	558: { // minecraft:lilac
+		BaseID:    12917,
+		DefaultID: 12918,
 		Properties: []blockProperty{
 			{"half", []string{"upper", "lower"}, 2},
 		},
 	},
-	170: { // minecraft:lily_of_the_valley
-		BaseID:    2134,
-		DefaultID: 2134,
+	171: { // minecraft:lily_of_the_valley
+		BaseID:    2335,
+		DefaultID: 2335,
 	},
-	373: { // minecraft:lily_pad
-		BaseID:    8719,
-		DefaultID: 8719,
+	374: { // minecraft:lily_pad
+		BaseID:    8920,
+		DefaultID: 8920,
 	},
-	566: { // minecraft:lime_banner
-		BaseID:    12805,
-		DefaultID: 12805,
+	568: { // minecraft:lime_banner
+		BaseID:    13007,
+		DefaultID: 13015,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	115: { // minecraft:lime_bed
-		BaseID:    1811,
-		DefaultID: 1814,
+		BaseID:    2011,
+		DefaultID: 2014,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	948: { // minecraft:lime_candle
-		BaseID:    22990,
-		DefaultID: 22993,
+	950: { // minecraft:lime_candle
+		BaseID:    23192,
+		DefaultID: 23195,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	965: { // minecraft:lime_candle_cake
-		BaseID:    23178,
-		DefaultID: 23179,
+	967: { // minecraft:lime_candle_cake
+		BaseID:    23380,
+		DefaultID: 23381,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	541: { // minecraft:lime_carpet
-		BaseID:    12699,
-		DefaultID: 12699,
+	543: { // minecraft:lime_carpet
+		BaseID:    12901,
+		DefaultID: 12901,
 	},
-	713: { // minecraft:lime_concrete
-		BaseID:    14833,
-		DefaultID: 14833,
+	715: { // minecraft:lime_concrete
+		BaseID:    15035,
+		DefaultID: 15035,
 	},
-	729: { // minecraft:lime_concrete_powder
-		BaseID:    14849,
-		DefaultID: 14849,
+	731: { // minecraft:lime_concrete_powder
+		BaseID:    15051,
+		DefaultID: 15051,
 	},
-	697: { // minecraft:lime_glazed_terracotta
-		BaseID:    14784,
-		DefaultID: 14784,
+	699: { // minecraft:lime_glazed_terracotta
+		BaseID:    14986,
+		DefaultID: 14986,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	681: { // minecraft:lime_shulker_box
-		BaseID:    14698,
-		DefaultID: 14702,
+	683: { // minecraft:lime_shulker_box
+		BaseID:    14900,
+		DefaultID: 14904,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	304: { // minecraft:lime_stained_glass
-		BaseID:    6902,
-		DefaultID: 6902,
+	305: { // minecraft:lime_stained_glass
+		BaseID:    7103,
+		DefaultID: 7103,
 	},
-	503: { // minecraft:lime_stained_glass_pane
-		BaseID:    11418,
-		DefaultID: 11449,
+	505: { // minecraft:lime_stained_glass_pane
+		BaseID:    11620,
+		DefaultID: 11651,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -4492,97 +4500,97 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	487: { // minecraft:lime_terracotta
-		BaseID:    11247,
-		DefaultID: 11247,
+	489: { // minecraft:lime_terracotta
+		BaseID:    11449,
+		DefaultID: 11449,
 	},
-	582: { // minecraft:lime_wall_banner
-		BaseID:    13001,
-		DefaultID: 13001,
+	584: { // minecraft:lime_wall_banner
+		BaseID:    13203,
+		DefaultID: 13203,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	145: { // minecraft:lime_wool
-		BaseID:    2098,
-		DefaultID: 2098,
+		BaseID:    2298,
+		DefaultID: 2298,
 	},
-	921: { // minecraft:lodestone
-		BaseID:    21628,
-		DefaultID: 21628,
+	923: { // minecraft:lodestone
+		BaseID:    21830,
+		DefaultID: 21830,
 	},
-	836: { // minecraft:loom
-		BaseID:    20536,
-		DefaultID: 20536,
+	838: { // minecraft:loom
+		BaseID:    20738,
+		DefaultID: 20738,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	563: { // minecraft:magenta_banner
-		BaseID:    12757,
-		DefaultID: 12757,
+	565: { // minecraft:magenta_banner
+		BaseID:    12959,
+		DefaultID: 12967,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	112: { // minecraft:magenta_bed
-		BaseID:    1763,
-		DefaultID: 1766,
+		BaseID:    1963,
+		DefaultID: 1966,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	945: { // minecraft:magenta_candle
-		BaseID:    22942,
-		DefaultID: 22945,
+	947: { // minecraft:magenta_candle
+		BaseID:    23144,
+		DefaultID: 23147,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	962: { // minecraft:magenta_candle_cake
-		BaseID:    23172,
-		DefaultID: 23173,
+	964: { // minecraft:magenta_candle_cake
+		BaseID:    23374,
+		DefaultID: 23375,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	538: { // minecraft:magenta_carpet
-		BaseID:    12696,
-		DefaultID: 12696,
+	540: { // minecraft:magenta_carpet
+		BaseID:    12898,
+		DefaultID: 12898,
 	},
-	710: { // minecraft:magenta_concrete
-		BaseID:    14830,
-		DefaultID: 14830,
+	712: { // minecraft:magenta_concrete
+		BaseID:    15032,
+		DefaultID: 15032,
 	},
-	726: { // minecraft:magenta_concrete_powder
-		BaseID:    14846,
-		DefaultID: 14846,
+	728: { // minecraft:magenta_concrete_powder
+		BaseID:    15048,
+		DefaultID: 15048,
 	},
-	694: { // minecraft:magenta_glazed_terracotta
-		BaseID:    14772,
-		DefaultID: 14772,
+	696: { // minecraft:magenta_glazed_terracotta
+		BaseID:    14974,
+		DefaultID: 14974,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	678: { // minecraft:magenta_shulker_box
-		BaseID:    14680,
-		DefaultID: 14684,
+	680: { // minecraft:magenta_shulker_box
+		BaseID:    14882,
+		DefaultID: 14886,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	301: { // minecraft:magenta_stained_glass
-		BaseID:    6899,
-		DefaultID: 6899,
+	302: { // minecraft:magenta_stained_glass
+		BaseID:    7100,
+		DefaultID: 7100,
 	},
-	500: { // minecraft:magenta_stained_glass_pane
-		BaseID:    11322,
-		DefaultID: 11353,
+	502: { // minecraft:magenta_stained_glass_pane
+		BaseID:    11524,
+		DefaultID: 11555,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -4591,37 +4599,37 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	484: { // minecraft:magenta_terracotta
-		BaseID:    11244,
-		DefaultID: 11244,
+	486: { // minecraft:magenta_terracotta
+		BaseID:    11446,
+		DefaultID: 11446,
 	},
-	579: { // minecraft:magenta_wall_banner
-		BaseID:    12989,
-		DefaultID: 12989,
+	581: { // minecraft:magenta_wall_banner
+		BaseID:    13191,
+		DefaultID: 13191,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	142: { // minecraft:magenta_wool
-		BaseID:    2095,
-		DefaultID: 2095,
+		BaseID:    2295,
+		DefaultID: 2295,
 	},
-	669: { // minecraft:magma_block
-		BaseID:    14643,
-		DefaultID: 14643,
+	671: { // minecraft:magma_block
+		BaseID:    14845,
+		DefaultID: 14845,
 	},
-	449: { // minecraft:mangrove_button
-		BaseID:    10665,
-		DefaultID: 10674,
+	451: { // minecraft:mangrove_button
+		BaseID:    10867,
+		DefaultID: 10876,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	651: { // minecraft:mangrove_door
-		BaseID:    14306,
-		DefaultID: 14317,
+	653: { // minecraft:mangrove_door
+		BaseID:    14508,
+		DefaultID: 14519,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -4630,9 +4638,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	642: { // minecraft:mangrove_fence
-		BaseID:    13794,
-		DefaultID: 13825,
+	644: { // minecraft:mangrove_fence
+		BaseID:    13996,
+		DefaultID: 14027,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -4641,9 +4649,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	633: { // minecraft:mangrove_fence_gate
-		BaseID:    13506,
-		DefaultID: 13513,
+	635: { // minecraft:mangrove_fence_gate
+		BaseID:    13708,
+		DefaultID: 13715,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -4651,9 +4659,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	243: { // minecraft:mangrove_hanging_sign
-		BaseID:    6346,
-		DefaultID: 6379,
+	244: { // minecraft:mangrove_hanging_sign
+		BaseID:    6547,
+		DefaultID: 6596,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -4680,9 +4688,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    26,
 		DefaultID: 26,
 	},
-	268: { // minecraft:mangrove_pressure_plate
-		BaseID:    6676,
-		DefaultID: 6677,
+	269: { // minecraft:mangrove_pressure_plate
+		BaseID:    6877,
+		DefaultID: 6878,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
@@ -4704,9 +4712,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	186: { // minecraft:mangrove_shelf
-		BaseID:    2847,
-		DefaultID: 2856,
+	187: { // minecraft:mangrove_shelf
+		BaseID:    3048,
+		DefaultID: 3057,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -4714,25 +4722,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	217: { // minecraft:mangrove_sign
-		BaseID:    5390,
-		DefaultID: 5391,
+	218: { // minecraft:mangrove_sign
+		BaseID:    5591,
+		DefaultID: 5608,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	605: { // minecraft:mangrove_slab
-		BaseID:    13176,
-		DefaultID: 13179,
+	607: { // minecraft:mangrove_slab
+		BaseID:    13378,
+		DefaultID: 13381,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	518: { // minecraft:mangrove_stairs
-		BaseID:    12090,
-		DefaultID: 12101,
+	520: { // minecraft:mangrove_stairs
+		BaseID:    12292,
+		DefaultID: 12303,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -4740,9 +4748,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	323: { // minecraft:mangrove_trapdoor
-		BaseID:    7425,
-		DefaultID: 7440,
+	324: { // minecraft:mangrove_trapdoor
+		BaseID:    7626,
+		DefaultID: 7641,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -4751,17 +4759,17 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	253: { // minecraft:mangrove_wall_hanging_sign
-		BaseID:    6538,
-		DefaultID: 6539,
+	254: { // minecraft:mangrove_wall_hanging_sign
+		BaseID:    6739,
+		DefaultID: 6740,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	231: { // minecraft:mangrove_wall_sign
-		BaseID:    5690,
-		DefaultID: 5691,
+	232: { // minecraft:mangrove_wall_sign
+		BaseID:    5891,
+		DefaultID: 5892,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -4774,48 +4782,48 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	980: { // minecraft:medium_amethyst_bud
-		BaseID:    23226,
-		DefaultID: 23235,
+	982: { // minecraft:medium_amethyst_bud
+		BaseID:    23428,
+		DefaultID: 23437,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	360: { // minecraft:melon
-		BaseID:    8132,
-		DefaultID: 8132,
+	361: { // minecraft:melon
+		BaseID:    8333,
+		DefaultID: 8333,
 	},
-	364: { // minecraft:melon_stem
-		BaseID:    8149,
-		DefaultID: 8149,
+	365: { // minecraft:melon_stem
+		BaseID:    8350,
+		DefaultID: 8350,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7"}, 8},
 		},
 	},
-	1114: { // minecraft:moss_block
-		BaseID:    27660,
-		DefaultID: 27660,
+	1116: { // minecraft:moss_block
+		BaseID:    27862,
+		DefaultID: 27862,
 	},
-	1110: { // minecraft:moss_carpet
-		BaseID:    27611,
-		DefaultID: 27611,
+	1112: { // minecraft:moss_carpet
+		BaseID:    27813,
+		DefaultID: 27813,
 	},
-	191: { // minecraft:mossy_cobblestone
-		BaseID:    3167,
-		DefaultID: 3167,
+	192: { // minecraft:mossy_cobblestone
+		BaseID:    3368,
+		DefaultID: 3368,
 	},
-	813: { // minecraft:mossy_cobblestone_slab
-		BaseID:    16238,
-		DefaultID: 16241,
+	815: { // minecraft:mossy_cobblestone_slab
+		BaseID:    16440,
+		DefaultID: 16443,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	799: { // minecraft:mossy_cobblestone_stairs
-		BaseID:    15414,
-		DefaultID: 15425,
+	801: { // minecraft:mossy_cobblestone_stairs
+		BaseID:    15616,
+		DefaultID: 15627,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -4823,9 +4831,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	409: { // minecraft:mossy_cobblestone_wall
-		BaseID:    10104,
-		DefaultID: 10107,
+	410: { // minecraft:mossy_cobblestone_wall
+		BaseID:    10305,
+		DefaultID: 10308,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -4835,17 +4843,17 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	811: { // minecraft:mossy_stone_brick_slab
-		BaseID:    16226,
-		DefaultID: 16229,
+	813: { // minecraft:mossy_stone_brick_slab
+		BaseID:    16428,
+		DefaultID: 16431,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	797: { // minecraft:mossy_stone_brick_stairs
-		BaseID:    15254,
-		DefaultID: 15265,
+	799: { // minecraft:mossy_stone_brick_stairs
+		BaseID:    15456,
+		DefaultID: 15467,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -4853,9 +4861,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	825: { // minecraft:mossy_stone_brick_wall
-		BaseID:    17264,
-		DefaultID: 17267,
+	827: { // minecraft:mossy_stone_brick_wall
+		BaseID:    17466,
+		DefaultID: 17469,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -4865,33 +4873,33 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	326: { // minecraft:mossy_stone_bricks
-		BaseID:    7554,
-		DefaultID: 7554,
+	327: { // minecraft:mossy_stone_bricks
+		BaseID:    7755,
+		DefaultID: 7755,
 	},
 	156: { // minecraft:moving_piston
-		BaseID:    2109,
-		DefaultID: 2109,
+		BaseID:    2309,
+		DefaultID: 2309,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"type", []string{"normal", "sticky"}, 2},
 		},
 	},
-	1120: { // minecraft:mud
-		BaseID:    27720,
-		DefaultID: 27720,
+	1122: { // minecraft:mud
+		BaseID:    27922,
+		DefaultID: 27922,
 	},
-	616: { // minecraft:mud_brick_slab
-		BaseID:    13242,
-		DefaultID: 13245,
+	618: { // minecraft:mud_brick_slab
+		BaseID:    13444,
+		DefaultID: 13447,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	371: { // minecraft:mud_brick_stairs
-		BaseID:    8637,
-		DefaultID: 8648,
+	372: { // minecraft:mud_brick_stairs
+		BaseID:    8838,
+		DefaultID: 8849,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -4899,9 +4907,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	828: { // minecraft:mud_brick_wall
-		BaseID:    18236,
-		DefaultID: 18239,
+	830: { // minecraft:mud_brick_wall
+		BaseID:    18438,
+		DefaultID: 18441,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -4911,9 +4919,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	330: { // minecraft:mud_bricks
-		BaseID:    7558,
-		DefaultID: 7558,
+	331: { // minecraft:mud_bricks
+		BaseID:    7759,
+		DefaultID: 7759,
 	},
 	59: { // minecraft:muddy_mangrove_roots
 		BaseID:    165,
@@ -4922,9 +4930,9 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	339: { // minecraft:mushroom_stem
-		BaseID:    7693,
-		DefaultID: 7693,
+	340: { // minecraft:mushroom_stem
+		BaseID:    7894,
+		DefaultID: 7894,
 		Properties: []blockProperty{
 			{"down", []string{"true", "false"}, 2},
 			{"east", []string{"true", "false"}, 2},
@@ -4934,16 +4942,16 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	372: { // minecraft:mycelium
-		BaseID:    8717,
-		DefaultID: 8718,
+	373: { // minecraft:mycelium
+		BaseID:    8918,
+		DefaultID: 8919,
 		Properties: []blockProperty{
 			{"snowy", []string{"true", "false"}, 2},
 		},
 	},
-	381: { // minecraft:nether_brick_fence
-		BaseID:    9134,
-		DefaultID: 9165,
+	382: { // minecraft:nether_brick_fence
+		BaseID:    9335,
+		DefaultID: 9366,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -4952,17 +4960,17 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	617: { // minecraft:nether_brick_slab
-		BaseID:    13248,
-		DefaultID: 13251,
+	619: { // minecraft:nether_brick_slab
+		BaseID:    13450,
+		DefaultID: 13453,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	382: { // minecraft:nether_brick_stairs
-		BaseID:    9166,
-		DefaultID: 9177,
+	383: { // minecraft:nether_brick_stairs
+		BaseID:    9367,
+		DefaultID: 9378,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -4970,9 +4978,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	829: { // minecraft:nether_brick_wall
-		BaseID:    18560,
-		DefaultID: 18563,
+	831: { // minecraft:nether_brick_wall
+		BaseID:    18762,
+		DefaultID: 18765,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -4982,69 +4990,69 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	380: { // minecraft:nether_bricks
-		BaseID:    9133,
-		DefaultID: 9133,
+	381: { // minecraft:nether_bricks
+		BaseID:    9334,
+		DefaultID: 9334,
 	},
 	48: { // minecraft:nether_gold_ore
 		BaseID:    135,
 		DefaultID: 135,
 	},
-	294: { // minecraft:nether_portal
-		BaseID:    6816,
-		DefaultID: 6816,
+	295: { // minecraft:nether_portal
+		BaseID:    7017,
+		DefaultID: 7017,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "z"}, 2},
 		},
 	},
-	474: { // minecraft:nether_quartz_ore
-		BaseID:    11110,
-		DefaultID: 11110,
+	476: { // minecraft:nether_quartz_ore
+		BaseID:    11312,
+		DefaultID: 11312,
 	},
-	868: { // minecraft:nether_sprouts
-		BaseID:    20759,
-		DefaultID: 20759,
+	870: { // minecraft:nether_sprouts
+		BaseID:    20961,
+		DefaultID: 20961,
 	},
-	383: { // minecraft:nether_wart
-		BaseID:    9246,
-		DefaultID: 9246,
+	384: { // minecraft:nether_wart
+		BaseID:    9447,
+		DefaultID: 9447,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3"}, 4},
 		},
 	},
-	670: { // minecraft:nether_wart_block
-		BaseID:    14644,
-		DefaultID: 14644,
+	672: { // minecraft:nether_wart_block
+		BaseID:    14846,
+		DefaultID: 14846,
 	},
-	913: { // minecraft:netherite_block
-		BaseID:    21616,
-		DefaultID: 21616,
+	915: { // minecraft:netherite_block
+		BaseID:    21818,
+		DefaultID: 21818,
 	},
-	284: { // minecraft:netherrack
-		BaseID:    6796,
-		DefaultID: 6796,
+	285: { // minecraft:netherrack
+		BaseID:    6997,
+		DefaultID: 6997,
 	},
 	109: { // minecraft:note_block
 		BaseID:    581,
 		DefaultID: 582,
 		Properties: []blockProperty{
-			{"instrument", []string{"harp", "basedrum", "snare", "hat", "bass", "flute", "bell", "guitar", "chime", "xylophone", "iron_xylophone", "cow_bell", "didgeridoo", "bit", "banjo", "pling", "zombie", "skeleton", "creeper", "dragon", "wither_skeleton", "piglin", "custom_head"}, 23},
+			{"instrument", []string{"harp", "basedrum", "snare", "hat", "bass", "flute", "bell", "guitar", "chime", "xylophone", "iron_xylophone", "cow_bell", "didgeridoo", "bit", "banjo", "pling", "trumpet", "trumpet_exposed", "trumpet_oxidized", "trumpet_weathered", "zombie", "skeleton", "creeper", "dragon", "wither_skeleton", "piglin", "custom_head"}, 27},
 			{"note", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"}, 25},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	441: { // minecraft:oak_button
-		BaseID:    10473,
-		DefaultID: 10482,
+	443: { // minecraft:oak_button
+		BaseID:    10675,
+		DefaultID: 10684,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	219: { // minecraft:oak_door
-		BaseID:    5454,
-		DefaultID: 5465,
+	220: { // minecraft:oak_door
+		BaseID:    5655,
+		DefaultID: 5666,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -5053,9 +5061,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	283: { // minecraft:oak_fence
-		BaseID:    6764,
-		DefaultID: 6795,
+	284: { // minecraft:oak_fence
+		BaseID:    6965,
+		DefaultID: 6996,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -5064,9 +5072,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	368: { // minecraft:oak_fence_gate
-		BaseID:    8445,
-		DefaultID: 8452,
+	369: { // minecraft:oak_fence_gate
+		BaseID:    8646,
+		DefaultID: 8653,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -5074,9 +5082,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	233: { // minecraft:oak_hanging_sign
-		BaseID:    5706,
-		DefaultID: 5739,
+	234: { // minecraft:oak_hanging_sign
+		BaseID:    5907,
+		DefaultID: 5956,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -5103,9 +5111,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    15,
 		DefaultID: 15,
 	},
-	260: { // minecraft:oak_pressure_plate
-		BaseID:    6660,
-		DefaultID: 6661,
+	261: { // minecraft:oak_pressure_plate
+		BaseID:    6861,
+		DefaultID: 6862,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
@@ -5117,9 +5125,9 @@ var blockStates = map[int32]*blockStateData{
 			{"stage", []string{"0", "1"}, 2},
 		},
 	},
-	187: { // minecraft:oak_shelf
-		BaseID:    2911,
-		DefaultID: 2920,
+	188: { // minecraft:oak_shelf
+		BaseID:    3112,
+		DefaultID: 3121,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -5127,25 +5135,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	209: { // minecraft:oak_sign
-		BaseID:    5134,
-		DefaultID: 5135,
+	210: { // minecraft:oak_sign
+		BaseID:    5335,
+		DefaultID: 5352,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	597: { // minecraft:oak_slab
-		BaseID:    13128,
-		DefaultID: 13131,
+	599: { // minecraft:oak_slab
+		BaseID:    13330,
+		DefaultID: 13333,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	199: { // minecraft:oak_stairs
-		BaseID:    3706,
-		DefaultID: 3717,
+	200: { // minecraft:oak_stairs
+		BaseID:    3907,
+		DefaultID: 3918,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5153,9 +5161,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	315: { // minecraft:oak_trapdoor
-		BaseID:    6913,
-		DefaultID: 6928,
+	316: { // minecraft:oak_trapdoor
+		BaseID:    7114,
+		DefaultID: 7129,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5164,17 +5172,17 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	245: { // minecraft:oak_wall_hanging_sign
-		BaseID:    6474,
-		DefaultID: 6475,
+	246: { // minecraft:oak_wall_hanging_sign
+		BaseID:    6675,
+		DefaultID: 6676,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	223: { // minecraft:oak_wall_sign
-		BaseID:    5626,
-		DefaultID: 5627,
+	224: { // minecraft:oak_wall_sign
+		BaseID:    5827,
+		DefaultID: 5828,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -5187,94 +5195,94 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	674: { // minecraft:observer
-		BaseID:    14650,
-		DefaultID: 14655,
+	676: { // minecraft:observer
+		BaseID:    14852,
+		DefaultID: 14857,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	192: { // minecraft:obsidian
-		BaseID:    3168,
-		DefaultID: 3168,
+	193: { // minecraft:obsidian
+		BaseID:    3369,
+		DefaultID: 3369,
 	},
-	1148: { // minecraft:ochre_froglight
-		BaseID:    29380,
-		DefaultID: 29381,
+	1150: { // minecraft:ochre_froglight
+		BaseID:    29582,
+		DefaultID: 29583,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	1161: { // minecraft:open_eyeblossom
-		BaseID:    29666,
-		DefaultID: 29666,
+	1163: { // minecraft:open_eyeblossom
+		BaseID:    29868,
+		DefaultID: 29868,
 	},
-	562: { // minecraft:orange_banner
-		BaseID:    12741,
-		DefaultID: 12741,
+	564: { // minecraft:orange_banner
+		BaseID:    12943,
+		DefaultID: 12951,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	111: { // minecraft:orange_bed
-		BaseID:    1747,
-		DefaultID: 1750,
+		BaseID:    1947,
+		DefaultID: 1950,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	944: { // minecraft:orange_candle
-		BaseID:    22926,
-		DefaultID: 22929,
+	946: { // minecraft:orange_candle
+		BaseID:    23128,
+		DefaultID: 23131,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	961: { // minecraft:orange_candle_cake
-		BaseID:    23170,
-		DefaultID: 23171,
+	963: { // minecraft:orange_candle_cake
+		BaseID:    23372,
+		DefaultID: 23373,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	537: { // minecraft:orange_carpet
-		BaseID:    12695,
-		DefaultID: 12695,
+	539: { // minecraft:orange_carpet
+		BaseID:    12897,
+		DefaultID: 12897,
 	},
-	709: { // minecraft:orange_concrete
-		BaseID:    14829,
-		DefaultID: 14829,
+	711: { // minecraft:orange_concrete
+		BaseID:    15031,
+		DefaultID: 15031,
 	},
-	725: { // minecraft:orange_concrete_powder
-		BaseID:    14845,
-		DefaultID: 14845,
+	727: { // minecraft:orange_concrete_powder
+		BaseID:    15047,
+		DefaultID: 15047,
 	},
-	693: { // minecraft:orange_glazed_terracotta
-		BaseID:    14768,
-		DefaultID: 14768,
+	695: { // minecraft:orange_glazed_terracotta
+		BaseID:    14970,
+		DefaultID: 14970,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	677: { // minecraft:orange_shulker_box
-		BaseID:    14674,
-		DefaultID: 14678,
+	679: { // minecraft:orange_shulker_box
+		BaseID:    14876,
+		DefaultID: 14880,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	300: { // minecraft:orange_stained_glass
-		BaseID:    6898,
-		DefaultID: 6898,
+	301: { // minecraft:orange_stained_glass
+		BaseID:    7099,
+		DefaultID: 7099,
 	},
-	499: { // minecraft:orange_stained_glass_pane
-		BaseID:    11290,
-		DefaultID: 11321,
+	501: { // minecraft:orange_stained_glass_pane
+		BaseID:    11492,
+		DefaultID: 11523,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -5283,40 +5291,40 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	483: { // minecraft:orange_terracotta
-		BaseID:    11243,
-		DefaultID: 11243,
+	485: { // minecraft:orange_terracotta
+		BaseID:    11445,
+		DefaultID: 11445,
 	},
-	164: { // minecraft:orange_tulip
-		BaseID:    2128,
-		DefaultID: 2128,
+	165: { // minecraft:orange_tulip
+		BaseID:    2329,
+		DefaultID: 2329,
 	},
-	578: { // minecraft:orange_wall_banner
-		BaseID:    12985,
-		DefaultID: 12985,
+	580: { // minecraft:orange_wall_banner
+		BaseID:    13187,
+		DefaultID: 13187,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	141: { // minecraft:orange_wool
-		BaseID:    2094,
-		DefaultID: 2094,
+		BaseID:    2294,
+		DefaultID: 2294,
 	},
-	167: { // minecraft:oxeye_daisy
-		BaseID:    2131,
-		DefaultID: 2131,
+	168: { // minecraft:oxeye_daisy
+		BaseID:    2332,
+		DefaultID: 2332,
 	},
-	1015: { // minecraft:oxidized_chiseled_copper
-		BaseID:    25117,
-		DefaultID: 25117,
+	1017: { // minecraft:oxidized_chiseled_copper
+		BaseID:    25319,
+		DefaultID: 25319,
 	},
-	1008: { // minecraft:oxidized_copper
-		BaseID:    25110,
-		DefaultID: 25110,
+	1010: { // minecraft:oxidized_copper
+		BaseID:    25312,
+		DefaultID: 25312,
 	},
-	344: { // minecraft:oxidized_copper_bars
-		BaseID:    7885,
-		DefaultID: 7916,
+	345: { // minecraft:oxidized_copper_bars
+		BaseID:    8086,
+		DefaultID: 8117,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -5325,34 +5333,34 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	1074: { // minecraft:oxidized_copper_bulb
-		BaseID:    26873,
-		DefaultID: 26876,
+	1076: { // minecraft:oxidized_copper_bulb
+		BaseID:    27075,
+		DefaultID: 27078,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	353: { // minecraft:oxidized_copper_chain
-		BaseID:    8069,
-		DefaultID: 8072,
+	354: { // minecraft:oxidized_copper_chain
+		BaseID:    8270,
+		DefaultID: 8273,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1082: { // minecraft:oxidized_copper_chest
-		BaseID:    26965,
-		DefaultID: 26966,
+	1084: { // minecraft:oxidized_copper_chest
+		BaseID:    27167,
+		DefaultID: 27168,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"type", []string{"single", "left", "right"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1049: { // minecraft:oxidized_copper_door
-		BaseID:    25949,
-		DefaultID: 25960,
+	1051: { // minecraft:oxidized_copper_door
+		BaseID:    26151,
+		DefaultID: 26162,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -5361,33 +5369,33 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	1090: { // minecraft:oxidized_copper_golem_statue
-		BaseID:    27181,
-		DefaultID: 27182,
+	1092: { // minecraft:oxidized_copper_golem_statue
+		BaseID:    27383,
+		DefaultID: 27384,
 		Properties: []blockProperty{
 			{"copper_golem_pose", []string{"standing", "sitting", "running", "star"}, 4},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1066: { // minecraft:oxidized_copper_grate
-		BaseID:    26851,
-		DefaultID: 26852,
+	1068: { // minecraft:oxidized_copper_grate
+		BaseID:    27053,
+		DefaultID: 27054,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	852: { // minecraft:oxidized_copper_lantern
-		BaseID:    20655,
-		DefaultID: 20658,
+	854: { // minecraft:oxidized_copper_lantern
+		BaseID:    20857,
+		DefaultID: 20860,
 		Properties: []blockProperty{
 			{"hanging", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1057: { // minecraft:oxidized_copper_trapdoor
-		BaseID:    26461,
-		DefaultID: 26476,
+	1059: { // minecraft:oxidized_copper_trapdoor
+		BaseID:    26663,
+		DefaultID: 26678,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5396,21 +5404,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1011: { // minecraft:oxidized_cut_copper
-		BaseID:    25113,
-		DefaultID: 25113,
+	1013: { // minecraft:oxidized_cut_copper
+		BaseID:    25315,
+		DefaultID: 25315,
 	},
-	1027: { // minecraft:oxidized_cut_copper_slab
-		BaseID:    25445,
-		DefaultID: 25448,
+	1029: { // minecraft:oxidized_cut_copper_slab
+		BaseID:    25647,
+		DefaultID: 25650,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1023: { // minecraft:oxidized_cut_copper_stairs
-		BaseID:    25125,
-		DefaultID: 25136,
+	1025: { // minecraft:oxidized_cut_copper_stairs
+		BaseID:    25327,
+		DefaultID: 25338,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5418,37 +5426,37 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1098: { // minecraft:oxidized_lightning_rod
-		BaseID:    27413,
-		DefaultID: 27432,
+	1100: { // minecraft:oxidized_lightning_rod
+		BaseID:    27615,
+		DefaultID: 27634,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"powered", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	554: { // minecraft:packed_ice
-		BaseID:    12712,
-		DefaultID: 12712,
+	556: { // minecraft:packed_ice
+		BaseID:    12914,
+		DefaultID: 12914,
 	},
-	329: { // minecraft:packed_mud
-		BaseID:    7557,
-		DefaultID: 7557,
+	330: { // minecraft:packed_mud
+		BaseID:    7758,
+		DefaultID: 7758,
 	},
-	1160: { // minecraft:pale_hanging_moss
-		BaseID:    29664,
-		DefaultID: 29664,
+	1162: { // minecraft:pale_hanging_moss
+		BaseID:    29866,
+		DefaultID: 29866,
 		Properties: []blockProperty{
 			{"tip", []string{"true", "false"}, 2},
 		},
 	},
-	1158: { // minecraft:pale_moss_block
-		BaseID:    29501,
-		DefaultID: 29501,
+	1160: { // minecraft:pale_moss_block
+		BaseID:    29703,
+		DefaultID: 29703,
 	},
-	1159: { // minecraft:pale_moss_carpet
-		BaseID:    29502,
-		DefaultID: 29502,
+	1161: { // minecraft:pale_moss_carpet
+		BaseID:    29704,
+		DefaultID: 29704,
 		Properties: []blockProperty{
 			{"bottom", []string{"true", "false"}, 2},
 			{"east", []string{"none", "low", "tall"}, 3},
@@ -5457,18 +5465,18 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	448: { // minecraft:pale_oak_button
-		BaseID:    10641,
-		DefaultID: 10650,
+	450: { // minecraft:pale_oak_button
+		BaseID:    10843,
+		DefaultID: 10852,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	650: { // minecraft:pale_oak_door
-		BaseID:    14242,
-		DefaultID: 14253,
+	652: { // minecraft:pale_oak_door
+		BaseID:    14444,
+		DefaultID: 14455,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -5477,9 +5485,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	641: { // minecraft:pale_oak_fence
-		BaseID:    13762,
-		DefaultID: 13793,
+	643: { // minecraft:pale_oak_fence
+		BaseID:    13964,
+		DefaultID: 13995,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -5488,9 +5496,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	632: { // minecraft:pale_oak_fence_gate
-		BaseID:    13474,
-		DefaultID: 13481,
+	634: { // minecraft:pale_oak_fence_gate
+		BaseID:    13676,
+		DefaultID: 13683,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -5498,9 +5506,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	240: { // minecraft:pale_oak_hanging_sign
-		BaseID:    6154,
-		DefaultID: 6187,
+	241: { // minecraft:pale_oak_hanging_sign
+		BaseID:    6355,
+		DefaultID: 6404,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -5527,9 +5535,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    25,
 		DefaultID: 25,
 	},
-	267: { // minecraft:pale_oak_pressure_plate
-		BaseID:    6674,
-		DefaultID: 6675,
+	268: { // minecraft:pale_oak_pressure_plate
+		BaseID:    6875,
+		DefaultID: 6876,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
@@ -5541,9 +5549,9 @@ var blockStates = map[int32]*blockStateData{
 			{"stage", []string{"0", "1"}, 2},
 		},
 	},
-	188: { // minecraft:pale_oak_shelf
-		BaseID:    2975,
-		DefaultID: 2984,
+	189: { // minecraft:pale_oak_shelf
+		BaseID:    3176,
+		DefaultID: 3185,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -5551,25 +5559,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	216: { // minecraft:pale_oak_sign
-		BaseID:    5358,
-		DefaultID: 5359,
+	217: { // minecraft:pale_oak_sign
+		BaseID:    5559,
+		DefaultID: 5576,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	604: { // minecraft:pale_oak_slab
-		BaseID:    13170,
-		DefaultID: 13173,
+	606: { // minecraft:pale_oak_slab
+		BaseID:    13372,
+		DefaultID: 13375,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	517: { // minecraft:pale_oak_stairs
-		BaseID:    12010,
-		DefaultID: 12021,
+	519: { // minecraft:pale_oak_stairs
+		BaseID:    12212,
+		DefaultID: 12223,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5577,9 +5585,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	322: { // minecraft:pale_oak_trapdoor
-		BaseID:    7361,
-		DefaultID: 7376,
+	323: { // minecraft:pale_oak_trapdoor
+		BaseID:    7562,
+		DefaultID: 7577,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5588,17 +5596,17 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	252: { // minecraft:pale_oak_wall_hanging_sign
-		BaseID:    6530,
-		DefaultID: 6531,
+	253: { // minecraft:pale_oak_wall_hanging_sign
+		BaseID:    6731,
+		DefaultID: 6732,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	230: { // minecraft:pale_oak_wall_sign
-		BaseID:    5682,
-		DefaultID: 5683,
+	231: { // minecraft:pale_oak_wall_sign
+		BaseID:    5883,
+		DefaultID: 5884,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -5611,117 +5619,117 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	1150: { // minecraft:pearlescent_froglight
-		BaseID:    29386,
-		DefaultID: 29387,
+	1152: { // minecraft:pearlescent_froglight
+		BaseID:    29588,
+		DefaultID: 29589,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	558: { // minecraft:peony
-		BaseID:    12719,
-		DefaultID: 12720,
+	560: { // minecraft:peony
+		BaseID:    12921,
+		DefaultID: 12922,
 		Properties: []blockProperty{
 			{"half", []string{"upper", "lower"}, 2},
 		},
 	},
-	612: { // minecraft:petrified_oak_slab
-		BaseID:    13218,
-		DefaultID: 13221,
+	614: { // minecraft:petrified_oak_slab
+		BaseID:    13420,
+		DefaultID: 13423,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	463: { // minecraft:piglin_head
-		BaseID:    10953,
-		DefaultID: 10969,
+	465: { // minecraft:piglin_head
+		BaseID:    11155,
+		DefaultID: 11171,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	464: { // minecraft:piglin_wall_head
-		BaseID:    10985,
-		DefaultID: 10986,
+	466: { // minecraft:piglin_wall_head
+		BaseID:    11187,
+		DefaultID: 11188,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	567: { // minecraft:pink_banner
-		BaseID:    12821,
-		DefaultID: 12821,
+	569: { // minecraft:pink_banner
+		BaseID:    13023,
+		DefaultID: 13031,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	116: { // minecraft:pink_bed
-		BaseID:    1827,
-		DefaultID: 1830,
+		BaseID:    2027,
+		DefaultID: 2030,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	949: { // minecraft:pink_candle
-		BaseID:    23006,
-		DefaultID: 23009,
+	951: { // minecraft:pink_candle
+		BaseID:    23208,
+		DefaultID: 23211,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	966: { // minecraft:pink_candle_cake
-		BaseID:    23180,
-		DefaultID: 23181,
+	968: { // minecraft:pink_candle_cake
+		BaseID:    23382,
+		DefaultID: 23383,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	542: { // minecraft:pink_carpet
-		BaseID:    12700,
-		DefaultID: 12700,
+	544: { // minecraft:pink_carpet
+		BaseID:    12902,
+		DefaultID: 12902,
 	},
-	714: { // minecraft:pink_concrete
-		BaseID:    14834,
-		DefaultID: 14834,
+	716: { // minecraft:pink_concrete
+		BaseID:    15036,
+		DefaultID: 15036,
 	},
-	730: { // minecraft:pink_concrete_powder
-		BaseID:    14850,
-		DefaultID: 14850,
+	732: { // minecraft:pink_concrete_powder
+		BaseID:    15052,
+		DefaultID: 15052,
 	},
-	698: { // minecraft:pink_glazed_terracotta
-		BaseID:    14788,
-		DefaultID: 14788,
+	700: { // minecraft:pink_glazed_terracotta
+		BaseID:    14990,
+		DefaultID: 14990,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	1111: { // minecraft:pink_petals
-		BaseID:    27612,
-		DefaultID: 27612,
+	1113: { // minecraft:pink_petals
+		BaseID:    27814,
+		DefaultID: 27814,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"flower_amount", []string{"1", "2", "3", "4"}, 4},
 		},
 	},
-	682: { // minecraft:pink_shulker_box
-		BaseID:    14704,
-		DefaultID: 14708,
+	684: { // minecraft:pink_shulker_box
+		BaseID:    14906,
+		DefaultID: 14910,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	305: { // minecraft:pink_stained_glass
-		BaseID:    6903,
-		DefaultID: 6903,
+	306: { // minecraft:pink_stained_glass
+		BaseID:    7104,
+		DefaultID: 7104,
 	},
-	504: { // minecraft:pink_stained_glass_pane
-		BaseID:    11450,
-		DefaultID: 11481,
+	506: { // minecraft:pink_stained_glass_pane
+		BaseID:    11652,
+		DefaultID: 11683,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -5730,68 +5738,68 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	488: { // minecraft:pink_terracotta
-		BaseID:    11248,
-		DefaultID: 11248,
+	490: { // minecraft:pink_terracotta
+		BaseID:    11450,
+		DefaultID: 11450,
 	},
-	166: { // minecraft:pink_tulip
-		BaseID:    2130,
-		DefaultID: 2130,
+	167: { // minecraft:pink_tulip
+		BaseID:    2331,
+		DefaultID: 2331,
 	},
-	583: { // minecraft:pink_wall_banner
-		BaseID:    13005,
-		DefaultID: 13005,
+	585: { // minecraft:pink_wall_banner
+		BaseID:    13207,
+		DefaultID: 13207,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	146: { // minecraft:pink_wool
-		BaseID:    2099,
-		DefaultID: 2099,
+		BaseID:    2299,
+		DefaultID: 2299,
 	},
 	138: { // minecraft:piston
-		BaseID:    2057,
-		DefaultID: 2063,
+		BaseID:    2257,
+		DefaultID: 2263,
 		Properties: []blockProperty{
 			{"extended", []string{"true", "false"}, 2},
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
 	139: { // minecraft:piston_head
-		BaseID:    2069,
-		DefaultID: 2071,
+		BaseID:    2269,
+		DefaultID: 2271,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"short", []string{"true", "false"}, 2},
 			{"type", []string{"normal", "sticky"}, 2},
 		},
 	},
-	661: { // minecraft:pitcher_crop
-		BaseID:    14597,
-		DefaultID: 14598,
+	663: { // minecraft:pitcher_crop
+		BaseID:    14799,
+		DefaultID: 14800,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4"}, 5},
 			{"half", []string{"upper", "lower"}, 2},
 		},
 	},
-	662: { // minecraft:pitcher_plant
-		BaseID:    14607,
-		DefaultID: 14608,
+	664: { // minecraft:pitcher_plant
+		BaseID:    14809,
+		DefaultID: 14810,
 		Properties: []blockProperty{
 			{"half", []string{"upper", "lower"}, 2},
 		},
 	},
-	457: { // minecraft:player_head
-		BaseID:    10833,
-		DefaultID: 10849,
+	459: { // minecraft:player_head
+		BaseID:    11035,
+		DefaultID: 11051,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	458: { // minecraft:player_wall_head
-		BaseID:    10865,
-		DefaultID: 10866,
+	460: { // minecraft:player_wall_head
+		BaseID:    11067,
+		DefaultID: 11068,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -5804,9 +5812,9 @@ var blockStates = map[int32]*blockStateData{
 			{"snowy", []string{"true", "false"}, 2},
 		},
 	},
-	1103: { // minecraft:pointed_dripstone
-		BaseID:    27533,
-		DefaultID: 27538,
+	1105: { // minecraft:pointed_dripstone
+		BaseID:    27735,
+		DefaultID: 27740,
 		Properties: []blockProperty{
 			{"thickness", []string{"tip_merge", "tip", "frustum", "middle", "base"}, 5},
 			{"vertical_direction", []string{"up", "down"}, 2},
@@ -5817,17 +5825,17 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    7,
 		DefaultID: 7,
 	},
-	820: { // minecraft:polished_andesite_slab
-		BaseID:    16280,
-		DefaultID: 16283,
+	822: { // minecraft:polished_andesite_slab
+		BaseID:    16482,
+		DefaultID: 16485,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	807: { // minecraft:polished_andesite_stairs
-		BaseID:    16054,
-		DefaultID: 16065,
+	809: { // minecraft:polished_andesite_stairs
+		BaseID:    16256,
+		DefaultID: 16267,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5835,28 +5843,28 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	288: { // minecraft:polished_basalt
-		BaseID:    6802,
-		DefaultID: 6803,
+	289: { // minecraft:polished_basalt
+		BaseID:    7003,
+		DefaultID: 7004,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	926: { // minecraft:polished_blackstone
-		BaseID:    22040,
-		DefaultID: 22040,
+	928: { // minecraft:polished_blackstone
+		BaseID:    22242,
+		DefaultID: 22242,
 	},
-	930: { // minecraft:polished_blackstone_brick_slab
-		BaseID:    22044,
-		DefaultID: 22047,
+	932: { // minecraft:polished_blackstone_brick_slab
+		BaseID:    22246,
+		DefaultID: 22249,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	931: { // minecraft:polished_blackstone_brick_stairs
-		BaseID:    22050,
-		DefaultID: 22061,
+	933: { // minecraft:polished_blackstone_brick_stairs
+		BaseID:    22252,
+		DefaultID: 22263,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5864,9 +5872,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	932: { // minecraft:polished_blackstone_brick_wall
-		BaseID:    22130,
-		DefaultID: 22133,
+	934: { // minecraft:polished_blackstone_brick_wall
+		BaseID:    22332,
+		DefaultID: 22335,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -5876,37 +5884,37 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	927: { // minecraft:polished_blackstone_bricks
-		BaseID:    22041,
-		DefaultID: 22041,
+	929: { // minecraft:polished_blackstone_bricks
+		BaseID:    22243,
+		DefaultID: 22243,
 	},
-	937: { // minecraft:polished_blackstone_button
-		BaseID:    22543,
-		DefaultID: 22552,
+	939: { // minecraft:polished_blackstone_button
+		BaseID:    22745,
+		DefaultID: 22754,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	936: { // minecraft:polished_blackstone_pressure_plate
-		BaseID:    22541,
-		DefaultID: 22542,
+	938: { // minecraft:polished_blackstone_pressure_plate
+		BaseID:    22743,
+		DefaultID: 22744,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	935: { // minecraft:polished_blackstone_slab
-		BaseID:    22535,
-		DefaultID: 22538,
+	937: { // minecraft:polished_blackstone_slab
+		BaseID:    22737,
+		DefaultID: 22740,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	934: { // minecraft:polished_blackstone_stairs
-		BaseID:    22455,
-		DefaultID: 22466,
+	936: { // minecraft:polished_blackstone_stairs
+		BaseID:    22657,
+		DefaultID: 22668,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5914,9 +5922,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	938: { // minecraft:polished_blackstone_wall
-		BaseID:    22567,
-		DefaultID: 22570,
+	940: { // minecraft:polished_blackstone_wall
+		BaseID:    22769,
+		DefaultID: 22772,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -5926,21 +5934,21 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	1126: { // minecraft:polished_deepslate
-		BaseID:    28135,
-		DefaultID: 28135,
+	1128: { // minecraft:polished_deepslate
+		BaseID:    28337,
+		DefaultID: 28337,
 	},
-	1128: { // minecraft:polished_deepslate_slab
-		BaseID:    28216,
-		DefaultID: 28219,
+	1130: { // minecraft:polished_deepslate_slab
+		BaseID:    28418,
+		DefaultID: 28421,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1127: { // minecraft:polished_deepslate_stairs
-		BaseID:    28136,
-		DefaultID: 28147,
+	1129: { // minecraft:polished_deepslate_stairs
+		BaseID:    28338,
+		DefaultID: 28349,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5948,9 +5956,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1129: { // minecraft:polished_deepslate_wall
-		BaseID:    28222,
-		DefaultID: 28225,
+	1131: { // minecraft:polished_deepslate_wall
+		BaseID:    28424,
+		DefaultID: 28427,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -5964,17 +5972,17 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    5,
 		DefaultID: 5,
 	},
-	812: { // minecraft:polished_diorite_slab
-		BaseID:    16232,
-		DefaultID: 16235,
+	814: { // minecraft:polished_diorite_slab
+		BaseID:    16434,
+		DefaultID: 16437,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	798: { // minecraft:polished_diorite_stairs
-		BaseID:    15334,
-		DefaultID: 15345,
+	800: { // minecraft:polished_diorite_stairs
+		BaseID:    15536,
+		DefaultID: 15547,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -5986,17 +5994,17 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    3,
 		DefaultID: 3,
 	},
-	809: { // minecraft:polished_granite_slab
-		BaseID:    16214,
-		DefaultID: 16217,
+	811: { // minecraft:polished_granite_slab
+		BaseID:    16416,
+		DefaultID: 16419,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	795: { // minecraft:polished_granite_stairs
-		BaseID:    15094,
-		DefaultID: 15105,
+	797: { // minecraft:polished_granite_stairs
+		BaseID:    15296,
+		DefaultID: 15307,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6004,21 +6012,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	986: { // minecraft:polished_tuff
-		BaseID:    23661,
-		DefaultID: 23661,
+	988: { // minecraft:polished_tuff
+		BaseID:    23863,
+		DefaultID: 23863,
 	},
-	987: { // minecraft:polished_tuff_slab
-		BaseID:    23662,
-		DefaultID: 23665,
+	989: { // minecraft:polished_tuff_slab
+		BaseID:    23864,
+		DefaultID: 23867,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	988: { // minecraft:polished_tuff_stairs
-		BaseID:    23668,
-		DefaultID: 23679,
+	990: { // minecraft:polished_tuff_stairs
+		BaseID:    23870,
+		DefaultID: 23881,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6026,9 +6034,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	989: { // minecraft:polished_tuff_wall
-		BaseID:    23748,
-		DefaultID: 23751,
+	991: { // minecraft:polished_tuff_wall
+		BaseID:    23950,
+		DefaultID: 23953,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -6038,200 +6046,204 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	159: { // minecraft:poppy
-		BaseID:    2123,
-		DefaultID: 2123,
+	160: { // minecraft:poppy
+		BaseID:    2324,
+		DefaultID: 2324,
 	},
-	440: { // minecraft:potatoes
-		BaseID:    10465,
-		DefaultID: 10465,
+	442: { // minecraft:potatoes
+		BaseID:    10667,
+		DefaultID: 10667,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7"}, 8},
 		},
 	},
-	416: { // minecraft:potted_acacia_sapling
-		BaseID:    10434,
-		DefaultID: 10434,
+	417: { // minecraft:potted_acacia_sapling
+		BaseID:    10635,
+		DefaultID: 10635,
 	},
-	425: { // minecraft:potted_allium
-		BaseID:    10443,
-		DefaultID: 10443,
+	427: { // minecraft:potted_allium
+		BaseID:    10645,
+		DefaultID: 10645,
 	},
-	1146: { // minecraft:potted_azalea_bush
-		BaseID:    29378,
-		DefaultID: 29378,
+	1148: { // minecraft:potted_azalea_bush
+		BaseID:    29580,
+		DefaultID: 29580,
 	},
-	426: { // minecraft:potted_azure_bluet
-		BaseID:    10444,
-		DefaultID: 10444,
+	428: { // minecraft:potted_azure_bluet
+		BaseID:    10646,
+		DefaultID: 10646,
 	},
-	791: { // minecraft:potted_bamboo
-		BaseID:    15089,
-		DefaultID: 15089,
+	793: { // minecraft:potted_bamboo
+		BaseID:    15291,
+		DefaultID: 15291,
 	},
-	414: { // minecraft:potted_birch_sapling
-		BaseID:    10432,
-		DefaultID: 10432,
+	415: { // minecraft:potted_birch_sapling
+		BaseID:    10633,
+		DefaultID: 10633,
 	},
-	424: { // minecraft:potted_blue_orchid
-		BaseID:    10442,
-		DefaultID: 10442,
+	426: { // minecraft:potted_blue_orchid
+		BaseID:    10644,
+		DefaultID: 10644,
 	},
-	436: { // minecraft:potted_brown_mushroom
-		BaseID:    10454,
-		DefaultID: 10454,
+	438: { // minecraft:potted_brown_mushroom
+		BaseID:    10656,
+		DefaultID: 10656,
 	},
-	438: { // minecraft:potted_cactus
-		BaseID:    10456,
-		DefaultID: 10456,
+	440: { // minecraft:potted_cactus
+		BaseID:    10658,
+		DefaultID: 10658,
 	},
-	417: { // minecraft:potted_cherry_sapling
-		BaseID:    10435,
-		DefaultID: 10435,
+	418: { // minecraft:potted_cherry_sapling
+		BaseID:    10636,
+		DefaultID: 10636,
 	},
-	1164: { // minecraft:potted_closed_eyeblossom
-		BaseID:    29669,
-		DefaultID: 29669,
+	1166: { // minecraft:potted_closed_eyeblossom
+		BaseID:    29871,
+		DefaultID: 29871,
 	},
-	432: { // minecraft:potted_cornflower
-		BaseID:    10450,
-		DefaultID: 10450,
+	434: { // minecraft:potted_cornflower
+		BaseID:    10652,
+		DefaultID: 10652,
 	},
-	917: { // minecraft:potted_crimson_fungus
-		BaseID:    21624,
-		DefaultID: 21624,
+	919: { // minecraft:potted_crimson_fungus
+		BaseID:    21826,
+		DefaultID: 21826,
 	},
-	919: { // minecraft:potted_crimson_roots
-		BaseID:    21626,
-		DefaultID: 21626,
+	921: { // minecraft:potted_crimson_roots
+		BaseID:    21828,
+		DefaultID: 21828,
 	},
-	422: { // minecraft:potted_dandelion
-		BaseID:    10440,
-		DefaultID: 10440,
+	423: { // minecraft:potted_dandelion
+		BaseID:    10641,
+		DefaultID: 10641,
 	},
-	418: { // minecraft:potted_dark_oak_sapling
-		BaseID:    10436,
-		DefaultID: 10436,
+	419: { // minecraft:potted_dark_oak_sapling
+		BaseID:    10637,
+		DefaultID: 10637,
 	},
-	437: { // minecraft:potted_dead_bush
-		BaseID:    10455,
-		DefaultID: 10455,
+	439: { // minecraft:potted_dead_bush
+		BaseID:    10657,
+		DefaultID: 10657,
 	},
-	421: { // minecraft:potted_fern
-		BaseID:    10439,
-		DefaultID: 10439,
+	422: { // minecraft:potted_fern
+		BaseID:    10640,
+		DefaultID: 10640,
 	},
-	1147: { // minecraft:potted_flowering_azalea_bush
-		BaseID:    29379,
-		DefaultID: 29379,
+	1149: { // minecraft:potted_flowering_azalea_bush
+		BaseID:    29581,
+		DefaultID: 29581,
 	},
-	415: { // minecraft:potted_jungle_sapling
-		BaseID:    10433,
-		DefaultID: 10433,
+	424: { // minecraft:potted_golden_dandelion
+		BaseID:    10642,
+		DefaultID: 10642,
 	},
-	433: { // minecraft:potted_lily_of_the_valley
-		BaseID:    10451,
-		DefaultID: 10451,
+	416: { // minecraft:potted_jungle_sapling
+		BaseID:    10634,
+		DefaultID: 10634,
 	},
-	420: { // minecraft:potted_mangrove_propagule
-		BaseID:    10438,
-		DefaultID: 10438,
+	435: { // minecraft:potted_lily_of_the_valley
+		BaseID:    10653,
+		DefaultID: 10653,
 	},
-	412: { // minecraft:potted_oak_sapling
-		BaseID:    10430,
-		DefaultID: 10430,
+	421: { // minecraft:potted_mangrove_propagule
+		BaseID:    10639,
+		DefaultID: 10639,
 	},
-	1163: { // minecraft:potted_open_eyeblossom
-		BaseID:    29668,
-		DefaultID: 29668,
+	413: { // minecraft:potted_oak_sapling
+		BaseID:    10631,
+		DefaultID: 10631,
 	},
-	428: { // minecraft:potted_orange_tulip
-		BaseID:    10446,
-		DefaultID: 10446,
+	1165: { // minecraft:potted_open_eyeblossom
+		BaseID:    29870,
+		DefaultID: 29870,
 	},
-	431: { // minecraft:potted_oxeye_daisy
-		BaseID:    10449,
-		DefaultID: 10449,
+	430: { // minecraft:potted_orange_tulip
+		BaseID:    10648,
+		DefaultID: 10648,
 	},
-	419: { // minecraft:potted_pale_oak_sapling
-		BaseID:    10437,
-		DefaultID: 10437,
+	433: { // minecraft:potted_oxeye_daisy
+		BaseID:    10651,
+		DefaultID: 10651,
 	},
-	430: { // minecraft:potted_pink_tulip
-		BaseID:    10448,
-		DefaultID: 10448,
+	420: { // minecraft:potted_pale_oak_sapling
+		BaseID:    10638,
+		DefaultID: 10638,
 	},
-	423: { // minecraft:potted_poppy
-		BaseID:    10441,
-		DefaultID: 10441,
+	432: { // minecraft:potted_pink_tulip
+		BaseID:    10650,
+		DefaultID: 10650,
 	},
-	435: { // minecraft:potted_red_mushroom
-		BaseID:    10453,
-		DefaultID: 10453,
+	425: { // minecraft:potted_poppy
+		BaseID:    10643,
+		DefaultID: 10643,
 	},
-	427: { // minecraft:potted_red_tulip
-		BaseID:    10445,
-		DefaultID: 10445,
+	437: { // minecraft:potted_red_mushroom
+		BaseID:    10655,
+		DefaultID: 10655,
 	},
-	413: { // minecraft:potted_spruce_sapling
-		BaseID:    10431,
-		DefaultID: 10431,
+	429: { // minecraft:potted_red_tulip
+		BaseID:    10647,
+		DefaultID: 10647,
 	},
-	411: { // minecraft:potted_torchflower
-		BaseID:    10429,
-		DefaultID: 10429,
+	414: { // minecraft:potted_spruce_sapling
+		BaseID:    10632,
+		DefaultID: 10632,
 	},
-	918: { // minecraft:potted_warped_fungus
-		BaseID:    21625,
-		DefaultID: 21625,
+	412: { // minecraft:potted_torchflower
+		BaseID:    10630,
+		DefaultID: 10630,
 	},
-	920: { // minecraft:potted_warped_roots
-		BaseID:    21627,
-		DefaultID: 21627,
+	920: { // minecraft:potted_warped_fungus
+		BaseID:    21827,
+		DefaultID: 21827,
 	},
-	429: { // minecraft:potted_white_tulip
-		BaseID:    10447,
-		DefaultID: 10447,
+	922: { // minecraft:potted_warped_roots
+		BaseID:    21829,
+		DefaultID: 21829,
 	},
-	434: { // minecraft:potted_wither_rose
-		BaseID:    10452,
-		DefaultID: 10452,
+	431: { // minecraft:potted_white_tulip
+		BaseID:    10649,
+		DefaultID: 10649,
 	},
-	998: { // minecraft:powder_snow
-		BaseID:    24487,
-		DefaultID: 24487,
+	436: { // minecraft:potted_wither_rose
+		BaseID:    10654,
+		DefaultID: 10654,
 	},
-	389: { // minecraft:powder_snow_cauldron
-		BaseID:    9264,
-		DefaultID: 9264,
+	1000: { // minecraft:powder_snow
+		BaseID:    24689,
+		DefaultID: 24689,
+	},
+	390: { // minecraft:powder_snow_cauldron
+		BaseID:    9465,
+		DefaultID: 9465,
 		Properties: []blockProperty{
 			{"level", []string{"1", "2", "3"}, 3},
 		},
 	},
 	126: { // minecraft:powered_rail
-		BaseID:    1987,
-		DefaultID: 2000,
+		BaseID:    2187,
+		DefaultID: 2200,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 			{"shape", []string{"north_south", "east_west", "ascending_east", "ascending_west", "ascending_north", "ascending_south"}, 6},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	525: { // minecraft:prismarine
-		BaseID:    12429,
-		DefaultID: 12429,
+	527: { // minecraft:prismarine
+		BaseID:    12631,
+		DefaultID: 12631,
 	},
-	532: { // minecraft:prismarine_brick_slab
-		BaseID:    12678,
-		DefaultID: 12681,
+	534: { // minecraft:prismarine_brick_slab
+		BaseID:    12880,
+		DefaultID: 12883,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	529: { // minecraft:prismarine_brick_stairs
-		BaseID:    12512,
-		DefaultID: 12523,
+	531: { // minecraft:prismarine_brick_stairs
+		BaseID:    12714,
+		DefaultID: 12725,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6239,21 +6251,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	526: { // minecraft:prismarine_bricks
-		BaseID:    12430,
-		DefaultID: 12430,
+	528: { // minecraft:prismarine_bricks
+		BaseID:    12632,
+		DefaultID: 12632,
 	},
-	531: { // minecraft:prismarine_slab
-		BaseID:    12672,
-		DefaultID: 12675,
+	533: { // minecraft:prismarine_slab
+		BaseID:    12874,
+		DefaultID: 12877,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	528: { // minecraft:prismarine_stairs
-		BaseID:    12432,
-		DefaultID: 12443,
+	530: { // minecraft:prismarine_stairs
+		BaseID:    12634,
+		DefaultID: 12645,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6261,9 +6273,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	823: { // minecraft:prismarine_wall
-		BaseID:    16616,
-		DefaultID: 16619,
+	825: { // minecraft:prismarine_wall
+		BaseID:    16818,
+		DefaultID: 16821,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -6273,82 +6285,82 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	359: { // minecraft:pumpkin
-		BaseID:    8131,
-		DefaultID: 8131,
+	360: { // minecraft:pumpkin
+		BaseID:    8332,
+		DefaultID: 8332,
 	},
-	363: { // minecraft:pumpkin_stem
-		BaseID:    8141,
-		DefaultID: 8141,
+	364: { // minecraft:pumpkin_stem
+		BaseID:    8342,
+		DefaultID: 8342,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7"}, 8},
 		},
 	},
-	571: { // minecraft:purple_banner
-		BaseID:    12885,
-		DefaultID: 12885,
+	573: { // minecraft:purple_banner
+		BaseID:    13087,
+		DefaultID: 13095,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	120: { // minecraft:purple_bed
-		BaseID:    1891,
-		DefaultID: 1894,
+		BaseID:    2091,
+		DefaultID: 2094,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	953: { // minecraft:purple_candle
-		BaseID:    23070,
-		DefaultID: 23073,
+	955: { // minecraft:purple_candle
+		BaseID:    23272,
+		DefaultID: 23275,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	970: { // minecraft:purple_candle_cake
-		BaseID:    23188,
-		DefaultID: 23189,
+	972: { // minecraft:purple_candle_cake
+		BaseID:    23390,
+		DefaultID: 23391,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	546: { // minecraft:purple_carpet
-		BaseID:    12704,
-		DefaultID: 12704,
+	548: { // minecraft:purple_carpet
+		BaseID:    12906,
+		DefaultID: 12906,
 	},
-	718: { // minecraft:purple_concrete
-		BaseID:    14838,
-		DefaultID: 14838,
+	720: { // minecraft:purple_concrete
+		BaseID:    15040,
+		DefaultID: 15040,
 	},
-	734: { // minecraft:purple_concrete_powder
-		BaseID:    14854,
-		DefaultID: 14854,
+	736: { // minecraft:purple_concrete_powder
+		BaseID:    15056,
+		DefaultID: 15056,
 	},
-	702: { // minecraft:purple_glazed_terracotta
-		BaseID:    14804,
-		DefaultID: 14804,
+	704: { // minecraft:purple_glazed_terracotta
+		BaseID:    15006,
+		DefaultID: 15006,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	686: { // minecraft:purple_shulker_box
-		BaseID:    14728,
-		DefaultID: 14732,
+	688: { // minecraft:purple_shulker_box
+		BaseID:    14930,
+		DefaultID: 14934,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	309: { // minecraft:purple_stained_glass
-		BaseID:    6907,
-		DefaultID: 6907,
+	310: { // minecraft:purple_stained_glass
+		BaseID:    7108,
+		DefaultID: 7108,
 	},
-	508: { // minecraft:purple_stained_glass_pane
-		BaseID:    11578,
-		DefaultID: 11609,
+	510: { // minecraft:purple_stained_glass_pane
+		BaseID:    11780,
+		DefaultID: 11811,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -6357,43 +6369,43 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	492: { // minecraft:purple_terracotta
-		BaseID:    11252,
-		DefaultID: 11252,
+	494: { // minecraft:purple_terracotta
+		BaseID:    11454,
+		DefaultID: 11454,
 	},
-	587: { // minecraft:purple_wall_banner
-		BaseID:    13021,
-		DefaultID: 13021,
+	589: { // minecraft:purple_wall_banner
+		BaseID:    13223,
+		DefaultID: 13223,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	150: { // minecraft:purple_wool
-		BaseID:    2103,
-		DefaultID: 2103,
+		BaseID:    2303,
+		DefaultID: 2303,
 	},
-	656: { // minecraft:purpur_block
-		BaseID:    14510,
-		DefaultID: 14510,
+	658: { // minecraft:purpur_block
+		BaseID:    14712,
+		DefaultID: 14712,
 	},
-	657: { // minecraft:purpur_pillar
-		BaseID:    14511,
-		DefaultID: 14512,
+	659: { // minecraft:purpur_pillar
+		BaseID:    14713,
+		DefaultID: 14714,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	621: { // minecraft:purpur_slab
-		BaseID:    13272,
-		DefaultID: 13275,
+	623: { // minecraft:purpur_slab
+		BaseID:    13474,
+		DefaultID: 13477,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	658: { // minecraft:purpur_stairs
-		BaseID:    14514,
-		DefaultID: 14525,
+	660: { // minecraft:purpur_stairs
+		BaseID:    14716,
+		DefaultID: 14727,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6401,32 +6413,32 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	476: { // minecraft:quartz_block
-		BaseID:    11121,
-		DefaultID: 11121,
+	478: { // minecraft:quartz_block
+		BaseID:    11323,
+		DefaultID: 11323,
 	},
-	941: { // minecraft:quartz_bricks
-		BaseID:    22893,
-		DefaultID: 22893,
+	943: { // minecraft:quartz_bricks
+		BaseID:    23095,
+		DefaultID: 23095,
 	},
-	478: { // minecraft:quartz_pillar
-		BaseID:    11123,
-		DefaultID: 11124,
+	480: { // minecraft:quartz_pillar
+		BaseID:    11325,
+		DefaultID: 11326,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	618: { // minecraft:quartz_slab
-		BaseID:    13254,
-		DefaultID: 13257,
+	620: { // minecraft:quartz_slab
+		BaseID:    13456,
+		DefaultID: 13459,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	479: { // minecraft:quartz_stairs
-		BaseID:    11126,
-		DefaultID: 11137,
+	481: { // minecraft:quartz_stairs
+		BaseID:    11328,
+		DefaultID: 11339,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6434,84 +6446,84 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	221: { // minecraft:rail
-		BaseID:    5526,
-		DefaultID: 5527,
+	222: { // minecraft:rail
+		BaseID:    5727,
+		DefaultID: 5728,
 		Properties: []blockProperty{
 			{"shape", []string{"north_south", "east_west", "ascending_east", "ascending_west", "ascending_north", "ascending_south", "south_east", "south_west", "north_west", "north_east"}, 10},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1144: { // minecraft:raw_copper_block
-		BaseID:    29376,
-		DefaultID: 29376,
+	1146: { // minecraft:raw_copper_block
+		BaseID:    29578,
+		DefaultID: 29578,
 	},
-	1145: { // minecraft:raw_gold_block
-		BaseID:    29377,
-		DefaultID: 29377,
+	1147: { // minecraft:raw_gold_block
+		BaseID:    29579,
+		DefaultID: 29579,
 	},
-	1143: { // minecraft:raw_iron_block
-		BaseID:    29375,
-		DefaultID: 29375,
+	1145: { // minecraft:raw_iron_block
+		BaseID:    29577,
+		DefaultID: 29577,
 	},
-	575: { // minecraft:red_banner
-		BaseID:    12949,
-		DefaultID: 12949,
+	577: { // minecraft:red_banner
+		BaseID:    13151,
+		DefaultID: 13159,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	124: { // minecraft:red_bed
-		BaseID:    1955,
-		DefaultID: 1958,
+		BaseID:    2155,
+		DefaultID: 2158,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	957: { // minecraft:red_candle
-		BaseID:    23134,
-		DefaultID: 23137,
+	959: { // minecraft:red_candle
+		BaseID:    23336,
+		DefaultID: 23339,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	974: { // minecraft:red_candle_cake
-		BaseID:    23196,
-		DefaultID: 23197,
+	976: { // minecraft:red_candle_cake
+		BaseID:    23398,
+		DefaultID: 23399,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	550: { // minecraft:red_carpet
-		BaseID:    12708,
-		DefaultID: 12708,
+	552: { // minecraft:red_carpet
+		BaseID:    12910,
+		DefaultID: 12910,
 	},
-	722: { // minecraft:red_concrete
-		BaseID:    14842,
-		DefaultID: 14842,
+	724: { // minecraft:red_concrete
+		BaseID:    15044,
+		DefaultID: 15044,
 	},
-	738: { // minecraft:red_concrete_powder
-		BaseID:    14858,
-		DefaultID: 14858,
+	740: { // minecraft:red_concrete_powder
+		BaseID:    15060,
+		DefaultID: 15060,
 	},
-	706: { // minecraft:red_glazed_terracotta
-		BaseID:    14820,
-		DefaultID: 14820,
+	708: { // minecraft:red_glazed_terracotta
+		BaseID:    15022,
+		DefaultID: 15022,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	172: { // minecraft:red_mushroom
-		BaseID:    2136,
-		DefaultID: 2136,
+	173: { // minecraft:red_mushroom
+		BaseID:    2337,
+		DefaultID: 2337,
 	},
-	338: { // minecraft:red_mushroom_block
-		BaseID:    7629,
-		DefaultID: 7629,
+	339: { // minecraft:red_mushroom_block
+		BaseID:    7830,
+		DefaultID: 7830,
 		Properties: []blockProperty{
 			{"down", []string{"true", "false"}, 2},
 			{"east", []string{"true", "false"}, 2},
@@ -6521,17 +6533,17 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	819: { // minecraft:red_nether_brick_slab
-		BaseID:    16274,
-		DefaultID: 16277,
+	821: { // minecraft:red_nether_brick_slab
+		BaseID:    16476,
+		DefaultID: 16479,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	806: { // minecraft:red_nether_brick_stairs
-		BaseID:    15974,
-		DefaultID: 15985,
+	808: { // minecraft:red_nether_brick_stairs
+		BaseID:    16176,
+		DefaultID: 16187,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6539,9 +6551,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	831: { // minecraft:red_nether_brick_wall
-		BaseID:    19208,
-		DefaultID: 19211,
+	833: { // minecraft:red_nether_brick_wall
+		BaseID:    19410,
+		DefaultID: 19413,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -6551,29 +6563,29 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	671: { // minecraft:red_nether_bricks
-		BaseID:    14645,
-		DefaultID: 14645,
+	673: { // minecraft:red_nether_bricks
+		BaseID:    14847,
+		DefaultID: 14847,
 	},
 	39: { // minecraft:red_sand
 		BaseID:    123,
 		DefaultID: 123,
 	},
-	593: { // minecraft:red_sandstone
-		BaseID:    13045,
-		DefaultID: 13045,
+	595: { // minecraft:red_sandstone
+		BaseID:    13247,
+		DefaultID: 13247,
 	},
-	619: { // minecraft:red_sandstone_slab
-		BaseID:    13260,
-		DefaultID: 13263,
+	621: { // minecraft:red_sandstone_slab
+		BaseID:    13462,
+		DefaultID: 13465,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	596: { // minecraft:red_sandstone_stairs
-		BaseID:    13048,
-		DefaultID: 13059,
+	598: { // minecraft:red_sandstone_stairs
+		BaseID:    13250,
+		DefaultID: 13261,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6581,9 +6593,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	824: { // minecraft:red_sandstone_wall
-		BaseID:    16940,
-		DefaultID: 16943,
+	826: { // minecraft:red_sandstone_wall
+		BaseID:    17142,
+		DefaultID: 17145,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -6593,20 +6605,20 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	690: { // minecraft:red_shulker_box
-		BaseID:    14752,
-		DefaultID: 14756,
+	692: { // minecraft:red_shulker_box
+		BaseID:    14954,
+		DefaultID: 14958,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	313: { // minecraft:red_stained_glass
-		BaseID:    6911,
-		DefaultID: 6911,
+	314: { // minecraft:red_stained_glass
+		BaseID:    7112,
+		DefaultID: 7112,
 	},
-	512: { // minecraft:red_stained_glass_pane
-		BaseID:    11706,
-		DefaultID: 11737,
+	514: { // minecraft:red_stained_glass_pane
+		BaseID:    11908,
+		DefaultID: 11939,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -6615,61 +6627,61 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	496: { // minecraft:red_terracotta
-		BaseID:    11256,
-		DefaultID: 11256,
+	498: { // minecraft:red_terracotta
+		BaseID:    11458,
+		DefaultID: 11458,
 	},
-	163: { // minecraft:red_tulip
-		BaseID:    2127,
-		DefaultID: 2127,
+	164: { // minecraft:red_tulip
+		BaseID:    2328,
+		DefaultID: 2328,
 	},
-	591: { // minecraft:red_wall_banner
-		BaseID:    13037,
-		DefaultID: 13037,
+	593: { // minecraft:red_wall_banner
+		BaseID:    13239,
+		DefaultID: 13239,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	154: { // minecraft:red_wool
-		BaseID:    2107,
-		DefaultID: 2107,
+		BaseID:    2307,
+		DefaultID: 2307,
 	},
-	473: { // minecraft:redstone_block
-		BaseID:    11109,
-		DefaultID: 11109,
+	475: { // minecraft:redstone_block
+		BaseID:    11311,
+		DefaultID: 11311,
 	},
-	394: { // minecraft:redstone_lamp
-		BaseID:    9278,
-		DefaultID: 9279,
+	395: { // minecraft:redstone_lamp
+		BaseID:    9479,
+		DefaultID: 9480,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	270: { // minecraft:redstone_ore
-		BaseID:    6680,
-		DefaultID: 6681,
+	271: { // minecraft:redstone_ore
+		BaseID:    6881,
+		DefaultID: 6882,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	272: { // minecraft:redstone_torch
-		BaseID:    6684,
-		DefaultID: 6684,
+	273: { // minecraft:redstone_torch
+		BaseID:    6885,
+		DefaultID: 6885,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	273: { // minecraft:redstone_wall_torch
-		BaseID:    6686,
-		DefaultID: 6686,
+	274: { // minecraft:redstone_wall_torch
+		BaseID:    6887,
+		DefaultID: 6887,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	201: { // minecraft:redstone_wire
-		BaseID:    3810,
-		DefaultID: 4970,
+	202: { // minecraft:redstone_wire
+		BaseID:    4011,
+		DefaultID: 5171,
 		Properties: []blockProperty{
 			{"east", []string{"up", "side", "none"}, 3},
 			{"north", []string{"up", "side", "none"}, 3},
@@ -6678,13 +6690,13 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"up", "side", "none"}, 3},
 		},
 	},
-	1152: { // minecraft:reinforced_deepslate
-		BaseID:    29390,
-		DefaultID: 29390,
+	1154: { // minecraft:reinforced_deepslate
+		BaseID:    29592,
+		DefaultID: 29592,
 	},
-	298: { // minecraft:repeater
-		BaseID:    6833,
-		DefaultID: 6836,
+	299: { // minecraft:repeater
+		BaseID:    7034,
+		DefaultID: 7037,
 		Properties: []blockProperty{
 			{"delay", []string{"1", "2", "3", "4"}, 4},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
@@ -6692,29 +6704,29 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	666: { // minecraft:repeating_command_block
-		BaseID:    14615,
-		DefaultID: 14621,
+	668: { // minecraft:repeating_command_block
+		BaseID:    14817,
+		DefaultID: 14823,
 		Properties: []blockProperty{
 			{"conditional", []string{"true", "false"}, 2},
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	374: { // minecraft:resin_block
-		BaseID:    8720,
-		DefaultID: 8720,
+	375: { // minecraft:resin_block
+		BaseID:    8921,
+		DefaultID: 8921,
 	},
-	377: { // minecraft:resin_brick_slab
-		BaseID:    8802,
-		DefaultID: 8805,
+	378: { // minecraft:resin_brick_slab
+		BaseID:    9003,
+		DefaultID: 9006,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	376: { // minecraft:resin_brick_stairs
-		BaseID:    8722,
-		DefaultID: 8733,
+	377: { // minecraft:resin_brick_stairs
+		BaseID:    8923,
+		DefaultID: 8934,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6722,9 +6734,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	378: { // minecraft:resin_brick_wall
-		BaseID:    8808,
-		DefaultID: 8811,
+	379: { // minecraft:resin_brick_wall
+		BaseID:    9009,
+		DefaultID: 9012,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -6734,13 +6746,13 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	375: { // minecraft:resin_bricks
-		BaseID:    8721,
-		DefaultID: 8721,
+	376: { // minecraft:resin_bricks
+		BaseID:    8922,
+		DefaultID: 8922,
 	},
-	367: { // minecraft:resin_clump
-		BaseID:    8317,
-		DefaultID: 8444,
+	368: { // minecraft:resin_clump
+		BaseID:    8518,
+		DefaultID: 8645,
 		Properties: []blockProperty{
 			{"down", []string{"true", "false"}, 2},
 			{"east", []string{"true", "false"}, 2},
@@ -6751,20 +6763,20 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	916: { // minecraft:respawn_anchor
-		BaseID:    21619,
-		DefaultID: 21619,
+	918: { // minecraft:respawn_anchor
+		BaseID:    21821,
+		DefaultID: 21821,
 		Properties: []blockProperty{
 			{"charges", []string{"0", "1", "2", "3", "4"}, 5},
 		},
 	},
-	1119: { // minecraft:rooted_dirt
-		BaseID:    27719,
-		DefaultID: 27719,
+	1121: { // minecraft:rooted_dirt
+		BaseID:    27921,
+		DefaultID: 27921,
 	},
-	557: { // minecraft:rose_bush
-		BaseID:    12717,
-		DefaultID: 12718,
+	559: { // minecraft:rose_bush
+		BaseID:    12919,
+		DefaultID: 12920,
 		Properties: []blockProperty{
 			{"half", []string{"upper", "lower"}, 2},
 		},
@@ -6777,17 +6789,17 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    578,
 		DefaultID: 578,
 	},
-	610: { // minecraft:sandstone_slab
-		BaseID:    13206,
-		DefaultID: 13209,
+	612: { // minecraft:sandstone_slab
+		BaseID:    13408,
+		DefaultID: 13411,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	396: { // minecraft:sandstone_stairs
-		BaseID:    9292,
-		DefaultID: 9303,
+	397: { // minecraft:sandstone_stairs
+		BaseID:    9493,
+		DefaultID: 9504,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6795,9 +6807,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	832: { // minecraft:sandstone_wall
-		BaseID:    19532,
-		DefaultID: 19535,
+	834: { // minecraft:sandstone_wall
+		BaseID:    19734,
+		DefaultID: 19737,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -6807,47 +6819,47 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	835: { // minecraft:scaffolding
-		BaseID:    20504,
-		DefaultID: 20535,
+	837: { // minecraft:scaffolding
+		BaseID:    20706,
+		DefaultID: 20737,
 		Properties: []blockProperty{
 			{"bottom", []string{"true", "false"}, 2},
 			{"distance", []string{"0", "1", "2", "3", "4", "5", "6", "7"}, 8},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1001: { // minecraft:sculk
-		BaseID:    24968,
-		DefaultID: 24968,
+	1003: { // minecraft:sculk
+		BaseID:    25170,
+		DefaultID: 25170,
 	},
-	1003: { // minecraft:sculk_catalyst
-		BaseID:    25097,
-		DefaultID: 25098,
+	1005: { // minecraft:sculk_catalyst
+		BaseID:    25299,
+		DefaultID: 25300,
 		Properties: []blockProperty{
 			{"bloom", []string{"true", "false"}, 2},
 		},
 	},
-	999: { // minecraft:sculk_sensor
-		BaseID:    24488,
-		DefaultID: 24489,
+	1001: { // minecraft:sculk_sensor
+		BaseID:    24690,
+		DefaultID: 24691,
 		Properties: []blockProperty{
 			{"power", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"sculk_sensor_phase", []string{"inactive", "active", "cooldown"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1004: { // minecraft:sculk_shrieker
-		BaseID:    25099,
-		DefaultID: 25106,
+	1006: { // minecraft:sculk_shrieker
+		BaseID:    25301,
+		DefaultID: 25308,
 		Properties: []blockProperty{
 			{"can_summon", []string{"true", "false"}, 2},
 			{"shrieking", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1002: { // minecraft:sculk_vein
-		BaseID:    24969,
-		DefaultID: 25096,
+	1004: { // minecraft:sculk_vein
+		BaseID:    25171,
+		DefaultID: 25298,
 		Properties: []blockProperty{
 			{"down", []string{"true", "false"}, 2},
 			{"east", []string{"true", "false"}, 2},
@@ -6858,109 +6870,109 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	534: { // minecraft:sea_lantern
-		BaseID:    12690,
-		DefaultID: 12690,
+	536: { // minecraft:sea_lantern
+		BaseID:    12892,
+		DefaultID: 12892,
 	},
-	786: { // minecraft:sea_pickle
-		BaseID:    15065,
-		DefaultID: 15065,
+	788: { // minecraft:sea_pickle
+		BaseID:    15267,
+		DefaultID: 15267,
 		Properties: []blockProperty{
 			{"pickles", []string{"1", "2", "3", "4"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
 	136: { // minecraft:seagrass
-		BaseID:    2054,
-		DefaultID: 2054,
+		BaseID:    2254,
+		DefaultID: 2254,
 	},
 	134: { // minecraft:short_dry_grass
-		BaseID:    2052,
-		DefaultID: 2052,
+		BaseID:    2252,
+		DefaultID: 2252,
 	},
 	130: { // minecraft:short_grass
-		BaseID:    2048,
-		DefaultID: 2048,
+		BaseID:    2248,
+		DefaultID: 2248,
 	},
-	875: { // minecraft:shroomlight
-		BaseID:    20774,
-		DefaultID: 20774,
+	877: { // minecraft:shroomlight
+		BaseID:    20976,
+		DefaultID: 20976,
 	},
-	675: { // minecraft:shulker_box
-		BaseID:    14662,
-		DefaultID: 14666,
+	677: { // minecraft:shulker_box
+		BaseID:    14864,
+		DefaultID: 14868,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	451: { // minecraft:skeleton_skull
-		BaseID:    10713,
-		DefaultID: 10729,
+	453: { // minecraft:skeleton_skull
+		BaseID:    10915,
+		DefaultID: 10931,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	452: { // minecraft:skeleton_wall_skull
-		BaseID:    10745,
-		DefaultID: 10746,
+	454: { // minecraft:skeleton_wall_skull
+		BaseID:    10947,
+		DefaultID: 10948,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	521: { // minecraft:slime_block
-		BaseID:    12330,
-		DefaultID: 12330,
+	523: { // minecraft:slime_block
+		BaseID:    12532,
+		DefaultID: 12532,
 	},
-	981: { // minecraft:small_amethyst_bud
-		BaseID:    23238,
-		DefaultID: 23247,
+	983: { // minecraft:small_amethyst_bud
+		BaseID:    23440,
+		DefaultID: 23449,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1117: { // minecraft:small_dripleaf
-		BaseID:    27701,
-		DefaultID: 27704,
+	1119: { // minecraft:small_dripleaf
+		BaseID:    27903,
+		DefaultID: 27906,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	844: { // minecraft:smithing_table
-		BaseID:    20598,
-		DefaultID: 20598,
+	846: { // minecraft:smithing_table
+		BaseID:    20800,
+		DefaultID: 20800,
 	},
-	838: { // minecraft:smoker
-		BaseID:    20552,
-		DefaultID: 20553,
+	840: { // minecraft:smoker
+		BaseID:    20754,
+		DefaultID: 20755,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	1142: { // minecraft:smooth_basalt
-		BaseID:    29374,
-		DefaultID: 29374,
+	1144: { // minecraft:smooth_basalt
+		BaseID:    29576,
+		DefaultID: 29576,
 	},
-	624: { // minecraft:smooth_quartz
-		BaseID:    13280,
-		DefaultID: 13280,
+	626: { // minecraft:smooth_quartz
+		BaseID:    13482,
+		DefaultID: 13482,
 	},
-	816: { // minecraft:smooth_quartz_slab
-		BaseID:    16256,
-		DefaultID: 16259,
+	818: { // minecraft:smooth_quartz_slab
+		BaseID:    16458,
+		DefaultID: 16461,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	803: { // minecraft:smooth_quartz_stairs
-		BaseID:    15734,
-		DefaultID: 15745,
+	805: { // minecraft:smooth_quartz_stairs
+		BaseID:    15936,
+		DefaultID: 15947,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6968,21 +6980,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	625: { // minecraft:smooth_red_sandstone
-		BaseID:    13281,
-		DefaultID: 13281,
+	627: { // minecraft:smooth_red_sandstone
+		BaseID:    13483,
+		DefaultID: 13483,
 	},
-	810: { // minecraft:smooth_red_sandstone_slab
-		BaseID:    16220,
-		DefaultID: 16223,
+	812: { // minecraft:smooth_red_sandstone_slab
+		BaseID:    16422,
+		DefaultID: 16425,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	796: { // minecraft:smooth_red_sandstone_stairs
-		BaseID:    15174,
-		DefaultID: 15185,
+	798: { // minecraft:smooth_red_sandstone_stairs
+		BaseID:    15376,
+		DefaultID: 15387,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -6990,21 +7002,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	623: { // minecraft:smooth_sandstone
-		BaseID:    13279,
-		DefaultID: 13279,
+	625: { // minecraft:smooth_sandstone
+		BaseID:    13481,
+		DefaultID: 13481,
 	},
-	815: { // minecraft:smooth_sandstone_slab
-		BaseID:    16250,
-		DefaultID: 16253,
+	817: { // minecraft:smooth_sandstone_slab
+		BaseID:    16452,
+		DefaultID: 16455,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	802: { // minecraft:smooth_sandstone_stairs
-		BaseID:    15654,
-		DefaultID: 15665,
+	804: { // minecraft:smooth_sandstone_stairs
+		BaseID:    15856,
+		DefaultID: 15867,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -7012,39 +7024,39 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	622: { // minecraft:smooth_stone
-		BaseID:    13278,
-		DefaultID: 13278,
+	624: { // minecraft:smooth_stone
+		BaseID:    13480,
+		DefaultID: 13480,
 	},
-	609: { // minecraft:smooth_stone_slab
-		BaseID:    13200,
-		DefaultID: 13203,
+	611: { // minecraft:smooth_stone_slab
+		BaseID:    13402,
+		DefaultID: 13405,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	744: { // minecraft:sniffer_egg
-		BaseID:    14900,
-		DefaultID: 14900,
+	746: { // minecraft:sniffer_egg
+		BaseID:    15102,
+		DefaultID: 15102,
 		Properties: []blockProperty{
 			{"hatch", []string{"0", "1", "2"}, 3},
 		},
 	},
-	275: { // minecraft:snow
-		BaseID:    6718,
-		DefaultID: 6718,
+	276: { // minecraft:snow
+		BaseID:    6919,
+		DefaultID: 6919,
 		Properties: []blockProperty{
 			{"layers", []string{"1", "2", "3", "4", "5", "6", "7", "8"}, 8},
 		},
 	},
-	277: { // minecraft:snow_block
-		BaseID:    6727,
-		DefaultID: 6727,
+	278: { // minecraft:snow_block
+		BaseID:    6928,
+		DefaultID: 6928,
 	},
-	858: { // minecraft:soul_campfire
-		BaseID:    20707,
-		DefaultID: 20710,
+	860: { // minecraft:soul_campfire
+		BaseID:    20909,
+		DefaultID: 20912,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"lit", []string{"true", "false"}, 2},
@@ -7052,61 +7064,61 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	196: { // minecraft:soul_fire
-		BaseID:    3686,
-		DefaultID: 3686,
+	197: { // minecraft:soul_fire
+		BaseID:    3887,
+		DefaultID: 3887,
 	},
-	848: { // minecraft:soul_lantern
-		BaseID:    20639,
-		DefaultID: 20642,
+	850: { // minecraft:soul_lantern
+		BaseID:    20841,
+		DefaultID: 20844,
 		Properties: []blockProperty{
 			{"hanging", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	285: { // minecraft:soul_sand
-		BaseID:    6797,
-		DefaultID: 6797,
+	286: { // minecraft:soul_sand
+		BaseID:    6998,
+		DefaultID: 6998,
 	},
-	286: { // minecraft:soul_soil
-		BaseID:    6798,
-		DefaultID: 6798,
+	287: { // minecraft:soul_soil
+		BaseID:    6999,
+		DefaultID: 6999,
 	},
-	289: { // minecraft:soul_torch
-		BaseID:    6805,
-		DefaultID: 6805,
+	290: { // minecraft:soul_torch
+		BaseID:    7006,
+		DefaultID: 7006,
 	},
-	290: { // minecraft:soul_wall_torch
-		BaseID:    6806,
-		DefaultID: 6806,
+	291: { // minecraft:soul_wall_torch
+		BaseID:    7007,
+		DefaultID: 7007,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	197: { // minecraft:spawner
-		BaseID:    3687,
-		DefaultID: 3687,
+	198: { // minecraft:spawner
+		BaseID:    3888,
+		DefaultID: 3888,
 	},
 	99: { // minecraft:sponge
 		BaseID:    560,
 		DefaultID: 560,
 	},
-	1107: { // minecraft:spore_blossom
-		BaseID:    27608,
-		DefaultID: 27608,
+	1109: { // minecraft:spore_blossom
+		BaseID:    27810,
+		DefaultID: 27810,
 	},
-	442: { // minecraft:spruce_button
-		BaseID:    10497,
-		DefaultID: 10506,
+	444: { // minecraft:spruce_button
+		BaseID:    10699,
+		DefaultID: 10708,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	644: { // minecraft:spruce_door
-		BaseID:    13858,
-		DefaultID: 13869,
+	646: { // minecraft:spruce_door
+		BaseID:    14060,
+		DefaultID: 14071,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -7115,9 +7127,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	635: { // minecraft:spruce_fence
-		BaseID:    13570,
-		DefaultID: 13601,
+	637: { // minecraft:spruce_fence
+		BaseID:    13772,
+		DefaultID: 13803,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -7126,9 +7138,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	626: { // minecraft:spruce_fence_gate
-		BaseID:    13282,
-		DefaultID: 13289,
+	628: { // minecraft:spruce_fence_gate
+		BaseID:    13484,
+		DefaultID: 13491,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -7136,9 +7148,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	234: { // minecraft:spruce_hanging_sign
-		BaseID:    5770,
-		DefaultID: 5803,
+	235: { // minecraft:spruce_hanging_sign
+		BaseID:    5971,
+		DefaultID: 6020,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
@@ -7165,9 +7177,9 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    16,
 		DefaultID: 16,
 	},
-	261: { // minecraft:spruce_pressure_plate
-		BaseID:    6662,
-		DefaultID: 6663,
+	262: { // minecraft:spruce_pressure_plate
+		BaseID:    6863,
+		DefaultID: 6864,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
@@ -7179,9 +7191,9 @@ var blockStates = map[int32]*blockStateData{
 			{"stage", []string{"0", "1"}, 2},
 		},
 	},
-	189: { // minecraft:spruce_shelf
-		BaseID:    3039,
-		DefaultID: 3048,
+	190: { // minecraft:spruce_shelf
+		BaseID:    3240,
+		DefaultID: 3249,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -7189,25 +7201,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	210: { // minecraft:spruce_sign
-		BaseID:    5166,
-		DefaultID: 5167,
+	211: { // minecraft:spruce_sign
+		BaseID:    5367,
+		DefaultID: 5384,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	598: { // minecraft:spruce_slab
-		BaseID:    13134,
-		DefaultID: 13137,
+	600: { // minecraft:spruce_slab
+		BaseID:    13336,
+		DefaultID: 13339,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	403: { // minecraft:spruce_stairs
-		BaseID:    9527,
-		DefaultID: 9538,
+	404: { // minecraft:spruce_stairs
+		BaseID:    9728,
+		DefaultID: 9739,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -7215,9 +7227,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	316: { // minecraft:spruce_trapdoor
-		BaseID:    6977,
-		DefaultID: 6992,
+	317: { // minecraft:spruce_trapdoor
+		BaseID:    7178,
+		DefaultID: 7193,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -7226,17 +7238,17 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	246: { // minecraft:spruce_wall_hanging_sign
-		BaseID:    6482,
-		DefaultID: 6483,
+	247: { // minecraft:spruce_wall_hanging_sign
+		BaseID:    6683,
+		DefaultID: 6684,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	224: { // minecraft:spruce_wall_sign
-		BaseID:    5634,
-		DefaultID: 5635,
+	225: { // minecraft:spruce_wall_sign
+		BaseID:    5835,
+		DefaultID: 5836,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
@@ -7250,8 +7262,8 @@ var blockStates = map[int32]*blockStateData{
 		},
 	},
 	128: { // minecraft:sticky_piston
-		BaseID:    2035,
-		DefaultID: 2041,
+		BaseID:    2235,
+		DefaultID: 2241,
 		Properties: []blockProperty{
 			{"extended", []string{"true", "false"}, 2},
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
@@ -7261,17 +7273,17 @@ var blockStates = map[int32]*blockStateData{
 		BaseID:    1,
 		DefaultID: 1,
 	},
-	615: { // minecraft:stone_brick_slab
-		BaseID:    13236,
-		DefaultID: 13239,
+	617: { // minecraft:stone_brick_slab
+		BaseID:    13438,
+		DefaultID: 13441,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	370: { // minecraft:stone_brick_stairs
-		BaseID:    8557,
-		DefaultID: 8568,
+	371: { // minecraft:stone_brick_stairs
+		BaseID:    8758,
+		DefaultID: 8769,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -7279,9 +7291,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	827: { // minecraft:stone_brick_wall
-		BaseID:    17912,
-		DefaultID: 17915,
+	829: { // minecraft:stone_brick_wall
+		BaseID:    18114,
+		DefaultID: 18117,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -7291,37 +7303,37 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	325: { // minecraft:stone_bricks
-		BaseID:    7553,
-		DefaultID: 7553,
+	326: { // minecraft:stone_bricks
+		BaseID:    7754,
+		DefaultID: 7754,
 	},
-	274: { // minecraft:stone_button
-		BaseID:    6694,
-		DefaultID: 6703,
+	275: { // minecraft:stone_button
+		BaseID:    6895,
+		DefaultID: 6904,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	258: { // minecraft:stone_pressure_plate
-		BaseID:    6594,
-		DefaultID: 6595,
+	259: { // minecraft:stone_pressure_plate
+		BaseID:    6795,
+		DefaultID: 6796,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	608: { // minecraft:stone_slab
-		BaseID:    13194,
-		DefaultID: 13197,
+	610: { // minecraft:stone_slab
+		BaseID:    13396,
+		DefaultID: 13399,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	801: { // minecraft:stone_stairs
-		BaseID:    15574,
-		DefaultID: 15585,
+	803: { // minecraft:stone_stairs
+		BaseID:    15776,
+		DefaultID: 15787,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -7329,9 +7341,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	845: { // minecraft:stonecutter
-		BaseID:    20599,
-		DefaultID: 20599,
+	847: { // minecraft:stonecutter
+		BaseID:    20801,
+		DefaultID: 20801,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
@@ -7385,16 +7397,16 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	872: { // minecraft:stripped_crimson_hyphae
-		BaseID:    20769,
-		DefaultID: 20770,
+	874: { // minecraft:stripped_crimson_hyphae
+		BaseID:    20971,
+		DefaultID: 20972,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	870: { // minecraft:stripped_crimson_stem
-		BaseID:    20763,
-		DefaultID: 20764,
+	872: { // minecraft:stripped_crimson_stem
+		BaseID:    20965,
+		DefaultID: 20966,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
@@ -7483,41 +7495,41 @@ var blockStates = map[int32]*blockStateData{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	863: { // minecraft:stripped_warped_hyphae
-		BaseID:    20752,
-		DefaultID: 20753,
+	865: { // minecraft:stripped_warped_hyphae
+		BaseID:    20954,
+		DefaultID: 20955,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	861: { // minecraft:stripped_warped_stem
-		BaseID:    20746,
-		DefaultID: 20747,
+	863: { // minecraft:stripped_warped_stem
+		BaseID:    20948,
+		DefaultID: 20949,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	903: { // minecraft:structure_block
-		BaseID:    21520,
-		DefaultID: 21521,
+	905: { // minecraft:structure_block
+		BaseID:    21722,
+		DefaultID: 21723,
 		Properties: []blockProperty{
 			{"mode", []string{"save", "load", "corner", "data"}, 4},
 		},
 	},
-	673: { // minecraft:structure_void
-		BaseID:    14649,
-		DefaultID: 14649,
+	675: { // minecraft:structure_void
+		BaseID:    14851,
+		DefaultID: 14851,
 	},
-	281: { // minecraft:sugar_cane
-		BaseID:    6746,
-		DefaultID: 6746,
+	282: { // minecraft:sugar_cane
+		BaseID:    6947,
+		DefaultID: 6947,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	555: { // minecraft:sunflower
-		BaseID:    12713,
-		DefaultID: 12714,
+	557: { // minecraft:sunflower
+		BaseID:    12915,
+		DefaultID: 12916,
 		Properties: []blockProperty{
 			{"half", []string{"upper", "lower"}, 2},
 		},
@@ -7536,99 +7548,99 @@ var blockStates = map[int32]*blockStateData{
 			{"dusted", []string{"0", "1", "2", "3"}, 4},
 		},
 	},
-	859: { // minecraft:sweet_berry_bush
-		BaseID:    20739,
-		DefaultID: 20739,
+	861: { // minecraft:sweet_berry_bush
+		BaseID:    20941,
+		DefaultID: 20941,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3"}, 4},
 		},
 	},
 	135: { // minecraft:tall_dry_grass
-		BaseID:    2053,
-		DefaultID: 2053,
+		BaseID:    2253,
+		DefaultID: 2253,
 	},
-	559: { // minecraft:tall_grass
-		BaseID:    12721,
-		DefaultID: 12722,
+	561: { // minecraft:tall_grass
+		BaseID:    12923,
+		DefaultID: 12924,
 		Properties: []blockProperty{
 			{"half", []string{"upper", "lower"}, 2},
 		},
 	},
 	137: { // minecraft:tall_seagrass
-		BaseID:    2055,
-		DefaultID: 2056,
+		BaseID:    2255,
+		DefaultID: 2256,
 		Properties: []blockProperty{
 			{"half", []string{"upper", "lower"}, 2},
 		},
 	},
-	908: { // minecraft:target
-		BaseID:    21550,
-		DefaultID: 21550,
+	910: { // minecraft:target
+		BaseID:    21752,
+		DefaultID: 21752,
 		Properties: []blockProperty{
 			{"power", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	552: { // minecraft:terracotta
-		BaseID:    12710,
-		DefaultID: 12710,
+	554: { // minecraft:terracotta
+		BaseID:    12912,
+		DefaultID: 12912,
 	},
-	905: { // minecraft:test_block
-		BaseID:    21536,
-		DefaultID: 21536,
+	907: { // minecraft:test_block
+		BaseID:    21738,
+		DefaultID: 21738,
 		Properties: []blockProperty{
 			{"mode", []string{"start", "log", "fail", "accept"}, 4},
 		},
 	},
-	906: { // minecraft:test_instance_block
-		BaseID:    21540,
-		DefaultID: 21540,
+	908: { // minecraft:test_instance_block
+		BaseID:    21742,
+		DefaultID: 21742,
 	},
-	997: { // minecraft:tinted_glass
-		BaseID:    24486,
-		DefaultID: 24486,
+	999: { // minecraft:tinted_glass
+		BaseID:    24688,
+		DefaultID: 24688,
 	},
-	176: { // minecraft:tnt
-		BaseID:    2140,
-		DefaultID: 2141,
+	177: { // minecraft:tnt
+		BaseID:    2341,
+		DefaultID: 2342,
 		Properties: []blockProperty{
 			{"unstable", []string{"true", "false"}, 2},
 		},
 	},
-	193: { // minecraft:torch
-		BaseID:    3169,
-		DefaultID: 3169,
+	194: { // minecraft:torch
+		BaseID:    3370,
+		DefaultID: 3370,
 	},
-	158: { // minecraft:torchflower
-		BaseID:    2122,
-		DefaultID: 2122,
+	159: { // minecraft:torchflower
+		BaseID:    2323,
+		DefaultID: 2323,
 	},
-	660: { // minecraft:torchflower_crop
-		BaseID:    14595,
-		DefaultID: 14595,
+	662: { // minecraft:torchflower_crop
+		BaseID:    14797,
+		DefaultID: 14797,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1"}, 2},
 		},
 	},
-	468: { // minecraft:trapped_chest
-		BaseID:    11005,
-		DefaultID: 11006,
+	470: { // minecraft:trapped_chest
+		BaseID:    11207,
+		DefaultID: 11208,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"type", []string{"single", "left", "right"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1155: { // minecraft:trial_spawner
-		BaseID:    29455,
-		DefaultID: 29461,
+	1157: { // minecraft:trial_spawner
+		BaseID:    29657,
+		DefaultID: 29663,
 		Properties: []blockProperty{
 			{"ominous", []string{"true", "false"}, 2},
 			{"trial_spawner_state", []string{"inactive", "waiting_for_players", "active", "waiting_for_reward_ejection", "ejecting_reward", "cooldown"}, 6},
 		},
 	},
-	401: { // minecraft:tripwire
-		BaseID:    9398,
-		DefaultID: 9525,
+	402: { // minecraft:tripwire
+		BaseID:    9599,
+		DefaultID: 9726,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"disarmed", []string{"true", "false"}, 2},
@@ -7639,56 +7651,56 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	400: { // minecraft:tripwire_hook
-		BaseID:    9382,
-		DefaultID: 9391,
+	401: { // minecraft:tripwire_hook
+		BaseID:    9583,
+		DefaultID: 9592,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	761: { // minecraft:tube_coral
-		BaseID:    14955,
-		DefaultID: 14955,
+	763: { // minecraft:tube_coral
+		BaseID:    15157,
+		DefaultID: 15157,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	751: { // minecraft:tube_coral_block
-		BaseID:    14940,
-		DefaultID: 14940,
+	753: { // minecraft:tube_coral_block
+		BaseID:    15142,
+		DefaultID: 15142,
 	},
-	771: { // minecraft:tube_coral_fan
-		BaseID:    14975,
-		DefaultID: 14975,
+	773: { // minecraft:tube_coral_fan
+		BaseID:    15177,
+		DefaultID: 15177,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	781: { // minecraft:tube_coral_wall_fan
-		BaseID:    15025,
-		DefaultID: 15025,
+	783: { // minecraft:tube_coral_wall_fan
+		BaseID:    15227,
+		DefaultID: 15227,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	982: { // minecraft:tuff
-		BaseID:    23250,
-		DefaultID: 23250,
+	984: { // minecraft:tuff
+		BaseID:    23452,
+		DefaultID: 23452,
 	},
-	992: { // minecraft:tuff_brick_slab
-		BaseID:    24074,
-		DefaultID: 24077,
+	994: { // minecraft:tuff_brick_slab
+		BaseID:    24276,
+		DefaultID: 24279,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	993: { // minecraft:tuff_brick_stairs
-		BaseID:    24080,
-		DefaultID: 24091,
+	995: { // minecraft:tuff_brick_stairs
+		BaseID:    24282,
+		DefaultID: 24293,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -7696,9 +7708,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	994: { // minecraft:tuff_brick_wall
-		BaseID:    24160,
-		DefaultID: 24163,
+	996: { // minecraft:tuff_brick_wall
+		BaseID:    24362,
+		DefaultID: 24365,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -7708,21 +7720,21 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	991: { // minecraft:tuff_bricks
-		BaseID:    24073,
-		DefaultID: 24073,
+	993: { // minecraft:tuff_bricks
+		BaseID:    24275,
+		DefaultID: 24275,
 	},
-	983: { // minecraft:tuff_slab
-		BaseID:    23251,
-		DefaultID: 23254,
+	985: { // minecraft:tuff_slab
+		BaseID:    23453,
+		DefaultID: 23456,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	984: { // minecraft:tuff_stairs
-		BaseID:    23257,
-		DefaultID: 23268,
+	986: { // minecraft:tuff_stairs
+		BaseID:    23459,
+		DefaultID: 23470,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -7730,9 +7742,9 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	985: { // minecraft:tuff_wall
-		BaseID:    23337,
-		DefaultID: 23340,
+	987: { // minecraft:tuff_wall
+		BaseID:    23539,
+		DefaultID: 23542,
 		Properties: []blockProperty{
 			{"east", []string{"none", "low", "tall"}, 3},
 			{"north", []string{"none", "low", "tall"}, 3},
@@ -7742,44 +7754,44 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"none", "low", "tall"}, 3},
 		},
 	},
-	743: { // minecraft:turtle_egg
-		BaseID:    14888,
-		DefaultID: 14888,
+	745: { // minecraft:turtle_egg
+		BaseID:    15090,
+		DefaultID: 15090,
 		Properties: []blockProperty{
 			{"eggs", []string{"1", "2", "3", "4"}, 4},
 			{"hatch", []string{"0", "1", "2"}, 3},
 		},
 	},
-	878: { // minecraft:twisting_vines
-		BaseID:    20802,
-		DefaultID: 20802,
+	880: { // minecraft:twisting_vines
+		BaseID:    21004,
+		DefaultID: 21004,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"}, 26},
 		},
 	},
-	879: { // minecraft:twisting_vines_plant
-		BaseID:    20828,
-		DefaultID: 20828,
+	881: { // minecraft:twisting_vines_plant
+		BaseID:    21030,
+		DefaultID: 21030,
 	},
-	1156: { // minecraft:vault
-		BaseID:    29467,
-		DefaultID: 29471,
+	1158: { // minecraft:vault
+		BaseID:    29669,
+		DefaultID: 29673,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"ominous", []string{"true", "false"}, 2},
 			{"vault_state", []string{"inactive", "active", "unlocking", "ejecting"}, 4},
 		},
 	},
-	1149: { // minecraft:verdant_froglight
-		BaseID:    29383,
-		DefaultID: 29384,
+	1151: { // minecraft:verdant_froglight
+		BaseID:    29585,
+		DefaultID: 29586,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	365: { // minecraft:vine
-		BaseID:    8157,
-		DefaultID: 8188,
+	366: { // minecraft:vine
+		BaseID:    8358,
+		DefaultID: 8389,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -7788,29 +7800,29 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	792: { // minecraft:void_air
-		BaseID:    15090,
-		DefaultID: 15090,
+	794: { // minecraft:void_air
+		BaseID:    15292,
+		DefaultID: 15292,
 	},
-	194: { // minecraft:wall_torch
-		BaseID:    3170,
-		DefaultID: 3170,
+	195: { // minecraft:wall_torch
+		BaseID:    3371,
+		DefaultID: 3371,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	896: { // minecraft:warped_button
-		BaseID:    21288,
-		DefaultID: 21297,
+	898: { // minecraft:warped_button
+		BaseID:    21490,
+		DefaultID: 21499,
 		Properties: []blockProperty{
 			{"face", []string{"floor", "wall", "ceiling"}, 3},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	898: { // minecraft:warped_door
-		BaseID:    21376,
-		DefaultID: 21387,
+	900: { // minecraft:warped_door
+		BaseID:    21578,
+		DefaultID: 21589,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -7819,9 +7831,9 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	888: { // minecraft:warped_fence
-		BaseID:    20880,
-		DefaultID: 20911,
+	890: { // minecraft:warped_fence
+		BaseID:    21082,
+		DefaultID: 21113,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -7830,9 +7842,9 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	892: { // minecraft:warped_fence_gate
-		BaseID:    21072,
-		DefaultID: 21079,
+	894: { // minecraft:warped_fence_gate
+		BaseID:    21274,
+		DefaultID: 21281,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"in_wall", []string{"true", "false"}, 2},
@@ -7840,48 +7852,48 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	865: { // minecraft:warped_fungus
-		BaseID:    20756,
-		DefaultID: 20756,
+	867: { // minecraft:warped_fungus
+		BaseID:    20958,
+		DefaultID: 20958,
 	},
-	242: { // minecraft:warped_hanging_sign
-		BaseID:    6282,
-		DefaultID: 6315,
+	243: { // minecraft:warped_hanging_sign
+		BaseID:    6483,
+		DefaultID: 6532,
 		Properties: []blockProperty{
 			{"attached", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	862: { // minecraft:warped_hyphae
-		BaseID:    20749,
-		DefaultID: 20750,
+	864: { // minecraft:warped_hyphae
+		BaseID:    20951,
+		DefaultID: 20952,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	864: { // minecraft:warped_nylium
-		BaseID:    20755,
-		DefaultID: 20755,
+	866: { // minecraft:warped_nylium
+		BaseID:    20957,
+		DefaultID: 20957,
 	},
-	882: { // minecraft:warped_planks
-		BaseID:    20831,
-		DefaultID: 20831,
+	884: { // minecraft:warped_planks
+		BaseID:    21033,
+		DefaultID: 21033,
 	},
-	886: { // minecraft:warped_pressure_plate
-		BaseID:    20846,
-		DefaultID: 20847,
+	888: { // minecraft:warped_pressure_plate
+		BaseID:    21048,
+		DefaultID: 21049,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	867: { // minecraft:warped_roots
-		BaseID:    20758,
-		DefaultID: 20758,
+	869: { // minecraft:warped_roots
+		BaseID:    20960,
+		DefaultID: 20960,
 	},
-	190: { // minecraft:warped_shelf
-		BaseID:    3103,
-		DefaultID: 3112,
+	191: { // minecraft:warped_shelf
+		BaseID:    3304,
+		DefaultID: 3313,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -7889,25 +7901,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	900: { // minecraft:warped_sign
-		BaseID:    21472,
-		DefaultID: 21473,
+	902: { // minecraft:warped_sign
+		BaseID:    21674,
+		DefaultID: 21691,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	884: { // minecraft:warped_slab
-		BaseID:    20838,
-		DefaultID: 20841,
+	886: { // minecraft:warped_slab
+		BaseID:    21040,
+		DefaultID: 21043,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	894: { // minecraft:warped_stairs
-		BaseID:    21184,
-		DefaultID: 21195,
+	896: { // minecraft:warped_stairs
+		BaseID:    21386,
+		DefaultID: 21397,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -7915,16 +7927,16 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	860: { // minecraft:warped_stem
-		BaseID:    20743,
-		DefaultID: 20744,
+	862: { // minecraft:warped_stem
+		BaseID:    20945,
+		DefaultID: 20946,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 		},
 	},
-	890: { // minecraft:warped_trapdoor
-		BaseID:    20976,
-		DefaultID: 20991,
+	892: { // minecraft:warped_trapdoor
+		BaseID:    21178,
+		DefaultID: 21193,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -7933,25 +7945,25 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	255: { // minecraft:warped_wall_hanging_sign
-		BaseID:    6554,
-		DefaultID: 6555,
+	256: { // minecraft:warped_wall_hanging_sign
+		BaseID:    6755,
+		DefaultID: 6756,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	902: { // minecraft:warped_wall_sign
-		BaseID:    21512,
-		DefaultID: 21513,
+	904: { // minecraft:warped_wall_sign
+		BaseID:    21714,
+		DefaultID: 21715,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	866: { // minecraft:warped_wart_block
-		BaseID:    20757,
-		DefaultID: 20757,
+	868: { // minecraft:warped_wart_block
+		BaseID:    20959,
+		DefaultID: 20959,
 	},
 	35: { // minecraft:water
 		BaseID:    86,
@@ -7960,20 +7972,20 @@ var blockStates = map[int32]*blockStateData{
 			{"level", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	387: { // minecraft:water_cauldron
-		BaseID:    9260,
-		DefaultID: 9260,
+	388: { // minecraft:water_cauldron
+		BaseID:    9461,
+		DefaultID: 9461,
 		Properties: []blockProperty{
 			{"level", []string{"1", "2", "3"}, 3},
 		},
 	},
-	1022: { // minecraft:waxed_chiseled_copper
-		BaseID:    25124,
-		DefaultID: 25124,
+	1024: { // minecraft:waxed_chiseled_copper
+		BaseID:    25326,
+		DefaultID: 25326,
 	},
-	345: { // minecraft:waxed_copper_bars
-		BaseID:    7917,
-		DefaultID: 7948,
+	346: { // minecraft:waxed_copper_bars
+		BaseID:    8118,
+		DefaultID: 8149,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -7982,38 +7994,38 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	1031: { // minecraft:waxed_copper_block
-		BaseID:    25469,
-		DefaultID: 25469,
+	1033: { // minecraft:waxed_copper_block
+		BaseID:    25671,
+		DefaultID: 25671,
 	},
-	1075: { // minecraft:waxed_copper_bulb
-		BaseID:    26877,
-		DefaultID: 26880,
+	1077: { // minecraft:waxed_copper_bulb
+		BaseID:    27079,
+		DefaultID: 27082,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	354: { // minecraft:waxed_copper_chain
-		BaseID:    8075,
-		DefaultID: 8078,
+	355: { // minecraft:waxed_copper_chain
+		BaseID:    8276,
+		DefaultID: 8279,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1083: { // minecraft:waxed_copper_chest
-		BaseID:    26989,
-		DefaultID: 26990,
+	1085: { // minecraft:waxed_copper_chest
+		BaseID:    27191,
+		DefaultID: 27192,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"type", []string{"single", "left", "right"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1051: { // minecraft:waxed_copper_door
-		BaseID:    26077,
-		DefaultID: 26088,
+	1053: { // minecraft:waxed_copper_door
+		BaseID:    26279,
+		DefaultID: 26290,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -8022,33 +8034,33 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	1091: { // minecraft:waxed_copper_golem_statue
-		BaseID:    27213,
-		DefaultID: 27214,
+	1093: { // minecraft:waxed_copper_golem_statue
+		BaseID:    27415,
+		DefaultID: 27416,
 		Properties: []blockProperty{
 			{"copper_golem_pose", []string{"standing", "sitting", "running", "star"}, 4},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1067: { // minecraft:waxed_copper_grate
-		BaseID:    26853,
-		DefaultID: 26854,
+	1069: { // minecraft:waxed_copper_grate
+		BaseID:    27055,
+		DefaultID: 27056,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	853: { // minecraft:waxed_copper_lantern
-		BaseID:    20659,
-		DefaultID: 20662,
+	855: { // minecraft:waxed_copper_lantern
+		BaseID:    20861,
+		DefaultID: 20864,
 		Properties: []blockProperty{
 			{"hanging", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1059: { // minecraft:waxed_copper_trapdoor
-		BaseID:    26589,
-		DefaultID: 26604,
+	1061: { // minecraft:waxed_copper_trapdoor
+		BaseID:    26791,
+		DefaultID: 26806,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -8057,21 +8069,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1038: { // minecraft:waxed_cut_copper
-		BaseID:    25476,
-		DefaultID: 25476,
+	1040: { // minecraft:waxed_cut_copper
+		BaseID:    25678,
+		DefaultID: 25678,
 	},
-	1046: { // minecraft:waxed_cut_copper_slab
-		BaseID:    25815,
-		DefaultID: 25818,
+	1048: { // minecraft:waxed_cut_copper_slab
+		BaseID:    26017,
+		DefaultID: 26020,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1042: { // minecraft:waxed_cut_copper_stairs
-		BaseID:    25717,
-		DefaultID: 25728,
+	1044: { // minecraft:waxed_cut_copper_stairs
+		BaseID:    25919,
+		DefaultID: 25930,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -8079,17 +8091,17 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1021: { // minecraft:waxed_exposed_chiseled_copper
-		BaseID:    25123,
-		DefaultID: 25123,
+	1023: { // minecraft:waxed_exposed_chiseled_copper
+		BaseID:    25325,
+		DefaultID: 25325,
 	},
-	1033: { // minecraft:waxed_exposed_copper
-		BaseID:    25471,
-		DefaultID: 25471,
+	1035: { // minecraft:waxed_exposed_copper
+		BaseID:    25673,
+		DefaultID: 25673,
 	},
-	346: { // minecraft:waxed_exposed_copper_bars
-		BaseID:    7949,
-		DefaultID: 7980,
+	347: { // minecraft:waxed_exposed_copper_bars
+		BaseID:    8150,
+		DefaultID: 8181,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -8098,34 +8110,34 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	1076: { // minecraft:waxed_exposed_copper_bulb
-		BaseID:    26881,
-		DefaultID: 26884,
+	1078: { // minecraft:waxed_exposed_copper_bulb
+		BaseID:    27083,
+		DefaultID: 27086,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	355: { // minecraft:waxed_exposed_copper_chain
-		BaseID:    8081,
-		DefaultID: 8084,
+	356: { // minecraft:waxed_exposed_copper_chain
+		BaseID:    8282,
+		DefaultID: 8285,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1084: { // minecraft:waxed_exposed_copper_chest
-		BaseID:    27013,
-		DefaultID: 27014,
+	1086: { // minecraft:waxed_exposed_copper_chest
+		BaseID:    27215,
+		DefaultID: 27216,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"type", []string{"single", "left", "right"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1052: { // minecraft:waxed_exposed_copper_door
-		BaseID:    26141,
-		DefaultID: 26152,
+	1054: { // minecraft:waxed_exposed_copper_door
+		BaseID:    26343,
+		DefaultID: 26354,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -8134,33 +8146,33 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	1092: { // minecraft:waxed_exposed_copper_golem_statue
-		BaseID:    27245,
-		DefaultID: 27246,
+	1094: { // minecraft:waxed_exposed_copper_golem_statue
+		BaseID:    27447,
+		DefaultID: 27448,
 		Properties: []blockProperty{
 			{"copper_golem_pose", []string{"standing", "sitting", "running", "star"}, 4},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1068: { // minecraft:waxed_exposed_copper_grate
+	1070: { // minecraft:waxed_exposed_copper_grate
+		BaseID:    27057,
+		DefaultID: 27058,
+		Properties: []blockProperty{
+			{"waterlogged", []string{"true", "false"}, 2},
+		},
+	},
+	856: { // minecraft:waxed_exposed_copper_lantern
+		BaseID:    20865,
+		DefaultID: 20868,
+		Properties: []blockProperty{
+			{"hanging", []string{"true", "false"}, 2},
+			{"waterlogged", []string{"true", "false"}, 2},
+		},
+	},
+	1062: { // minecraft:waxed_exposed_copper_trapdoor
 		BaseID:    26855,
-		DefaultID: 26856,
-		Properties: []blockProperty{
-			{"waterlogged", []string{"true", "false"}, 2},
-		},
-	},
-	854: { // minecraft:waxed_exposed_copper_lantern
-		BaseID:    20663,
-		DefaultID: 20666,
-		Properties: []blockProperty{
-			{"hanging", []string{"true", "false"}, 2},
-			{"waterlogged", []string{"true", "false"}, 2},
-		},
-	},
-	1060: { // minecraft:waxed_exposed_copper_trapdoor
-		BaseID:    26653,
-		DefaultID: 26668,
+		DefaultID: 26870,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -8169,21 +8181,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1037: { // minecraft:waxed_exposed_cut_copper
-		BaseID:    25475,
-		DefaultID: 25475,
+	1039: { // minecraft:waxed_exposed_cut_copper
+		BaseID:    25677,
+		DefaultID: 25677,
 	},
-	1045: { // minecraft:waxed_exposed_cut_copper_slab
-		BaseID:    25809,
-		DefaultID: 25812,
+	1047: { // minecraft:waxed_exposed_cut_copper_slab
+		BaseID:    26011,
+		DefaultID: 26014,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1041: { // minecraft:waxed_exposed_cut_copper_stairs
-		BaseID:    25637,
-		DefaultID: 25648,
+	1043: { // minecraft:waxed_exposed_cut_copper_stairs
+		BaseID:    25839,
+		DefaultID: 25850,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -8191,35 +8203,35 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1100: { // minecraft:waxed_exposed_lightning_rod
-		BaseID:    27461,
-		DefaultID: 27480,
+	1102: { // minecraft:waxed_exposed_lightning_rod
+		BaseID:    27663,
+		DefaultID: 27682,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"powered", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1099: { // minecraft:waxed_lightning_rod
-		BaseID:    27437,
-		DefaultID: 27456,
+	1101: { // minecraft:waxed_lightning_rod
+		BaseID:    27639,
+		DefaultID: 27658,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"powered", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1019: { // minecraft:waxed_oxidized_chiseled_copper
-		BaseID:    25121,
-		DefaultID: 25121,
+	1021: { // minecraft:waxed_oxidized_chiseled_copper
+		BaseID:    25323,
+		DefaultID: 25323,
 	},
-	1034: { // minecraft:waxed_oxidized_copper
-		BaseID:    25472,
-		DefaultID: 25472,
+	1036: { // minecraft:waxed_oxidized_copper
+		BaseID:    25674,
+		DefaultID: 25674,
 	},
-	348: { // minecraft:waxed_oxidized_copper_bars
-		BaseID:    8013,
-		DefaultID: 8044,
+	349: { // minecraft:waxed_oxidized_copper_bars
+		BaseID:    8214,
+		DefaultID: 8245,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -8228,69 +8240,69 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	1078: { // minecraft:waxed_oxidized_copper_bulb
-		BaseID:    26889,
-		DefaultID: 26892,
+	1080: { // minecraft:waxed_oxidized_copper_bulb
+		BaseID:    27091,
+		DefaultID: 27094,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	357: { // minecraft:waxed_oxidized_copper_chain
-		BaseID:    8093,
-		DefaultID: 8096,
+	358: { // minecraft:waxed_oxidized_copper_chain
+		BaseID:    8294,
+		DefaultID: 8297,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1086: { // minecraft:waxed_oxidized_copper_chest
+	1088: { // minecraft:waxed_oxidized_copper_chest
+		BaseID:    27263,
+		DefaultID: 27264,
+		Properties: []blockProperty{
+			{"facing", []string{"north", "south", "west", "east"}, 4},
+			{"type", []string{"single", "left", "right"}, 3},
+			{"waterlogged", []string{"true", "false"}, 2},
+		},
+	},
+	1055: { // minecraft:waxed_oxidized_copper_door
+		BaseID:    26407,
+		DefaultID: 26418,
+		Properties: []blockProperty{
+			{"facing", []string{"north", "south", "west", "east"}, 4},
+			{"half", []string{"upper", "lower"}, 2},
+			{"hinge", []string{"left", "right"}, 2},
+			{"open", []string{"true", "false"}, 2},
+			{"powered", []string{"true", "false"}, 2},
+		},
+	},
+	1096: { // minecraft:waxed_oxidized_copper_golem_statue
+		BaseID:    27511,
+		DefaultID: 27512,
+		Properties: []blockProperty{
+			{"copper_golem_pose", []string{"standing", "sitting", "running", "star"}, 4},
+			{"facing", []string{"north", "south", "west", "east"}, 4},
+			{"waterlogged", []string{"true", "false"}, 2},
+		},
+	},
+	1072: { // minecraft:waxed_oxidized_copper_grate
 		BaseID:    27061,
 		DefaultID: 27062,
 		Properties: []blockProperty{
-			{"facing", []string{"north", "south", "west", "east"}, 4},
-			{"type", []string{"single", "left", "right"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1053: { // minecraft:waxed_oxidized_copper_door
-		BaseID:    26205,
-		DefaultID: 26216,
-		Properties: []blockProperty{
-			{"facing", []string{"north", "south", "west", "east"}, 4},
-			{"half", []string{"upper", "lower"}, 2},
-			{"hinge", []string{"left", "right"}, 2},
-			{"open", []string{"true", "false"}, 2},
-			{"powered", []string{"true", "false"}, 2},
-		},
-	},
-	1094: { // minecraft:waxed_oxidized_copper_golem_statue
-		BaseID:    27309,
-		DefaultID: 27310,
-		Properties: []blockProperty{
-			{"copper_golem_pose", []string{"standing", "sitting", "running", "star"}, 4},
-			{"facing", []string{"north", "south", "west", "east"}, 4},
-			{"waterlogged", []string{"true", "false"}, 2},
-		},
-	},
-	1070: { // minecraft:waxed_oxidized_copper_grate
-		BaseID:    26859,
-		DefaultID: 26860,
-		Properties: []blockProperty{
-			{"waterlogged", []string{"true", "false"}, 2},
-		},
-	},
-	856: { // minecraft:waxed_oxidized_copper_lantern
-		BaseID:    20671,
-		DefaultID: 20674,
+	858: { // minecraft:waxed_oxidized_copper_lantern
+		BaseID:    20873,
+		DefaultID: 20876,
 		Properties: []blockProperty{
 			{"hanging", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1061: { // minecraft:waxed_oxidized_copper_trapdoor
-		BaseID:    26717,
-		DefaultID: 26732,
+	1063: { // minecraft:waxed_oxidized_copper_trapdoor
+		BaseID:    26919,
+		DefaultID: 26934,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -8299,21 +8311,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1035: { // minecraft:waxed_oxidized_cut_copper
-		BaseID:    25473,
-		DefaultID: 25473,
+	1037: { // minecraft:waxed_oxidized_cut_copper
+		BaseID:    25675,
+		DefaultID: 25675,
 	},
-	1043: { // minecraft:waxed_oxidized_cut_copper_slab
-		BaseID:    25797,
-		DefaultID: 25800,
+	1045: { // minecraft:waxed_oxidized_cut_copper_slab
+		BaseID:    25999,
+		DefaultID: 26002,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1039: { // minecraft:waxed_oxidized_cut_copper_stairs
-		BaseID:    25477,
-		DefaultID: 25488,
+	1041: { // minecraft:waxed_oxidized_cut_copper_stairs
+		BaseID:    25679,
+		DefaultID: 25690,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -8321,26 +8333,26 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1102: { // minecraft:waxed_oxidized_lightning_rod
-		BaseID:    27509,
-		DefaultID: 27528,
+	1104: { // minecraft:waxed_oxidized_lightning_rod
+		BaseID:    27711,
+		DefaultID: 27730,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"powered", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1020: { // minecraft:waxed_weathered_chiseled_copper
-		BaseID:    25122,
-		DefaultID: 25122,
+	1022: { // minecraft:waxed_weathered_chiseled_copper
+		BaseID:    25324,
+		DefaultID: 25324,
 	},
-	1032: { // minecraft:waxed_weathered_copper
-		BaseID:    25470,
-		DefaultID: 25470,
+	1034: { // minecraft:waxed_weathered_copper
+		BaseID:    25672,
+		DefaultID: 25672,
 	},
-	347: { // minecraft:waxed_weathered_copper_bars
-		BaseID:    7981,
-		DefaultID: 8012,
+	348: { // minecraft:waxed_weathered_copper_bars
+		BaseID:    8182,
+		DefaultID: 8213,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -8349,34 +8361,34 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	1077: { // minecraft:waxed_weathered_copper_bulb
-		BaseID:    26885,
-		DefaultID: 26888,
+	1079: { // minecraft:waxed_weathered_copper_bulb
+		BaseID:    27087,
+		DefaultID: 27090,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	356: { // minecraft:waxed_weathered_copper_chain
-		BaseID:    8087,
-		DefaultID: 8090,
+	357: { // minecraft:waxed_weathered_copper_chain
+		BaseID:    8288,
+		DefaultID: 8291,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1085: { // minecraft:waxed_weathered_copper_chest
-		BaseID:    27037,
-		DefaultID: 27038,
+	1087: { // minecraft:waxed_weathered_copper_chest
+		BaseID:    27239,
+		DefaultID: 27240,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"type", []string{"single", "left", "right"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1054: { // minecraft:waxed_weathered_copper_door
-		BaseID:    26269,
-		DefaultID: 26280,
+	1056: { // minecraft:waxed_weathered_copper_door
+		BaseID:    26471,
+		DefaultID: 26482,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -8385,33 +8397,33 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	1093: { // minecraft:waxed_weathered_copper_golem_statue
-		BaseID:    27277,
-		DefaultID: 27278,
+	1095: { // minecraft:waxed_weathered_copper_golem_statue
+		BaseID:    27479,
+		DefaultID: 27480,
 		Properties: []blockProperty{
 			{"copper_golem_pose", []string{"standing", "sitting", "running", "star"}, 4},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1069: { // minecraft:waxed_weathered_copper_grate
-		BaseID:    26857,
-		DefaultID: 26858,
+	1071: { // minecraft:waxed_weathered_copper_grate
+		BaseID:    27059,
+		DefaultID: 27060,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	855: { // minecraft:waxed_weathered_copper_lantern
-		BaseID:    20667,
-		DefaultID: 20670,
+	857: { // minecraft:waxed_weathered_copper_lantern
+		BaseID:    20869,
+		DefaultID: 20872,
 		Properties: []blockProperty{
 			{"hanging", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1062: { // minecraft:waxed_weathered_copper_trapdoor
-		BaseID:    26781,
-		DefaultID: 26796,
+	1064: { // minecraft:waxed_weathered_copper_trapdoor
+		BaseID:    26983,
+		DefaultID: 26998,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -8420,21 +8432,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1036: { // minecraft:waxed_weathered_cut_copper
-		BaseID:    25474,
-		DefaultID: 25474,
+	1038: { // minecraft:waxed_weathered_cut_copper
+		BaseID:    25676,
+		DefaultID: 25676,
 	},
-	1044: { // minecraft:waxed_weathered_cut_copper_slab
-		BaseID:    25803,
-		DefaultID: 25806,
+	1046: { // minecraft:waxed_weathered_cut_copper_slab
+		BaseID:    26005,
+		DefaultID: 26008,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1040: { // minecraft:waxed_weathered_cut_copper_stairs
-		BaseID:    25557,
-		DefaultID: 25568,
+	1042: { // minecraft:waxed_weathered_cut_copper_stairs
+		BaseID:    25759,
+		DefaultID: 25770,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -8442,26 +8454,26 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1101: { // minecraft:waxed_weathered_lightning_rod
-		BaseID:    27485,
-		DefaultID: 27504,
+	1103: { // minecraft:waxed_weathered_lightning_rod
+		BaseID:    27687,
+		DefaultID: 27706,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"powered", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1016: { // minecraft:weathered_chiseled_copper
-		BaseID:    25118,
-		DefaultID: 25118,
+	1018: { // minecraft:weathered_chiseled_copper
+		BaseID:    25320,
+		DefaultID: 25320,
 	},
-	1007: { // minecraft:weathered_copper
-		BaseID:    25109,
-		DefaultID: 25109,
+	1009: { // minecraft:weathered_copper
+		BaseID:    25311,
+		DefaultID: 25311,
 	},
-	343: { // minecraft:weathered_copper_bars
-		BaseID:    7853,
-		DefaultID: 7884,
+	344: { // minecraft:weathered_copper_bars
+		BaseID:    8054,
+		DefaultID: 8085,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -8470,34 +8482,34 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	1073: { // minecraft:weathered_copper_bulb
-		BaseID:    26869,
-		DefaultID: 26872,
+	1075: { // minecraft:weathered_copper_bulb
+		BaseID:    27071,
+		DefaultID: 27074,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	352: { // minecraft:weathered_copper_chain
-		BaseID:    8063,
-		DefaultID: 8066,
+	353: { // minecraft:weathered_copper_chain
+		BaseID:    8264,
+		DefaultID: 8267,
 		Properties: []blockProperty{
 			{"axis", []string{"x", "y", "z"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1081: { // minecraft:weathered_copper_chest
-		BaseID:    26941,
-		DefaultID: 26942,
+	1083: { // minecraft:weathered_copper_chest
+		BaseID:    27143,
+		DefaultID: 27144,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"type", []string{"single", "left", "right"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1050: { // minecraft:weathered_copper_door
-		BaseID:    26013,
-		DefaultID: 26024,
+	1052: { // minecraft:weathered_copper_door
+		BaseID:    26215,
+		DefaultID: 26226,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"upper", "lower"}, 2},
@@ -8506,33 +8518,33 @@ var blockStates = map[int32]*blockStateData{
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	1089: { // minecraft:weathered_copper_golem_statue
-		BaseID:    27149,
-		DefaultID: 27150,
+	1091: { // minecraft:weathered_copper_golem_statue
+		BaseID:    27351,
+		DefaultID: 27352,
 		Properties: []blockProperty{
 			{"copper_golem_pose", []string{"standing", "sitting", "running", "star"}, 4},
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1065: { // minecraft:weathered_copper_grate
-		BaseID:    26849,
-		DefaultID: 26850,
+	1067: { // minecraft:weathered_copper_grate
+		BaseID:    27051,
+		DefaultID: 27052,
 		Properties: []blockProperty{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	851: { // minecraft:weathered_copper_lantern
-		BaseID:    20651,
-		DefaultID: 20654,
+	853: { // minecraft:weathered_copper_lantern
+		BaseID:    20853,
+		DefaultID: 20856,
 		Properties: []blockProperty{
 			{"hanging", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1058: { // minecraft:weathered_copper_trapdoor
-		BaseID:    26525,
-		DefaultID: 26540,
+	1060: { // minecraft:weathered_copper_trapdoor
+		BaseID:    26727,
+		DefaultID: 26742,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -8541,21 +8553,21 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1012: { // minecraft:weathered_cut_copper
-		BaseID:    25114,
-		DefaultID: 25114,
+	1014: { // minecraft:weathered_cut_copper
+		BaseID:    25316,
+		DefaultID: 25316,
 	},
-	1028: { // minecraft:weathered_cut_copper_slab
-		BaseID:    25451,
-		DefaultID: 25454,
+	1030: { // minecraft:weathered_cut_copper_slab
+		BaseID:    25653,
+		DefaultID: 25656,
 		Properties: []blockProperty{
 			{"type", []string{"top", "bottom", "double"}, 3},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1024: { // minecraft:weathered_cut_copper_stairs
-		BaseID:    25205,
-		DefaultID: 25216,
+	1026: { // minecraft:weathered_cut_copper_stairs
+		BaseID:    25407,
+		DefaultID: 25418,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"half", []string{"top", "bottom"}, 2},
@@ -8563,102 +8575,102 @@ var blockStates = map[int32]*blockStateData{
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	1097: { // minecraft:weathered_lightning_rod
-		BaseID:    27389,
-		DefaultID: 27408,
+	1099: { // minecraft:weathered_lightning_rod
+		BaseID:    27591,
+		DefaultID: 27610,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 			{"powered", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	876: { // minecraft:weeping_vines
-		BaseID:    20775,
-		DefaultID: 20775,
+	878: { // minecraft:weeping_vines
+		BaseID:    20977,
+		DefaultID: 20977,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"}, 26},
 		},
 	},
-	877: { // minecraft:weeping_vines_plant
-		BaseID:    20801,
-		DefaultID: 20801,
+	879: { // minecraft:weeping_vines_plant
+		BaseID:    21003,
+		DefaultID: 21003,
 	},
 	100: { // minecraft:wet_sponge
 		BaseID:    561,
 		DefaultID: 561,
 	},
-	206: { // minecraft:wheat
-		BaseID:    5110,
-		DefaultID: 5110,
+	207: { // minecraft:wheat
+		BaseID:    5311,
+		DefaultID: 5311,
 		Properties: []blockProperty{
 			{"age", []string{"0", "1", "2", "3", "4", "5", "6", "7"}, 8},
 		},
 	},
-	561: { // minecraft:white_banner
-		BaseID:    12725,
-		DefaultID: 12725,
+	563: { // minecraft:white_banner
+		BaseID:    12927,
+		DefaultID: 12935,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	110: { // minecraft:white_bed
-		BaseID:    1731,
-		DefaultID: 1734,
+		BaseID:    1931,
+		DefaultID: 1934,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	943: { // minecraft:white_candle
-		BaseID:    22910,
-		DefaultID: 22913,
+	945: { // minecraft:white_candle
+		BaseID:    23112,
+		DefaultID: 23115,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	960: { // minecraft:white_candle_cake
-		BaseID:    23168,
-		DefaultID: 23169,
+	962: { // minecraft:white_candle_cake
+		BaseID:    23370,
+		DefaultID: 23371,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	536: { // minecraft:white_carpet
-		BaseID:    12694,
-		DefaultID: 12694,
+	538: { // minecraft:white_carpet
+		BaseID:    12896,
+		DefaultID: 12896,
 	},
-	708: { // minecraft:white_concrete
-		BaseID:    14828,
-		DefaultID: 14828,
+	710: { // minecraft:white_concrete
+		BaseID:    15030,
+		DefaultID: 15030,
 	},
-	724: { // minecraft:white_concrete_powder
-		BaseID:    14844,
-		DefaultID: 14844,
+	726: { // minecraft:white_concrete_powder
+		BaseID:    15046,
+		DefaultID: 15046,
 	},
-	692: { // minecraft:white_glazed_terracotta
-		BaseID:    14764,
-		DefaultID: 14764,
+	694: { // minecraft:white_glazed_terracotta
+		BaseID:    14966,
+		DefaultID: 14966,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	676: { // minecraft:white_shulker_box
-		BaseID:    14668,
-		DefaultID: 14672,
+	678: { // minecraft:white_shulker_box
+		BaseID:    14870,
+		DefaultID: 14874,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	299: { // minecraft:white_stained_glass
-		BaseID:    6897,
-		DefaultID: 6897,
+	300: { // minecraft:white_stained_glass
+		BaseID:    7098,
+		DefaultID: 7098,
 	},
-	498: { // minecraft:white_stained_glass_pane
-		BaseID:    11258,
-		DefaultID: 11289,
+	500: { // minecraft:white_stained_glass_pane
+		BaseID:    11460,
+		DefaultID: 11491,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -8667,118 +8679,118 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	482: { // minecraft:white_terracotta
-		BaseID:    11242,
-		DefaultID: 11242,
+	484: { // minecraft:white_terracotta
+		BaseID:    11444,
+		DefaultID: 11444,
 	},
-	165: { // minecraft:white_tulip
-		BaseID:    2129,
-		DefaultID: 2129,
+	166: { // minecraft:white_tulip
+		BaseID:    2330,
+		DefaultID: 2330,
 	},
-	577: { // minecraft:white_wall_banner
-		BaseID:    12981,
-		DefaultID: 12981,
+	579: { // minecraft:white_wall_banner
+		BaseID:    13183,
+		DefaultID: 13183,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	140: { // minecraft:white_wool
-		BaseID:    2093,
-		DefaultID: 2093,
+		BaseID:    2293,
+		DefaultID: 2293,
 	},
-	1112: { // minecraft:wildflowers
-		BaseID:    27628,
-		DefaultID: 27628,
+	1114: { // minecraft:wildflowers
+		BaseID:    27830,
+		DefaultID: 27830,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"flower_amount", []string{"1", "2", "3", "4"}, 4},
 		},
 	},
-	169: { // minecraft:wither_rose
-		BaseID:    2133,
-		DefaultID: 2133,
+	170: { // minecraft:wither_rose
+		BaseID:    2334,
+		DefaultID: 2334,
 	},
-	453: { // minecraft:wither_skeleton_skull
-		BaseID:    10753,
-		DefaultID: 10769,
+	455: { // minecraft:wither_skeleton_skull
+		BaseID:    10955,
+		DefaultID: 10971,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	454: { // minecraft:wither_skeleton_wall_skull
-		BaseID:    10785,
-		DefaultID: 10786,
+	456: { // minecraft:wither_skeleton_wall_skull
+		BaseID:    10987,
+		DefaultID: 10988,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
 		},
 	},
-	565: { // minecraft:yellow_banner
-		BaseID:    12789,
-		DefaultID: 12789,
+	567: { // minecraft:yellow_banner
+		BaseID:    12991,
+		DefaultID: 12999,
 		Properties: []blockProperty{
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
 	114: { // minecraft:yellow_bed
-		BaseID:    1795,
-		DefaultID: 1798,
+		BaseID:    1995,
+		DefaultID: 1998,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"occupied", []string{"true", "false"}, 2},
 			{"part", []string{"head", "foot"}, 2},
 		},
 	},
-	947: { // minecraft:yellow_candle
-		BaseID:    22974,
-		DefaultID: 22977,
+	949: { // minecraft:yellow_candle
+		BaseID:    23176,
+		DefaultID: 23179,
 		Properties: []blockProperty{
 			{"candles", []string{"1", "2", "3", "4"}, 4},
 			{"lit", []string{"true", "false"}, 2},
 			{"waterlogged", []string{"true", "false"}, 2},
 		},
 	},
-	964: { // minecraft:yellow_candle_cake
-		BaseID:    23176,
-		DefaultID: 23177,
+	966: { // minecraft:yellow_candle_cake
+		BaseID:    23378,
+		DefaultID: 23379,
 		Properties: []blockProperty{
 			{"lit", []string{"true", "false"}, 2},
 		},
 	},
-	540: { // minecraft:yellow_carpet
-		BaseID:    12698,
-		DefaultID: 12698,
+	542: { // minecraft:yellow_carpet
+		BaseID:    12900,
+		DefaultID: 12900,
 	},
-	712: { // minecraft:yellow_concrete
-		BaseID:    14832,
-		DefaultID: 14832,
+	714: { // minecraft:yellow_concrete
+		BaseID:    15034,
+		DefaultID: 15034,
 	},
-	728: { // minecraft:yellow_concrete_powder
-		BaseID:    14848,
-		DefaultID: 14848,
+	730: { // minecraft:yellow_concrete_powder
+		BaseID:    15050,
+		DefaultID: 15050,
 	},
-	696: { // minecraft:yellow_glazed_terracotta
-		BaseID:    14780,
-		DefaultID: 14780,
+	698: { // minecraft:yellow_glazed_terracotta
+		BaseID:    14982,
+		DefaultID: 14982,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
-	680: { // minecraft:yellow_shulker_box
-		BaseID:    14692,
-		DefaultID: 14696,
+	682: { // minecraft:yellow_shulker_box
+		BaseID:    14894,
+		DefaultID: 14898,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "east", "south", "west", "up", "down"}, 6},
 		},
 	},
-	303: { // minecraft:yellow_stained_glass
-		BaseID:    6901,
-		DefaultID: 6901,
+	304: { // minecraft:yellow_stained_glass
+		BaseID:    7102,
+		DefaultID: 7102,
 	},
-	502: { // minecraft:yellow_stained_glass_pane
-		BaseID:    11386,
-		DefaultID: 11417,
+	504: { // minecraft:yellow_stained_glass_pane
+		BaseID:    11588,
+		DefaultID: 11619,
 		Properties: []blockProperty{
 			{"east", []string{"true", "false"}, 2},
 			{"north", []string{"true", "false"}, 2},
@@ -8787,32 +8799,32 @@ var blockStates = map[int32]*blockStateData{
 			{"west", []string{"true", "false"}, 2},
 		},
 	},
-	486: { // minecraft:yellow_terracotta
-		BaseID:    11246,
-		DefaultID: 11246,
+	488: { // minecraft:yellow_terracotta
+		BaseID:    11448,
+		DefaultID: 11448,
 	},
-	581: { // minecraft:yellow_wall_banner
-		BaseID:    12997,
-		DefaultID: 12997,
+	583: { // minecraft:yellow_wall_banner
+		BaseID:    13199,
+		DefaultID: 13199,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 		},
 	},
 	144: { // minecraft:yellow_wool
-		BaseID:    2097,
-		DefaultID: 2097,
+		BaseID:    2297,
+		DefaultID: 2297,
 	},
-	455: { // minecraft:zombie_head
-		BaseID:    10793,
-		DefaultID: 10809,
+	457: { // minecraft:zombie_head
+		BaseID:    10995,
+		DefaultID: 11011,
 		Properties: []blockProperty{
 			{"powered", []string{"true", "false"}, 2},
 			{"rotation", []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}, 16},
 		},
 	},
-	456: { // minecraft:zombie_wall_head
-		BaseID:    10825,
-		DefaultID: 10826,
+	458: { // minecraft:zombie_wall_head
+		BaseID:    11027,
+		DefaultID: 11028,
 		Properties: []blockProperty{
 			{"facing", []string{"north", "south", "west", "east"}, 4},
 			{"powered", []string{"true", "false"}, 2},
@@ -8931,1061 +8943,1063 @@ var stateRanges = []stateRangeEntry{
 	{578, 579, 106},
 	{579, 580, 107},
 	{580, 581, 108},
-	{581, 1731, 109},
-	{1731, 1747, 110},
-	{1747, 1763, 111},
-	{1763, 1779, 112},
-	{1779, 1795, 113},
-	{1795, 1811, 114},
-	{1811, 1827, 115},
-	{1827, 1843, 116},
-	{1843, 1859, 117},
-	{1859, 1875, 118},
-	{1875, 1891, 119},
-	{1891, 1907, 120},
-	{1907, 1923, 121},
-	{1923, 1939, 122},
-	{1939, 1955, 123},
-	{1955, 1971, 124},
-	{1971, 1987, 125},
-	{1987, 2011, 126},
-	{2011, 2035, 127},
-	{2035, 2047, 128},
-	{2047, 2048, 129},
-	{2048, 2049, 130},
-	{2049, 2050, 131},
-	{2050, 2051, 132},
-	{2051, 2052, 133},
-	{2052, 2053, 134},
-	{2053, 2054, 135},
-	{2054, 2055, 136},
-	{2055, 2057, 137},
-	{2057, 2069, 138},
-	{2069, 2093, 139},
-	{2093, 2094, 140},
-	{2094, 2095, 141},
-	{2095, 2096, 142},
-	{2096, 2097, 143},
-	{2097, 2098, 144},
-	{2098, 2099, 145},
-	{2099, 2100, 146},
-	{2100, 2101, 147},
-	{2101, 2102, 148},
-	{2102, 2103, 149},
-	{2103, 2104, 150},
-	{2104, 2105, 151},
-	{2105, 2106, 152},
-	{2106, 2107, 153},
-	{2107, 2108, 154},
-	{2108, 2109, 155},
-	{2109, 2121, 156},
-	{2121, 2122, 157},
-	{2122, 2123, 158},
-	{2123, 2124, 159},
-	{2124, 2125, 160},
-	{2125, 2126, 161},
-	{2126, 2127, 162},
-	{2127, 2128, 163},
-	{2128, 2129, 164},
-	{2129, 2130, 165},
-	{2130, 2131, 166},
-	{2131, 2132, 167},
-	{2132, 2133, 168},
-	{2133, 2134, 169},
-	{2134, 2135, 170},
-	{2135, 2136, 171},
-	{2136, 2137, 172},
-	{2137, 2138, 173},
-	{2138, 2139, 174},
-	{2139, 2140, 175},
-	{2140, 2142, 176},
-	{2142, 2143, 177},
-	{2143, 2399, 178},
-	{2399, 2463, 179},
-	{2463, 2527, 180},
-	{2527, 2591, 181},
-	{2591, 2655, 182},
-	{2655, 2719, 183},
-	{2719, 2783, 184},
-	{2783, 2847, 185},
-	{2847, 2911, 186},
-	{2911, 2975, 187},
-	{2975, 3039, 188},
-	{3039, 3103, 189},
-	{3103, 3167, 190},
-	{3167, 3168, 191},
-	{3168, 3169, 192},
-	{3169, 3170, 193},
-	{3170, 3174, 194},
-	{3174, 3686, 195},
-	{3686, 3687, 196},
-	{3687, 3688, 197},
-	{3688, 3706, 198},
-	{3706, 3786, 199},
-	{3786, 3810, 200},
-	{3810, 5106, 201},
-	{5106, 5107, 202},
-	{5107, 5108, 203},
-	{5108, 5109, 204},
-	{5109, 5110, 205},
-	{5110, 5118, 206},
-	{5118, 5126, 207},
-	{5126, 5134, 208},
-	{5134, 5166, 209},
-	{5166, 5198, 210},
-	{5198, 5230, 211},
-	{5230, 5262, 212},
-	{5262, 5294, 213},
-	{5294, 5326, 214},
-	{5326, 5358, 215},
-	{5358, 5390, 216},
-	{5390, 5422, 217},
-	{5422, 5454, 218},
-	{5454, 5518, 219},
-	{5518, 5526, 220},
-	{5526, 5546, 221},
-	{5546, 5626, 222},
-	{5626, 5634, 223},
-	{5634, 5642, 224},
-	{5642, 5650, 225},
-	{5650, 5658, 226},
-	{5658, 5666, 227},
-	{5666, 5674, 228},
-	{5674, 5682, 229},
-	{5682, 5690, 230},
-	{5690, 5698, 231},
-	{5698, 5706, 232},
-	{5706, 5770, 233},
-	{5770, 5834, 234},
-	{5834, 5898, 235},
-	{5898, 5962, 236},
-	{5962, 6026, 237},
-	{6026, 6090, 238},
-	{6090, 6154, 239},
-	{6154, 6218, 240},
-	{6218, 6282, 241},
-	{6282, 6346, 242},
-	{6346, 6410, 243},
-	{6410, 6474, 244},
-	{6474, 6482, 245},
-	{6482, 6490, 246},
-	{6490, 6498, 247},
-	{6498, 6506, 248},
-	{6506, 6514, 249},
-	{6514, 6522, 250},
-	{6522, 6530, 251},
-	{6530, 6538, 252},
-	{6538, 6546, 253},
-	{6546, 6554, 254},
-	{6554, 6562, 255},
-	{6562, 6570, 256},
-	{6570, 6594, 257},
-	{6594, 6596, 258},
-	{6596, 6660, 259},
-	{6660, 6662, 260},
-	{6662, 6664, 261},
-	{6664, 6666, 262},
-	{6666, 6668, 263},
-	{6668, 6670, 264},
-	{6670, 6672, 265},
-	{6672, 6674, 266},
-	{6674, 6676, 267},
-	{6676, 6678, 268},
-	{6678, 6680, 269},
-	{6680, 6682, 270},
-	{6682, 6684, 271},
-	{6684, 6686, 272},
-	{6686, 6694, 273},
-	{6694, 6718, 274},
-	{6718, 6726, 275},
-	{6726, 6727, 276},
-	{6727, 6728, 277},
-	{6728, 6744, 278},
-	{6744, 6745, 279},
-	{6745, 6746, 280},
-	{6746, 6762, 281},
-	{6762, 6764, 282},
-	{6764, 6796, 283},
-	{6796, 6797, 284},
-	{6797, 6798, 285},
-	{6798, 6799, 286},
-	{6799, 6802, 287},
-	{6802, 6805, 288},
-	{6805, 6806, 289},
-	{6806, 6810, 290},
-	{6810, 6811, 291},
-	{6811, 6815, 292},
-	{6815, 6816, 293},
-	{6816, 6818, 294},
-	{6818, 6822, 295},
-	{6822, 6826, 296},
-	{6826, 6833, 297},
-	{6833, 6897, 298},
-	{6897, 6898, 299},
-	{6898, 6899, 300},
-	{6899, 6900, 301},
-	{6900, 6901, 302},
-	{6901, 6902, 303},
-	{6902, 6903, 304},
-	{6903, 6904, 305},
-	{6904, 6905, 306},
-	{6905, 6906, 307},
-	{6906, 6907, 308},
-	{6907, 6908, 309},
-	{6908, 6909, 310},
-	{6909, 6910, 311},
-	{6910, 6911, 312},
-	{6911, 6912, 313},
-	{6912, 6913, 314},
-	{6913, 6977, 315},
-	{6977, 7041, 316},
-	{7041, 7105, 317},
-	{7105, 7169, 318},
-	{7169, 7233, 319},
-	{7233, 7297, 320},
-	{7297, 7361, 321},
-	{7361, 7425, 322},
-	{7425, 7489, 323},
-	{7489, 7553, 324},
-	{7553, 7554, 325},
-	{7554, 7555, 326},
-	{7555, 7556, 327},
-	{7556, 7557, 328},
-	{7557, 7558, 329},
-	{7558, 7559, 330},
-	{7559, 7560, 331},
-	{7560, 7561, 332},
-	{7561, 7562, 333},
-	{7562, 7563, 334},
-	{7563, 7564, 335},
-	{7564, 7565, 336},
-	{7565, 7629, 337},
-	{7629, 7693, 338},
-	{7693, 7757, 339},
-	{7757, 7789, 340},
-	{7789, 7821, 341},
-	{7821, 7853, 342},
-	{7853, 7885, 343},
-	{7885, 7917, 344},
-	{7917, 7949, 345},
-	{7949, 7981, 346},
-	{7981, 8013, 347},
-	{8013, 8045, 348},
-	{8045, 8051, 349},
-	{8051, 8057, 350},
-	{8057, 8063, 351},
-	{8063, 8069, 352},
-	{8069, 8075, 353},
-	{8075, 8081, 354},
-	{8081, 8087, 355},
-	{8087, 8093, 356},
-	{8093, 8099, 357},
-	{8099, 8131, 358},
-	{8131, 8132, 359},
-	{8132, 8133, 360},
-	{8133, 8137, 361},
-	{8137, 8141, 362},
-	{8141, 8149, 363},
-	{8149, 8157, 364},
-	{8157, 8189, 365},
-	{8189, 8317, 366},
-	{8317, 8445, 367},
-	{8445, 8477, 368},
-	{8477, 8557, 369},
-	{8557, 8637, 370},
-	{8637, 8717, 371},
-	{8717, 8719, 372},
-	{8719, 8720, 373},
-	{8720, 8721, 374},
-	{8721, 8722, 375},
-	{8722, 8802, 376},
-	{8802, 8808, 377},
-	{8808, 9132, 378},
-	{9132, 9133, 379},
-	{9133, 9134, 380},
-	{9134, 9166, 381},
-	{9166, 9246, 382},
-	{9246, 9250, 383},
-	{9250, 9251, 384},
-	{9251, 9259, 385},
-	{9259, 9260, 386},
-	{9260, 9263, 387},
-	{9263, 9264, 388},
-	{9264, 9267, 389},
-	{9267, 9268, 390},
-	{9268, 9276, 391},
-	{9276, 9277, 392},
-	{9277, 9278, 393},
-	{9278, 9280, 394},
-	{9280, 9292, 395},
-	{9292, 9372, 396},
-	{9372, 9373, 397},
-	{9373, 9374, 398},
-	{9374, 9382, 399},
-	{9382, 9398, 400},
-	{9398, 9526, 401},
-	{9526, 9527, 402},
-	{9527, 9607, 403},
-	{9607, 9687, 404},
-	{9687, 9767, 405},
-	{9767, 9779, 406},
-	{9779, 9780, 407},
-	{9780, 10104, 408},
-	{10104, 10428, 409},
-	{10428, 10429, 410},
-	{10429, 10430, 411},
-	{10430, 10431, 412},
-	{10431, 10432, 413},
-	{10432, 10433, 414},
-	{10433, 10434, 415},
-	{10434, 10435, 416},
-	{10435, 10436, 417},
-	{10436, 10437, 418},
-	{10437, 10438, 419},
-	{10438, 10439, 420},
-	{10439, 10440, 421},
-	{10440, 10441, 422},
-	{10441, 10442, 423},
-	{10442, 10443, 424},
-	{10443, 10444, 425},
-	{10444, 10445, 426},
-	{10445, 10446, 427},
-	{10446, 10447, 428},
-	{10447, 10448, 429},
-	{10448, 10449, 430},
-	{10449, 10450, 431},
-	{10450, 10451, 432},
-	{10451, 10452, 433},
-	{10452, 10453, 434},
-	{10453, 10454, 435},
-	{10454, 10455, 436},
-	{10455, 10456, 437},
-	{10456, 10457, 438},
-	{10457, 10465, 439},
-	{10465, 10473, 440},
-	{10473, 10497, 441},
-	{10497, 10521, 442},
-	{10521, 10545, 443},
-	{10545, 10569, 444},
-	{10569, 10593, 445},
-	{10593, 10617, 446},
-	{10617, 10641, 447},
-	{10641, 10665, 448},
-	{10665, 10689, 449},
-	{10689, 10713, 450},
-	{10713, 10745, 451},
-	{10745, 10753, 452},
-	{10753, 10785, 453},
-	{10785, 10793, 454},
-	{10793, 10825, 455},
-	{10825, 10833, 456},
-	{10833, 10865, 457},
-	{10865, 10873, 458},
-	{10873, 10905, 459},
-	{10905, 10913, 460},
-	{10913, 10945, 461},
-	{10945, 10953, 462},
-	{10953, 10985, 463},
-	{10985, 10993, 464},
-	{10993, 10997, 465},
-	{10997, 11001, 466},
-	{11001, 11005, 467},
-	{11005, 11029, 468},
-	{11029, 11045, 469},
-	{11045, 11061, 470},
-	{11061, 11077, 471},
-	{11077, 11109, 472},
-	{11109, 11110, 473},
-	{11110, 11111, 474},
-	{11111, 11121, 475},
-	{11121, 11122, 476},
-	{11122, 11123, 477},
-	{11123, 11126, 478},
-	{11126, 11206, 479},
-	{11206, 11230, 480},
-	{11230, 11242, 481},
-	{11242, 11243, 482},
-	{11243, 11244, 483},
-	{11244, 11245, 484},
-	{11245, 11246, 485},
-	{11246, 11247, 486},
-	{11247, 11248, 487},
-	{11248, 11249, 488},
-	{11249, 11250, 489},
-	{11250, 11251, 490},
-	{11251, 11252, 491},
-	{11252, 11253, 492},
-	{11253, 11254, 493},
-	{11254, 11255, 494},
-	{11255, 11256, 495},
-	{11256, 11257, 496},
-	{11257, 11258, 497},
-	{11258, 11290, 498},
-	{11290, 11322, 499},
-	{11322, 11354, 500},
-	{11354, 11386, 501},
-	{11386, 11418, 502},
-	{11418, 11450, 503},
-	{11450, 11482, 504},
-	{11482, 11514, 505},
-	{11514, 11546, 506},
-	{11546, 11578, 507},
-	{11578, 11610, 508},
-	{11610, 11642, 509},
-	{11642, 11674, 510},
-	{11674, 11706, 511},
-	{11706, 11738, 512},
-	{11738, 11770, 513},
-	{11770, 11850, 514},
-	{11850, 11930, 515},
-	{11930, 12010, 516},
-	{12010, 12090, 517},
-	{12090, 12170, 518},
-	{12170, 12250, 519},
-	{12250, 12330, 520},
-	{12330, 12331, 521},
-	{12331, 12333, 522},
-	{12333, 12365, 523},
-	{12365, 12429, 524},
-	{12429, 12430, 525},
-	{12430, 12431, 526},
-	{12431, 12432, 527},
-	{12432, 12512, 528},
-	{12512, 12592, 529},
-	{12592, 12672, 530},
-	{12672, 12678, 531},
-	{12678, 12684, 532},
-	{12684, 12690, 533},
-	{12690, 12691, 534},
-	{12691, 12694, 535},
-	{12694, 12695, 536},
-	{12695, 12696, 537},
-	{12696, 12697, 538},
-	{12697, 12698, 539},
-	{12698, 12699, 540},
-	{12699, 12700, 541},
-	{12700, 12701, 542},
-	{12701, 12702, 543},
-	{12702, 12703, 544},
-	{12703, 12704, 545},
-	{12704, 12705, 546},
-	{12705, 12706, 547},
-	{12706, 12707, 548},
-	{12707, 12708, 549},
-	{12708, 12709, 550},
-	{12709, 12710, 551},
-	{12710, 12711, 552},
-	{12711, 12712, 553},
-	{12712, 12713, 554},
-	{12713, 12715, 555},
-	{12715, 12717, 556},
-	{12717, 12719, 557},
-	{12719, 12721, 558},
-	{12721, 12723, 559},
-	{12723, 12725, 560},
-	{12725, 12741, 561},
-	{12741, 12757, 562},
-	{12757, 12773, 563},
-	{12773, 12789, 564},
-	{12789, 12805, 565},
-	{12805, 12821, 566},
-	{12821, 12837, 567},
-	{12837, 12853, 568},
-	{12853, 12869, 569},
-	{12869, 12885, 570},
-	{12885, 12901, 571},
-	{12901, 12917, 572},
-	{12917, 12933, 573},
-	{12933, 12949, 574},
-	{12949, 12965, 575},
-	{12965, 12981, 576},
-	{12981, 12985, 577},
-	{12985, 12989, 578},
-	{12989, 12993, 579},
-	{12993, 12997, 580},
-	{12997, 13001, 581},
-	{13001, 13005, 582},
-	{13005, 13009, 583},
-	{13009, 13013, 584},
-	{13013, 13017, 585},
-	{13017, 13021, 586},
-	{13021, 13025, 587},
-	{13025, 13029, 588},
-	{13029, 13033, 589},
-	{13033, 13037, 590},
-	{13037, 13041, 591},
-	{13041, 13045, 592},
-	{13045, 13046, 593},
-	{13046, 13047, 594},
-	{13047, 13048, 595},
-	{13048, 13128, 596},
-	{13128, 13134, 597},
-	{13134, 13140, 598},
-	{13140, 13146, 599},
-	{13146, 13152, 600},
-	{13152, 13158, 601},
-	{13158, 13164, 602},
-	{13164, 13170, 603},
-	{13170, 13176, 604},
-	{13176, 13182, 605},
-	{13182, 13188, 606},
-	{13188, 13194, 607},
-	{13194, 13200, 608},
-	{13200, 13206, 609},
-	{13206, 13212, 610},
-	{13212, 13218, 611},
-	{13218, 13224, 612},
-	{13224, 13230, 613},
-	{13230, 13236, 614},
-	{13236, 13242, 615},
-	{13242, 13248, 616},
-	{13248, 13254, 617},
-	{13254, 13260, 618},
-	{13260, 13266, 619},
-	{13266, 13272, 620},
-	{13272, 13278, 621},
-	{13278, 13279, 622},
-	{13279, 13280, 623},
-	{13280, 13281, 624},
-	{13281, 13282, 625},
-	{13282, 13314, 626},
-	{13314, 13346, 627},
-	{13346, 13378, 628},
-	{13378, 13410, 629},
-	{13410, 13442, 630},
-	{13442, 13474, 631},
-	{13474, 13506, 632},
-	{13506, 13538, 633},
-	{13538, 13570, 634},
-	{13570, 13602, 635},
-	{13602, 13634, 636},
-	{13634, 13666, 637},
-	{13666, 13698, 638},
-	{13698, 13730, 639},
-	{13730, 13762, 640},
-	{13762, 13794, 641},
-	{13794, 13826, 642},
-	{13826, 13858, 643},
-	{13858, 13922, 644},
-	{13922, 13986, 645},
-	{13986, 14050, 646},
-	{14050, 14114, 647},
-	{14114, 14178, 648},
-	{14178, 14242, 649},
-	{14242, 14306, 650},
-	{14306, 14370, 651},
-	{14370, 14434, 652},
-	{14434, 14440, 653},
-	{14440, 14504, 654},
-	{14504, 14510, 655},
-	{14510, 14511, 656},
-	{14511, 14514, 657},
-	{14514, 14594, 658},
-	{14594, 14595, 659},
-	{14595, 14597, 660},
-	{14597, 14607, 661},
-	{14607, 14609, 662},
-	{14609, 14613, 663},
-	{14613, 14614, 664},
-	{14614, 14615, 665},
-	{14615, 14627, 666},
-	{14627, 14639, 667},
-	{14639, 14643, 668},
-	{14643, 14644, 669},
-	{14644, 14645, 670},
-	{14645, 14646, 671},
-	{14646, 14649, 672},
-	{14649, 14650, 673},
-	{14650, 14662, 674},
-	{14662, 14668, 675},
-	{14668, 14674, 676},
-	{14674, 14680, 677},
-	{14680, 14686, 678},
-	{14686, 14692, 679},
-	{14692, 14698, 680},
-	{14698, 14704, 681},
-	{14704, 14710, 682},
-	{14710, 14716, 683},
-	{14716, 14722, 684},
-	{14722, 14728, 685},
-	{14728, 14734, 686},
-	{14734, 14740, 687},
-	{14740, 14746, 688},
-	{14746, 14752, 689},
-	{14752, 14758, 690},
-	{14758, 14764, 691},
-	{14764, 14768, 692},
-	{14768, 14772, 693},
-	{14772, 14776, 694},
-	{14776, 14780, 695},
-	{14780, 14784, 696},
-	{14784, 14788, 697},
-	{14788, 14792, 698},
-	{14792, 14796, 699},
-	{14796, 14800, 700},
-	{14800, 14804, 701},
-	{14804, 14808, 702},
-	{14808, 14812, 703},
-	{14812, 14816, 704},
-	{14816, 14820, 705},
-	{14820, 14824, 706},
-	{14824, 14828, 707},
-	{14828, 14829, 708},
-	{14829, 14830, 709},
-	{14830, 14831, 710},
-	{14831, 14832, 711},
-	{14832, 14833, 712},
-	{14833, 14834, 713},
-	{14834, 14835, 714},
-	{14835, 14836, 715},
-	{14836, 14837, 716},
-	{14837, 14838, 717},
-	{14838, 14839, 718},
-	{14839, 14840, 719},
-	{14840, 14841, 720},
-	{14841, 14842, 721},
-	{14842, 14843, 722},
-	{14843, 14844, 723},
-	{14844, 14845, 724},
-	{14845, 14846, 725},
-	{14846, 14847, 726},
-	{14847, 14848, 727},
-	{14848, 14849, 728},
-	{14849, 14850, 729},
-	{14850, 14851, 730},
-	{14851, 14852, 731},
-	{14852, 14853, 732},
-	{14853, 14854, 733},
-	{14854, 14855, 734},
-	{14855, 14856, 735},
-	{14856, 14857, 736},
-	{14857, 14858, 737},
-	{14858, 14859, 738},
-	{14859, 14860, 739},
-	{14860, 14886, 740},
-	{14886, 14887, 741},
-	{14887, 14888, 742},
-	{14888, 14900, 743},
-	{14900, 14903, 744},
-	{14903, 14935, 745},
-	{14935, 14936, 746},
-	{14936, 14937, 747},
-	{14937, 14938, 748},
-	{14938, 14939, 749},
-	{14939, 14940, 750},
-	{14940, 14941, 751},
-	{14941, 14942, 752},
-	{14942, 14943, 753},
-	{14943, 14944, 754},
-	{14944, 14945, 755},
-	{14945, 14947, 756},
-	{14947, 14949, 757},
-	{14949, 14951, 758},
-	{14951, 14953, 759},
-	{14953, 14955, 760},
-	{14955, 14957, 761},
-	{14957, 14959, 762},
-	{14959, 14961, 763},
-	{14961, 14963, 764},
-	{14963, 14965, 765},
-	{14965, 14967, 766},
-	{14967, 14969, 767},
-	{14969, 14971, 768},
-	{14971, 14973, 769},
-	{14973, 14975, 770},
-	{14975, 14977, 771},
-	{14977, 14979, 772},
-	{14979, 14981, 773},
-	{14981, 14983, 774},
-	{14983, 14985, 775},
-	{14985, 14993, 776},
-	{14993, 15001, 777},
-	{15001, 15009, 778},
-	{15009, 15017, 779},
-	{15017, 15025, 780},
-	{15025, 15033, 781},
-	{15033, 15041, 782},
-	{15041, 15049, 783},
-	{15049, 15057, 784},
-	{15057, 15065, 785},
-	{15065, 15073, 786},
-	{15073, 15074, 787},
-	{15074, 15076, 788},
-	{15076, 15077, 789},
-	{15077, 15089, 790},
-	{15089, 15090, 791},
-	{15090, 15091, 792},
-	{15091, 15092, 793},
-	{15092, 15094, 794},
-	{15094, 15174, 795},
-	{15174, 15254, 796},
-	{15254, 15334, 797},
-	{15334, 15414, 798},
-	{15414, 15494, 799},
-	{15494, 15574, 800},
-	{15574, 15654, 801},
-	{15654, 15734, 802},
-	{15734, 15814, 803},
-	{15814, 15894, 804},
-	{15894, 15974, 805},
-	{15974, 16054, 806},
-	{16054, 16134, 807},
-	{16134, 16214, 808},
-	{16214, 16220, 809},
-	{16220, 16226, 810},
-	{16226, 16232, 811},
-	{16232, 16238, 812},
-	{16238, 16244, 813},
-	{16244, 16250, 814},
-	{16250, 16256, 815},
-	{16256, 16262, 816},
-	{16262, 16268, 817},
-	{16268, 16274, 818},
-	{16274, 16280, 819},
-	{16280, 16286, 820},
-	{16286, 16292, 821},
-	{16292, 16616, 822},
-	{16616, 16940, 823},
-	{16940, 17264, 824},
-	{17264, 17588, 825},
-	{17588, 17912, 826},
-	{17912, 18236, 827},
-	{18236, 18560, 828},
-	{18560, 18884, 829},
-	{18884, 19208, 830},
-	{19208, 19532, 831},
-	{19532, 19856, 832},
-	{19856, 20180, 833},
-	{20180, 20504, 834},
-	{20504, 20536, 835},
-	{20536, 20540, 836},
-	{20540, 20552, 837},
-	{20552, 20560, 838},
-	{20560, 20568, 839},
-	{20568, 20569, 840},
-	{20569, 20570, 841},
-	{20570, 20582, 842},
-	{20582, 20598, 843},
-	{20598, 20599, 844},
-	{20599, 20603, 845},
-	{20603, 20635, 846},
-	{20635, 20639, 847},
-	{20639, 20643, 848},
-	{20643, 20647, 849},
-	{20647, 20651, 850},
-	{20651, 20655, 851},
-	{20655, 20659, 852},
-	{20659, 20663, 853},
-	{20663, 20667, 854},
-	{20667, 20671, 855},
-	{20671, 20675, 856},
-	{20675, 20707, 857},
-	{20707, 20739, 858},
-	{20739, 20743, 859},
-	{20743, 20746, 860},
-	{20746, 20749, 861},
-	{20749, 20752, 862},
-	{20752, 20755, 863},
-	{20755, 20756, 864},
-	{20756, 20757, 865},
-	{20757, 20758, 866},
-	{20758, 20759, 867},
-	{20759, 20760, 868},
-	{20760, 20763, 869},
-	{20763, 20766, 870},
-	{20766, 20769, 871},
-	{20769, 20772, 872},
-	{20772, 20773, 873},
-	{20773, 20774, 874},
-	{20774, 20775, 875},
-	{20775, 20801, 876},
-	{20801, 20802, 877},
-	{20802, 20828, 878},
-	{20828, 20829, 879},
-	{20829, 20830, 880},
-	{20830, 20831, 881},
-	{20831, 20832, 882},
-	{20832, 20838, 883},
-	{20838, 20844, 884},
-	{20844, 20846, 885},
-	{20846, 20848, 886},
-	{20848, 20880, 887},
-	{20880, 20912, 888},
-	{20912, 20976, 889},
-	{20976, 21040, 890},
-	{21040, 21072, 891},
-	{21072, 21104, 892},
-	{21104, 21184, 893},
-	{21184, 21264, 894},
-	{21264, 21288, 895},
-	{21288, 21312, 896},
-	{21312, 21376, 897},
-	{21376, 21440, 898},
-	{21440, 21472, 899},
-	{21472, 21504, 900},
-	{21504, 21512, 901},
-	{21512, 21520, 902},
-	{21520, 21524, 903},
-	{21524, 21536, 904},
-	{21536, 21540, 905},
-	{21540, 21541, 906},
-	{21541, 21550, 907},
-	{21550, 21566, 908},
-	{21566, 21590, 909},
-	{21590, 21614, 910},
-	{21614, 21615, 911},
-	{21615, 21616, 912},
-	{21616, 21617, 913},
-	{21617, 21618, 914},
-	{21618, 21619, 915},
-	{21619, 21624, 916},
-	{21624, 21625, 917},
-	{21625, 21626, 918},
-	{21626, 21627, 919},
-	{21627, 21628, 920},
-	{21628, 21629, 921},
-	{21629, 21630, 922},
-	{21630, 21710, 923},
-	{21710, 22034, 924},
-	{22034, 22040, 925},
-	{22040, 22041, 926},
-	{22041, 22042, 927},
-	{22042, 22043, 928},
-	{22043, 22044, 929},
-	{22044, 22050, 930},
-	{22050, 22130, 931},
-	{22130, 22454, 932},
-	{22454, 22455, 933},
-	{22455, 22535, 934},
-	{22535, 22541, 935},
-	{22541, 22543, 936},
-	{22543, 22567, 937},
-	{22567, 22891, 938},
-	{22891, 22892, 939},
-	{22892, 22893, 940},
-	{22893, 22894, 941},
-	{22894, 22910, 942},
-	{22910, 22926, 943},
-	{22926, 22942, 944},
-	{22942, 22958, 945},
-	{22958, 22974, 946},
-	{22974, 22990, 947},
-	{22990, 23006, 948},
-	{23006, 23022, 949},
-	{23022, 23038, 950},
-	{23038, 23054, 951},
-	{23054, 23070, 952},
-	{23070, 23086, 953},
-	{23086, 23102, 954},
-	{23102, 23118, 955},
-	{23118, 23134, 956},
-	{23134, 23150, 957},
-	{23150, 23166, 958},
-	{23166, 23168, 959},
-	{23168, 23170, 960},
-	{23170, 23172, 961},
-	{23172, 23174, 962},
-	{23174, 23176, 963},
-	{23176, 23178, 964},
-	{23178, 23180, 965},
-	{23180, 23182, 966},
-	{23182, 23184, 967},
-	{23184, 23186, 968},
-	{23186, 23188, 969},
-	{23188, 23190, 970},
-	{23190, 23192, 971},
-	{23192, 23194, 972},
-	{23194, 23196, 973},
-	{23196, 23198, 974},
-	{23198, 23200, 975},
-	{23200, 23201, 976},
-	{23201, 23202, 977},
-	{23202, 23214, 978},
-	{23214, 23226, 979},
-	{23226, 23238, 980},
-	{23238, 23250, 981},
-	{23250, 23251, 982},
-	{23251, 23257, 983},
-	{23257, 23337, 984},
-	{23337, 23661, 985},
-	{23661, 23662, 986},
-	{23662, 23668, 987},
-	{23668, 23748, 988},
-	{23748, 24072, 989},
-	{24072, 24073, 990},
-	{24073, 24074, 991},
-	{24074, 24080, 992},
-	{24080, 24160, 993},
-	{24160, 24484, 994},
-	{24484, 24485, 995},
-	{24485, 24486, 996},
-	{24486, 24487, 997},
-	{24487, 24488, 998},
-	{24488, 24584, 999},
-	{24584, 24968, 1000},
-	{24968, 24969, 1001},
-	{24969, 25097, 1002},
-	{25097, 25099, 1003},
-	{25099, 25107, 1004},
-	{25107, 25108, 1005},
-	{25108, 25109, 1006},
-	{25109, 25110, 1007},
-	{25110, 25111, 1008},
-	{25111, 25112, 1009},
-	{25112, 25113, 1010},
-	{25113, 25114, 1011},
-	{25114, 25115, 1012},
-	{25115, 25116, 1013},
-	{25116, 25117, 1014},
-	{25117, 25118, 1015},
-	{25118, 25119, 1016},
-	{25119, 25120, 1017},
-	{25120, 25121, 1018},
-	{25121, 25122, 1019},
-	{25122, 25123, 1020},
-	{25123, 25124, 1021},
-	{25124, 25125, 1022},
-	{25125, 25205, 1023},
-	{25205, 25285, 1024},
-	{25285, 25365, 1025},
-	{25365, 25445, 1026},
-	{25445, 25451, 1027},
-	{25451, 25457, 1028},
-	{25457, 25463, 1029},
-	{25463, 25469, 1030},
-	{25469, 25470, 1031},
-	{25470, 25471, 1032},
-	{25471, 25472, 1033},
-	{25472, 25473, 1034},
-	{25473, 25474, 1035},
-	{25474, 25475, 1036},
-	{25475, 25476, 1037},
-	{25476, 25477, 1038},
-	{25477, 25557, 1039},
-	{25557, 25637, 1040},
-	{25637, 25717, 1041},
-	{25717, 25797, 1042},
-	{25797, 25803, 1043},
-	{25803, 25809, 1044},
-	{25809, 25815, 1045},
-	{25815, 25821, 1046},
-	{25821, 25885, 1047},
-	{25885, 25949, 1048},
-	{25949, 26013, 1049},
-	{26013, 26077, 1050},
-	{26077, 26141, 1051},
-	{26141, 26205, 1052},
-	{26205, 26269, 1053},
-	{26269, 26333, 1054},
-	{26333, 26397, 1055},
-	{26397, 26461, 1056},
-	{26461, 26525, 1057},
-	{26525, 26589, 1058},
-	{26589, 26653, 1059},
-	{26653, 26717, 1060},
-	{26717, 26781, 1061},
-	{26781, 26845, 1062},
-	{26845, 26847, 1063},
-	{26847, 26849, 1064},
-	{26849, 26851, 1065},
-	{26851, 26853, 1066},
-	{26853, 26855, 1067},
-	{26855, 26857, 1068},
-	{26857, 26859, 1069},
-	{26859, 26861, 1070},
-	{26861, 26865, 1071},
-	{26865, 26869, 1072},
-	{26869, 26873, 1073},
-	{26873, 26877, 1074},
-	{26877, 26881, 1075},
-	{26881, 26885, 1076},
-	{26885, 26889, 1077},
-	{26889, 26893, 1078},
-	{26893, 26917, 1079},
-	{26917, 26941, 1080},
-	{26941, 26965, 1081},
-	{26965, 26989, 1082},
-	{26989, 27013, 1083},
-	{27013, 27037, 1084},
-	{27037, 27061, 1085},
-	{27061, 27085, 1086},
-	{27085, 27117, 1087},
-	{27117, 27149, 1088},
-	{27149, 27181, 1089},
-	{27181, 27213, 1090},
-	{27213, 27245, 1091},
-	{27245, 27277, 1092},
-	{27277, 27309, 1093},
-	{27309, 27341, 1094},
-	{27341, 27365, 1095},
-	{27365, 27389, 1096},
-	{27389, 27413, 1097},
-	{27413, 27437, 1098},
-	{27437, 27461, 1099},
-	{27461, 27485, 1100},
-	{27485, 27509, 1101},
-	{27509, 27533, 1102},
-	{27533, 27553, 1103},
-	{27553, 27554, 1104},
-	{27554, 27606, 1105},
-	{27606, 27608, 1106},
-	{27608, 27609, 1107},
-	{27609, 27610, 1108},
-	{27610, 27611, 1109},
-	{27611, 27612, 1110},
-	{27612, 27628, 1111},
-	{27628, 27644, 1112},
-	{27644, 27660, 1113},
-	{27660, 27661, 1114},
-	{27661, 27693, 1115},
-	{27693, 27701, 1116},
-	{27701, 27717, 1117},
-	{27717, 27719, 1118},
-	{27719, 27720, 1119},
-	{27720, 27721, 1120},
-	{27721, 27724, 1121},
-	{27724, 27725, 1122},
-	{27725, 27805, 1123},
-	{27805, 27811, 1124},
-	{27811, 28135, 1125},
-	{28135, 28136, 1126},
-	{28136, 28216, 1127},
-	{28216, 28222, 1128},
-	{28222, 28546, 1129},
-	{28546, 28547, 1130},
-	{28547, 28627, 1131},
-	{28627, 28633, 1132},
-	{28633, 28957, 1133},
-	{28957, 28958, 1134},
-	{28958, 29038, 1135},
-	{29038, 29044, 1136},
-	{29044, 29368, 1137},
-	{29368, 29369, 1138},
-	{29369, 29370, 1139},
-	{29370, 29371, 1140},
-	{29371, 29374, 1141},
-	{29374, 29375, 1142},
-	{29375, 29376, 1143},
-	{29376, 29377, 1144},
-	{29377, 29378, 1145},
-	{29378, 29379, 1146},
-	{29379, 29380, 1147},
-	{29380, 29383, 1148},
-	{29383, 29386, 1149},
-	{29386, 29389, 1150},
-	{29389, 29390, 1151},
-	{29390, 29391, 1152},
-	{29391, 29407, 1153},
-	{29407, 29455, 1154},
-	{29455, 29467, 1155},
-	{29467, 29499, 1156},
-	{29499, 29501, 1157},
-	{29501, 29502, 1158},
-	{29502, 29664, 1159},
-	{29664, 29666, 1160},
-	{29666, 29667, 1161},
-	{29667, 29668, 1162},
-	{29668, 29669, 1163},
-	{29669, 29670, 1164},
-	{29670, 29671, 1165},
+	{581, 1931, 109},
+	{1931, 1947, 110},
+	{1947, 1963, 111},
+	{1963, 1979, 112},
+	{1979, 1995, 113},
+	{1995, 2011, 114},
+	{2011, 2027, 115},
+	{2027, 2043, 116},
+	{2043, 2059, 117},
+	{2059, 2075, 118},
+	{2075, 2091, 119},
+	{2091, 2107, 120},
+	{2107, 2123, 121},
+	{2123, 2139, 122},
+	{2139, 2155, 123},
+	{2155, 2171, 124},
+	{2171, 2187, 125},
+	{2187, 2211, 126},
+	{2211, 2235, 127},
+	{2235, 2247, 128},
+	{2247, 2248, 129},
+	{2248, 2249, 130},
+	{2249, 2250, 131},
+	{2250, 2251, 132},
+	{2251, 2252, 133},
+	{2252, 2253, 134},
+	{2253, 2254, 135},
+	{2254, 2255, 136},
+	{2255, 2257, 137},
+	{2257, 2269, 138},
+	{2269, 2293, 139},
+	{2293, 2294, 140},
+	{2294, 2295, 141},
+	{2295, 2296, 142},
+	{2296, 2297, 143},
+	{2297, 2298, 144},
+	{2298, 2299, 145},
+	{2299, 2300, 146},
+	{2300, 2301, 147},
+	{2301, 2302, 148},
+	{2302, 2303, 149},
+	{2303, 2304, 150},
+	{2304, 2305, 151},
+	{2305, 2306, 152},
+	{2306, 2307, 153},
+	{2307, 2308, 154},
+	{2308, 2309, 155},
+	{2309, 2321, 156},
+	{2321, 2322, 157},
+	{2322, 2323, 158},
+	{2323, 2324, 159},
+	{2324, 2325, 160},
+	{2325, 2326, 161},
+	{2326, 2327, 162},
+	{2327, 2328, 163},
+	{2328, 2329, 164},
+	{2329, 2330, 165},
+	{2330, 2331, 166},
+	{2331, 2332, 167},
+	{2332, 2333, 168},
+	{2333, 2334, 169},
+	{2334, 2335, 170},
+	{2335, 2336, 171},
+	{2336, 2337, 172},
+	{2337, 2338, 173},
+	{2338, 2339, 174},
+	{2339, 2340, 175},
+	{2340, 2341, 176},
+	{2341, 2343, 177},
+	{2343, 2344, 178},
+	{2344, 2600, 179},
+	{2600, 2664, 180},
+	{2664, 2728, 181},
+	{2728, 2792, 182},
+	{2792, 2856, 183},
+	{2856, 2920, 184},
+	{2920, 2984, 185},
+	{2984, 3048, 186},
+	{3048, 3112, 187},
+	{3112, 3176, 188},
+	{3176, 3240, 189},
+	{3240, 3304, 190},
+	{3304, 3368, 191},
+	{3368, 3369, 192},
+	{3369, 3370, 193},
+	{3370, 3371, 194},
+	{3371, 3375, 195},
+	{3375, 3887, 196},
+	{3887, 3888, 197},
+	{3888, 3889, 198},
+	{3889, 3907, 199},
+	{3907, 3987, 200},
+	{3987, 4011, 201},
+	{4011, 5307, 202},
+	{5307, 5308, 203},
+	{5308, 5309, 204},
+	{5309, 5310, 205},
+	{5310, 5311, 206},
+	{5311, 5319, 207},
+	{5319, 5327, 208},
+	{5327, 5335, 209},
+	{5335, 5367, 210},
+	{5367, 5399, 211},
+	{5399, 5431, 212},
+	{5431, 5463, 213},
+	{5463, 5495, 214},
+	{5495, 5527, 215},
+	{5527, 5559, 216},
+	{5559, 5591, 217},
+	{5591, 5623, 218},
+	{5623, 5655, 219},
+	{5655, 5719, 220},
+	{5719, 5727, 221},
+	{5727, 5747, 222},
+	{5747, 5827, 223},
+	{5827, 5835, 224},
+	{5835, 5843, 225},
+	{5843, 5851, 226},
+	{5851, 5859, 227},
+	{5859, 5867, 228},
+	{5867, 5875, 229},
+	{5875, 5883, 230},
+	{5883, 5891, 231},
+	{5891, 5899, 232},
+	{5899, 5907, 233},
+	{5907, 5971, 234},
+	{5971, 6035, 235},
+	{6035, 6099, 236},
+	{6099, 6163, 237},
+	{6163, 6227, 238},
+	{6227, 6291, 239},
+	{6291, 6355, 240},
+	{6355, 6419, 241},
+	{6419, 6483, 242},
+	{6483, 6547, 243},
+	{6547, 6611, 244},
+	{6611, 6675, 245},
+	{6675, 6683, 246},
+	{6683, 6691, 247},
+	{6691, 6699, 248},
+	{6699, 6707, 249},
+	{6707, 6715, 250},
+	{6715, 6723, 251},
+	{6723, 6731, 252},
+	{6731, 6739, 253},
+	{6739, 6747, 254},
+	{6747, 6755, 255},
+	{6755, 6763, 256},
+	{6763, 6771, 257},
+	{6771, 6795, 258},
+	{6795, 6797, 259},
+	{6797, 6861, 260},
+	{6861, 6863, 261},
+	{6863, 6865, 262},
+	{6865, 6867, 263},
+	{6867, 6869, 264},
+	{6869, 6871, 265},
+	{6871, 6873, 266},
+	{6873, 6875, 267},
+	{6875, 6877, 268},
+	{6877, 6879, 269},
+	{6879, 6881, 270},
+	{6881, 6883, 271},
+	{6883, 6885, 272},
+	{6885, 6887, 273},
+	{6887, 6895, 274},
+	{6895, 6919, 275},
+	{6919, 6927, 276},
+	{6927, 6928, 277},
+	{6928, 6929, 278},
+	{6929, 6945, 279},
+	{6945, 6946, 280},
+	{6946, 6947, 281},
+	{6947, 6963, 282},
+	{6963, 6965, 283},
+	{6965, 6997, 284},
+	{6997, 6998, 285},
+	{6998, 6999, 286},
+	{6999, 7000, 287},
+	{7000, 7003, 288},
+	{7003, 7006, 289},
+	{7006, 7007, 290},
+	{7007, 7011, 291},
+	{7011, 7012, 292},
+	{7012, 7016, 293},
+	{7016, 7017, 294},
+	{7017, 7019, 295},
+	{7019, 7023, 296},
+	{7023, 7027, 297},
+	{7027, 7034, 298},
+	{7034, 7098, 299},
+	{7098, 7099, 300},
+	{7099, 7100, 301},
+	{7100, 7101, 302},
+	{7101, 7102, 303},
+	{7102, 7103, 304},
+	{7103, 7104, 305},
+	{7104, 7105, 306},
+	{7105, 7106, 307},
+	{7106, 7107, 308},
+	{7107, 7108, 309},
+	{7108, 7109, 310},
+	{7109, 7110, 311},
+	{7110, 7111, 312},
+	{7111, 7112, 313},
+	{7112, 7113, 314},
+	{7113, 7114, 315},
+	{7114, 7178, 316},
+	{7178, 7242, 317},
+	{7242, 7306, 318},
+	{7306, 7370, 319},
+	{7370, 7434, 320},
+	{7434, 7498, 321},
+	{7498, 7562, 322},
+	{7562, 7626, 323},
+	{7626, 7690, 324},
+	{7690, 7754, 325},
+	{7754, 7755, 326},
+	{7755, 7756, 327},
+	{7756, 7757, 328},
+	{7757, 7758, 329},
+	{7758, 7759, 330},
+	{7759, 7760, 331},
+	{7760, 7761, 332},
+	{7761, 7762, 333},
+	{7762, 7763, 334},
+	{7763, 7764, 335},
+	{7764, 7765, 336},
+	{7765, 7766, 337},
+	{7766, 7830, 338},
+	{7830, 7894, 339},
+	{7894, 7958, 340},
+	{7958, 7990, 341},
+	{7990, 8022, 342},
+	{8022, 8054, 343},
+	{8054, 8086, 344},
+	{8086, 8118, 345},
+	{8118, 8150, 346},
+	{8150, 8182, 347},
+	{8182, 8214, 348},
+	{8214, 8246, 349},
+	{8246, 8252, 350},
+	{8252, 8258, 351},
+	{8258, 8264, 352},
+	{8264, 8270, 353},
+	{8270, 8276, 354},
+	{8276, 8282, 355},
+	{8282, 8288, 356},
+	{8288, 8294, 357},
+	{8294, 8300, 358},
+	{8300, 8332, 359},
+	{8332, 8333, 360},
+	{8333, 8334, 361},
+	{8334, 8338, 362},
+	{8338, 8342, 363},
+	{8342, 8350, 364},
+	{8350, 8358, 365},
+	{8358, 8390, 366},
+	{8390, 8518, 367},
+	{8518, 8646, 368},
+	{8646, 8678, 369},
+	{8678, 8758, 370},
+	{8758, 8838, 371},
+	{8838, 8918, 372},
+	{8918, 8920, 373},
+	{8920, 8921, 374},
+	{8921, 8922, 375},
+	{8922, 8923, 376},
+	{8923, 9003, 377},
+	{9003, 9009, 378},
+	{9009, 9333, 379},
+	{9333, 9334, 380},
+	{9334, 9335, 381},
+	{9335, 9367, 382},
+	{9367, 9447, 383},
+	{9447, 9451, 384},
+	{9451, 9452, 385},
+	{9452, 9460, 386},
+	{9460, 9461, 387},
+	{9461, 9464, 388},
+	{9464, 9465, 389},
+	{9465, 9468, 390},
+	{9468, 9469, 391},
+	{9469, 9477, 392},
+	{9477, 9478, 393},
+	{9478, 9479, 394},
+	{9479, 9481, 395},
+	{9481, 9493, 396},
+	{9493, 9573, 397},
+	{9573, 9574, 398},
+	{9574, 9575, 399},
+	{9575, 9583, 400},
+	{9583, 9599, 401},
+	{9599, 9727, 402},
+	{9727, 9728, 403},
+	{9728, 9808, 404},
+	{9808, 9888, 405},
+	{9888, 9968, 406},
+	{9968, 9980, 407},
+	{9980, 9981, 408},
+	{9981, 10305, 409},
+	{10305, 10629, 410},
+	{10629, 10630, 411},
+	{10630, 10631, 412},
+	{10631, 10632, 413},
+	{10632, 10633, 414},
+	{10633, 10634, 415},
+	{10634, 10635, 416},
+	{10635, 10636, 417},
+	{10636, 10637, 418},
+	{10637, 10638, 419},
+	{10638, 10639, 420},
+	{10639, 10640, 421},
+	{10640, 10641, 422},
+	{10641, 10642, 423},
+	{10642, 10643, 424},
+	{10643, 10644, 425},
+	{10644, 10645, 426},
+	{10645, 10646, 427},
+	{10646, 10647, 428},
+	{10647, 10648, 429},
+	{10648, 10649, 430},
+	{10649, 10650, 431},
+	{10650, 10651, 432},
+	{10651, 10652, 433},
+	{10652, 10653, 434},
+	{10653, 10654, 435},
+	{10654, 10655, 436},
+	{10655, 10656, 437},
+	{10656, 10657, 438},
+	{10657, 10658, 439},
+	{10658, 10659, 440},
+	{10659, 10667, 441},
+	{10667, 10675, 442},
+	{10675, 10699, 443},
+	{10699, 10723, 444},
+	{10723, 10747, 445},
+	{10747, 10771, 446},
+	{10771, 10795, 447},
+	{10795, 10819, 448},
+	{10819, 10843, 449},
+	{10843, 10867, 450},
+	{10867, 10891, 451},
+	{10891, 10915, 452},
+	{10915, 10947, 453},
+	{10947, 10955, 454},
+	{10955, 10987, 455},
+	{10987, 10995, 456},
+	{10995, 11027, 457},
+	{11027, 11035, 458},
+	{11035, 11067, 459},
+	{11067, 11075, 460},
+	{11075, 11107, 461},
+	{11107, 11115, 462},
+	{11115, 11147, 463},
+	{11147, 11155, 464},
+	{11155, 11187, 465},
+	{11187, 11195, 466},
+	{11195, 11199, 467},
+	{11199, 11203, 468},
+	{11203, 11207, 469},
+	{11207, 11231, 470},
+	{11231, 11247, 471},
+	{11247, 11263, 472},
+	{11263, 11279, 473},
+	{11279, 11311, 474},
+	{11311, 11312, 475},
+	{11312, 11313, 476},
+	{11313, 11323, 477},
+	{11323, 11324, 478},
+	{11324, 11325, 479},
+	{11325, 11328, 480},
+	{11328, 11408, 481},
+	{11408, 11432, 482},
+	{11432, 11444, 483},
+	{11444, 11445, 484},
+	{11445, 11446, 485},
+	{11446, 11447, 486},
+	{11447, 11448, 487},
+	{11448, 11449, 488},
+	{11449, 11450, 489},
+	{11450, 11451, 490},
+	{11451, 11452, 491},
+	{11452, 11453, 492},
+	{11453, 11454, 493},
+	{11454, 11455, 494},
+	{11455, 11456, 495},
+	{11456, 11457, 496},
+	{11457, 11458, 497},
+	{11458, 11459, 498},
+	{11459, 11460, 499},
+	{11460, 11492, 500},
+	{11492, 11524, 501},
+	{11524, 11556, 502},
+	{11556, 11588, 503},
+	{11588, 11620, 504},
+	{11620, 11652, 505},
+	{11652, 11684, 506},
+	{11684, 11716, 507},
+	{11716, 11748, 508},
+	{11748, 11780, 509},
+	{11780, 11812, 510},
+	{11812, 11844, 511},
+	{11844, 11876, 512},
+	{11876, 11908, 513},
+	{11908, 11940, 514},
+	{11940, 11972, 515},
+	{11972, 12052, 516},
+	{12052, 12132, 517},
+	{12132, 12212, 518},
+	{12212, 12292, 519},
+	{12292, 12372, 520},
+	{12372, 12452, 521},
+	{12452, 12532, 522},
+	{12532, 12533, 523},
+	{12533, 12535, 524},
+	{12535, 12567, 525},
+	{12567, 12631, 526},
+	{12631, 12632, 527},
+	{12632, 12633, 528},
+	{12633, 12634, 529},
+	{12634, 12714, 530},
+	{12714, 12794, 531},
+	{12794, 12874, 532},
+	{12874, 12880, 533},
+	{12880, 12886, 534},
+	{12886, 12892, 535},
+	{12892, 12893, 536},
+	{12893, 12896, 537},
+	{12896, 12897, 538},
+	{12897, 12898, 539},
+	{12898, 12899, 540},
+	{12899, 12900, 541},
+	{12900, 12901, 542},
+	{12901, 12902, 543},
+	{12902, 12903, 544},
+	{12903, 12904, 545},
+	{12904, 12905, 546},
+	{12905, 12906, 547},
+	{12906, 12907, 548},
+	{12907, 12908, 549},
+	{12908, 12909, 550},
+	{12909, 12910, 551},
+	{12910, 12911, 552},
+	{12911, 12912, 553},
+	{12912, 12913, 554},
+	{12913, 12914, 555},
+	{12914, 12915, 556},
+	{12915, 12917, 557},
+	{12917, 12919, 558},
+	{12919, 12921, 559},
+	{12921, 12923, 560},
+	{12923, 12925, 561},
+	{12925, 12927, 562},
+	{12927, 12943, 563},
+	{12943, 12959, 564},
+	{12959, 12975, 565},
+	{12975, 12991, 566},
+	{12991, 13007, 567},
+	{13007, 13023, 568},
+	{13023, 13039, 569},
+	{13039, 13055, 570},
+	{13055, 13071, 571},
+	{13071, 13087, 572},
+	{13087, 13103, 573},
+	{13103, 13119, 574},
+	{13119, 13135, 575},
+	{13135, 13151, 576},
+	{13151, 13167, 577},
+	{13167, 13183, 578},
+	{13183, 13187, 579},
+	{13187, 13191, 580},
+	{13191, 13195, 581},
+	{13195, 13199, 582},
+	{13199, 13203, 583},
+	{13203, 13207, 584},
+	{13207, 13211, 585},
+	{13211, 13215, 586},
+	{13215, 13219, 587},
+	{13219, 13223, 588},
+	{13223, 13227, 589},
+	{13227, 13231, 590},
+	{13231, 13235, 591},
+	{13235, 13239, 592},
+	{13239, 13243, 593},
+	{13243, 13247, 594},
+	{13247, 13248, 595},
+	{13248, 13249, 596},
+	{13249, 13250, 597},
+	{13250, 13330, 598},
+	{13330, 13336, 599},
+	{13336, 13342, 600},
+	{13342, 13348, 601},
+	{13348, 13354, 602},
+	{13354, 13360, 603},
+	{13360, 13366, 604},
+	{13366, 13372, 605},
+	{13372, 13378, 606},
+	{13378, 13384, 607},
+	{13384, 13390, 608},
+	{13390, 13396, 609},
+	{13396, 13402, 610},
+	{13402, 13408, 611},
+	{13408, 13414, 612},
+	{13414, 13420, 613},
+	{13420, 13426, 614},
+	{13426, 13432, 615},
+	{13432, 13438, 616},
+	{13438, 13444, 617},
+	{13444, 13450, 618},
+	{13450, 13456, 619},
+	{13456, 13462, 620},
+	{13462, 13468, 621},
+	{13468, 13474, 622},
+	{13474, 13480, 623},
+	{13480, 13481, 624},
+	{13481, 13482, 625},
+	{13482, 13483, 626},
+	{13483, 13484, 627},
+	{13484, 13516, 628},
+	{13516, 13548, 629},
+	{13548, 13580, 630},
+	{13580, 13612, 631},
+	{13612, 13644, 632},
+	{13644, 13676, 633},
+	{13676, 13708, 634},
+	{13708, 13740, 635},
+	{13740, 13772, 636},
+	{13772, 13804, 637},
+	{13804, 13836, 638},
+	{13836, 13868, 639},
+	{13868, 13900, 640},
+	{13900, 13932, 641},
+	{13932, 13964, 642},
+	{13964, 13996, 643},
+	{13996, 14028, 644},
+	{14028, 14060, 645},
+	{14060, 14124, 646},
+	{14124, 14188, 647},
+	{14188, 14252, 648},
+	{14252, 14316, 649},
+	{14316, 14380, 650},
+	{14380, 14444, 651},
+	{14444, 14508, 652},
+	{14508, 14572, 653},
+	{14572, 14636, 654},
+	{14636, 14642, 655},
+	{14642, 14706, 656},
+	{14706, 14712, 657},
+	{14712, 14713, 658},
+	{14713, 14716, 659},
+	{14716, 14796, 660},
+	{14796, 14797, 661},
+	{14797, 14799, 662},
+	{14799, 14809, 663},
+	{14809, 14811, 664},
+	{14811, 14815, 665},
+	{14815, 14816, 666},
+	{14816, 14817, 667},
+	{14817, 14829, 668},
+	{14829, 14841, 669},
+	{14841, 14845, 670},
+	{14845, 14846, 671},
+	{14846, 14847, 672},
+	{14847, 14848, 673},
+	{14848, 14851, 674},
+	{14851, 14852, 675},
+	{14852, 14864, 676},
+	{14864, 14870, 677},
+	{14870, 14876, 678},
+	{14876, 14882, 679},
+	{14882, 14888, 680},
+	{14888, 14894, 681},
+	{14894, 14900, 682},
+	{14900, 14906, 683},
+	{14906, 14912, 684},
+	{14912, 14918, 685},
+	{14918, 14924, 686},
+	{14924, 14930, 687},
+	{14930, 14936, 688},
+	{14936, 14942, 689},
+	{14942, 14948, 690},
+	{14948, 14954, 691},
+	{14954, 14960, 692},
+	{14960, 14966, 693},
+	{14966, 14970, 694},
+	{14970, 14974, 695},
+	{14974, 14978, 696},
+	{14978, 14982, 697},
+	{14982, 14986, 698},
+	{14986, 14990, 699},
+	{14990, 14994, 700},
+	{14994, 14998, 701},
+	{14998, 15002, 702},
+	{15002, 15006, 703},
+	{15006, 15010, 704},
+	{15010, 15014, 705},
+	{15014, 15018, 706},
+	{15018, 15022, 707},
+	{15022, 15026, 708},
+	{15026, 15030, 709},
+	{15030, 15031, 710},
+	{15031, 15032, 711},
+	{15032, 15033, 712},
+	{15033, 15034, 713},
+	{15034, 15035, 714},
+	{15035, 15036, 715},
+	{15036, 15037, 716},
+	{15037, 15038, 717},
+	{15038, 15039, 718},
+	{15039, 15040, 719},
+	{15040, 15041, 720},
+	{15041, 15042, 721},
+	{15042, 15043, 722},
+	{15043, 15044, 723},
+	{15044, 15045, 724},
+	{15045, 15046, 725},
+	{15046, 15047, 726},
+	{15047, 15048, 727},
+	{15048, 15049, 728},
+	{15049, 15050, 729},
+	{15050, 15051, 730},
+	{15051, 15052, 731},
+	{15052, 15053, 732},
+	{15053, 15054, 733},
+	{15054, 15055, 734},
+	{15055, 15056, 735},
+	{15056, 15057, 736},
+	{15057, 15058, 737},
+	{15058, 15059, 738},
+	{15059, 15060, 739},
+	{15060, 15061, 740},
+	{15061, 15062, 741},
+	{15062, 15088, 742},
+	{15088, 15089, 743},
+	{15089, 15090, 744},
+	{15090, 15102, 745},
+	{15102, 15105, 746},
+	{15105, 15137, 747},
+	{15137, 15138, 748},
+	{15138, 15139, 749},
+	{15139, 15140, 750},
+	{15140, 15141, 751},
+	{15141, 15142, 752},
+	{15142, 15143, 753},
+	{15143, 15144, 754},
+	{15144, 15145, 755},
+	{15145, 15146, 756},
+	{15146, 15147, 757},
+	{15147, 15149, 758},
+	{15149, 15151, 759},
+	{15151, 15153, 760},
+	{15153, 15155, 761},
+	{15155, 15157, 762},
+	{15157, 15159, 763},
+	{15159, 15161, 764},
+	{15161, 15163, 765},
+	{15163, 15165, 766},
+	{15165, 15167, 767},
+	{15167, 15169, 768},
+	{15169, 15171, 769},
+	{15171, 15173, 770},
+	{15173, 15175, 771},
+	{15175, 15177, 772},
+	{15177, 15179, 773},
+	{15179, 15181, 774},
+	{15181, 15183, 775},
+	{15183, 15185, 776},
+	{15185, 15187, 777},
+	{15187, 15195, 778},
+	{15195, 15203, 779},
+	{15203, 15211, 780},
+	{15211, 15219, 781},
+	{15219, 15227, 782},
+	{15227, 15235, 783},
+	{15235, 15243, 784},
+	{15243, 15251, 785},
+	{15251, 15259, 786},
+	{15259, 15267, 787},
+	{15267, 15275, 788},
+	{15275, 15276, 789},
+	{15276, 15278, 790},
+	{15278, 15279, 791},
+	{15279, 15291, 792},
+	{15291, 15292, 793},
+	{15292, 15293, 794},
+	{15293, 15294, 795},
+	{15294, 15296, 796},
+	{15296, 15376, 797},
+	{15376, 15456, 798},
+	{15456, 15536, 799},
+	{15536, 15616, 800},
+	{15616, 15696, 801},
+	{15696, 15776, 802},
+	{15776, 15856, 803},
+	{15856, 15936, 804},
+	{15936, 16016, 805},
+	{16016, 16096, 806},
+	{16096, 16176, 807},
+	{16176, 16256, 808},
+	{16256, 16336, 809},
+	{16336, 16416, 810},
+	{16416, 16422, 811},
+	{16422, 16428, 812},
+	{16428, 16434, 813},
+	{16434, 16440, 814},
+	{16440, 16446, 815},
+	{16446, 16452, 816},
+	{16452, 16458, 817},
+	{16458, 16464, 818},
+	{16464, 16470, 819},
+	{16470, 16476, 820},
+	{16476, 16482, 821},
+	{16482, 16488, 822},
+	{16488, 16494, 823},
+	{16494, 16818, 824},
+	{16818, 17142, 825},
+	{17142, 17466, 826},
+	{17466, 17790, 827},
+	{17790, 18114, 828},
+	{18114, 18438, 829},
+	{18438, 18762, 830},
+	{18762, 19086, 831},
+	{19086, 19410, 832},
+	{19410, 19734, 833},
+	{19734, 20058, 834},
+	{20058, 20382, 835},
+	{20382, 20706, 836},
+	{20706, 20738, 837},
+	{20738, 20742, 838},
+	{20742, 20754, 839},
+	{20754, 20762, 840},
+	{20762, 20770, 841},
+	{20770, 20771, 842},
+	{20771, 20772, 843},
+	{20772, 20784, 844},
+	{20784, 20800, 845},
+	{20800, 20801, 846},
+	{20801, 20805, 847},
+	{20805, 20837, 848},
+	{20837, 20841, 849},
+	{20841, 20845, 850},
+	{20845, 20849, 851},
+	{20849, 20853, 852},
+	{20853, 20857, 853},
+	{20857, 20861, 854},
+	{20861, 20865, 855},
+	{20865, 20869, 856},
+	{20869, 20873, 857},
+	{20873, 20877, 858},
+	{20877, 20909, 859},
+	{20909, 20941, 860},
+	{20941, 20945, 861},
+	{20945, 20948, 862},
+	{20948, 20951, 863},
+	{20951, 20954, 864},
+	{20954, 20957, 865},
+	{20957, 20958, 866},
+	{20958, 20959, 867},
+	{20959, 20960, 868},
+	{20960, 20961, 869},
+	{20961, 20962, 870},
+	{20962, 20965, 871},
+	{20965, 20968, 872},
+	{20968, 20971, 873},
+	{20971, 20974, 874},
+	{20974, 20975, 875},
+	{20975, 20976, 876},
+	{20976, 20977, 877},
+	{20977, 21003, 878},
+	{21003, 21004, 879},
+	{21004, 21030, 880},
+	{21030, 21031, 881},
+	{21031, 21032, 882},
+	{21032, 21033, 883},
+	{21033, 21034, 884},
+	{21034, 21040, 885},
+	{21040, 21046, 886},
+	{21046, 21048, 887},
+	{21048, 21050, 888},
+	{21050, 21082, 889},
+	{21082, 21114, 890},
+	{21114, 21178, 891},
+	{21178, 21242, 892},
+	{21242, 21274, 893},
+	{21274, 21306, 894},
+	{21306, 21386, 895},
+	{21386, 21466, 896},
+	{21466, 21490, 897},
+	{21490, 21514, 898},
+	{21514, 21578, 899},
+	{21578, 21642, 900},
+	{21642, 21674, 901},
+	{21674, 21706, 902},
+	{21706, 21714, 903},
+	{21714, 21722, 904},
+	{21722, 21726, 905},
+	{21726, 21738, 906},
+	{21738, 21742, 907},
+	{21742, 21743, 908},
+	{21743, 21752, 909},
+	{21752, 21768, 910},
+	{21768, 21792, 911},
+	{21792, 21816, 912},
+	{21816, 21817, 913},
+	{21817, 21818, 914},
+	{21818, 21819, 915},
+	{21819, 21820, 916},
+	{21820, 21821, 917},
+	{21821, 21826, 918},
+	{21826, 21827, 919},
+	{21827, 21828, 920},
+	{21828, 21829, 921},
+	{21829, 21830, 922},
+	{21830, 21831, 923},
+	{21831, 21832, 924},
+	{21832, 21912, 925},
+	{21912, 22236, 926},
+	{22236, 22242, 927},
+	{22242, 22243, 928},
+	{22243, 22244, 929},
+	{22244, 22245, 930},
+	{22245, 22246, 931},
+	{22246, 22252, 932},
+	{22252, 22332, 933},
+	{22332, 22656, 934},
+	{22656, 22657, 935},
+	{22657, 22737, 936},
+	{22737, 22743, 937},
+	{22743, 22745, 938},
+	{22745, 22769, 939},
+	{22769, 23093, 940},
+	{23093, 23094, 941},
+	{23094, 23095, 942},
+	{23095, 23096, 943},
+	{23096, 23112, 944},
+	{23112, 23128, 945},
+	{23128, 23144, 946},
+	{23144, 23160, 947},
+	{23160, 23176, 948},
+	{23176, 23192, 949},
+	{23192, 23208, 950},
+	{23208, 23224, 951},
+	{23224, 23240, 952},
+	{23240, 23256, 953},
+	{23256, 23272, 954},
+	{23272, 23288, 955},
+	{23288, 23304, 956},
+	{23304, 23320, 957},
+	{23320, 23336, 958},
+	{23336, 23352, 959},
+	{23352, 23368, 960},
+	{23368, 23370, 961},
+	{23370, 23372, 962},
+	{23372, 23374, 963},
+	{23374, 23376, 964},
+	{23376, 23378, 965},
+	{23378, 23380, 966},
+	{23380, 23382, 967},
+	{23382, 23384, 968},
+	{23384, 23386, 969},
+	{23386, 23388, 970},
+	{23388, 23390, 971},
+	{23390, 23392, 972},
+	{23392, 23394, 973},
+	{23394, 23396, 974},
+	{23396, 23398, 975},
+	{23398, 23400, 976},
+	{23400, 23402, 977},
+	{23402, 23403, 978},
+	{23403, 23404, 979},
+	{23404, 23416, 980},
+	{23416, 23428, 981},
+	{23428, 23440, 982},
+	{23440, 23452, 983},
+	{23452, 23453, 984},
+	{23453, 23459, 985},
+	{23459, 23539, 986},
+	{23539, 23863, 987},
+	{23863, 23864, 988},
+	{23864, 23870, 989},
+	{23870, 23950, 990},
+	{23950, 24274, 991},
+	{24274, 24275, 992},
+	{24275, 24276, 993},
+	{24276, 24282, 994},
+	{24282, 24362, 995},
+	{24362, 24686, 996},
+	{24686, 24687, 997},
+	{24687, 24688, 998},
+	{24688, 24689, 999},
+	{24689, 24690, 1000},
+	{24690, 24786, 1001},
+	{24786, 25170, 1002},
+	{25170, 25171, 1003},
+	{25171, 25299, 1004},
+	{25299, 25301, 1005},
+	{25301, 25309, 1006},
+	{25309, 25310, 1007},
+	{25310, 25311, 1008},
+	{25311, 25312, 1009},
+	{25312, 25313, 1010},
+	{25313, 25314, 1011},
+	{25314, 25315, 1012},
+	{25315, 25316, 1013},
+	{25316, 25317, 1014},
+	{25317, 25318, 1015},
+	{25318, 25319, 1016},
+	{25319, 25320, 1017},
+	{25320, 25321, 1018},
+	{25321, 25322, 1019},
+	{25322, 25323, 1020},
+	{25323, 25324, 1021},
+	{25324, 25325, 1022},
+	{25325, 25326, 1023},
+	{25326, 25327, 1024},
+	{25327, 25407, 1025},
+	{25407, 25487, 1026},
+	{25487, 25567, 1027},
+	{25567, 25647, 1028},
+	{25647, 25653, 1029},
+	{25653, 25659, 1030},
+	{25659, 25665, 1031},
+	{25665, 25671, 1032},
+	{25671, 25672, 1033},
+	{25672, 25673, 1034},
+	{25673, 25674, 1035},
+	{25674, 25675, 1036},
+	{25675, 25676, 1037},
+	{25676, 25677, 1038},
+	{25677, 25678, 1039},
+	{25678, 25679, 1040},
+	{25679, 25759, 1041},
+	{25759, 25839, 1042},
+	{25839, 25919, 1043},
+	{25919, 25999, 1044},
+	{25999, 26005, 1045},
+	{26005, 26011, 1046},
+	{26011, 26017, 1047},
+	{26017, 26023, 1048},
+	{26023, 26087, 1049},
+	{26087, 26151, 1050},
+	{26151, 26215, 1051},
+	{26215, 26279, 1052},
+	{26279, 26343, 1053},
+	{26343, 26407, 1054},
+	{26407, 26471, 1055},
+	{26471, 26535, 1056},
+	{26535, 26599, 1057},
+	{26599, 26663, 1058},
+	{26663, 26727, 1059},
+	{26727, 26791, 1060},
+	{26791, 26855, 1061},
+	{26855, 26919, 1062},
+	{26919, 26983, 1063},
+	{26983, 27047, 1064},
+	{27047, 27049, 1065},
+	{27049, 27051, 1066},
+	{27051, 27053, 1067},
+	{27053, 27055, 1068},
+	{27055, 27057, 1069},
+	{27057, 27059, 1070},
+	{27059, 27061, 1071},
+	{27061, 27063, 1072},
+	{27063, 27067, 1073},
+	{27067, 27071, 1074},
+	{27071, 27075, 1075},
+	{27075, 27079, 1076},
+	{27079, 27083, 1077},
+	{27083, 27087, 1078},
+	{27087, 27091, 1079},
+	{27091, 27095, 1080},
+	{27095, 27119, 1081},
+	{27119, 27143, 1082},
+	{27143, 27167, 1083},
+	{27167, 27191, 1084},
+	{27191, 27215, 1085},
+	{27215, 27239, 1086},
+	{27239, 27263, 1087},
+	{27263, 27287, 1088},
+	{27287, 27319, 1089},
+	{27319, 27351, 1090},
+	{27351, 27383, 1091},
+	{27383, 27415, 1092},
+	{27415, 27447, 1093},
+	{27447, 27479, 1094},
+	{27479, 27511, 1095},
+	{27511, 27543, 1096},
+	{27543, 27567, 1097},
+	{27567, 27591, 1098},
+	{27591, 27615, 1099},
+	{27615, 27639, 1100},
+	{27639, 27663, 1101},
+	{27663, 27687, 1102},
+	{27687, 27711, 1103},
+	{27711, 27735, 1104},
+	{27735, 27755, 1105},
+	{27755, 27756, 1106},
+	{27756, 27808, 1107},
+	{27808, 27810, 1108},
+	{27810, 27811, 1109},
+	{27811, 27812, 1110},
+	{27812, 27813, 1111},
+	{27813, 27814, 1112},
+	{27814, 27830, 1113},
+	{27830, 27846, 1114},
+	{27846, 27862, 1115},
+	{27862, 27863, 1116},
+	{27863, 27895, 1117},
+	{27895, 27903, 1118},
+	{27903, 27919, 1119},
+	{27919, 27921, 1120},
+	{27921, 27922, 1121},
+	{27922, 27923, 1122},
+	{27923, 27926, 1123},
+	{27926, 27927, 1124},
+	{27927, 28007, 1125},
+	{28007, 28013, 1126},
+	{28013, 28337, 1127},
+	{28337, 28338, 1128},
+	{28338, 28418, 1129},
+	{28418, 28424, 1130},
+	{28424, 28748, 1131},
+	{28748, 28749, 1132},
+	{28749, 28829, 1133},
+	{28829, 28835, 1134},
+	{28835, 29159, 1135},
+	{29159, 29160, 1136},
+	{29160, 29240, 1137},
+	{29240, 29246, 1138},
+	{29246, 29570, 1139},
+	{29570, 29571, 1140},
+	{29571, 29572, 1141},
+	{29572, 29573, 1142},
+	{29573, 29576, 1143},
+	{29576, 29577, 1144},
+	{29577, 29578, 1145},
+	{29578, 29579, 1146},
+	{29579, 29580, 1147},
+	{29580, 29581, 1148},
+	{29581, 29582, 1149},
+	{29582, 29585, 1150},
+	{29585, 29588, 1151},
+	{29588, 29591, 1152},
+	{29591, 29592, 1153},
+	{29592, 29593, 1154},
+	{29593, 29609, 1155},
+	{29609, 29657, 1156},
+	{29657, 29669, 1157},
+	{29669, 29701, 1158},
+	{29701, 29703, 1159},
+	{29703, 29704, 1160},
+	{29704, 29866, 1161},
+	{29866, 29868, 1162},
+	{29868, 29869, 1163},
+	{29869, 29870, 1164},
+	{29870, 29871, 1165},
+	{29871, 29872, 1166},
+	{29872, 29873, 1167},
 }

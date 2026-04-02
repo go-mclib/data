@@ -1,4 +1,4 @@
-// Code generated for Minecraft 1.21.11 (Protocol 774); DO NOT EDIT.
+// Code generated for Minecraft 26.1 (Protocol 775); DO NOT EDIT.
 
 package entities
 
@@ -55,20 +55,23 @@ const (
 
 // Cat metadata indices
 const (
-	CatIndexVariant     = 17
-	CatIndexIsLying     = 18
-	CatIndexIsRelaxed   = 19
-	CatIndexCollarColor = 20
+	CatIndexVariant      = 17
+	CatIndexIsLying      = 18
+	CatIndexIsRelaxed    = 19
+	CatIndexCollarColor  = 20
+	CatIndexSoundVariant = 21
 )
 
 // Chicken metadata indices
 const (
-	ChickenIndexVariant = 17
+	ChickenIndexVariant      = 17
+	ChickenIndexSoundVariant = 18
 )
 
 // Cow metadata indices
 const (
-	CowIndexVariant = 17
+	CowIndexVariant      = 17
+	CowIndexSoundVariant = 18
 )
 
 // Creeper metadata indices
@@ -156,8 +159,9 @@ const (
 
 // Pig metadata indices
 const (
-	PigIndexBoostTime = 17
-	PigIndexVariant   = 18
+	PigIndexBoostTime    = 17
+	PigIndexVariant      = 18
+	PigIndexSoundVariant = 19
 )
 
 // Player metadata indices
@@ -507,6 +511,7 @@ type CatMetadata struct {
 	HasIsLying           bool
 	HasIsRelaxed         bool
 	HasCollarColor       bool
+	HasSoundVariant      bool
 
 	// field values
 	Flags             byte
@@ -530,6 +535,7 @@ type CatMetadata struct {
 	IsLying           bool
 	IsRelaxed         bool
 	CollarColor       int32
+	SoundVariant      int32
 }
 
 // ChickenMetadata contains metadata fields for Chicken entities.
@@ -550,6 +556,7 @@ type ChickenMetadata struct {
 	HasMobFlags          bool
 	HasIsBaby            bool
 	HasVariant           bool
+	HasSoundVariant      bool
 
 	// field values
 	Flags             byte
@@ -570,6 +577,7 @@ type ChickenMetadata struct {
 	MobFlags          byte
 	IsBaby            bool
 	Variant           int32
+	SoundVariant      int32
 }
 
 // CowMetadata contains metadata fields for Cow entities.
@@ -590,6 +598,7 @@ type CowMetadata struct {
 	HasMobFlags          bool
 	HasIsBaby            bool
 	HasVariant           bool
+	HasSoundVariant      bool
 
 	// field values
 	Flags             byte
@@ -610,6 +619,7 @@ type CowMetadata struct {
 	MobFlags          byte
 	IsBaby            bool
 	Variant           int32
+	SoundVariant      int32
 }
 
 // CreeperMetadata contains metadata fields for Creeper entities.
@@ -1033,6 +1043,7 @@ type PigMetadata struct {
 	HasIsBaby            bool
 	HasBoostTime         bool
 	HasVariant           bool
+	HasSoundVariant      bool
 
 	// field values
 	Flags             byte
@@ -1054,6 +1065,7 @@ type PigMetadata struct {
 	IsBaby            bool
 	BoostTime         int32
 	Variant           int32
+	SoundVariant      int32
 }
 
 // PlayerMetadata contains metadata fields for Player entities.
@@ -1509,7 +1521,7 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
 		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
-		{Index: 15, Serializer: 38, Name: "MainHand", Passthrough: false},
+		{Index: 15, Serializer: 42, Name: "MainHand", Passthrough: false},
 		{Index: 16, Serializer: 0, Name: "SkinParts", Passthrough: false},
 	},
 	"Bat": {
@@ -1588,6 +1600,7 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 18, Serializer: 8, Name: "IsLying", Passthrough: false},
 		{Index: 19, Serializer: 8, Name: "IsRelaxed", Passthrough: false},
 		{Index: 20, Serializer: 1, Name: "CollarColor", Passthrough: false},
+		{Index: 21, Serializer: 22, Name: "SoundVariant", Passthrough: false},
 	},
 	"Chicken": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -1607,7 +1620,8 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
-		{Index: 17, Serializer: 27, Name: "Variant", Passthrough: false},
+		{Index: 17, Serializer: 30, Name: "Variant", Passthrough: false},
+		{Index: 18, Serializer: 31, Name: "SoundVariant", Passthrough: false},
 	},
 	"Cow": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -1627,7 +1641,8 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
-		{Index: 17, Serializer: 22, Name: "Variant", Passthrough: false},
+		{Index: 17, Serializer: 23, Name: "Variant", Passthrough: false},
+		{Index: 18, Serializer: 24, Name: "SoundVariant", Passthrough: false},
 	},
 	"Creeper": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -1844,7 +1859,8 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
 		{Index: 17, Serializer: 1, Name: "BoostTime", Passthrough: false},
-		{Index: 18, Serializer: 26, Name: "Variant", Passthrough: false},
+		{Index: 18, Serializer: 28, Name: "Variant", Passthrough: false},
+		{Index: 19, Serializer: 29, Name: "SoundVariant", Passthrough: false},
 	},
 	"Player": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -1862,7 +1878,7 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
 		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
-		{Index: 15, Serializer: 38, Name: "MainHand", Passthrough: false},
+		{Index: 15, Serializer: 42, Name: "MainHand", Passthrough: false},
 		{Index: 16, Serializer: 0, Name: "SkinParts", Passthrough: false},
 		{Index: 17, Serializer: 3, Name: "AdditionalHearts", Passthrough: false},
 		{Index: 18, Serializer: 1, Name: "Score", Passthrough: false},
@@ -2007,8 +2023,8 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
 		{Index: 17, Serializer: 8, Name: "IsTamed", Passthrough: false},
-		{Index: 18, Serializer: 23, Name: "Variant", Passthrough: false},
-		{Index: 19, Serializer: 24, Name: "SoundVariant", Passthrough: false},
+		{Index: 18, Serializer: 25, Name: "Variant", Passthrough: false},
+		{Index: 19, Serializer: 26, Name: "SoundVariant", Passthrough: false},
 		{Index: 20, Serializer: 8, Name: "IsAngry", Passthrough: false},
 		{Index: 21, Serializer: 1, Name: "CollarColor", Passthrough: false},
 	},

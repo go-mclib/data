@@ -41,10 +41,14 @@
       "goType": "float64",
       "wireType": "float32"
     },
+    "minecraft:additional_trade_cost": {
+      "goField": "AdditionalTradeCost",
+      "goType": "int32",
+      "wireType": "varint"
+    },
     "minecraft:damage_type": {
-      "goField": "DamageType",
-      "goType": "string",
-      "wireType": "identifier"
+      "wireType": "varint",
+      "passthrough": true
     },
     "minecraft:item_model": {
       "goField": "ItemModel",
@@ -57,9 +61,8 @@
       "wireType": "identifier"
     },
     "minecraft:provides_trim_material": {
-      "goField": "ProvidesTrimMaterial",
-      "goType": "string",
-      "wireType": "identifier"
+      "wireType": "id_or_inline",
+      "passthrough": true
     },
     "minecraft:jukebox_playable": {
       "goField": "JukeboxPlayable",
@@ -67,9 +70,8 @@
       "wireType": "identifier"
     },
     "minecraft:provides_banner_patterns": {
-      "goField": "ProvidesBannerPatterns",
-      "goType": "string",
-      "wireType": "identifier"
+      "wireType": "holderSet",
+      "passthrough": true
     },
     "minecraft:break_sound": {
       "goField": "BreakSound",
@@ -226,6 +228,10 @@
     },
     "minecraft:intangible_projectile": {
       "wireType": "empty",
+      "passthrough": true
+    },
+    "minecraft:dye": {
+      "wireType": "varint",
       "passthrough": true
     },
     "minecraft:dyed_color": {

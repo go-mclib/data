@@ -279,7 +279,7 @@ Benchmarks on Apple M2 (`go test -bench=. -benchmem ./...`):
 | `StateID` (uncached) | ~84 ns/op | 0 |
 | `StateProperties` | ~138 ns/op | 2 |
 
-## Data Sources (as of Minecraft 1.21.11)
+## Data Sources
 
 Generated from Minecraft server reports (not committed). To regenerate:
 

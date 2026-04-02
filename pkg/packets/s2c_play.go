@@ -3781,9 +3781,17 @@ func (p *S2CSetSubtitleText) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Time
 type S2CSetTime struct {
-	WorldAge            ns.Int64
-	TimeOfDay           ns.Int64
-	TimeOfDayIncreasing ns.Boolean
+	WorldAge     ns.Int64
+	ClockUpdates []ClockUpdate
+}
+
+// ClockUpdate represents a single clock state update.
+// WorldClock is a VarInt holder reference into the minecraft:world_clock registry.
+type ClockUpdate struct {
+	WorldClock  ns.VarInt
+	TotalTicks  ns.VarLong
+	PartialTick ns.Float32
+	Rate        ns.Float32
 }
 
 func (p *S2CSetTime) Read(buf *ns.PacketBuffer) error {
@@ -3791,21 +3799,50 @@ func (p *S2CSetTime) Read(buf *ns.PacketBuffer) error {
 	if p.WorldAge, err = buf.ReadInt64(); err != nil {
 		return err
 	}
-	if p.TimeOfDay, err = buf.ReadInt64(); err != nil {
+	count, err := buf.ReadVarInt()
+	if err != nil {
 		return err
 	}
-	p.TimeOfDayIncreasing, err = buf.ReadBool()
-	return err
+	p.ClockUpdates = make([]ClockUpdate, count)
+	for i := range p.ClockUpdates {
+		if p.ClockUpdates[i].WorldClock, err = buf.ReadVarInt(); err != nil {
+			return err
+		}
+		if p.ClockUpdates[i].TotalTicks, err = buf.ReadVarLong(); err != nil {
+			return err
+		}
+		if p.ClockUpdates[i].PartialTick, err = buf.ReadFloat32(); err != nil {
+			return err
+		}
+		if p.ClockUpdates[i].Rate, err = buf.ReadFloat32(); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (p *S2CSetTime) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt64(p.WorldAge); err != nil {
 		return err
 	}
-	if err := buf.WriteInt64(p.TimeOfDay); err != nil {
+	if err := buf.WriteVarInt(ns.VarInt(len(p.ClockUpdates))); err != nil {
 		return err
 	}
-	return buf.WriteBool(p.TimeOfDayIncreasing)
+	for _, cu := range p.ClockUpdates {
+		if err := buf.WriteVarInt(cu.WorldClock); err != nil {
+			return err
+		}
+		if err := buf.WriteVarLong(cu.TotalTicks); err != nil {
+			return err
+		}
+		if err := buf.WriteFloat32(cu.PartialTick); err != nil {
+			return err
+		}
+		if err := buf.WriteFloat32(cu.Rate); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // S2CSetTitleText represents "Set Title Text".
@@ -4555,3 +4592,58 @@ func (p *S2CShowDialogPlay) Read(buf *ns.PacketBuffer) error {
 func (p *S2CShowDialogPlay) Write(buf *ns.PacketBuffer) error {
 	return buf.WriteByteArray(p.Dialog)
 }
+
+// S2CGameRuleValues represents "Game Rule Values" (new in 26.1).
+// Sent by the server to inform the client of current game rule values.
+//
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Game_Rule_Values
+type S2CGameRuleValues struct {
+	Values []GameRuleEntry
+}
+
+// GameRuleEntry represents a single game rule key-value pair.
+type GameRuleEntry struct {
+	Key   ns.Identifier
+	Value ns.String
+}
+
+func (p *S2CGameRuleValues) Read(buf *ns.PacketBuffer) error {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	p.Values = make([]GameRuleEntry, count)
+	for i := range p.Values {
+		if p.Values[i].Key, err = buf.ReadIdentifier(); err != nil {
+			return err
+		}
+		if p.Values[i].Value, err = buf.ReadString(32767); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (p *S2CGameRuleValues) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Values))); err != nil {
+		return err
+	}
+	for _, v := range p.Values {
+		if err := buf.WriteIdentifier(v.Key); err != nil {
+			return err
+		}
+		if err := buf.WriteString(v.Value); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// S2CLowDiskSpaceWarning represents "Low Disk Space Warning" (new in 26.1).
+// Empty packet sent when the server is running low on disk space.
+//
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Low_Disk_Space_Warning
+type S2CLowDiskSpaceWarning struct{}
+
+func (p *S2CLowDiskSpaceWarning) Read(buf *ns.PacketBuffer) error  { return nil }
+func (p *S2CLowDiskSpaceWarning) Write(buf *ns.PacketBuffer) error { return nil }

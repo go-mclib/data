@@ -9,7 +9,7 @@ import (
 
 // synchronizedRegistryIDs lists the registry identifiers that are sent over the
 // network from server to client during the configuration phase.
-// Source: decompiled RegistryDataLoader.SYNCHRONIZED_REGISTRIES (Minecraft 1.21.11).
+// Source: decompiled RegistryDataLoader.SYNCHRONIZED_REGISTRIES (Minecraft 26.1).
 var synchronizedRegistryIDs = []string{
 	"minecraft:worldgen/biome",
 	"minecraft:chat_type",
@@ -18,10 +18,14 @@ var synchronizedRegistryIDs = []string{
 	"minecraft:wolf_variant",
 	"minecraft:wolf_sound_variant",
 	"minecraft:pig_variant",
+	"minecraft:pig_sound_variant",
 	"minecraft:frog_variant",
 	"minecraft:cat_variant",
+	"minecraft:cat_sound_variant",
 	"minecraft:cow_variant",
+	"minecraft:cow_sound_variant",
 	"minecraft:chicken_variant",
+	"minecraft:chicken_sound_variant",
 	"minecraft:zombie_nautilus_variant",
 	"minecraft:painting_variant",
 	"minecraft:dimension_type",
@@ -33,6 +37,7 @@ var synchronizedRegistryIDs = []string{
 	"minecraft:test_environment",
 	"minecraft:test_instance",
 	"minecraft:dialog",
+	"minecraft:world_clock",
 	"minecraft:timeline",
 }
 

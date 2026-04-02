@@ -15,7 +15,7 @@ func main() {
 	// load JSON data
 	registries := loadJSON[map[string]RegistryJSON](filepath.Join(baseDir, "registries.json"))
 	blocks := loadJSON[map[string]BlockJSON](filepath.Join(baseDir, "blocks.json"))
-	items := loadJSON[map[string]ItemJSON](filepath.Join(baseDir, "items.json"))
+	items := loadItems(baseDir)
 	packets := loadJSON[PacketsJSON](filepath.Join(baseDir, "packets.json"))
 	langPath := filepath.Join(baseDir, "en_us.json")
 
