@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 # orchestrate a full packet capture session:
 #   1. set up + start minecraft server from template
-#   2. start MITM proxy
-#   3. wait for client connection (manual or via macro)
-#   4. save captured packets on exit
+#   2. start MITM proxy (paused — captures only after macro starts)
+#   3. record or replay a macro (triggered by in-game command block)
+#   4. auto-shutdown and save captures when macro finishes
 #
 # usage:
-#   capture.sh <version> [macro.json]
+#   capture.sh <version> record <output.json>    # record new macro
+#   capture.sh <version> replay <macro.json>     # replay existing macro
+#   capture.sh <version>                         # manual (no macro)
 #
-# examples:
-#   capture.sh 26.1.1                          # manual client connection
-#   capture.sh 26.1.1 ../macros/full_test.json  # automated via macro
+# the macro is triggered by a command block running /say [macro] start
+# and stopped by /say [macro] stop (record only).
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -18,31 +19,104 @@ PROXY_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 DATA_DIR="$(cd "$PROXY_DIR/.." && pwd)"
 SERVER_DIR="/tmp/gomclib-test-server"
 
-VERSION="${1:?usage: $0 <version> [macro.json]}"
-MACRO="${2:-}"
+VERSION="${1:?usage: $0 <version> [record <out.json> | replay <macro.json>]}"
+MODE="${2:-}"
+MACRO_FILE="${3:-}"
 SERVER_PORT=25566
 PROXY_PORT=25565
 
+if [[ -n "$MODE" && "$MODE" != "record" && "$MODE" != "replay" ]]; then
+    echo "usage: $0 <version> [record <out.json> | replay <macro.json>]"
+    exit 1
+fi
+if [[ -n "$MODE" && -z "$MACRO_FILE" ]]; then
+    echo "usage: $0 <version> $MODE <file.json>"
+    exit 1
+fi
+
+# check if ports are already in use
+check_port() {
+    local port="$1" label="$2"
+    local pid
+    pid=$(lsof -ti "tcp:$port" 2>/dev/null || true)
+    if [[ -n "$pid" ]]; then
+        echo "error: port $port ($label) is already in use by PID $pid"
+        echo "  kill it with:  kill $pid"
+        return 1
+    fi
+}
+busy=0
+check_port "$SERVER_PORT" "server" || busy=1
+check_port "$PROXY_PORT" "proxy"  || busy=1
+if [[ $busy -ne 0 ]]; then
+    exit 1
+fi
+
 SERVER_PID=""
 PROXY_PID=""
+MACRO_PID=""
+SERVER_INPUT=""
+
+# kill a process and all its children
+killtree() {
+    local pid="$1" sig="${2:-TERM}"
+    pkill -"$sig" -P "$pid" 2>/dev/null  # children first
+    kill -"$sig" "$pid" 2>/dev/null
+}
 
 cleanup() {
+    set +e                # don't abort cleanup if a kill/wait fails
+    trap - EXIT INT TERM  # prevent re-entry on repeated ctrl+c
     echo ""
     echo "shutting down..."
-    if [[ -n "$PROXY_PID" ]]; then
-        kill "$PROXY_PID" 2>/dev/null && wait "$PROXY_PID" 2>/dev/null
+
+    # stop macro if running
+    [[ -n "$MACRO_PID" ]] && kill "$MACRO_PID" 2>/dev/null && wait "$MACRO_PID" 2>/dev/null
+
+    # stop proxy (go run spawns a child — kill the whole tree)
+    if [[ -n "$PROXY_PID" ]] && kill -0 "$PROXY_PID" 2>/dev/null; then
+        killtree "$PROXY_PID"
+        wait "$PROXY_PID" 2>/dev/null
         echo "  proxy stopped"
     fi
-    if [[ -n "$SERVER_PID" ]]; then
-        kill "$SERVER_PID" 2>/dev/null && wait "$SERVER_PID" 2>/dev/null
+
+    # close FIFO write end before stopping server
+    exec 3>&- 2>/dev/null || true
+
+    # gracefully stop server via 'stop' command
+    if [[ -n "$SERVER_PID" ]] && kill -0 "$SERVER_PID" 2>/dev/null; then
+        # send stop command (server reads from FIFO even after we close fd 3,
+        # because we reopen it briefly here)
+        if [[ -n "$SERVER_INPUT" && -p "$SERVER_INPUT" ]]; then
+            echo "stop" > "$SERVER_INPUT" 2>/dev/null || true
+        fi
+        # wait up to 10s for graceful shutdown
+        for _ in $(seq 1 10); do
+            kill -0 "$SERVER_PID" 2>/dev/null || break
+            sleep 1
+        done
+        # force kill entire tree if still running
+        if kill -0 "$SERVER_PID" 2>/dev/null; then
+            killtree "$SERVER_PID" 9
+        fi
+        wait "$SERVER_PID" 2>/dev/null
         echo "  server stopped"
     fi
+
     echo "done. captures saved to $PROXY_DIR/captures/"
 }
 trap cleanup EXIT INT TERM
 
+# check pynput early (before starting server/proxy) if we need it
+if [[ -n "$MODE" ]]; then
+    python3 -c "import pynput" 2>/dev/null || {
+        echo "error: pynput is required for macros: pip install pynput"
+        exit 1
+    }
+fi
+
 echo "=== packet capture ==="
-echo "version=$VERSION  server=:$SERVER_PORT  proxy=:$PROXY_PORT"
+echo "version=$VERSION  server=:$SERVER_PORT  proxy=:$PROXY_PORT  mode=${MODE:-manual}"
 echo ""
 
 # step 1: set up server
@@ -50,11 +124,18 @@ echo "[1/4] setting up server..."
 "$SCRIPT_DIR/server.sh" setup "$VERSION"
 echo ""
 
-# step 2: start server and wait for it to be ready
+# step 2: start server with stdin FIFO (so we can send commands)
 echo "[2/4] starting server..."
+SERVER_INPUT="$SERVER_DIR/stdin_pipe"
+rm -f "$SERVER_INPUT"
+mkfifo "$SERVER_INPUT"
+
 cd "$SERVER_DIR"
-java -jar server.jar -nogui > "$SERVER_DIR/console.log" 2>&1 &
+# start java first (opens read end of FIFO), then open write end
+# (reversed order would deadlock: write blocks until a reader exists)
+java -jar server.jar -nogui < "$SERVER_INPUT" > "$SERVER_DIR/console.log" 2>&1 &
 SERVER_PID=$!
+exec 3>"$SERVER_INPUT"  # keep write end open so server doesn't get EOF
 echo "server PID: $SERVER_PID"
 
 echo -n "waiting for server"
@@ -82,28 +163,37 @@ echo ""
 
 # step 3: start proxy
 echo "[3/4] starting proxy..."
+PROXY_ARGS=(-target "localhost:$SERVER_PORT" -port "$PROXY_PORT" -verbose)
+if [[ -n "$MODE" ]]; then
+    PROXY_ARGS+=(-paused)
+fi
 cd "$DATA_DIR"
-go run ./proxy/cmd/proxy -target "localhost:$SERVER_PORT" -port "$PROXY_PORT" -verbose &
+go run ./proxy/cmd/proxy "${PROXY_ARGS[@]}" &
 PROXY_PID=$!
 sleep 2
 echo "proxy PID: $PROXY_PID"
 echo ""
 
-# step 4: client connection
-echo "[4/4] connect to localhost:$PROXY_PORT"
-echo ""
-echo "  tip: add --quickPlayMultiplayer localhost:$PROXY_PORT"
-echo "       to your launcher profile's game arguments for auto-connect"
-echo ""
+# step 4: macro / manual
+SERVER_LOG="$SERVER_DIR/console.log"
+CAPTURE_TRIGGER="$PROXY_DIR/captures/.start"
+MACRO_ARGS=(--server-log "$SERVER_LOG" --server-input "$SERVER_INPUT" --capture-trigger "$CAPTURE_TRIGGER")
 
-if [[ -n "$MACRO" ]]; then
-    echo "macro: $MACRO (starting in 5s...)"
-    sleep 5
-    python3 "$SCRIPT_DIR/input_macro.py" replay "$MACRO"
+if [[ "$MODE" == "record" ]]; then
+    echo "[4/4] connect to localhost:$PROXY_PORT, then click the [macro] start button"
     echo ""
-    echo "macro finished. press ctrl+c to save captures and exit."
-    wait "$PROXY_PID" 2>/dev/null || true
+    python3 "$SCRIPT_DIR/input_macro.py" record "${MACRO_ARGS[@]}" "$MACRO_FILE"
+    echo ""
+
+elif [[ "$MODE" == "replay" ]]; then
+    echo "[4/4] connect to localhost:$PROXY_PORT, then click the [macro] start button"
+    echo ""
+    python3 "$SCRIPT_DIR/input_macro.py" replay "${MACRO_ARGS[@]}" "$MACRO_FILE"
+    echo ""
+
 else
+    echo "[4/4] connect to localhost:$PROXY_PORT"
     echo "press ctrl+c when done capturing."
     wait "$PROXY_PID" 2>/dev/null || true
 fi
+# cleanup trap fires on exit, stopping proxy + server

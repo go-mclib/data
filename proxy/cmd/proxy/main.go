@@ -13,6 +13,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"syscall"
 	"time"
 
@@ -50,6 +51,7 @@ type PacketCapture struct {
 	packets []CapturedPacket
 	dir     string
 	filter  *PacketFilter
+	paused  atomic.Bool
 }
 
 func NewPacketCapture(outputDir string, filter *PacketFilter) *PacketCapture {
@@ -61,7 +63,7 @@ func NewPacketCapture(outputDir string, filter *PacketFilter) *PacketCapture {
 }
 
 func (pc *PacketCapture) Add(pkt CapturedPacket, state string, packetID int, wire *jp.WirePacket) {
-	if !pc.filter.Match(state, packetID) {
+	if pc.paused.Load() || !pc.filter.Match(state, packetID) {
 		return
 	}
 	pc.mu.Lock()
@@ -429,6 +431,7 @@ func main() {
 		verbose     = flag.Bool("verbose", false, "enable verbose logging")
 		stateFilter = flag.String("state", "", "comma-separated states to capture (e.g., login,play)")
 		idFilter    = flag.String("packetId", "", "comma-separated packet IDs to capture (e.g., 0x00,0x01)")
+		startPaused = flag.Bool("paused", false, "start with capture paused (touch <output>/.start to begin)")
 	)
 	flag.Parse()
 
@@ -469,6 +472,23 @@ func main() {
 	// single capture for entire proxy run
 	capture := NewPacketCapture(*outputDir, filter)
 	startTime := time.Now()
+
+	if *startPaused {
+		capture.paused.Store(true)
+		triggerPath := filepath.Join(*outputDir, ".start")
+		log.Printf("capture paused, touch %s to begin", triggerPath)
+		go func() {
+			for capture.paused.Load() {
+				if _, err := os.Stat(triggerPath); err == nil {
+					_ = os.Remove(triggerPath)
+					capture.paused.Store(false)
+					log.Printf("capture started")
+					return
+				}
+				time.Sleep(100 * time.Millisecond)
+			}
+		}()
+	}
 
 	// save capture on exit
 	sigCh := make(chan os.Signal, 1)
