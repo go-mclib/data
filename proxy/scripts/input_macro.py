@@ -125,43 +125,68 @@ _event_source = None
 _MAGIC_USER_DATA = 0x474F4D43  # "GOMC"
 
 
-def _start_mouse_suppression():
-    """start an active CGEventTap that drops real mouse events during replay.
+def _start_input_suppression(stopped_event):
+    """start an active CGEventTap that suppresses real input during replay.
 
-    real hardware mouse movement contaminates the replay (GLFW sums ALL
-    deltas). this tap runs on a background thread and drops all mouse
-    move/drag events so only our synthetic events reach the game.
+    blocks real hardware mouse AND keyboard events so they don't contaminate
+    the replay. our synthetic events pass through: mouse events are marked
+    with magic user data, keyboard events are identified by source PID
+    (real hardware has PID 0, our synthetic events have our PID).
+
+    F10 (vk=109) from real hardware stops the replay via stopped_event.
     """
     import Quartz
 
     global _suppress_tap
     info = {}
     ready = threading.Event()
+    our_pid = os.getpid()
 
     def run():
         def suppress_callback(_proxy, event_type, event, _refcon):
             if event_type == Quartz.kCGEventTapDisabledByTimeout:
                 Quartz.CGEventTapEnable(info.get("tap"), True)
                 return event
-            # let our synthetic events through (marked with magic value)
+
+            # let our synthetic mouse events through (marked with magic value)
             if Quartz.CGEventGetIntegerValueField(
                 event, Quartz.kCGEventSourceUserData
             ) == _MAGIC_USER_DATA:
                 return event
-            return None  # drop real hardware mouse events
+
+            # let our synthetic keyboard events through (from pynput, same PID)
+            source_pid = Quartz.CGEventGetIntegerValueField(
+                event, Quartz.kCGEventSourceUnixProcessID
+            )
+            if source_pid == our_pid:
+                return event
+
+            # F10 (vk=109) from real keyboard → stop the replay
+            if event_type == Quartz.kCGEventKeyDown:
+                vk = Quartz.CGEventGetIntegerValueField(
+                    event, Quartz.kCGKeyboardEventKeycode
+                )
+                if vk == 109:  # F10
+                    stopped_event.set()
+                    return None
+
+            return None  # drop all other real hardware input
 
         mask = (
             Quartz.CGEventMaskBit(Quartz.kCGEventMouseMoved)
             | Quartz.CGEventMaskBit(Quartz.kCGEventLeftMouseDragged)
             | Quartz.CGEventMaskBit(Quartz.kCGEventRightMouseDragged)
             | Quartz.CGEventMaskBit(Quartz.kCGEventOtherMouseDragged)
+            | Quartz.CGEventMaskBit(Quartz.kCGEventKeyDown)
+            | Quartz.CGEventMaskBit(Quartz.kCGEventKeyUp)
+            | Quartz.CGEventMaskBit(Quartz.kCGEventFlagsChanged)
         )
 
         tap = Quartz.CGEventTapCreate(
             Quartz.kCGHIDEventTap,
             Quartz.kCGHeadInsertEventTap,
-            Quartz.kCGEventTapOptionDefault,  # active tap — can modify/drop
-            mask,  # kCGEventTapDisabledByTimeout is delivered automatically
+            Quartz.kCGEventTapOptionDefault,
+            mask,
             suppress_callback,
             None,
         )
@@ -188,7 +213,7 @@ def _start_mouse_suppression():
     return info.get("loop")
 
 
-def _stop_mouse_suppression(loop):
+def _stop_input_suppression(loop):
     """stop the suppression tap."""
     import Quartz
 
@@ -553,21 +578,21 @@ def replay(input_file, speed=1.0, server_log=None, server_input=None, capture_tr
     duration = events[-1]["t"] / speed
     print(
         f"replaying {len(events)} events ({duration:.1f}s at {speed}x)... "
-        "ctrl+c to abort"
+        "F10 or ctrl+c to abort"
     )
 
     _focus_game_window()
+
+    # watch for stop marker in server log, or F10 from real keyboard
+    stopped = threading.Event()
 
     suppress_loop = None
     if use_quartz:
         import Quartz
 
-        # suppress real mouse events so they don't contaminate the replay;
-        # our synthetic events pass through (marked with magic user data)
-        suppress_loop = _start_mouse_suppression()
-
-    # watch for stop marker in server log
-    stopped = threading.Event()
+        # suppress real mouse + keyboard so they don't contaminate the replay;
+        # our synthetic events pass through; F10 triggers stopped
+        suppress_loop = _start_input_suppression(stopped)
     if server_log:
 
         def watch_stop():
@@ -621,7 +646,7 @@ def replay(input_file, speed=1.0, server_log=None, server_input=None, capture_tr
         print("\naborted")
     finally:
         if suppress_loop is not None:
-            _stop_mouse_suppression(suppress_loop)
+            _stop_input_suppression(suppress_loop)
 
     if not stopped.is_set():
         _send_server_cmd(server_input, "say macro stopped")
