@@ -21,7 +21,11 @@ SERVER_DIR="/tmp/gomclib-test-server"
 
 VERSION="${1:?usage: $0 <version> [record <out.json> | replay <macro.json>]}"
 MODE="${2:-}"
+# resolve macro path now, before any cd changes the working directory
 MACRO_FILE="${3:-}"
+if [[ -n "$MACRO_FILE" && "$MACRO_FILE" != /* ]]; then
+    MACRO_FILE="$(pwd)/$MACRO_FILE"
+fi
 SERVER_PORT=25566
 PROXY_PORT=25565
 
@@ -65,44 +69,15 @@ killtree() {
 }
 
 cleanup() {
-    set +e                # don't abort cleanup if a kill/wait fails
-    trap - EXIT INT TERM  # prevent re-entry on repeated ctrl+c
+    set +e
+    trap - EXIT INT TERM
     echo ""
     echo "shutting down..."
-
-    # stop macro if running
-    [[ -n "$MACRO_PID" ]] && kill "$MACRO_PID" 2>/dev/null && wait "$MACRO_PID" 2>/dev/null
-
-    # stop proxy (go run spawns a child — kill the whole tree)
-    if [[ -n "$PROXY_PID" ]] && kill -0 "$PROXY_PID" 2>/dev/null; then
-        killtree "$PROXY_PID"
-        wait "$PROXY_PID" 2>/dev/null
-        echo "  proxy stopped"
-    fi
-
-    # close FIFO write end before stopping server
+    [[ -n "$MACRO_PID" ]] && kill "$MACRO_PID" 2>/dev/null
+    [[ -n "$PROXY_PID" ]] && killtree "$PROXY_PID" 9
+    [[ -n "$SERVER_PID" ]] && killtree "$SERVER_PID" 9
     exec 3>&- 2>/dev/null || true
-
-    # gracefully stop server via 'stop' command
-    if [[ -n "$SERVER_PID" ]] && kill -0 "$SERVER_PID" 2>/dev/null; then
-        # send stop command (server reads from FIFO even after we close fd 3,
-        # because we reopen it briefly here)
-        if [[ -n "$SERVER_INPUT" && -p "$SERVER_INPUT" ]]; then
-            echo "stop" > "$SERVER_INPUT" 2>/dev/null || true
-        fi
-        # wait up to 10s for graceful shutdown
-        for _ in $(seq 1 10); do
-            kill -0 "$SERVER_PID" 2>/dev/null || break
-            sleep 1
-        done
-        # force kill entire tree if still running
-        if kill -0 "$SERVER_PID" 2>/dev/null; then
-            killtree "$SERVER_PID" 9
-        fi
-        wait "$SERVER_PID" 2>/dev/null
-        echo "  server stopped"
-    fi
-
+    wait 2>/dev/null
     echo "done. captures saved to $PROXY_DIR/captures/"
 }
 trap cleanup EXIT INT TERM

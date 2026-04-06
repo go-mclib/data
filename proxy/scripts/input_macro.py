@@ -22,11 +22,11 @@ setup checklist:
 
 import argparse
 import json
-import os
 import subprocess
 import sys
 import threading
 import time
+from pathlib import Path
 
 
 # markers in server log (from /say commands in command blocks)
@@ -74,12 +74,13 @@ def _wait_for_log(log_path, marker, timeout=300):
     """tail log_path from current end until a line containing marker appears."""
     deadline = time.monotonic() + timeout
 
-    while not os.path.exists(log_path):
+    log = Path(log_path)
+    while not log.exists():
         if time.monotonic() > deadline:
             return False
         time.sleep(0.5)
 
-    with open(log_path) as f:
+    with log.open() as f:
         f.seek(0, 2)
         while time.monotonic() < deadline:
             line = f.readline()
@@ -97,8 +98,7 @@ def _send_server_cmd(server_input, cmd):
     if not server_input:
         return
     try:
-        with open(server_input, "w") as f:
-            f.write(cmd + "\n")
+        Path(server_input).write_text(cmd + "\n")
     except OSError:
         pass
 
@@ -423,8 +423,9 @@ def _trigger_capture(capture_trigger):
     if not capture_trigger:
         return
     try:
-        os.makedirs(os.path.dirname(capture_trigger), exist_ok=True)
-        open(capture_trigger, "w").close()
+        p = Path(capture_trigger)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.touch()
     except OSError:
         pass
 
@@ -524,8 +525,7 @@ def record(output_file, stop_key="f10", server_log=None, server_input=None, capt
         if mouse_tap is not None:
             Quartz.CGEventTapEnable(mouse_tap, False)
 
-    with open(output_file, "w") as f:
-        json.dump(events, f, separators=(",", ":"))
+    Path(output_file).write_text(json.dumps(events, separators=(",", ":")))
 
     duration = elapsed()
     print(f"recorded {len(events)} events ({duration:.1f}s) -> {output_file}")
@@ -540,8 +540,7 @@ def replay(input_file, speed=1.0, server_log=None, server_input=None, capture_tr
         print("pynput is required: pip install pynput", file=sys.stderr)
         sys.exit(1)
 
-    with open(input_file) as f:
-        events = json.load(f)
+    events = json.loads(Path(input_file).read_text())
 
     if not events:
         print("no events to replay")
@@ -704,16 +703,26 @@ def main():
         _check_accessibility()
         print("ok: Accessibility permissions granted")
     elif args.cmd == "record":
+        # resolve to absolute path early (capture.sh cd's around)
+        output = Path(args.output).resolve()
+        output.parent.mkdir(parents=True, exist_ok=True)
         record(
-            args.output, args.stop_key,
+            output, args.stop_key,
             args.server_log, args.server_input, args.capture_trigger,
         )
     else:
+        input_path = Path(args.input).resolve()
+        if not input_path.is_file():
+            print(f"error: file not found: {input_path}", file=sys.stderr)
+            sys.exit(1)
         replay(
-            args.input, args.speed,
+            input_path, args.speed,
             args.server_log, args.server_input, args.capture_trigger,
         )
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(130)
