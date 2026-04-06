@@ -140,7 +140,6 @@ def _start_input_suppression(stopped_event):
     global _suppress_tap
     info = {}
     ready = threading.Event()
-    our_pid = os.getpid()
 
     def run():
         def suppress_callback(_proxy, event_type, event, _refcon):
@@ -148,17 +147,10 @@ def _start_input_suppression(stopped_event):
                 Quartz.CGEventTapEnable(info.get("tap"), True)
                 return event
 
-            # let our synthetic mouse events through (marked with magic value)
+            # let our synthetic events through (marked with magic value)
             if Quartz.CGEventGetIntegerValueField(
                 event, Quartz.kCGEventSourceUserData
             ) == _MAGIC_USER_DATA:
-                return event
-
-            # let our synthetic keyboard events through (from pynput, same PID)
-            source_pid = Quartz.CGEventGetIntegerValueField(
-                event, Quartz.kCGEventSourceUnixProcessID
-            )
-            if source_pid == our_pid:
                 return event
 
             # F10 (vk=109) from real keyboard → stop the replay
@@ -262,6 +254,21 @@ def _post_mouse_move(x, y, dx, dy):
     Quartz.CGEventSetFlags(event, flags | Quartz.kCGEventFlagMaskNonCoalesced)
 
     # post at HID level — goes through full window server pipeline
+    Quartz.CGEventPost(Quartz.kCGHIDEventTap, event)
+
+
+def _post_key_event(vk, key_down):
+    """post a keyboard event through the full pipeline with magic marker."""
+    import Quartz
+
+    global _event_source
+    if _event_source is None:
+        _event_source = Quartz.CGEventSourceCreate(
+            Quartz.kCGEventSourceStateHIDSystemState
+        )
+        Quartz.CGEventSourceSetUserData(_event_source, _MAGIC_USER_DATA)
+
+    event = Quartz.CGEventCreateKeyboardEvent(_event_source, vk, key_down)
     Quartz.CGEventPost(Quartz.kCGHIDEventTap, event)
 
 
@@ -461,7 +468,10 @@ def record(output_file, stop_key="f10", server_log=None, server_input=None, capt
     def key_event(etype, key):
         name = key_str(key)
         ev = {"t": elapsed(), "type": etype, "key": name}
+        # extract vk from KeyCode directly, or from Key.value for special keys
         vk = getattr(key, "vk", None)
+        if vk is None and isinstance(key, keyboard.Key):
+            vk = getattr(key.value, "vk", None)
         if vk is not None:
             ev["vk"] = vk
         return ev
@@ -622,9 +632,17 @@ def replay(input_file, speed=1.0, server_log=None, server_input=None, capture_tr
 
             t = ev["type"]
             if t == "kp":
-                kb.press(str_to_key(ev["key"], ev.get("vk")))
+                vk = ev.get("vk")
+                if use_quartz and vk is not None:
+                    _post_key_event(vk, True)
+                else:
+                    kb.press(str_to_key(ev["key"], vk))
             elif t == "kr":
-                kb.release(str_to_key(ev["key"], ev.get("vk")))
+                vk = ev.get("vk")
+                if use_quartz and vk is not None:
+                    _post_key_event(vk, False)
+                else:
+                    kb.release(str_to_key(ev["key"], vk))
             elif t == "mm":
                 if use_quartz and "dx" in ev:
                     _post_mouse_move(
