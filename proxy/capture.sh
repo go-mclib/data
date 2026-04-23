@@ -14,8 +14,7 @@
 # and stopped by /say [macro] stop (record only).
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PROXY_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+PROXY_DIR="$(cd "$(dirname "$0")" && pwd)"
 DATA_DIR="$(cd "$PROXY_DIR/.." && pwd)"
 SERVER_DIR="/tmp/gomclib-test-server"
 
@@ -96,7 +95,7 @@ echo ""
 
 # step 1: set up server
 echo "[1/4] setting up server..."
-"$SCRIPT_DIR/server.sh" setup "$VERSION"
+"$PROXY_DIR/server.sh" setup "$VERSION"
 echo ""
 
 # step 2: start server with stdin FIFO (so we can send commands)
@@ -157,13 +156,13 @@ MACRO_ARGS=(--server-log "$SERVER_LOG" --server-input "$SERVER_INPUT" --capture-
 if [[ "$MODE" == "record" ]]; then
     echo "[4/4] connect to localhost:$PROXY_PORT, then click the [macro] start button"
     echo ""
-    python3 "$SCRIPT_DIR/input_macro.py" record "${MACRO_ARGS[@]}" "$MACRO_FILE"
+    python3 "$PROXY_DIR/input_macro.py" record "${MACRO_ARGS[@]}" "$MACRO_FILE"
     echo ""
 
 elif [[ "$MODE" == "replay" ]]; then
     echo "[4/4] connect to localhost:$PROXY_PORT, then click the [macro] start button"
     echo ""
-    python3 "$SCRIPT_DIR/input_macro.py" replay "${MACRO_ARGS[@]}" "$MACRO_FILE"
+    python3 "$PROXY_DIR/input_macro.py" replay "${MACRO_ARGS[@]}" "$MACRO_FILE"
     echo ""
 
 else

@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
-# download, set up, and run a Minecraft server for packet capture.
+# download, set up, and run a Minecraft server for gomclib testing
 #
 # usage:
 #   server.sh download <version>   fetch server jar from Mojang
-#   server.sh setup <version>      ensure server is ready from template in /tmp
-#   server.sh run <version>        setup + start the server
+#     V
+#    server.sh setup <version>      ensure server is ready from template in /tmp
+#      V
+#     server.sh run <version>        setup + start the server
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PROXY_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-JARS_DIR="$PROXY_DIR/jars"
-TEMPLATE_DIR="$PROXY_DIR/server_template"
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+JARS_DIR="$ROOT_DIR/jars"
+TEMPLATE_DIR="$ROOT_DIR/server_template"
 SERVER_DIR="/tmp/gomclib-test-server"
 SERVER_PORT=25566
 
