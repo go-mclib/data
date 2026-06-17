@@ -4,10 +4,6 @@ This is the root directory for decompiled Minecraft client folders. Keep the dec
 
 Decompiling the source code is helpful to reveal the internals of the Minecraft client/server networking code, which allows us to pipe the diffs between versions to LLMs and develop the Go bindings faster. See `.claude/prompts/` for AI prompts.
 
-## Decompiling
-
-This repository uses [MinecraftDecompiler](https://github.com/MaxPixelStudios/MinecraftDecompiler) under the hood. You must download the latest .jar to this directory, see `download.sh`.
-
 ## Data Generators
 
 Run with `./generate-data.sh`

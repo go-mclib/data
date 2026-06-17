@@ -2,11 +2,15 @@
 # download, set up, and run a Minecraft server for gomclib testing
 #
 # usage:
-#   server.sh download <version>   fetch server jar from Mojang
+#   server.sh download <version>          fetch server jar from Mojang
 #     V
-#    server.sh setup <version>      ensure server is ready from template in /tmp
+#    server.sh setup <version>             ensure server is ready from template in /tmp
 #      V
-#     server.sh run <version>        setup + start the server
+#     server.sh run <version>               setup + start the server
+#
+#   server.sh update-template <version>   boot server, let you edit the world,
+#                                         then sync whitelisted files back to
+#                                         server_template/ on /stop or ctrl+c
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -92,9 +96,115 @@ run() {
     exec java -jar server.jar -nogui
 }
 
+# files copied back verbatim from the running server dir to the template
+TEMPLATE_FILES=(
+    codeofconduct/en_us.txt
+    eula.txt
+    ops.json
+    server.properties
+    world/level.dat
+    world/data/minecraft/game_rules.dat
+    world/data/minecraft/world_gen_settings.dat
+    world/dimensions/minecraft/overworld/data/minecraft/world_border.dat
+)
+
+# directories mirrored recursively (entire contents replaced in the template)
+TEMPLATE_DIRS=(
+    world/dimensions/minecraft/overworld/entities
+    world/dimensions/minecraft/overworld/poi
+    world/dimensions/minecraft/overworld/region
+)
+
+sync_to_template() {
+    echo ""
+    echo "syncing changes back to $TEMPLATE_DIR..."
+
+    for f in "${TEMPLATE_FILES[@]}"; do
+        if [[ -f "$SERVER_DIR/$f" ]]; then
+            mkdir -p "$TEMPLATE_DIR/$(dirname "$f")"
+            cp "$SERVER_DIR/$f" "$TEMPLATE_DIR/$f"
+            echo "  file  $f"
+        else
+            echo "  skip  $f (missing)"
+        fi
+    done
+
+    for d in "${TEMPLATE_DIRS[@]}"; do
+        if [[ -d "$SERVER_DIR/$d" ]]; then
+            rm -rf "$TEMPLATE_DIR/$d"
+            mkdir -p "$TEMPLATE_DIR/$d"
+            # trailing /. copies contents without the leading dir
+            cp -R "$SERVER_DIR/$d/." "$TEMPLATE_DIR/$d/"
+            echo "  dir   $d/"
+        else
+            echo "  skip  $d/ (missing)"
+        fi
+    done
+
+    # revert proxy-specific tweaks applied in setup() so the template stays
+    # canonical (matches a fresh vanilla server's defaults).
+    if [[ -f "$TEMPLATE_DIR/server.properties" ]]; then
+        sed -i '' "s/^server-port=.*/server-port=25565/" "$TEMPLATE_DIR/server.properties"
+        sed -i '' "s/^pause-when-empty-seconds=.*/pause-when-empty-seconds=60/" "$TEMPLATE_DIR/server.properties"
+    fi
+
+    echo "template updated."
+}
+
+update_template() {
+    local version="$1"
+    setup "$version"
+
+    local fifo="$SERVER_DIR/stdin_pipe"
+    rm -f "$fifo"
+    mkfifo "$fifo"
+
+    cd "$SERVER_DIR"
+    # background the server so the shell can trap ctrl+c and forward /stop.
+    # without a FIFO on stdin, a backgrounded java would see EOF and exit.
+    java -jar server.jar -nogui < "$fifo" &
+    local server_pid=$!
+    exec 4>"$fifo"  # keep write end open so server doesn't read EOF
+
+    synced=0
+    on_exit() {
+        trap - EXIT INT TERM
+        if [[ $synced -eq 0 ]]; then
+            synced=1
+            echo ""
+            echo "stopping server..."
+            echo "stop" >&4 2>/dev/null || true
+            # wait up to 60s for clean shutdown so chunks flush to disk
+            for _ in $(seq 1 600); do
+                kill -0 "$server_pid" 2>/dev/null || break
+                sleep 0.1
+            done
+            if kill -0 "$server_pid" 2>/dev/null; then
+                echo "server did not exit in time, sending SIGTERM"
+                kill "$server_pid" 2>/dev/null || true
+                wait "$server_pid" 2>/dev/null || true
+            else
+                wait "$server_pid" 2>/dev/null || true
+            fi
+            exec 4>&- 2>/dev/null || true
+            sync_to_template
+        fi
+    }
+    trap on_exit EXIT INT TERM
+
+    echo ""
+    echo "=== template update mode ==="
+    echo "connect to localhost:$SERVER_PORT, modify the world as needed."
+    echo "type /stop (in-game or in this terminal) or ctrl+c to save and sync."
+    echo ""
+
+    wait "$server_pid" 2>/dev/null || true
+}
+
 case "${1:-help}" in
-    download) download "${2:?usage: $0 download <version>}" ;;
-    setup)    setup "${2:?usage: $0 setup <version>}" ;;
-    run)      run "${2:?usage: $0 run <version>}" ;;
-    *)        echo "usage: $0 {download|setup|run} <version>"; exit 1 ;;
+    download)        download "${2:?usage: $0 download <version>}" ;;
+    setup)           setup "${2:?usage: $0 setup <version>}" ;;
+    run)             run "${2:?usage: $0 run <version>}" ;;
+    update-template) update_template "${2:?usage: $0 update-template <version>}" ;;
+    *)               echo "usage: $0 {download|setup|run|update-template} <version>"; exit 1 ;;
 esac

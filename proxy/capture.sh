@@ -73,7 +73,16 @@ cleanup() {
     echo ""
     echo "shutting down..."
     [[ -n "$MACRO_PID" ]] && kill "$MACRO_PID" 2>/dev/null
-    [[ -n "$PROXY_PID" ]] && killtree "$PROXY_PID" 9
+    # gracefully stop proxy so its signal handler can save captures;
+    # SIGKILL would skip the save path entirely.
+    if [[ -n "$PROXY_PID" ]]; then
+        killtree "$PROXY_PID" TERM
+        for _ in $(seq 1 50); do
+            kill -0 "$PROXY_PID" 2>/dev/null || break
+            sleep 0.1
+        done
+        kill -0 "$PROXY_PID" 2>/dev/null && killtree "$PROXY_PID" 9
+    fi
     [[ -n "$SERVER_PID" ]] && killtree "$SERVER_PID" 9
     exec 3>&- 2>/dev/null || true
     wait 2>/dev/null

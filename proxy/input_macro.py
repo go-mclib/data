@@ -272,6 +272,78 @@ def _post_key_event(vk, key_down):
     Quartz.CGEventPost(Quartz.kCGHIDEventTap, event)
 
 
+_BUTTON_TYPE = {}
+_BUTTON_NUM = {}
+
+
+def _button_maps():
+    """build macOS button enum maps lazily (Quartz must be imported)."""
+    import Quartz
+
+    if _BUTTON_TYPE:
+        return
+    _BUTTON_TYPE.update({
+        ("left", True): Quartz.kCGEventLeftMouseDown,
+        ("left", False): Quartz.kCGEventLeftMouseUp,
+        ("right", True): Quartz.kCGEventRightMouseDown,
+        ("right", False): Quartz.kCGEventRightMouseUp,
+        ("middle", True): Quartz.kCGEventOtherMouseDown,
+        ("middle", False): Quartz.kCGEventOtherMouseUp,
+    })
+    _BUTTON_NUM.update({
+        "left": Quartz.kCGMouseButtonLeft,
+        "right": Quartz.kCGMouseButtonRight,
+        "middle": Quartz.kCGMouseButtonCenter,
+    })
+
+
+def _post_mouse_button(x, y, btn, pressed):
+    """post a mouse button event at exact absolute position via the magic source.
+
+    bypasses pynput (which rounds to int and uses a different source) so that
+    clicks land on the exact float coordinates recorded, with no race between
+    position-setter and click events.
+    """
+    import Quartz
+
+    global _event_source
+    if _event_source is None:
+        _event_source = Quartz.CGEventSourceCreate(
+            Quartz.kCGEventSourceStateHIDSystemState
+        )
+        Quartz.CGEventSourceSetUserData(_event_source, _MAGIC_USER_DATA)
+    _button_maps()
+
+    event = Quartz.CGEventCreateMouseEvent(
+        _event_source, _BUTTON_TYPE[(btn, pressed)], (x, y),
+        _BUTTON_NUM[btn],
+    )
+    Quartz.CGEventPost(Quartz.kCGHIDEventTap, event)
+
+
+def _post_mouse_scroll(x, y, dx, dy):
+    """post a scroll wheel event at exact absolute position via the magic source."""
+    import Quartz
+
+    global _event_source
+    if _event_source is None:
+        _event_source = Quartz.CGEventSourceCreate(
+            Quartz.kCGEventSourceStateHIDSystemState
+        )
+        Quartz.CGEventSourceSetUserData(_event_source, _MAGIC_USER_DATA)
+
+    # move cursor to the recorded position first so scroll targets the right spot
+    _post_mouse_move(x, y, 0, 0)
+
+    event = Quartz.CGEventCreateScrollWheelEvent(
+        None, Quartz.kCGScrollEventUnitPixel, 2, int(dy), int(dx),
+    )
+    Quartz.CGEventSetIntegerValueField(
+        event, Quartz.kCGEventSourceUserData, _MAGIC_USER_DATA
+    )
+    Quartz.CGEventPost(Quartz.kCGHIDEventTap, event)
+
+
 def _start_mouse_tap(events, elapsed_fn):
     """start a CGEventTap that records mouse events with raw deltas.
 
@@ -651,14 +723,23 @@ def replay(input_file, speed=1.0, server_log=None, server_input=None, capture_tr
                 else:
                     ms.position = (ev["x"], ev["y"])
             elif t == "mp":
-                ms.position = (ev["x"], ev["y"])
-                ms.press(str_to_button(ev["btn"]))
+                if use_quartz:
+                    _post_mouse_button(ev["x"], ev["y"], ev["btn"], True)
+                else:
+                    ms.position = (ev["x"], ev["y"])
+                    ms.press(str_to_button(ev["btn"]))
             elif t == "mr":
-                ms.position = (ev["x"], ev["y"])
-                ms.release(str_to_button(ev["btn"]))
+                if use_quartz:
+                    _post_mouse_button(ev["x"], ev["y"], ev["btn"], False)
+                else:
+                    ms.position = (ev["x"], ev["y"])
+                    ms.release(str_to_button(ev["btn"]))
             elif t == "ms":
-                ms.position = (ev["x"], ev["y"])
-                ms.scroll(ev["dx"], ev["dy"])
+                if use_quartz:
+                    _post_mouse_scroll(ev["x"], ev["y"], ev["dx"], ev["dy"])
+                else:
+                    ms.position = (ev["x"], ev["y"])
+                    ms.scroll(ev["dx"], ev["dy"])
     except KeyboardInterrupt:
         print("\naborted")
     finally:
