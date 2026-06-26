@@ -15,9 +15,14 @@ type ContainerKind struct {
 	DirectBits      int
 }
 
+// DirectBits is the global-palette bit width = ceil(log2(registry size)). It is
+// only used when encoding a container that overflows to the direct palette;
+// decoding reads the width from the wire (see Decode). Bump these when the
+// registries grow past a power of two (26.2: 32366 block states -> 15 bits,
+// 66 biomes -> 7 bits).
 var (
 	BlockStatesKind = ContainerKind{EntryCount: 4096, MinIndirectBits: 4, MaxIndirectBits: 8, DirectBits: 15}
-	BiomesKind      = ContainerKind{EntryCount: 64, MinIndirectBits: 1, MaxIndirectBits: 3, DirectBits: 6}
+	BiomesKind      = ContainerKind{EntryCount: 64, MinIndirectBits: 1, MaxIndirectBits: 3, DirectBits: 7}
 )
 
 // PalettedContainer stores entries (block state IDs or biome IDs) using palette compression.
@@ -197,7 +202,8 @@ func setEntry(data []uint64, bpe, index int, value int32) {
 }
 
 // Decode reads a PalettedContainer from the buffer.
-// Wire format (1.21.11): byte bpe | palette data | fixed-size long array (no length prefix).
+// Wire format: byte bitsPerEntry | palette | fixed-size long array (no length
+// prefix). The long-array length is derived from the bits-per-entry byte.
 func (p *PalettedContainer) Decode(buf *ns.PacketBuffer) error {
 	bpe, err := buf.ReadUint8()
 	if err != nil {
@@ -234,9 +240,18 @@ func (p *PalettedContainer) Decode(buf *ns.PacketBuffer) error {
 			p.palette[i] = int32(v)
 		}
 	} else {
-		// direct palette
-		p.bitsPerEntry = p.kind.DirectBits
+		// direct palette: the byte is the global-palette bit width the server
+		// actually packed with (ceil(log2(registry size))). use it verbatim
+		// rather than a hardcoded constant, which goes stale as the block/biome
+		// registry grows (e.g. biomes crossing 64 -> 6 to 7 bits).
+		p.bitsPerEntry = int(bpe)
 		p.palette = nil
+	}
+
+	// guard against a malformed/desynced bits-per-entry so a bad stream surfaces
+	// as a parse error rather than a divide-by-zero panic deeper down.
+	if p.bitsPerEntry < 1 || p.bitsPerEntry > 64 {
+		return fmt.Errorf("invalid bits-per-entry %d (wire byte %d)", p.bitsPerEntry, bpe)
 	}
 
 	// read fixed-size long array (size calculated, no VarInt prefix)

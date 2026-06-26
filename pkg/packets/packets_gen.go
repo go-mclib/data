@@ -500,9 +500,9 @@ func (p *C2SSignUpdate) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSignUp
 func (p *C2SSignUpdate) State() jp.State { return jp.StatePlay }
 func (p *C2SSignUpdate) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SSpectateEntity) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSpectateEntityID) }
-func (p *C2SSpectateEntity) State() jp.State { return jp.StatePlay }
-func (p *C2SSpectateEntity) Bound() jp.Bound { return jp.C2S }
+func (p *C2SSpectatorAction) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSpectatorActionID) }
+func (p *C2SSpectatorAction) State() jp.State { return jp.StatePlay }
+func (p *C2SSpectatorAction) Bound() jp.Bound { return jp.C2S }
 
 func (p *C2SSwing) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSwingID) }
 func (p *C2SSwing) State() jp.State { return jp.StatePlay }

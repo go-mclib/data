@@ -31,15 +31,21 @@ See package documentation:
 
 ## Updating to a New Minecraft Version
 
-1. **Regenerate data** from server reports:
+1. **Generate the server JSON reports** (downloads the vanilla server jar and runs its data generator):
+
+   ```bash
+   cd vanilla_server_reports && ./generate.sh <version>
+   ```
+
+2. **Regenerate data** from the server reports + decompiled source (`../mcsrc/current`):
 
    ```bash
    cd pkg/data && go generate ./... && go fmt ./...
    ```
 
-2. **Update packet bindings** - see `.claude/prompts/PACKETS.md`
+3. **Update packet bindings** - see `.claude/prompts/PACKETS.md`
 
-3. **Update component decoders** - see `.claude/prompts/DATA.md`
+4. **Update component decoders** - see `.claude/prompts/DATA.md`
 
 ## License
 

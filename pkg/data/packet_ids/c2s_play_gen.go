@@ -1,4 +1,4 @@
-// Code generated for Minecraft 26.1 (Protocol 775); DO NOT EDIT.
+// Code generated for Minecraft 26.2 (Protocol 776); DO NOT EDIT.
 
 package packet_ids
 
@@ -66,7 +66,7 @@ const (
 	C2SSetStructureBlockID         = 59
 	C2SSetTestBlockID              = 60
 	C2SSignUpdateID                = 61
-	C2SSpectateEntityID            = 62
+	C2SSpectatorActionID           = 62
 	C2SSwingID                     = 63
 	C2STeleportToEntityID          = 64
 	C2STestInstanceBlockActionID   = 65

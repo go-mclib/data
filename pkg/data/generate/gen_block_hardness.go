@@ -25,6 +25,7 @@ func generateBlockHardness(decompiledDir, outPath string) {
 	}
 
 	props := parseBlockProps(string(data))
+	checkMinCount("block hardness", len(props), 500)
 	if len(props) == 0 {
 		fmt.Fprintf(os.Stderr, "warning: no block hardness data found in Blocks.java\n")
 		return
@@ -76,7 +77,9 @@ func generateBlockHardness(decompiledDir, outPath string) {
 func parseBlockProps(src string) map[string]*blockProps {
 	result := make(map[string]*blockProps)
 
-	registerRe := regexp.MustCompile(`register\(\s*\n?\s*"([a-z_]+)"`)
+	// block names come from the static field constant: `public static final
+	// Block STONE = register(BlockItemIds.STONE, ...)` -> stone.
+	registerRe := regexp.MustCompile(`([A-Z][A-Z0-9_]*)\s*=\s*register\(`)
 	strengthRe := regexp.MustCompile(`\.strength\(\s*(-?[0-9.]+)F?`)
 	indestructibleRe := regexp.MustCompile(`\.indestructible\(\)`)
 	requiresToolRe := regexp.MustCompile(`\.requiresCorrectToolForDrops\(\)`)
@@ -88,7 +91,7 @@ func parseBlockProps(src string) map[string]*blockProps {
 	matches := registerRe.FindAllStringSubmatchIndex(src, -1)
 
 	for i, match := range matches {
-		name := src[match[2]:match[3]]
+		name := strings.ToLower(src[match[2]:match[3]])
 
 		start := match[0]
 		var end int

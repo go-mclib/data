@@ -129,7 +129,7 @@ var PacketRegistries = map[string]map[int]PacketFactory{
 		int(packet_ids.C2SSetStructureBlockID):         func() jp.Packet { return &C2SSetStructureBlock{} },
 		int(packet_ids.C2SSetTestBlockID):              func() jp.Packet { return &C2SSetTestBlock{} },
 		int(packet_ids.C2SSignUpdateID):                func() jp.Packet { return &C2SSignUpdate{} },
-		int(packet_ids.C2SSpectateEntityID):            func() jp.Packet { return &C2SSpectateEntity{} },
+		int(packet_ids.C2SSpectatorActionID):           func() jp.Packet { return &C2SSpectatorAction{} },
 		int(packet_ids.C2SSwingID):                     func() jp.Packet { return &C2SSwing{} },
 		int(packet_ids.C2STeleportToEntityID):          func() jp.Packet { return &C2STeleportToEntity{} },
 		int(packet_ids.C2STestInstanceBlockActionID):   func() jp.Packet { return &C2STestInstanceBlockAction{} },

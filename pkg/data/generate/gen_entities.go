@@ -30,7 +30,7 @@ func generateEntities(registries map[string]RegistryJSON, entityTypeJavaPath, ou
 	writeFile(outPath, sb.String())
 }
 
-// extractMobCategories parses EntityType.java to extract the MobCategory for each entity.
+// extractMobCategories parses EntityTypes.java to extract the MobCategory for each entity.
 func extractMobCategories(javaPath string) map[string]string {
 	data, err := os.ReadFile(javaPath)
 	if err != nil {
@@ -39,7 +39,9 @@ func extractMobCategories(javaPath string) map[string]string {
 	}
 	src := string(data)
 
-	registerRe := regexp.MustCompile(`register\(\s*"([^"]+)"`)
+	// entity names come from the static field constant: `public static final
+	// EntityType<T> ACACIA_BOAT = register(...)` -> minecraft:acacia_boat.
+	registerRe := regexp.MustCompile(`([A-Z][A-Z0-9_]*)\s*=\s*register\(`)
 	categoryRe := regexp.MustCompile(`MobCategory\.(\w+)`)
 
 	categories := make(map[string]string)
@@ -49,7 +51,7 @@ func extractMobCategories(javaPath string) map[string]string {
 		if nameMatch == nil {
 			continue
 		}
-		name := "minecraft:" + nameMatch[1]
+		name := "minecraft:" + strings.ToLower(nameMatch[1])
 
 		block := findRegisterBlock(src, loc[0])
 		if block == "" {
@@ -63,6 +65,7 @@ func extractMobCategories(javaPath string) map[string]string {
 		categories[name] = strings.ToLower(catMatch[1])
 	}
 
-	fmt.Printf("mob categories: extracted %d entities from EntityType.java\n", len(categories))
+	fmt.Printf("mob categories: extracted %d entities from EntityTypes.java\n", len(categories))
+	checkMinCount("mob categories", len(categories), 100)
 	return categories
 }

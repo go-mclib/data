@@ -1666,7 +1666,9 @@ type S2CLogin struct {
 	DeathLocation       ns.PrefixedOptional[ns.GlobalPos]
 	PortalCooldown      ns.VarInt
 	SeaLevel            ns.VarInt
-	EnforcesSecureChat  ns.Boolean
+	// OnlineMode reports whether the server is in online mode (added in 26.2).
+	OnlineMode         ns.Boolean
+	EnforcesSecureChat ns.Boolean
 }
 
 func (p *S2CLogin) Read(buf *ns.PacketBuffer) error {
@@ -1730,6 +1732,9 @@ func (p *S2CLogin) Read(buf *ns.PacketBuffer) error {
 		return err
 	}
 	if p.SeaLevel, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.OnlineMode, err = buf.ReadBool(); err != nil {
 		return err
 	}
 	p.EnforcesSecureChat, err = buf.ReadBool()
@@ -1796,6 +1801,9 @@ func (p *S2CLogin) Write(buf *ns.PacketBuffer) error {
 		return err
 	}
 	if err := buf.WriteVarInt(p.SeaLevel); err != nil {
+		return err
+	}
+	if err := buf.WriteBool(p.OnlineMode); err != nil {
 		return err
 	}
 	return buf.WriteBool(p.EnforcesSecureChat)

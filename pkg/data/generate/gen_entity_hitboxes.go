@@ -24,13 +24,12 @@ func generateEntityHitboxes(entityTypeJavaPath, outPath string) {
 	src := string(data)
 
 	// extract all register(...) blocks with their entity name, sized(), and eyeHeight()
-	// pattern: register(\n   "name", ... .sized(W, H) ... optionally .eyeHeight(E) ...
+	// pattern: NAME = register(... .sized(W, H) ... optionally .eyeHeight(E) ...
 	//
-	// we scan for each register("name", ...) call and extract sized/eyeHeight from the
-	// builder chain that follows, up to the closing ");".
-
-	// find each register call: register(\n  "name",
-	registerRe := regexp.MustCompile(`register\(\s*"([^"]+)"`)
+	// the entity name comes from the static field constant: `public static final
+	// EntityType<T> ACACIA_BOAT = register(...)` -> acacia_boat. we extract sized/
+	// eyeHeight from the builder chain that follows, up to the closing ");".
+	registerRe := regexp.MustCompile(`([A-Z][A-Z0-9_]*)\s*=\s*register\(`)
 	sizedRe := regexp.MustCompile(`\.sized\(([^,]+),\s*([^)]+)\)`)
 	eyeHeightRe := regexp.MustCompile(`\.eyeHeight\(([^)]+)\)`)
 
@@ -43,7 +42,7 @@ func generateEntityHitboxes(entityTypeJavaPath, outPath string) {
 		if nameMatch == nil {
 			continue
 		}
-		name := nameMatch[1]
+		name := strings.ToLower(nameMatch[1])
 
 		// find the extent of this register() call by finding the matching ");"
 		// start from after the opening "register("
@@ -74,7 +73,8 @@ func generateEntityHitboxes(entityTypeJavaPath, outPath string) {
 		}
 	}
 
-	fmt.Printf("entity hitboxes: extracted %d entities from EntityType.java\n", len(dims))
+	fmt.Printf("entity hitboxes: extracted %d entities from EntityTypes.java\n", len(dims))
+	checkMinCount("entity hitboxes", len(dims), 100)
 
 	// sort entity names for deterministic output
 	names := make([]string, 0, len(dims))

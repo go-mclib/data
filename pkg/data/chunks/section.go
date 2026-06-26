@@ -6,7 +6,9 @@ import (
 
 // ChunkSection represents a 16x16x16 section of blocks and a 4x4x4 grid of biomes.
 type ChunkSection struct {
-	BlockCount  int16
+	BlockCount int16
+	// FluidCount is the number of fluid blocks in the section (added in 26.1).
+	FluidCount  int16
 	BlockStates *PalettedContainer
 	Biomes      *PalettedContainer
 }
@@ -15,6 +17,7 @@ type ChunkSection struct {
 func NewEmptySection() *ChunkSection {
 	return &ChunkSection{
 		BlockCount:  0,
+		FluidCount:  0,
 		BlockStates: NewSingleValue(BlockStatesKind, 0),
 		Biomes:      NewSingleValue(BiomesKind, 0),
 	}
@@ -48,6 +51,12 @@ func (s *ChunkSection) Decode(buf *ns.PacketBuffer) error {
 	}
 	s.BlockCount = int16(bc)
 
+	fc, err := buf.ReadInt16()
+	if err != nil {
+		return err
+	}
+	s.FluidCount = int16(fc)
+
 	s.BlockStates = &PalettedContainer{kind: BlockStatesKind}
 	if err := s.BlockStates.Decode(buf); err != nil {
 		return err
@@ -60,6 +69,9 @@ func (s *ChunkSection) Decode(buf *ns.PacketBuffer) error {
 // Encode writes a ChunkSection to the buffer.
 func (s *ChunkSection) Encode(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt16(ns.Int16(s.BlockCount)); err != nil {
+		return err
+	}
+	if err := buf.WriteInt16(ns.Int16(s.FluidCount)); err != nil {
 		return err
 	}
 	if err := s.BlockStates.Encode(buf); err != nil {

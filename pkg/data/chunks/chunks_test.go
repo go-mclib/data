@@ -93,6 +93,57 @@ func TestPalettedContainerBiomes(t *testing.T) {
 	assert.Equal(t, int32(0), decoded.GetXYZ(3, 3, 3))
 }
 
+// TestPalettedContainerBiomesDirect covers a direct (global-palette) biome
+// container. With >8 distinct biomes a section overflows the indirect palette
+// and packs with the global-palette width (ceil(log2(66 biomes)) = 7 bits in
+// 26.2). Regression: the decoder used to hardcode 6 bits here, reading one long
+// too few and desyncing the rest of the column.
+func TestPalettedContainerBiomesDirect(t *testing.T) {
+	c := chunks.NewSingleValue(chunks.BiomesKind, 0)
+	for i := range 9 { // 9 distinct values force the indirect palette to direct
+		c.SetXYZ(i, 0, 0, int32(10+i))
+	}
+	assert.Equal(t, 7, c.BitsPerEntry(), "9 distinct biomes should use the 7-bit global palette")
+
+	buf := ns.NewWriter()
+	require.NoError(t, c.Encode(buf))
+
+	decoded := chunks.NewSingleValue(chunks.BiomesKind, 0)
+	require.NoError(t, decoded.Decode(ns.NewReader(buf.Bytes())))
+	assert.Equal(t, 7, decoded.BitsPerEntry())
+	for i := range 9 {
+		assert.Equal(t, int32(10+i), decoded.GetXYZ(i, 0, 0))
+	}
+}
+
+// TestChunkSectionDirectBiomeNoDesync proves a section whose biome container is
+// direct does not desync the next section read from the same buffer.
+func TestChunkSectionDirectBiomeNoDesync(t *testing.T) {
+	first := chunks.NewEmptySection()
+	for i := range 9 {
+		first.SetBiome(i, 0, 0, int32(20+i)) // force direct biome palette
+	}
+	assert.Equal(t, 7, first.Biomes.BitsPerEntry())
+
+	second := chunks.NewEmptySection()
+	second.BlockCount = 3
+	second.FluidCount = 7
+	second.SetBlockState(2, 2, 2, 1234)
+
+	buf := ns.NewWriter()
+	require.NoError(t, first.Encode(buf))
+	require.NoError(t, second.Encode(buf))
+
+	r := ns.NewReader(buf.Bytes())
+	d1, d2 := &chunks.ChunkSection{}, &chunks.ChunkSection{}
+	require.NoError(t, d1.Decode(r))
+	require.NoError(t, d2.Decode(r), "second section must stay aligned after a direct biome container")
+	assert.Equal(t, int32(20), d1.GetBiome(0, 0, 0))
+	assert.Equal(t, int16(3), d2.BlockCount)
+	assert.Equal(t, int16(7), d2.FluidCount)
+	assert.Equal(t, int32(1234), d2.GetBlockState(2, 2, 2))
+}
+
 func TestChunkSectionDecodeEncode(t *testing.T) {
 	sec := chunks.NewEmptySection()
 	sec.BlockCount = 2

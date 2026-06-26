@@ -1,4 +1,4 @@
-// Code generated for Minecraft 26.1 (Protocol 775); DO NOT EDIT.
+// Code generated for Minecraft 26.2 (Protocol 776); DO NOT EDIT.
 
 package entities
 
@@ -135,6 +135,7 @@ var entityCategory = map[string]string{
 	"minecraft:squid":                  "water_creature",
 	"minecraft:stray":                  "monster",
 	"minecraft:strider":                "creature",
+	"minecraft:sulfur_cube":            "monster",
 	"minecraft:tadpole":                "creature",
 	"minecraft:text_display":           "misc",
 	"minecraft:tnt":                    "misc",

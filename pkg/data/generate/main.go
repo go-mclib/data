@@ -22,7 +22,8 @@ func main() {
 	outDir := filepath.Dir(baseDir)
 	// decompiled sources live in the sibling go-mclib/mcsrc repo (../../../mcsrc relative to pkg/data)
 	decompiledDir := filepath.Join(outDir, "..", "..", "..", "mcsrc", "current")
-	decompiledEntityType := filepath.Join(decompiledDir, "net", "minecraft", "world", "entity", "EntityType.java")
+	// entity registrations moved from EntityType.java to EntityTypes.java in 26.2
+	decompiledEntityType := filepath.Join(decompiledDir, "net", "minecraft", "world", "entity", "EntityTypes.java")
 	itemTagsDir := filepath.Join(decompiledDir, "data", "minecraft", "tags", "item")
 	datapackDir := filepath.Join(decompiledDir, "data", "minecraft")
 
@@ -46,6 +47,9 @@ func main() {
 	generateRegistryData(datapackDir, filepath.Join(outDir, "registries", "registry_data_gen.go"))
 	generateTagData(filepath.Join(decompiledDir, "data", "minecraft", "tags"), filepath.Join(outDir, "registries", "tag_data_gen.go"))
 	generateBlockHardness(decompiledDir, filepath.Join(outDir, "blocks", "block_hardness_gen.go"))
+
+	// fail loudly if any scraper produced implausibly few entries
+	reportSanityChecks()
 
 	fmt.Println("generation complete")
 }

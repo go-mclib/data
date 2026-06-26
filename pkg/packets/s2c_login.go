@@ -86,6 +86,8 @@ type GameProfile struct {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Login_Success
 type S2CLoginFinished struct {
 	Profile GameProfile
+	// SessionId is the player's session UUID (added in 26.2).
+	SessionId ns.UUID
 }
 
 func (p *S2CLoginFinished) Read(buf *ns.PacketBuffer) error {
@@ -114,7 +116,8 @@ func (p *S2CLoginFinished) Read(buf *ns.PacketBuffer) error {
 			return err
 		}
 	}
-	return nil
+	p.SessionId, err = buf.ReadUUID()
+	return err
 }
 
 func (p *S2CLoginFinished) Write(buf *ns.PacketBuffer) error {
@@ -140,7 +143,7 @@ func (p *S2CLoginFinished) Write(buf *ns.PacketBuffer) error {
 			return err
 		}
 	}
-	return nil
+	return buf.WriteUUID(p.SessionId)
 }
 
 // S2CLoginCompression represents "Set Compression".

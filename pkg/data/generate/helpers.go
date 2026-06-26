@@ -12,9 +12,38 @@ import (
 
 // Protocol version info - update these when regenerating for a new Minecraft version
 const (
-	ProtocolVersion  = 775
-	MinecraftVersion = "26.1"
+	ProtocolVersion  = 776
+	MinecraftVersion = "26.2"
 )
+
+// lowCountWarnings accumulates scrapers that produced implausibly few entries.
+var lowCountWarnings []string
+
+// checkMinCount records a sanity-check failure when a scraper produced fewer
+// entries than expected. This catches the silent failure mode where Mojang
+// refactors the decompiled source layout and a Java-scraping parser quietly
+// matches nothing (e.g. "extracted 0 entities") but generation still completes.
+// Recorded failures are reported together by reportSanityChecks.
+func checkMinCount(label string, got, min int) {
+	if got < min {
+		lowCountWarnings = append(lowCountWarnings, fmt.Sprintf("%s: scraped %d entries (expected >= %d)", label, got, min))
+	}
+}
+
+// reportSanityChecks prints any accumulated low-count failures and exits
+// non-zero, so a broken scraper fails generation loudly instead of silently
+// shipping near-empty data.
+func reportSanityChecks() {
+	if len(lowCountWarnings) == 0 {
+		return
+	}
+	fmt.Fprintln(os.Stderr, "\n!!! SANITY CHECK FAILED: a parser likely broke (decompiled source layout may have changed):")
+	for _, w := range lowCountWarnings {
+		fmt.Fprintf(os.Stderr, "  - %s\n", w)
+	}
+	fmt.Fprintln(os.Stderr, "")
+	os.Exit(1)
+}
 
 // generatedFileHeader returns the standard header for generated Go files.
 func generatedFileHeader(pkg string) string {

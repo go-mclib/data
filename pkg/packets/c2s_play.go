@@ -2186,19 +2186,35 @@ func (p *C2SSetGameRule) Write(buf *ns.PacketBuffer) error {
 	return nil
 }
 
-// C2SSpectateEntity represents "Spectate Entity" (new in 26.1).
+// C2SSpectatorAction represents "Spectator Action" (renamed from "Spectate
+// Entity" in 26.2; the entity id is now an optional VarInt).
 //
-// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Spectate_Entity
-type C2SSpectateEntity struct {
-	EntityId ns.VarInt
+// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Spectator_Action
+type C2SSpectatorAction struct {
+	// HasTarget indicates whether an entity is being spectated.
+	HasTarget ns.Boolean
+	// TargetEntityId is the spectated entity id (valid only when HasTarget).
+	TargetEntityId ns.VarInt
 }
 
-func (p *C2SSpectateEntity) Read(buf *ns.PacketBuffer) error {
-	var err error
-	p.EntityId, err = buf.ReadVarInt()
-	return err
+// the entity id is encoded as an optional VarInt: 0 means "no target", and a
+// value n > 0 encodes target id n-1.
+func (p *C2SSpectatorAction) Read(buf *ns.PacketBuffer) error {
+	v, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if v == 0 {
+		p.HasTarget, p.TargetEntityId = false, 0
+		return nil
+	}
+	p.HasTarget, p.TargetEntityId = true, v-1
+	return nil
 }
 
-func (p *C2SSpectateEntity) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteVarInt(p.EntityId)
+func (p *C2SSpectatorAction) Write(buf *ns.PacketBuffer) error {
+	if !p.HasTarget {
+		return buf.WriteVarInt(0)
+	}
+	return buf.WriteVarInt(p.TargetEntityId + 1)
 }
