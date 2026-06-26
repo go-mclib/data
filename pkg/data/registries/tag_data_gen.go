@@ -882,7 +882,8 @@ var TagData = map[string]map[string][]string{
 			"minecraft:deepslate",
 			"minecraft:tuff",
 		},
-		"minecraft:default_immune_to": {},
+		"minecraft:default_immune_to": {
+		},
 		"minecraft:diamond_ores": {
 			"minecraft:diamond_ore",
 			"minecraft:deepslate_diamond_ore",
@@ -1404,7 +1405,8 @@ var TagData = map[string]map[string][]string{
 			"minecraft:redstone_ore",
 			"minecraft:deepslate_redstone_ore",
 		},
-		"minecraft:incorrect_for_diamond_tool": {},
+		"minecraft:incorrect_for_diamond_tool": {
+		},
 		"minecraft:incorrect_for_gold_tool": {
 			"minecraft:obsidian",
 			"minecraft:crying_obsidian",
@@ -1522,7 +1524,8 @@ var TagData = map[string]map[string][]string{
 			"minecraft:respawn_anchor",
 			"minecraft:ancient_debris",
 		},
-		"minecraft:incorrect_for_netherite_tool": {},
+		"minecraft:incorrect_for_netherite_tool": {
+		},
 		"minecraft:incorrect_for_stone_tool": {
 			"minecraft:obsidian",
 			"minecraft:crying_obsidian",
@@ -4067,7 +4070,8 @@ var TagData = map[string]map[string][]string{
 			"minecraft:mycelium",
 			"minecraft:farmland",
 		},
-		"minecraft:supports_frogspawn": {},
+		"minecraft:supports_frogspawn": {
+		},
 		"minecraft:supports_hanging_mangrove_propagule": {
 			"minecraft:mangrove_leaves",
 		},
@@ -5025,8 +5029,10 @@ var TagData = map[string]map[string][]string{
 		},
 	},
 	"minecraft:dialog": {
-		"minecraft:pause_screen_additions": {},
-		"minecraft:quick_actions":          {},
+		"minecraft:pause_screen_additions": {
+		},
+		"minecraft:quick_actions": {
+		},
 	},
 	"minecraft:enchantment": {
 		"minecraft:curse": {
@@ -9472,9 +9478,12 @@ var TagData = map[string]map[string][]string{
 			"minecraft:smith/2/iron_ingot_emerald",
 			"minecraft:smith/2/emerald_bell",
 		},
-		"minecraft:level_3": {},
-		"minecraft:level_4": {},
-		"minecraft:level_5": {},
+		"minecraft:level_3": {
+		},
+		"minecraft:level_4": {
+		},
+		"minecraft:level_5": {
+		},
 	},
 	"minecraft:villager_trade/farmer": {
 		"minecraft:level_1": {
@@ -9768,7 +9777,8 @@ var TagData = map[string]map[string][]string{
 			"minecraft:toolsmith/1/emerald_stone_pickaxe",
 			"minecraft:toolsmith/1/emerald_stone_hoe",
 		},
-		"minecraft:level_2": {},
+		"minecraft:level_2": {
+		},
 		"minecraft:level_3": {
 			"minecraft:toolsmith/3/flint_emerald",
 			"minecraft:toolsmith/3/emerald_enchanted_iron_axe",
@@ -9895,7 +9905,8 @@ var TagData = map[string]map[string][]string{
 			"minecraft:weaponsmith/1/emerald_iron_axe",
 			"minecraft:weaponsmith/1/emerald_enchanted_iron_sword",
 		},
-		"minecraft:level_2": {},
+		"minecraft:level_2": {
+		},
 		"minecraft:level_3": {
 			"minecraft:weaponsmith/3/flint_emerald",
 		},
