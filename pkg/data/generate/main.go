@@ -20,7 +20,8 @@ func main() {
 	langPath := filepath.Join(baseDir, "en_us.json")
 
 	outDir := filepath.Dir(baseDir)
-	decompiledDir := filepath.Join(outDir, "..", "..", "decompiled", "current")
+	// decompiled sources live in the sibling go-mclib/mcsrc repo (../../../mcsrc relative to pkg/data)
+	decompiledDir := filepath.Join(outDir, "..", "..", "..", "mcsrc", "current")
 	decompiledEntityType := filepath.Join(decompiledDir, "net", "minecraft", "world", "entity", "EntityType.java")
 	itemTagsDir := filepath.Join(decompiledDir, "data", "minecraft", "tags", "item")
 	datapackDir := filepath.Join(decompiledDir, "data", "minecraft")

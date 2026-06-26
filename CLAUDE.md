@@ -7,7 +7,8 @@
 - `./proxy` — MITM proxy for capturing packets, used to generate test fixtures (see `./proxy/README.md`)
 - `./pkg/packets` — Go bindings for packet structures (see `./pkg/packets/README.md`)
 - `./pkg/data` — game data bindings (blocks, items, entities, etc.) with serialization; largely auto-generated from server reports (see `./pkg/data/generate/README.md`)
-- `./decompiled` — decompiled Minecraft source code (see `./decompiled/README.md`); latest assumed version in `./decompiled/current/`
+
+Decompiled Minecraft source (source of truth, used by the generator) lives in the sibling [go-mclib/mcsrc](https://github.com/go-mclib/mcsrc) repo — checked out as `../mcsrc`, latest version in `../mcsrc/current/`.
 
 ## Workflow
 

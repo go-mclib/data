@@ -39,8 +39,8 @@ Complex codecs (enchantments, attribute modifiers, lore, tool rules, etc.) remai
 1. **Diff decompiled source**:
 
    ```bash
-   diff -r ./decompiled/current/net/minecraft/world/item/component \
-           ./decompiled/previous/net/minecraft/world/item/component
+   diff -r ../mcsrc/current/net/minecraft/world/item/component \
+           ../mcsrc/previous/net/minecraft/world/item/component
    ```
 
 2. **Check Minecraft Wiki**:

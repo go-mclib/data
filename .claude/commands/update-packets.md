@@ -8,7 +8,7 @@ Read and follow `.claude/prompts/PACKETS.md` to update packet bindings for the n
 
 Before starting:
 
-1. Verify `./decompiled/current/` and `./decompiled/previous/` exist
+1. Verify `../mcsrc/current/` and `../mcsrc/previous/` exist (repo: <https://github.com/go-mclib/mcsrc>)
 2. Check the current Minecraft version in `go.mod` or recent commits
 
 After completing:

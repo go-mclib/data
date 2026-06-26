@@ -5,9 +5,9 @@ Update Go packet bindings for a new Minecraft version.
 ## Steps
 
 1. **Compute diff against the previous Minecraft version**
-   - Ensure `./decompiled/current/` and `./decompiled/previous/` exist
-   - If not, see `./decompiled/README.md` for decompilation instructions
-   - Run: `diff -r ./decompiled/current/net/minecraft/network ./decompiled/previous/net/minecraft/network`
+   - Ensure `../mcsrc/current/` and `../mcsrc/previous/` exist
+   - If not, see the [go-mclib/mcsrc](https://github.com/go-mclib/mcsrc) repo for decompilation instructions
+   - Run: `diff -r ../mcsrc/current/net/minecraft/network ../mcsrc/previous/net/minecraft/network`
    - Check [Minecraft Wiki Protocol](https://minecraft.wiki/w/Java_Edition_protocol/Packets) for documentation
 
 2. **Examine differences in the network protocol**

@@ -30,6 +30,6 @@ From server reports (`vanilla_server_reports/`):
 - `packets.json`: All network packets in the game and their protocol IDs;
 - `registries.json`: All registries in the base game and their protocol IDs;
 
-From decompiled assets (`decompiled/`):
+From decompiled assets ([go-mclib/mcsrc](https://github.com/go-mclib/mcsrc), checked out as `../mcsrc`):
 
 - `en_us.json`: English translations for all translation keys (items, blocks, UI, etc.);
