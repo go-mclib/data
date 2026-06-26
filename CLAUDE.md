@@ -5,15 +5,16 @@
 ## Folders
 
 - `./pkg/packets` — Go bindings for packet structures (see `./pkg/packets/README.md`)
-- `./pkg/data` — game data bindings (blocks, items, entities, etc.) with serialization; largely auto-generated from server reports (see `./pkg/data/generate/README.md`)
-- `./vanilla_server_reports` — downloads the vanilla server jar and runs its data generator to produce the JSON reports consumed by `./pkg/data/generate`
+- `./pkg/data` — game data bindings (blocks, items, entities, etc.) with serialization; auto-generated (see `./pkg/data/generate/README.md`)
+- `./vanilla_server_reports` — downloads the vanilla server jar and runs its data generator → blocks/items/registries/packets/commands/tags JSON
+- `./mcdump` — standalone Java tool that boots the server jar's registries and dumps collision shapes, entity hitboxes, hardness, mob categories straight from the game (replaced PrismarineJS and the decompiled-source scrapers)
 
-Decompiled Minecraft source (source of truth) lives in the sibling [go-mclib/mcsrc](https://github.com/go-mclib/mcsrc) repo — checked out as `../mcsrc`, latest version in `../mcsrc/current/`.
+Decompiled Minecraft source (for reading protocol internals) lives in the sibling [go-mclib/mcsrc](https://github.com/go-mclib/mcsrc) repo — checked out as `../mcsrc`, latest version in `../mcsrc/current/`.
 
 ## Workflow
 
-1. Examine the decompiled source in `../mcsrc/current/` (the source of truth); the [wiki](https://minecraft.wiki/w/Java_Edition_protocol) is useful but may be outdated. Diff against a previous version (e.g. `diff -r ../mcsrc/<old>/net/minecraft/network ../mcsrc/current/net/minecraft/network`) to find protocol changes.
-2. Regenerate the JSON reports for the new version: `cd vanilla_server_reports && ./generate.sh <version>`
+1. Examine the decompiled source in `../mcsrc/current/`; diff against a previous version (e.g. `diff -r ../mcsrc/<old>/net/minecraft/network ../mcsrc/current/net/minecraft/network`) to find protocol changes.
+2. Regenerate the input JSON: `cd vanilla_server_reports && ./generate.sh <version>` and `cd mcdump && ./dump.sh <version>`.
 3. Regenerate the Go bindings: `cd pkg/data && go generate ./... && go fmt ./...`
 4. Write/adjust hand-written packet bindings in `./pkg/packets` per the diffed source.
 5. Repeat when Minecraft updates the protocol.

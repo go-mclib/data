@@ -2,24 +2,27 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"regexp"
+	"sort"
 	"strings"
 )
 
-func generateEntities(registries map[string]RegistryJSON, entityTypeJavaPath, outPath string) {
-	entityRegistry := registries["minecraft:entity_type"]
+// generateEntities emits the per-entity mob category map from the mod's
+// entities.json (the game's own EntityType.getCategory()).
+func generateEntities(mcdumpPath, outPath string) {
+	ents := loadEntities(mcdumpPath)
 
-	// extract MobCategory from EntityType.java
-	categories := extractMobCategories(entityTypeJavaPath)
+	names := make([]string, 0, len(ents))
+	for name := range ents {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	checkMinCount("mob categories", len(names), 100)
 
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("entities"))
-
-	// mob category map
 	sb.WriteString("var entityCategory = map[string]string{\n")
-	for _, name := range sortedKeys(entityRegistry.Entries) {
-		cat := categories[name]
+	for _, name := range names {
+		cat := ents[name].Category
 		if cat == "" {
 			cat = "misc"
 		}
@@ -28,44 +31,5 @@ func generateEntities(registries map[string]RegistryJSON, entityTypeJavaPath, ou
 	sb.WriteString("}\n")
 
 	writeFile(outPath, sb.String())
-}
-
-// extractMobCategories parses EntityTypes.java to extract the MobCategory for each entity.
-func extractMobCategories(javaPath string) map[string]string {
-	data, err := os.ReadFile(javaPath)
-	if err != nil {
-		fmt.Printf("skipping mob categories: %v\n", err)
-		return nil
-	}
-	src := string(data)
-
-	// entity names come from the static field constant: `public static final
-	// EntityType<T> ACACIA_BOAT = register(...)` -> minecraft:acacia_boat.
-	registerRe := regexp.MustCompile(`([A-Z][A-Z0-9_]*)\s*=\s*register\(`)
-	categoryRe := regexp.MustCompile(`MobCategory\.(\w+)`)
-
-	categories := make(map[string]string)
-	matches := registerRe.FindAllStringIndex(src, -1)
-	for _, loc := range matches {
-		nameMatch := registerRe.FindStringSubmatch(src[loc[0]:loc[1]])
-		if nameMatch == nil {
-			continue
-		}
-		name := "minecraft:" + strings.ToLower(nameMatch[1])
-
-		block := findRegisterBlock(src, loc[0])
-		if block == "" {
-			continue
-		}
-
-		catMatch := categoryRe.FindStringSubmatch(block)
-		if catMatch == nil {
-			continue
-		}
-		categories[name] = strings.ToLower(catMatch[1])
-	}
-
-	fmt.Printf("mob categories: extracted %d entities from EntityTypes.java\n", len(categories))
-	checkMinCount("mob categories", len(categories), 100)
-	return categories
+	fmt.Printf("mob categories: %d entities\n", len(names))
 }

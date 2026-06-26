@@ -22,10 +22,14 @@ func main() {
 	outDir := filepath.Dir(baseDir)
 	// decompiled sources live in the sibling go-mclib/mcsrc repo (../../../mcsrc relative to pkg/data)
 	decompiledDir := filepath.Join(outDir, "..", "..", "..", "mcsrc", "current")
-	// entity registrations moved from EntityType.java to EntityTypes.java in 26.2
-	decompiledEntityType := filepath.Join(decompiledDir, "net", "minecraft", "world", "entity", "EntityTypes.java")
 	itemTagsDir := filepath.Join(decompiledDir, "data", "minecraft", "tags", "item")
 	datapackDir := filepath.Join(decompiledDir, "data", "minecraft")
+
+	// game data dumped by the standalone mod (mcdump) — collision shapes, entity
+	// hitboxes, hardness, mob categories: straight from the game, no scraping.
+	mcdumpDir := filepath.Join(baseDir, "mcdump")
+	mcdumpBlocks := filepath.Join(mcdumpDir, "blocks.json")
+	mcdumpEntities := filepath.Join(mcdumpDir, "entities.json")
 
 	// generate version info
 	generateVersion(filepath.Join(outDir, "version_gen.go"))
@@ -39,14 +43,14 @@ func main() {
 	generateComponentCodecs(registries, filepath.Join(baseDir, "component_metadata.include.json"), filepath.Join(outDir, "items", "item_components_codec_gen.go"))
 	generatePacketIds(packets, filepath.Join(outDir, "packet_ids"))
 	generateLang(langPath, filepath.Join(outDir, "lang", "lang_gen.go"))
-	generateEntities(registries, decompiledEntityType, filepath.Join(outDir, "entities", "entities_gen.go"))
+	generateEntities(mcdumpEntities, filepath.Join(outDir, "entities", "entities_gen.go"))
 	generateEntityMetadata(filepath.Join(baseDir, "entity_metadata.include.json"), filepath.Join(outDir, "entities"))
-	generateBlockShapes(blocks, filepath.Join(baseDir, "prismarine_block_collision_shapes.json"), filepath.Join(outDir, "hitboxes", "blocks", "block_shapes_gen.go"))
-	generateEntityHitboxes(decompiledEntityType, filepath.Join(outDir, "hitboxes", "entities", "entity_hitboxes_gen.go"))
+	generateBlockShapes(mcdumpBlocks, filepath.Join(outDir, "hitboxes", "blocks", "block_shapes_gen.go"))
+	generateEntityHitboxes(mcdumpEntities, filepath.Join(outDir, "hitboxes", "entities", "entity_hitboxes_gen.go"))
 	generateItemTags(itemTagsDir, registries, filepath.Join(outDir, "items", "tags_gen.go"))
 	generateRegistryData(datapackDir, filepath.Join(outDir, "registries", "registry_data_gen.go"))
 	generateTagData(filepath.Join(decompiledDir, "data", "minecraft", "tags"), filepath.Join(outDir, "registries", "tag_data_gen.go"))
-	generateBlockHardness(decompiledDir, filepath.Join(outDir, "blocks", "block_hardness_gen.go"))
+	generateBlockHardness(mcdumpBlocks, filepath.Join(outDir, "blocks", "block_hardness_gen.go"))
 
 	// fail loudly if any scraper produced implausibly few entries
 	reportSanityChecks()
