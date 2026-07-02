@@ -13,8 +13,8 @@ import (
 	"fmt"
 	"slices"
 
+	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
-	"github.com/go-mclib/protocol/nbt"
 
 	"github.com/go-mclib/data/pkg/data/registries"
 )

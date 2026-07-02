@@ -6,8 +6,8 @@ import (
 
 	"github.com/go-mclib/data/pkg/data/entities"
 	"github.com/go-mclib/data/pkg/data/items"
+	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
-	"github.com/go-mclib/protocol/nbt"
 )
 
 // S2CBundleDelimiter represents "Bundle Delimiter".
@@ -211,11 +211,9 @@ func (p *S2CBlockEntityData) Read(buf *ns.PacketBuffer) error {
 	if p.Type, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	remaining, err := buf.ReadByteArray(1048576)
-	if err != nil {
-		return err
-	}
-	p.NbtData, err = nbt.DecodeNetwork(remaining)
+	// inline network NBT (no length prefix)
+	nbtReader := nbt.NewReaderFrom(buf.Reader())
+	p.NbtData, _, err = nbtReader.ReadTag(true)
 	return err
 }
 
@@ -2549,13 +2547,15 @@ type S2CPlayerInfoUpdate struct {
 }
 
 func (p *S2CPlayerInfoUpdate) Read(buf *ns.PacketBuffer) error {
-	var err error
-	p.Data, err = buf.ReadByteArray(1048576)
+	// the body (actions bitset + entry array) runs to the end of the packet;
+	// it is not length-prefixed
+	data, err := io.ReadAll(buf.Reader())
+	p.Data = ns.ByteArray(data)
 	return err
 }
 
 func (p *S2CPlayerInfoUpdate) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteByteArray(p.Data)
+	return buf.WriteFixedByteArray(p.Data)
 }
 
 // S2CPlayerLookAt represents "Look At".
@@ -4152,11 +4152,9 @@ func (p *S2CTagQuery) Read(buf *ns.PacketBuffer) error {
 	if p.TransactionId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	remaining, err := buf.ReadByteArray(1048576)
-	if err != nil {
-		return err
-	}
-	p.Nbt, err = nbt.DecodeNetwork(remaining)
+	// inline network NBT (no length prefix)
+	nbtReader := nbt.NewReaderFrom(buf.Reader())
+	p.Nbt, _, err = nbtReader.ReadTag(true)
 	return err
 }
 

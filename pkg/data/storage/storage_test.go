@@ -98,6 +98,8 @@ func TestChunkNBTRoundTrip(t *testing.T) {
 	col := &chunks.ChunkColumn{
 		X:          5,
 		Z:          -3,
+		MinY:       chunks.MinY,
+		Sections:   make([]*chunks.ChunkSection, chunks.SectionCount),
 		Heightmaps: make(map[int32][]int64),
 	}
 	for i := range chunks.SectionCount {
@@ -144,6 +146,8 @@ func TestChunkNBTWithRegionStorage(t *testing.T) {
 	col := &chunks.ChunkColumn{
 		X:          0,
 		Z:          0,
+		MinY:       chunks.MinY,
+		Sections:   make([]*chunks.ChunkSection, chunks.SectionCount),
 		Heightmaps: make(map[int32][]int64),
 	}
 	for i := range chunks.SectionCount {

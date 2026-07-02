@@ -1,8 +1,8 @@
 package packets
 
 import (
+	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
-	"github.com/go-mclib/protocol/nbt"
 )
 
 // S2CCookieRequestConfiguration represents "Cookie Request (configuration)".
@@ -163,14 +163,10 @@ func (p *S2CRegistryData) Read(buf *ns.PacketBuffer) error {
 			return err
 		}
 		if p.Entries[i].HasData {
-			// read NBT data - we need to read remaining bytes for this entry,
-			// as we don't know the exact NBT size upfront
-			remaining, err := buf.ReadByteArray(1048576)
-			if err != nil {
-				return err
-			}
-			p.Entries[i].Data, err = nbt.DecodeNetwork(remaining)
-			if err != nil {
+			// inline network NBT (no length prefix); read directly from the
+			// buffer so it consumes exactly this entry's tag
+			nbtReader := nbt.NewReaderFrom(buf.Reader())
+			if p.Entries[i].Data, _, err = nbtReader.ReadTag(true); err != nil {
 				return err
 			}
 		}
@@ -634,12 +630,10 @@ type S2CShowDialogConfiguration struct {
 }
 
 func (p *S2CShowDialogConfiguration) Read(buf *ns.PacketBuffer) error {
-	// read remaining bytes as NBT
-	remaining, err := buf.ReadByteArray(1048576)
-	if err != nil {
-		return err
-	}
-	p.Dialog, err = nbt.DecodeNetwork(remaining)
+	// inline network NBT (no length prefix)
+	nbtReader := nbt.NewReaderFrom(buf.Reader())
+	tag, _, err := nbtReader.ReadTag(true)
+	p.Dialog = tag
 	return err
 }
 

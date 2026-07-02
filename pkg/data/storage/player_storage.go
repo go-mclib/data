@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-mclib/data/pkg/data/items"
 	"github.com/go-mclib/data/pkg/data/registries"
-	"github.com/go-mclib/protocol/nbt"
+	"github.com/go-mclib/nbt"
 )
 
 // PlayerData holds the data persisted for a player.

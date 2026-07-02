@@ -163,7 +163,7 @@ func TestChunkSectionDecodeEncode(t *testing.T) {
 }
 
 func TestChunkColumnGetSetBlockState(t *testing.T) {
-	col := &chunks.ChunkColumn{X: 0, Z: 0}
+	col := chunks.NewColumn(0, 0)
 	// Y=-64 is section index 0
 	col.SetBlockState(0, -64, 0, 1)
 	assert.Equal(t, int32(1), col.GetBlockState(0, -64, 0))
@@ -181,7 +181,7 @@ func TestChunkColumnGetSetBlockState(t *testing.T) {
 }
 
 func TestChunkColumnEncodeDecodeSections(t *testing.T) {
-	col := &chunks.ChunkColumn{X: 0, Z: 0}
+	col := chunks.NewColumn(0, 0)
 	col.SetBlockState(5, 10, 3, 100)
 	col.SetBlockState(0, -64, 0, 1)
 
@@ -189,7 +189,7 @@ func TestChunkColumnEncodeDecodeSections(t *testing.T) {
 	require.NoError(t, err)
 
 	// parse it back via a ChunkData-like flow
-	col2 := &chunks.ChunkColumn{X: 0, Z: 0}
+	col2 := chunks.NewColumn(0, 0)
 	buf := ns.NewReader(data)
 	for i := range chunks.SectionCount {
 		sec := &chunks.ChunkSection{}

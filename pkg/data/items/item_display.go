@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
-	"github.com/go-mclib/protocol/nbt"
 )
 
 // componentNames maps component IDs to their minecraft identifiers.

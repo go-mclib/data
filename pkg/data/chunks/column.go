@@ -5,35 +5,55 @@ import (
 )
 
 const (
-	// SectionCount is the number of vertical sections in a chunk column (1.21.x: Y -64 to 319).
+	// SectionCount is the vanilla overworld section count (Y -64..319). Used as
+	// a fallback when the dimension's real height is unknown.
 	SectionCount = 24
-	// MinY is the minimum world Y coordinate.
+	// MinY is the vanilla overworld minimum world Y (fallback default).
 	MinY = -64
-	// MaxY is the maximum world Y coordinate (exclusive).
+	// MaxY is the vanilla overworld maximum world Y, exclusive (fallback default).
 	MaxY = MinY + SectionCount*16
 )
 
-// ChunkColumn represents a vertical column of chunk sections with associated data.
+// ChunkColumn represents a vertical column of chunk sections with associated
+// data. Height is per-column: MinY and len(Sections) come from the dimension
+// type, so datapack-changed world heights parse correctly.
 type ChunkColumn struct {
 	X, Z          int32
-	Sections      [SectionCount]*ChunkSection
+	MinY          int // world Y of the bottom section
+	Sections      []*ChunkSection
 	Heightmaps    map[int32][]int64
 	BlockEntities []ns.BlockEntity
 	Light         *ns.LightData
 }
 
-// ParseChunkColumn decodes a ChunkColumn from protocol-level types.
-func ParseChunkColumn(x, z int32, data ns.ChunkData, light *ns.LightData) (*ChunkColumn, error) {
+// NewColumn returns an empty column at the vanilla overworld height with its
+// section slice allocated (all nil). Use for tests and chunk generation.
+func NewColumn(x, z int32) *ChunkColumn {
+	return &ChunkColumn{
+		X:          x,
+		Z:          z,
+		MinY:       MinY,
+		Sections:   make([]*ChunkSection, SectionCount),
+		Heightmaps: make(map[int32][]int64),
+	}
+}
+
+// ParseChunkColumn decodes a ChunkColumn. minY and sectionCount describe the
+// dimension's vertical extent (from the dimension type); pass DefaultMinY and
+// DefaultSectionCount for the vanilla overworld.
+func ParseChunkColumn(x, z int32, minY, sectionCount int, data ns.ChunkData, light *ns.LightData) (*ChunkColumn, error) {
 	col := &ChunkColumn{
 		X:             x,
 		Z:             z,
+		MinY:          minY,
+		Sections:      make([]*ChunkSection, sectionCount),
 		Heightmaps:    data.Heightmaps,
 		BlockEntities: data.BlockEntities,
 		Light:         light,
 	}
 
 	buf := ns.NewReader(data.Data)
-	for i := range SectionCount {
+	for i := range sectionCount {
 		sec := &ChunkSection{}
 		if err := sec.Decode(buf); err != nil {
 			return nil, err
@@ -46,7 +66,7 @@ func ParseChunkColumn(x, z int32, data ns.ChunkData, light *ns.LightData) (*Chun
 // GetBlockState returns the block state ID at absolute world coordinates.
 // Returns 0 (air) if the coordinates are out of range or the section is nil.
 func (c *ChunkColumn) GetBlockState(x, y, z int) int32 {
-	idx := SectionIndex(y)
+	idx := c.SectionIndex(y)
 	if idx < 0 {
 		return 0
 	}
@@ -61,7 +81,7 @@ func (c *ChunkColumn) GetBlockState(x, y, z int) int32 {
 // SetBlockState sets the block state ID at absolute world coordinates.
 // Creates an empty section if the target section is nil.
 func (c *ChunkColumn) SetBlockState(x, y, z int, stateID int32) {
-	idx := SectionIndex(y)
+	idx := c.SectionIndex(y)
 	if idx < 0 {
 		return
 	}
@@ -86,8 +106,19 @@ func (c *ChunkColumn) EncodeSections() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// SectionIndex returns the section array index for the given world Y coordinate.
-// Returns -1 if Y is out of range.
+// SectionIndex returns the section array index for the given world Y, or -1 if
+// Y is outside this column's vertical range.
+func (c *ChunkColumn) SectionIndex(worldY int) int {
+	idx := (worldY - c.MinY) >> 4
+	if idx < 0 || idx >= len(c.Sections) {
+		return -1
+	}
+	return idx
+}
+
+// SectionIndex returns the section index for a world Y assuming the vanilla
+// overworld range. Prefer (*ChunkColumn).SectionIndex for dimension-correct
+// bounds; this exists for callers without a column.
 func SectionIndex(worldY int) int {
 	idx := (worldY - MinY) >> 4
 	if idx < 0 || idx >= SectionCount {

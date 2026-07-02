@@ -8,8 +8,8 @@ import (
 	"github.com/go-mclib/data/pkg/data/blocks"
 	"github.com/go-mclib/data/pkg/data/chunks"
 	"github.com/go-mclib/data/pkg/data/registries"
+	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
-	"github.com/go-mclib/protocol/nbt"
 )
 
 // DataVersion for the current protocol (1.21.11 = 4189).
@@ -248,6 +248,8 @@ func NBTToChunk(data []byte) (*chunks.ChunkColumn, error) {
 	col := &chunks.ChunkColumn{
 		X:          root.GetInt("xPos"),
 		Z:          root.GetInt("zPos"),
+		MinY:       chunks.MinY,
+		Sections:   make([]*chunks.ChunkSection, chunks.SectionCount),
 		Heightmaps: make(map[int32][]int64),
 	}
 

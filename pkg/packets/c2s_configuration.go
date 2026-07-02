@@ -1,8 +1,8 @@
 package packets
 
 import (
+	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
-	"github.com/go-mclib/protocol/nbt"
 )
 
 // C2SClientInformationConfiguration represents "Client Information (configuration)".
@@ -306,12 +306,9 @@ func (p *C2SCustomClickActionConfiguration) Read(buf *ns.PacketBuffer) error {
 	if p.Id, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
-	// read remaining bytes as NBT
-	remaining, err := buf.ReadByteArray(1048576)
-	if err != nil {
-		return err
-	}
-	p.Payload, err = nbt.DecodeNetwork(remaining)
+	// inline network NBT (no length prefix)
+	nbtReader := nbt.NewReaderFrom(buf.Reader())
+	p.Payload, _, err = nbtReader.ReadTag(true)
 	return err
 }
 
