@@ -26,8 +26,8 @@ go get github.com/go-mclib/data
 
 See package documentation:
 
-- [pkg/data/README.md](./pkg/data/README.md) - Registries, blocks, items
-- [pkg/packets/README.md](./pkg/packets/README.md) - Packet definitions
+- [PACKAGES.md](./PACKAGES.md) - Registries, blocks, items
+- [packets/README.md](./packets/README.md) - Packet definitions
 
 ## Updating to a New Minecraft Version
 
@@ -40,7 +40,7 @@ See package documentation:
 2. **Regenerate data** from the server reports + decompiled source (`../mcsrc/current`):
 
    ```bash
-   cd pkg/data && go generate ./... && go fmt ./...
+   go generate ./... && go fmt ./...
    ```
 
 3. **Update packet bindings** - see `.claude/prompts/PACKETS.md`
