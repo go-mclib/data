@@ -571,4 +571,3 @@ func (genWeaponCodec) Encode(c *Components) ([]byte, error) {
 	w.WriteFloat32(ns.Float32(c.Weapon.DisableBlockingForSeconds))
 	return w.Bytes(), nil
 }
-

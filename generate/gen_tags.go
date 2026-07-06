@@ -17,26 +17,27 @@ type tagJSON struct {
 func generateItemTags(tagsDir string, registries map[string]RegistryJSON, outPath string) {
 	itemRegistry := registries["minecraft:item"]
 
-	// load all tag files
+	// load all tag files, including nested dirs (enchantable/, piglin_loved/…)
 	raw := make(map[string][]string) // tag name -> raw values (items + #refs)
-	entries, err := os.ReadDir(tagsDir)
-	if err != nil {
-		panic(fmt.Sprintf("failed to read tags dir %s: %v", tagsDir, err))
-	}
-	for _, entry := range entries {
-		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".json") {
-			continue
+	err := filepath.WalkDir(tagsDir, func(path string, d os.DirEntry, err error) error {
+		if err != nil || d.IsDir() || !strings.HasSuffix(d.Name(), ".json") {
+			return err
 		}
-		data, err := os.ReadFile(filepath.Join(tagsDir, entry.Name()))
+		data, err := os.ReadFile(path)
 		if err != nil {
-			panic(fmt.Sprintf("failed to read tag file %s: %v", entry.Name(), err))
+			return fmt.Errorf("failed to read tag file %s: %w", path, err)
 		}
 		var tag tagJSON
 		if err := json.Unmarshal(data, &tag); err != nil {
-			panic(fmt.Sprintf("failed to parse tag file %s: %v", entry.Name(), err))
+			return fmt.Errorf("failed to parse tag file %s: %w", path, err)
 		}
-		name := "minecraft:" + strings.TrimSuffix(entry.Name(), ".json")
+		rel, _ := filepath.Rel(tagsDir, path)
+		name := "minecraft:" + strings.TrimSuffix(filepath.ToSlash(rel), ".json")
 		raw[name] = tag.Values
+		return nil
+	})
+	if err != nil {
+		panic(fmt.Sprintf("failed to read tags dir %s: %v", tagsDir, err))
 	}
 
 	// recursively resolve tags into concrete item IDs
