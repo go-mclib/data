@@ -16,3 +16,12 @@ func ItemName(protocolID int32) string {
 func DefaultComponents(itemID int32) *Components {
 	return defaultComponents[itemID]
 }
+
+// MaxStackSize returns an item's stack limit from its default components
+// (64 when the item is unknown).
+func MaxStackSize(itemID int32) int32 {
+	if c := DefaultComponents(itemID); c != nil && c.MaxStackSize > 0 {
+		return c.MaxStackSize
+	}
+	return 64
+}

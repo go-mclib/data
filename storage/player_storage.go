@@ -21,6 +21,9 @@ type PlayerData struct {
 	Gamemode   int32
 	Inventory  []InventorySlot
 	HeldSlot   int32
+	Health     float32
+	Food       int32
+	Saturation float32
 }
 
 // InventorySlot represents one item in a player's inventory.
@@ -37,10 +40,13 @@ func SavePlayer(dir, uuid string, pd *PlayerData) error {
 	}
 
 	root := nbt.Compound{
-		"DataVersion":      nbt.Int(DataVersion),
-		"playerGameType":   nbt.Int(pd.Gamemode),
-		"Dimension":        nbt.String(pd.Dimension),
-		"SelectedItemSlot": nbt.Int(pd.HeldSlot),
+		"DataVersion":         nbt.Int(DataVersion),
+		"playerGameType":      nbt.Int(pd.Gamemode),
+		"Dimension":           nbt.String(pd.Dimension),
+		"SelectedItemSlot":    nbt.Int(pd.HeldSlot),
+		"Health":              nbt.Float(pd.Health),
+		"foodLevel":           nbt.Int(pd.Food),
+		"foodSaturationLevel": nbt.Float(pd.Saturation),
 		"Pos": nbt.List{
 			ElementType: nbt.TagDouble,
 			Elements:    []nbt.Tag{nbt.Double(pd.X), nbt.Double(pd.Y), nbt.Double(pd.Z)},
@@ -104,9 +110,12 @@ func LoadPlayer(dir, uuid string) (*PlayerData, error) {
 	}
 
 	pd := &PlayerData{
-		Gamemode:  root.GetInt("playerGameType"),
-		Dimension: root.GetString("Dimension"),
-		HeldSlot:  root.GetInt("SelectedItemSlot"),
+		Gamemode:   root.GetInt("playerGameType"),
+		Dimension:  root.GetString("Dimension"),
+		HeldSlot:   root.GetInt("SelectedItemSlot"),
+		Health:     root.GetFloat("Health"),
+		Food:       root.GetInt("foodLevel"),
+		Saturation: root.GetFloat("foodSaturationLevel"),
 	}
 
 	// position

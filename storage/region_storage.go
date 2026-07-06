@@ -42,7 +42,9 @@ func regionCoords(chunkX, chunkZ int32) (int32, int32) {
 	return chunkX >> 5, chunkZ >> 5
 }
 
-func (rs *RegionStorage) getRegion(chunkX, chunkZ int32) (*RegionFile, error) {
+// getRegion returns the (cached) region file for a chunk. Without create, a
+// missing file yields (nil, nil) instead of creating an empty region on disk.
+func (rs *RegionStorage) getRegion(chunkX, chunkZ int32, create bool) (*RegionFile, error) {
 	rx, rz := regionCoords(chunkX, chunkZ)
 	key := regionKey(rx, rz)
 
@@ -54,12 +56,18 @@ func (rs *RegionStorage) getRegion(chunkX, chunkZ int32) (*RegionFile, error) {
 		return entry.region, nil
 	}
 
+	path := filepath.Join(rs.dir, fmt.Sprintf("r.%d.%d.mca", rx, rz))
+	if !create {
+		if _, err := os.Stat(path); err != nil {
+			return nil, nil
+		}
+	}
+
 	// evict if at capacity
 	for len(rs.cache) >= maxOpenRegions {
 		rs.evictOldest()
 	}
 
-	path := filepath.Join(rs.dir, fmt.Sprintf("r.%d.%d.mca", rx, rz))
 	region, err := OpenRegion(path)
 	if err != nil {
 		return nil, err
@@ -94,16 +102,16 @@ func (rs *RegionStorage) evictOldest() {
 
 // ReadChunk reads a chunk from the appropriate region file. Returns nil, nil if absent.
 func (rs *RegionStorage) ReadChunk(chunkX, chunkZ int32) ([]byte, error) {
-	region, err := rs.getRegion(chunkX, chunkZ)
-	if err != nil {
+	region, err := rs.getRegion(chunkX, chunkZ, false)
+	if err != nil || region == nil {
 		return nil, err
 	}
 	return region.ReadChunk(chunkX, chunkZ)
 }
 
-// WriteChunk writes a chunk to the appropriate region file.
+// WriteChunk writes a chunk to the appropriate region file, creating it if needed.
 func (rs *RegionStorage) WriteChunk(chunkX, chunkZ int32, data []byte) error {
-	region, err := rs.getRegion(chunkX, chunkZ)
+	region, err := rs.getRegion(chunkX, chunkZ, true)
 	if err != nil {
 		return err
 	}
@@ -112,8 +120,8 @@ func (rs *RegionStorage) WriteChunk(chunkX, chunkZ int32, data []byte) error {
 
 // HasChunk checks if a chunk exists in the appropriate region file.
 func (rs *RegionStorage) HasChunk(chunkX, chunkZ int32) bool {
-	region, err := rs.getRegion(chunkX, chunkZ)
-	if err != nil {
+	region, err := rs.getRegion(chunkX, chunkZ, false)
+	if err != nil || region == nil {
 		return false
 	}
 	return region.HasChunk(chunkX, chunkZ)
