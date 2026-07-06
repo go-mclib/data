@@ -24,6 +24,9 @@ type PlayerData struct {
 	Health     float32
 	Food       int32
 	Saturation float32
+	XpLevel    int32
+	XpProgress float32
+	XpTotal    int32
 }
 
 // InventorySlot represents one item in a player's inventory.
@@ -47,6 +50,9 @@ func SavePlayer(dir, uuid string, pd *PlayerData) error {
 		"Health":              nbt.Float(pd.Health),
 		"foodLevel":           nbt.Int(pd.Food),
 		"foodSaturationLevel": nbt.Float(pd.Saturation),
+		"XpLevel":             nbt.Int(pd.XpLevel),
+		"XpP":                 nbt.Float(pd.XpProgress),
+		"XpTotal":             nbt.Int(pd.XpTotal),
 		"Pos": nbt.List{
 			ElementType: nbt.TagDouble,
 			Elements:    []nbt.Tag{nbt.Double(pd.X), nbt.Double(pd.Y), nbt.Double(pd.Z)},
@@ -116,6 +122,9 @@ func LoadPlayer(dir, uuid string) (*PlayerData, error) {
 		Health:     root.GetFloat("Health"),
 		Food:       root.GetInt("foodLevel"),
 		Saturation: root.GetFloat("foodSaturationLevel"),
+		XpLevel:    root.GetInt("XpLevel"),
+		XpProgress: root.GetFloat("XpP"),
+		XpTotal:    root.GetInt("XpTotal"),
 	}
 
 	// position

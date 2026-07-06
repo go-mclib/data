@@ -51,6 +51,7 @@ func main() {
 	generateRegistryData(datapackDir, filepath.Join(outDir, "registries", "registry_data_gen.go"))
 	generateTagData(filepath.Join(decompiledDir, "data", "minecraft", "tags"), filepath.Join(outDir, "registries", "tag_data_gen.go"))
 	generateBlockHardness(mcdumpBlocks, filepath.Join(outDir, "blocks", "block_hardness_gen.go"))
+	generateRecipes(filepath.Join(datapackDir, "recipe"), filepath.Join(outDir, "recipes", "recipes_gen.go"))
 
 	// fail loudly if any scraper produced implausibly few entries
 	reportSanityChecks()
