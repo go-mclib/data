@@ -190,6 +190,7 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 		Dimension: "minecraft:overworld",
 		Gamemode:  1,
 		HeldSlot:  3,
+		Tags:      []string{"builder", "quest_started"},
 		Inventory: []storage.InventorySlot{
 			{Slot: 0, ID: "minecraft:stone", Count: 64},
 			{Slot: 36, ID: "minecraft:diamond_sword", Count: 1},
@@ -216,6 +217,7 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 	assert.Equal(t, pd.Gamemode, loaded.Gamemode)
 	assert.Equal(t, pd.HeldSlot, loaded.HeldSlot)
 	assert.Equal(t, pd.Dimension, loaded.Dimension)
+	assert.Equal(t, pd.Tags, loaded.Tags)
 	assert.Len(t, loaded.Inventory, 2)
 	assert.Equal(t, "minecraft:stone", loaded.Inventory[0].ID)
 	assert.Equal(t, int32(64), loaded.Inventory[0].Count)

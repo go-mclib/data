@@ -27,6 +27,7 @@ type PlayerData struct {
 	XpLevel    int32
 	XpProgress float32
 	XpTotal    int32
+	Tags       []string
 }
 
 // InventorySlot represents one item in a player's inventory.
@@ -64,6 +65,11 @@ func SavePlayer(dir, uuid string, pd *PlayerData) error {
 	}
 
 	root["Inventory"] = nbt.List{ElementType: nbt.TagCompound, Elements: encodeInventory(pd.Inventory)}
+	tags := nbt.List{ElementType: nbt.TagString}
+	for _, tag := range pd.Tags {
+		tags.Elements = append(tags.Elements, nbt.String(tag))
+	}
+	root["Tags"] = tags
 
 	data, err := nbt.EncodeFile(root, "")
 	if err != nil {
@@ -153,6 +159,11 @@ func LoadPlayer(dir, uuid string) (*PlayerData, error) {
 	}
 
 	pd.Inventory = decodeInventory(root.GetList("Inventory"))
+	for _, tag := range root.GetList("Tags").Elements {
+		if name, ok := tag.(nbt.String); ok {
+			pd.Tags = append(pd.Tags, string(name))
+		}
+	}
 
 	return pd, nil
 }

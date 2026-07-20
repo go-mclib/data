@@ -2,6 +2,7 @@ package packets
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 
 	"github.com/go-mclib/data/entities"
@@ -1222,7 +1223,7 @@ func (p *S2CExplode) Read(buf *ns.PacketBuffer) error {
 	if p.Z, err = buf.ReadFloat64(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(1048576)
+	p.Data, err = io.ReadAll(buf.Reader())
 	return err
 }
 
@@ -1236,7 +1237,7 @@ func (p *S2CExplode) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteFloat64(p.Z); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	return buf.WriteFixedByteArray(p.Data)
 }
 
 // S2CForgetLevelChunk represents "Unload Chunk".
@@ -1570,7 +1571,7 @@ func (p *S2CLevelParticles) Read(buf *ns.PacketBuffer) error {
 	if p.ParticleId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(1048576)
+	p.Data, err = io.ReadAll(buf.Reader())
 	return err
 }
 
@@ -1608,7 +1609,7 @@ func (p *S2CLevelParticles) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.ParticleId); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	return buf.WriteFixedByteArray(p.Data)
 }
 
 // S2CLightUpdate represents "Update Light".
@@ -3603,8 +3604,10 @@ func (p *S2CSetHeldSlot) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Objectives
 type S2CSetObjective struct {
 	ObjectiveName ns.String
-	Mode          ns.Int8
-	Data          ns.ByteArray
+	Mode          ns.Int8 // 0 add, 1 remove, 2 change
+	DisplayName   ns.TextComponent
+	RenderType    ns.VarInt // 0 integer, 1 hearts
+	NumberFormat  ns.PrefixedOptional[ns.NumberFormat]
 }
 
 func (p *S2CSetObjective) Read(buf *ns.PacketBuffer) error {
@@ -3615,10 +3618,20 @@ func (p *S2CSetObjective) Read(buf *ns.PacketBuffer) error {
 	if p.Mode, err = buf.ReadInt8(); err != nil {
 		return err
 	}
-	if p.Mode == 0 || p.Mode == 2 {
-		p.Data, err = buf.ReadByteArray(1048576)
+	if p.Mode != 0 && p.Mode != 2 {
+		return nil
 	}
-	return err
+	if p.DisplayName, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	if p.RenderType, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	return p.NumberFormat.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.NumberFormat, error) {
+		var f ns.NumberFormat
+		err := f.Decode(b)
+		return f, err
+	})
 }
 
 func (p *S2CSetObjective) Write(buf *ns.PacketBuffer) error {
@@ -3628,10 +3641,18 @@ func (p *S2CSetObjective) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt8(p.Mode); err != nil {
 		return err
 	}
-	if p.Mode == 0 || p.Mode == 2 {
-		return buf.WriteByteArray(p.Data)
+	if p.Mode != 0 && p.Mode != 2 {
+		return nil
 	}
-	return nil
+	if err := buf.WriteTextComponent(p.DisplayName); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.RenderType); err != nil {
+		return err
+	}
+	return p.NumberFormat.EncodeWith(buf, func(b *ns.PacketBuffer, f ns.NumberFormat) error {
+		return f.Encode(b)
+	})
 }
 
 // S2CSetPassengers represents "Set Passengers".
@@ -3685,10 +3706,69 @@ func (p *S2CSetPlayerInventory) Write(buf *ns.PacketBuffer) error {
 // S2CSetPlayerTeam represents "Update Teams".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Teams
+// PlayerTeamParameters is present for create/change team methods. Visibility,
+// collision and color are registry/enum VarInts in Minecraft 26.2.
+type PlayerTeamParameters struct {
+	DisplayName       ns.TextComponent
+	MemberNamePrefix  ns.TextComponent
+	MemberNameSuffix  ns.TextComponent
+	NameTagVisibility ns.VarInt
+	CollisionRule     ns.VarInt
+	Color             ns.PrefixedOptional[ns.VarInt]
+	Options           ns.Int8 // bit 0 friendly fire, bit 1 see invisible allies
+}
+
+func (p *PlayerTeamParameters) read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.DisplayName, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	if p.MemberNamePrefix, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	if p.MemberNameSuffix, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	if p.NameTagVisibility, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.CollisionRule, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if err := p.Color.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.VarInt, error) { return b.ReadVarInt() }); err != nil {
+		return err
+	}
+	p.Options, err = buf.ReadInt8()
+	return err
+}
+
+func (p PlayerTeamParameters) write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteTextComponent(p.DisplayName); err != nil {
+		return err
+	}
+	if err := buf.WriteTextComponent(p.MemberNamePrefix); err != nil {
+		return err
+	}
+	if err := buf.WriteTextComponent(p.MemberNameSuffix); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.NameTagVisibility); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.CollisionRule); err != nil {
+		return err
+	}
+	if err := p.Color.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.VarInt) error { return b.WriteVarInt(v) }); err != nil {
+		return err
+	}
+	return buf.WriteInt8(p.Options)
+}
+
 type S2CSetPlayerTeam struct {
-	TeamName ns.String
-	Method   ns.Int8
-	Data     ns.ByteArray
+	TeamName   ns.String
+	Method     ns.Int8 // 0 create, 1 remove, 2 change, 3 join, 4 leave
+	Parameters *PlayerTeamParameters
+	Players    ns.PrefixedArray[ns.String]
 }
 
 func (p *S2CSetPlayerTeam) Read(buf *ns.PacketBuffer) error {
@@ -3699,8 +3779,16 @@ func (p *S2CSetPlayerTeam) Read(buf *ns.PacketBuffer) error {
 	if p.Method, err = buf.ReadInt8(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(1048576)
-	return err
+	if p.Method == 0 || p.Method == 2 {
+		p.Parameters = &PlayerTeamParameters{}
+		if err := p.Parameters.read(buf); err != nil {
+			return err
+		}
+	}
+	if p.Method == 0 || p.Method == 3 || p.Method == 4 {
+		return p.Players.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.String, error) { return b.ReadString(32767) })
+	}
+	return nil
 }
 
 func (p *S2CSetPlayerTeam) Write(buf *ns.PacketBuffer) error {
@@ -3710,7 +3798,18 @@ func (p *S2CSetPlayerTeam) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt8(p.Method); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	if p.Method == 0 || p.Method == 2 {
+		if p.Parameters == nil {
+			return fmt.Errorf("team method %d requires parameters", p.Method)
+		}
+		if err := p.Parameters.write(buf); err != nil {
+			return err
+		}
+	}
+	if p.Method == 0 || p.Method == 3 || p.Method == 4 {
+		return p.Players.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.String) error { return b.WriteString(v) })
+	}
+	return nil
 }
 
 // S2CSetScore represents "Update Score".
@@ -3720,7 +3819,8 @@ type S2CSetScore struct {
 	EntityName    ns.String
 	ObjectiveName ns.String
 	Value         ns.VarInt
-	Data          ns.ByteArray
+	DisplayName   ns.PrefixedOptional[ns.TextComponent]
+	NumberFormat  ns.PrefixedOptional[ns.NumberFormat]
 }
 
 func (p *S2CSetScore) Read(buf *ns.PacketBuffer) error {
@@ -3734,8 +3834,16 @@ func (p *S2CSetScore) Read(buf *ns.PacketBuffer) error {
 	if p.Value, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(1048576)
-	return err
+	if err := p.DisplayName.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
+		return b.ReadTextComponent()
+	}); err != nil {
+		return err
+	}
+	return p.NumberFormat.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.NumberFormat, error) {
+		var f ns.NumberFormat
+		err := f.Decode(b)
+		return f, err
+	})
 }
 
 func (p *S2CSetScore) Write(buf *ns.PacketBuffer) error {
@@ -3748,7 +3856,14 @@ func (p *S2CSetScore) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.Value); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	if err := p.DisplayName.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.TextComponent) error {
+		return b.WriteTextComponent(v)
+	}); err != nil {
+		return err
+	}
+	return p.NumberFormat.EncodeWith(buf, func(b *ns.PacketBuffer, f ns.NumberFormat) error {
+		return f.Encode(b)
+	})
 }
 
 // S2CSetSimulationDistance represents "Set Simulation Distance".
@@ -3905,7 +4020,7 @@ func (p *S2CSetTitlesAnimation) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Entity_Sound_Effect
 type S2CSoundEntity struct {
-	SoundEvent    ns.ByteArray
+	SoundEvent    ns.SoundEvent
 	SoundCategory ns.VarInt
 	EntityId      ns.VarInt
 	Volume        ns.Float32
@@ -3915,7 +4030,7 @@ type S2CSoundEntity struct {
 
 func (p *S2CSoundEntity) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.SoundEvent, err = buf.ReadByteArray(1048576); err != nil {
+	if err = p.SoundEvent.Decode(buf); err != nil {
 		return err
 	}
 	if p.SoundCategory, err = buf.ReadVarInt(); err != nil {
@@ -3935,7 +4050,7 @@ func (p *S2CSoundEntity) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *S2CSoundEntity) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteByteArray(p.SoundEvent); err != nil {
+	if err := p.SoundEvent.Encode(buf); err != nil {
 		return err
 	}
 	if err := buf.WriteVarInt(p.SoundCategory); err != nil {
@@ -3957,7 +4072,7 @@ func (p *S2CSoundEntity) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Sound_Effect
 type S2CSound struct {
-	SoundEvent      ns.ByteArray
+	SoundEvent      ns.SoundEvent
 	SoundCategory   ns.VarInt
 	EffectPositionX ns.Int32
 	EffectPositionY ns.Int32
@@ -3969,7 +4084,7 @@ type S2CSound struct {
 
 func (p *S2CSound) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.SoundEvent, err = buf.ReadByteArray(1048576); err != nil {
+	if err = p.SoundEvent.Decode(buf); err != nil {
 		return err
 	}
 	if p.SoundCategory, err = buf.ReadVarInt(); err != nil {
@@ -3995,7 +4110,7 @@ func (p *S2CSound) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *S2CSound) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteByteArray(p.SoundEvent); err != nil {
+	if err := p.SoundEvent.Encode(buf); err != nil {
 		return err
 	}
 	if err := buf.WriteVarInt(p.SoundCategory); err != nil {
