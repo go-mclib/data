@@ -52,21 +52,9 @@ func init() {
 	})
 
 	// Simple String/Identifier codecs
-	RegisterCodec(ComponentBreakSound, &stringCodec{
-		get: func(c *Components) string { return c.BreakSound },
-		set: func(c *Components, v string) { c.BreakSound = v },
-	})
-	RegisterCodec(ComponentInstrument, &stringCodec{
-		get: func(c *Components) string { return c.Instrument },
-		set: func(c *Components, v string) { c.Instrument = v },
-	})
 	RegisterCodec(ComponentItemModel, &stringCodec{
 		get: func(c *Components) string { return c.ItemModel },
 		set: func(c *Components, v string) { c.ItemModel = v },
-	})
-	RegisterCodec(ComponentJukeboxPlayable, &stringCodec{
-		get: func(c *Components) string { return c.JukeboxPlayable },
-		set: func(c *Components, v string) { c.JukeboxPlayable = v },
 	})
 
 	// Empty marker codecs (bool flags)
@@ -117,7 +105,6 @@ func init() {
 	// Empty passthrough
 	for _, id := range []int32{
 		ComponentCreativeSlotLock,
-		ComponentIntangibleProjectile,
 	} {
 		registerEmptyPassthrough(id)
 	}
@@ -131,12 +118,11 @@ func init() {
 
 	// NBT passthrough
 	for _, id := range []int32{
-		ComponentBlockEntityData,
 		ComponentBucketEntityData,
 		ComponentContainerLoot,
 		ComponentCustomData,
 		ComponentDebugStickState,
-		ComponentEntityData,
+		ComponentIntangibleProjectile,
 		ComponentLock,
 		ComponentMapDecorations,
 	} {
@@ -150,22 +136,6 @@ func init() {
 		ComponentRepairable,
 	} {
 		registerHolderSetPassthrough(id)
-	}
-
-	// SlotList passthrough
-	for _, id := range []int32{
-		ComponentBundleContents,
-		ComponentChargedProjectiles,
-		ComponentContainer,
-	} {
-		registerSlotListPassthrough(id)
-	}
-
-	// Slot passthrough
-	for _, id := range []int32{
-		ComponentUseRemainder,
-	} {
-		registerSlotPassthrough(id)
 	}
 
 	// Entity variant (VarInt) passthrough
@@ -322,6 +292,9 @@ func (genFoodCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 	if err := w.CopyFloat32(buf); err != nil {
 		return nil, err
 	}
+	if err := w.CopyBool(buf); err != nil {
+		return nil, err
+	}
 	return w.Bytes(), nil
 }
 
@@ -341,6 +314,13 @@ func (genFoodCodec) Apply(c *Components, data []byte) error {
 			return err
 		}
 		s.Saturation = float64(v)
+	}
+	{
+		v, err := buf.ReadBool()
+		if err != nil {
+			return err
+		}
+		s.CanAlwaysEat = bool(v)
 	}
 	c.Food = s
 	return nil
@@ -367,6 +347,7 @@ func (genFoodCodec) Encode(c *Components) ([]byte, error) {
 	w := ns.NewWriter()
 	w.WriteVarInt(ns.VarInt(c.Food.Nutrition))
 	w.WriteFloat32(ns.Float32(c.Food.Saturation))
+	w.WriteBool(ns.Boolean(c.Food.CanAlwaysEat))
 	return w.Bytes(), nil
 }
 
@@ -486,6 +467,19 @@ func (genUseCooldownCodec) Apply(c *Components, data []byte) error {
 		}
 		s.Seconds = float64(v)
 	}
+	{
+		present, err := buf.ReadBool()
+		if err != nil {
+			return err
+		}
+		if present {
+			v, err := buf.ReadIdentifier()
+			if err != nil {
+				return err
+			}
+			s.CooldownGroup = string(v)
+		}
+	}
 	c.UseCooldown = s
 	return nil
 }
@@ -510,7 +504,10 @@ func (genUseCooldownCodec) Encode(c *Components) ([]byte, error) {
 	}
 	w := ns.NewWriter()
 	w.WriteFloat32(ns.Float32(c.UseCooldown.Seconds))
-	w.WriteBool(false)
+	w.WriteBool(ns.Boolean(c.UseCooldown.CooldownGroup != ""))
+	if c.UseCooldown.CooldownGroup != "" {
+		w.WriteIdentifier(ns.Identifier(c.UseCooldown.CooldownGroup))
+	}
 	return w.Bytes(), nil
 }
 

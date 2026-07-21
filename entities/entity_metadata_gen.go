@@ -192,6 +192,12 @@ const (
 	SpiderIndexSpiderFlags = 16
 )
 
+// Trident metadata indices
+const (
+	TridentIndexLoyalty = 11
+	TridentIndexFoil = 12
+)
+
 // Villager metadata indices
 const (
 	VillagerIndexVillagerData = 17
@@ -1266,6 +1272,38 @@ type SpiderMetadata struct {
 	SpiderFlags byte
 }
 
+// TridentMetadata contains metadata fields for Trident entities.
+type TridentMetadata struct {
+	// field presence flags
+	HasFlags bool
+	HasAirSupply bool
+	HasCustomNameVisible bool
+	HasSilent bool
+	HasNoGravity bool
+	HasPose bool
+	HasTicksFrozen bool
+	HasArrowFlags bool
+	HasPierceLevel bool
+	HasInGround bool
+	HasLoyalty bool
+	HasFoil bool
+
+	// field values
+	Flags byte
+	AirSupply int32
+	CustomName *string
+	CustomNameVisible bool
+	Silent bool
+	NoGravity bool
+	Pose int32
+	TicksFrozen int32
+	ArrowFlags byte
+	PierceLevel byte
+	InGround bool
+	Loyalty byte
+	Foil bool
+}
+
 // VillagerMetadata contains metadata fields for Villager entities.
 type VillagerMetadata struct {
 	// field presence flags
@@ -1961,6 +1999,21 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 0, Name: "SpiderFlags", Passthrough: false},
+	},
+	"Trident": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "ArrowFlags", Passthrough: false},
+		{Index: 9, Serializer: 0, Name: "PierceLevel", Passthrough: false},
+		{Index: 10, Serializer: 8, Name: "InGround", Passthrough: false},
+		{Index: 11, Serializer: 0, Name: "Loyalty", Passthrough: false},
+		{Index: 12, Serializer: 8, Name: "Foil", Passthrough: false},
 	},
 	"Villager": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},

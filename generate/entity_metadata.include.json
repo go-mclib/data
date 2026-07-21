@@ -265,6 +265,13 @@
         {"index": 10, "name": "InGround", "serializer": 8, "goField": "InGround", "goType": "bool"}
       ]
     },
+    "Trident": {
+      "parent": "Arrow",
+      "fields": [
+        {"index": 11, "name": "Loyalty", "serializer": 0, "goField": "Loyalty", "goType": "byte"},
+        {"index": 12, "name": "Foil", "serializer": 8, "goField": "Foil", "goType": "bool"}
+      ]
+    },
     "Fireball": {
       "parent": "Entity",
       "fields": [

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/bits"
 	"strconv"
 	"strings"
 )
@@ -10,8 +11,12 @@ import (
 type mcdumpBlocks struct {
 	Blocks map[string]struct {
 		States []struct {
-			ID    int32 `json:"id"`
-			Shape int   `json:"shape"`
+			ID          int32 `json:"id"`
+			Shape       int   `json:"shape"`
+			Replaceable bool  `json:"replaceable"`
+			IgniteOdds  uint8 `json:"igniteOdds"`
+			BurnOdds    uint8 `json:"burnOdds"`
+			SturdyTop   bool  `json:"sturdyTop"`
 		} `json:"states"`
 	} `json:"blocks"`
 	Shapes [][][]float64 `json:"shapes"` // shape -> list of [minX,minY,minZ,maxX,maxY,maxZ]
@@ -75,7 +80,7 @@ func generateBlockShapes(mcdumpPath, outPath string) {
 			if j > 0 {
 				sb.WriteString(", ")
 			}
-			sb.WriteString(fmt.Sprintf("{%s, %s, %s, %s, %s, %s}",
+			sb.WriteString(fmt.Sprintf("{MinX: %s, MinY: %s, MinZ: %s, MaxX: %s, MaxY: %s, MaxZ: %s}",
 				formatFloat(aabb[0]), formatFloat(aabb[1]), formatFloat(aabb[2]),
 				formatFloat(aabb[3]), formatFloat(aabb[4]), formatFloat(aabb[5])))
 		}
@@ -95,6 +100,80 @@ func generateBlockShapes(mcdumpPath, outPath string) {
 
 	writeFile(outPath, sb.String())
 	fmt.Printf("block shapes: %d states, %d unique shapes\n", len(shapeByState), len(compact))
+}
+func generateBlockSupport(mcdumpPath, outPath string) {
+	dump := loadJSON[mcdumpBlocks](mcdumpPath)
+	maxStateID := int32(0)
+	for _, block := range dump.Blocks {
+		for _, state := range block.States {
+			maxStateID = max(maxStateID, state.ID)
+		}
+	}
+	igniteOdds := make([]uint8, maxStateID+1)
+	burnOdds := make([]uint8, maxStateID+1)
+	sturdyTop := make([]uint64, maxStateID/64+1)
+	replaceable := make([]uint64, maxStateID/64+1)
+	for _, block := range dump.Blocks {
+		for _, state := range block.States {
+			igniteOdds[state.ID] = state.IgniteOdds
+			burnOdds[state.ID] = state.BurnOdds
+			if state.SturdyTop {
+				sturdyTop[state.ID/64] |= 1 << (state.ID % 64)
+			}
+			if state.Replaceable {
+				replaceable[state.ID/64] |= 1 << (state.ID % 64)
+			}
+		}
+	}
+
+	var sb strings.Builder
+	sb.WriteString(generatedFileHeader("blocks"))
+	writeUint8Array(&sb, "fireIgniteOdds", igniteOdds)
+	writeUint8Array(&sb, "fireBurnOdds", burnOdds)
+	writeUint64Array(&sb, "sturdyTopStates", sturdyTop)
+	writeUint64Array(&sb, "replaceableStates", replaceable)
+	writeFile(outPath, sb.String())
+	fmt.Printf("block support: %d flammable, %d sturdy-top, %d replaceable states\n", countNonzero(igniteOdds), countSetBits(sturdyTop), countSetBits(replaceable))
+}
+
+func writeUint8Array(sb *strings.Builder, name string, values []uint8) {
+	sb.WriteString("var " + name + " = [...]uint8{\n\t")
+	for i, value := range values {
+		if i > 0 && i%32 == 0 {
+			sb.WriteString("\n\t")
+		}
+		sb.WriteString(fmt.Sprintf("%d, ", value))
+	}
+	sb.WriteString("\n}\n\n")
+}
+
+func countNonzero(values []uint8) int {
+	result := 0
+	for _, value := range values {
+		if value != 0 {
+			result++
+		}
+	}
+	return result
+}
+
+func writeUint64Array(sb *strings.Builder, name string, values []uint64) {
+	sb.WriteString("var " + name + " = [...]uint64{\n\t")
+	for i, value := range values {
+		if i > 0 && i%8 == 0 {
+			sb.WriteString("\n\t")
+		}
+		sb.WriteString(fmt.Sprintf("0x%x, ", value))
+	}
+	sb.WriteString("\n}\n\n")
+}
+
+func countSetBits(values []uint64) int {
+	result := 0
+	for _, value := range values {
+		result += bits.OnesCount64(value)
+	}
+	return result
 }
 
 func shapeKey(aabbs [][]float64) string {

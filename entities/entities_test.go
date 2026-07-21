@@ -93,6 +93,9 @@ func TestMetadataFieldIndices(t *testing.T) {
 	if entities.CreeperIndexSwellDir < 8 {
 		t.Errorf("CreeperIndexSwellDir = %d, should be >= 8", entities.CreeperIndexSwellDir)
 	}
+	if entities.TridentIndexLoyalty != 11 || entities.TridentIndexFoil != 12 {
+		t.Errorf("trident metadata indices = (%d, %d), want (11, 12)", entities.TridentIndexLoyalty, entities.TridentIndexFoil)
+	}
 }
 
 func TestMetadataOperations(t *testing.T) {

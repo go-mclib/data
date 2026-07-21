@@ -1,6 +1,8 @@
 package packets
 
 import (
+	"io"
+
 	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
@@ -42,7 +44,7 @@ func (p *S2CCustomPayloadConfiguration) Read(buf *ns.PacketBuffer) error {
 	if p.Channel, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(1048576)
+	p.Data, err = io.ReadAll(buf.Reader())
 	return err
 }
 
@@ -50,7 +52,7 @@ func (p *S2CCustomPayloadConfiguration) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteIdentifier(p.Channel); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	return buf.WriteFixedByteArray(p.Data)
 }
 
 // S2CDisconnectConfiguration represents "Disconnect (configuration)".

@@ -832,7 +832,7 @@ func (p *S2CCustomPayloadPlay) Read(buf *ns.PacketBuffer) error {
 	if p.Channel, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(1048576)
+	p.Data, err = io.ReadAll(buf.Reader())
 	return err
 }
 
@@ -840,7 +840,7 @@ func (p *S2CCustomPayloadPlay) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteIdentifier(p.Channel); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	return buf.WriteFixedByteArray(p.Data)
 }
 
 // S2CDamageEvent represents "Damage Event".
@@ -2745,34 +2745,74 @@ func (p *S2CPlayerRotation) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Recipe_Book_Add
 type S2CRecipeBookAdd struct {
-	Data ns.ByteArray
+	Entries []RecipeBookEntry
+	Replace ns.Boolean
 }
 
 func (p *S2CRecipeBookAdd) Read(buf *ns.PacketBuffer) error {
-	var err error
-	p.Data, err = buf.ReadByteArray(1048576)
+	entryCount, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if entryCount < 0 || entryCount > maxRecipeDisplays {
+		return fmt.Errorf("invalid recipe book entry count %d", entryCount)
+	}
+	p.Entries = make([]RecipeBookEntry, entryCount)
+	for i := range p.Entries {
+		if err := p.Entries[i].read(buf); err != nil {
+			return err
+		}
+	}
+	p.Replace, err = buf.ReadBool()
 	return err
 }
 
 func (p *S2CRecipeBookAdd) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteByteArray(p.Data)
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Entries))); err != nil {
+		return err
+	}
+	for _, entry := range p.Entries {
+		if err := entry.write(buf); err != nil {
+			return err
+		}
+	}
+	return buf.WriteBool(p.Replace)
 }
 
 // S2CRecipeBookRemove represents "Recipe Book Remove".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Recipe_Book_Remove
 type S2CRecipeBookRemove struct {
-	Recipes ns.ByteArray
+	Recipes []ns.VarInt
 }
 
 func (p *S2CRecipeBookRemove) Read(buf *ns.PacketBuffer) error {
-	var err error
-	p.Recipes, err = buf.ReadByteArray(1048576)
-	return err
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if count < 0 || count > 65536 {
+		return fmt.Errorf("invalid recipe display id count %d", count)
+	}
+	p.Recipes = make([]ns.VarInt, count)
+	for i := range p.Recipes {
+		if p.Recipes[i], err = buf.ReadVarInt(); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (p *S2CRecipeBookRemove) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteByteArray(p.Recipes)
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Recipes))); err != nil {
+		return err
+	}
+	for _, recipe := range p.Recipes {
+		if err := buf.WriteVarInt(recipe); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // S2CRecipeBookSettings represents "Recipe Book Settings".
@@ -2845,17 +2885,36 @@ func (p *S2CRecipeBookSettings) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Remove_Entities
 type S2CRemoveEntities struct {
-	EntityIds ns.ByteArray
+	EntityIds []ns.VarInt
 }
 
 func (p *S2CRemoveEntities) Read(buf *ns.PacketBuffer) error {
-	var err error
-	p.EntityIds, err = buf.ReadByteArray(1048576)
-	return err
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if count < 0 || count > 65536 {
+		return fmt.Errorf("invalid removed entity count %d", count)
+	}
+	p.EntityIds = make([]ns.VarInt, count)
+	for i := range p.EntityIds {
+		if p.EntityIds[i], err = buf.ReadVarInt(); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (p *S2CRemoveEntities) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteByteArray(p.EntityIds)
+	if err := buf.WriteVarInt(ns.VarInt(len(p.EntityIds))); err != nil {
+		return err
+	}
+	for _, entityID := range p.EntityIds {
+		if err := buf.WriteVarInt(entityID); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // S2CRemoveMobEffect represents "Remove Entity Effect".
@@ -2987,7 +3046,7 @@ type S2CRespawn struct {
 	PreviousGameMode ns.Int8
 	IsDebug          ns.Boolean
 	IsFlat           ns.Boolean
-	DeathLocation    ns.PrefixedOptional[ns.ByteArray]
+	DeathLocation    ns.PrefixedOptional[ns.GlobalPos]
 	PortalCooldown   ns.VarInt
 	SeaLevel         ns.VarInt
 	DataKept         ns.Int8
@@ -3016,8 +3075,8 @@ func (p *S2CRespawn) Read(buf *ns.PacketBuffer) error {
 	if p.IsFlat, err = buf.ReadBool(); err != nil {
 		return err
 	}
-	if err = p.DeathLocation.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
-		return b.ReadByteArray(1048576)
+	if err = p.DeathLocation.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.GlobalPos, error) {
+		return b.ReadGlobalPos()
 	}); err != nil {
 		return err
 	}
@@ -3053,8 +3112,8 @@ func (p *S2CRespawn) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteBool(p.IsFlat); err != nil {
 		return err
 	}
-	if err := p.DeathLocation.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {
-		return b.WriteByteArray(v)
+	if err := p.DeathLocation.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.GlobalPos) error {
+		return b.WriteGlobalPos(v)
 	}); err != nil {
 		return err
 	}
@@ -3501,7 +3560,13 @@ func (p *S2CSetEntityMotion) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Equipment
 type S2CSetEquipment struct {
 	EntityId ns.VarInt
-	Data     ns.ByteArray
+	Slots    []EquipmentEntry
+}
+
+// EquipmentEntry pairs an EquipmentSlot ordinal with an item stack.
+type EquipmentEntry struct {
+	Slot ns.Uint8
+	Item ns.Slot
 }
 
 func (p *S2CSetEquipment) Read(buf *ns.PacketBuffer) error {
@@ -3509,15 +3574,46 @@ func (p *S2CSetEquipment) Read(buf *ns.PacketBuffer) error {
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(1048576)
-	return err
+	p.Slots = nil
+	for {
+		rawSlot, err := buf.ReadUint8()
+		if err != nil {
+			return err
+		}
+		item, err := buf.ReadSlot(items.Decoder())
+		if err != nil {
+			return err
+		}
+		p.Slots = append(p.Slots, EquipmentEntry{Slot: rawSlot & 0x7f, Item: item})
+		if rawSlot&0x80 == 0 {
+			return nil
+		}
+		if len(p.Slots) >= 128 {
+			return fmt.Errorf("too many equipment entries")
+		}
+	}
 }
 
 func (p *S2CSetEquipment) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.EntityId); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	if len(p.Slots) == 0 {
+		return fmt.Errorf("set equipment packet has no entries")
+	}
+	for i, entry := range p.Slots {
+		slot := entry.Slot & 0x7f
+		if i != len(p.Slots)-1 {
+			slot |= 0x80
+		}
+		if err := buf.WriteUint8(slot); err != nil {
+			return err
+		}
+		if err := buf.WriteSlot(entry.Item); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // S2CSetExperience represents "Set Experience".
@@ -3660,7 +3756,7 @@ func (p *S2CSetObjective) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Passengers
 type S2CSetPassengers struct {
 	EntityId   ns.VarInt
-	Passengers ns.ByteArray
+	Passengers []ns.VarInt
 }
 
 func (p *S2CSetPassengers) Read(buf *ns.PacketBuffer) error {
@@ -3668,15 +3764,35 @@ func (p *S2CSetPassengers) Read(buf *ns.PacketBuffer) error {
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.Passengers, err = buf.ReadByteArray(1048576)
-	return err
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if count < 0 || count > 65536 {
+		return fmt.Errorf("invalid passenger count %d", count)
+	}
+	p.Passengers = make([]ns.VarInt, count)
+	for i := range p.Passengers {
+		if p.Passengers[i], err = buf.ReadVarInt(); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (p *S2CSetPassengers) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.EntityId); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Passengers)
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Passengers))); err != nil {
+		return err
+	}
+	for _, passenger := range p.Passengers {
+		if err := buf.WriteVarInt(passenger); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // S2CSetPlayerInventory represents "Set Player Inventory Slot".
@@ -4584,17 +4700,79 @@ func (p *S2CUpdateMobEffect) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Recipes
 type S2CUpdateRecipes struct {
-	Data ns.ByteArray
+	PropertySets       []RecipePropertySet
+	StonecutterRecipes []StonecutterRecipeEntry
 }
 
 func (p *S2CUpdateRecipes) Read(buf *ns.PacketBuffer) error {
-	var err error
-	p.Data, err = buf.ReadByteArray(1048576)
-	return err
+	propertyCount, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if propertyCount < 0 || propertyCount > 1024 {
+		return fmt.Errorf("invalid recipe property set count %d", propertyCount)
+	}
+	p.PropertySets = make([]RecipePropertySet, propertyCount)
+	for i := range p.PropertySets {
+		if p.PropertySets[i].Key, err = buf.ReadIdentifier(); err != nil {
+			return err
+		}
+		itemCount, err := buf.ReadVarInt()
+		if err != nil {
+			return err
+		}
+		if itemCount < 0 || itemCount > 65536 {
+			return fmt.Errorf("invalid recipe property item count %d", itemCount)
+		}
+		p.PropertySets[i].Items = make([]ns.VarInt, itemCount)
+		for n := range p.PropertySets[i].Items {
+			if p.PropertySets[i].Items[n], err = buf.ReadVarInt(); err != nil {
+				return err
+			}
+		}
+	}
+	stonecutterCount, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if stonecutterCount < 0 || stonecutterCount > 65536 {
+		return fmt.Errorf("invalid stonecutter recipe count %d", stonecutterCount)
+	}
+	p.StonecutterRecipes = make([]StonecutterRecipeEntry, stonecutterCount)
+	for i := range p.StonecutterRecipes {
+		if err := p.StonecutterRecipes[i].read(buf); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (p *S2CUpdateRecipes) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteByteArray(p.Data)
+	if err := buf.WriteVarInt(ns.VarInt(len(p.PropertySets))); err != nil {
+		return err
+	}
+	for _, property := range p.PropertySets {
+		if err := buf.WriteIdentifier(property.Key); err != nil {
+			return err
+		}
+		if err := buf.WriteVarInt(ns.VarInt(len(property.Items))); err != nil {
+			return err
+		}
+		for _, item := range property.Items {
+			if err := buf.WriteVarInt(item); err != nil {
+				return err
+			}
+		}
+	}
+	if err := buf.WriteVarInt(ns.VarInt(len(p.StonecutterRecipes))); err != nil {
+		return err
+	}
+	for _, recipe := range p.StonecutterRecipes {
+		if err := recipe.write(buf); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // S2CUpdateTagsPlay represents "Update Tags (play)".

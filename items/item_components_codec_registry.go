@@ -6,6 +6,7 @@ package items
 import (
 	"fmt"
 
+	"github.com/go-mclib/data/registries"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
@@ -15,6 +16,10 @@ func init() {
 	RegisterCodec(ComponentItemName, &itemNameCodec{})
 	RegisterCodec(ComponentAttributeModifiers, &attributeModifiersCodec{})
 	RegisterCodec(ComponentRarity, &rarityCodec{})
+	RegisterCodec(ComponentBreakSound, newHolderStringCodec(ComponentBreakSound, "minecraft:sound_event", func(c *Components) string { return c.BreakSound }, func(c *Components, value string) { c.BreakSound = value }, copySoundEventDirect))
+	RegisterCodec(ComponentInstrument, newHolderStringCodec(ComponentInstrument, "minecraft:instrument", func(c *Components) string { return c.Instrument }, func(c *Components, value string) { c.Instrument = value }, copyInstrumentDirect))
+	RegisterCodec(ComponentJukeboxPlayable, newHolderStringCodec(ComponentJukeboxPlayable, "minecraft:jukebox_song", func(c *Components) string { return c.JukeboxPlayable }, func(c *Components, value string) { c.JukeboxPlayable = value }, copyJukeboxSongDirect))
+	RegisterCodec(ComponentProvidesTrimMaterial, newHolderStringCodec(ComponentProvidesTrimMaterial, "minecraft:trim_material", func(c *Components) string { return c.ProvidesTrimMaterial }, func(c *Components, value string) { c.ProvidesTrimMaterial = value }, copyTrimMaterialDirect))
 
 	// lore, enchantments, and tool codecs (full implementations)
 	RegisterCodec(ComponentLore, &loreCodec{})
@@ -34,27 +39,724 @@ func init() {
 	RegisterCodec(ComponentCanBreak, &passthroughCodec{decode: decodeBlockPredicatesWire})
 	RegisterCodec(ComponentCanPlaceOn, &passthroughCodec{decode: decodeBlockPredicatesWire})
 	RegisterCodec(ComponentCustomModelData, &passthroughCodec{decode: decodeCustomModelDataWire})
-	RegisterCodec(ComponentConsumable, &passthroughCodec{decode: decodeConsumableWire})
+	RegisterCodec(ComponentBundleContents, &passthroughCodec{decode: decodeTemplateListWire})
+	RegisterCodec(ComponentChargedProjectiles, &passthroughCodec{decode: decodeTemplateListWire})
+	RegisterCodec(ComponentContainer, &passthroughCodec{decode: decodeOptionalTemplateListWire})
+	RegisterCodec(ComponentSulfurCubeContent, &passthroughCodec{decode: copyItemStackTemplate})
+	RegisterCodec(ComponentEntityData, entityDataCodec{})
+	RegisterCodec(ComponentBlockEntityData, &passthroughCodec{decode: decodeTypedEntityDataWire})
+	RegisterCodec(ComponentUseRemainder, &passthroughCodec{decode: copyItemStackTemplate})
+	RegisterCodec(ComponentConsumable, consumableCodec{})
 	RegisterCodec(ComponentUseEffects, &passthroughCodec{decode: decodeUseEffectsWire})
 	RegisterCodec(ComponentAttackRange, &passthroughCodec{decode: decodeAttackRangeWire})
 	RegisterCodec(ComponentEquippable, &passthroughCodec{decode: decodeEquippableWire})
-	RegisterCodec(ComponentDeathProtection, &passthroughCodec{decode: decodeDeathProtectionWire})
-	RegisterCodec(ComponentBlocksAttacks, &passthroughCodec{decode: decodeBlocksAttacksWire})
+	RegisterCodec(ComponentDeathProtection, deathProtectionCodec{})
+	RegisterCodec(ComponentBlocksAttacks, blocksAttacksCodec{})
 	RegisterCodec(ComponentKineticWeapon, &passthroughCodec{decode: decodeKineticWeaponWire})
 	RegisterCodec(ComponentPiercingWeapon, &passthroughCodec{decode: decodePiercingWeaponWire})
 	RegisterCodec(ComponentPotionContents, &passthroughCodec{decode: decodePotionContentsWire})
 	RegisterCodec(ComponentSuspiciousStewEffects, &passthroughCodec{decode: decodeSuspiciousStewWire})
 	RegisterCodec(ComponentWritableBookContent, &passthroughCodec{decode: decodeWritableBookWire})
 	RegisterCodec(ComponentWrittenBookContent, &passthroughCodec{decode: decodeWrittenBookWire})
-	RegisterCodec(ComponentTrim, &passthroughCodec{decode: decodeTrimWire})
-	RegisterCodec(ComponentRecipes, &passthroughCodec{decode: decodeRecipesWire})
+	RegisterCodec(ComponentTrim, trimCodec{})
+	RegisterCodec(ComponentPaintingVariant, paintingVariantCodec{})
+	RegisterCodec(ComponentDye, dyeCodec{})
+	RegisterCodec(ComponentDyedColor, dyedColorCodec{})
+	RegisterCodec(ComponentBannerPatterns, bannerPatternsCodec{})
+	RegisterCodec(ComponentPotDecorations, potDecorationsCodec{})
+	RegisterCodec(ComponentFireworkExplosion, fireworkExplosionCodec{})
+	RegisterCodec(ComponentFireworks, fireworksCodec{})
+	RegisterCodec(ComponentBaseColor, baseColorCodec{})
+	RegisterCodec(ComponentRecipes, &passthroughCodec{decode: decodeNBTWire})
 	RegisterCodec(ComponentLodestoneTracker, &passthroughCodec{decode: decodeLodestoneWire})
-	RegisterCodec(ComponentFireworkExplosion, &passthroughCodec{decode: decodeFireworkExplosionWire})
 	RegisterCodec(ComponentProfile, &passthroughCodec{decode: decodeProfileWire})
-	RegisterCodec(ComponentBannerPatterns, &passthroughCodec{decode: decodeBannerPatternsWire})
-	RegisterCodec(ComponentPotDecorations, &passthroughCodec{decode: decodePotDecorationsWire})
 	RegisterCodec(ComponentBlockState, &passthroughCodec{decode: decodeBlockStateWire})
 	RegisterCodec(ComponentBees, &passthroughCodec{decode: decodeBeesWire})
+}
+
+type holderStringCodec struct {
+	id       int32
+	registry string
+	get      func(*Components) string
+	set      func(*Components, string)
+	direct   func(*ns.PacketBuffer, *ns.PacketBuffer) error
+}
+
+func newHolderStringCodec(id int32, registry string, get func(*Components) string, set func(*Components, string), direct func(*ns.PacketBuffer, *ns.PacketBuffer) error) *holderStringCodec {
+	return &holderStringCodec{id: id, registry: registry, get: get, set: set, direct: direct}
+}
+
+func (codec *holderStringCodec) DecodeWire(reader *ns.PacketBuffer) ([]byte, error) {
+	writer := ns.NewWriter()
+	holderID, err := reader.ReadVarInt()
+	if err != nil {
+		return nil, err
+	}
+	writer.WriteVarInt(holderID)
+	if holderID == 0 {
+		if err := codec.direct(reader, writer); err != nil {
+			return nil, err
+		}
+	}
+	return writer.Bytes(), nil
+}
+
+func (codec *holderStringCodec) Apply(components *Components, data []byte) error {
+	reader := ns.NewReader(data)
+	holderID, err := reader.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if holderID < 0 {
+		return fmt.Errorf("invalid %s holder %d", codec.registry, holderID)
+	}
+	if holderID == 0 {
+		validated := ns.NewWriter()
+		validated.WriteVarInt(0)
+		if err := codec.direct(reader, validated); err != nil {
+			return err
+		}
+		if components.rawPassthrough == nil {
+			components.rawPassthrough = make(map[int32][]byte)
+		}
+		components.rawPassthrough[codec.id] = append([]byte(nil), data...)
+		codec.set(components, "")
+		return nil
+	}
+	entries := registries.SynchronizedEntries[codec.registry]
+	if codec.registry == "minecraft:sound_event" {
+		name := registries.SoundEvent.ByID(int32(holderID - 1))
+		if name == "" {
+			return fmt.Errorf("unknown %s holder %d", codec.registry, holderID)
+		}
+		codec.set(components, name)
+	} else if int(holderID-1) >= len(entries) {
+		return fmt.Errorf("unknown %s holder %d", codec.registry, holderID)
+	} else {
+		codec.set(components, entries[holderID-1])
+	}
+	delete(components.rawPassthrough, codec.id)
+	return nil
+}
+
+func (codec *holderStringCodec) Clear(components *Components) {
+	codec.set(components, "")
+	delete(components.rawPassthrough, codec.id)
+}
+
+func (codec *holderStringCodec) Differs(components, defaults *Components) (bool, bool) {
+	if _, direct := components.rawPassthrough[codec.id]; direct {
+		return true, true
+	}
+	value := codec.get(components)
+	defaultValue := ""
+	if defaults != nil {
+		defaultValue = codec.get(defaults)
+	}
+	if value == defaultValue {
+		return false, value != ""
+	}
+	return true, value != ""
+}
+
+func (codec *holderStringCodec) Encode(components *Components) ([]byte, error) {
+	if direct, ok := components.rawPassthrough[codec.id]; ok {
+		return append([]byte(nil), direct...), nil
+	}
+	value := codec.get(components)
+	var entryID int
+	if codec.registry == "minecraft:sound_event" {
+		entryID = int(registries.SoundEvent.Get(value))
+	} else {
+		entryID = registryEntryID(codec.registry, value)
+	}
+	if entryID < 0 {
+		return nil, fmt.Errorf("unknown %s entry %q", codec.registry, value)
+	}
+	writer := ns.NewWriter()
+	writer.WriteVarInt(ns.VarInt(entryID + 1))
+	return writer.Bytes(), nil
+}
+
+func copySoundEventDirect(reader, writer *ns.PacketBuffer) error {
+	if err := writer.CopyString(reader, maxStringLen); err != nil {
+		return err
+	}
+	hasRange, err := reader.ReadBool()
+	if err != nil {
+		return err
+	}
+	writer.WriteBool(hasRange)
+	if hasRange {
+		return writer.CopyFloat32(reader)
+	}
+	return nil
+}
+
+func copySoundEventHolder(reader, writer *ns.PacketBuffer) error {
+	holderID, err := reader.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	writer.WriteVarInt(holderID)
+	if holderID == 0 {
+		return copySoundEventDirect(reader, writer)
+	}
+	return nil
+}
+
+func copyInstrumentDirect(reader, writer *ns.PacketBuffer) error {
+	if err := copySoundEventHolder(reader, writer); err != nil {
+		return err
+	}
+	if err := writer.CopyFloat32(reader); err != nil {
+		return err
+	}
+	if err := writer.CopyFloat32(reader); err != nil {
+		return err
+	}
+	return copyNBT(reader, writer)
+}
+
+func copyJukeboxSongDirect(reader, writer *ns.PacketBuffer) error {
+	if err := copySoundEventHolder(reader, writer); err != nil {
+		return err
+	}
+	if err := copyNBT(reader, writer); err != nil {
+		return err
+	}
+	if err := writer.CopyFloat32(reader); err != nil {
+		return err
+	}
+	return writer.CopyVarInt(reader)
+}
+
+func copyTrimMaterialDirect(reader, writer *ns.PacketBuffer) error {
+	if err := writer.CopyString(reader, maxStringLen); err != nil {
+		return err
+	}
+	count, err := reader.ReadVarInt()
+	if err != nil || count < 0 || count > 256 {
+		return fmt.Errorf("invalid trim material override count %d", count)
+	}
+	writer.WriteVarInt(count)
+	for range int(count) {
+		if err := writer.CopyString(reader, maxStringLen); err != nil {
+			return err
+		}
+		if err := writer.CopyString(reader, maxStringLen); err != nil {
+			return err
+		}
+	}
+	return copyNBT(reader, writer)
+}
+
+type fireworkExplosionCodec struct{}
+
+func (fireworkExplosionCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	writer := ns.NewWriter()
+	if err := copyFireworkExplosion(buf, writer); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+func (fireworkExplosionCodec) Apply(components *Components, data []byte) error {
+	explosion, err := readFireworkExplosion(ns.NewReader(data))
+	if err != nil {
+		return err
+	}
+	components.FireworkExplosion = &explosion
+	return nil
+}
+func (fireworkExplosionCodec) Clear(components *Components) { components.FireworkExplosion = nil }
+func (fireworkExplosionCodec) Differs(components, defaults *Components) (bool, bool) {
+	return !equalFireworkExplosionPointers(components.FireworkExplosion, defaults.FireworkExplosion), components.FireworkExplosion != nil
+}
+func (fireworkExplosionCodec) Encode(components *Components) ([]byte, error) {
+	if components.FireworkExplosion == nil {
+		return nil, fmt.Errorf("firework explosion is absent")
+	}
+	writer := ns.NewWriter()
+	if err := writeFireworkExplosion(writer, *components.FireworkExplosion); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+
+type fireworksCodec struct{}
+
+func (fireworksCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	writer := ns.NewWriter()
+	if err := writer.CopyVarInt(buf); err != nil {
+		return nil, err
+	}
+	count, err := buf.ReadVarInt()
+	if err != nil || count < 0 || count > 256 {
+		return nil, fmt.Errorf("invalid firework explosion count %d", count)
+	}
+	if err := writer.WriteVarInt(count); err != nil {
+		return nil, err
+	}
+	for range int(count) {
+		if err := copyFireworkExplosion(buf, writer); err != nil {
+			return nil, err
+		}
+	}
+	return writer.Bytes(), nil
+}
+func (fireworksCodec) Apply(components *Components, data []byte) error {
+	reader := ns.NewReader(data)
+	flight, err := reader.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	count, err := reader.ReadVarInt()
+	if err != nil || count < 0 || count > 256 {
+		return fmt.Errorf("invalid firework explosion count %d", count)
+	}
+	explosions := make([]FireworkExplosion, count)
+	for i := range explosions {
+		explosions[i], err = readFireworkExplosion(reader)
+		if err != nil {
+			return err
+		}
+	}
+	components.Fireworks = &Fireworks{FlightDuration: int32(flight)}
+	components.FireworkExplosions = explosions
+	return nil
+}
+func (fireworksCodec) Clear(components *Components) {
+	components.Fireworks = nil
+	components.FireworkExplosions = nil
+}
+func (fireworksCodec) Differs(components, defaults *Components) (bool, bool) {
+	if components.Fireworks == nil || defaults.Fireworks == nil {
+		return components.Fireworks != nil || defaults.Fireworks != nil, components.Fireworks != nil
+	}
+	if components.Fireworks.FlightDuration != defaults.Fireworks.FlightDuration || len(components.FireworkExplosions) != len(defaults.FireworkExplosions) {
+		return true, true
+	}
+	for i := range components.FireworkExplosions {
+		if !equalFireworkExplosion(components.FireworkExplosions[i], defaults.FireworkExplosions[i]) {
+			return true, true
+		}
+	}
+	return false, true
+}
+func (fireworksCodec) Encode(components *Components) ([]byte, error) {
+	if components.Fireworks == nil {
+		return nil, fmt.Errorf("fireworks component is absent")
+	}
+	writer := ns.NewWriter()
+	if err := writer.WriteVarInt(ns.VarInt(components.Fireworks.FlightDuration)); err != nil {
+		return nil, err
+	}
+	if err := writer.WriteVarInt(ns.VarInt(len(components.FireworkExplosions))); err != nil {
+		return nil, err
+	}
+	for _, explosion := range components.FireworkExplosions {
+		if err := writeFireworkExplosion(writer, explosion); err != nil {
+			return nil, err
+		}
+	}
+	return writer.Bytes(), nil
+}
+
+func readFireworkExplosion(reader *ns.PacketBuffer) (FireworkExplosion, error) {
+	shape, err := reader.ReadVarInt()
+	if err != nil || shape < 0 || shape > 4 {
+		return FireworkExplosion{}, fmt.Errorf("invalid firework shape %d", shape)
+	}
+	colors, err := readFireworkColors(reader)
+	if err != nil {
+		return FireworkExplosion{}, err
+	}
+	fadeColors, err := readFireworkColors(reader)
+	if err != nil {
+		return FireworkExplosion{}, err
+	}
+	trail, err := reader.ReadBool()
+	if err != nil {
+		return FireworkExplosion{}, err
+	}
+	twinkle, err := reader.ReadBool()
+	if err != nil {
+		return FireworkExplosion{}, err
+	}
+	return FireworkExplosion{Shape: int32(shape), Colors: colors, FadeColors: fadeColors, HasTrail: bool(trail), HasTwinkle: bool(twinkle)}, nil
+}
+
+func readFireworkColors(reader *ns.PacketBuffer) ([]int32, error) {
+	count, err := reader.ReadVarInt()
+	if err != nil || count < 0 || count > 256 {
+		return nil, fmt.Errorf("invalid firework color count %d", count)
+	}
+	colors := make([]int32, count)
+	for i := range colors {
+		color, err := reader.ReadInt32()
+		if err != nil {
+			return nil, err
+		}
+		colors[i] = int32(color)
+	}
+	return colors, nil
+}
+
+func writeFireworkExplosion(writer *ns.PacketBuffer, explosion FireworkExplosion) error {
+	if explosion.Shape < 0 || explosion.Shape > 4 || len(explosion.Colors) > 256 || len(explosion.FadeColors) > 256 {
+		return fmt.Errorf("invalid firework explosion")
+	}
+	if err := writer.WriteVarInt(ns.VarInt(explosion.Shape)); err != nil {
+		return err
+	}
+	for _, colors := range [][]int32{explosion.Colors, explosion.FadeColors} {
+		if err := writer.WriteVarInt(ns.VarInt(len(colors))); err != nil {
+			return err
+		}
+		for _, color := range colors {
+			if err := writer.WriteInt32(ns.Int32(color)); err != nil {
+				return err
+			}
+		}
+	}
+	if err := writer.WriteBool(ns.Boolean(explosion.HasTrail)); err != nil {
+		return err
+	}
+	return writer.WriteBool(ns.Boolean(explosion.HasTwinkle))
+}
+
+func equalFireworkExplosionPointers(a, b *FireworkExplosion) bool {
+	if a == nil || b == nil {
+		return a == nil && b == nil
+	}
+	return equalFireworkExplosion(*a, *b)
+}
+
+func equalFireworkExplosion(a, b FireworkExplosion) bool {
+	if a.Shape != b.Shape || a.HasTrail != b.HasTrail || a.HasTwinkle != b.HasTwinkle || len(a.Colors) != len(b.Colors) || len(a.FadeColors) != len(b.FadeColors) {
+		return false
+	}
+	for i := range a.Colors {
+		if a.Colors[i] != b.Colors[i] {
+			return false
+		}
+	}
+	for i := range a.FadeColors {
+		if a.FadeColors[i] != b.FadeColors[i] {
+			return false
+		}
+	}
+	return true
+}
+
+type potDecorationsCodec struct{}
+
+func (potDecorationsCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	writer := ns.NewWriter()
+	if err := decodePotDecorationsWire(buf, writer); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+
+func (potDecorationsCodec) Apply(components *Components, data []byte) error {
+	reader := ns.NewReader(data)
+	count, err := reader.ReadVarInt()
+	if err != nil || count < 0 || count > 4 {
+		return fmt.Errorf("invalid pot decoration count %d", count)
+	}
+	items := [4]string{"minecraft:brick", "minecraft:brick", "minecraft:brick", "minecraft:brick"}
+	for i := range int(count) {
+		itemID, err := reader.ReadVarInt()
+		if err != nil || registries.Item.ByID(int32(itemID)) == "" {
+			return fmt.Errorf("unknown pot decoration item id %d", itemID)
+		}
+		items[i] = registries.Item.ByID(int32(itemID))
+	}
+	components.PotDecorations = &PotDecorations{Back: items[0], Left: items[1], Right: items[2], Front: items[3]}
+	return nil
+}
+
+func (potDecorationsCodec) Clear(components *Components) { components.PotDecorations = nil }
+func (potDecorationsCodec) Differs(components, defaults *Components) (bool, bool) {
+	if components.PotDecorations == nil || defaults.PotDecorations == nil {
+		return components.PotDecorations != nil || defaults.PotDecorations != nil, components.PotDecorations != nil
+	}
+	return *components.PotDecorations != *defaults.PotDecorations, true
+}
+func (potDecorationsCodec) Encode(components *Components) ([]byte, error) {
+	if components.PotDecorations == nil {
+		return nil, fmt.Errorf("pot decorations are absent")
+	}
+	writer := ns.NewWriter()
+	if err := writer.WriteVarInt(4); err != nil {
+		return nil, err
+	}
+	for _, name := range []string{
+		components.PotDecorations.Back, components.PotDecorations.Left,
+		components.PotDecorations.Right, components.PotDecorations.Front,
+	} {
+		itemID := registries.Item.Get(name)
+		if itemID < 0 {
+			return nil, fmt.Errorf("unknown pot decoration item %q", name)
+		}
+		if err := writer.WriteVarInt(ns.VarInt(itemID)); err != nil {
+			return nil, err
+		}
+	}
+	return writer.Bytes(), nil
+}
+
+type baseColorCodec struct{}
+
+func (baseColorCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	writer := ns.NewWriter()
+	if err := writer.CopyVarInt(buf); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+func (baseColorCodec) Apply(components *Components, data []byte) error {
+	color, err := ns.NewReader(data).ReadVarInt()
+	if err != nil || color < 0 || color >= 16 {
+		return fmt.Errorf("unknown base color id %d", color)
+	}
+	value := int32(color)
+	components.BaseColor = &value
+	return nil
+}
+func (baseColorCodec) Clear(components *Components) { components.BaseColor = nil }
+func (baseColorCodec) Differs(components, defaults *Components) (bool, bool) {
+	return !equalInt32Pointers(components.BaseColor, defaults.BaseColor), components.BaseColor != nil
+}
+func (baseColorCodec) Encode(components *Components) ([]byte, error) {
+	if components.BaseColor == nil || *components.BaseColor < 0 || *components.BaseColor >= 16 {
+		return nil, fmt.Errorf("invalid base color")
+	}
+	writer := ns.NewWriter()
+	if err := writer.WriteVarInt(ns.VarInt(*components.BaseColor)); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+
+type bannerPatternsCodec struct{}
+
+func (bannerPatternsCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	writer := ns.NewWriter()
+	if err := decodeBannerPatternsWire(buf, writer); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+
+func (bannerPatternsCodec) Apply(components *Components, data []byte) error {
+	reader := ns.NewReader(data)
+	count, err := reader.ReadVarInt()
+	if err != nil || count < 0 || count > 256 {
+		return fmt.Errorf("invalid banner pattern count %d", count)
+	}
+	entries := registries.SynchronizedEntries["minecraft:banner_pattern"]
+	layers := make([]BannerPatternLayer, count)
+	for i := range layers {
+		holder, err := reader.ReadVarInt()
+		if err != nil || holder < 0 || holder > ns.VarInt(len(entries)) {
+			return fmt.Errorf("unknown banner pattern holder %d", holder)
+		}
+		if holder == 0 {
+			assetID, err := reader.ReadIdentifier()
+			if err != nil {
+				return err
+			}
+			translationKey, err := reader.ReadString(maxStringLen)
+			if err != nil {
+				return err
+			}
+			layers[i].AssetID = string(assetID)
+			layers[i].TranslationKey = string(translationKey)
+		} else {
+			layers[i].Pattern = entries[holder-1]
+		}
+		color, err := reader.ReadVarInt()
+		if err != nil || color < 0 || color >= 16 {
+			return fmt.Errorf("unknown banner color id %d", color)
+		}
+		layers[i].Color = int32(color)
+	}
+	components.BannerPatterns = &layers
+	return nil
+}
+
+func (bannerPatternsCodec) Clear(components *Components) { components.BannerPatterns = nil }
+func (bannerPatternsCodec) Differs(components, defaults *Components) (bool, bool) {
+	return !equalBannerPatterns(components.BannerPatterns, defaults.BannerPatterns), components.BannerPatterns != nil
+}
+func (bannerPatternsCodec) Encode(components *Components) ([]byte, error) {
+	if components.BannerPatterns == nil {
+		return nil, fmt.Errorf("banner patterns are absent")
+	}
+	writer := ns.NewWriter()
+	if err := writer.WriteVarInt(ns.VarInt(len(*components.BannerPatterns))); err != nil {
+		return nil, err
+	}
+	entries := registries.SynchronizedEntries["minecraft:banner_pattern"]
+	for _, layer := range *components.BannerPatterns {
+		pattern := -1
+		for id, name := range entries {
+			if name == layer.Pattern {
+				pattern = id
+				break
+			}
+		}
+		if layer.Color < 0 || layer.Color >= 16 {
+			return nil, fmt.Errorf("invalid banner color %d", layer.Color)
+		}
+		if pattern >= 0 {
+			if err := writer.WriteVarInt(ns.VarInt(pattern + 1)); err != nil {
+				return nil, err
+			}
+		} else {
+			if layer.AssetID == "" || layer.TranslationKey == "" {
+				return nil, fmt.Errorf("invalid direct banner pattern")
+			}
+			if err := writer.WriteVarInt(0); err != nil {
+				return nil, err
+			}
+			if err := writer.WriteIdentifier(ns.Identifier(layer.AssetID)); err != nil {
+				return nil, err
+			}
+			if err := writer.WriteString(ns.String(layer.TranslationKey)); err != nil {
+				return nil, err
+			}
+		}
+		if err := writer.WriteVarInt(ns.VarInt(layer.Color)); err != nil {
+			return nil, err
+		}
+	}
+	return writer.Bytes(), nil
+}
+
+func equalBannerPatterns(a, b *[]BannerPatternLayer) bool {
+	if a == nil || b == nil {
+		return a == nil && b == nil
+	}
+	if len(*a) != len(*b) {
+		return false
+	}
+	for i := range *a {
+		if (*a)[i] != (*b)[i] {
+			return false
+		}
+	}
+	return true
+}
+
+type dyeCodec struct{}
+
+func (dyeCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	writer := ns.NewWriter()
+	if err := writer.CopyVarInt(buf); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+
+func (dyeCodec) Apply(components *Components, data []byte) error {
+	id, err := ns.NewReader(data).ReadVarInt()
+	if err != nil || id < 0 || id >= 16 {
+		return fmt.Errorf("unknown dye id %d", id)
+	}
+	value := int32(id)
+	components.Dye = &value
+	return nil
+}
+
+func (dyeCodec) Clear(components *Components) { components.Dye = nil }
+func (dyeCodec) Differs(components, defaults *Components) (bool, bool) {
+	return !equalInt32Pointers(components.Dye, defaults.Dye), components.Dye != nil
+}
+func (dyeCodec) Encode(components *Components) ([]byte, error) {
+	if components.Dye == nil || *components.Dye < 0 || *components.Dye >= 16 {
+		return nil, fmt.Errorf("unknown dye id %v", components.Dye)
+	}
+	writer := ns.NewWriter()
+	if err := writer.WriteVarInt(ns.VarInt(*components.Dye)); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+
+type dyedColorCodec struct{}
+
+func (dyedColorCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	writer := ns.NewWriter()
+	if err := writer.CopyInt32(buf); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+func (dyedColorCodec) Apply(components *Components, data []byte) error {
+	color, err := ns.NewReader(data).ReadInt32()
+	value := int32(color)
+	components.DyedColor = &value
+	return err
+}
+func (dyedColorCodec) Clear(components *Components) { components.DyedColor = nil }
+func (dyedColorCodec) Differs(components, defaults *Components) (bool, bool) {
+	return !equalInt32Pointers(components.DyedColor, defaults.DyedColor), components.DyedColor != nil
+}
+func (dyedColorCodec) Encode(components *Components) ([]byte, error) {
+	if components.DyedColor == nil {
+		return nil, fmt.Errorf("dyed color is absent")
+	}
+	writer := ns.NewWriter()
+	if err := writer.WriteInt32(ns.Int32(*components.DyedColor)); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+
+func equalInt32Pointers(a, b *int32) bool {
+	return a == nil && b == nil || a != nil && b != nil && *a == *b
+}
+
+type paintingVariantCodec struct{}
+
+func (paintingVariantCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	writer := ns.NewWriter()
+	if err := writer.CopyVarInt(buf); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
+}
+
+func (paintingVariantCodec) Apply(components *Components, data []byte) error {
+	id, err := ns.NewReader(data).ReadVarInt()
+	entries := registries.SynchronizedEntries["minecraft:painting_variant"]
+	if err != nil || id < 0 || int(id) >= len(entries) {
+		return fmt.Errorf("unknown painting variant id %d", id)
+	}
+	components.PaintingVariant = entries[id]
+	return nil
+}
+
+func (paintingVariantCodec) Clear(components *Components) { components.PaintingVariant = "" }
+
+func (paintingVariantCodec) Differs(components, defaults *Components) (bool, bool) {
+	return components.PaintingVariant != defaults.PaintingVariant, components.PaintingVariant != ""
+}
+
+func (paintingVariantCodec) Encode(components *Components) ([]byte, error) {
+	for id, name := range registries.SynchronizedEntries["minecraft:painting_variant"] {
+		if name == components.PaintingVariant {
+			writer := ns.NewWriter()
+			if err := writer.WriteVarInt(ns.VarInt(id)); err != nil {
+				return nil, err
+			}
+			return writer.Bytes(), nil
+		}
+	}
+	return nil, fmt.Errorf("unknown painting variant %q", components.PaintingVariant)
 }
 
 func registerVarIntPassthrough(id int32) {
@@ -227,28 +929,6 @@ func decodeDeathProtectionWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return copyVarIntPrefixedList(buf, w, copyConsumeEffect)
 }
 
-func decodeBlocksAttacksWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	if err := w.CopyFloat32(buf); err != nil { // block delay seconds
-		return err
-	}
-	if err := w.CopyFloat32(buf); err != nil { // disable cooldown scale
-		return err
-	}
-	if err := copyVarIntPrefixedList(buf, w, copyDamageReduction); err != nil {
-		return err
-	}
-	if err := copyItemDamageFunction(buf, w); err != nil {
-		return err
-	}
-	if err := copyOptionalHolderSet(buf, w); err != nil { // bypassed by
-		return err
-	}
-	if err := copyOptionalSoundEvent(buf, w); err != nil { // block sound
-		return err
-	}
-	return copyOptionalSoundEvent(buf, w) // disable sound
-}
-
 func decodeKineticWeaponWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	if err := w.CopyFloat32(buf); err != nil { // damage multiplier
 		return err
@@ -294,6 +974,39 @@ func decodePotionContentsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 		return err
 	}
 	return copyOptionalString(buf, w) // custom name
+}
+
+func copyItemStackTemplate(buf, writer *ns.PacketBuffer) error {
+	stack, err := ReadItemStackTemplate(buf)
+	if err != nil {
+		return err
+	}
+	return WriteItemStackTemplate(writer, stack)
+}
+
+func decodeTemplateListWire(buf, writer *ns.PacketBuffer) error {
+	return copyVarIntPrefixedList(buf, writer, copyItemStackTemplate)
+}
+
+func decodeOptionalTemplateListWire(buf, writer *ns.PacketBuffer) error {
+	return copyVarIntPrefixedList(buf, writer, func(buf, writer *ns.PacketBuffer) error {
+		hasStack, err := buf.ReadBool()
+		if err != nil {
+			return err
+		}
+		writer.WriteBool(hasStack)
+		if !hasStack {
+			return nil
+		}
+		return copyItemStackTemplate(buf, writer)
+	})
+}
+
+func decodeTypedEntityDataWire(buf, writer *ns.PacketBuffer) error {
+	if err := writer.CopyVarInt(buf); err != nil {
+		return err
+	}
+	return copyNBT(buf, writer)
 }
 
 func decodeSuspiciousStewWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -382,9 +1095,15 @@ func decodeBannerPatternsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func decodePotDecorationsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	for range 4 {
-		// optional item ID
-		if err := copyOptionalVarInt(buf, w); err != nil {
+	count, err := buf.ReadVarInt()
+	if err != nil || count < 0 || count > 4 {
+		return fmt.Errorf("invalid pot decoration count %d", count)
+	}
+	if err := w.WriteVarInt(count); err != nil {
+		return err
+	}
+	for range int(count) {
+		if err := w.CopyVarInt(buf); err != nil {
 			return err
 		}
 	}
@@ -582,19 +1301,7 @@ func copyOptionalHolderSet(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func copySoundEvent(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	typeID, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(typeID)
-
-	if typeID == 0 {
-		if err := w.CopyString(buf, maxStringLen); err != nil {
-			return err
-		}
-		return copyOptionalVarInt(buf, w)
-	}
-	return nil
+	return copySoundEventHolder(buf, w)
 }
 
 func copyOptionalSoundEvent(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -734,32 +1441,6 @@ func copyPropertyMatcher(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 		return err
 	}
 	return copyOptionalString(buf, w)
-}
-
-func copyDamageReduction(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	if err := w.CopyFloat32(buf); err != nil { // horizontal angle
-		return err
-	}
-	if err := copyHolderSet(buf, w); err != nil {
-		return err
-	}
-	// base, factor, horizontal limit
-	for range 3 {
-		if err := w.CopyFloat32(buf); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func copyItemDamageFunction(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// threshold, base, factor
-	for range 3 {
-		if err := w.CopyFloat32(buf); err != nil {
-			return err
-		}
-	}
-	return nil
 }
 
 func copyOptionalKineticConditions(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {

@@ -1,8 +1,11 @@
 package items
 
 import (
+	"bytes"
 	"fmt"
+	"reflect"
 
+	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
@@ -30,6 +33,55 @@ func NewStack(itemID int32, count int32) *ItemStack {
 		Count:      count,
 		Components: components,
 	}
+}
+
+// SameStack reports item-and-component-patch equality, ignoring patch entry order.
+func SameStack(a, b ns.Slot) bool {
+	if a.ItemID != b.ItemID || len(a.Components.Add) != len(b.Components.Add) || len(a.Components.Remove) != len(b.Components.Remove) {
+		return false
+	}
+	added := make(map[ns.VarInt][]byte, len(a.Components.Add))
+	for _, component := range a.Components.Add {
+		added[component.ID] = component.Data
+	}
+	for _, component := range b.Components.Add {
+		data, ok := added[component.ID]
+		if !ok || !componentDataEqual(component.ID, data, component.Data) {
+			return false
+		}
+	}
+	removed := make(map[ns.VarInt]struct{}, len(a.Components.Remove))
+	for _, component := range a.Components.Remove {
+		removed[component] = struct{}{}
+	}
+	for _, component := range b.Components.Remove {
+		if _, ok := removed[component]; !ok {
+			return false
+		}
+	}
+	return true
+}
+
+func componentDataEqual(id ns.VarInt, a, b []byte) bool {
+	if bytes.Equal(a, b) {
+		return true
+	}
+	if codec := componentCodecs[int32(id)]; codec != nil {
+		if _, passthrough := codec.(*passthroughCodec); !passthrough {
+			var left, right Components
+			if codec.Apply(&left, a) == nil && codec.Apply(&right, b) == nil {
+				return reflect.DeepEqual(left, right)
+			}
+		}
+	}
+	switch int32(id) {
+	case ComponentBlockEntityData, ComponentBucketEntityData, ComponentContainerLoot,
+		ComponentCustomData, ComponentDebugStickState, ComponentEntityData, ComponentLock, ComponentMapDecorations:
+		left, _, leftErr := nbt.NewReaderFrom(bytes.NewReader(a)).ReadTag(true)
+		right, _, rightErr := nbt.NewReaderFrom(bytes.NewReader(b)).ReadTag(true)
+		return leftErr == nil && rightErr == nil && reflect.DeepEqual(left, right)
+	}
+	return false
 }
 
 // SetDefaultComponents overwrites the stack's components with the item's
@@ -174,6 +226,109 @@ func (s *ItemStack) WriteSlot(buf *ns.PacketBuffer) error {
 		return err
 	}
 	return buf.WriteSlot(slot)
+}
+
+// UseRemainderSlot returns the component-defined remainder template.
+func UseRemainderSlot(slot ns.Slot) (ns.Slot, bool) {
+	for _, removed := range slot.Components.Remove {
+		if int32(removed) == ComponentUseRemainder {
+			return ns.Slot{}, false
+		}
+	}
+	for _, component := range slot.Components.Add {
+		if int32(component.ID) == ComponentUseRemainder {
+			remainder, err := ReadItemStackTemplate(ns.NewReader(component.Data))
+			return remainder, err == nil && !remainder.IsEmpty()
+		}
+	}
+	defaults := DefaultComponents(int32(slot.ItemID))
+	if defaults == nil || defaults.UseRemainder == nil {
+		return ns.Slot{}, false
+	}
+	id := ItemID(defaults.UseRemainder.ID)
+	if id < 0 {
+		return ns.Slot{}, false
+	}
+	return ns.NewSlot(ns.VarInt(id), ns.VarInt(max(defaults.UseRemainder.Count, 1))), true
+}
+
+// ReadItemStackTemplate reads an item holder, count, and unframed component patch.
+func ReadItemStackTemplate(buf *ns.PacketBuffer) (ns.Slot, error) {
+	itemID, err := buf.ReadVarInt()
+	if err != nil {
+		return ns.Slot{}, err
+	}
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return ns.Slot{}, err
+	}
+	if count < 1 || count > 99 {
+		return ns.Slot{}, fmt.Errorf("item template count %d is outside [1,99]", count)
+	}
+	added, err := buf.ReadVarInt()
+	if err != nil {
+		return ns.Slot{}, err
+	}
+	removed, err := buf.ReadVarInt()
+	if err != nil {
+		return ns.Slot{}, err
+	}
+	if added < 0 || removed < 0 || int64(added)+int64(removed) > 256 {
+		return ns.Slot{}, fmt.Errorf("item template patch size %d/%d is invalid", added, removed)
+	}
+	slot := ns.NewSlot(itemID, count)
+	for range int(added) {
+		id, err := buf.ReadVarInt()
+		if err != nil {
+			return ns.Slot{}, err
+		}
+		data, err := decodeComponentWire(buf, id)
+		if err != nil {
+			return ns.Slot{}, err
+		}
+		slot.Components.Add = append(slot.Components.Add, ns.RawSlotComponent{ID: id, Data: data})
+	}
+	for range int(removed) {
+		id, err := buf.ReadVarInt()
+		if err != nil {
+			return ns.Slot{}, err
+		}
+		slot.Components.Remove = append(slot.Components.Remove, id)
+	}
+	return slot, nil
+}
+
+// WriteItemStackTemplate writes an item holder, count, and unframed component patch.
+func WriteItemStackTemplate(buf *ns.PacketBuffer, slot ns.Slot) error {
+	if slot.IsEmpty() || slot.Count > 99 {
+		return fmt.Errorf("item template count %d is outside [1,99]", slot.Count)
+	}
+	if err := buf.WriteVarInt(slot.ItemID); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(slot.Count); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(ns.VarInt(len(slot.Components.Add))); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(ns.VarInt(len(slot.Components.Remove))); err != nil {
+		return err
+	}
+	for _, component := range slot.Components.Add {
+		if err := buf.WriteVarInt(component.ID); err != nil {
+			return err
+		}
+		if _, err := buf.Write(component.Data); err != nil {
+			return err
+		}
+	}
+	for _, id := range slot.Components.Remove {
+		if err := buf.WriteVarInt(id); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // WriteRawSlotDelimited writes a raw ns.Slot with length-prefixed component data.

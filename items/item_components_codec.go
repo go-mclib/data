@@ -10,6 +10,7 @@ package items
 // - Encoding from the Components struct back to raw bytes
 
 import (
+	"bytes"
 	"fmt"
 	"slices"
 
@@ -45,6 +46,9 @@ const maxStringLen = 32767
 
 // RegisterCodec registers a codec for a component ID.
 func RegisterCodec(id int32, codec ComponentCodec) {
+	if passthrough, ok := codec.(*passthroughCodec); ok {
+		passthrough.id = id
+	}
 	componentCodecs[id] = codec
 }
 
@@ -264,6 +268,7 @@ func (codec *customNameCodec) Apply(c *Components, data []byte) error {
 	if err != nil {
 		return err
 	}
+	name.Raw = append([]byte(nil), data...)
 	c.CustomName = name
 	return nil
 }
@@ -279,7 +284,7 @@ func (codec *customNameCodec) Differs(c, defaults *Components) (bool, bool) {
 		return true, cHas
 	}
 	if cHas && dHas {
-		return *c.CustomName != *defaults.CustomName, true
+		return c.CustomName.Text != defaults.CustomName.Text || c.CustomName.Translate != defaults.CustomName.Translate || !bytes.Equal(c.CustomName.Raw, defaults.CustomName.Raw), true
 	}
 	return false, false
 }
@@ -287,6 +292,9 @@ func (codec *customNameCodec) Differs(c, defaults *Components) (bool, bool) {
 func (codec *customNameCodec) Encode(c *Components) ([]byte, error) {
 	if c.CustomName == nil {
 		return nil, nil
+	}
+	if c.CustomName.Raw != nil {
+		return append([]byte(nil), c.CustomName.Raw...), nil
 	}
 	w := ns.NewWriter()
 	if err := encodeItemName(w, c.CustomName); err != nil {
@@ -312,6 +320,7 @@ func (codec *itemNameCodec) Apply(c *Components, data []byte) error {
 	if err != nil {
 		return err
 	}
+	name.Raw = append([]byte(nil), data...)
 	c.ItemName = name
 	return nil
 }
@@ -327,7 +336,7 @@ func (codec *itemNameCodec) Differs(c, defaults *Components) (bool, bool) {
 		return true, cHas
 	}
 	if cHas && dHas {
-		return *c.ItemName != *defaults.ItemName, true
+		return c.ItemName.Text != defaults.ItemName.Text || c.ItemName.Translate != defaults.ItemName.Translate || !bytes.Equal(c.ItemName.Raw, defaults.ItemName.Raw), true
 	}
 	return false, false
 }
@@ -335,6 +344,9 @@ func (codec *itemNameCodec) Differs(c, defaults *Components) (bool, bool) {
 func (codec *itemNameCodec) Encode(c *Components) ([]byte, error) {
 	if c.ItemName == nil {
 		return nil, nil
+	}
+	if c.ItemName.Raw != nil {
+		return append([]byte(nil), c.ItemName.Raw...), nil
 	}
 	w := ns.NewWriter()
 	if err := encodeItemName(w, c.ItemName); err != nil {
@@ -346,11 +358,21 @@ func (codec *itemNameCodec) Encode(c *Components) ([]byte, error) {
 // attributeModifiersCodec handles AttributeModifiers.
 type attributeModifiersCodec struct{}
 
+var attributeModifierOperations = []string{"add_value", "add_multiplied_base", "add_multiplied_total"}
+var attributeModifierOperationIDs = map[string]int32{"add_value": 0, "add_multiplied_base": 1, "add_multiplied_total": 2}
+var equipmentSlotGroups = []string{"any", "mainhand", "offhand", "hand", "feet", "legs", "chest", "head", "armor", "body", "saddle"}
+var equipmentSlotGroupIDs = map[string]int32{"any": 0, "mainhand": 1, "offhand": 2, "hand": 3, "feet": 4, "legs": 5, "chest": 6, "head": 7, "armor": 8, "body": 9, "saddle": 10}
+var attributeModifierDisplayTypes = []string{"default", "hidden", "override"}
+var attributeModifierDisplayTypeIDs = map[string]int32{"default": 0, "hidden": 1, "override": 2}
+
 func (codec *attributeModifiersCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 	w := ns.NewWriter()
 	count, err := buf.ReadVarInt()
 	if err != nil {
 		return nil, err
+	}
+	if count < 0 {
+		return nil, fmt.Errorf("negative attribute modifier count %d", count)
 	}
 	w.WriteVarInt(count)
 	for range int(count) {
@@ -367,7 +389,10 @@ func (codec *attributeModifiersCodec) Apply(c *Components, data []byte) error {
 	if err != nil {
 		return err
 	}
-	modifiers := make([]AttributeModifier, 0, count)
+	if count < 0 {
+		return fmt.Errorf("negative attribute modifier count %d", count)
+	}
+	modifiers := make([]AttributeModifier, 0, min(int(count), 65536))
 	for range int(count) {
 		mod, err := decodeAttributeModifier(buf)
 		if err != nil {
@@ -390,7 +415,7 @@ func (codec *attributeModifiersCodec) Differs(c, defaults *Components) (bool, bo
 		return true, cHas
 	}
 	if cHas && dHas {
-		return !slices.Equal(c.AttributeModifiers, defaults.AttributeModifiers), true
+		return !slices.EqualFunc(c.AttributeModifiers, defaults.AttributeModifiers, attributeModifiersEqual), true
 	}
 	return false, false
 }
@@ -485,14 +510,19 @@ func (codec *loreCodec) Apply(c *Components, data []byte) error {
 		}
 	}
 	c.Lore = lore
+	c.loreRaw = append([]byte(nil), data...)
 	return nil
 }
 
 func (codec *loreCodec) Clear(c *Components) {
 	c.Lore = nil
+	c.loreRaw = nil
 }
 
 func (codec *loreCodec) Differs(c, defaults *Components) (bool, bool) {
+	if c.loreRaw != nil {
+		return !bytes.Equal(c.loreRaw, defaults.loreRaw), true
+	}
 	cHas := len(c.Lore) > 0
 	dHas := len(defaults.Lore) > 0
 	if cHas != dHas {
@@ -505,6 +535,9 @@ func (codec *loreCodec) Differs(c, defaults *Components) (bool, bool) {
 }
 
 func (codec *loreCodec) Encode(c *Components) ([]byte, error) {
+	if c.loreRaw != nil {
+		return append([]byte(nil), c.loreRaw...), nil
+	}
 	w := ns.NewWriter()
 	w.WriteVarInt(ns.VarInt(len(c.Lore)))
 	for _, line := range c.Lore {
@@ -557,8 +590,12 @@ func (codec *enchantmentsCodec) Apply(c *Components, data []byte) error {
 		if err != nil {
 			return err
 		}
-		// store as "id:<num>" for now since enchantments are data-driven
-		enchants[fmt.Sprintf("id:%d", enchID)] = int32(level)
+		name := fmt.Sprintf("id:%d", enchID)
+		entries := registries.SynchronizedEntries["minecraft:enchantment"]
+		if int(enchID) >= 0 && int(enchID) < len(entries) {
+			name = entries[enchID]
+		}
+		enchants[name] = int32(level)
 	}
 	codec.set(c, enchants)
 	return nil
@@ -596,10 +633,13 @@ func (codec *enchantmentsCodec) Encode(c *Components) ([]byte, error) {
 	w := ns.NewWriter()
 	w.WriteVarInt(ns.VarInt(len(m)))
 	for name, level := range m {
-		// parse "id:<num>" format or treat as raw ID
 		var enchID int32
 		if _, err := fmt.Sscanf(name, "id:%d", &enchID); err != nil {
-			return nil, fmt.Errorf("invalid enchantment format: %s (expected id:<num>)", name)
+			index := slices.Index(registries.SynchronizedEntries["minecraft:enchantment"], name)
+			if index < 0 {
+				return nil, fmt.Errorf("unknown enchantment %s", name)
+			}
+			enchID = int32(index)
 		}
 		w.WriteVarInt(ns.VarInt(enchID))
 		w.WriteVarInt(ns.VarInt(level))
@@ -782,6 +822,7 @@ func encodeToolRule(w *ns.PacketBuffer, rule ToolRule) error {
 // passthroughCodec stores raw bytes without interpreting them.
 // Used for components that aren't fully implemented yet.
 type passthroughCodec struct {
+	id     int32
 	decode func(buf *ns.PacketBuffer, w *ns.PacketBuffer) error
 }
 
@@ -794,19 +835,43 @@ func (codec *passthroughCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) 
 }
 
 func (codec *passthroughCodec) Apply(c *Components, data []byte) error {
-	return nil // passthrough - don't apply to struct
+	if c.rawPassthrough == nil {
+		c.rawPassthrough = make(map[int32][]byte)
+	}
+	c.rawPassthrough[codec.id] = append([]byte(nil), data...)
+	delete(c.removedPassthrough, codec.id)
+	return nil
 }
 
 func (codec *passthroughCodec) Clear(c *Components) {
-	// passthrough - nothing to clear
+	delete(c.rawPassthrough, codec.id)
+	if c.removedPassthrough == nil {
+		c.removedPassthrough = make(map[int32]bool)
+	}
+	c.removedPassthrough[codec.id] = true
 }
 
 func (codec *passthroughCodec) Differs(c, defaults *Components) (bool, bool) {
-	return false, false // passthrough - never differs
+	if data, ok := c.rawPassthrough[codec.id]; ok {
+		if defaults != nil {
+			if defaultData, present := defaults.rawPassthrough[codec.id]; present && bytes.Equal(data, defaultData) {
+				return false, true
+			}
+		}
+		return true, true
+	}
+	if c.removedPassthrough[codec.id] {
+		return true, false
+	}
+	return false, false
 }
 
 func (codec *passthroughCodec) Encode(c *Components) ([]byte, error) {
-	return nil, fmt.Errorf("passthrough codec cannot encode")
+	data, ok := c.rawPassthrough[codec.id]
+	if !ok {
+		return nil, fmt.Errorf("passthrough component %d is absent", codec.id)
+	}
+	return append([]byte(nil), data...), nil
 }
 
 // copyNBT copies an NBT tag from reader to writer.
@@ -863,56 +928,55 @@ func encodeItemName(w *ns.PacketBuffer, name *ItemNameComponent) error {
 func decodeAttributeModifier(buf *ns.PacketBuffer) (AttributeModifier, error) {
 	var mod AttributeModifier
 
-	// attribute ID (registry reference)
 	attrID, err := buf.ReadVarInt()
 	if err != nil {
 		return mod, err
 	}
 	mod.Type = registries.Attribute.ByID(int32(attrID))
+	if mod.Type == "" {
+		return mod, fmt.Errorf("unknown attribute type ID %d", attrID)
+	}
 
-	// modifier ID (Identifier string)
 	modID, err := buf.ReadString(maxStringLen)
 	if err != nil {
 		return mod, err
 	}
 	mod.ID = string(modID)
 
-	// amount (Double)
 	amount, err := buf.ReadFloat64()
 	if err != nil {
 		return mod, err
 	}
 	mod.Amount = float64(amount)
 
-	// operation (VarInt)
 	operation, err := buf.ReadVarInt()
 	if err != nil {
 		return mod, err
 	}
-	operations := []string{"add_value", "add_multiplied_base", "add_multiplied_total"}
-	if int(operation) < len(operations) {
-		mod.Operation = operations[operation]
-	}
+	mod.Operation = enumName(attributeModifierOperations, operation)
 
-	// slot (VarInt - equipment slot group)
 	slot, err := buf.ReadVarInt()
 	if err != nil {
 		return mod, err
 	}
-	slots := []string{"any", "hand", "mainhand", "offhand", "armor", "feet", "legs", "chest", "head", "body"}
-	if int(slot) < len(slots) {
-		mod.Slot = slots[slot]
-	}
+	mod.Slot = enumName(equipmentSlotGroups, slot)
 
-	// display type (VarInt)
 	displayType, err := buf.ReadVarInt()
 	if err != nil {
 		return mod, err
 	}
-	if displayType == 2 {
-		// OVERRIDE includes a Component (NBT) - skip for now
-		reader := nbt.NewReaderFrom(buf.Reader())
-		_, _, _ = reader.ReadTag(true)
+	mod.Display.Type = enumName(attributeModifierDisplayTypes, displayType)
+	if mod.Display.Type == "override" {
+		raw := ns.NewWriter()
+		if err := copyNBT(buf, raw); err != nil {
+			return mod, err
+		}
+		value, err := decodeItemName(ns.NewReader(raw.Bytes()))
+		if err != nil {
+			return mod, err
+		}
+		value.Raw = append([]byte(nil), raw.Bytes()...)
+		mod.Display.Value = value
 	}
 
 	return mod, nil
@@ -920,31 +984,81 @@ func decodeAttributeModifier(buf *ns.PacketBuffer) (AttributeModifier, error) {
 
 // encodeAttributeModifier writes an attribute modifier entry.
 func encodeAttributeModifier(w *ns.PacketBuffer, mod AttributeModifier) error {
-	// attribute type (registry ID)
 	attrID := registries.Attribute.Get(mod.Type)
 	if attrID < 0 {
-		return fmt.Errorf("unknown attribute type: %s", mod.Type)
+		return fmt.Errorf("unknown attribute type %q", mod.Type)
 	}
 	w.WriteVarInt(ns.VarInt(attrID))
-
-	// modifier ID (Identifier string)
 	w.WriteString(ns.String(mod.ID))
-
-	// amount (Double)
 	w.WriteFloat64(ns.Float64(mod.Amount))
 
-	// operation (VarInt)
-	operations := map[string]int32{"add_value": 0, "add_multiplied_base": 1, "add_multiplied_total": 2}
-	w.WriteVarInt(ns.VarInt(operations[mod.Operation]))
+	operation, ok := attributeModifierOperationIDs[mod.Operation]
+	if !ok {
+		return fmt.Errorf("unknown attribute modifier operation %q", mod.Operation)
+	}
+	w.WriteVarInt(ns.VarInt(operation))
 
-	// slot (VarInt - equipment slot group)
-	slots := map[string]int32{"any": 0, "hand": 1, "mainhand": 2, "offhand": 3, "armor": 4, "feet": 5, "legs": 6, "chest": 7, "head": 8, "body": 9}
-	w.WriteVarInt(ns.VarInt(slots[mod.Slot]))
+	slotName := mod.Slot
+	if slotName == "" {
+		slotName = "any"
+	}
+	slot, ok := equipmentSlotGroupIDs[slotName]
+	if !ok {
+		return fmt.Errorf("unknown equipment slot group %q", mod.Slot)
+	}
+	w.WriteVarInt(ns.VarInt(slot))
 
-	// display type (VarInt) - 0=DEFAULT, 1:WHEN_NOT_DEFAULT, 2=OVERRIDE
-	w.WriteVarInt(0)
+	displayName := normalizedAttributeModifierDisplayType(mod.Display.Type)
+	displayType, ok := attributeModifierDisplayTypeIDs[displayName]
+	if !ok {
+		return fmt.Errorf("unknown attribute modifier display type %q", mod.Display.Type)
+	}
+	w.WriteVarInt(ns.VarInt(displayType))
+	if displayName != "override" {
+		return nil
+	}
+	if mod.Display.Value == nil {
+		return fmt.Errorf("override attribute modifier display has no value")
+	}
+	if mod.Display.Value.Raw != nil {
+		return copyNBT(ns.NewReader(mod.Display.Value.Raw), w)
+	}
+	return encodeItemName(w, mod.Display.Value)
+}
 
-	return nil
+func attributeModifiersEqual(a, b AttributeModifier) bool {
+	if a.Type != b.Type || a.Amount != b.Amount || a.ID != b.ID || a.Operation != b.Operation || normalizedEquipmentSlotGroup(a.Slot) != normalizedEquipmentSlotGroup(b.Slot) || normalizedAttributeModifierDisplayType(a.Display.Type) != normalizedAttributeModifierDisplayType(b.Display.Type) {
+		return false
+	}
+	return itemNameComponentsEqual(a.Display.Value, b.Display.Value)
+}
+
+func itemNameComponentsEqual(a, b *ItemNameComponent) bool {
+	if a == nil || b == nil {
+		return a == b
+	}
+	return a.Text == b.Text && a.Translate == b.Translate && bytes.Equal(a.Raw, b.Raw)
+}
+
+func normalizedEquipmentSlotGroup(slot string) string {
+	if slot == "" {
+		return "any"
+	}
+	return slot
+}
+
+func normalizedAttributeModifierDisplayType(displayType string) string {
+	if displayType == "" {
+		return "default"
+	}
+	return displayType
+}
+
+func enumName(names []string, id ns.VarInt) string {
+	if id < 0 || int(id) >= len(names) {
+		return names[0]
+	}
+	return names[id]
 }
 
 // copyAttributeModifier copies an attribute modifier from reader to writer.

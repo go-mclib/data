@@ -17,12 +17,31 @@ type LevelData struct {
 	Time                   int64 // world age, never frozen
 	DayTime                int64 // visual day clock
 	Seed                   int64 // world generation seed
+	BorderSet              bool
+	BorderCenterX          float64
+	BorderCenterZ          float64
+	BorderSize             float64
+	BorderSizeLerpTime     int64
+	BorderSizeLerpTarget   float64
+	BorderSafeZone         float64
+	BorderDamagePerBlock   float64
+	BorderWarningBlocks    float64
+	BorderWarningTime      float64
 }
 
 // SaveLevel writes <dir>/level.dat (gzip-compressed NBT, vanilla layout).
 func SaveLevel(dir string, ld *LevelData) error {
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return err
+	}
+	border := *ld
+	if !border.BorderSet {
+		border.BorderSize = 59999968
+		border.BorderSizeLerpTarget = 59999968
+		border.BorderSafeZone = 5
+		border.BorderDamagePerBlock = 0.2
+		border.BorderWarningBlocks = 5
+		border.BorderWarningTime = 15
 	}
 	root := nbt.Compound{
 		"Data": nbt.Compound{
@@ -35,6 +54,15 @@ func SaveLevel(dir string, ld *LevelData) error {
 			"WorldGenSettings": nbt.Compound{
 				"seed": nbt.Long(ld.Seed),
 			},
+			"BorderCenterX":        nbt.Double(border.BorderCenterX),
+			"BorderCenterZ":        nbt.Double(border.BorderCenterZ),
+			"BorderSize":           nbt.Double(border.BorderSize),
+			"BorderSizeLerpTime":   nbt.Long(border.BorderSizeLerpTime),
+			"BorderSizeLerpTarget": nbt.Double(border.BorderSizeLerpTarget),
+			"BorderSafeZone":       nbt.Double(border.BorderSafeZone),
+			"BorderDamagePerBlock": nbt.Double(border.BorderDamagePerBlock),
+			"BorderWarningBlocks":  nbt.Double(border.BorderWarningBlocks),
+			"BorderWarningTime":    nbt.Double(border.BorderWarningTime),
 		},
 	}
 	data, err := nbt.EncodeFile(root, "")
@@ -82,12 +110,25 @@ func LoadLevel(dir string) (*LevelData, error) {
 		return nil, fmt.Errorf("root is not compound")
 	}
 	d := root.GetCompound("Data")
-	return &LevelData{
+	ld := &LevelData{
 		SpawnX:  d.GetInt("SpawnX"),
 		SpawnY:  d.GetInt("SpawnY"),
 		SpawnZ:  d.GetInt("SpawnZ"),
 		Time:    d.GetLong("Time"),
 		DayTime: d.GetLong("DayTime"),
 		Seed:    d.GetCompound("WorldGenSettings").GetLong("seed"),
-	}, nil
+	}
+	if d.Get("BorderSize") != nil {
+		ld.BorderSet = true
+		ld.BorderCenterX = d.GetDouble("BorderCenterX")
+		ld.BorderCenterZ = d.GetDouble("BorderCenterZ")
+		ld.BorderSize = d.GetDouble("BorderSize")
+		ld.BorderSizeLerpTime = d.GetLong("BorderSizeLerpTime")
+		ld.BorderSizeLerpTarget = d.GetDouble("BorderSizeLerpTarget")
+		ld.BorderSafeZone = d.GetDouble("BorderSafeZone")
+		ld.BorderDamagePerBlock = d.GetDouble("BorderDamagePerBlock")
+		ld.BorderWarningBlocks = d.GetDouble("BorderWarningBlocks")
+		ld.BorderWarningTime = d.GetDouble("BorderWarningTime")
+	}
+	return ld, nil
 }

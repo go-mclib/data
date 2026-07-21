@@ -91,6 +91,43 @@ func DefaultStateID(blockID int32) int32 {
 	return state.DefaultID
 }
 
+// IsFlammable reports whether vanilla fire can burn the block state.
+func IsFlammable(stateID int32) bool {
+	return FireIgniteOdds(stateID) > 0
+}
+
+// FireIgniteOdds returns the state's vanilla chance to catch fire.
+func FireIgniteOdds(stateID int32) int {
+	if stateID < 0 || int(stateID) >= len(fireIgniteOdds) {
+		return 0
+	}
+	return int(fireIgniteOdds[stateID])
+}
+
+// FireBurnOdds returns the state's vanilla chance to burn away.
+func FireBurnOdds(stateID int32) int {
+	if stateID < 0 || int(stateID) >= len(fireBurnOdds) {
+		return 0
+	}
+	return int(fireBurnOdds[stateID])
+}
+
+// HasSturdyTop reports whether the block state's upper face supports fire.
+func HasSturdyTop(stateID int32) bool {
+	if stateID < 0 || int(stateID/64) >= len(sturdyTopStates) {
+		return false
+	}
+	return sturdyTopStates[stateID/64]&(uint64(1)<<(stateID%64)) != 0
+}
+
+// IsReplaceable reports whether vanilla permits replacing the block state.
+func IsReplaceable(stateID int32) bool {
+	if stateID < 0 || int(stateID/64) >= len(replaceableStates) {
+		return false
+	}
+	return replaceableStates[stateID/64]&(uint64(1)<<(stateID%64)) != 0
+}
+
 // blockStateData holds the data needed to calculate state IDs.
 type blockStateData struct {
 	BaseID     int32

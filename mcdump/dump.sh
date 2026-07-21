@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Build and run the standalone dumper against the vanilla server jar, writing the
-# JSON the Go generator consumes. No Fabric, no Gradle — the server jar ships with
+# build and run the standalone dumper against the vanilla server jar, writing the
+# json the Go generator consumes. No Fabric, no Gradle — the server jar ships with
 # real Mojang names and all its libraries, so we just put them on the classpath.
 #
 # usage: ./dump.sh [version]   (default: matches vanilla_server_reports)
@@ -10,7 +10,7 @@ cd "$(dirname "$0")"
 VERSION="${1:-26.2}"
 SERVER_JAR="../vanilla_server_reports/server-${VERSION}.jar"
 WORK=".work"
-OUT="../pkg/data/generate/mcdump"
+OUT="../generate/mcdump"
 
 if [[ ! -f "$SERVER_JAR" ]]; then
 	echo "server jar not found: $SERVER_JAR"
@@ -34,4 +34,4 @@ echo "running dumper..."
 mkdir -p "$OUT"
 java -cp "$WORK:$CP" Dump "$OUT"
 
-echo "dump written to $OUT — now run 'go generate ./...' in ../pkg/data"
+echo "dump written to $OUT — now run 'go generate ./...' in .."

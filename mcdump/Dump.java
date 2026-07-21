@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -13,12 +14,15 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.io.Writer;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,16 +33,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-// Standalone dumper: boots Minecraft's registries straight from the server jar
+// standalone dumper: boots Minecraft's registries straight from the server jar
 // (real Mojang names — no Fabric, no remapping) and writes the game's own data
 // as JSON. The actual game code is the single source of truth.
 //
-// Covers the data that previously needed PrismarineJS / source scraping
+// covers the data that previously needed PrismarineJS / source scraping
 // (collision shapes, entity hitboxes, hardness, mob categories) plus the
 // built-in registry id maps. Datapack-bound data (item component values, tags,
 // biomes) needs a loaded world and still comes from the vanilla server datagen.
 public final class Dump {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+	private static final Method FIRE_IGNITE_ODDS = fireOddsMethod("getIgniteOdds");
+	private static final Method FIRE_BURN_ODDS = fireOddsMethod("getBurnOdds");
 
 	public static void main(final String[] args) throws Exception {
 		final Path out = Path.of(args.length > 0 ? args[0] : "go-mclib-dump");
@@ -55,7 +61,7 @@ public final class Dump {
 	}
 
 	// blocks: every state's palette id, properties, collision shape (deduped into
-	// a shapes table), plus per-block hardness and requires-correct-tool.
+	// a shapes table), replaceability, flammability, top-face sturdiness, hardness, and tool requirement.
 	private static JsonObject blocks() {
 		final JsonObject root = new JsonObject();
 		final JsonObject blocks = new JsonObject();
@@ -82,6 +88,10 @@ public final class Dump {
 				sobj.add("properties", props);
 				final VoxelShape shape = state.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO);
 				sobj.addProperty("shape", shapeIndexOf(shape, shapeTable, shapeIndex));
+				sobj.addProperty("replaceable", state.canBeReplaced());
+				sobj.addProperty("igniteOdds", fireOdds(FIRE_IGNITE_ODDS, state));
+				sobj.addProperty("burnOdds", fireOdds(FIRE_BURN_ODDS, state));
+				sobj.addProperty("sturdyTop", state.isFaceSturdy(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, Direction.UP));
 				states.add(sobj);
 			}
 			bobj.add("states", states);
@@ -140,7 +150,7 @@ public final class Dump {
 		return root;
 	}
 
-	// registries: every built-in registry -> { entry name: protocol id }. (Datapack
+	// registries: every built-in registry -> { entry name: protocol id }. (datapack
 	// registries such as biomes need a loaded world and still come from the datagen.)
 	private static JsonObject registries() {
 		final JsonObject root = new JsonObject();
@@ -167,6 +177,24 @@ public final class Dump {
 	}
 
 	// --- helpers ---
+
+	private static Method fireOddsMethod(final String name) {
+		try {
+			final Method method = FireBlock.class.getDeclaredMethod(name, BlockState.class);
+			method.setAccessible(true);
+			return method;
+		} catch (final ReflectiveOperationException exception) {
+			throw new ExceptionInInitializerError(exception);
+		}
+	}
+
+	private static int fireOdds(final Method method, final BlockState state) {
+		try {
+			return (int) method.invoke(Blocks.FIRE, state);
+		} catch (final ReflectiveOperationException exception) {
+			throw new IllegalStateException("cannot inspect fire odds", exception);
+		}
+	}
 
 	private static <T> List<T> sortedByKey(final Registry<T> reg) {
 		final List<T> list = new ArrayList<>();

@@ -95,7 +95,14 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 				if s, ok := m["saturation"].(float64); ok {
 					sb.WriteString(fmt.Sprintf("%s\tSaturation: %v,\n", indent, s))
 				}
+				if canAlwaysEat, ok := m["can_always_eat"].(bool); ok && canAlwaysEat {
+					sb.WriteString(fmt.Sprintf("%s\tCanAlwaysEat: true,\n", indent))
+				}
 				sb.WriteString(fmt.Sprintf("%s},\n", indent))
+			}
+		case "minecraft:consumable":
+			if m, ok := value.(map[string]any); ok {
+				writeConsumable(sb, indent, m)
 			}
 		case "minecraft:tool":
 			if m, ok := value.(map[string]any); ok {
@@ -118,6 +125,67 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 						}
 					}
 					sb.WriteString(fmt.Sprintf("%s\t},\n", indent))
+				}
+				sb.WriteString(fmt.Sprintf("%s},\n", indent))
+			}
+		case "minecraft:blocks_attacks":
+			if m, ok := value.(map[string]any); ok {
+				blockDelay, _ := m["block_delay_seconds"].(float64)
+				disableScale := 1.0
+				if value, ok := m["disable_cooldown_scale"].(float64); ok {
+					disableScale = value
+				}
+				sb.WriteString(fmt.Sprintf("%sBlocksAttacks: &BlocksAttacks{\n", indent))
+				sb.WriteString(fmt.Sprintf("%s\tBlockDelaySeconds: %v,\n", indent, blockDelay))
+				sb.WriteString(fmt.Sprintf("%s\tDisableCooldownScale: %v,\n", indent, disableScale))
+				sb.WriteString(fmt.Sprintf("%s\tDamageReductions: []DamageReduction{\n", indent))
+				if reductions, ok := m["damage_reductions"].([]any); ok {
+					for _, raw := range reductions {
+						reduction, ok := raw.(map[string]any)
+						if !ok {
+							continue
+						}
+						angle, base, factor := 90.0, 0.0, 1.0
+						if value, ok := reduction["horizontal_blocking_angle"].(float64); ok {
+							angle = value
+						}
+						if value, ok := reduction["base"].(float64); ok {
+							base = value
+						}
+						if value, ok := reduction["factor"].(float64); ok {
+							factor = value
+						}
+						sb.WriteString(fmt.Sprintf("%s\t\t{HorizontalBlockingAngle: %v, Base: %v, Factor: %v", indent, angle, base, factor))
+						generateHolderSetLiteral(sb, reduction["type"])
+						sb.WriteString("},\n")
+					}
+				} else {
+					sb.WriteString(fmt.Sprintf("%s\t\t{HorizontalBlockingAngle: 90, Factor: 1},\n", indent))
+				}
+				sb.WriteString(fmt.Sprintf("%s\t},\n", indent))
+				threshold, damageBase, damageFactor := 1.0, 0.0, 1.0
+				if damage, ok := m["item_damage"].(map[string]any); ok {
+					if value, ok := damage["threshold"].(float64); ok {
+						threshold = value
+					}
+					if value, ok := damage["base"].(float64); ok {
+						damageBase = value
+					}
+					if value, ok := damage["factor"].(float64); ok {
+						damageFactor = value
+					}
+				}
+				sb.WriteString(fmt.Sprintf("%s\tItemDamage: DamageSpec{Threshold: %v, Base: %v, Factor: %v},\n", indent, threshold, damageBase, damageFactor))
+				if bypassedBy, ok := m["bypassed_by"]; ok {
+					sb.WriteString(fmt.Sprintf("%s\tBypassedBy: []string{", indent))
+					generateStringValues(sb, bypassedBy)
+					sb.WriteString("},\n")
+				}
+				if sound, ok := m["block_sound"].(string); ok {
+					sb.WriteString(fmt.Sprintf("%s\tBlockSound: %q,\n", indent, sound))
+				}
+				if sound, ok := m["disabled_sound"].(string); ok {
+					sb.WriteString(fmt.Sprintf("%s\tDisabledSound: %q,\n", indent, sound))
 				}
 				sb.WriteString(fmt.Sprintf("%s},\n", indent))
 			}
@@ -158,8 +226,12 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 			}
 		case "minecraft:use_cooldown":
 			if m, ok := value.(map[string]any); ok {
-				if s, ok := m["seconds"].(float64); ok {
-					sb.WriteString(fmt.Sprintf("%sUseCooldown: &UseCooldown{Seconds: %v},\n", indent, s))
+				if seconds, ok := m["seconds"].(float64); ok {
+					sb.WriteString(fmt.Sprintf("%sUseCooldown: &UseCooldown{Seconds: %v", indent, seconds))
+					if group, ok := m["cooldown_group"].(string); ok {
+						sb.WriteString(fmt.Sprintf(", CooldownGroup: %q", group))
+					}
+					sb.WriteString("},\n")
 				}
 			}
 		case "minecraft:use_remainder":
@@ -177,6 +249,16 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 			if m, ok := value.(map[string]any); ok {
 				if t, ok := m["types"].(string); ok {
 					sb.WriteString(fmt.Sprintf("%sDamageResistant: &DamageResistant{Types: %q},\n", indent, t))
+				}
+			}
+		case "minecraft:death_protection":
+			if m, ok := value.(map[string]any); ok {
+				writeDeathProtection(sb, indent, m)
+			}
+		case "minecraft:entity_data":
+			if m, ok := value.(map[string]any); ok {
+				if entityType, ok := m["id"].(string); ok {
+					sb.WriteString(fmt.Sprintf("%sEntityData: &TypedEntityData{Type: %q},\n", indent, entityType))
 				}
 			}
 		case "minecraft:map_color":
@@ -203,26 +285,53 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 				sb.WriteString(fmt.Sprintf("%sAttributeModifiers: []AttributeModifier{\n", indent))
 				for _, entry := range arr {
 					if m, ok := entry.(map[string]any); ok {
-						sb.WriteString(fmt.Sprintf("%s\t{", indent))
+						fields := make([]string, 0, 6)
 						if t, ok := m["type"].(string); ok {
-							sb.WriteString(fmt.Sprintf("Type: %q, ", t))
+							fields = append(fields, fmt.Sprintf("Type: %q", t))
 						}
 						if a, ok := m["amount"].(float64); ok {
-							sb.WriteString(fmt.Sprintf("Amount: %v, ", a))
+							fields = append(fields, fmt.Sprintf("Amount: %v", a))
 						}
 						if id, ok := m["id"].(string); ok {
-							sb.WriteString(fmt.Sprintf("ID: %q, ", id))
+							fields = append(fields, fmt.Sprintf("ID: %q", id))
 						}
 						if op, ok := m["operation"].(string); ok {
-							sb.WriteString(fmt.Sprintf("Operation: %q, ", op))
+							fields = append(fields, fmt.Sprintf("Operation: %q", op))
 						}
 						if s, ok := m["slot"].(string); ok {
-							sb.WriteString(fmt.Sprintf("Slot: %q", s))
+							fields = append(fields, fmt.Sprintf("Slot: %q", s))
 						}
-						sb.WriteString("},\n")
+						if display, ok := m["display"].(map[string]any); ok {
+							if displayType, ok := display["type"].(string); ok && displayType != "default" {
+								fields = append(fields, fmt.Sprintf("Display: AttributeModifierDisplay{Type: %q}", displayType))
+							}
+						}
+						sb.WriteString(fmt.Sprintf("%s\t{%s},\n", indent, strings.Join(fields, ", ")))
 					}
 				}
 				sb.WriteString(fmt.Sprintf("%s},\n", indent))
+			}
+		}
+	}
+}
+
+func generateHolderSetLiteral(sb *strings.Builder, value any) {
+	if value == nil {
+		return
+	}
+	sb.WriteString(", Types: []string{")
+	generateStringValues(sb, value)
+	sb.WriteString("}")
+}
+
+func generateStringValues(sb *strings.Builder, value any) {
+	switch value := value.(type) {
+	case string:
+		sb.WriteString(fmt.Sprintf("%q", value))
+	case []any:
+		for _, raw := range value {
+			if entry, ok := raw.(string); ok {
+				sb.WriteString(fmt.Sprintf("%q, ", entry))
 			}
 		}
 	}
@@ -479,6 +588,111 @@ func writePassthroughList(sb *strings.Builder, comment string, ids []string, reg
 	sb.WriteString("\t}\n\n")
 }
 
+func writeConsumable(sb *strings.Builder, indent string, value map[string]any) {
+	sb.WriteString(fmt.Sprintf("%sConsumable: &Consumable{\n", indent))
+	seconds := 1.6
+	if configured, ok := value["consume_seconds"].(float64); ok {
+		seconds = configured
+	}
+	animation := "eat"
+	if configured, ok := value["animation"].(string); ok {
+		animation = configured
+	}
+	sound := "minecraft:entity.generic.eat"
+	if configured, ok := value["sound"].(string); ok {
+		sound = configured
+	}
+	hasParticles := true
+	if configured, ok := value["has_consume_particles"].(bool); ok {
+		hasParticles = configured
+	}
+	sb.WriteString(fmt.Sprintf("%s\tConsumeSeconds: %v,\n", indent, seconds))
+	sb.WriteString(fmt.Sprintf("%s\tAnimation: %q,\n", indent, animation))
+	sb.WriteString(fmt.Sprintf("%s\tSound: %q,\n", indent, sound))
+	sb.WriteString(fmt.Sprintf("%s\tHasParticles: %t,\n", indent, hasParticles))
+	writeConsumeEffects(sb, indent+"\t", "OnConsumeEffects", value["on_consume_effects"])
+	sb.WriteString(fmt.Sprintf("%s},\n", indent))
+}
+
+func writeDeathProtection(sb *strings.Builder, indent string, value map[string]any) {
+	sb.WriteString(fmt.Sprintf("%sDeathProtection: &DeathProtection{\n", indent))
+	writeConsumeEffects(sb, indent+"\t", "DeathEffects", value["death_effects"])
+	sb.WriteString(fmt.Sprintf("%s},\n", indent))
+}
+
+func writeConsumeEffects(sb *strings.Builder, indent, field string, value any) {
+	effects, ok := value.([]any)
+	if !ok || len(effects) == 0 {
+		return
+	}
+	sb.WriteString(fmt.Sprintf("%s%s: []ConsumeEffect{\n", indent, field))
+	for _, raw := range effects {
+		effect, ok := raw.(map[string]any)
+		if !ok {
+			continue
+		}
+		sb.WriteString(fmt.Sprintf("%s\t{Type: %q", indent, effect["type"]))
+		probability := 1.0
+		if configured, ok := effect["probability"].(float64); ok {
+			probability = configured
+		}
+		sb.WriteString(fmt.Sprintf(", Probability: %v", probability))
+		if effect["type"] == "minecraft:teleport_randomly" {
+			diameter := 16.0
+			if configured, ok := effect["diameter"].(float64); ok {
+				diameter = configured
+			}
+			sb.WriteString(fmt.Sprintf(", Diameter: %v", diameter))
+		}
+		if sound, ok := effect["sound"].(string); ok {
+			sb.WriteString(fmt.Sprintf(", Sound: %q", sound))
+		}
+		switch entries := effect["effects"].(type) {
+		case string:
+			sb.WriteString(fmt.Sprintf(", EffectIDs: []string{%q}", entries))
+		case []any:
+			sb.WriteString(", Effects: []StatusEffect{")
+			for _, rawStatus := range entries {
+				status, ok := rawStatus.(map[string]any)
+				if !ok {
+					continue
+				}
+				sb.WriteString("{")
+				if id, ok := status["id"].(string); ok {
+					sb.WriteString(fmt.Sprintf("ID: %q, ", id))
+				}
+				if duration, ok := status["duration"].(float64); ok {
+					sb.WriteString(fmt.Sprintf("Duration: %d, ", int32(duration)))
+				}
+				if amplifier, ok := status["amplifier"].(float64); ok {
+					sb.WriteString(fmt.Sprintf("Amplifier: %d, ", int32(amplifier)))
+				}
+				showParticles := true
+				if configured, ok := status["show_particles"].(bool); ok {
+					showParticles = configured
+				}
+				if showParticles {
+					sb.WriteString("ShowParticles: true, ")
+				}
+				showIcon := true
+				if configured, ok := status["show_icon"].(bool); ok {
+					showIcon = configured
+				}
+				if showIcon {
+					sb.WriteString("ShowIcon: true, ")
+				}
+				if ambient, ok := status["ambient"].(bool); ok && ambient {
+					sb.WriteString("Ambient: true, ")
+				}
+				sb.WriteString("},")
+			}
+			sb.WriteString("}")
+		}
+		sb.WriteString("},\n")
+	}
+	sb.WriteString(fmt.Sprintf("%s},\n", indent))
+}
+
 func componentKeyToGoField(key string) string {
 	switch key {
 	case "minecraft:max_stack_size":
@@ -497,6 +711,14 @@ func componentKeyToGoField(key string) string {
 		return "ItemModel"
 	case "minecraft:food":
 		return "Food"
+	case "minecraft:consumable":
+		return "Consumable"
+	case "minecraft:death_protection":
+		return "DeathProtection"
+	case "minecraft:blocks_attacks":
+		return "BlocksAttacks"
+	case "minecraft:entity_data":
+		return "EntityData"
 	case "minecraft:tool":
 		return "Tool"
 	case "minecraft:weapon":
@@ -543,14 +765,12 @@ func componentKeyToGoField(key string) string {
 		"minecraft:swing_animation",
 		"minecraft:tooltip_display",
 		"minecraft:use_effects",
-		"minecraft:consumable",
 		"minecraft:container",
 		"minecraft:stored_enchantments",
 		"minecraft:potion_contents",
 		"minecraft:bundle_contents",
 		"minecraft:charged_projectiles",
 		"minecraft:debug_stick_state",
-		"minecraft:entity_data",
 		"minecraft:bucket_entity_data",
 		"minecraft:block_entity_data",
 		"minecraft:block_state",
@@ -579,8 +799,6 @@ func componentKeyToGoField(key string) string {
 		"minecraft:custom_model_data",
 		"minecraft:custom_name",
 		"minecraft:enchantment_glint_override",
-		"minecraft:death_protection",
-		"minecraft:blocks_attacks",
 		"minecraft:kinetic_weapon",
 		"minecraft:piercing_weapon",
 		"minecraft:attack_range",
@@ -718,6 +936,10 @@ func writeApplyField(sb *strings.Builder, f WireField) {
 		sb.WriteString("\t\t\tv, err := buf.ReadVarInt()\n\t\t\tif err != nil {\n\t\t\t\treturn err\n\t\t\t}\n")
 		sb.WriteString("\t\t\tarr = append(arr, int32(v))\n\t\t}\n")
 		fmt.Fprintf(sb, "\t\ts.%s = arr\n\t}\n", f.GoField)
+	case "optionalIdentifier":
+		sb.WriteString("\t{\n\t\tpresent, err := buf.ReadBool()\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n")
+		sb.WriteString("\t\tif present {\n\t\t\tv, err := buf.ReadIdentifier()\n\t\t\tif err != nil {\n\t\t\t\treturn err\n\t\t\t}\n")
+		fmt.Fprintf(sb, "\t\t\ts.%s = string(v)\n\t\t}\n\t}\n", f.GoField)
 	}
 }
 
@@ -733,6 +955,9 @@ func writeEncodeField(sb *strings.Builder, goField string, f WireField) {
 		case "varintArray":
 			fmt.Fprintf(sb, "\tw.WriteVarInt(ns.VarInt(len(c.%s.%s)))\n", goField, f.GoField)
 			fmt.Fprintf(sb, "\tfor _, v := range c.%s.%s {\n\t\tw.WriteVarInt(ns.VarInt(v))\n\t}\n", goField, f.GoField)
+		case "optionalIdentifier":
+			fmt.Fprintf(sb, "\tw.WriteBool(ns.Boolean(c.%s.%s != \"\"))\n", goField, f.GoField)
+			fmt.Fprintf(sb, "\tif c.%s.%s != \"\" {\n\t\tw.WriteIdentifier(ns.Identifier(c.%s.%s))\n\t}\n", goField, f.GoField, goField, f.GoField)
 		}
 	} else {
 		// unmapped field: write zero/default value

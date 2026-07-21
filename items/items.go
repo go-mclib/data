@@ -2,6 +2,30 @@ package items
 
 import "github.com/go-mclib/data/registries"
 
+func init() {
+	for id, color := range dyeNames {
+		components := defaultComponents[ItemID("minecraft:"+color+"_dye")]
+		if components != nil {
+			value := int32(id)
+			components.Dye = &value
+		}
+		banner := defaultComponents[ItemID("minecraft:"+color+"_banner")]
+		if banner != nil {
+			layers := []BannerPatternLayer{}
+			banner.BannerPatterns = &layers
+		}
+	}
+	if shield := defaultComponents[ItemID("minecraft:shield")]; shield != nil {
+		layers := []BannerPatternLayer{}
+		shield.BannerPatterns = &layers
+	}
+	if pot := defaultComponents[ItemID("minecraft:decorated_pot")]; pot != nil {
+		pot.PotDecorations = &PotDecorations{
+			Back: "minecraft:brick", Left: "minecraft:brick", Right: "minecraft:brick", Front: "minecraft:brick",
+		}
+	}
+}
+
 // ItemID returns the protocol ID for an item identifier, or -1 if not found.
 func ItemID(id string) int32 {
 	return registries.Item.Get(id)

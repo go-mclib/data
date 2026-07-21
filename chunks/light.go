@@ -2,21 +2,20 @@ package chunks
 
 import ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 
-const lightSections = SectionCount + 2 // 1 below + 24 chunk + 1 above
-
 // ComputeSkylight computes simple vertical sky light propagation.
 // For each XZ column, sky light starts at 15 from the top and is blocked by any non-air block.
 // This does not perform horizontal light spreading (sufficient for flat worlds).
 func (c *ChunkColumn) ComputeSkylight() {
-	skyLight := make([][]byte, lightSections)
+	lightSectionCount := len(c.Sections) + 2
+	skyLight := make([][]byte, lightSectionCount)
 
 	// above-world section: full sky light
-	skyLight[lightSections-1] = fullSkyLightArray()
+	skyLight[lightSectionCount-1] = fullSkyLightArray()
 
 	for x := range 16 {
 		for z := range 16 {
 			light := byte(15)
-			for secIdx := SectionCount - 1; secIdx >= 0; secIdx-- {
+			for secIdx := len(c.Sections) - 1; secIdx >= 0; secIdx-- {
 				lightIdx := secIdx + 1
 				if skyLight[lightIdx] == nil {
 					skyLight[lightIdx] = make([]byte, 2048)
@@ -35,11 +34,11 @@ func (c *ChunkColumn) ComputeSkylight() {
 	}
 
 	// build LightData
-	skyMask := ns.NewBitSet(lightSections)
-	emptySkyMask := ns.NewBitSet(lightSections)
+	skyMask := ns.NewBitSet(lightSectionCount)
+	emptySkyMask := ns.NewBitSet(lightSectionCount)
 	var skyArrays [][]byte
 
-	for i := range lightSections {
+	for i := range lightSectionCount {
 		if skyLight[i] != nil && !isAllZero(skyLight[i]) {
 			skyMask.Set(i)
 			skyArrays = append(skyArrays, skyLight[i])

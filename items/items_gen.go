@@ -166,6 +166,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1192: { // minecraft:allay_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:allay"},
 		ItemModel:    "minecraft:allay_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.allay_spawn_egg"},
 		MaxStackSize: 64,
@@ -264,6 +265,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	921: { // minecraft:apple
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  4,
 			Saturation: 2.4,
@@ -292,6 +299,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1170: { // minecraft:armadillo_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:armadillo"},
 		ItemModel:    "minecraft:armadillo_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.armadillo_spawn_egg"},
 		MaxStackSize: 64,
@@ -332,6 +340,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1180: { // minecraft:axolotl_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:axolotl"},
 		ItemModel:    "minecraft:axolotl_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.axolotl_spawn_egg"},
 		MaxStackSize: 64,
@@ -364,6 +373,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1259: { // minecraft:baked_potato
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  5,
 			Saturation: 6,
@@ -552,6 +567,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1171: { // minecraft:bat_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:bat"},
 		ItemModel:    "minecraft:bat_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bat_spawn_egg"},
 		MaxStackSize: 64,
@@ -584,6 +600,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1172: { // minecraft:bee_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:bee"},
 		ItemModel:    "minecraft:bee_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bee_spawn_egg"},
 		MaxStackSize: 64,
@@ -592,6 +609,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1139: { // minecraft:beef
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  3,
 			Saturation: 1.8000001,
@@ -612,6 +635,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1317: { // minecraft:beetroot
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  1,
 			Saturation: 1.2,
@@ -632,6 +661,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1319: { // minecraft:beetroot_soup
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  6,
 			Saturation: 7.2000003,
@@ -991,6 +1026,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1233: { // minecraft:blaze_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:blaze"},
 		ItemModel:    "minecraft:blaze_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.blaze_spawn_egg"},
 		MaxStackSize: 64,
@@ -1143,6 +1179,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1202: { // minecraft:bogged_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:bogged"},
 		ItemModel:    "minecraft:bogged_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.bogged_spawn_egg"},
 		MaxStackSize: 64,
@@ -1252,6 +1289,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	981: { // minecraft:bread
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  5,
 			Saturation: 6,
@@ -1272,6 +1315,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1218: { // minecraft:breeze_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:breeze"},
 		ItemModel:    "minecraft:breeze_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.breeze_spawn_egg"},
 		MaxStackSize: 64,
@@ -1594,6 +1638,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1203: { // minecraft:camel_husk_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:camel_husk"},
 		ItemModel:    "minecraft:camel_husk_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.camel_husk_spawn_egg"},
 		MaxStackSize: 64,
@@ -1602,6 +1647,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1163: { // minecraft:camel_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:camel"},
 		ItemModel:    "minecraft:camel_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.camel_spawn_egg"},
 		MaxStackSize: 64,
@@ -1626,6 +1672,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1257: { // minecraft:carrot
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  3,
 			Saturation: 3.6000001,
@@ -1656,7 +1708,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	385: { // minecraft:carved_pumpkin
 		AttributeModifiers: []AttributeModifier{
-			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:carved_pumpkin",
@@ -1667,6 +1719,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1167: { // minecraft:cat_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:cat"},
 		ItemModel:    "minecraft:cat_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cat_spawn_egg"},
 		MaxStackSize: 64,
@@ -1683,6 +1736,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1216: { // minecraft:cave_spider_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:cave_spider"},
 		ItemModel:    "minecraft:cave_spider_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cave_spider_spawn_egg"},
 		MaxStackSize: 64,
@@ -1931,6 +1985,15 @@ var defaultComponents = map[int32]*Components{
 	},
 	1141: { // minecraft:chicken
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:apply_effects", Probability: 0.3, Effects: []StatusEffect{{ID: "minecraft:hunger", Duration: 600, ShowParticles: true, ShowIcon: true}}},
+			},
+		},
 		Food: &Food{
 			Nutrition:  2,
 			Saturation: 1.2,
@@ -1943,6 +2006,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1159: { // minecraft:chicken_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:chicken"},
 		ItemModel:    "minecraft:chicken_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.chicken_spawn_egg"},
 		MaxStackSize: 64,
@@ -2079,9 +2143,19 @@ var defaultComponents = map[int32]*Components{
 	},
 	1313: { // minecraft:chorus_fruit
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:teleport_randomly", Probability: 1, Diameter: 16},
+			},
+		},
 		Food: &Food{
-			Nutrition:  4,
-			Saturation: 2.4,
+			Nutrition:    4,
+			Saturation:   2.4,
+			CanAlwaysEat: true,
 		},
 		ItemModel:    "minecraft:chorus_fruit",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.chorus_fruit"},
@@ -2316,6 +2390,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1086: { // minecraft:cod
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  2,
 			Saturation: 0.4,
@@ -2340,6 +2420,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1181: { // minecraft:cod_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:cod"},
 		ItemModel:    "minecraft:cod_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cod_spawn_egg"},
 		MaxStackSize: 64,
@@ -2396,6 +2477,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1140: { // minecraft:cooked_beef
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  8,
 			Saturation: 12.8,
@@ -2408,6 +2495,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1142: { // minecraft:cooked_chicken
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  6,
 			Saturation: 7.2000003,
@@ -2420,6 +2513,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1090: { // minecraft:cooked_cod
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  5,
 			Saturation: 6,
@@ -2432,6 +2531,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1295: { // minecraft:cooked_mutton
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  6,
 			Saturation: 9.6,
@@ -2444,6 +2549,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1012: { // minecraft:cooked_porkchop
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  8,
 			Saturation: 12.8,
@@ -2456,6 +2567,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1280: { // minecraft:cooked_rabbit
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  5,
 			Saturation: 6,
@@ -2468,6 +2585,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1091: { // minecraft:cooked_salmon
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  6,
 			Saturation: 9.6,
@@ -2480,6 +2603,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1131: { // minecraft:cookie
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  2,
 			Saturation: 0.4,
@@ -2598,6 +2727,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1196: { // minecraft:copper_golem_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:copper_golem"},
 		ItemModel:    "minecraft:copper_golem_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_golem_spawn_egg"},
 		MaxStackSize: 64,
@@ -2853,6 +2983,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1160: { // minecraft:cow_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:cow"},
 		ItemModel:    "minecraft:cow_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cow_spawn_egg"},
 		MaxStackSize: 64,
@@ -2925,6 +3056,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1219: { // minecraft:creaking_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:creaking"},
 		ItemModel:    "minecraft:creaking_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.creaking_spawn_egg"},
 		MaxStackSize: 64,
@@ -2942,7 +3074,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1267: { // minecraft:creeper_head
 		AttributeModifiers: []AttributeModifier{
-			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:creeper_head",
@@ -2953,6 +3085,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1220: { // minecraft:creeper_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:creeper"},
 		ItemModel:    "minecraft:creeper_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.creeper_spawn_egg"},
 		MaxStackSize: 64,
@@ -4101,6 +4234,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1182: { // minecraft:dolphin_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:dolphin"},
 		ItemModel:    "minecraft:dolphin_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.dolphin_spawn_egg"},
 		MaxStackSize: 64,
@@ -4109,6 +4243,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1164: { // minecraft:donkey_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:donkey"},
 		ItemModel:    "minecraft:donkey_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.donkey_spawn_egg"},
 		MaxStackSize: 64,
@@ -4133,7 +4268,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1268: { // minecraft:dragon_head
 		AttributeModifiers: []AttributeModifier{
-			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:dragon_head",
@@ -4152,6 +4287,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1136: { // minecraft:dried_kelp
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 0.8,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  1,
 			Saturation: 0.6,
@@ -4188,6 +4329,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1204: { // minecraft:drowned_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:drowned"},
 		ItemModel:    "minecraft:drowned_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.drowned_spawn_egg"},
 		MaxStackSize: 64,
@@ -4220,6 +4362,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1221: { // minecraft:elder_guardian_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:elder_guardian"},
 		ItemModel:    "minecraft:elder_guardian_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.elder_guardian_spawn_egg"},
 		MaxStackSize: 64,
@@ -4273,9 +4416,19 @@ var defaultComponents = map[int32]*Components{
 	},
 	1015: { // minecraft:enchanted_golden_apple
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:apply_effects", Probability: 1, Effects: []StatusEffect{{ID: "minecraft:regeneration", Duration: 400, Amplifier: 1, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:resistance", Duration: 6000, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:fire_resistance", Duration: 6000, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:absorption", Duration: 2400, Amplifier: 3, ShowParticles: true, ShowIcon: true}}},
+			},
+		},
 		Food: &Food{
-			Nutrition:  4,
-			Saturation: 9.6,
+			Nutrition:    4,
+			Saturation:   9.6,
+			CanAlwaysEat: true,
 		},
 		ItemModel:    "minecraft:enchanted_golden_apple",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.enchanted_golden_apple"},
@@ -4365,6 +4518,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1243: { // minecraft:ender_dragon_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:ender_dragon"},
 		ItemModel:    "minecraft:ender_dragon_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ender_dragon_spawn_egg"},
 		MaxStackSize: 64,
@@ -4390,6 +4544,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1244: { // minecraft:enderman_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:enderman"},
 		ItemModel:    "minecraft:enderman_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.enderman_spawn_egg"},
 		MaxStackSize: 64,
@@ -4398,6 +4553,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1245: { // minecraft:endermite_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:endermite"},
 		ItemModel:    "minecraft:endermite_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.endermite_spawn_egg"},
 		MaxStackSize: 64,
@@ -4406,6 +4562,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1228: { // minecraft:evoker_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:evoker"},
 		ItemModel:    "minecraft:evoker_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.evoker_spawn_egg"},
 		MaxStackSize: 64,
@@ -4760,6 +4917,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1173: { // minecraft:fox_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:fox"},
 		ItemModel:    "minecraft:fox_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.fox_spawn_egg"},
 		MaxStackSize: 64,
@@ -4776,6 +4934,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1183: { // minecraft:frog_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:frog"},
 		ItemModel:    "minecraft:frog_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.frog_spawn_egg"},
 		MaxStackSize: 64,
@@ -4808,6 +4967,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1234: { // minecraft:ghast_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:ghast"},
 		ItemModel:    "minecraft:ghast_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ghast_spawn_egg"},
 		MaxStackSize: 64,
@@ -4873,6 +5033,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1405: { // minecraft:glow_berries
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  2,
 			Saturation: 0.4,
@@ -4909,6 +5075,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1184: { // minecraft:glow_squid_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:glow_squid"},
 		ItemModel:    "minecraft:glow_squid_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.glow_squid_spawn_egg"},
 		MaxStackSize: 64,
@@ -4942,6 +5109,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1174: { // minecraft:goat_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:goat"},
 		ItemModel:    "minecraft:goat_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.goat_spawn_egg"},
 		MaxStackSize: 64,
@@ -4983,9 +5151,19 @@ var defaultComponents = map[int32]*Components{
 	},
 	1014: { // minecraft:golden_apple
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:apply_effects", Probability: 1, Effects: []StatusEffect{{ID: "minecraft:regeneration", Duration: 100, Amplifier: 1, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:absorption", Duration: 2400, ShowParticles: true, ShowIcon: true}}},
+			},
+		},
 		Food: &Food{
-			Nutrition:  4,
-			Saturation: 9.6,
+			Nutrition:    4,
+			Saturation:   9.6,
+			CanAlwaysEat: true,
 		},
 		ItemModel:    "minecraft:golden_apple",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.golden_apple"},
@@ -5037,6 +5215,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1262: { // minecraft:golden_carrot
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  6,
 			Saturation: 14.400001,
@@ -5543,6 +5727,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1222: { // minecraft:guardian_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:guardian"},
 		ItemModel:    "minecraft:guardian_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.guardian_spawn_egg"},
 		MaxStackSize: 64,
@@ -5584,6 +5769,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1235: { // minecraft:happy_ghast_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:happy_ghast"},
 		ItemModel:    "minecraft:happy_ghast_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.happy_ghast_spawn_egg"},
 		MaxStackSize: 64,
@@ -5640,6 +5826,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1236: { // minecraft:hoglin_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:hoglin"},
 		ItemModel:    "minecraft:hoglin_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.hoglin_spawn_egg"},
 		MaxStackSize: 64,
@@ -5656,9 +5843,19 @@ var defaultComponents = map[int32]*Components{
 	},
 	1412: { // minecraft:honey_bottle
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 2,
+			Animation:      "drink",
+			Sound:          "minecraft:item.honey_bottle.drink",
+			HasParticles:   false,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:remove_effects", Probability: 1, EffectIDs: []string{"minecraft:poison"}},
+			},
+		},
 		Food: &Food{
-			Nutrition:  6,
-			Saturation: 1.2,
+			Nutrition:    6,
+			Saturation:   1.2,
+			CanAlwaysEat: true,
 		},
 		ItemModel:    "minecraft:honey_bottle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.honey_bottle"},
@@ -5727,6 +5924,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1165: { // minecraft:horse_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:horse"},
 		ItemModel:    "minecraft:horse_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.horse_spawn_egg"},
 		MaxStackSize: 64,
@@ -5751,6 +5949,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1205: { // minecraft:husk_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:husk"},
 		ItemModel:    "minecraft:husk_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.husk_spawn_egg"},
 		MaxStackSize: 64,
@@ -5921,6 +6120,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1197: { // minecraft:iron_golem_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:iron_golem"},
 		ItemModel:    "minecraft:iron_golem_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_golem_spawn_egg"},
 		MaxStackSize: 64,
@@ -6926,6 +7126,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1175: { // minecraft:llama_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:llama"},
 		ItemModel:    "minecraft:llama_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.llama_spawn_egg"},
 		MaxStackSize: 64,
@@ -7104,6 +7305,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1237: { // minecraft:magma_cube_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:magma_cube"},
 		ItemModel:    "minecraft:magma_cube_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.magma_cube_spawn_egg"},
 		MaxStackSize: 64,
@@ -7296,6 +7498,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1135: { // minecraft:melon_slice
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  2,
 			Saturation: 1.2,
@@ -7307,7 +7515,16 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1046: { // minecraft:milk_bucket
-		BreakSound:   "minecraft:entity.item.break",
+		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "drink",
+			Sound:          "minecraft:entity.generic.drink",
+			HasParticles:   false,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:clear_all_effects", Probability: 1},
+			},
+		},
 		ItemModel:    "minecraft:milk_bucket",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.milk_bucket"},
 		MaxStackSize: 1,
@@ -7344,6 +7561,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1193: { // minecraft:mooshroom_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:mooshroom"},
 		ItemModel:    "minecraft:mooshroom_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.mooshroom_spawn_egg"},
 		MaxStackSize: 64,
@@ -7488,6 +7706,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1166: { // minecraft:mule_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:mule"},
 		ItemModel:    "minecraft:mule_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.mule_spawn_egg"},
 		MaxStackSize: 64,
@@ -7504,6 +7723,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	975: { // minecraft:mushroom_stew
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  6,
 			Saturation: 7.2000003,
@@ -7717,6 +7942,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1294: { // minecraft:mutton
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  2,
 			Saturation: 1.2,
@@ -7753,6 +7984,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1185: { // minecraft:nautilus_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:nautilus"},
 		ItemModel:    "minecraft:nautilus_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.nautilus_spawn_egg"},
 		MaxStackSize: 64,
@@ -8320,6 +8552,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1176: { // minecraft:ocelot_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:ocelot"},
 		ItemModel:    "minecraft:ocelot_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ocelot_spawn_egg"},
 		MaxStackSize: 64,
@@ -8335,7 +8568,16 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1536: { // minecraft:ominous_bottle
-		BreakSound:             "minecraft:entity.item.break",
+		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "drink",
+			Sound:          "minecraft:entity.generic.drink",
+			HasParticles:   false,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:play_sound", Probability: 1, Sound: "minecraft:item.ominous_bottle.dispose"},
+			},
+		},
 		ItemModel:              "minecraft:ominous_bottle",
 		ItemName:               &ItemNameComponent{Translate: "item.minecraft.ominous_bottle"},
 		MaxStackSize:           64,
@@ -8809,6 +9051,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1177: { // minecraft:panda_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:panda"},
 		ItemModel:    "minecraft:panda_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.panda_spawn_egg"},
 		MaxStackSize: 64,
@@ -8825,6 +9068,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1206: { // minecraft:parched_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:parched"},
 		ItemModel:    "minecraft:parched_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.parched_spawn_egg"},
 		MaxStackSize: 64,
@@ -8833,6 +9077,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1168: { // minecraft:parrot_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:parrot"},
 		ItemModel:    "minecraft:parrot_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.parrot_spawn_egg"},
 		MaxStackSize: 64,
@@ -8873,6 +9118,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1223: { // minecraft:phantom_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:phantom"},
 		ItemModel:    "minecraft:phantom_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.phantom_spawn_egg"},
 		MaxStackSize: 64,
@@ -8881,6 +9127,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1161: { // minecraft:pig_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:pig"},
 		ItemModel:    "minecraft:pig_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pig_spawn_egg"},
 		MaxStackSize: 64,
@@ -8898,6 +9145,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1239: { // minecraft:piglin_brute_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:piglin_brute"},
 		ItemModel:    "minecraft:piglin_brute_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.piglin_brute_spawn_egg"},
 		MaxStackSize: 64,
@@ -8906,7 +9154,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1269: { // minecraft:piglin_head
 		AttributeModifiers: []AttributeModifier{
-			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:piglin_head",
@@ -8917,6 +9165,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1238: { // minecraft:piglin_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:piglin"},
 		ItemModel:    "minecraft:piglin_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.piglin_spawn_egg"},
 		MaxStackSize: 64,
@@ -8925,6 +9174,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1229: { // minecraft:pillager_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:pillager"},
 		ItemModel:    "minecraft:pillager_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pillager_spawn_egg"},
 		MaxStackSize: 64,
@@ -9093,7 +9343,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1265: { // minecraft:player_head
 		AttributeModifiers: []AttributeModifier{
-			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:player_head",
@@ -9128,6 +9378,15 @@ var defaultComponents = map[int32]*Components{
 	},
 	1260: { // minecraft:poisonous_potato
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:apply_effects", Probability: 0.6, Effects: []StatusEffect{{ID: "minecraft:poison", Duration: 100, ShowParticles: true, ShowIcon: true}}},
+			},
+		},
 		Food: &Food{
 			Nutrition:  2,
 			Saturation: 1.2,
@@ -9140,6 +9399,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1178: { // minecraft:polar_bear_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:polar_bear"},
 		ItemModel:    "minecraft:polar_bear_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.polar_bear_spawn_egg"},
 		MaxStackSize: 64,
@@ -9452,6 +9712,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1011: { // minecraft:porkchop
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  3,
 			Saturation: 1.8000001,
@@ -9464,6 +9730,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1258: { // minecraft:potato
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  1,
 			Saturation: 0.6,
@@ -9483,7 +9755,13 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1150: { // minecraft:potion
-		BreakSound:   "minecraft:entity.item.break",
+		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "drink",
+			Sound:          "minecraft:entity.generic.drink",
+			HasParticles:   false,
+		},
 		ItemModel:    "minecraft:potion",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.potion"},
 		MaxStackSize: 1,
@@ -9591,6 +9869,15 @@ var defaultComponents = map[int32]*Components{
 	},
 	1089: { // minecraft:pufferfish
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:apply_effects", Probability: 1, Effects: []StatusEffect{{ID: "minecraft:poison", Duration: 1200, Amplifier: 1, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:hunger", Duration: 300, Amplifier: 2, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:nausea", Duration: 300, ShowParticles: true, ShowIcon: true}}},
+			},
+		},
 		Food: &Food{
 			Nutrition:  1,
 			Saturation: 0.2,
@@ -9615,6 +9902,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1186: { // minecraft:pufferfish_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:pufferfish"},
 		ItemModel:    "minecraft:pufferfish_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pufferfish_spawn_egg"},
 		MaxStackSize: 64,
@@ -9631,6 +9919,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1271: { // minecraft:pumpkin_pie
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  8,
 			Saturation: 4.8,
@@ -9852,6 +10146,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1279: { // minecraft:rabbit
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  3,
 			Saturation: 1.8000001,
@@ -9880,6 +10180,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1179: { // minecraft:rabbit_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:rabbit"},
 		ItemModel:    "minecraft:rabbit_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.rabbit_spawn_egg"},
 		MaxStackSize: 64,
@@ -9888,6 +10189,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1281: { // minecraft:rabbit_stew
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  10,
 			Saturation: 12,
@@ -9919,6 +10226,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1230: { // minecraft:ravager_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:ravager"},
 		ItemModel:    "minecraft:ravager_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.ravager_spawn_egg"},
 		MaxStackSize: 64,
@@ -10353,6 +10661,15 @@ var defaultComponents = map[int32]*Components{
 	},
 	1143: { // minecraft:rotten_flesh
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:apply_effects", Probability: 0.8, Effects: []StatusEffect{{ID: "minecraft:hunger", Duration: 600, ShowParticles: true, ShowIcon: true}}},
+			},
+		},
 		Food: &Food{
 			Nutrition:  4,
 			Saturation: 0.8,
@@ -10373,6 +10690,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1087: { // minecraft:salmon
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  2,
 			Saturation: 0.4,
@@ -10397,6 +10720,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1187: { // minecraft:salmon_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:salmon"},
 		ItemModel:    "minecraft:salmon_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.salmon_spawn_egg"},
 		MaxStackSize: 64,
@@ -10567,6 +10891,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1162: { // minecraft:sheep_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:sheep"},
 		ItemModel:    "minecraft:sheep_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.sheep_spawn_egg"},
 		MaxStackSize: 64,
@@ -10582,6 +10907,17 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1325: { // minecraft:shield
+		BlocksAttacks: &BlocksAttacks{
+			BlockDelaySeconds:    0.25,
+			DisableCooldownScale: 1,
+			DamageReductions: []DamageReduction{
+				{HorizontalBlockingAngle: 90, Factor: 1},
+			},
+			ItemDamage:    DamageSpec{Threshold: 3, Base: 1, Factor: 1},
+			BypassedBy:    []string{"#minecraft:bypasses_shield"},
+			BlockSound:    "minecraft:item.shield.block",
+			DisabledSound: "minecraft:item.shield.break",
+		},
 		BreakSound:   "minecraft:item.shield.break",
 		Damage:       0,
 		ItemModel:    "minecraft:shield",
@@ -10634,6 +10970,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1246: { // minecraft:shulker_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:shulker"},
 		ItemModel:    "minecraft:shulker_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.shulker_spawn_egg"},
 		MaxStackSize: 64,
@@ -10650,6 +10987,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1224: { // minecraft:silverfish_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:silverfish"},
 		ItemModel:    "minecraft:silverfish_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.silverfish_spawn_egg"},
 		MaxStackSize: 64,
@@ -10658,6 +10996,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1208: { // minecraft:skeleton_horse_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:skeleton_horse"},
 		ItemModel:    "minecraft:skeleton_horse_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.skeleton_horse_spawn_egg"},
 		MaxStackSize: 64,
@@ -10666,7 +11005,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1263: { // minecraft:skeleton_skull
 		AttributeModifiers: []AttributeModifier{
-			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:skeleton_skull",
@@ -10677,6 +11016,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1207: { // minecraft:skeleton_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:skeleton"},
 		ItemModel:    "minecraft:skeleton_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.skeleton_spawn_egg"},
 		MaxStackSize: 64,
@@ -10718,6 +11058,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1225: { // minecraft:slime_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:slime"},
 		ItemModel:    "minecraft:slime_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.slime_spawn_egg"},
 		MaxStackSize: 64,
@@ -10862,6 +11203,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1194: { // minecraft:sniffer_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:sniffer"},
 		ItemModel:    "minecraft:sniffer_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.sniffer_spawn_egg"},
 		MaxStackSize: 64,
@@ -10902,6 +11244,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1198: { // minecraft:snow_golem_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:snow_golem"},
 		ItemModel:    "minecraft:snow_golem_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.snow_golem_spawn_egg"},
 		MaxStackSize: 64,
@@ -10974,6 +11317,15 @@ var defaultComponents = map[int32]*Components{
 	},
 	1151: { // minecraft:spider_eye
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+			OnConsumeEffects: []ConsumeEffect{
+				{Type: "minecraft:apply_effects", Probability: 1, Effects: []StatusEffect{{ID: "minecraft:poison", Duration: 100, ShowParticles: true, ShowIcon: true}}},
+			},
+		},
 		Food: &Food{
 			Nutrition:  2,
 			Saturation: 3.2,
@@ -10986,6 +11338,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1217: { // minecraft:spider_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:spider"},
 		ItemModel:    "minecraft:spider_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.spider_spawn_egg"},
 		MaxStackSize: 64,
@@ -11178,6 +11531,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1188: { // minecraft:squid_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:squid"},
 		ItemModel:    "minecraft:squid_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.squid_spawn_egg"},
 		MaxStackSize: 64,
@@ -11426,6 +11780,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1209: { // minecraft:stray_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:stray"},
 		ItemModel:    "minecraft:stray_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.stray_spawn_egg"},
 		MaxStackSize: 64,
@@ -11434,6 +11789,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1240: { // minecraft:strider_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:strider"},
 		ItemModel:    "minecraft:strider_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.strider_spawn_egg"},
 		MaxStackSize: 64,
@@ -11714,6 +12070,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1195: { // minecraft:sulfur_cube_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:sulfur_cube"},
 		ItemModel:    "minecraft:sulfur_cube_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.sulfur_cube_spawn_egg"},
 		MaxStackSize: 64,
@@ -11778,9 +12135,16 @@ var defaultComponents = map[int32]*Components{
 	},
 	1371: { // minecraft:suspicious_stew
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
-			Nutrition:  6,
-			Saturation: 7.2000003,
+			Nutrition:    6,
+			Saturation:   7.2000003,
+			CanAlwaysEat: true,
 		},
 		ItemModel:    "minecraft:suspicious_stew",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.suspicious_stew"},
@@ -11793,6 +12157,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1404: { // minecraft:sweet_berries
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  2,
 			Saturation: 0.4,
@@ -11813,6 +12183,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1189: { // minecraft:tadpole_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:tadpole"},
 		ItemModel:    "minecraft:tadpole_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.tadpole_spawn_egg"},
 		MaxStackSize: 64,
@@ -11933,7 +12304,13 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1333: { // minecraft:totem_of_undying
-		BreakSound:   "minecraft:entity.item.break",
+		BreakSound: "minecraft:entity.item.break",
+		DeathProtection: &DeathProtection{
+			DeathEffects: []ConsumeEffect{
+				{Type: "minecraft:clear_all_effects", Probability: 1},
+				{Type: "minecraft:apply_effects", Probability: 1, Effects: []StatusEffect{{ID: "minecraft:regeneration", Duration: 900, Amplifier: 1, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:absorption", Duration: 100, Amplifier: 1, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:fire_resistance", Duration: 800, ShowParticles: true, ShowIcon: true}}},
+			},
+		},
 		ItemModel:    "minecraft:totem_of_undying",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.totem_of_undying"},
 		MaxStackSize: 1,
@@ -11942,6 +12319,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1199: { // minecraft:trader_llama_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:trader_llama"},
 		ItemModel:    "minecraft:trader_llama_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.trader_llama_spawn_egg"},
 		MaxStackSize: 64,
@@ -11999,6 +12377,12 @@ var defaultComponents = map[int32]*Components{
 	},
 	1088: { // minecraft:tropical_fish
 		BreakSound: "minecraft:entity.item.break",
+		Consumable: &Consumable{
+			ConsumeSeconds: 1.6,
+			Animation:      "eat",
+			Sound:          "minecraft:entity.generic.eat",
+			HasParticles:   true,
+		},
 		Food: &Food{
 			Nutrition:  1,
 			Saturation: 0.2,
@@ -12023,6 +12407,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1190: { // minecraft:tropical_fish_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:tropical_fish"},
 		ItemModel:    "minecraft:tropical_fish_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.tropical_fish_spawn_egg"},
 		MaxStackSize: 64,
@@ -12151,6 +12536,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1191: { // minecraft:turtle_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:turtle"},
 		ItemModel:    "minecraft:turtle_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.turtle_spawn_egg"},
 		MaxStackSize: 64,
@@ -12191,6 +12577,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1232: { // minecraft:vex_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:vex"},
 		ItemModel:    "minecraft:vex_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.vex_spawn_egg"},
 		MaxStackSize: 64,
@@ -12199,6 +12586,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1200: { // minecraft:villager_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:villager"},
 		ItemModel:    "minecraft:villager_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.villager_spawn_egg"},
 		MaxStackSize: 64,
@@ -12207,6 +12595,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1231: { // minecraft:vindicator_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:vindicator"},
 		ItemModel:    "minecraft:vindicator_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.vindicator_spawn_egg"},
 		MaxStackSize: 64,
@@ -12223,6 +12612,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1201: { // minecraft:wandering_trader_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:wandering_trader"},
 		ItemModel:    "minecraft:wandering_trader_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wandering_trader_spawn_egg"},
 		MaxStackSize: 64,
@@ -12239,6 +12629,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1226: { // minecraft:warden_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:warden"},
 		ItemModel:    "minecraft:warden_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.warden_spawn_egg"},
 		MaxStackSize: 64,
@@ -13202,6 +13593,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1227: { // minecraft:witch_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:witch"},
 		ItemModel:    "minecraft:witch_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.witch_spawn_egg"},
 		MaxStackSize: 64,
@@ -13218,7 +13610,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1264: { // minecraft:wither_skeleton_skull
 		AttributeModifiers: []AttributeModifier{
-			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:wither_skeleton_skull",
@@ -13229,6 +13621,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1211: { // minecraft:wither_skeleton_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:wither_skeleton"},
 		ItemModel:    "minecraft:wither_skeleton_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wither_skeleton_spawn_egg"},
 		MaxStackSize: 64,
@@ -13237,6 +13630,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1210: { // minecraft:wither_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:wither"},
 		ItemModel:    "minecraft:wither_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wither_spawn_egg"},
 		MaxStackSize: 64,
@@ -13260,6 +13654,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1169: { // minecraft:wolf_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:wolf"},
 		ItemModel:    "minecraft:wolf_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wolf_spawn_egg"},
 		MaxStackSize: 64,
@@ -13548,6 +13943,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1241: { // minecraft:zoglin_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:zoglin"},
 		ItemModel:    "minecraft:zoglin_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zoglin_spawn_egg"},
 		MaxStackSize: 64,
@@ -13556,7 +13952,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1266: { // minecraft:zombie_head
 		AttributeModifiers: []AttributeModifier{
-			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head"},
+			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
 		ItemModel:    "minecraft:zombie_head",
@@ -13567,6 +13963,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1213: { // minecraft:zombie_horse_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:zombie_horse"},
 		ItemModel:    "minecraft:zombie_horse_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zombie_horse_spawn_egg"},
 		MaxStackSize: 64,
@@ -13575,6 +13972,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1214: { // minecraft:zombie_nautilus_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:zombie_nautilus"},
 		ItemModel:    "minecraft:zombie_nautilus_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zombie_nautilus_spawn_egg"},
 		MaxStackSize: 64,
@@ -13583,6 +13981,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1212: { // minecraft:zombie_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:zombie"},
 		ItemModel:    "minecraft:zombie_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zombie_spawn_egg"},
 		MaxStackSize: 64,
@@ -13591,6 +13990,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1215: { // minecraft:zombie_villager_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:zombie_villager"},
 		ItemModel:    "minecraft:zombie_villager_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zombie_villager_spawn_egg"},
 		MaxStackSize: 64,
@@ -13599,6 +13999,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	1242: { // minecraft:zombified_piglin_spawn_egg
 		BreakSound:   "minecraft:entity.item.break",
+		EntityData:   &TypedEntityData{Type: "minecraft:zombified_piglin"},
 		ItemModel:    "minecraft:zombified_piglin_spawn_egg",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.zombified_piglin_spawn_egg"},
 		MaxStackSize: 64,

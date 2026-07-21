@@ -13,13 +13,31 @@ type recipeJSON struct {
 	Type string `json:"type"`
 	// pattern is per-type: []string for crafting_shaped, a trim-pattern id
 	// string for smithing — decoded lazily
-	Pattern     json.RawMessage `json:"pattern"`
-	Key         map[string]any  `json:"key"`
-	Ingredients []any           `json:"ingredients"`
-	Ingredient  any             `json:"ingredient"`
-	Result      json.RawMessage `json:"result"`
-	Experience  float64         `json:"experience"`
-	CookingTime int             `json:"cookingtime"`
+	Pattern                  json.RawMessage `json:"pattern"`
+	Key                      map[string]any  `json:"key"`
+	Ingredients              []any           `json:"ingredients"`
+	Ingredient               any             `json:"ingredient"`
+	Target                   any             `json:"target"`
+	Dye                      any             `json:"dye"`
+	Input                    any             `json:"input"`
+	Source                   any             `json:"source"`
+	Material                 any             `json:"material"`
+	Template                 any             `json:"template"`
+	Base                     any             `json:"base"`
+	Addition                 any             `json:"addition"`
+	Result                   json.RawMessage `json:"result"`
+	Experience               float64         `json:"experience"`
+	CookingTime              *int            `json:"cookingtime"`
+	Category                 string          `json:"category"`
+	Group                    string          `json:"group"`
+	MaterialCount            *recipeIntRange `json:"material_count"`
+	AddMaterialCountToResult bool            `json:"add_material_count_to_result"`
+	ShowNotification         *bool           `json:"show_notification"`
+}
+
+type recipeIntRange struct {
+	Min *int `json:"min"`
+	Max *int `json:"max"`
 }
 
 func (r *recipeJSON) patternRows() []string {
@@ -33,8 +51,8 @@ type recipeResult struct {
 	Count int    `json:"count"`
 }
 
-// generateRecipes emits shaped/shapeless crafting and smelting recipes from
-// the datapack recipe JSONs. Ingredients keep tag references ("#minecraft:planks")
+// generateRecipes emits crafting, cooking, stonecutting, and smithing recipes
+// from the datapack JSONs. Ingredients keep tag references ("#minecraft:planks")
 // for runtime resolution via items.ItemTag.
 func generateRecipes(recipeDir, outPath string) {
 	entries, err := os.ReadDir(recipeDir)
@@ -52,8 +70,11 @@ func generateRecipes(recipeDir, outPath string) {
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("recipes"))
 
-	var shaped, shapeless, smelting strings.Builder
-	nShaped, nShapeless, nSmelting := 0, 0, 0
+	var shaped, shapeless, dye, imbue, transmute, smelting, blasting, smoking, campfire, stonecutting, smithing strings.Builder
+	nShaped, nShapeless, nDye, nImbue, nTransmute, nSmelting := 0, 0, 0, 0, 0, 0
+	nBlasting, nSmoking, nCampfire, nStonecutting, nSmithing := 0, 0, 0, 0, 0
+	displayID := 0
+	groups := make(map[string]int)
 
 	for _, name := range names {
 		r := loadJSON[recipeJSON](filepath.Join(recipeDir, name))
@@ -70,24 +91,79 @@ func generateRecipes(recipeDir, outPath string) {
 		if res.Count == 0 {
 			res.Count = 1
 		}
+		groupID := -1
+		if r.Group != "" {
+			var exists bool
+			groupID, exists = groups[r.Group]
+			if !exists {
+				groupID = len(groups)
+				groups[r.Group] = groupID
+			}
+		}
+		recipeName := "minecraft:" + strings.TrimSuffix(name, ".json")
+		showNotification := true
+		if r.ShowNotification != nil {
+			showNotification = *r.ShowNotification
+		}
+		info := fmt.Sprintf("Info: Info{Name: %q, DisplayID: %d, Group: %d, Category: %q, ShowNotification: %t}", recipeName, displayID, groupID, recipeBookCategory(r), showNotification)
+		displayID += recipeDisplayCount(r)
 		switch r.Type {
 		case "minecraft:crafting_shaped":
 			w, h, cells := shapedCells(r)
-			fmt.Fprintf(&shaped, "\t{Width: %d, Height: %d, Cells: %s, Result: %q, Count: %d},\n",
-				w, h, ingredientsLiteral(cells), res.ID, res.Count)
+			fmt.Fprintf(&shaped, "\t{%s, Width: %d, Height: %d, Cells: %s, Result: %q, Count: %d},\n",
+				info, w, h, ingredientsLiteral(cells), res.ID, res.Count)
 			nShaped++
 		case "minecraft:crafting_shapeless":
 			cells := make([]ingredient, 0, len(r.Ingredients))
 			for _, ing := range r.Ingredients {
 				cells = append(cells, parseIngredient(ing))
 			}
-			fmt.Fprintf(&shapeless, "\t{Ingredients: %s, Result: %q, Count: %d},\n",
-				ingredientsLiteral(cells), res.ID, res.Count)
+			fmt.Fprintf(&shapeless, "\t{%s, Ingredients: %s, Result: %q, Count: %d},\n",
+				info, ingredientsLiteral(cells), res.ID, res.Count)
 			nShapeless++
+		case "minecraft:crafting_dye":
+			fmt.Fprintf(&dye, "\t{%s, Target: %s, Dye: %s, Result: %q},\n",
+				info, ingredientLiteral(parseIngredient(r.Target)), ingredientLiteral(parseIngredient(r.Dye)), res.ID)
+			nDye++
+		case "minecraft:crafting_imbue":
+			fmt.Fprintf(&imbue, "\t{%s, Source: %s, Material: %s, Result: %q, Count: %d},\n",
+				info, ingredientLiteral(parseIngredient(r.Source)), ingredientLiteral(parseIngredient(r.Material)), res.ID, res.Count)
+			nImbue++
+		case "minecraft:crafting_transmute":
+			minCount, maxCount := 1, 1
+			if r.MaterialCount != nil {
+				if r.MaterialCount.Min != nil {
+					minCount = *r.MaterialCount.Min
+				}
+				if r.MaterialCount.Max != nil {
+					maxCount = *r.MaterialCount.Max
+				}
+			}
+			fmt.Fprintf(&transmute, "\t{%s, Input: %s, Material: %s, MinMaterialCount: %d, MaxMaterialCount: %d, Result: %q, Count: %d, AddMaterialCountToResult: %t},\n",
+				info, ingredientLiteral(parseIngredient(r.Input)), ingredientLiteral(parseIngredient(r.Material)), minCount, maxCount, res.ID, res.Count, r.AddMaterialCountToResult)
+			nTransmute++
 		case "minecraft:smelting":
-			fmt.Fprintf(&smelting, "\t{Ingredient: %s, Result: %q, Experience: %g, CookingTime: %d},\n",
-				ingredientLiteral(parseIngredient(r.Ingredient)), res.ID, r.Experience, r.CookingTime)
+			writeCookingRecipe(&smelting, info, r, res, 200)
 			nSmelting++
+		case "minecraft:blasting":
+			writeCookingRecipe(&blasting, info, r, res, 100)
+			nBlasting++
+		case "minecraft:smoking":
+			writeCookingRecipe(&smoking, info, r, res, 100)
+			nSmoking++
+		case "minecraft:campfire_cooking":
+			writeCookingRecipe(&campfire, info, r, res, 100)
+			nCampfire++
+		case "minecraft:stonecutting":
+			fmt.Fprintf(&stonecutting, "\t{%s, Ingredient: %s, Result: %q, Count: %d},\n",
+				info, ingredientLiteral(parseIngredient(r.Ingredient)), res.ID, res.Count)
+			nStonecutting++
+		case "minecraft:smithing_transform", "minecraft:smithing_trim":
+			var pattern string
+			_ = json.Unmarshal(r.Pattern, &pattern)
+			fmt.Fprintf(&smithing, "\t{%s, Type: %q, Template: %s, Base: %s, Addition: %s, Result: %q, Pattern: %q},\n",
+				info, r.Type, ingredientLiteral(parseIngredient(r.Template)), ingredientLiteral(parseIngredient(r.Base)), ingredientLiteral(parseIngredient(r.Addition)), res.ID, pattern)
+			nSmithing++
 		}
 	}
 
@@ -95,15 +171,106 @@ func generateRecipes(recipeDir, outPath string) {
 	sb.WriteString(shaped.String())
 	sb.WriteString("}\n\nvar ShapelessRecipes = []Shapeless{\n")
 	sb.WriteString(shapeless.String())
+	sb.WriteString("}\n\nvar DyeRecipes = []Dye{\n")
+	sb.WriteString(dye.String())
+	sb.WriteString("}\n\nvar ImbueRecipes = []Imbue{\n")
+	sb.WriteString(imbue.String())
+	sb.WriteString("}\n\nvar TransmuteRecipes = []Transmute{\n")
+	sb.WriteString(transmute.String())
 	sb.WriteString("}\n\nvar SmeltingRecipes = []Smelting{\n")
 	sb.WriteString(smelting.String())
+	sb.WriteString("}\n\nvar BlastingRecipes = []Smelting{\n")
+	sb.WriteString(blasting.String())
+	sb.WriteString("}\n\nvar SmokingRecipes = []Smelting{\n")
+	sb.WriteString(smoking.String())
+	sb.WriteString("}\n\nvar CampfireRecipes = []Smelting{\n")
+	sb.WriteString(campfire.String())
+	sb.WriteString("}\n\nvar StonecuttingRecipes = []Stonecutting{\n")
+	sb.WriteString(stonecutting.String())
+	sb.WriteString("}\n\nvar SmithingRecipes = []Smithing{\n")
+	sb.WriteString(smithing.String())
 	sb.WriteString("}\n")
 
 	checkMinCount("shaped recipes", nShaped, 500)
+	checkMinCount("dye recipes", nDye, 6)
+	checkMinCount("imbue recipes", nImbue, 1)
+	checkMinCount("transmute recipes", nTransmute, 33)
 	checkMinCount("shapeless recipes", nShapeless, 100)
 	checkMinCount("smelting recipes", nSmelting, 50)
+	checkMinCount("blasting recipes", nBlasting, 20)
+	checkMinCount("smoking recipes", nSmoking, 8)
+	checkMinCount("campfire recipes", nCampfire, 8)
+	checkMinCount("stonecutting recipes", nStonecutting, 300)
+	checkMinCount("smithing recipes", nSmithing, 25)
 	writeFile(outPath, sb.String())
-	fmt.Printf("generated %d shaped, %d shapeless, %d smelting recipes\n", nShaped, nShapeless, nSmelting)
+	fmt.Printf("generated %d shaped, %d shapeless, %d dye, %d imbue, %d transmute, %d cooking, %d stonecutting, %d smithing recipes\n",
+		nShaped, nShapeless, nDye, nImbue, nTransmute, nSmelting+nBlasting+nSmoking+nCampfire, nStonecutting, nSmithing)
+}
+
+func recipeDisplayCount(recipe recipeJSON) int {
+	switch recipe.Type {
+	case "minecraft:crafting_shaped", "minecraft:crafting_shapeless", "minecraft:crafting_dye", "minecraft:crafting_imbue",
+		"minecraft:smelting", "minecraft:blasting", "minecraft:smoking", "minecraft:campfire_cooking",
+		"minecraft:stonecutting", "minecraft:smithing_transform", "minecraft:smithing_trim":
+		return 1
+	case "minecraft:crafting_transmute":
+		minCount, maxCount := 1, 1
+		if recipe.MaterialCount != nil {
+			if recipe.MaterialCount.Min != nil {
+				minCount = *recipe.MaterialCount.Min
+			}
+			if recipe.MaterialCount.Max != nil {
+				maxCount = *recipe.MaterialCount.Max
+			}
+		}
+		return max(maxCount-minCount+1, 0)
+	default:
+		return 0
+	}
+}
+
+func recipeBookCategory(recipe recipeJSON) string {
+	switch recipe.Type {
+	case "minecraft:crafting_shaped", "minecraft:crafting_shapeless", "minecraft:crafting_dye", "minecraft:crafting_imbue", "minecraft:crafting_transmute":
+		category := recipe.Category
+		if category == "" {
+			category = "misc"
+		}
+		if category == "building" {
+			category = "building_blocks"
+		}
+		return "minecraft:crafting_" + category
+	case "minecraft:smelting":
+		category := recipe.Category
+		if category == "" {
+			category = "misc"
+		}
+		return "minecraft:furnace_" + category
+	case "minecraft:blasting":
+		if recipe.Category == "blocks" {
+			return "minecraft:blast_furnace_blocks"
+		}
+		return "minecraft:blast_furnace_misc"
+	case "minecraft:smoking":
+		return "minecraft:smoker_food"
+	case "minecraft:campfire_cooking":
+		return "minecraft:campfire"
+	case "minecraft:stonecutting":
+		return "minecraft:stonecutter"
+	case "minecraft:smithing_transform", "minecraft:smithing_trim":
+		return "minecraft:smithing"
+	default:
+		return ""
+	}
+}
+
+func writeCookingRecipe(out *strings.Builder, info string, recipe recipeJSON, result recipeResult, defaultCookingTime int) {
+	cookingTime := defaultCookingTime
+	if recipe.CookingTime != nil {
+		cookingTime = *recipe.CookingTime
+	}
+	fmt.Fprintf(out, "\t{%s, Ingredient: %s, Result: %q, Experience: %g, CookingTime: %d},\n",
+		info, ingredientLiteral(parseIngredient(recipe.Ingredient)), result.ID, recipe.Experience, cookingTime)
 }
 
 type ingredient []string

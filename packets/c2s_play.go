@@ -1,6 +1,8 @@
 package packets
 
 import (
+	"io"
+
 	"github.com/go-mclib/data/items"
 	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
@@ -653,7 +655,7 @@ func (p *C2SCustomPayloadPlay) Read(buf *ns.PacketBuffer) error {
 	if p.Channel, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(32767)
+	p.Data, err = io.ReadAll(buf.Reader())
 	return err
 }
 
@@ -661,7 +663,7 @@ func (p *C2SCustomPayloadPlay) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteIdentifier(p.Channel); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	return buf.WriteFixedByteArray(p.Data)
 }
 
 // C2SDebugSubscriptionRequest represents "Debug Subscription Request".

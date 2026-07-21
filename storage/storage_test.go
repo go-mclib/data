@@ -1,6 +1,8 @@
 package storage_test
 
 import (
+	"compress/gzip"
+	"io"
 	"os"
 	"path/filepath"
 	"testing"
@@ -8,6 +10,7 @@ import (
 	"github.com/go-mclib/data/blocks"
 	"github.com/go-mclib/data/chunks"
 	"github.com/go-mclib/data/storage"
+	"github.com/go-mclib/nbt"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -136,6 +139,36 @@ func TestChunkNBTRoundTrip(t *testing.T) {
 	assert.Equal(t, int16(2), loaded.Sections[0].BlockCount)
 }
 
+func TestChunkNBTDimensionHeight(t *testing.T) {
+	const sectionCount = 16
+	col := &chunks.ChunkColumn{
+		X: 2, Z: 3, MinY: 0,
+		Sections: make([]*chunks.ChunkSection, sectionCount), Heightmaps: make(map[int32][]int64),
+	}
+	for i := range sectionCount {
+		col.Sections[i] = chunks.NewEmptySection()
+	}
+	stoneID := blocks.DefaultStateID(blocks.BlockID("minecraft:stone"))
+	col.SetBlockState(1, 0, 1, stoneID)
+	col.Sections[0].BlockCount = 1
+	col.ComputeSkylight()
+
+	data, err := storage.ChunkToNBT(col)
+	require.NoError(t, err)
+	loaded, err := storage.NBTToChunkWithHeight(data, 0, sectionCount)
+	require.NoError(t, err)
+	assert.Equal(t, 0, loaded.MinY)
+	assert.Len(t, loaded.Sections, sectionCount)
+	assert.Equal(t, stoneID, loaded.GetBlockState(1, 0, 1))
+	require.NotNil(t, loaded.Light)
+	assert.True(t, loaded.Light.SkyLightMask.Get(sectionCount+1))
+	assert.Len(t, loaded.Light.SkyLightArrays, sectionCount+1)
+}
+
+func TestCurrentDataVersion(t *testing.T) {
+	assert.Equal(t, 4903, storage.DataVersion)
+}
+
 func TestChunkNBTWithRegionStorage(t *testing.T) {
 	dir := t.TempDir()
 	regionDir := filepath.Join(dir, "region")
@@ -187,22 +220,69 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 	pd := &storage.PlayerData{
 		X: 100.5, Y: 65.0, Z: -200.3,
 		Yaw: 45.0, Pitch: -10.0,
-		Dimension: "minecraft:overworld",
-		Gamemode:  1,
-		HeldSlot:  3,
-		Tags:      []string{"builder", "quest_started"},
+		Dimension:        "minecraft:overworld",
+		Gamemode:         1,
+		HeldSlot:         3,
+		Tags:             []string{"builder", "quest_started"},
+		FireTicks:        157,
+		AirSupply:        123,
+		TicksFrozen:      91,
+		FallDistance:     6.25,
+		AbsorptionAmount: 5.5,
 		Inventory: []storage.InventorySlot{
 			{Slot: 0, ID: "minecraft:stone", Count: 64},
-			{Slot: 36, ID: "minecraft:diamond_sword", Count: 1},
+			{Slot: 9, ID: "minecraft:diamond_sword", Count: 1, Components: nbt.Compound{"minecraft:damage": nbt.Int(17)}},
+		},
+		Equipment: []storage.EquipmentSlot{
+			{Slot: "head", ID: "minecraft:iron_helmet", Count: 1},
+		},
+		Effects: []storage.EffectData{{
+			Name: "minecraft:speed", Duration: 200, Amplifier: 1, ShowParticles: true, ShowIcon: true,
+			Hidden: &storage.EffectData{Name: "minecraft:speed", Duration: 400, ShowParticles: true, ShowIcon: true},
+		}},
+		RecipeBook: storage.RecipeBookData{
+			CraftingOpen: true, FurnaceFiltering: true,
+			Recipes: []string{"minecraft:oak_planks"}, ToBeDisplayed: []string{"minecraft:oak_planks"},
 		},
 	}
 
 	uuid := "12345678-1234-1234-1234-123456789abc"
 	require.NoError(t, storage.SavePlayer(pdDir, uuid, pd))
 
-	// verify file exists
-	_, err := os.Stat(filepath.Join(pdDir, uuid+".dat"))
+	// verify the 26.2 inventory/equipment layout on disk
+	path := filepath.Join(pdDir, uuid+".dat")
+	file, err := os.Open(path)
 	require.NoError(t, err)
+	compressed, err := gzip.NewReader(file)
+	require.NoError(t, err)
+	raw, err := io.ReadAll(compressed)
+	require.NoError(t, err)
+	require.NoError(t, compressed.Close())
+	require.NoError(t, file.Close())
+	tag, _, err := nbt.DecodeFile(raw, nbt.WithMaxBytes(0))
+	require.NoError(t, err)
+	root, ok := tag.(nbt.Compound)
+	require.True(t, ok)
+	for _, entry := range root.GetList("Inventory").Elements {
+		item := entry.(nbt.Compound)
+		assert.Less(t, item.GetByte("Slot"), int8(36))
+		if item.GetString("id") == "minecraft:diamond_sword" {
+			assert.Equal(t, int32(17), item.GetCompound("components").GetInt("minecraft:damage"))
+		}
+	}
+	head := root.GetCompound("equipment").GetCompound("head")
+	assert.Equal(t, "minecraft:iron_helmet", head.GetString("id"))
+	assert.Equal(t, int16(157), root.GetShort("Fire"))
+	effect := root.GetList("active_effects").Get(0).(nbt.Compound)
+	assert.Equal(t, "minecraft:speed", effect.GetString("id"))
+	assert.Equal(t, int32(200), effect.GetInt("duration"))
+	hiddenEffect := effect.GetCompound("hidden_effect")
+	assert.Equal(t, int32(400), hiddenEffect.GetInt("duration"))
+	assert.Nil(t, hiddenEffect.Get("id"))
+	recipeBook := root.GetCompound("recipeBook")
+	assert.Equal(t, int8(1), recipeBook.GetByte("isGuiOpen"))
+	assert.Equal(t, int8(1), recipeBook.GetByte("isFurnaceFilteringCraftable"))
+	assert.Equal(t, "minecraft:oak_planks", string(recipeBook.GetList("recipes").Get(0).(nbt.String)))
 
 	// load back
 	loaded, err := storage.LoadPlayer(pdDir, uuid)
@@ -218,9 +298,20 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 	assert.Equal(t, pd.HeldSlot, loaded.HeldSlot)
 	assert.Equal(t, pd.Dimension, loaded.Dimension)
 	assert.Equal(t, pd.Tags, loaded.Tags)
+	assert.Equal(t, pd.FireTicks, loaded.FireTicks)
+	assert.Equal(t, pd.AirSupply, loaded.AirSupply)
+	assert.Equal(t, pd.TicksFrozen, loaded.TicksFrozen)
+	assert.Equal(t, pd.FallDistance, loaded.FallDistance)
+	assert.Equal(t, pd.AbsorptionAmount, loaded.AbsorptionAmount)
 	assert.Len(t, loaded.Inventory, 2)
 	assert.Equal(t, "minecraft:stone", loaded.Inventory[0].ID)
 	assert.Equal(t, int32(64), loaded.Inventory[0].Count)
+	assert.Equal(t, int32(17), loaded.Inventory[1].Components.GetInt("minecraft:damage"))
+	require.Len(t, loaded.Equipment, 1)
+	assert.Equal(t, "head", loaded.Equipment[0].Slot)
+	assert.Equal(t, "minecraft:iron_helmet", loaded.Equipment[0].ID)
+	assert.Equal(t, pd.Effects, loaded.Effects)
+	assert.Equal(t, pd.RecipeBook, loaded.RecipeBook)
 }
 
 func TestLoadPlayerNotFound(t *testing.T) {
@@ -228,4 +319,29 @@ func TestLoadPlayerNotFound(t *testing.T) {
 	pd, err := storage.LoadPlayer(dir, "nonexistent")
 	require.NoError(t, err)
 	assert.Nil(t, pd)
+}
+
+func TestLevelDataBorderRoundTrip(t *testing.T) {
+	dir := t.TempDir()
+	want := &storage.LevelData{
+		Seed: 42, BorderSet: true,
+		BorderCenterX: 12.5, BorderCenterZ: -31.25,
+		BorderSize: 400, BorderSizeLerpTime: 2750, BorderSizeLerpTarget: 125,
+		BorderSafeZone: 3.5, BorderDamagePerBlock: 0.75,
+		BorderWarningBlocks: 9, BorderWarningTime: 21,
+	}
+	require.NoError(t, storage.SaveLevel(dir, want))
+
+	got, err := storage.LoadLevel(dir)
+	require.NoError(t, err)
+	assert.True(t, got.BorderSet)
+	assert.Equal(t, want.BorderCenterX, got.BorderCenterX)
+	assert.Equal(t, want.BorderCenterZ, got.BorderCenterZ)
+	assert.Equal(t, want.BorderSize, got.BorderSize)
+	assert.Equal(t, want.BorderSizeLerpTime, got.BorderSizeLerpTime)
+	assert.Equal(t, want.BorderSizeLerpTarget, got.BorderSizeLerpTarget)
+	assert.Equal(t, want.BorderSafeZone, got.BorderSafeZone)
+	assert.Equal(t, want.BorderDamagePerBlock, got.BorderDamagePerBlock)
+	assert.Equal(t, want.BorderWarningBlocks, got.BorderWarningBlocks)
+	assert.Equal(t, want.BorderWarningTime, got.BorderWarningTime)
 }

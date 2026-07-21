@@ -142,3 +142,41 @@ func TestStateProperties(t *testing.T) {
 
 	t.Logf("tested %d state reverse lookups", testedCount)
 }
+
+func TestBlockSupportMetadata(t *testing.T) {
+	type supportDump struct {
+		Blocks map[string]struct {
+			States []struct {
+				ID          int32 `json:"id"`
+				Replaceable bool  `json:"replaceable"`
+				IgniteOdds  int   `json:"igniteOdds"`
+				BurnOdds    int   `json:"burnOdds"`
+				SturdyTop   bool  `json:"sturdyTop"`
+			} `json:"states"`
+		} `json:"blocks"`
+	}
+	data, err := os.ReadFile("../generate/mcdump/blocks.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var dump supportDump
+	if err := json.Unmarshal(data, &dump); err != nil {
+		t.Fatal(err)
+	}
+	for name, block := range dump.Blocks {
+		for _, state := range block.States {
+			if got := blocks.FireIgniteOdds(state.ID); got != state.IgniteOdds {
+				t.Errorf("FireIgniteOdds(%s, %d) = %d, want %d", name, state.ID, got, state.IgniteOdds)
+			}
+			if got := blocks.FireBurnOdds(state.ID); got != state.BurnOdds {
+				t.Errorf("FireBurnOdds(%s, %d) = %d, want %d", name, state.ID, got, state.BurnOdds)
+			}
+			if got := blocks.HasSturdyTop(state.ID); got != state.SturdyTop {
+				t.Errorf("HasSturdyTop(%s, %d) = %v, want %v", name, state.ID, got, state.SturdyTop)
+			}
+			if got := blocks.IsReplaceable(state.ID); got != state.Replaceable {
+				t.Errorf("IsReplaceable(%s, %d) = %v, want %v", name, state.ID, got, state.Replaceable)
+			}
+		}
+	}
+}

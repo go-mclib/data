@@ -12,16 +12,15 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
-// DataVersion is the world data version written to saved data.
-// hardcoded and stale (4189 = 1.21.4; current mcsrc version.json world_version is 4903) — needs a generator run.
-const DataVersion = 4189
+// DataVersion is the 26.2 world data version written to saved data.
+const DataVersion = 4903
 
 // ChunkToNBT serializes a ChunkColumn to Anvil-format NBT bytes (uncompressed).
 func ChunkToNBT(col *chunks.ChunkColumn) ([]byte, error) {
 	root := nbt.Compound{
 		"DataVersion": nbt.Int(DataVersion),
 		"xPos":        nbt.Int(col.X),
-		"yPos":        nbt.Int(chunks.MinY >> 4),
+		"yPos":        nbt.Int(col.MinY >> 4),
 		"zPos":        nbt.Int(col.Z),
 		"Status":      nbt.String("minecraft:full"),
 		"LastUpdate":  nbt.Long(0),
@@ -29,12 +28,15 @@ func ChunkToNBT(col *chunks.ChunkColumn) ([]byte, error) {
 
 	// sections
 	var sectionTags []nbt.Tag
-	for i := range chunks.SectionCount {
+	if tag := lightSectionToNBT(col, int8((col.MinY>>4)-1), 0); tag != nil {
+		sectionTags = append(sectionTags, tag)
+	}
+	for i := range len(col.Sections) {
 		sec := col.Sections[i]
 		if sec == nil {
 			continue
 		}
-		sectionY := int8(i + (chunks.MinY >> 4))
+		sectionY := int8(i + (col.MinY >> 4))
 		tag, err := sectionToNBT(sec, sectionY, col, i)
 		if err != nil {
 			return nil, fmt.Errorf("section %d: %w", i, err)
@@ -42,6 +44,9 @@ func ChunkToNBT(col *chunks.ChunkColumn) ([]byte, error) {
 		if tag != nil {
 			sectionTags = append(sectionTags, tag)
 		}
+	}
+	if tag := lightSectionToNBT(col, int8((col.MinY>>4)+len(col.Sections)), len(col.Sections)+1); tag != nil {
+		sectionTags = append(sectionTags, tag)
 	}
 	root["sections"] = nbt.List{ElementType: nbt.TagCompound, Elements: sectionTags}
 
@@ -100,6 +105,23 @@ func sectionToNBT(sec *chunks.ChunkSection, sectionY int8, col *chunks.ChunkColu
 	}
 
 	return tag, nil
+}
+
+func lightSectionToNBT(col *chunks.ChunkColumn, sectionY int8, lightIdx int) nbt.Compound {
+	if col.Light == nil {
+		return nil
+	}
+	tag := nbt.Compound{"Y": nbt.Byte(sectionY)}
+	if skyArr := getLightArray(col.Light.SkyLightMask, col.Light.SkyLightArrays, lightIdx); skyArr != nil {
+		tag["SkyLight"] = nbt.ByteArray(skyArr)
+	}
+	if blockArr := getLightArray(col.Light.BlockLightMask, col.Light.BlockLightArrays, lightIdx); blockArr != nil {
+		tag["BlockLight"] = nbt.ByteArray(blockArr)
+	}
+	if len(tag) == 1 {
+		return nil
+	}
+	return tag
 }
 
 func getLightArray(mask ns.BitSet, arrays [][]byte, sectionIdx int) []byte {
@@ -235,8 +257,16 @@ func packLongArray(container *chunks.PalettedContainer, idMap map[int32]int32, e
 	return longs
 }
 
-// NBTToChunk deserializes a ChunkColumn from Anvil-format NBT bytes.
+// NBTToChunk deserializes an overworld-height ChunkColumn from Anvil-format NBT bytes.
 func NBTToChunk(data []byte) (*chunks.ChunkColumn, error) {
+	return NBTToChunkWithHeight(data, chunks.MinY, chunks.SectionCount)
+}
+
+// NBTToChunkWithHeight deserializes a ChunkColumn for a dimension height.
+func NBTToChunkWithHeight(data []byte, minY, sectionCount int) (*chunks.ChunkColumn, error) {
+	if minY%16 != 0 || sectionCount <= 0 {
+		return nil, fmt.Errorf("invalid chunk height minY=%d sections=%d", minY, sectionCount)
+	}
 	tag, _, err := nbt.DecodeFile(data, nbt.WithMaxBytes(0))
 	if err != nil {
 		return nil, fmt.Errorf("decode NBT: %w", err)
@@ -249,8 +279,8 @@ func NBTToChunk(data []byte) (*chunks.ChunkColumn, error) {
 	col := &chunks.ChunkColumn{
 		X:          root.GetInt("xPos"),
 		Z:          root.GetInt("zPos"),
-		MinY:       chunks.MinY,
-		Sections:   make([]*chunks.ChunkSection, chunks.SectionCount),
+		MinY:       minY,
+		Sections:   make([]*chunks.ChunkSection, sectionCount),
 		Heightmaps: make(map[int32][]int64),
 	}
 
@@ -267,17 +297,17 @@ func NBTToChunk(data []byte) (*chunks.ChunkColumn, error) {
 	}
 
 	// sections
-	for i := range chunks.SectionCount {
+	for i := range sectionCount {
 		col.Sections[i] = chunks.NewEmptySection()
 	}
 
 	sectionList := root.GetList("sections")
 	var skyLightArrays [][]byte
 	var blockLightArrays [][]byte
-	skyMask := ns.NewBitSet(chunks.SectionCount + 2)
-	emptySkyMask := ns.NewBitSet(chunks.SectionCount + 2)
-	blockMask := ns.NewBitSet(chunks.SectionCount + 2)
-	emptyBlockMask := ns.NewBitSet(chunks.SectionCount + 2)
+	skyMask := ns.NewBitSet(sectionCount + 2)
+	emptySkyMask := ns.NewBitSet(sectionCount + 2)
+	blockMask := ns.NewBitSet(sectionCount + 2)
+	emptyBlockMask := ns.NewBitSet(sectionCount + 2)
 
 	for _, elem := range sectionList.Elements {
 		secTag, ok := elem.(nbt.Compound)
@@ -285,8 +315,23 @@ func NBTToChunk(data []byte) (*chunks.ChunkColumn, error) {
 			continue
 		}
 		sectionY := secTag.GetByte("Y")
-		secIdx := int(sectionY) - (chunks.MinY >> 4)
-		if secIdx < 0 || secIdx >= chunks.SectionCount {
+		secIdx := int(sectionY) - (minY >> 4)
+		lightIdx := secIdx + 1
+		if lightIdx >= 0 && lightIdx < sectionCount+2 {
+			if skyData := secTag.GetByteArray("SkyLight"); len(skyData) == 2048 {
+				skyMask.Set(lightIdx)
+				skyLightArrays = append(skyLightArrays, skyData)
+			} else if secIdx >= 0 && secIdx < sectionCount {
+				emptySkyMask.Set(lightIdx)
+			}
+			if blockData := secTag.GetByteArray("BlockLight"); len(blockData) == 2048 {
+				blockMask.Set(lightIdx)
+				blockLightArrays = append(blockLightArrays, blockData)
+			} else if secIdx >= 0 && secIdx < sectionCount {
+				emptyBlockMask.Set(lightIdx)
+			}
+		}
+		if secIdx < 0 || secIdx >= sectionCount {
 			continue
 		}
 
@@ -304,20 +349,6 @@ func NBTToChunk(data []byte) (*chunks.ChunkColumn, error) {
 			loadBiomes(sec, biomeComp)
 		}
 
-		// light
-		lightIdx := secIdx + 1
-		if skyData := secTag.GetByteArray("SkyLight"); len(skyData) == 2048 {
-			skyMask.Set(lightIdx)
-			skyLightArrays = append(skyLightArrays, skyData)
-		} else {
-			emptySkyMask.Set(lightIdx)
-		}
-		if blockData := secTag.GetByteArray("BlockLight"); len(blockData) == 2048 {
-			blockMask.Set(lightIdx)
-			blockLightArrays = append(blockLightArrays, blockData)
-		} else {
-			emptyBlockMask.Set(lightIdx)
-		}
 	}
 
 	// build light data if any arrays were found
