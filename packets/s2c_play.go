@@ -4631,8 +4631,20 @@ func (p *S2CUpdateAdvancements) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Attributes
 type S2CUpdateAttributes struct {
-	EntityId ns.VarInt
-	Data     ns.ByteArray
+	EntityId   ns.VarInt
+	Attributes []AttributeSnapshot
+}
+
+type AttributeSnapshot struct {
+	Type      ns.VarInt
+	Base      ns.Float64
+	Modifiers []AttributeModifier
+}
+
+type AttributeModifier struct {
+	ID        ns.Identifier
+	Amount    ns.Float64
+	Operation ns.VarInt
 }
 
 func (p *S2CUpdateAttributes) Read(buf *ns.PacketBuffer) error {
@@ -4640,15 +4652,97 @@ func (p *S2CUpdateAttributes) Read(buf *ns.PacketBuffer) error {
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.Data, err = buf.ReadByteArray(1048576)
-	return err
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if count < 0 || count > 128 {
+		return fmt.Errorf("attribute count %d outside 0..128", count)
+	}
+	p.Attributes = make([]AttributeSnapshot, count)
+	for i := range p.Attributes {
+		if err := p.Attributes[i].read(buf); err != nil {
+			return fmt.Errorf("attribute %d: %w", i, err)
+		}
+	}
+	return nil
 }
 
 func (p *S2CUpdateAttributes) Write(buf *ns.PacketBuffer) error {
+	if len(p.Attributes) > 128 {
+		return fmt.Errorf("attribute count %d exceeds 128", len(p.Attributes))
+	}
 	if err := buf.WriteVarInt(p.EntityId); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Data)
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Attributes))); err != nil {
+		return err
+	}
+	for i := range p.Attributes {
+		if err := p.Attributes[i].write(buf); err != nil {
+			return fmt.Errorf("attribute %d: %w", i, err)
+		}
+	}
+	return nil
+}
+
+func (a *AttributeSnapshot) read(buf *ns.PacketBuffer) error {
+	var err error
+	if a.Type, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if a.Base, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if count < 0 || count > 1024 {
+		return fmt.Errorf("modifier count %d outside 0..1024", count)
+	}
+	a.Modifiers = make([]AttributeModifier, count)
+	for i := range a.Modifiers {
+		modifier := &a.Modifiers[i]
+		if modifier.ID, err = buf.ReadIdentifier(); err != nil {
+			return err
+		}
+		if modifier.Amount, err = buf.ReadFloat64(); err != nil {
+			return err
+		}
+		if modifier.Operation, err = buf.ReadVarInt(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (a *AttributeSnapshot) write(buf *ns.PacketBuffer) error {
+	if len(a.Modifiers) > 1024 {
+		return fmt.Errorf("modifier count %d exceeds 1024", len(a.Modifiers))
+	}
+	if err := buf.WriteVarInt(a.Type); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(a.Base); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(ns.VarInt(len(a.Modifiers))); err != nil {
+		return err
+	}
+	for i := range a.Modifiers {
+		modifier := &a.Modifiers[i]
+		if err := buf.WriteIdentifier(modifier.ID); err != nil {
+			return err
+		}
+		if err := buf.WriteFloat64(modifier.Amount); err != nil {
+			return err
+		}
+		if err := buf.WriteVarInt(modifier.Operation); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // S2CUpdateMobEffect represents "Entity Effect".

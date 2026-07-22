@@ -3,6 +3,7 @@ package items
 import (
 	"bytes"
 	"fmt"
+	"math"
 	"slices"
 	"sort"
 	"strings"
@@ -21,7 +22,7 @@ func SupportsNBTComponent(name string) bool {
 		"minecraft:item_model", "minecraft:break_sound", "minecraft:instrument", "minecraft:jukebox_playable", "minecraft:provides_trim_material", "minecraft:rarity",
 		"minecraft:note_block_sound", "minecraft:tooltip_style", "minecraft:glider", "minecraft:creative_slot_lock", "minecraft:intangible_projectile",
 		"minecraft:bundle_contents", "minecraft:charged_projectiles", "minecraft:container", "minecraft:sulfur_cube_content", "minecraft:writable_book_content", "minecraft:written_book_content",
-		"minecraft:food", "minecraft:consumable", "minecraft:death_protection", "minecraft:weapon", "minecraft:blocks_attacks", "minecraft:enchantable", "minecraft:tooltip_display", "minecraft:use_cooldown", "minecraft:use_remainder", "minecraft:use_effects",
+		"minecraft:food", "minecraft:consumable", "minecraft:death_protection", "minecraft:weapon", "minecraft:attack_range", "minecraft:blocks_attacks", "minecraft:tool", "minecraft:enchantable", "minecraft:tooltip_display", "minecraft:use_cooldown", "minecraft:use_remainder", "minecraft:use_effects",
 		"minecraft:entity_data", "minecraft:block_entity_data", "minecraft:bucket_entity_data", "minecraft:debug_stick_state", "minecraft:map_decorations", "minecraft:lock", "minecraft:container_loot", "minecraft:recipes", "minecraft:block_state",
 		"minecraft:attribute_modifiers", "minecraft:custom_name", "minecraft:item_name", "minecraft:lore", "minecraft:enchantments", "minecraft:stored_enchantments",
 		"minecraft:trim", "minecraft:potion_contents", "minecraft:painting/variant", "minecraft:dye", "minecraft:dyed_color", "minecraft:base_color", "minecraft:banner_patterns", "minecraft:pot_decorations", "minecraft:firework_explosion", "minecraft:fireworks", "minecraft:custom_data":
@@ -119,6 +120,18 @@ func ComponentsToNBT(slot ns.Slot) nbt.Compound {
 					"item_damage_per_attack":       nbt.Int(weapon.ItemDamagePerAttack),
 					"disable_blocking_for_seconds": nbt.Float(weapon.DisableBlockingForSeconds),
 				}
+			}
+		case "minecraft:attack_range":
+			if attackRange := stack.Components.AttackRange; attackRange != nil {
+				result[name] = nbt.Compound{
+					"min_reach": nbt.Float(attackRange.MinReach), "max_reach": nbt.Float(attackRange.MaxReach),
+					"min_creative_reach": nbt.Float(attackRange.MinCreativeReach), "max_creative_reach": nbt.Float(attackRange.MaxCreativeReach),
+					"hitbox_margin": nbt.Float(attackRange.HitboxMargin), "mob_factor": nbt.Float(attackRange.MobFactor),
+				}
+			}
+		case "minecraft:tool":
+			if tool := stack.Components.Tool; tool != nil {
+				result[name] = toolNBT(tool)
 			}
 		case "minecraft:enchantable":
 			if enchantable := stack.Components.Enchantable; enchantable != nil {
@@ -464,6 +477,50 @@ func ApplyNBTComponents(slot ns.Slot, patch nbt.Compound) (ns.Slot, error) {
 				return ns.Slot{}, fmt.Errorf("weapon values must be non-negative")
 			}
 			stack.Components.Weapon = &Weapon{ItemDamagePerAttack: damage, DisableBlockingForSeconds: disable}
+			stack.Components.SetPresent(id)
+		case "minecraft:attack_range":
+			compound, ok := value.(nbt.Compound)
+			if !ok {
+				return ns.Slot{}, fmt.Errorf("attack_range component must be a compound")
+			}
+			attackRange := &AttackRange{
+				MinReach: 0, MaxReach: 3, MinCreativeReach: 0,
+				MaxCreativeReach: 5, HitboxMargin: 0.3, MobFactor: 1,
+			}
+			if tag, present := compound["min_reach"]; present {
+				attackRange.MinReach = floatValue(tag)
+			}
+			if tag, present := compound["max_reach"]; present {
+				attackRange.MaxReach = floatValue(tag)
+			}
+			if tag, present := compound["min_creative_reach"]; present {
+				attackRange.MinCreativeReach = floatValue(tag)
+			}
+			if tag, present := compound["max_creative_reach"]; present {
+				attackRange.MaxCreativeReach = floatValue(tag)
+			}
+			if tag, present := compound["hitbox_margin"]; present {
+				attackRange.HitboxMargin = floatValue(tag)
+			}
+			if tag, present := compound["mob_factor"]; present {
+				attackRange.MobFactor = floatValue(tag)
+			}
+			if attackRange.MinReach < 0 || attackRange.MinReach > 64 ||
+				attackRange.MaxReach < 0 || attackRange.MaxReach > 64 ||
+				attackRange.MinCreativeReach < 0 || attackRange.MinCreativeReach > 64 ||
+				attackRange.MaxCreativeReach < 0 || attackRange.MaxCreativeReach > 64 ||
+				attackRange.HitboxMargin < 0 || attackRange.HitboxMargin > 1 ||
+				attackRange.MobFactor < 0 || attackRange.MobFactor > 2 {
+				return ns.Slot{}, fmt.Errorf("attack_range values are outside vanilla bounds")
+			}
+			stack.Components.AttackRange = attackRange
+			stack.Components.SetPresent(id)
+		case "minecraft:tool":
+			tool, err := toolFromNBT(value)
+			if err != nil {
+				return ns.Slot{}, err
+			}
+			stack.Components.Tool = tool
 			stack.Components.SetPresent(id)
 		case "minecraft:enchantable":
 			compound, ok := value.(nbt.Compound)
@@ -1139,6 +1196,88 @@ func blocksAttacksFromNBT(value nbt.Tag) (*BlocksAttacks, error) {
 		component.DisabledSound, component.DisabledSoundDirect, component.DisabledSoundRange = sound.name, sound.direct, sound.fixedRange
 	}
 	return component, nil
+}
+
+func toolNBT(tool *Tool) nbt.Tag {
+	rules := nbt.List{ElementType: nbt.TagCompound}
+	for _, rule := range tool.Rules {
+		entry := nbt.Compound{"blocks": holderSetNBT(rule.Blocks)}
+		if rule.HasSpeed {
+			entry["speed"] = nbt.Float(rule.Speed)
+		}
+		if rule.HasCorrectForDrops {
+			entry["correct_for_drops"] = nbt.Byte(map[bool]int8{true: 1}[rule.CorrectForDrops])
+		}
+		rules.Elements = append(rules.Elements, entry)
+	}
+	result := nbt.Compound{"rules": rules}
+	if tool.DefaultMiningSpeed != 1 {
+		result["default_mining_speed"] = nbt.Float(tool.DefaultMiningSpeed)
+	}
+	if tool.DamagePerBlock != 1 {
+		result["damage_per_block"] = nbt.Int(tool.DamagePerBlock)
+	}
+	if !tool.CanDestroyBlocksInCreative {
+		result["can_destroy_blocks_in_creative"] = nbt.Byte(0)
+	}
+	return result
+}
+
+func toolFromNBT(value nbt.Tag) (*Tool, error) {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return nil, fmt.Errorf("tool component must be a compound")
+	}
+	ruleList, ok := compound["rules"].(nbt.List)
+	if !ok || len(ruleList.Elements) > 0 && ruleList.ElementType != nbt.TagCompound {
+		return nil, fmt.Errorf("tool rules must be a compound list")
+	}
+	tool := &Tool{DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true}
+	if tag, present := compound["default_mining_speed"]; present {
+		tool.DefaultMiningSpeed = floatValue(tag)
+	}
+	if tag, present := compound["damage_per_block"]; present {
+		tool.DamagePerBlock = intValue(tag)
+	}
+	if _, present := compound["can_destroy_blocks_in_creative"]; present {
+		tool.CanDestroyBlocksInCreative = nbtBoolOr(compound, "can_destroy_blocks_in_creative", true)
+	}
+	if tool.DamagePerBlock < 0 {
+		return nil, fmt.Errorf("tool damage_per_block must be non-negative")
+	}
+	tool.Rules = make([]ToolRule, 0, len(ruleList.Elements))
+	for _, element := range ruleList.Elements {
+		entry, ok := element.(nbt.Compound)
+		if !ok {
+			return nil, fmt.Errorf("tool rule must be a compound")
+		}
+		blocksTag, present := entry["blocks"]
+		if !present {
+			return nil, fmt.Errorf("tool rule is missing blocks")
+		}
+		rule := ToolRule{}
+		var err error
+		rule.Blocks, err = holderSetFromNBT(blocksTag)
+		if err != nil {
+			return nil, err
+		}
+		if len(rule.Blocks) == 0 {
+			return nil, fmt.Errorf("tool rule block holder set is empty")
+		}
+		if speed, present := entry["speed"]; present {
+			rule.Speed = floatValue(speed)
+			rule.HasSpeed = true
+			if rule.Speed <= 0 || rule.Speed > math.MaxFloat32 {
+				return nil, fmt.Errorf("tool rule speed must be positive")
+			}
+		}
+		if _, present := entry["correct_for_drops"]; present {
+			rule.CorrectForDrops = nbtBoolOr(entry, "correct_for_drops", false)
+			rule.HasCorrectForDrops = true
+		}
+		tool.Rules = append(tool.Rules, rule)
+	}
+	return tool, nil
 }
 
 func holderSetNBT(entries []string) nbt.Tag {
@@ -1832,6 +1971,16 @@ func typedEntityDataNBT(data []byte, registry *registries.Registry) (nbt.Compoun
 	}
 	result["id"] = nbt.String(typeName)
 	return result, nil
+}
+
+// SlotToNBT converts a non-empty slot to vanilla's item-stack compound.
+func SlotToNBT(slot ns.Slot) nbt.Compound {
+	return componentSlotNBT(slot)
+}
+
+// SlotFromNBT decodes vanilla's item-stack compound.
+func SlotFromNBT(value nbt.Tag) (ns.Slot, error) {
+	return slotFromComponentNBT(value)
 }
 
 func componentSlotNBT(slot ns.Slot) nbt.Compound {

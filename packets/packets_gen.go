@@ -8,31 +8,45 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
-func (p *C2SAcceptCodeOfConduct) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SAcceptCodeOfConductID) }
+func (p *C2SAcceptCodeOfConduct) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SAcceptCodeOfConductID)
+}
 func (p *C2SAcceptCodeOfConduct) State() jp.State { return jp.StateConfiguration }
 func (p *C2SAcceptCodeOfConduct) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SClientInformationConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SClientInformationConfigurationID) }
+func (p *C2SClientInformationConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SClientInformationConfigurationID)
+}
 func (p *C2SClientInformationConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SClientInformationConfiguration) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SCookieResponseConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SCookieResponseConfigurationID) }
+func (p *C2SCookieResponseConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SCookieResponseConfigurationID)
+}
 func (p *C2SCookieResponseConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SCookieResponseConfiguration) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SCustomClickActionConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SCustomClickActionConfigurationID) }
+func (p *C2SCustomClickActionConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SCustomClickActionConfigurationID)
+}
 func (p *C2SCustomClickActionConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SCustomClickActionConfiguration) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SCustomPayloadConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SCustomPayloadConfigurationID) }
+func (p *C2SCustomPayloadConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SCustomPayloadConfigurationID)
+}
 func (p *C2SCustomPayloadConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SCustomPayloadConfiguration) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SFinishConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SFinishConfigurationID) }
+func (p *C2SFinishConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SFinishConfigurationID)
+}
 func (p *C2SFinishConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SFinishConfiguration) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SKeepAliveConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SKeepAliveConfigurationID) }
+func (p *C2SKeepAliveConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SKeepAliveConfigurationID)
+}
 func (p *C2SKeepAliveConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SKeepAliveConfiguration) Bound() jp.Bound { return jp.C2S }
 
@@ -40,7 +54,9 @@ func (p *C2SPongConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2
 func (p *C2SPongConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SPongConfiguration) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SResourcePackConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SResourcePackConfigurationID) }
+func (p *C2SResourcePackConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SResourcePackConfigurationID)
+}
 func (p *C2SResourcePackConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *C2SResourcePackConfiguration) Bound() jp.Bound { return jp.C2S }
 
@@ -48,7 +64,9 @@ func (p *C2SSelectKnownPacks) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2S
 func (p *C2SSelectKnownPacks) State() jp.State { return jp.StateConfiguration }
 func (p *C2SSelectKnownPacks) Bound() jp.Bound { return jp.C2S }
 
-func (p *S2CClearDialogConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CClearDialogConfigurationID) }
+func (p *S2CClearDialogConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CClearDialogConfigurationID)
+}
 func (p *S2CClearDialogConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CClearDialogConfiguration) Bound() jp.Bound { return jp.S2C }
 
@@ -56,27 +74,39 @@ func (p *S2CCodeOfConduct) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCod
 func (p *S2CCodeOfConduct) State() jp.State { return jp.StateConfiguration }
 func (p *S2CCodeOfConduct) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CCookieRequestConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCookieRequestConfigurationID) }
+func (p *S2CCookieRequestConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CCookieRequestConfigurationID)
+}
 func (p *S2CCookieRequestConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CCookieRequestConfiguration) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CCustomPayloadConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCustomPayloadConfigurationID) }
+func (p *S2CCustomPayloadConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CCustomPayloadConfigurationID)
+}
 func (p *S2CCustomPayloadConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CCustomPayloadConfiguration) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CCustomReportDetailsConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCustomReportDetailsConfigurationID) }
+func (p *S2CCustomReportDetailsConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CCustomReportDetailsConfigurationID)
+}
 func (p *S2CCustomReportDetailsConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CCustomReportDetailsConfiguration) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CDisconnectConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CDisconnectConfigurationID) }
+func (p *S2CDisconnectConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CDisconnectConfigurationID)
+}
 func (p *S2CDisconnectConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CDisconnectConfiguration) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CFinishConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CFinishConfigurationID) }
+func (p *S2CFinishConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CFinishConfigurationID)
+}
 func (p *S2CFinishConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CFinishConfiguration) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CKeepAliveConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CKeepAliveConfigurationID) }
+func (p *S2CKeepAliveConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CKeepAliveConfigurationID)
+}
 func (p *S2CKeepAliveConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CKeepAliveConfiguration) Bound() jp.Bound { return jp.S2C }
 
@@ -92,11 +122,15 @@ func (p *S2CResetChat) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CResetCh
 func (p *S2CResetChat) State() jp.State { return jp.StateConfiguration }
 func (p *S2CResetChat) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CResourcePackPopConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CResourcePackPopConfigurationID) }
+func (p *S2CResourcePackPopConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CResourcePackPopConfigurationID)
+}
 func (p *S2CResourcePackPopConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CResourcePackPopConfiguration) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CResourcePackPushConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CResourcePackPushConfigurationID) }
+func (p *S2CResourcePackPushConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CResourcePackPushConfigurationID)
+}
 func (p *S2CResourcePackPushConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CResourcePackPushConfiguration) Bound() jp.Bound { return jp.S2C }
 
@@ -104,27 +138,39 @@ func (p *S2CSelectKnownPacks) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2C
 func (p *S2CSelectKnownPacks) State() jp.State { return jp.StateConfiguration }
 func (p *S2CSelectKnownPacks) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CServerLinksConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CServerLinksConfigurationID) }
+func (p *S2CServerLinksConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CServerLinksConfigurationID)
+}
 func (p *S2CServerLinksConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CServerLinksConfiguration) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CShowDialogConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CShowDialogConfigurationID) }
+func (p *S2CShowDialogConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CShowDialogConfigurationID)
+}
 func (p *S2CShowDialogConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CShowDialogConfiguration) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CStoreCookieConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CStoreCookieConfigurationID) }
+func (p *S2CStoreCookieConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CStoreCookieConfigurationID)
+}
 func (p *S2CStoreCookieConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CStoreCookieConfiguration) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CTransferConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CTransferConfigurationID) }
+func (p *S2CTransferConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CTransferConfigurationID)
+}
 func (p *S2CTransferConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CTransferConfiguration) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CUpdateEnabledFeatures) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CUpdateEnabledFeaturesID) }
+func (p *S2CUpdateEnabledFeatures) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CUpdateEnabledFeaturesID)
+}
 func (p *S2CUpdateEnabledFeatures) State() jp.State { return jp.StateConfiguration }
 func (p *S2CUpdateEnabledFeatures) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CUpdateTagsConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CUpdateTagsConfigurationID) }
+func (p *S2CUpdateTagsConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CUpdateTagsConfigurationID)
+}
 func (p *S2CUpdateTagsConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CUpdateTagsConfiguration) Bound() jp.Bound { return jp.S2C }
 
@@ -132,7 +178,9 @@ func (p *C2SIntention) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SIntenti
 func (p *C2SIntention) State() jp.State { return jp.StateHandshake }
 func (p *C2SIntention) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SCookieResponseLogin) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SCookieResponseLoginID) }
+func (p *C2SCookieResponseLogin) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SCookieResponseLoginID)
+}
 func (p *C2SCookieResponseLogin) State() jp.State { return jp.StateLogin }
 func (p *C2SCookieResponseLogin) Bound() jp.Bound { return jp.C2S }
 
@@ -176,7 +224,9 @@ func (p *S2CLoginFinished) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLog
 func (p *S2CLoginFinished) State() jp.State { return jp.StateLogin }
 func (p *S2CLoginFinished) Bound() jp.Bound { return jp.S2C }
 
-func (p *C2SAcceptTeleportation) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SAcceptTeleportationID) }
+func (p *C2SAcceptTeleportation) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SAcceptTeleportationID)
+}
 func (p *C2SAcceptTeleportation) State() jp.State { return jp.StatePlay }
 func (p *C2SAcceptTeleportation) Bound() jp.Bound { return jp.C2S }
 
@@ -184,7 +234,9 @@ func (p *C2SAttack) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SAttackID) 
 func (p *C2SAttack) State() jp.State { return jp.StatePlay }
 func (p *C2SAttack) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SBlockEntityTagQuery) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SBlockEntityTagQueryID) }
+func (p *C2SBlockEntityTagQuery) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SBlockEntityTagQueryID)
+}
 func (p *C2SBlockEntityTagQuery) State() jp.State { return jp.StatePlay }
 func (p *C2SBlockEntityTagQuery) Bound() jp.Bound { return jp.C2S }
 
@@ -228,7 +280,9 @@ func (p *C2SClientCommand) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SCli
 func (p *C2SClientCommand) State() jp.State { return jp.StatePlay }
 func (p *C2SClientCommand) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SClientInformationPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SClientInformationPlayID) }
+func (p *C2SClientInformationPlay) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SClientInformationPlayID)
+}
 func (p *C2SClientInformationPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SClientInformationPlay) Bound() jp.Bound { return jp.C2S }
 
@@ -240,11 +294,15 @@ func (p *C2SCommandSuggestion) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2
 func (p *C2SCommandSuggestion) State() jp.State { return jp.StatePlay }
 func (p *C2SCommandSuggestion) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SConfigurationAcknowledged) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SConfigurationAcknowledgedID) }
+func (p *C2SConfigurationAcknowledged) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SConfigurationAcknowledgedID)
+}
 func (p *C2SConfigurationAcknowledged) State() jp.State { return jp.StatePlay }
 func (p *C2SConfigurationAcknowledged) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SContainerButtonClick) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SContainerButtonClickID) }
+func (p *C2SContainerButtonClick) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SContainerButtonClickID)
+}
 func (p *C2SContainerButtonClick) State() jp.State { return jp.StatePlay }
 func (p *C2SContainerButtonClick) Bound() jp.Bound { return jp.C2S }
 
@@ -256,7 +314,9 @@ func (p *C2SContainerClose) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SCo
 func (p *C2SContainerClose) State() jp.State { return jp.StatePlay }
 func (p *C2SContainerClose) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SContainerSlotStateChanged) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SContainerSlotStateChangedID) }
+func (p *C2SContainerSlotStateChanged) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SContainerSlotStateChangedID)
+}
 func (p *C2SContainerSlotStateChanged) State() jp.State { return jp.StatePlay }
 func (p *C2SContainerSlotStateChanged) Bound() jp.Bound { return jp.C2S }
 
@@ -264,7 +324,9 @@ func (p *C2SCookieResponsePlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.C
 func (p *C2SCookieResponsePlay) State() jp.State { return jp.StatePlay }
 func (p *C2SCookieResponsePlay) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SCustomClickActionPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SCustomClickActionPlayID) }
+func (p *C2SCustomClickActionPlay) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SCustomClickActionPlayID)
+}
 func (p *C2SCustomClickActionPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SCustomClickActionPlay) Bound() jp.Bound { return jp.C2S }
 
@@ -272,7 +334,9 @@ func (p *C2SCustomPayloadPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2
 func (p *C2SCustomPayloadPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SCustomPayloadPlay) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SDebugSubscriptionRequest) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SDebugSubscriptionRequestID) }
+func (p *C2SDebugSubscriptionRequest) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SDebugSubscriptionRequestID)
+}
 func (p *C2SDebugSubscriptionRequest) State() jp.State { return jp.StatePlay }
 func (p *C2SDebugSubscriptionRequest) Bound() jp.Bound { return jp.C2S }
 
@@ -312,7 +376,9 @@ func (p *C2SMovePlayerRot) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SMov
 func (p *C2SMovePlayerRot) State() jp.State { return jp.StatePlay }
 func (p *C2SMovePlayerRot) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SMovePlayerStatusOnly) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SMovePlayerStatusOnlyID) }
+func (p *C2SMovePlayerStatusOnly) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SMovePlayerStatusOnlyID)
+}
 func (p *C2SMovePlayerStatusOnly) State() jp.State { return jp.StatePlay }
 func (p *C2SMovePlayerStatusOnly) Bound() jp.Bound { return jp.C2S }
 
@@ -364,11 +430,15 @@ func (p *C2SPongPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SPongPlay
 func (p *C2SPongPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SPongPlay) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SRecipeBookChangeSettings) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SRecipeBookChangeSettingsID) }
+func (p *C2SRecipeBookChangeSettings) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SRecipeBookChangeSettingsID)
+}
 func (p *C2SRecipeBookChangeSettings) State() jp.State { return jp.StatePlay }
 func (p *C2SRecipeBookChangeSettings) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SRecipeBookSeenRecipe) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SRecipeBookSeenRecipeID) }
+func (p *C2SRecipeBookSeenRecipe) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SRecipeBookSeenRecipeID)
+}
 func (p *C2SRecipeBookSeenRecipe) State() jp.State { return jp.StatePlay }
 func (p *C2SRecipeBookSeenRecipe) Bound() jp.Bound { return jp.C2S }
 
@@ -404,7 +474,9 @@ func (p *C2SSetCommandMinecart) ID() ns.VarInt   { return ns.VarInt(packet_ids.C
 func (p *C2SSetCommandMinecart) State() jp.State { return jp.StatePlay }
 func (p *C2SSetCommandMinecart) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SSetCreativeModeSlot) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSetCreativeModeSlotID) }
+func (p *C2SSetCreativeModeSlot) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2SSetCreativeModeSlotID)
+}
 func (p *C2SSetCreativeModeSlot) State() jp.State { return jp.StatePlay }
 func (p *C2SSetCreativeModeSlot) Bound() jp.Bound { return jp.C2S }
 
@@ -440,7 +512,9 @@ func (p *C2STeleportToEntity) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2S
 func (p *C2STeleportToEntity) State() jp.State { return jp.StatePlay }
 func (p *C2STeleportToEntity) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2STestInstanceBlockAction) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2STestInstanceBlockActionID) }
+func (p *C2STestInstanceBlockAction) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.C2STestInstanceBlockActionID)
+}
 func (p *C2STestInstanceBlockAction) State() jp.State { return jp.StatePlay }
 func (p *C2STestInstanceBlockAction) Bound() jp.Bound { return jp.C2S }
 
@@ -528,7 +602,9 @@ func (p *S2CContainerClose) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCo
 func (p *S2CContainerClose) State() jp.State { return jp.StatePlay }
 func (p *S2CContainerClose) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CContainerSetContent) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CContainerSetContentID) }
+func (p *S2CContainerSetContent) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CContainerSetContentID)
+}
 func (p *S2CContainerSetContent) State() jp.State { return jp.StatePlay }
 func (p *S2CContainerSetContent) Bound() jp.Bound { return jp.S2C }
 
@@ -548,7 +624,9 @@ func (p *S2CCooldown) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCooldown
 func (p *S2CCooldown) State() jp.State { return jp.StatePlay }
 func (p *S2CCooldown) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CCustomChatCompletions) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCustomChatCompletionsID) }
+func (p *S2CCustomChatCompletions) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CCustomChatCompletionsID)
+}
 func (p *S2CCustomChatCompletions) State() jp.State { return jp.StatePlay }
 func (p *S2CCustomChatCompletions) Bound() jp.Bound { return jp.S2C }
 
@@ -556,7 +634,9 @@ func (p *S2CCustomPayloadPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2
 func (p *S2CCustomPayloadPlay) State() jp.State { return jp.StatePlay }
 func (p *S2CCustomPayloadPlay) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CCustomReportDetailsPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CCustomReportDetailsPlayID) }
+func (p *S2CCustomReportDetailsPlay) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CCustomReportDetailsPlayID)
+}
 func (p *S2CCustomReportDetailsPlay) State() jp.State { return jp.StatePlay }
 func (p *S2CCustomReportDetailsPlay) Bound() jp.Bound { return jp.S2C }
 
@@ -620,7 +700,9 @@ func (p *S2CGameRuleValues) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CGa
 func (p *S2CGameRuleValues) State() jp.State { return jp.StatePlay }
 func (p *S2CGameRuleValues) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CGameTestHighlightPos) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CGameTestHighlightPosID) }
+func (p *S2CGameTestHighlightPos) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CGameTestHighlightPosID)
+}
 func (p *S2CGameTestHighlightPos) State() jp.State { return jp.StatePlay }
 func (p *S2CGameTestHighlightPos) Bound() jp.Bound { return jp.S2C }
 
@@ -636,7 +718,9 @@ func (p *S2CKeepAlivePlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CKee
 func (p *S2CKeepAlivePlay) State() jp.State { return jp.StatePlay }
 func (p *S2CKeepAlivePlay) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CLevelChunkWithLight) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLevelChunkWithLightID) }
+func (p *S2CLevelChunkWithLight) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CLevelChunkWithLightID)
+}
 func (p *S2CLevelChunkWithLight) State() jp.State { return jp.StatePlay }
 func (p *S2CLevelChunkWithLight) Bound() jp.Bound { return jp.S2C }
 
@@ -656,7 +740,9 @@ func (p *S2CLogin) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLoginID) }
 func (p *S2CLogin) State() jp.State { return jp.StatePlay }
 func (p *S2CLogin) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CLowDiskSpaceWarning) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CLowDiskSpaceWarningID) }
+func (p *S2CLowDiskSpaceWarning) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CLowDiskSpaceWarningID)
+}
 func (p *S2CLowDiskSpaceWarning) State() jp.State { return jp.StatePlay }
 func (p *S2CLowDiskSpaceWarning) Bound() jp.Bound { return jp.S2C }
 
@@ -684,7 +770,9 @@ func (p *S2CMoveEntityRot) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CMov
 func (p *S2CMoveEntityRot) State() jp.State { return jp.StatePlay }
 func (p *S2CMoveEntityRot) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CMoveMinecartAlongTrack) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CMoveMinecartAlongTrackID) }
+func (p *S2CMoveMinecartAlongTrack) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CMoveMinecartAlongTrackID)
+}
 func (p *S2CMoveMinecartAlongTrack) State() jp.State { return jp.StatePlay }
 func (p *S2CMoveMinecartAlongTrack) Bound() jp.Bound { return jp.S2C }
 
@@ -784,11 +872,15 @@ func (p *S2CResetScore) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CResetS
 func (p *S2CResetScore) State() jp.State { return jp.StatePlay }
 func (p *S2CResetScore) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CResourcePackPopPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CResourcePackPopPlayID) }
+func (p *S2CResourcePackPopPlay) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CResourcePackPopPlayID)
+}
 func (p *S2CResourcePackPopPlay) State() jp.State { return jp.StatePlay }
 func (p *S2CResourcePackPopPlay) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CResourcePackPushPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CResourcePackPushPlayID) }
+func (p *S2CResourcePackPushPlay) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CResourcePackPushPlayID)
+}
 func (p *S2CResourcePackPushPlay) State() jp.State { return jp.StatePlay }
 func (p *S2CResourcePackPushPlay) Bound() jp.Bound { return jp.S2C }
 
@@ -800,11 +892,15 @@ func (p *S2CRotateHead) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CRotate
 func (p *S2CRotateHead) State() jp.State { return jp.StatePlay }
 func (p *S2CRotateHead) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CSectionBlocksUpdate) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSectionBlocksUpdateID) }
+func (p *S2CSectionBlocksUpdate) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CSectionBlocksUpdateID)
+}
 func (p *S2CSectionBlocksUpdate) State() jp.State { return jp.StatePlay }
 func (p *S2CSectionBlocksUpdate) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CSelectAdvancementsTab) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSelectAdvancementsTabID) }
+func (p *S2CSelectAdvancementsTab) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CSelectAdvancementsTabID)
+}
 func (p *S2CSelectAdvancementsTab) State() jp.State { return jp.StatePlay }
 func (p *S2CSelectAdvancementsTab) Bound() jp.Bound { return jp.S2C }
 
@@ -832,11 +928,15 @@ func (p *S2CSetBorderSize) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSet
 func (p *S2CSetBorderSize) State() jp.State { return jp.StatePlay }
 func (p *S2CSetBorderSize) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CSetBorderWarningDelay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetBorderWarningDelayID) }
+func (p *S2CSetBorderWarningDelay) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CSetBorderWarningDelayID)
+}
 func (p *S2CSetBorderWarningDelay) State() jp.State { return jp.StatePlay }
 func (p *S2CSetBorderWarningDelay) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CSetBorderWarningDistance) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetBorderWarningDistanceID) }
+func (p *S2CSetBorderWarningDistance) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CSetBorderWarningDistanceID)
+}
 func (p *S2CSetBorderWarningDistance) State() jp.State { return jp.StatePlay }
 func (p *S2CSetBorderWarningDistance) Bound() jp.Bound { return jp.S2C }
 
@@ -844,11 +944,15 @@ func (p *S2CSetCamera) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetCame
 func (p *S2CSetCamera) State() jp.State { return jp.StatePlay }
 func (p *S2CSetCamera) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CSetChunkCacheCenter) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetChunkCacheCenterID) }
+func (p *S2CSetChunkCacheCenter) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CSetChunkCacheCenterID)
+}
 func (p *S2CSetChunkCacheCenter) State() jp.State { return jp.StatePlay }
 func (p *S2CSetChunkCacheCenter) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CSetChunkCacheRadius) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetChunkCacheRadiusID) }
+func (p *S2CSetChunkCacheRadius) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CSetChunkCacheRadiusID)
+}
 func (p *S2CSetChunkCacheRadius) State() jp.State { return jp.StatePlay }
 func (p *S2CSetChunkCacheRadius) Bound() jp.Bound { return jp.S2C }
 
@@ -856,11 +960,15 @@ func (p *S2CSetCursorItem) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSet
 func (p *S2CSetCursorItem) State() jp.State { return jp.StatePlay }
 func (p *S2CSetCursorItem) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CSetDefaultSpawnPosition) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetDefaultSpawnPositionID) }
+func (p *S2CSetDefaultSpawnPosition) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CSetDefaultSpawnPositionID)
+}
 func (p *S2CSetDefaultSpawnPosition) State() jp.State { return jp.StatePlay }
 func (p *S2CSetDefaultSpawnPosition) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CSetDisplayObjective) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetDisplayObjectiveID) }
+func (p *S2CSetDisplayObjective) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CSetDisplayObjectiveID)
+}
 func (p *S2CSetDisplayObjective) State() jp.State { return jp.StatePlay }
 func (p *S2CSetDisplayObjective) Bound() jp.Bound { return jp.S2C }
 
@@ -912,7 +1020,9 @@ func (p *S2CSetScore) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetScore
 func (p *S2CSetScore) State() jp.State { return jp.StatePlay }
 func (p *S2CSetScore) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CSetSimulationDistance) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSetSimulationDistanceID) }
+func (p *S2CSetSimulationDistance) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CSetSimulationDistanceID)
+}
 func (p *S2CSetSimulationDistance) State() jp.State { return jp.StatePlay }
 func (p *S2CSetSimulationDistance) Bound() jp.Bound { return jp.S2C }
 
@@ -976,7 +1086,9 @@ func (p *S2CTeleportEntity) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CTe
 func (p *S2CTeleportEntity) State() jp.State { return jp.StatePlay }
 func (p *S2CTeleportEntity) Bound() jp.Bound { return jp.S2C }
 
-func (p *S2CTestInstanceBlockStatus) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CTestInstanceBlockStatusID) }
+func (p *S2CTestInstanceBlockStatus) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CTestInstanceBlockStatusID)
+}
 func (p *S2CTestInstanceBlockStatus) State() jp.State { return jp.StatePlay }
 func (p *S2CTestInstanceBlockStatus) Bound() jp.Bound { return jp.S2C }
 
@@ -1031,4 +1143,3 @@ func (p *S2CPongResponseStatus) Bound() jp.Bound { return jp.S2C }
 func (p *S2CStatusResponse) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CStatusResponseID) }
 func (p *S2CStatusResponse) State() jp.State { return jp.StateStatus }
 func (p *S2CStatusResponse) Bound() jp.Bound { return jp.S2C }
-

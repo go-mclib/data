@@ -16,6 +16,7 @@ type Components struct {
 
 	AdditionalTradeCost    int32
 	AttributeModifiers     []AttributeModifier
+	AttackRange            *AttackRange
 	BannerPatterns         *[]BannerPatternLayer
 	BaseColor              *int32
 	BlocksAttacks          *BlocksAttacks
@@ -177,8 +178,11 @@ type Equippable struct {
 	Slot            string
 	EquipSound      string
 	AssetID         string
+	CameraOverlay   string
 	AllowedEntities []string
+	Dispensable     bool
 	Swappable       bool
+	DamageOnHurt    bool
 	CanBeSheared    bool
 	ShearingSound   string
 }
@@ -246,14 +250,17 @@ type Repairable struct {
 
 type Tool struct {
 	Rules                      []ToolRule
+	DefaultMiningSpeed         float64
 	DamagePerBlock             int32
 	CanDestroyBlocksInCreative bool
 }
 
 type ToolRule struct {
-	Blocks          string
-	Speed           float64
-	CorrectForDrops bool
+	Blocks             []string
+	Speed              float64
+	HasSpeed           bool
+	CorrectForDrops    bool
+	HasCorrectForDrops bool
 }
 
 type TooltipDisplay struct {
@@ -390,6 +397,10 @@ func (c *Components) Clone() *Components {
 	}
 
 	// clone pointer types
+	if c.AttackRange != nil {
+		v := *c.AttackRange
+		clone.AttackRange = &v
+	}
 	if c.BannerPatterns != nil {
 		layers := append([]BannerPatternLayer(nil), (*c.BannerPatterns)...)
 		clone.BannerPatterns = &layers
@@ -518,6 +529,9 @@ func (c *Components) Clone() *Components {
 	if c.Tool != nil {
 		v := *c.Tool
 		v.Rules = append([]ToolRule(nil), c.Tool.Rules...)
+		for i := range v.Rules {
+			v.Rules[i].Blocks = append([]string(nil), v.Rules[i].Blocks...)
+		}
 		clone.Tool = &v
 	}
 	if c.Trim != nil {

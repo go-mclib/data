@@ -874,6 +874,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	548: { // minecraft:black_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:black_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:black_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.black_carpet"},
 		MaxStackSize: 64,
@@ -914,6 +915,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	881: { // minecraft:black_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:black_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:black_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.black_harness"},
 		MaxStackSize: 1,
@@ -1067,6 +1069,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	544: { // minecraft:blue_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:blue_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:blue_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.blue_carpet"},
 		MaxStackSize: 64,
@@ -1115,6 +1118,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	877: { // minecraft:blue_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:blue_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:blue_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.blue_harness"},
 		MaxStackSize: 1,
@@ -1412,6 +1416,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	545: { // minecraft:brown_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:brown_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:brown_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.brown_carpet"},
 		MaxStackSize: 64,
@@ -1460,6 +1465,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	878: { // minecraft:brown_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:brown_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:brown_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.brown_harness"},
 		MaxStackSize: 1,
@@ -1711,6 +1717,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: false, DamageOnHurt: true, CameraOverlay: "minecraft:misc/pumpkinblur"},
 		ItemModel:    "minecraft:carved_pumpkin",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.carved_pumpkin"},
 		MaxStackSize: 64,
@@ -1759,6 +1766,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 12},
+		Equippable:   &Equippable{Slot: "feet", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_chain", AssetID: "minecraft:chainmail"},
 		ItemModel:    "minecraft:chainmail_boots",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.chainmail_boots"},
 		MaxDamage:    195,
@@ -1775,6 +1783,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 12},
+		Equippable:   &Equippable{Slot: "chest", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_chain", AssetID: "minecraft:chainmail"},
 		ItemModel:    "minecraft:chainmail_chestplate",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.chainmail_chestplate"},
 		MaxDamage:    240,
@@ -1791,6 +1800,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 12},
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_chain", AssetID: "minecraft:chainmail"},
 		ItemModel:    "minecraft:chainmail_helmet",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.chainmail_helmet"},
 		MaxDamage:    165,
@@ -1807,6 +1817,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 12},
+		Equippable:   &Equippable{Slot: "legs", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_chain", AssetID: "minecraft:chainmail"},
 		ItemModel:    "minecraft:chainmail_leggings",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.chainmail_leggings"},
 		MaxDamage:    225,
@@ -2635,9 +2646,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:copper_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_copper_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/axe", Speed: 5, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_copper_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 5, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -2669,6 +2681,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 8},
+		Equippable:   &Equippable{Slot: "feet", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_copper", AssetID: "minecraft:copper"},
 		ItemModel:    "minecraft:copper_boots",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_boots"},
 		MaxDamage:    143,
@@ -2709,6 +2722,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 8},
+		Equippable:   &Equippable{Slot: "chest", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_copper", AssetID: "minecraft:copper"},
 		ItemModel:    "minecraft:copper_chestplate",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_chestplate"},
 		MaxDamage:    176,
@@ -2758,6 +2772,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 8},
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_copper", AssetID: "minecraft:copper"},
 		ItemModel:    "minecraft:copper_helmet",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_helmet"},
 		MaxDamage:    121,
@@ -2782,9 +2797,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:copper_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_copper_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/hoe", Speed: 5, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_copper_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 5, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -2797,6 +2813,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:entity.horse.armor", AssetID: "minecraft:copper", ShearingSound: "minecraft:item.horse_armor.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_horse_armor"}},
 		ItemModel:    "minecraft:copper_horse_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_horse_armor"},
 		MaxStackSize: 1,
@@ -2828,6 +2845,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 8},
+		Equippable:   &Equippable{Slot: "legs", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_copper", AssetID: "minecraft:copper"},
 		ItemModel:    "minecraft:copper_leggings",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_leggings"},
 		MaxDamage:    165,
@@ -2842,6 +2860,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:item.armor.equip_nautilus", AssetID: "minecraft:copper", ShearingSound: "minecraft:item.armor.unequip_nautilus", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_nautilus_armor"}},
 		ItemModel:    "minecraft:copper_nautilus_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.copper_nautilus_armor"},
 		MaxStackSize: 1,
@@ -2880,9 +2899,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:copper_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_copper_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/pickaxe", Speed: 5, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_copper_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 5, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -2905,9 +2925,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:copper_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_copper_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/shovel", Speed: 5, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_copper_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 5, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -2915,6 +2936,14 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1328: { // minecraft:copper_spear
+		AttackRange: &AttackRange{
+			MinReach:         2,
+			MaxReach:         4.5,
+			MinCreativeReach: 2,
+			MaxCreativeReach: 6.5,
+			HitboxMargin:     0.125,
+			MobFactor:        0.5,
+		},
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 1, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.8235294818878174, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -2949,10 +2978,11 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:copper_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
 			Rules: []ToolRule{
-				{Blocks: "minecraft:cobweb", Speed: 15, CorrectForDrops: true},
-				{Blocks: "#minecraft:sword_instantly_mines", Speed: 3.4028235e+38},
-				{Blocks: "#minecraft:sword_efficient", Speed: 1.5},
+				{Blocks: []string{"minecraft:cobweb"}, Speed: 15, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:sword_instantly_mines"}, Speed: 3.4028235e+38, HasSpeed: true},
+				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
 		Weapon: &Weapon{},
@@ -3077,6 +3107,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: false, DamageOnHurt: true},
 		ItemModel:    "minecraft:creeper_head",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.creeper_head"},
 		MaxStackSize: 64,
@@ -3337,6 +3368,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	542: { // minecraft:cyan_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:cyan_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:cyan_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.cyan_carpet"},
 		MaxStackSize: 64,
@@ -3377,6 +3409,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	875: { // minecraft:cyan_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:cyan_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:cyan_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.cyan_harness"},
 		MaxStackSize: 1,
@@ -3936,9 +3969,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:diamond_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_diamond_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/axe", Speed: 8, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_diamond_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 8, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -3962,6 +3996,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
+		Equippable:   &Equippable{Slot: "feet", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_diamond", AssetID: "minecraft:diamond"},
 		ItemModel:    "minecraft:diamond_boots",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.diamond_boots"},
 		MaxDamage:    429,
@@ -3978,6 +4013,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
+		Equippable:   &Equippable{Slot: "chest", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_diamond", AssetID: "minecraft:diamond"},
 		ItemModel:    "minecraft:diamond_chestplate",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.diamond_chestplate"},
 		MaxDamage:    528,
@@ -3994,6 +4030,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_diamond", AssetID: "minecraft:diamond"},
 		ItemModel:    "minecraft:diamond_helmet",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.diamond_helmet"},
 		MaxDamage:    363,
@@ -4018,9 +4055,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:diamond_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_diamond_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/hoe", Speed: 8, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_diamond_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 8, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -4033,6 +4071,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:entity.horse.armor", AssetID: "minecraft:diamond", ShearingSound: "minecraft:item.horse_armor.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_horse_armor"}},
 		ItemModel:    "minecraft:diamond_horse_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.diamond_horse_armor"},
 		MaxStackSize: 1,
@@ -4047,6 +4086,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 10},
+		Equippable:   &Equippable{Slot: "legs", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_diamond", AssetID: "minecraft:diamond"},
 		ItemModel:    "minecraft:diamond_leggings",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.diamond_leggings"},
 		MaxDamage:    495,
@@ -4061,6 +4101,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:armor_toughness", Amount: 2, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:item.armor.equip_nautilus", AssetID: "minecraft:diamond", ShearingSound: "minecraft:item.armor.unequip_nautilus", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_nautilus_armor"}},
 		ItemModel:    "minecraft:diamond_nautilus_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.diamond_nautilus_armor"},
 		MaxStackSize: 1,
@@ -4091,9 +4132,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:diamond_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_diamond_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/pickaxe", Speed: 8, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_diamond_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 8, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -4116,9 +4158,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:diamond_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_diamond_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/shovel", Speed: 8, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_diamond_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 8, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -4126,6 +4169,14 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1331: { // minecraft:diamond_spear
+		AttackRange: &AttackRange{
+			MinReach:         2,
+			MaxReach:         4.5,
+			MinCreativeReach: 2,
+			MaxCreativeReach: 6.5,
+			HitboxMargin:     0.125,
+			MobFactor:        0.5,
+		},
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 3, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3.0476189851760864, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -4160,10 +4211,11 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:diamond_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
 			Rules: []ToolRule{
-				{Blocks: "minecraft:cobweb", Speed: 15, CorrectForDrops: true},
-				{Blocks: "#minecraft:sword_instantly_mines", Speed: 3.4028235e+38},
-				{Blocks: "#minecraft:sword_efficient", Speed: 1.5},
+				{Blocks: []string{"minecraft:cobweb"}, Speed: 15, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:sword_instantly_mines"}, Speed: 3.4028235e+38, HasSpeed: true},
+				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
 		Weapon: &Weapon{},
@@ -4271,6 +4323,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: false, DamageOnHurt: true},
 		ItemModel:    "minecraft:dragon_head",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.dragon_head"},
 		MaxStackSize: 64,
@@ -4372,6 +4425,7 @@ var defaultComponents = map[int32]*Components{
 	890: { // minecraft:elytra
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
+		Equippable:   &Equippable{Slot: "chest", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:item.armor.equip_elytra", AssetID: "minecraft:elytra"},
 		Glider:       true,
 		ItemModel:    "minecraft:elytra",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.elytra"},
@@ -5187,9 +5241,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:gold_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_gold_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/axe", Speed: 12, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_gold_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 12, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -5205,6 +5260,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 25},
+		Equippable:   &Equippable{Slot: "feet", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_gold", AssetID: "minecraft:gold"},
 		ItemModel:    "minecraft:golden_boots",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.golden_boots"},
 		MaxDamage:    91,
@@ -5239,6 +5295,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 25},
+		Equippable:   &Equippable{Slot: "chest", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_gold", AssetID: "minecraft:gold"},
 		ItemModel:    "minecraft:golden_chestplate",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.golden_chestplate"},
 		MaxDamage:    112,
@@ -5263,6 +5320,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 25},
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_gold", AssetID: "minecraft:gold"},
 		ItemModel:    "minecraft:golden_helmet",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.golden_helmet"},
 		MaxDamage:    77,
@@ -5287,9 +5345,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:gold_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_gold_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/hoe", Speed: 12, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_gold_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 12, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -5302,6 +5361,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:entity.horse.armor", AssetID: "minecraft:gold", ShearingSound: "minecraft:item.horse_armor.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_horse_armor"}},
 		ItemModel:    "minecraft:golden_horse_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.golden_horse_armor"},
 		MaxStackSize: 1,
@@ -5316,6 +5376,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 25},
+		Equippable:   &Equippable{Slot: "legs", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_gold", AssetID: "minecraft:gold"},
 		ItemModel:    "minecraft:golden_leggings",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.golden_leggings"},
 		MaxDamage:    105,
@@ -5330,6 +5391,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:item.armor.equip_nautilus", AssetID: "minecraft:gold", ShearingSound: "minecraft:item.armor.unequip_nautilus", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_nautilus_armor"}},
 		ItemModel:    "minecraft:golden_nautilus_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.golden_nautilus_armor"},
 		MaxStackSize: 1,
@@ -5352,9 +5414,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:gold_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_gold_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/pickaxe", Speed: 12, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_gold_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 12, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -5377,9 +5440,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:gold_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_gold_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/shovel", Speed: 12, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_gold_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 12, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -5387,6 +5451,14 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1330: { // minecraft:golden_spear
+		AttackRange: &AttackRange{
+			MinReach:         2,
+			MaxReach:         4.5,
+			MinCreativeReach: 2,
+			MaxCreativeReach: 6.5,
+			HitboxMargin:     0.125,
+			MobFactor:        0.5,
+		},
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.9473683834075928, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -5421,10 +5493,11 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:gold_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
 			Rules: []ToolRule{
-				{Blocks: "minecraft:cobweb", Speed: 15, CorrectForDrops: true},
-				{Blocks: "#minecraft:sword_instantly_mines", Speed: 3.4028235e+38},
-				{Blocks: "#minecraft:sword_efficient", Speed: 1.5},
+				{Blocks: []string{"minecraft:cobweb"}, Speed: 15, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:sword_instantly_mines"}, Speed: 3.4028235e+38, HasSpeed: true},
+				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
 		Weapon: &Weapon{},
@@ -5511,6 +5584,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	540: { // minecraft:gray_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:gray_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:gray_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.gray_carpet"},
 		MaxStackSize: 64,
@@ -5551,6 +5625,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	873: { // minecraft:gray_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:gray_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:gray_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.gray_harness"},
 		MaxStackSize: 1,
@@ -5631,6 +5706,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	546: { // minecraft:green_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:green_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:green_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.green_carpet"},
 		MaxStackSize: 64,
@@ -5671,6 +5747,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	879: { // minecraft:green_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:green_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:green_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.green_harness"},
 		MaxStackSize: 1,
@@ -6044,9 +6121,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:iron_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_iron_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/axe", Speed: 6, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_iron_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 6, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -6078,6 +6156,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 9},
+		Equippable:   &Equippable{Slot: "feet", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_iron", AssetID: "minecraft:iron"},
 		ItemModel:    "minecraft:iron_boots",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_boots"},
 		MaxDamage:    195,
@@ -6102,6 +6181,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 9},
+		Equippable:   &Equippable{Slot: "chest", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_iron", AssetID: "minecraft:iron"},
 		ItemModel:    "minecraft:iron_chestplate",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_chestplate"},
 		MaxDamage:    240,
@@ -6135,6 +6215,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 9},
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_iron", AssetID: "minecraft:iron"},
 		ItemModel:    "minecraft:iron_helmet",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_helmet"},
 		MaxDamage:    165,
@@ -6159,9 +6240,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:iron_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_iron_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/hoe", Speed: 6, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_iron_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 6, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -6174,6 +6256,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:entity.horse.armor", AssetID: "minecraft:iron", ShearingSound: "minecraft:item.horse_armor.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_horse_armor"}},
 		ItemModel:    "minecraft:iron_horse_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_horse_armor"},
 		MaxStackSize: 1,
@@ -6197,6 +6280,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 9},
+		Equippable:   &Equippable{Slot: "legs", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_iron", AssetID: "minecraft:iron"},
 		ItemModel:    "minecraft:iron_leggings",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_leggings"},
 		MaxDamage:    225,
@@ -6211,6 +6295,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:item.armor.equip_nautilus", AssetID: "minecraft:iron", ShearingSound: "minecraft:item.armor.unequip_nautilus", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_nautilus_armor"}},
 		ItemModel:    "minecraft:iron_nautilus_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.iron_nautilus_armor"},
 		MaxStackSize: 1,
@@ -6249,9 +6334,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:iron_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_iron_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/pickaxe", Speed: 6, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_iron_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 6, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -6274,9 +6360,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:iron_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_iron_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/shovel", Speed: 6, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_iron_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 6, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -6284,6 +6371,14 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1329: { // minecraft:iron_spear
+		AttackRange: &AttackRange{
+			MinReach:         2,
+			MaxReach:         4.5,
+			MinCreativeReach: 2,
+			MaxCreativeReach: 6.5,
+			HitboxMargin:     0.125,
+			MobFactor:        0.5,
+		},
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 2, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.9473683834075928, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -6318,10 +6413,11 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:iron_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
 			Rules: []ToolRule{
-				{Blocks: "minecraft:cobweb", Speed: 15, CorrectForDrops: true},
-				{Blocks: "#minecraft:sword_instantly_mines", Speed: 3.4028235e+38},
-				{Blocks: "#minecraft:sword_efficient", Speed: 1.5},
+				{Blocks: []string{"minecraft:cobweb"}, Speed: 15, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:sword_instantly_mines"}, Speed: 3.4028235e+38, HasSpeed: true},
+				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
 		Weapon: &Weapon{},
@@ -6623,6 +6719,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
+		Equippable:   &Equippable{Slot: "feet", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_leather", AssetID: "minecraft:leather"},
 		ItemModel:    "minecraft:leather_boots",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.leather_boots"},
 		MaxDamage:    65,
@@ -6639,6 +6736,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
+		Equippable:   &Equippable{Slot: "chest", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_leather", AssetID: "minecraft:leather"},
 		ItemModel:    "minecraft:leather_chestplate",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.leather_chestplate"},
 		MaxDamage:    80,
@@ -6655,6 +6753,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_leather", AssetID: "minecraft:leather"},
 		ItemModel:    "minecraft:leather_helmet",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.leather_helmet"},
 		MaxDamage:    55,
@@ -6669,6 +6768,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:armor_toughness", Amount: 0, ID: "minecraft:armor.body", Operation: "add_value", Slot: "body"},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:entity.horse.armor", AssetID: "minecraft:leather", ShearingSound: "minecraft:item.horse_armor.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_horse_armor"}},
 		ItemModel:    "minecraft:leather_horse_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.leather_horse_armor"},
 		MaxStackSize: 1,
@@ -6683,6 +6783,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 15},
+		Equippable:   &Equippable{Slot: "legs", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_leather", AssetID: "minecraft:leather"},
 		ItemModel:    "minecraft:leather_leggings",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.leather_leggings"},
 		MaxDamage:    75,
@@ -6749,6 +6850,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	536: { // minecraft:light_blue_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:light_blue_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:light_blue_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_blue_carpet"},
 		MaxStackSize: 64,
@@ -6789,6 +6891,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	869: { // minecraft:light_blue_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:light_blue_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:light_blue_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.light_blue_harness"},
 		MaxStackSize: 1,
@@ -6869,6 +6972,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	541: { // minecraft:light_gray_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:light_gray_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:light_gray_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.light_gray_carpet"},
 		MaxStackSize: 64,
@@ -6909,6 +7013,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	874: { // minecraft:light_gray_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:light_gray_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:light_gray_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.light_gray_harness"},
 		MaxStackSize: 1,
@@ -7029,6 +7134,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	538: { // minecraft:lime_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:lime_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:lime_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.lime_carpet"},
 		MaxStackSize: 64,
@@ -7069,6 +7175,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	871: { // minecraft:lime_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:lime_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:lime_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.lime_harness"},
 		MaxStackSize: 1,
@@ -7164,8 +7271,10 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "epic",
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "minecraft:breeze_rod"},
-		Tool:         &Tool{},
-		Weapon:       &Weapon{},
+		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
+		},
+		Weapon: &Weapon{},
 	},
 	1298: { // minecraft:magenta_banner
 		BreakSound:   "minecraft:entity.item.break",
@@ -7201,6 +7310,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	535: { // minecraft:magenta_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:magenta_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:magenta_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.magenta_carpet"},
 		MaxStackSize: 64,
@@ -7241,6 +7351,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	868: { // minecraft:magenta_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:magenta_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:magenta_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.magenta_harness"},
 		MaxStackSize: 1,
@@ -8105,9 +8216,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 		Repairable:      &Repairable{Items: "#minecraft:netherite_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_netherite_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/axe", Speed: 9, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_netherite_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 9, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -8134,6 +8246,7 @@ var defaultComponents = map[int32]*Components{
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
 		Enchantable:     &Enchantable{Value: 15},
+		Equippable:      &Equippable{Slot: "feet", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_netherite", AssetID: "minecraft:netherite"},
 		ItemModel:       "minecraft:netherite_boots",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.netherite_boots"},
 		MaxDamage:       481,
@@ -8152,6 +8265,7 @@ var defaultComponents = map[int32]*Components{
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
 		Enchantable:     &Enchantable{Value: 15},
+		Equippable:      &Equippable{Slot: "chest", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_netherite", AssetID: "minecraft:netherite"},
 		ItemModel:       "minecraft:netherite_chestplate",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.netherite_chestplate"},
 		MaxDamage:       592,
@@ -8170,6 +8284,7 @@ var defaultComponents = map[int32]*Components{
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
 		Enchantable:     &Enchantable{Value: 15},
+		Equippable:      &Equippable{Slot: "head", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_netherite", AssetID: "minecraft:netherite"},
 		ItemModel:       "minecraft:netherite_helmet",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.netherite_helmet"},
 		MaxDamage:       407,
@@ -8195,9 +8310,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 		Repairable:      &Repairable{Items: "#minecraft:netherite_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_netherite_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/hoe", Speed: 9, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_netherite_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 9, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -8212,6 +8328,7 @@ var defaultComponents = map[int32]*Components{
 		},
 		BreakSound:      "minecraft:entity.item.break",
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
+		Equippable:      &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:entity.horse.armor", AssetID: "minecraft:netherite", ShearingSound: "minecraft:item.horse_armor.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_horse_armor"}},
 		ItemModel:       "minecraft:netherite_horse_armor",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.netherite_horse_armor"},
 		MaxStackSize:    1,
@@ -8238,6 +8355,7 @@ var defaultComponents = map[int32]*Components{
 		Damage:          0,
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
 		Enchantable:     &Enchantable{Value: 15},
+		Equippable:      &Equippable{Slot: "legs", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_netherite", AssetID: "minecraft:netherite"},
 		ItemModel:       "minecraft:netherite_leggings",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.netherite_leggings"},
 		MaxDamage:       555,
@@ -8254,6 +8372,7 @@ var defaultComponents = map[int32]*Components{
 		},
 		BreakSound:      "minecraft:entity.item.break",
 		DamageResistant: &DamageResistant{Types: "#minecraft:is_fire"},
+		Equippable:      &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: false, EquipSound: "minecraft:item.armor.equip_nautilus", AssetID: "minecraft:netherite", ShearingSound: "minecraft:item.armor.unequip_nautilus", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_wear_nautilus_armor"}},
 		ItemModel:       "minecraft:netherite_nautilus_armor",
 		ItemName:        &ItemNameComponent{Translate: "item.minecraft.netherite_nautilus_armor"},
 		MaxStackSize:    1,
@@ -8277,9 +8396,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 		Repairable:      &Repairable{Items: "#minecraft:netherite_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_netherite_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/pickaxe", Speed: 9, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_netherite_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 9, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -8312,9 +8432,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 		Repairable:      &Repairable{Items: "#minecraft:netherite_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_netherite_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/shovel", Speed: 9, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_netherite_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 9, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -8322,6 +8443,14 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1332: { // minecraft:netherite_spear
+		AttackRange: &AttackRange{
+			MinReach:         2,
+			MaxReach:         4.5,
+			MinCreativeReach: 2,
+			MaxCreativeReach: 6.5,
+			HitboxMargin:     0.125,
+			MobFactor:        0.5,
+		},
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 4, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -3.13043475151062, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -8358,10 +8487,11 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:      0,
 		Repairable:      &Repairable{Items: "#minecraft:netherite_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
 			Rules: []ToolRule{
-				{Blocks: "minecraft:cobweb", Speed: 15, CorrectForDrops: true},
-				{Blocks: "#minecraft:sword_instantly_mines", Speed: 3.4028235e+38},
-				{Blocks: "#minecraft:sword_efficient", Speed: 1.5},
+				{Blocks: []string{"minecraft:cobweb"}, Speed: 15, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:sword_instantly_mines"}, Speed: 3.4028235e+38, HasSpeed: true},
+				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
 		Weapon: &Weapon{},
@@ -8635,6 +8765,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	534: { // minecraft:orange_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:orange_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:orange_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.orange_carpet"},
 		MaxStackSize: 64,
@@ -8675,6 +8806,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	867: { // minecraft:orange_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:orange_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:orange_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.orange_harness"},
 		MaxStackSize: 1,
@@ -9157,6 +9289,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: false, DamageOnHurt: true},
 		ItemModel:    "minecraft:piglin_head",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.piglin_head"},
 		MaxStackSize: 64,
@@ -9215,6 +9348,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	539: { // minecraft:pink_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:pink_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:pink_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.pink_carpet"},
 		MaxStackSize: 64,
@@ -9255,6 +9389,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	872: { // minecraft:pink_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:pink_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:pink_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.pink_harness"},
 		MaxStackSize: 1,
@@ -9346,6 +9481,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: false, DamageOnHurt: true},
 		ItemModel:    "minecraft:player_head",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.player_head"},
 		MaxStackSize: 64,
@@ -9977,6 +10113,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	543: { // minecraft:purple_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:purple_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:purple_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.purple_carpet"},
 		MaxStackSize: 64,
@@ -10017,6 +10154,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	876: { // minecraft:purple_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:purple_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:purple_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.purple_harness"},
 		MaxStackSize: 1,
@@ -10323,6 +10461,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	547: { // minecraft:red_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:red_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:red_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.red_carpet"},
 		MaxStackSize: 64,
@@ -10363,6 +10502,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	880: { // minecraft:red_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:red_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:red_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.red_harness"},
 		MaxStackSize: 1,
@@ -10682,6 +10822,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	865: { // minecraft:saddle
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "saddle", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.horse.saddle", AssetID: "minecraft:saddle", ShearingSound: "minecraft:item.saddle.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_saddle"}},
 		ItemModel:    "minecraft:saddle",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.saddle"},
 		MaxStackSize: 1,
@@ -10881,11 +11022,12 @@ var defaultComponents = map[int32]*Components{
 		Rarity:       "common",
 		RepairCost:   0,
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "minecraft:cobweb", Speed: 15, CorrectForDrops: true},
-				{Blocks: "#minecraft:shears_extreme_breaking_speed", Speed: 15},
-				{Blocks: "#minecraft:shears_major_breaking_speed", Speed: 5},
-				{Blocks: "#minecraft:shears_minor_breaking_speed", Speed: 2},
+				{Blocks: []string{"minecraft:cobweb"}, Speed: 15, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:shears_extreme_breaking_speed"}, Speed: 15, HasSpeed: true},
+				{Blocks: []string{"#minecraft:shears_major_breaking_speed"}, Speed: 5, HasSpeed: true},
+				{Blocks: []string{"#minecraft:shears_minor_breaking_speed"}, Speed: 2, HasSpeed: true},
 			},
 		},
 	},
@@ -10920,6 +11062,7 @@ var defaultComponents = map[int32]*Components{
 		},
 		BreakSound:   "minecraft:item.shield.break",
 		Damage:       0,
+		Equippable:   &Equippable{Slot: "offhand", Dispensable: true, Swappable: false, DamageOnHurt: true},
 		ItemModel:    "minecraft:shield",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.shield"},
 		MaxDamage:    336,
@@ -11008,6 +11151,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: false, DamageOnHurt: true},
 		ItemModel:    "minecraft:skeleton_skull",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.skeleton_skull"},
 		MaxStackSize: 64,
@@ -11578,9 +11722,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:stone_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_stone_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/axe", Speed: 4, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_stone_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 4, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -11644,9 +11789,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:stone_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_stone_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/hoe", Speed: 4, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_stone_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 4, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -11669,9 +11815,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:stone_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_stone_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/pickaxe", Speed: 4, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_stone_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 4, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -11702,9 +11849,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:stone_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_stone_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/shovel", Speed: 4, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_stone_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 4, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -11720,6 +11868,14 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 	},
 	1327: { // minecraft:stone_spear
+		AttackRange: &AttackRange{
+			MinReach:         2,
+			MaxReach:         4.5,
+			MinCreativeReach: 2,
+			MaxCreativeReach: 6.5,
+			HitboxMargin:     0.125,
+			MobFactor:        0.5,
+		},
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 1, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.666666626930237, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -11762,10 +11918,11 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:stone_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
 			Rules: []ToolRule{
-				{Blocks: "minecraft:cobweb", Speed: 15, CorrectForDrops: true},
-				{Blocks: "#minecraft:sword_instantly_mines", Speed: 3.4028235e+38},
-				{Blocks: "#minecraft:sword_efficient", Speed: 1.5},
+				{Blocks: []string{"minecraft:cobweb"}, Speed: 15, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:sword_instantly_mines"}, Speed: 3.4028235e+38, HasSpeed: true},
+				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
 		Weapon: &Weapon{},
@@ -12364,8 +12521,10 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize: 1,
 		Rarity:       "rare",
 		RepairCost:   0,
-		Tool:         &Tool{},
-		Weapon:       &Weapon{},
+		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
+		},
+		Weapon: &Weapon{},
 	},
 	772: { // minecraft:tripwire_hook
 		BreakSound:   "minecraft:entity.item.break",
@@ -12518,6 +12677,7 @@ var defaultComponents = map[int32]*Components{
 		BreakSound:   "minecraft:entity.item.break",
 		Damage:       0,
 		Enchantable:  &Enchantable{Value: 9},
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_turtle", AssetID: "minecraft:turtle_scute"},
 		ItemModel:    "minecraft:turtle_helmet",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.turtle_helmet"},
 		MaxDamage:    275,
@@ -13472,6 +13632,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	533: { // minecraft:white_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:white_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:white_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.white_carpet"},
 		MaxStackSize: 64,
@@ -13512,6 +13673,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	866: { // minecraft:white_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:white_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:white_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.white_harness"},
 		MaxStackSize: 1,
@@ -13613,6 +13775,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: false, DamageOnHurt: true},
 		ItemModel:    "minecraft:wither_skeleton_skull",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.wither_skeleton_skull"},
 		MaxStackSize: 64,
@@ -13644,6 +13807,7 @@ var defaultComponents = map[int32]*Components{
 		},
 		BreakSound:   "minecraft:item.wolf_armor.break",
 		Damage:       0,
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:item.armor.equip_wolf", AssetID: "minecraft:armadillo_scute", ShearingSound: "minecraft:item.armor.unequip_wolf", CanBeSheared: true, AllowedEntities: []string{"minecraft:wolf"}},
 		ItemModel:    "minecraft:wolf_armor",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.wolf_armor"},
 		MaxDamage:    64,
@@ -13677,9 +13841,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:wooden_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_wooden_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/axe", Speed: 2, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_wooden_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 2, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -13703,9 +13868,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:wooden_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_wooden_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/hoe", Speed: 2, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_wooden_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 2, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -13728,9 +13894,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:wooden_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_wooden_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/pickaxe", Speed: 2, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_wooden_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 2, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -13753,9 +13920,10 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:wooden_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 1, CanDestroyBlocksInCreative: true,
 			Rules: []ToolRule{
-				{Blocks: "#minecraft:incorrect_for_wooden_tool", CorrectForDrops: false},
-				{Blocks: "#minecraft:mineable/shovel", Speed: 2, CorrectForDrops: true},
+				{Blocks: []string{"#minecraft:incorrect_for_wooden_tool"}, CorrectForDrops: false, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 2, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
 		Weapon: &Weapon{
@@ -13763,6 +13931,14 @@ var defaultComponents = map[int32]*Components{
 		},
 	},
 	1326: { // minecraft:wooden_spear
+		AttackRange: &AttackRange{
+			MinReach:         2,
+			MaxReach:         4.5,
+			MinCreativeReach: 2,
+			MaxCreativeReach: 6.5,
+			HitboxMargin:     0.125,
+			MobFactor:        0.5,
+		},
 		AttributeModifiers: []AttributeModifier{
 			{Type: "minecraft:attack_damage", Amount: 0, ID: "minecraft:base_attack_damage", Operation: "add_value", Slot: "mainhand"},
 			{Type: "minecraft:attack_speed", Amount: -2.4615384340286255, ID: "minecraft:base_attack_speed", Operation: "add_value", Slot: "mainhand"},
@@ -13797,10 +13973,11 @@ var defaultComponents = map[int32]*Components{
 		RepairCost:   0,
 		Repairable:   &Repairable{Items: "#minecraft:wooden_tool_materials"},
 		Tool: &Tool{
+			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
 			Rules: []ToolRule{
-				{Blocks: "minecraft:cobweb", Speed: 15, CorrectForDrops: true},
-				{Blocks: "#minecraft:sword_instantly_mines", Speed: 3.4028235e+38},
-				{Blocks: "#minecraft:sword_efficient", Speed: 1.5},
+				{Blocks: []string{"minecraft:cobweb"}, Speed: 15, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
+				{Blocks: []string{"#minecraft:sword_instantly_mines"}, Speed: 3.4028235e+38, HasSpeed: true},
+				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
 		Weapon: &Weapon{},
@@ -13855,6 +14032,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	537: { // minecraft:yellow_carpet
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.llama.swag", AssetID: "minecraft:yellow_carpet", ShearingSound: "minecraft:item.llama_carpet.unequip", CanBeSheared: true, AllowedEntities: []string{"minecraft:llama", "minecraft:trader_llama"}},
 		ItemModel:    "minecraft:yellow_carpet",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.yellow_carpet"},
 		MaxStackSize: 64,
@@ -13895,6 +14073,7 @@ var defaultComponents = map[int32]*Components{
 	},
 	870: { // minecraft:yellow_harness
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "body", Dispensable: true, Swappable: true, DamageOnHurt: true, EquipSound: "minecraft:entity.happy_ghast.equip", AssetID: "minecraft:yellow_harness", ShearingSound: "minecraft:entity.happy_ghast.unequip", CanBeSheared: true, AllowedEntities: []string{"#minecraft:can_equip_harness"}},
 		ItemModel:    "minecraft:yellow_harness",
 		ItemName:     &ItemNameComponent{Translate: "item.minecraft.yellow_harness"},
 		MaxStackSize: 1,
@@ -13955,6 +14134,7 @@ var defaultComponents = map[int32]*Components{
 			{Type: "minecraft:waypoint_transmit_range", Amount: -1, ID: "minecraft:waypoint_transmit_range_hide", Operation: "add_multiplied_total", Slot: "head", Display: AttributeModifierDisplay{Type: "hidden"}},
 		},
 		BreakSound:   "minecraft:entity.item.break",
+		Equippable:   &Equippable{Slot: "head", Dispensable: true, Swappable: false, DamageOnHurt: true},
 		ItemModel:    "minecraft:zombie_head",
 		ItemName:     &ItemNameComponent{Translate: "block.minecraft.zombie_head"},
 		MaxStackSize: 64,

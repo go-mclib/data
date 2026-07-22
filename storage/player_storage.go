@@ -24,6 +24,8 @@ type PlayerData struct {
 	Health           float32
 	Food             int32
 	Saturation       float32
+	FoodExhaustion   float32
+	FoodTickTimer    int32
 	XpLevel          int32
 	XpProgress       float32
 	XpTotal          int32
@@ -35,6 +37,14 @@ type PlayerData struct {
 	AbsorptionAmount float32
 	Effects          []EffectData
 	RecipeBook       RecipeBookData
+	HasRespawn       bool
+	RespawnDimension string
+	RespawnX         int32
+	RespawnY         int32
+	RespawnZ         int32
+	RespawnYaw       float32
+	RespawnPitch     float32
+	RespawnForced    bool
 }
 
 type EffectData struct {
@@ -90,6 +100,8 @@ func SavePlayer(dir, uuid string, pd *PlayerData) error {
 		"Health":              nbt.Float(pd.Health),
 		"foodLevel":           nbt.Int(pd.Food),
 		"foodSaturationLevel": nbt.Float(pd.Saturation),
+		"foodExhaustionLevel": nbt.Float(pd.FoodExhaustion),
+		"foodTickTimer":       nbt.Int(pd.FoodTickTimer),
 		"XpLevel":             nbt.Int(pd.XpLevel),
 		"XpP":                 nbt.Float(pd.XpProgress),
 		"XpTotal":             nbt.Int(pd.XpTotal),
@@ -125,6 +137,18 @@ func SavePlayer(dir, uuid string, pd *PlayerData) error {
 		root["active_effects"] = effects
 	}
 	root["recipeBook"] = encodeRecipeBook(pd.RecipeBook)
+	if pd.HasRespawn {
+		respawn := nbt.Compound{
+			"dimension": nbt.String(pd.RespawnDimension),
+			"pos":       nbt.IntArray{pd.RespawnX, pd.RespawnY, pd.RespawnZ},
+			"yaw":       nbt.Float(pd.RespawnYaw),
+			"pitch":     nbt.Float(pd.RespawnPitch),
+		}
+		if pd.RespawnForced {
+			respawn["forced"] = nbt.Byte(1)
+		}
+		root["respawn"] = respawn
+	}
 
 	data, err := nbt.EncodeFile(root, "")
 	if err != nil {
@@ -183,6 +207,8 @@ func LoadPlayer(dir, uuid string) (*PlayerData, error) {
 		Health:           root.GetFloat("Health"),
 		Food:             root.GetInt("foodLevel"),
 		Saturation:       root.GetFloat("foodSaturationLevel"),
+		FoodExhaustion:   root.GetFloat("foodExhaustionLevel"),
+		FoodTickTimer:    root.GetInt("foodTickTimer"),
 		XpLevel:          root.GetInt("XpLevel"),
 		XpProgress:       root.GetFloat("XpP"),
 		XpTotal:          root.GetInt("XpTotal"),
@@ -215,6 +241,15 @@ func LoadPlayer(dir, uuid string) (*PlayerData, error) {
 		}
 		if f, ok := rotList.Get(1).(nbt.Float); ok {
 			pd.Pitch = float32(f)
+		}
+	}
+	if respawn := root.GetCompound("respawn"); respawn != nil {
+		if position := respawn.GetIntArray("pos"); len(position) == 3 {
+			pd.HasRespawn = true
+			pd.RespawnDimension = respawn.GetString("dimension")
+			pd.RespawnX, pd.RespawnY, pd.RespawnZ = position[0], position[1], position[2]
+			pd.RespawnYaw, pd.RespawnPitch = respawn.GetFloat("yaw"), respawn.GetFloat("pitch")
+			pd.RespawnForced = respawn.GetByte("forced") != 0
 		}
 	}
 

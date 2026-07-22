@@ -1,6 +1,11 @@
 package items
 
-import "github.com/go-mclib/data/registries"
+import (
+	"github.com/go-mclib/data/registries"
+	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	"slices"
+	"strings"
+)
 
 func init() {
 	for id, color := range dyeNames {
@@ -48,4 +53,56 @@ func MaxStackSize(itemID int32) int32 {
 		return c.MaxStackSize
 	}
 	return 64
+}
+
+// SlotMaxStackSize returns the effective max-stack-size component for a slot.
+func SlotMaxStackSize(slot ns.Slot) int32 {
+	limit := MaxStackSize(int32(slot.ItemID))
+	for _, component := range slot.Components.Add {
+		if int32(component.ID) != ComponentMaxStackSize {
+			continue
+		}
+		value, err := ns.NewReader(component.Data).ReadVarInt()
+		if err == nil {
+			limit = max(int32(value), 1)
+		}
+	}
+	for _, component := range slot.Components.Remove {
+		if int32(component) == ComponentMaxStackSize {
+			return 1
+		}
+	}
+	return limit
+}
+
+// SlotResistsDamage reports whether a slot's effective damage-resistant component contains a damage type.
+func SlotResistsDamage(slot ns.Slot, damageType string) bool {
+	var types []string
+	if defaults := DefaultComponents(int32(slot.ItemID)); defaults != nil && defaults.DamageResistant != nil {
+		types = []string{defaults.DamageResistant.Types}
+	}
+	for _, component := range slot.Components.Add {
+		if int32(component.ID) != ComponentDamageResistant {
+			continue
+		}
+		decoded, err := readDamageTypeHolderSet(ns.NewReader(component.Data))
+		if err == nil {
+			types = decoded
+		}
+	}
+	for _, component := range slot.Components.Remove {
+		if int32(component) == ComponentDamageResistant {
+			return false
+		}
+	}
+	for _, entry := range types {
+		if entry == damageType {
+			return true
+		}
+		if tag := strings.TrimPrefix(entry, "#"); tag != entry &&
+			slices.Contains(registries.TagData["minecraft:damage_type"][tag], damageType) {
+			return true
+		}
+	}
+	return false
 }

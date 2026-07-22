@@ -48,7 +48,7 @@ func init() {
 	RegisterCodec(ComponentUseRemainder, &passthroughCodec{decode: copyItemStackTemplate})
 	RegisterCodec(ComponentConsumable, consumableCodec{})
 	RegisterCodec(ComponentUseEffects, &passthroughCodec{decode: decodeUseEffectsWire})
-	RegisterCodec(ComponentAttackRange, &passthroughCodec{decode: decodeAttackRangeWire})
+	RegisterCodec(ComponentAttackRange, attackRangeCodec{})
 	RegisterCodec(ComponentEquippable, &passthroughCodec{decode: decodeEquippableWire})
 	RegisterCodec(ComponentDeathProtection, deathProtectionCodec{})
 	RegisterCodec(ComponentBlocksAttacks, blocksAttacksCodec{})
@@ -880,15 +880,6 @@ func decodeUseEffectsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 
 func decodeHolderSetWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return copyHolderSet(buf, w)
-}
-
-func decodeAttackRangeWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	for range 6 {
-		if err := w.CopyFloat32(buf); err != nil {
-			return err
-		}
-	}
-	return nil
 }
 
 func decodeEquippableWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {

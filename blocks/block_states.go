@@ -52,6 +52,50 @@ func StateID(blockID int, props map[string]string) int32 {
 	return result
 }
 
+// StateBlockID returns the block protocol ID for a state ID without decoding its properties.
+func StateBlockID(stateID int32) int32 {
+	lo, hi := 0, len(stateRanges)-1
+	for lo <= hi {
+		mid := (lo + hi) / 2
+		entry := &stateRanges[mid]
+		switch {
+		case stateID < entry.BaseID:
+			hi = mid - 1
+		case stateID >= entry.EndID:
+			lo = mid + 1
+		default:
+			return entry.BlockID
+		}
+	}
+	return -1
+}
+
+// Friction returns the vanilla friction coefficient for a block state.
+func Friction(stateID int32) float64 {
+	switch BlockName(StateBlockID(stateID)) {
+	case "minecraft:ice", "minecraft:packed_ice", "minecraft:frosted_ice":
+		return 0.98
+	case "minecraft:blue_ice":
+		return 0.989
+	case "minecraft:slime_block":
+		return 0.8
+	default:
+		return 0.6
+	}
+}
+
+// BounceRestitution returns the vanilla bounce coefficient for a block state.
+func BounceRestitution(stateID int32) float64 {
+	name := BlockName(StateBlockID(stateID))
+	if name == "minecraft:slime_block" {
+		return 1
+	}
+	if len(name) > len("_bed") && name[len(name)-len("_bed"):] == "_bed" {
+		return 0.75
+	}
+	return 0
+}
+
 // StateProperties returns the block ID and property values for a given state ID.
 // Uses binary search for O(log n) block lookup. Returns -1 and nil if the state ID is invalid.
 func StateProperties(stateID int) (blockID int32, props map[string]string) {

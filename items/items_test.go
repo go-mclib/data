@@ -2,6 +2,7 @@ package items_test
 
 import (
 	"encoding/hex"
+	"reflect"
 	"testing"
 
 	"github.com/go-mclib/data/items"
@@ -993,6 +994,82 @@ func TestDeathProtectionComponentRoundTrip(t *testing.T) {
 	}
 }
 
+func TestAttackRangeDefaultsWireAndNBTRoundTrip(t *testing.T) {
+	itemID := items.ItemID("minecraft:diamond_spear")
+	defaults := items.DefaultComponents(itemID)
+	if defaults.AttackRange == nil || defaults.AttackRange.MinReach != 2 ||
+		defaults.AttackRange.MaxReach != 4.5 || defaults.AttackRange.HitboxMargin != 0.125 {
+		t.Fatalf("diamond spear attack range = %+v", defaults.AttackRange)
+	}
+
+	stack := items.NewStack(itemID, 1)
+	stack.Components.AttackRange = &items.AttackRange{
+		MinReach: 1, MaxReach: 8, MinCreativeReach: 1,
+		MaxCreativeReach: 10, HitboxMargin: 0.25, MobFactor: 0.75,
+	}
+	slot, err := stack.ToSlot()
+	if err != nil {
+		t.Fatalf("ToSlot: %v", err)
+	}
+	wire := ns.NewWriter()
+	if err := wire.WriteSlot(slot); err != nil {
+		t.Fatalf("WriteSlot: %v", err)
+	}
+	decoded, err := ns.NewReader(wire.Bytes()).ReadSlot(items.Decoder())
+	if err != nil {
+		t.Fatalf("ReadSlot: %v", err)
+	}
+	decodedStack, err := items.FromSlot(decoded)
+	if err != nil || decodedStack.Components.AttackRange == nil ||
+		decodedStack.Components.AttackRange.MaxReach != 8 ||
+		decodedStack.Components.AttackRange.MobFactor != 0.75 {
+		t.Fatalf("decoded attack range = %+v, %v", decodedStack.Components.AttackRange, err)
+	}
+
+	patch := items.ComponentsToNBT(decoded)
+	restored, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(itemID), 1), patch)
+	if err != nil {
+		t.Fatalf("ApplyNBTComponents: %v", err)
+	}
+	restoredStack, err := items.FromSlot(restored)
+	if err != nil || restoredStack.Components.AttackRange == nil ||
+		restoredStack.Components.AttackRange.MaxCreativeReach != 10 ||
+		restoredStack.Components.AttackRange.HitboxMargin != 0.25 {
+		t.Fatalf("restored attack range = %+v, %v", restoredStack.Components.AttackRange, err)
+	}
+}
+
+func TestToolComponentWireRoundTripPreservesDefaultsAndOptionals(t *testing.T) {
+	stack := items.NewStack(items.ItemID("minecraft:stick"), 1)
+	want := &items.Tool{
+		DefaultMiningSpeed: 0.75,
+		DamagePerBlock:     2,
+		Rules: []items.ToolRule{
+			{
+				Blocks:          []string{"#minecraft:mineable/pickaxe"},
+				CorrectForDrops: false, HasCorrectForDrops: true,
+			},
+			{
+				Blocks: []string{"minecraft:stone", "minecraft:dirt"},
+				Speed:  3, HasSpeed: true,
+			},
+		},
+	}
+	stack.Components.Tool = want
+	stack.Components.SetPresent(items.ComponentTool)
+	slot, err := stack.ToSlot()
+	if err != nil {
+		t.Fatalf("ToSlot: %v", err)
+	}
+	decoded, err := items.FromSlot(slot)
+	if err != nil {
+		t.Fatalf("FromSlot: %v", err)
+	}
+	if !reflect.DeepEqual(decoded.Components.Tool, want) {
+		t.Fatalf("decoded tool = %#v, want %#v", decoded.Components.Tool, want)
+	}
+}
+
 func TestComponentConstants(t *testing.T) {
 	if items.ComponentDamage < 0 {
 		t.Error("ComponentDamage should be non-negative")
@@ -1005,5 +1082,161 @@ func TestComponentConstants(t *testing.T) {
 	}
 	if items.MaxComponentID < items.ComponentFood {
 		t.Error("MaxComponentID should be >= ComponentFood")
+	}
+}
+
+func TestToolComponentNBTRoundTripPreservesOptionalRules(t *testing.T) {
+	stack := items.NewStack(items.ItemID("minecraft:diamond_pickaxe"), 1)
+	stack.Components.Tool = &items.Tool{
+		Rules: []items.ToolRule{
+			{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 8, HasSpeed: true},
+			{Blocks: []string{"minecraft:obsidian", "minecraft:crying_obsidian"}, CorrectForDrops: true, HasCorrectForDrops: true},
+		},
+		DefaultMiningSpeed:         1,
+		DamagePerBlock:             2,
+		CanDestroyBlocksInCreative: true,
+	}
+	slot, err := stack.ToSlot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	component := items.ComponentsToNBT(slot).GetCompound("minecraft:tool")
+	if _, present := component["default_mining_speed"]; present {
+		t.Fatal("default mining speed should be omitted")
+	}
+	if _, present := component["can_destroy_blocks_in_creative"]; present {
+		t.Fatal("default creative flag should be omitted")
+	}
+	rules := component.GetList("rules")
+	if len(rules.Elements) != 2 {
+		t.Fatalf("rule count = %d, want 2", len(rules.Elements))
+	}
+	first := rules.Elements[0].(nbt.Compound)
+	if first.GetString("blocks") != "#minecraft:mineable/pickaxe" {
+		t.Fatalf("tag holder = %q", first.GetString("blocks"))
+	}
+	if _, present := first["correct_for_drops"]; present {
+		t.Fatal("absent correct-for-drops was encoded")
+	}
+	restored, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:diamond_pickaxe")), 1), nbt.Compound{
+		"minecraft:tool": component,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	decoded, err := items.FromSlot(restored)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(decoded.Components.Tool, stack.Components.Tool) {
+		t.Fatalf("restored tool = %#v, want %#v", decoded.Components.Tool, stack.Components.Tool)
+	}
+}
+
+func TestToolComponentNBTRejectsInvalidValues(t *testing.T) {
+	tests := map[string]nbt.Compound{
+		"negative damage": {
+			"rules":            nbt.List{ElementType: nbt.TagCompound},
+			"damage_per_block": nbt.Int(-1),
+		},
+		"zero rule speed": {
+			"rules": nbt.List{ElementType: nbt.TagCompound, Elements: []nbt.Tag{
+				nbt.Compound{
+					"blocks": nbt.String("#minecraft:mineable/pickaxe"),
+					"speed":  nbt.Float(0),
+				},
+			}},
+		},
+		"empty holder set": {
+			"rules": nbt.List{ElementType: nbt.TagCompound, Elements: []nbt.Tag{
+				nbt.Compound{
+					"blocks": nbt.List{ElementType: nbt.TagString},
+				},
+			}},
+		},
+	}
+	for name, tool := range tests {
+		t.Run(name, func(t *testing.T) {
+			_, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:diamond_pickaxe")), 1), nbt.Compound{
+				"minecraft:tool": tool,
+			})
+			if err == nil {
+				t.Fatal("invalid tool component was accepted")
+			}
+		})
+	}
+}
+
+func TestSlotMaxStackSizeUsesComponentPatch(t *testing.T) {
+	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	writer := ns.NewWriter()
+	writer.WriteVarInt(7)
+	slot.Components.Add = []ns.RawSlotComponent{{ID: items.ComponentMaxStackSize, Data: writer.Bytes()}}
+	if got := items.SlotMaxStackSize(slot); got != 7 {
+		t.Fatalf("custom slot max = %d, want 7", got)
+	}
+	slot.Components.Add = nil
+	slot.Components.Remove = []ns.VarInt{items.ComponentMaxStackSize}
+	if got := items.SlotMaxStackSize(slot); got != 1 {
+		t.Fatalf("removed slot max = %d, want fallback 1", got)
+	}
+}
+
+func TestSlotResistsDamageUsesComponentPatch(t *testing.T) {
+	netherite := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:netherite_ingot")), 1)
+	if !items.SlotResistsDamage(netherite, "minecraft:lava") {
+		t.Fatal("netherite ingot should resist fire")
+	}
+	netherite.Components.Remove = []ns.VarInt{items.ComponentDamageResistant}
+	if items.SlotResistsDamage(netherite, "minecraft:lava") {
+		t.Fatal("removed resistance still applied")
+	}
+
+	stone := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	writer := ns.NewWriter()
+	writer.WriteVarInt(0)
+	if err := writer.WriteString("minecraft:is_fire"); err != nil {
+		t.Fatal(err)
+	}
+	stone.Components.Add = []ns.RawSlotComponent{{ID: items.ComponentDamageResistant, Data: writer.Bytes()}}
+	if !items.SlotResistsDamage(stone, "minecraft:lava") {
+		t.Fatal("patched stone should resist fire")
+	}
+}
+
+func TestSlotNBTRoundTrip(t *testing.T) {
+	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 3)
+	writer := ns.NewWriter()
+	writer.WriteVarInt(7)
+	slot.Components.Add = []ns.RawSlotComponent{{ID: items.ComponentMaxStackSize, Data: writer.Bytes()}}
+
+	restored, err := items.SlotFromNBT(items.SlotToNBT(slot))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !items.SameStack(restored, slot) || restored.Count != slot.Count {
+		t.Fatalf("restored slot = %+v, want %+v", restored, slot)
+	}
+}
+
+func TestStackEquippableSlotUsesDefaultsAndPatch(t *testing.T) {
+	helmet := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:diamond_helmet")), 1)
+	if slot, ok := items.StackEquippableSlot(helmet); !ok || slot != "head" {
+		t.Fatalf("helmet equippable slot = %q/%v", slot, ok)
+	}
+	shield := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:shield")), 1)
+	if slot, ok := items.StackEquippableSlot(shield); !ok || slot != "offhand" {
+		t.Fatalf("shield equippable slot = %q/%v", slot, ok)
+	}
+	helmet.Components.Remove = []ns.VarInt{items.ComponentEquippable}
+	if slot, ok := items.StackEquippableSlot(helmet); ok {
+		t.Fatalf("removed equippable slot = %q", slot)
+	}
+	stone := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	writer := ns.NewWriter()
+	writer.WriteVarInt(5)
+	stone.Components.Add = []ns.RawSlotComponent{{ID: items.ComponentEquippable, Data: writer.Bytes()}}
+	if slot, ok := items.StackEquippableSlot(stone); !ok || slot != "head" {
+		t.Fatalf("patched equippable slot = %q/%v", slot, ok)
 	}
 }

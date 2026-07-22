@@ -305,6 +305,13 @@
         {"index": 12, "name": "DisplayOffset", "serializer": 1, "goField": "DisplayOffset", "goType": "int32"},
         {"index": 13, "name": "CustomDisplay", "serializer": 8, "goField": "CustomDisplay", "goType": "bool"}
       ]
+    },
+    "CommandBlockMinecart": {
+      "parent": "Minecart",
+      "fields": [
+        {"index": 14, "name": "Command", "serializer": 4, "goField": "Command", "goType": "string"},
+        {"index": 15, "name": "LastOutput", "serializer": 5, "goField": "LastOutput", "goType": "string", "passthrough": true}
+      ]
     }
   }
 }

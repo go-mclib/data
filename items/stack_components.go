@@ -9,6 +9,7 @@ var (
 	damageComponentID       = ns.VarInt(registries.DataComponentType.Get("minecraft:damage"))
 	enchantmentsComponentID = ns.VarInt(registries.DataComponentType.Get("minecraft:enchantments"))
 	storedEnchantmentsID    = ns.VarInt(registries.DataComponentType.Get("minecraft:stored_enchantments"))
+	equippableComponentID   = ns.VarInt(registries.DataComponentType.Get("minecraft:equippable"))
 )
 
 // StackEnchantment is one enchantment on an item stack (wire id + level).
@@ -47,6 +48,38 @@ func StackEnchantments(s ns.Slot) []StackEnchantment {
 // StackStoredEnchantments reads an enchanted book's stored enchantments.
 func StackStoredEnchantments(s ns.Slot) []StackEnchantment {
 	return readEnchantmentList(s, storedEnchantmentsID)
+}
+
+// StackEquippableSlot returns the effective equipment slot for a stack.
+func StackEquippableSlot(slot ns.Slot) (string, bool) {
+	if slot.IsEmpty() {
+		return "", false
+	}
+	equippable := DefaultComponents(int32(slot.ItemID)).Equippable
+	for _, removed := range slot.Components.Remove {
+		if removed == equippableComponentID {
+			equippable = nil
+			break
+		}
+	}
+	for _, component := range slot.Components.Add {
+		if component.ID != equippableComponentID {
+			continue
+		}
+		id, err := ns.NewReader(component.Data).ReadVarInt()
+		if err != nil {
+			return "", false
+		}
+		slots := [...]string{"mainhand", "offhand", "feet", "legs", "chest", "head", "body", "saddle"}
+		if id < 0 || int(id) >= len(slots) {
+			return "", false
+		}
+		return slots[id], true
+	}
+	if equippable == nil {
+		return "", false
+	}
+	return equippable.Slot, true
 }
 
 // WithStackStoredEnchantments copies the stack with stored enchantments

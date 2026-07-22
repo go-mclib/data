@@ -180,3 +180,37 @@ func TestBlockSupportMetadata(t *testing.T) {
 		}
 	}
 }
+
+func TestBlockFriction(t *testing.T) {
+	tests := map[string]float64{
+		"minecraft:stone":       0.6,
+		"minecraft:ice":         0.98,
+		"minecraft:packed_ice":  0.98,
+		"minecraft:frosted_ice": 0.98,
+		"minecraft:blue_ice":    0.989,
+		"minecraft:slime_block": 0.8,
+	}
+	for name, want := range tests {
+		stateID := blocks.DefaultStateID(blocks.BlockID(name))
+		if got := blocks.Friction(stateID); got != want {
+			t.Errorf("Friction(%s) = %v, want %v", name, got, want)
+		}
+		if got := blocks.StateBlockID(stateID); got != blocks.BlockID(name) {
+			t.Errorf("StateBlockID(%s) = %d, want %d", name, got, blocks.BlockID(name))
+		}
+	}
+}
+
+func TestBlockBounceRestitution(t *testing.T) {
+	tests := map[string]float64{
+		"minecraft:stone":       0,
+		"minecraft:slime_block": 1,
+		"minecraft:red_bed":     0.75,
+	}
+	for name, want := range tests {
+		stateID := blocks.DefaultStateID(blocks.BlockID(name))
+		if got := blocks.BounceRestitution(stateID); got != want {
+			t.Errorf("BounceRestitution(%s) = %v, want %v", name, got, want)
+		}
+	}
+}

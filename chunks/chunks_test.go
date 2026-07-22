@@ -3,6 +3,7 @@ package chunks_test
 import (
 	"testing"
 
+	"github.com/go-mclib/data/blocks"
 	"github.com/go-mclib/data/chunks"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 	"github.com/stretchr/testify/assert"
@@ -266,4 +267,55 @@ func TestDecodeBlockEntry(t *testing.T) {
 	assert.Equal(t, 3, lx)
 	assert.Equal(t, 12, ly)
 	assert.Equal(t, 7, lz)
+}
+
+func TestChunkBlockLightPropagatesAndClears(t *testing.T) {
+	col := chunks.NewColumn(0, 0)
+	torch := blocks.DefaultStateID(blocks.BlockID("minecraft:torch"))
+	stone := blocks.DefaultStateID(blocks.BlockID("minecraft:stone"))
+	col.SetBlockState(8, 64, 8, torch)
+	col.SetBlockState(9, 64, 8, stone)
+	col.ComputeSkylight()
+
+	assert.Equal(t, byte(14), lightAt(col.Light.BlockLightMask, col.Light.BlockLightArrays, 8, 64, 8))
+	assert.Equal(t, byte(13), lightAt(col.Light.BlockLightMask, col.Light.BlockLightArrays, 7, 64, 8))
+	assert.Equal(t, byte(0), lightAt(col.Light.BlockLightMask, col.Light.BlockLightArrays, 9, 64, 8))
+	assert.Equal(t, byte(1), lightAt(col.Light.BlockLightMask, col.Light.BlockLightArrays, 8, 77, 8))
+
+	col.SetBlockState(8, 64, 8, 0)
+	col.ComputeSkylight()
+	assert.Empty(t, col.Light.BlockLightArrays)
+}
+
+func TestChunkBlockLightUsesDynamicStateEmission(t *testing.T) {
+	col := chunks.NewColumn(0, 0)
+	furnaceID := blocks.BlockID("minecraft:furnace")
+	lit := blocks.StateID(int(furnaceID), map[string]string{"facing": "north", "lit": "true"})
+	unlit := blocks.StateID(int(furnaceID), map[string]string{"facing": "north", "lit": "false"})
+	col.SetBlockState(4, 20, 4, lit)
+	col.ComputeSkylight()
+	assert.Equal(t, byte(13), lightAt(col.Light.BlockLightMask, col.Light.BlockLightArrays, 4, 20, 4))
+
+	col.SetBlockState(4, 20, 4, unlit)
+	col.ComputeSkylight()
+	assert.Empty(t, col.Light.BlockLightArrays)
+}
+
+func lightAt(mask ns.BitSet, arrays [][]byte, x, y, z int) byte {
+	section := chunks.SectionIndex(y) + 1
+	arrayIndex := 0
+	for i := range section {
+		if mask.Get(i) {
+			arrayIndex++
+		}
+	}
+	if !mask.Get(section) {
+		return 0
+	}
+	index := ((y&15)*16+z)*16 + x
+	value := arrays[arrayIndex][index/2]
+	if index&1 == 0 {
+		return value & 15
+	}
+	return value >> 4
 }

@@ -107,19 +107,35 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 		case "minecraft:tool":
 			if m, ok := value.(map[string]any); ok {
 				sb.WriteString(fmt.Sprintf("%sTool: &Tool{\n", indent))
+				defaultMiningSpeed := 1.0
+				if value, ok := m["default_mining_speed"].(float64); ok {
+					defaultMiningSpeed = value
+				}
+				damagePerBlock := int32(1)
+				if value, ok := m["damage_per_block"].(float64); ok {
+					damagePerBlock = int32(value)
+				}
+				canDestroyBlocksInCreative := true
+				if value, ok := m["can_destroy_blocks_in_creative"].(bool); ok {
+					canDestroyBlocksInCreative = value
+				}
+				sb.WriteString(fmt.Sprintf(
+					"%s\tDefaultMiningSpeed: %v, DamagePerBlock: %d, CanDestroyBlocksInCreative: %v,\n",
+					indent, defaultMiningSpeed, damagePerBlock, canDestroyBlocksInCreative,
+				))
 				if rules, ok := m["rules"].([]any); ok && len(rules) > 0 {
 					sb.WriteString(fmt.Sprintf("%s\tRules: []ToolRule{\n", indent))
 					for _, r := range rules {
 						if rule, ok := r.(map[string]any); ok {
 							sb.WriteString(fmt.Sprintf("%s\t\t{", indent))
 							if b, ok := rule["blocks"].(string); ok {
-								sb.WriteString(fmt.Sprintf("Blocks: %q, ", b))
+								sb.WriteString(fmt.Sprintf("Blocks: []string{%q}, ", b))
 							}
 							if s, ok := rule["speed"].(float64); ok {
-								sb.WriteString(fmt.Sprintf("Speed: %v, ", s))
+								sb.WriteString(fmt.Sprintf("Speed: %v, HasSpeed: true, ", s))
 							}
 							if c, ok := rule["correct_for_drops"].(bool); ok {
-								sb.WriteString(fmt.Sprintf("CorrectForDrops: %v", c))
+								sb.WriteString(fmt.Sprintf("CorrectForDrops: %v, HasCorrectForDrops: true", c))
 							}
 							sb.WriteString("},\n")
 						}
@@ -199,6 +215,62 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 					sb.WriteString(fmt.Sprintf("%s\tItemDamagePerAttack: %d,\n", indent, int32(i)))
 				}
 				sb.WriteString(fmt.Sprintf("%s},\n", indent))
+			}
+		case "minecraft:attack_range":
+			if m, ok := value.(map[string]any); ok {
+				sb.WriteString(fmt.Sprintf("%sAttackRange: &AttackRange{\n", indent))
+				for _, field := range []struct {
+					json   string
+					goName string
+				}{
+					{"min_reach", "MinReach"},
+					{"max_reach", "MaxReach"},
+					{"min_creative_reach", "MinCreativeReach"},
+					{"max_creative_reach", "MaxCreativeReach"},
+					{"hitbox_margin", "HitboxMargin"},
+					{"mob_factor", "MobFactor"},
+				} {
+					if amount, ok := m[field.json].(float64); ok {
+						sb.WriteString(fmt.Sprintf("%s\t%s: %v,\n", indent, field.goName, amount))
+					}
+				}
+				sb.WriteString(fmt.Sprintf("%s},\n", indent))
+			}
+		case "minecraft:equippable":
+			if m, ok := value.(map[string]any); ok {
+				slot, _ := m["slot"].(string)
+				swappable, dispensable, damageOnHurt := true, true, true
+				if value, ok := m["swappable"].(bool); ok {
+					swappable = value
+				}
+				if value, ok := m["dispensable"].(bool); ok {
+					dispensable = value
+				}
+				if value, ok := m["damage_on_hurt"].(bool); ok {
+					damageOnHurt = value
+				}
+				sb.WriteString(fmt.Sprintf("%sEquippable: &Equippable{Slot: %q, Dispensable: %t, Swappable: %t, DamageOnHurt: %t", indent, slot, dispensable, swappable, damageOnHurt))
+				for _, field := range []struct {
+					json, goName string
+				}{
+					{"equip_sound", "EquipSound"},
+					{"asset_id", "AssetID"},
+					{"camera_overlay", "CameraOverlay"},
+					{"shearing_sound", "ShearingSound"},
+				} {
+					if value, ok := m[field.json].(string); ok {
+						sb.WriteString(fmt.Sprintf(", %s: %q", field.goName, value))
+					}
+				}
+				if value, ok := m["can_be_sheared"].(bool); ok {
+					sb.WriteString(fmt.Sprintf(", CanBeSheared: %t", value))
+				}
+				if allowed, ok := m["allowed_entities"]; ok {
+					sb.WriteString(", AllowedEntities: []string{")
+					generateStringValues(sb, allowed)
+					sb.WriteString("}")
+				}
+				sb.WriteString("},\n")
 			}
 		case "minecraft:enchantable":
 			if m, ok := value.(map[string]any); ok {
@@ -723,6 +795,8 @@ func componentKeyToGoField(key string) string {
 		return "Tool"
 	case "minecraft:weapon":
 		return "Weapon"
+	case "minecraft:attack_range":
+		return "AttackRange"
 	case "minecraft:enchantable":
 		return "Enchantable"
 	case "minecraft:repairable":
@@ -759,6 +833,8 @@ func componentKeyToGoField(key string) string {
 		return "Glider"
 	case "minecraft:attribute_modifiers":
 		return "AttributeModifiers"
+	case "minecraft:equippable":
+		return "Equippable"
 	// skip these for now as they're empty or complex
 	case "minecraft:enchantments",
 		"minecraft:lore",
@@ -801,8 +877,6 @@ func componentKeyToGoField(key string) string {
 		"minecraft:enchantment_glint_override",
 		"minecraft:kinetic_weapon",
 		"minecraft:piercing_weapon",
-		"minecraft:attack_range",
-		"minecraft:equippable",
 		"minecraft:unbreakable",
 		"minecraft:can_break",
 		"minecraft:can_place_on":

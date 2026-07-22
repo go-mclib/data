@@ -13,6 +13,7 @@ import (
 	"bytes"
 	"fmt"
 	"slices"
+	"strings"
 
 	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
@@ -698,7 +699,7 @@ func (codec *toolCodec) Apply(c *Components, data []byte) error {
 	if err != nil {
 		return err
 	}
-	_ = defaultSpeed // stored in rules, not in struct
+	tool.DefaultMiningSpeed = float64(defaultSpeed)
 	damagePerBlock, err := buf.ReadVarInt()
 	if err != nil {
 		return err
@@ -724,11 +725,9 @@ func (codec *toolCodec) Differs(c, defaults *Components) (bool, bool) {
 		return true, cHas
 	}
 	if cHas && dHas {
-		// simple comparison - check if rules differ
-		if len(c.Tool.Rules) != len(defaults.Tool.Rules) {
-			return true, true
-		}
-		return c.Tool.DamagePerBlock != defaults.Tool.DamagePerBlock ||
+		return !toolRulesEqual(c.Tool.Rules, defaults.Tool.Rules) ||
+			c.Tool.DefaultMiningSpeed != defaults.Tool.DefaultMiningSpeed ||
+			c.Tool.DamagePerBlock != defaults.Tool.DamagePerBlock ||
 			c.Tool.CanDestroyBlocksInCreative != defaults.Tool.CanDestroyBlocksInCreative, true
 	}
 	return false, false
@@ -745,7 +744,7 @@ func (codec *toolCodec) Encode(c *Components) ([]byte, error) {
 			return nil, err
 		}
 	}
-	w.WriteFloat32(1.0) // default mining speed
+	w.WriteFloat32(ns.Float32(c.Tool.DefaultMiningSpeed))
 	w.WriteVarInt(ns.VarInt(c.Tool.DamagePerBlock))
 	w.WriteBool(ns.Boolean(c.Tool.CanDestroyBlocksInCreative))
 	return w.Bytes(), nil
@@ -760,18 +759,23 @@ func decodeToolRule(buf *ns.PacketBuffer) (ToolRule, error) {
 		return rule, err
 	}
 	if typeID == 0 {
-		// tag reference
 		tag, err := buf.ReadString(maxStringLen)
 		if err != nil {
 			return rule, err
 		}
-		rule.Blocks = string(tag)
+		rule.Blocks = []string{"#" + string(tag)}
 	} else {
-		// list of block IDs - skip for now
+		rule.Blocks = make([]string, 0, int(typeID)-1)
 		for range int(typeID) - 1 {
-			if _, err := buf.ReadVarInt(); err != nil {
+			blockID, err := buf.ReadVarInt()
+			if err != nil {
 				return rule, err
 			}
+			name := registries.Block.ByID(int32(blockID))
+			if name == "" {
+				return rule, fmt.Errorf("unknown block holder ID %d", blockID)
+			}
+			rule.Blocks = append(rule.Blocks, name)
 		}
 	}
 	// optional speed
@@ -785,6 +789,7 @@ func decodeToolRule(buf *ns.PacketBuffer) (ToolRule, error) {
 			return rule, err
 		}
 		rule.Speed = float64(speed)
+		rule.HasSpeed = true
 	}
 	// optional correct for drops
 	hasCorrect, err := buf.ReadBool()
@@ -797,26 +802,104 @@ func decodeToolRule(buf *ns.PacketBuffer) (ToolRule, error) {
 			return rule, err
 		}
 		rule.CorrectForDrops = bool(correct)
+		rule.HasCorrectForDrops = true
 	}
 	return rule, nil
 }
 
 // encodeToolRule writes a tool rule to the buffer.
 func encodeToolRule(w *ns.PacketBuffer, rule ToolRule) error {
-	// blocks as tag reference
-	w.WriteVarInt(0)
-	w.WriteString(ns.String(rule.Blocks))
-	// speed
-	if rule.Speed > 0 {
-		w.WriteBool(true)
-		w.WriteFloat32(ns.Float32(rule.Speed))
+	if len(rule.Blocks) == 1 && strings.HasPrefix(rule.Blocks[0], "#") {
+		w.WriteVarInt(0)
+		w.WriteString(ns.String(strings.TrimPrefix(rule.Blocks[0], "#")))
 	} else {
-		w.WriteBool(false)
+		if len(rule.Blocks) == 0 {
+			return fmt.Errorf("tool rule block holder set is empty")
+		}
+		w.WriteVarInt(ns.VarInt(len(rule.Blocks) + 1))
+		for _, name := range rule.Blocks {
+			blockID := registries.Block.Get(name)
+			if blockID < 0 {
+				return fmt.Errorf("unknown tool rule block %q", name)
+			}
+			w.WriteVarInt(ns.VarInt(blockID))
+		}
 	}
-	// correct for drops
-	w.WriteBool(true)
-	w.WriteBool(ns.Boolean(rule.CorrectForDrops))
+	w.WriteBool(ns.Boolean(rule.HasSpeed))
+	if rule.HasSpeed {
+		w.WriteFloat32(ns.Float32(rule.Speed))
+	}
+	w.WriteBool(ns.Boolean(rule.HasCorrectForDrops))
+	if rule.HasCorrectForDrops {
+		w.WriteBool(ns.Boolean(rule.CorrectForDrops))
+	}
 	return nil
+}
+
+func toolRulesEqual(left, right []ToolRule) bool {
+	return slices.EqualFunc(left, right, func(left, right ToolRule) bool {
+		return slices.Equal(left.Blocks, right.Blocks) &&
+			left.Speed == right.Speed &&
+			left.HasSpeed == right.HasSpeed &&
+			left.CorrectForDrops == right.CorrectForDrops &&
+			left.HasCorrectForDrops == right.HasCorrectForDrops
+	})
+}
+
+type attackRangeCodec struct{}
+
+func (attackRangeCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	w := ns.NewWriter()
+	for range 6 {
+		if err := w.CopyFloat32(buf); err != nil {
+			return nil, err
+		}
+	}
+	return w.Bytes(), nil
+}
+
+func (attackRangeCodec) Apply(c *Components, data []byte) error {
+	buf := ns.NewReader(data)
+	values := make([]float64, 6)
+	for i := range values {
+		value, err := buf.ReadFloat32()
+		if err != nil {
+			return err
+		}
+		values[i] = float64(value)
+	}
+	c.AttackRange = &AttackRange{
+		MinReach: values[0], MaxReach: values[1],
+		MinCreativeReach: values[2], MaxCreativeReach: values[3],
+		HitboxMargin: values[4], MobFactor: values[5],
+	}
+	return nil
+}
+
+func (attackRangeCodec) Clear(c *Components) {
+	c.AttackRange = nil
+}
+
+func (attackRangeCodec) Differs(c, defaults *Components) (bool, bool) {
+	if c.AttackRange == nil || defaults.AttackRange == nil {
+		return c.AttackRange != defaults.AttackRange, c.AttackRange != nil
+	}
+	return *c.AttackRange != *defaults.AttackRange, true
+}
+
+func (attackRangeCodec) Encode(c *Components) ([]byte, error) {
+	if c.AttackRange == nil {
+		return nil, nil
+	}
+	w := ns.NewWriter()
+	for _, value := range [...]float64{
+		c.AttackRange.MinReach, c.AttackRange.MaxReach,
+		c.AttackRange.MinCreativeReach, c.AttackRange.MaxCreativeReach,
+		c.AttackRange.HitboxMargin, c.AttackRange.MobFactor,
+	} {
+		w.WriteFloat32(ns.Float32(value))
+	}
+	return w.Bytes(), nil
 }
 
 // passthroughCodec stores raw bytes without interpreting them.

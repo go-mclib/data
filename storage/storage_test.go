@@ -229,6 +229,10 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 		TicksFrozen:      91,
 		FallDistance:     6.25,
 		AbsorptionAmount: 5.5,
+		Food:             17,
+		Saturation:       2.5,
+		FoodExhaustion:   3.75,
+		FoodTickTimer:    61,
 		Inventory: []storage.InventorySlot{
 			{Slot: 0, ID: "minecraft:stone", Count: 64},
 			{Slot: 9, ID: "minecraft:diamond_sword", Count: 1, Components: nbt.Compound{"minecraft:damage": nbt.Int(17)}},
@@ -244,6 +248,8 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 			CraftingOpen: true, FurnaceFiltering: true,
 			Recipes: []string{"minecraft:oak_planks"}, ToBeDisplayed: []string{"minecraft:oak_planks"},
 		},
+		HasRespawn: true, RespawnDimension: "minecraft:overworld",
+		RespawnX: 12, RespawnY: 70, RespawnZ: -4, RespawnYaw: 90, RespawnPitch: 10,
 	}
 
 	uuid := "12345678-1234-1234-1234-123456789abc"
@@ -283,6 +289,9 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 	assert.Equal(t, int8(1), recipeBook.GetByte("isGuiOpen"))
 	assert.Equal(t, int8(1), recipeBook.GetByte("isFurnaceFilteringCraftable"))
 	assert.Equal(t, "minecraft:oak_planks", string(recipeBook.GetList("recipes").Get(0).(nbt.String)))
+	respawn := root.GetCompound("respawn")
+	assert.Equal(t, "minecraft:overworld", respawn.GetString("dimension"))
+	assert.Equal(t, []int32{12, 70, -4}, respawn.GetIntArray("pos"))
 
 	// load back
 	loaded, err := storage.LoadPlayer(pdDir, uuid)
@@ -303,6 +312,10 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 	assert.Equal(t, pd.TicksFrozen, loaded.TicksFrozen)
 	assert.Equal(t, pd.FallDistance, loaded.FallDistance)
 	assert.Equal(t, pd.AbsorptionAmount, loaded.AbsorptionAmount)
+	assert.Equal(t, pd.Food, loaded.Food)
+	assert.Equal(t, pd.Saturation, loaded.Saturation)
+	assert.Equal(t, pd.FoodExhaustion, loaded.FoodExhaustion)
+	assert.Equal(t, pd.FoodTickTimer, loaded.FoodTickTimer)
 	assert.Len(t, loaded.Inventory, 2)
 	assert.Equal(t, "minecraft:stone", loaded.Inventory[0].ID)
 	assert.Equal(t, int32(64), loaded.Inventory[0].Count)
@@ -312,6 +325,13 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 	assert.Equal(t, "minecraft:iron_helmet", loaded.Equipment[0].ID)
 	assert.Equal(t, pd.Effects, loaded.Effects)
 	assert.Equal(t, pd.RecipeBook, loaded.RecipeBook)
+	assert.True(t, loaded.HasRespawn)
+	assert.Equal(t, pd.RespawnDimension, loaded.RespawnDimension)
+	assert.Equal(t, pd.RespawnX, loaded.RespawnX)
+	assert.Equal(t, pd.RespawnY, loaded.RespawnY)
+	assert.Equal(t, pd.RespawnZ, loaded.RespawnZ)
+	assert.Equal(t, pd.RespawnYaw, loaded.RespawnYaw)
+	assert.Equal(t, pd.RespawnPitch, loaded.RespawnPitch)
 }
 
 func TestLoadPlayerNotFound(t *testing.T) {
