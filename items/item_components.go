@@ -175,16 +175,21 @@ type TypedEntityData struct {
 }
 
 type Equippable struct {
-	Slot            string
-	EquipSound      string
-	AssetID         string
-	CameraOverlay   string
-	AllowedEntities []string
-	Dispensable     bool
-	Swappable       bool
-	DamageOnHurt    bool
-	CanBeSheared    bool
-	ShearingSound   string
+	Slot                string
+	EquipSound          string
+	EquipSoundDirect    bool
+	EquipSoundRange     *float64
+	AssetID             string
+	CameraOverlay       string
+	AllowedEntities     []string
+	Dispensable         bool
+	Swappable           bool
+	DamageOnHurt        bool
+	EquipOnInteract     bool
+	CanBeSheared        bool
+	ShearingSound       string
+	ShearingSoundDirect bool
+	ShearingSoundRange  *float64
 }
 
 type FireworkExplosion struct {
@@ -469,6 +474,14 @@ func (c *Components) Clone() *Components {
 	if c.Equippable != nil {
 		v := *c.Equippable
 		v.AllowedEntities = append([]string(nil), c.Equippable.AllowedEntities...)
+		if c.Equippable.EquipSoundRange != nil {
+			value := *c.Equippable.EquipSoundRange
+			v.EquipSoundRange = &value
+		}
+		if c.Equippable.ShearingSoundRange != nil {
+			value := *c.Equippable.ShearingSoundRange
+			v.ShearingSoundRange = &value
+		}
 		clone.Equippable = &v
 	}
 	if c.FireworkExplosion != nil {
@@ -561,4 +574,8 @@ func (c *Components) Clone() *Components {
 	}
 
 	return &clone
+}
+
+func int32Pointer(value int32) *int32 {
+	return &value
 }

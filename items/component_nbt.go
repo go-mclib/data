@@ -13,6 +13,33 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
+var aquaticVariantComponentNames = map[string]map[int32]string{
+	"minecraft:axolotl/variant": {
+		0: "lucy", 1: "wild", 2: "gold", 3: "cyan", 4: "blue",
+	},
+	"minecraft:tropical_fish/pattern": {
+		0: "kob", 256: "sunstreak", 512: "snooper", 768: "dasher", 1024: "brinely", 1280: "spotty",
+		1: "flopper", 257: "stripey", 513: "glitter", 769: "blockfish", 1025: "betty", 1281: "clayfish",
+	},
+	"minecraft:tropical_fish/base_color": {
+		0: "white", 1: "orange", 2: "magenta", 3: "light_blue", 4: "yellow", 5: "lime", 6: "pink", 7: "gray",
+		8: "light_gray", 9: "cyan", 10: "purple", 11: "blue", 12: "brown", 13: "green", 14: "red", 15: "black",
+	},
+	"minecraft:tropical_fish/pattern_color": {
+		0: "white", 1: "orange", 2: "magenta", 3: "light_blue", 4: "yellow", 5: "lime", 6: "pink", 7: "gray",
+		8: "light_gray", 9: "cyan", 10: "purple", 11: "blue", 12: "brown", 13: "green", 14: "red", 15: "black",
+	},
+}
+
+func aquaticVariantComponentID(component, name string) (int32, bool) {
+	for id, candidate := range aquaticVariantComponentNames[component] {
+		if candidate == name {
+			return id, true
+		}
+	}
+	return 0, false
+}
+
 // SupportsNBTComponent reports whether a component has an NBT/wire bridge.
 func SupportsNBTComponent(name string) bool {
 	switch name {
@@ -22,14 +49,25 @@ func SupportsNBTComponent(name string) bool {
 		"minecraft:item_model", "minecraft:break_sound", "minecraft:instrument", "minecraft:jukebox_playable", "minecraft:provides_trim_material", "minecraft:rarity",
 		"minecraft:note_block_sound", "minecraft:tooltip_style", "minecraft:glider", "minecraft:creative_slot_lock", "minecraft:intangible_projectile",
 		"minecraft:bundle_contents", "minecraft:charged_projectiles", "minecraft:container", "minecraft:sulfur_cube_content", "minecraft:writable_book_content", "minecraft:written_book_content",
-		"minecraft:food", "minecraft:consumable", "minecraft:death_protection", "minecraft:weapon", "minecraft:attack_range", "minecraft:blocks_attacks", "minecraft:tool", "minecraft:enchantable", "minecraft:tooltip_display", "minecraft:use_cooldown", "minecraft:use_remainder", "minecraft:use_effects",
+		"minecraft:food", "minecraft:consumable", "minecraft:death_protection", "minecraft:weapon", "minecraft:attack_range", "minecraft:blocks_attacks", "minecraft:tool", "minecraft:enchantable", "minecraft:equippable", "minecraft:tooltip_display", "minecraft:use_cooldown", "minecraft:use_remainder", "minecraft:use_effects",
 		"minecraft:entity_data", "minecraft:block_entity_data", "minecraft:bucket_entity_data", "minecraft:debug_stick_state", "minecraft:map_decorations", "minecraft:lock", "minecraft:container_loot", "minecraft:recipes", "minecraft:block_state",
 		"minecraft:attribute_modifiers", "minecraft:custom_name", "minecraft:item_name", "minecraft:lore", "minecraft:enchantments", "minecraft:stored_enchantments",
-		"minecraft:trim", "minecraft:potion_contents", "minecraft:painting/variant", "minecraft:dye", "minecraft:dyed_color", "minecraft:base_color", "minecraft:banner_patterns", "minecraft:pot_decorations", "minecraft:firework_explosion", "minecraft:fireworks", "minecraft:custom_data":
+		"minecraft:trim", "minecraft:potion_contents", "minecraft:painting/variant", "minecraft:dye", "minecraft:dyed_color", "minecraft:base_color", "minecraft:banner_patterns", "minecraft:pot_decorations", "minecraft:firework_explosion", "minecraft:fireworks", "minecraft:custom_data",
+		"minecraft:axolotl/variant", "minecraft:tropical_fish/pattern", "minecraft:tropical_fish/base_color", "minecraft:tropical_fish/pattern_color":
 		return true
 	default:
 		return false
 	}
+}
+
+// HasWritableBookContent reports whether the effective stack is editable.
+func HasWritableBookContent(slot ns.Slot) bool {
+	stack, err := FromSlot(slot)
+	if err != nil || stack.Components == nil {
+		return false
+	}
+	_, present := stack.Components.rawPassthrough[ComponentWritableBookContent]
+	return present
 }
 
 // ComponentsToNBT converts a slot's component patch to vanilla item NBT.
@@ -45,6 +83,13 @@ func ComponentsToNBT(slot ns.Slot) nbt.Compound {
 			continue
 		}
 		switch name {
+		case "minecraft:axolotl/variant", "minecraft:tropical_fish/pattern",
+			"minecraft:tropical_fish/base_color", "minecraft:tropical_fish/pattern_color":
+			if enumID, err := ns.NewReader(raw.Data).ReadVarInt(); err == nil {
+				if enumName := aquaticVariantComponentNames[name][int32(enumID)]; enumName != "" {
+					result[name] = nbt.String(enumName)
+				}
+			}
 		case "minecraft:damage":
 			result[name] = nbt.Int(stack.Components.Damage)
 		case "minecraft:max_stack_size":
@@ -57,6 +102,10 @@ func ComponentsToNBT(slot ns.Slot) nbt.Compound {
 			result[name] = nbt.Int(stack.Components.AdditionalTradeCost)
 		case "minecraft:attribute_modifiers":
 			result[name] = attributeModifiersNBT(stack.Components.AttributeModifiers)
+		case "minecraft:equippable":
+			if stack.Components.Equippable != nil {
+				result[name] = equippableNBT(stack.Components.Equippable)
+			}
 		case "minecraft:potion_duration_scale":
 			result[name] = nbt.Float(stack.Components.PotionDurationScale)
 		case "minecraft:minimum_attack_charge":
@@ -355,6 +404,19 @@ func ApplyNBTComponents(slot ns.Slot, patch nbt.Compound) (ns.Slot, error) {
 			continue
 		}
 		switch key {
+		case "minecraft:axolotl/variant", "minecraft:tropical_fish/pattern",
+			"minecraft:tropical_fish/base_color", "minecraft:tropical_fish/pattern_color":
+			enumName, ok := value.(nbt.String)
+			if !ok {
+				return ns.Slot{}, fmt.Errorf("%s component must be a string", key)
+			}
+			enumID, ok := aquaticVariantComponentID(key, string(enumName))
+			if !ok {
+				return ns.Slot{}, fmt.Errorf("unknown %s value %q", key, enumName)
+			}
+			writer := ns.NewWriter()
+			writer.WriteVarInt(ns.VarInt(enumID))
+			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
 		case "minecraft:damage":
 			stack.Components.Damage = intValue(value)
 			stack.Components.SetPresent(id)
@@ -376,6 +438,13 @@ func ApplyNBTComponents(slot ns.Slot, patch nbt.Compound) (ns.Slot, error) {
 				return ns.Slot{}, err
 			}
 			stack.Components.AttributeModifiers = modifiers
+			stack.Components.SetPresent(id)
+		case "minecraft:equippable":
+			equippable, err := equippableFromNBT(value)
+			if err != nil {
+				return ns.Slot{}, err
+			}
+			stack.Components.Equippable = equippable
 			stack.Components.SetPresent(id)
 		case "minecraft:potion_duration_scale":
 			stack.Components.PotionDurationScale = floatValue(value)
@@ -1063,6 +1132,88 @@ func ApplyNBTComponents(slot ns.Slot, patch nbt.Compound) (ns.Slot, error) {
 		encoded.Components.Remove = append(encoded.Components.Remove, id)
 	}
 	return encoded, nil
+}
+
+func equippableNBT(component *Equippable) nbt.Tag {
+	result := nbt.Compound{"slot": nbt.String(component.Slot)}
+	if component.EquipSound != "" && component.EquipSound != "minecraft:item.armor.equip_generic" ||
+		component.EquipSoundDirect || component.EquipSoundRange != nil {
+		result["equip_sound"] = componentSoundNBT(component.EquipSound, component.EquipSoundDirect, component.EquipSoundRange)
+	}
+	if component.AssetID != "" {
+		result["asset_id"] = nbt.String(component.AssetID)
+	}
+	if component.CameraOverlay != "" {
+		result["camera_overlay"] = nbt.String(component.CameraOverlay)
+	}
+	if component.AllowedEntities != nil {
+		result["allowed_entities"] = holderSetNBT(component.AllowedEntities)
+	}
+	if !component.Dispensable {
+		result["dispensable"] = nbt.Byte(0)
+	}
+	if !component.Swappable {
+		result["swappable"] = nbt.Byte(0)
+	}
+	if !component.DamageOnHurt {
+		result["damage_on_hurt"] = nbt.Byte(0)
+	}
+	if component.EquipOnInteract {
+		result["equip_on_interact"] = nbt.Byte(1)
+	}
+	if component.CanBeSheared {
+		result["can_be_sheared"] = nbt.Byte(1)
+	}
+	if component.ShearingSound != "" && component.ShearingSound != "minecraft:item.shears.snip" ||
+		component.ShearingSoundDirect || component.ShearingSoundRange != nil {
+		result["shearing_sound"] = componentSoundNBT(component.ShearingSound, component.ShearingSoundDirect, component.ShearingSoundRange)
+	}
+	return result
+}
+
+func equippableFromNBT(value nbt.Tag) (*Equippable, error) {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return nil, fmt.Errorf("equippable component must be a compound")
+	}
+	slot := compound.GetString("slot")
+	if !slices.Contains(equipmentSlots, slot) {
+		return nil, fmt.Errorf("unknown equipment slot %q", slot)
+	}
+	component := &Equippable{
+		Slot: slot, EquipSound: "minecraft:item.armor.equip_generic",
+		Dispensable: true, Swappable: true, DamageOnHurt: true,
+		ShearingSound: "minecraft:item.shears.snip",
+	}
+	if soundTag, present := compound["equip_sound"]; present {
+		sound, err := consumableSoundFromNBT(soundTag)
+		if err != nil {
+			return nil, err
+		}
+		component.EquipSound, component.EquipSoundDirect, component.EquipSoundRange = sound.name, sound.direct, sound.fixedRange
+	}
+	component.AssetID = compound.GetString("asset_id")
+	component.CameraOverlay = compound.GetString("camera_overlay")
+	if allowed, present := compound["allowed_entities"]; present {
+		var err error
+		component.AllowedEntities, err = holderSetFromNBT(allowed)
+		if err != nil {
+			return nil, err
+		}
+	}
+	component.Dispensable = nbtBoolOr(compound, "dispensable", true)
+	component.Swappable = nbtBoolOr(compound, "swappable", true)
+	component.DamageOnHurt = nbtBoolOr(compound, "damage_on_hurt", true)
+	component.EquipOnInteract = nbtBoolOr(compound, "equip_on_interact", false)
+	component.CanBeSheared = nbtBoolOr(compound, "can_be_sheared", false)
+	if soundTag, present := compound["shearing_sound"]; present {
+		sound, err := consumableSoundFromNBT(soundTag)
+		if err != nil {
+			return nil, err
+		}
+		component.ShearingSound, component.ShearingSoundDirect, component.ShearingSoundRange = sound.name, sound.direct, sound.fixedRange
+	}
+	return component, nil
 }
 
 func blocksAttacksNBT(component *BlocksAttacks) nbt.Tag {

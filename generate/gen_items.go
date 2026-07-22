@@ -239,7 +239,7 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 		case "minecraft:equippable":
 			if m, ok := value.(map[string]any); ok {
 				slot, _ := m["slot"].(string)
-				swappable, dispensable, damageOnHurt := true, true, true
+				swappable, dispensable, damageOnHurt, equipOnInteract := true, true, true, false
 				if value, ok := m["swappable"].(bool); ok {
 					swappable = value
 				}
@@ -249,7 +249,10 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 				if value, ok := m["damage_on_hurt"].(bool); ok {
 					damageOnHurt = value
 				}
-				sb.WriteString(fmt.Sprintf("%sEquippable: &Equippable{Slot: %q, Dispensable: %t, Swappable: %t, DamageOnHurt: %t", indent, slot, dispensable, swappable, damageOnHurt))
+				if value, ok := m["equip_on_interact"].(bool); ok {
+					equipOnInteract = value
+				}
+				sb.WriteString(fmt.Sprintf("%sEquippable: &Equippable{Slot: %q, Dispensable: %t, Swappable: %t, DamageOnHurt: %t, EquipOnInteract: %t", indent, slot, dispensable, swappable, damageOnHurt, equipOnInteract))
 				for _, field := range []struct {
 					json, goName string
 				}{
@@ -284,6 +287,8 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 					sb.WriteString(fmt.Sprintf("%sRepairable: &Repairable{Items: %q},\n", indent, items))
 				}
 			}
+		case "minecraft:writable_book_content":
+			sb.WriteString(fmt.Sprintf("%srawPassthrough: map[int32][]byte{ComponentWritableBookContent: {0}},\n", indent))
 		case "minecraft:item_name":
 			if m, ok := value.(map[string]any); ok {
 				if t, ok := m["translate"].(string); ok {
@@ -331,6 +336,15 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 			if m, ok := value.(map[string]any); ok {
 				if entityType, ok := m["id"].(string); ok {
 					sb.WriteString(fmt.Sprintf("%sEntityData: &TypedEntityData{Type: %q},\n", indent, entityType))
+				}
+			}
+		case "minecraft:dye":
+			if name, ok := value.(string); ok {
+				for id, dyeName := range dyeColorNames {
+					if name == dyeName {
+						sb.WriteString(fmt.Sprintf("%sDye: int32Pointer(%d),\n", indent, id))
+						break
+					}
 				}
 			}
 		case "minecraft:map_color":
@@ -821,6 +835,8 @@ func componentKeyToGoField(key string) string {
 		return "UseRemainder"
 	case "minecraft:damage_resistant":
 		return "DamageResistant"
+	case "minecraft:dye":
+		return "Dye"
 	case "minecraft:map_color":
 		return "MapColor"
 	case "minecraft:ominous_bottle_amplifier":
@@ -835,6 +851,8 @@ func componentKeyToGoField(key string) string {
 		return "AttributeModifiers"
 	case "minecraft:equippable":
 		return "Equippable"
+	case "minecraft:writable_book_content":
+		return "rawPassthrough"
 	// skip these for now as they're empty or complex
 	case "minecraft:enchantments",
 		"minecraft:lore",
@@ -854,7 +872,6 @@ func componentKeyToGoField(key string) string {
 		"minecraft:lock",
 		"minecraft:container_loot",
 		"minecraft:pot_decorations",
-		"minecraft:writable_book_content",
 		"minecraft:written_book_content",
 		"minecraft:trim",
 		"minecraft:suspicious_stew_effects",
@@ -1048,4 +1065,9 @@ func writeEncodeField(sb *strings.Builder, goField string, f WireField) {
 			sb.WriteString("\tw.WriteVarInt(0)\n")
 		}
 	}
+}
+
+var dyeColorNames = [...]string{
+	"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
+	"light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
 }

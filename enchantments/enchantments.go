@@ -17,6 +17,63 @@ type Enchantment struct {
 	SupportedItems               []string
 	PrimaryItems                 []string
 	ExclusiveSet                 []string
+	Slots                        []string
+	EquipmentDropEffects         []EquipmentDropEffect
+}
+
+type EquipmentDropEffect struct {
+	Enchanted              string
+	Affected               string
+	Operation              string
+	Base                   float32
+	PerLevel               float32
+	RequiresAttackerPlayer bool
+}
+
+func (e EquipmentDropEffect) Apply(level int, chance float32) float32 {
+	value := e.Base + e.PerLevel*float32(level-1)
+	switch e.Operation {
+	case "minecraft:add":
+		return chance + value
+	case "minecraft:multiply":
+		return chance * value
+	case "minecraft:set":
+		return value
+	default:
+		return chance
+	}
+}
+
+func (e *Enchantment) MatchesSlot(slot string) bool {
+	for _, group := range e.Slots {
+		switch group {
+		case "any":
+			return true
+		case slot:
+			return true
+		case "hand":
+			if slot == "mainhand" || slot == "offhand" {
+				return true
+			}
+		case "armor":
+			if slot == "feet" || slot == "legs" || slot == "chest" || slot == "head" {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+var byName = func() map[string]*Enchantment {
+	result := make(map[string]*Enchantment, len(Enchantments))
+	for index := range Enchantments {
+		result[Enchantments[index].Name] = &Enchantments[index]
+	}
+	return result
+}()
+
+func Get(name string) *Enchantment {
+	return byName[name]
 }
 
 // MinCost is the lowest enchanting power that yields the enchantment at level.

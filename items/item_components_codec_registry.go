@@ -49,7 +49,7 @@ func init() {
 	RegisterCodec(ComponentConsumable, consumableCodec{})
 	RegisterCodec(ComponentUseEffects, &passthroughCodec{decode: decodeUseEffectsWire})
 	RegisterCodec(ComponentAttackRange, attackRangeCodec{})
-	RegisterCodec(ComponentEquippable, &passthroughCodec{decode: decodeEquippableWire})
+	RegisterCodec(ComponentEquippable, equippableCodec{})
 	RegisterCodec(ComponentDeathProtection, deathProtectionCodec{})
 	RegisterCodec(ComponentBlocksAttacks, blocksAttacksCodec{})
 	RegisterCodec(ComponentKineticWeapon, &passthroughCodec{decode: decodeKineticWeaponWire})

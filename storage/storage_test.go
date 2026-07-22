@@ -229,6 +229,7 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 		TicksFrozen:      91,
 		FallDistance:     6.25,
 		AbsorptionAmount: 5.5,
+		FallFlying:       true,
 		Food:             17,
 		Saturation:       2.5,
 		FoodExhaustion:   3.75,
@@ -279,6 +280,7 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 	head := root.GetCompound("equipment").GetCompound("head")
 	assert.Equal(t, "minecraft:iron_helmet", head.GetString("id"))
 	assert.Equal(t, int16(157), root.GetShort("Fire"))
+	assert.Equal(t, int8(1), root.GetByte("FallFlying"))
 	effect := root.GetList("active_effects").Get(0).(nbt.Compound)
 	assert.Equal(t, "minecraft:speed", effect.GetString("id"))
 	assert.Equal(t, int32(200), effect.GetInt("duration"))
@@ -312,6 +314,7 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 	assert.Equal(t, pd.TicksFrozen, loaded.TicksFrozen)
 	assert.Equal(t, pd.FallDistance, loaded.FallDistance)
 	assert.Equal(t, pd.AbsorptionAmount, loaded.AbsorptionAmount)
+	assert.Equal(t, pd.FallFlying, loaded.FallFlying)
 	assert.Equal(t, pd.Food, loaded.Food)
 	assert.Equal(t, pd.Saturation, loaded.Saturation)
 	assert.Equal(t, pd.FoodExhaustion, loaded.FoodExhaustion)

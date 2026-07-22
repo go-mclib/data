@@ -35,6 +35,7 @@ type PlayerData struct {
 	TicksFrozen      int32
 	FallDistance     float64
 	AbsorptionAmount float32
+	FallFlying       bool
 	Effects          []EffectData
 	RecipeBook       RecipeBookData
 	HasRespawn       bool
@@ -110,6 +111,7 @@ func SavePlayer(dir, uuid string, pd *PlayerData) error {
 		"TicksFrozen":         nbt.Int(pd.TicksFrozen),
 		"fall_distance":       nbt.Double(pd.FallDistance),
 		"AbsorptionAmount":    nbt.Float(pd.AbsorptionAmount),
+		"FallFlying":          nbt.Byte(boolByte(pd.FallFlying)),
 		"Pos": nbt.List{
 			ElementType: nbt.TagDouble,
 			Elements:    []nbt.Tag{nbt.Double(pd.X), nbt.Double(pd.Y), nbt.Double(pd.Z)},
@@ -217,6 +219,7 @@ func LoadPlayer(dir, uuid string) (*PlayerData, error) {
 		TicksFrozen:      root.GetInt("TicksFrozen"),
 		FallDistance:     root.GetDouble("fall_distance"),
 		AbsorptionAmount: root.GetFloat("AbsorptionAmount"),
+		FallFlying:       root.GetByte("FallFlying") != 0,
 	}
 
 	// position

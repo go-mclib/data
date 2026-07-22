@@ -1,6 +1,7 @@
 package packets
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/go-mclib/data/items"
@@ -717,14 +718,17 @@ func (p *C2SEditBook) Read(buf *ns.PacketBuffer) error {
 	if err != nil {
 		return err
 	}
-	p.Entries = make([]ns.String, count)
+	if count < 0 || count > 100 {
+		return fmt.Errorf("book page count %d exceeds maximum 100", count)
+	}
+	p.Entries = make([]ns.String, int(count))
 	for i := range p.Entries {
-		if p.Entries[i], err = buf.ReadString(8192); err != nil {
+		if p.Entries[i], err = buf.ReadString(1024); err != nil {
 			return err
 		}
 	}
 	return p.Title.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.String, error) {
-		return b.ReadString(128)
+		return b.ReadString(32)
 	})
 }
 

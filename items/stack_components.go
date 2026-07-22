@@ -3,10 +3,13 @@ package items
 import (
 	"github.com/go-mclib/data/registries"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	"strings"
 )
 
 var (
 	damageComponentID       = ns.VarInt(registries.DataComponentType.Get("minecraft:damage"))
+	repairCostComponentID   = ns.VarInt(registries.DataComponentType.Get("minecraft:repair_cost"))
+	repairableComponentID   = ns.VarInt(registries.DataComponentType.Get("minecraft:repairable"))
 	enchantmentsComponentID = ns.VarInt(registries.DataComponentType.Get("minecraft:enchantments"))
 	storedEnchantmentsID    = ns.VarInt(registries.DataComponentType.Get("minecraft:stored_enchantments"))
 	equippableComponentID   = ns.VarInt(registries.DataComponentType.Get("minecraft:equippable"))
@@ -38,6 +41,93 @@ func WithStackDamage(s ns.Slot, dmg int32) ns.Slot {
 	buf := ns.NewWriter()
 	buf.WriteVarInt(ns.VarInt(dmg))
 	return withComponent(s, damageComponentID, buf.Bytes())
+}
+
+// StackRepairCost reads the stack's prior-work penalty.
+func StackRepairCost(s ns.Slot) int32 {
+	for _, c := range s.Components.Add {
+		if c.ID != repairCostComponentID {
+			continue
+		}
+		v, err := ns.NewReader(c.Data).ReadVarInt()
+		if err != nil {
+			return 0
+		}
+		return int32(v)
+	}
+	return 0
+}
+
+// WithStackRepairCost copies the stack with its prior-work penalty replaced.
+func WithStackRepairCost(s ns.Slot, cost int32) ns.Slot {
+	buf := ns.NewWriter()
+	buf.WriteVarInt(ns.VarInt(cost))
+	return withComponent(s, repairCostComponentID, buf.Bytes())
+}
+
+// StackRepairableWith reports whether material matches the stack's effective repairable component.
+func StackRepairableWith(stack, material ns.Slot) bool {
+	if stack.IsEmpty() || material.IsEmpty() {
+		return false
+	}
+	removed := false
+	for _, id := range stack.Components.Remove {
+		if id == repairableComponentID {
+			removed = true
+			break
+		}
+	}
+	for _, component := range stack.Components.Add {
+		if component.ID == repairableComponentID {
+			return holderSetContainsItem(component.Data, int32(material.ItemID))
+		}
+	}
+	if removed {
+		return false
+	}
+	defaults := DefaultComponents(int32(stack.ItemID))
+	if defaults == nil || defaults.Repairable == nil {
+		return false
+	}
+	if tag, ok := strings.CutPrefix(defaults.Repairable.Items, "#"); ok {
+		for _, id := range ItemTag(tag) {
+			if id == int32(material.ItemID) {
+				return true
+			}
+		}
+		return false
+	}
+	return ItemID(defaults.Repairable.Items) == int32(material.ItemID)
+}
+
+func holderSetContainsItem(data []byte, itemID int32) bool {
+	buf := ns.NewReader(data)
+	marker, err := buf.ReadVarInt()
+	if err != nil || marker < 0 {
+		return false
+	}
+	if marker == 0 {
+		tag, err := buf.ReadString(32767)
+		if err != nil {
+			return false
+		}
+		for _, id := range ItemTag(string(tag)) {
+			if id == itemID {
+				return true
+			}
+		}
+		return false
+	}
+	for range int(marker) - 1 {
+		id, err := buf.ReadVarInt()
+		if err != nil {
+			return false
+		}
+		if int32(id) == itemID {
+			return true
+		}
+	}
+	return false
 }
 
 // StackEnchantments reads the stack's enchantments component.

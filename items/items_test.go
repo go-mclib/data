@@ -303,9 +303,14 @@ func TestBannerPatternsComponentRoundTrip(t *testing.T) {
 }
 
 func TestDyeComponentsRoundTrip(t *testing.T) {
-	defaultRed := items.DefaultComponents(items.ItemID("minecraft:red_dye"))
-	if defaultRed == nil || defaultRed.Dye == nil || *defaultRed.Dye != 14 {
-		t.Fatalf("red dye default = %+v", defaultRed)
+	for id, name := range []string{
+		"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
+		"light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
+	} {
+		defaults := items.DefaultComponents(items.ItemID("minecraft:" + name + "_dye"))
+		if defaults == nil || defaults.Dye == nil || *defaults.Dye != int32(id) {
+			t.Fatalf("%s dye default = %+v, want %d", name, defaults, id)
+		}
 	}
 	stack := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:leather_chestplate")), 1)
 	restored, err := items.ApplyNBTComponents(stack, nbt.Compound{
@@ -514,6 +519,18 @@ func TestWrittenBookContentNBTRoundTrip(t *testing.T) {
 	}
 }
 
+func TestWritableBookHasDefaultEditableContent(t *testing.T) {
+	writable := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:writable_book")), 1)
+	written := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:written_book")), 1)
+	if !items.HasWritableBookContent(writable) || items.HasWritableBookContent(written) {
+		t.Fatal("generated writable-book content default is incorrect")
+	}
+	removed, err := items.ApplyNBTComponents(writable, nbt.Compound{"!minecraft:writable_book_content": nbt.Compound{}})
+	if err != nil || items.HasWritableBookContent(removed) {
+		t.Fatalf("removed writable content remained editable: %v", err)
+	}
+}
+
 func TestWritableBookContentNBTRoundTrip(t *testing.T) {
 	patch := nbt.Compound{"minecraft:writable_book_content": nbt.Compound{
 		"pages": nbt.List{ElementType: nbt.TagCompound, Elements: []nbt.Tag{
@@ -676,6 +693,46 @@ func TestConsumableDirectSoundRangesRoundTrip(t *testing.T) {
 	}
 }
 
+func TestEquippableComponentWireAndNBTRoundTrip(t *testing.T) {
+	stack := items.NewStack(items.ItemID("minecraft:iron_helmet"), 1)
+	equipRange, shearRange := 12.5, 7.5
+	stack.Components.Equippable = &items.Equippable{
+		Slot:       "head",
+		EquipSound: "minecraft:test.equip", EquipSoundDirect: true, EquipSoundRange: &equipRange,
+		AssetID: "minecraft:test", CameraOverlay: "minecraft:misc/test",
+		AllowedEntities: []string{"#minecraft:undead"},
+		Dispensable:     false, Swappable: false, DamageOnHurt: false, EquipOnInteract: true, CanBeSheared: true,
+		ShearingSound: "minecraft:test.shear", ShearingSoundDirect: true, ShearingSoundRange: &shearRange,
+	}
+	slot, err := stack.ToSlot()
+	if err != nil {
+		t.Fatalf("ToSlot: %v", err)
+	}
+	wire := ns.NewWriter()
+	if err := wire.WriteSlot(slot); err != nil {
+		t.Fatalf("WriteSlot: %v", err)
+	}
+	decoded, err := ns.NewReader(wire.Bytes()).ReadSlot(items.Decoder())
+	if err != nil || !items.SameStack(slot, decoded) {
+		t.Fatalf("equippable wire round trip = %+v, %v", decoded.Components, err)
+	}
+	component, err := items.FromSlot(decoded)
+	if err != nil || component.Components.Equippable == nil {
+		t.Fatalf("decoded equippable = %+v, %v", component, err)
+	}
+	equippable := component.Components.Equippable
+	if equippable.Dispensable || !equippable.EquipOnInteract || !equippable.CanBeSheared ||
+		equippable.EquipSoundRange == nil || *equippable.EquipSoundRange != equipRange ||
+		equippable.ShearingSoundRange == nil || *equippable.ShearingSoundRange != shearRange {
+		t.Fatalf("decoded equippable = %+v", equippable)
+	}
+	patch := items.ComponentsToNBT(decoded)
+	restored, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:iron_helmet")), 1), patch)
+	if err != nil || !items.SameStack(decoded, restored) {
+		t.Fatalf("equippable NBT round trip = %+v, %v", patch, err)
+	}
+}
+
 func TestDirectHolderComponentNBTRoundTrip(t *testing.T) {
 	patch := nbt.Compound{
 		"minecraft:break_sound": nbt.Compound{"sound_id": nbt.String("minecraft:test.break"), "range": nbt.Float(8)},
@@ -760,6 +817,30 @@ func TestHolderComponentReferencesUseVanillaHolderEncoding(t *testing.T) {
 	for name, value := range patch {
 		if roundTrip.GetString(name) != string(value.(nbt.String)) {
 			t.Fatalf("%s round trip = %+v", name, roundTrip[name])
+		}
+	}
+}
+
+func TestAquaticVariantComponentNBTRoundTrip(t *testing.T) {
+	patch := nbt.Compound{
+		"minecraft:axolotl/variant":             nbt.String("blue"),
+		"minecraft:tropical_fish/pattern":       nbt.String("clayfish"),
+		"minecraft:tropical_fish/base_color":    nbt.String("cyan"),
+		"minecraft:tropical_fish/pattern_color": nbt.String("magenta"),
+	}
+	slot, err := items.ApplyNBTComponents(
+		ns.NewSlot(ns.VarInt(items.ItemID("minecraft:tropical_fish_bucket")), 1), patch,
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := items.FromSlot(slot); err != nil {
+		t.Fatalf("FromSlot: %v", err)
+	}
+	roundTrip := items.ComponentsToNBT(slot)
+	for name, value := range patch {
+		if got := roundTrip.GetString(name); got != string(value.(nbt.String)) {
+			t.Fatalf("%s = %q, want %q", name, got, value)
 		}
 	}
 }
