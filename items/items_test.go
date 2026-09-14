@@ -11,6 +11,32 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
+func TestFormattedLoreRetainsNestedTextAndWireStyle(t *testing.T) {
+	writer := ns.NewWriter()
+	writer.WriteVarInt(2)
+	for _, line := range []ns.TextComponent{
+		{Extra: []ns.TextComponent{{Text: "Spend ", Color: "gray"}, {Extra: []ns.TextComponent{{Text: "10 souls", Color: "gold"}}}}},
+		{Text: "Right click ", Extra: []ns.TextComponent{{Text: "to redeem", Color: "yellow"}}},
+	} {
+		if err := writer.WriteTextComponent(line); err != nil {
+			t.Fatal(err)
+		}
+	}
+	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:recovery_compass")), 1)
+	slot.Components.Add = []ns.RawSlotComponent{{ID: items.ComponentLore, Data: writer.Bytes()}}
+	stack, err := items.FromSlot(slot)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := []string{"Spend 10 souls", "Right click to redeem"}; !reflect.DeepEqual(stack.Components.Lore, want) {
+		t.Fatalf("formatted lore = %q, want %q", stack.Components.Lore, want)
+	}
+	restored, err := stack.ToSlot()
+	if err != nil || !items.SameStack(slot, restored) {
+		t.Fatalf("styled lore changed on replay: %v, %v", restored, err)
+	}
+}
+
 func TestReadPotionContentsCustomFields(t *testing.T) {
 	writer := ns.NewWriter()
 	writer.WriteBool(true)

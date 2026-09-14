@@ -500,15 +500,11 @@ func (codec *loreCodec) Apply(c *Components, data []byte) error {
 	}
 	lore := make([]string, 0, count)
 	for range int(count) {
-		name, err := decodeItemName(buf)
+		line, err := buf.ReadTextComponent()
 		if err != nil {
 			return err
 		}
-		if name.Translate != "" {
-			lore = append(lore, name.Translate)
-		} else {
-			lore = append(lore, name.Text)
-		}
+		lore = append(lore, line.String())
 	}
 	c.Lore = lore
 	c.loreRaw = append([]byte(nil), data...)
