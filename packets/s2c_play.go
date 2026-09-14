@@ -1061,10 +1061,8 @@ func (p *S2CDisconnectPlay) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Disguised_Chat_Message
 type S2CDisguisedChat struct {
-	Message    ns.TextComponent
-	ChatType   ns.ByteArray
-	SenderName ns.TextComponent
-	TargetName ns.PrefixedOptional[ns.TextComponent]
+	Message  ns.TextComponent
+	ChatType ChatTypeBound
 }
 
 func (p *S2CDisguisedChat) Read(buf *ns.PacketBuffer) error {
@@ -1072,30 +1070,14 @@ func (p *S2CDisguisedChat) Read(buf *ns.PacketBuffer) error {
 	if p.Message, err = buf.ReadTextComponent(); err != nil {
 		return err
 	}
-	if p.ChatType, err = buf.ReadByteArray(1048576); err != nil {
-		return err
-	}
-	if p.SenderName, err = buf.ReadTextComponent(); err != nil {
-		return err
-	}
-	return p.TargetName.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
-		return b.ReadTextComponent()
-	})
+	return p.ChatType.read(buf)
 }
 
 func (p *S2CDisguisedChat) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteTextComponent(p.Message); err != nil {
 		return err
 	}
-	if err := buf.WriteByteArray(p.ChatType); err != nil {
-		return err
-	}
-	if err := buf.WriteTextComponent(p.SenderName); err != nil {
-		return err
-	}
-	return p.TargetName.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.TextComponent) error {
-		return b.WriteTextComponent(v)
-	})
+	return p.ChatType.write(buf)
 }
 
 // S2CEntityEvent represents "Entity Event".
@@ -2288,6 +2270,32 @@ type ChatTypeBound struct {
 	TargetName ns.PrefixedOptional[ns.TextComponent] // target's display name (for whispers)
 }
 
+func (c *ChatTypeBound) read(buf *ns.PacketBuffer) error {
+	var err error
+	if c.ChatType, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	c.ChatType-- // Registry references use id + 1 on the wire.
+	if c.Name, err = buf.ReadTextComponent(); err != nil {
+		return err
+	}
+	return c.TargetName.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
+		return b.ReadTextComponent()
+	})
+}
+
+func (c *ChatTypeBound) write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(c.ChatType + 1); err != nil {
+		return err
+	}
+	if err := buf.WriteTextComponent(c.Name); err != nil {
+		return err
+	}
+	return c.TargetName.EncodeWith(buf, func(b *ns.PacketBuffer, value ns.TextComponent) error {
+		return b.WriteTextComponent(value)
+	})
+}
+
 func (p *S2CPlayerChat) Read(buf *ns.PacketBuffer) error {
 	var err error
 
@@ -2368,21 +2376,7 @@ func (p *S2CPlayerChat) Read(buf *ns.PacketBuffer) error {
 		p.FilterMask.Mask = bitset
 	}
 
-	// ChatType (holder format: VarInt(id + 1) for registry reference)
-	if p.ChatType.ChatType, err = buf.ReadVarInt(); err != nil {
-		return err
-	}
-	p.ChatType.ChatType-- // convert from wire (id+1) to logical id
-	if p.ChatType.Name, err = buf.ReadTextComponent(); err != nil {
-		return err
-	}
-	if err = p.ChatType.TargetName.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
-		return b.ReadTextComponent()
-	}); err != nil {
-		return err
-	}
-
-	return nil
+	return p.ChatType.read(buf)
 }
 
 func (p *S2CPlayerChat) Write(buf *ns.PacketBuffer) error {
@@ -2444,20 +2438,7 @@ func (p *S2CPlayerChat) Write(buf *ns.PacketBuffer) error {
 		}
 	}
 
-	// ChatType (holder format: VarInt(id + 1) for registry reference, 0 = direct/inline)
-	if err := buf.WriteVarInt(p.ChatType.ChatType + 1); err != nil {
-		return err
-	}
-	if err := buf.WriteTextComponent(p.ChatType.Name); err != nil {
-		return err
-	}
-	if err := p.ChatType.TargetName.EncodeWith(buf, func(b *ns.PacketBuffer, tc ns.TextComponent) error {
-		return b.WriteTextComponent(tc)
-	}); err != nil {
-		return err
-	}
-
-	return nil
+	return p.ChatType.write(buf)
 }
 
 // GetMessage returns the chat message content.
