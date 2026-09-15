@@ -11,15 +11,23 @@ import (
 type mcdumpBlocks struct {
 	Blocks map[string]struct {
 		States []struct {
-			ID          int32 `json:"id"`
-			Shape       int   `json:"shape"`
-			Replaceable bool  `json:"replaceable"`
-			IgniteOdds  uint8 `json:"igniteOdds"`
-			BurnOdds    uint8 `json:"burnOdds"`
-			SturdyTop   bool  `json:"sturdyTop"`
+			ID                  int32 `json:"id"`
+			Shape               int   `json:"shape"`
+			Replaceable         bool  `json:"replaceable"`
+			IgniteOdds          uint8 `json:"igniteOdds"`
+			BurnOdds            uint8 `json:"burnOdds"`
+			SturdyTop           bool  `json:"sturdyTop"`
+			BlocksMotion        bool  `json:"blocksMotion"`
+			LargeCollisionShape bool  `json:"largeCollisionShape"`
+			Suffocating         bool  `json:"suffocating"`
+			SturdyFaces         uint8 `json:"sturdyFaces"`
+			FluidKind           uint8 `json:"fluidKind"`
+			FluidAmount         uint8 `json:"fluidAmount"`
+			FluidFalling        bool  `json:"fluidFalling"`
 		} `json:"states"`
 	} `json:"blocks"`
-	Shapes [][][]float64 `json:"shapes"` // shape -> list of [minX,minY,minZ,maxX,maxY,maxZ]
+	Shapes           [][][]float64 `json:"shapes"`           // shape -> list of [minX,minY,minZ,maxX,maxY,maxZ]
+	ShapeCoordinates [][][]float64 `json:"shapeCoordinates"` // shape -> axis X/Y/Z -> voxel planes
 }
 
 // generateBlockShapes reads the mod's blocks.json (real game collision shapes per
@@ -30,19 +38,20 @@ func generateBlockShapes(mcdumpPath, outPath string) {
 
 	// re-intern shapes with the empty shape pinned at index 0.
 	compact := [][][]float64{{}}
-	indexByKey := map[string]int{shapeKey(nil): 0}
-	fullBlockIdx := 0
-	intern := func(aabbs [][]float64) int {
-		key := shapeKey(aabbs)
+	coordinates := [][][]float64{{nil, nil, nil}}
+	indexByKey := map[string]int{}
+	intern := func(aabbs, coords [][]float64) int {
+		if len(aabbs) == 0 {
+			return 0
+		}
+		key := shapeKey(aabbs) + ";" + shapeKey(coords)
 		if i, ok := indexByKey[key]; ok {
 			return i
 		}
 		i := len(compact)
 		compact = append(compact, aabbs)
+		coordinates = append(coordinates, coords)
 		indexByKey[key] = i
-		if isFullBlockShape(aabbs) {
-			fullBlockIdx = i
-		}
 		return i
 	}
 
@@ -56,9 +65,29 @@ func generateBlockShapes(mcdumpPath, outPath string) {
 	}
 
 	shapeByState := make([]uint16, maxStateID+1)
+	collisionFlags := make([]uint8, maxStateID+1)
+	sturdyFaces := make([]uint8, maxStateID+1)
+	fluidStates := make([]uint8, maxStateID+1)
 	for _, b := range dump.Blocks {
 		for _, s := range b.States {
-			shapeByState[s.ID] = uint16(intern(dump.Shapes[s.Shape]))
+			shapeByState[s.ID] = uint16(intern(dump.Shapes[s.Shape], dump.ShapeCoordinates[s.Shape]))
+			if s.BlocksMotion {
+				collisionFlags[s.ID] |= 1
+			}
+			if s.LargeCollisionShape {
+				collisionFlags[s.ID] |= 2
+			}
+			if s.Suffocating {
+				collisionFlags[s.ID] |= 4
+			}
+			if isFullBlockShape(dump.Shapes[s.Shape]) {
+				collisionFlags[s.ID] |= 8
+			}
+			sturdyFaces[s.ID] = s.SturdyFaces
+			fluidStates[s.ID] = s.FluidKind | s.FluidAmount<<2
+			if s.FluidFalling {
+				fluidStates[s.ID] |= 1 << 6
+			}
 		}
 	}
 	checkMinCount("block shape states", len(shapeByState), 1000)
@@ -66,7 +95,6 @@ func generateBlockShapes(mcdumpPath, outPath string) {
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("block_shapes"))
 	sb.WriteString("import \"github.com/go-mclib/data/hitboxes\"\n\n")
-	sb.WriteString(fmt.Sprintf("const fullBlockShapeIdx = %d\n\n", fullBlockIdx))
 
 	sb.WriteString(fmt.Sprintf("// shapes contains %d unique collision shapes (shape 0 is empty).\n", len(compact)))
 	sb.WriteString("var shapes = [...][]hitboxes.AABB{\n")
@@ -87,6 +115,20 @@ func generateBlockShapes(mcdumpPath, outPath string) {
 		sb.WriteString("},\n")
 	}
 	sb.WriteString("}\n\n")
+	sb.WriteString("var shapeCoordinates = [...][3][]float64{\n")
+	for _, axes := range coordinates {
+		sb.WriteString("\t{")
+		for _, coords := range axes {
+			sb.WriteString("{")
+			for _, coord := range coords {
+				sb.WriteString(formatFloat(coord))
+				sb.WriteByte(',')
+			}
+			sb.WriteString("},")
+		}
+		sb.WriteString("},\n")
+	}
+	sb.WriteString("}\n\n")
 
 	sb.WriteString(fmt.Sprintf("// shapeByState maps each of %d block state IDs to a shape index.\n", len(shapeByState)))
 	sb.WriteString("var shapeByState = [...]uint16{\n\t")
@@ -97,6 +139,9 @@ func generateBlockShapes(mcdumpPath, outPath string) {
 		sb.WriteString(fmt.Sprintf("%d, ", idx))
 	}
 	sb.WriteString("\n}\n")
+	writeUint8Array(&sb, "collisionFlags", collisionFlags)
+	writeUint8Array(&sb, "sturdyFaces", sturdyFaces)
+	writeUint8Array(&sb, "fluidStates", fluidStates)
 
 	writeFile(outPath, sb.String())
 	fmt.Printf("block shapes: %d states, %d unique shapes\n", len(shapeByState), len(compact))

@@ -147,14 +147,19 @@ func (p *C2SChatCommand) Write(buf *ns.PacketBuffer) error {
 // C2SChatCommandSigned represents "Signed Chat Command".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Signed_Chat_Command
+type CommandArgumentSignature struct {
+	Name      ns.String
+	Signature [256]byte
+}
+
 type C2SChatCommandSigned struct {
-	Command      ns.String
-	Timestamp    ns.Int64
-	Salt         ns.Int64
-	Signature    ns.ByteArray
-	MessageCount ns.VarInt
-	Acknowledged *ns.FixedBitSet
-	Checksum     ns.Int8
+	Command            ns.String
+	Timestamp          ns.Int64
+	Salt               ns.Int64
+	ArgumentSignatures []CommandArgumentSignature
+	MessageCount       ns.VarInt
+	Acknowledged       *ns.FixedBitSet
+	Checksum           ns.Int8
 }
 
 func (p *C2SChatCommandSigned) Read(buf *ns.PacketBuffer) error {
@@ -168,8 +173,21 @@ func (p *C2SChatCommandSigned) Read(buf *ns.PacketBuffer) error {
 	if p.Salt, err = buf.ReadInt64(); err != nil {
 		return err
 	}
-	if p.Signature, err = buf.ReadByteArray(256); err != nil {
+	count, err := buf.ReadVarInt()
+	if err != nil {
 		return err
+	}
+	if count < 0 || count > 8 {
+		return fmt.Errorf("invalid command signature count: %d", count)
+	}
+	p.ArgumentSignatures = make([]CommandArgumentSignature, int(count))
+	for i := range p.ArgumentSignatures {
+		if p.ArgumentSignatures[i].Name, err = buf.ReadString(16); err != nil {
+			return err
+		}
+		if _, err = buf.Read(p.ArgumentSignatures[i].Signature[:]); err != nil {
+			return err
+		}
 	}
 	if p.MessageCount, err = buf.ReadVarInt(); err != nil {
 		return err
@@ -194,8 +212,22 @@ func (p *C2SChatCommandSigned) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt64(p.Salt); err != nil {
 		return err
 	}
-	if err := buf.WriteByteArray(p.Signature); err != nil {
+	if len(p.ArgumentSignatures) > 8 {
+		return fmt.Errorf("too many command signatures")
+	}
+	if err := buf.WriteVarInt(ns.VarInt(len(p.ArgumentSignatures))); err != nil {
 		return err
+	}
+	for _, argument := range p.ArgumentSignatures {
+		if len(argument.Name) == 0 || len(argument.Name) > 16 {
+			return fmt.Errorf("invalid signed argument name")
+		}
+		if err := buf.WriteString(argument.Name); err != nil {
+			return err
+		}
+		if _, err := buf.Write(argument.Signature[:]); err != nil {
+			return err
+		}
 	}
 	if err := buf.WriteVarInt(p.MessageCount); err != nil {
 		return err

@@ -18,6 +18,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -66,6 +68,7 @@ public final class Dump {
 		final JsonObject root = new JsonObject();
 		final JsonObject blocks = new JsonObject();
 		final List<JsonArray> shapeTable = new ArrayList<>();
+		final List<JsonArray> coordinateTable = new ArrayList<>();
 		final Map<String, Integer> shapeIndex = new HashMap<>();
 
 		for (final Block block : sortedByKey(BuiltInRegistries.BLOCK)) {
@@ -87,11 +90,26 @@ public final class Dump {
 				}
 				sobj.add("properties", props);
 				final VoxelShape shape = state.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO);
-				sobj.addProperty("shape", shapeIndexOf(shape, shapeTable, shapeIndex));
+				sobj.addProperty("shape", shapeIndexOf(shape, shapeTable, coordinateTable, shapeIndex));
 				sobj.addProperty("replaceable", state.canBeReplaced());
 				sobj.addProperty("igniteOdds", fireOdds(FIRE_IGNITE_ODDS, state));
 				sobj.addProperty("burnOdds", fireOdds(FIRE_BURN_ODDS, state));
 				sobj.addProperty("sturdyTop", state.isFaceSturdy(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, Direction.UP));
+				sobj.addProperty("blocksMotion", state.blocksMotion());
+				sobj.addProperty("largeCollisionShape", state.hasLargeCollisionShape());
+				sobj.addProperty("suffocating", state.isSuffocating(EmptyBlockGetter.INSTANCE, BlockPos.ZERO));
+				int sturdyFaces = 0;
+				for (final Direction direction : Direction.values()) {
+					if (state.isFaceSturdy(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, direction)) {
+						sturdyFaces |= 1 << direction.get3DDataValue();
+					}
+				}
+				sobj.addProperty("sturdyFaces", sturdyFaces);
+				final var fluid = state.getFluidState();
+				// Bootstrap does not bind datapack tags; identify both flowing and source variants directly.
+				sobj.addProperty("fluidKind", fluid.getType().isSame(Fluids.WATER) ? 1 : fluid.getType().isSame(Fluids.LAVA) ? 2 : 0);
+				sobj.addProperty("fluidAmount", fluid.getAmount());
+				sobj.addProperty("fluidFalling", !fluid.isEmpty() && fluid.hasProperty(FlowingFluid.FALLING) && fluid.getValue(FlowingFluid.FALLING));
 				states.add(sobj);
 			}
 			bobj.add("states", states);
@@ -104,26 +122,41 @@ public final class Dump {
 			shapes.add(s);
 		}
 		root.add("shapes", shapes);
+		final JsonArray coordinates = new JsonArray();
+		for (final JsonArray coords : coordinateTable) {
+			coordinates.add(coords);
+		}
+		root.add("shapeCoordinates", coordinates);
 		return root;
 	}
 
-	private static int shapeIndexOf(final VoxelShape shape, final List<JsonArray> table, final Map<String, Integer> index) {
+	private static int shapeIndexOf(final VoxelShape shape, final List<JsonArray> table, final List<JsonArray> coordinateTable, final Map<String, Integer> index) {
 		final JsonArray boxes = new JsonArray();
 		final StringBuilder key = new StringBuilder();
 		for (final AABB b : shape.toAabbs()) {
 			final JsonArray box = new JsonArray();
 			for (final double d : new double[]{b.minX, b.minY, b.minZ, b.maxX, b.maxY, b.maxZ}) {
-				box.add(round(d));
+				box.add(d);
 			}
 			boxes.add(box);
 			key.append(box).append('|');
 		}
+		final JsonArray coordinates = new JsonArray();
+		for (final Direction.Axis axis : Direction.Axis.values()) {
+			final JsonArray coords = new JsonArray();
+			for (final double coord : shape.getCoords(axis)) {
+				coords.add(coord);
+			}
+			coordinates.add(coords);
+		}
+		key.append(coordinates);
 		final Integer existing = index.get(key.toString());
 		if (existing != null) {
 			return existing;
 		}
 		final int id = table.size();
 		table.add(boxes);
+		coordinateTable.add(coordinates);
 		index.put(key.toString(), id);
 		return id;
 	}

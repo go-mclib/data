@@ -4,9 +4,30 @@ package entities
 
 // Entity metadata field indices.
 
+// AbstractCubeMob metadata indices
+const (
+	AbstractCubeMobIndexSize = 18
+)
+
+// AbstractFish metadata indices
+const (
+	AbstractFishIndexFromBucket = 16
+)
+
+// AbstractPiglin metadata indices
+const (
+	AbstractPiglinIndexImmuneToZombification = 16
+)
+
+// AbstractVillager metadata indices
+const (
+	AbstractVillagerIndexUnhappyCounter = 18
+)
+
 // AgeableMob metadata indices
 const (
-	AgeableMobIndexIsBaby = 16
+	AgeableMobIndexIsBaby    = 16
+	AgeableMobIndexAgeLocked = 17
 )
 
 // ArmorStand metadata indices
@@ -55,17 +76,17 @@ const (
 
 // Cat metadata indices
 const (
-	CatIndexVariant      = 17
-	CatIndexIsLying      = 18
-	CatIndexIsRelaxed    = 19
-	CatIndexCollarColor  = 20
-	CatIndexSoundVariant = 21
+	CatIndexVariant      = 20
+	CatIndexIsLying      = 21
+	CatIndexIsRelaxed    = 22
+	CatIndexCollarColor  = 23
+	CatIndexSoundVariant = 24
 )
 
 // Chicken metadata indices
 const (
-	ChickenIndexVariant      = 17
-	ChickenIndexSoundVariant = 18
+	ChickenIndexVariant      = 18
+	ChickenIndexSoundVariant = 19
 )
 
 // CommandBlockMinecart metadata indices
@@ -76,8 +97,8 @@ const (
 
 // Cow metadata indices
 const (
-	CowIndexVariant      = 17
-	CowIndexSoundVariant = 18
+	CowIndexVariant      = 18
+	CowIndexSoundVariant = 19
 )
 
 // Creeper metadata indices
@@ -126,6 +147,12 @@ const (
 	GhastIndexIsCharging = 16
 )
 
+// HappyGhast metadata indices
+const (
+	HappyGhastIndexIsLeashHolder = 18
+	HappyGhastIndexStaysStill    = 19
+)
+
 // ItemEntity metadata indices
 const (
 	ItemEntityIndexItem = 8
@@ -163,11 +190,23 @@ const (
 	MobIndexMobFlags = 15
 )
 
+// Phantom metadata indices
+const (
+	PhantomIndexSize = 16
+)
+
 // Pig metadata indices
 const (
-	PigIndexBoostTime    = 17
-	PigIndexVariant      = 18
-	PigIndexSoundVariant = 19
+	PigIndexBoostTime    = 18
+	PigIndexVariant      = 19
+	PigIndexSoundVariant = 20
+)
+
+// Piglin metadata indices
+const (
+	PiglinIndexIsBaby             = 17
+	PiglinIndexIsChargingCrossbow = 18
+	PiglinIndexIsDancing          = 19
 )
 
 // Player metadata indices
@@ -178,9 +217,26 @@ const (
 	PlayerIndexRightShoulderEntity = 20
 )
 
+// Pufferfish metadata indices
+const (
+	PufferfishIndexPuffState = 17
+)
+
+// Salmon metadata indices
+const (
+	SalmonIndexVariant = 17
+)
+
 // Sheep metadata indices
 const (
-	SheepIndexColorFlags = 17
+	SheepIndexColorFlags = 18
+)
+
+// Shulker metadata indices
+const (
+	ShulkerIndexAttachFace = 16
+	ShulkerIndexPeek       = 17
+	ShulkerIndexColor      = 18
 )
 
 // Skeleton metadata indices
@@ -188,14 +244,21 @@ const (
 	SkeletonIndexIsConverting = 16
 )
 
-// Slime metadata indices
+// Sniffer metadata indices
 const (
-	SlimeIndexSize = 16
+	SnifferIndexState          = 18
+	SnifferIndexDropSeedAtTick = 19
 )
 
 // Spider metadata indices
 const (
 	SpiderIndexSpiderFlags = 16
+)
+
+// TamableAnimal metadata indices
+const (
+	TamableAnimalIndexTamableFlags = 18
+	TamableAnimalIndexOwner        = 19
 )
 
 // Trident metadata indices
@@ -206,7 +269,8 @@ const (
 
 // Villager metadata indices
 const (
-	VillagerIndexVillagerData = 17
+	VillagerIndexVillagerData          = 19
+	VillagerIndexVillagerDataFinalized = 20
 )
 
 // Wither metadata indices
@@ -219,11 +283,11 @@ const (
 
 // Wolf metadata indices
 const (
-	WolfIndexIsTamed      = 17
-	WolfIndexVariant      = 18
-	WolfIndexSoundVariant = 19
-	WolfIndexIsAngry      = 20
+	WolfIndexIsInterested = 20
 	WolfIndexCollarColor  = 21
+	WolfIndexAngerEndTime = 22
+	WolfIndexVariant      = 23
+	WolfIndexSoundVariant = 24
 )
 
 // Zombie metadata indices
@@ -240,8 +304,8 @@ type MetadataEntry struct {
 	Data       []byte // raw wire data
 }
 
-// AgeableMobMetadata contains metadata fields for AgeableMob entities.
-type AgeableMobMetadata struct {
+// AbstractCubeMobMetadata contains metadata fields for AbstractCubeMob entities.
+type AbstractCubeMobMetadata struct {
 	// field presence flags
 	HasFlags             bool
 	HasAirSupply         bool
@@ -257,6 +321,8 @@ type AgeableMobMetadata struct {
 	HasStingerCount      bool
 	HasMobFlags          bool
 	HasIsBaby            bool
+	HasAgeLocked         bool
+	HasSize              bool
 
 	// field values
 	Flags             byte
@@ -276,6 +342,166 @@ type AgeableMobMetadata struct {
 	SleepingPos       []byte // passthrough
 	MobFlags          byte
 	IsBaby            bool
+	AgeLocked         bool
+	Size              int32
+}
+
+// AbstractFishMetadata contains metadata fields for AbstractFish entities.
+type AbstractFishMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasLivingFlags       bool
+	HasHealth            bool
+	HasEffectAmbient     bool
+	HasArrowCount        bool
+	HasStingerCount      bool
+	HasMobFlags          bool
+	HasFromBucket        bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	LivingFlags       byte
+	Health            float32
+	EffectParticles   []byte // passthrough
+	EffectAmbient     bool
+	ArrowCount        int32
+	StingerCount      int32
+	SleepingPos       []byte // passthrough
+	MobFlags          byte
+	FromBucket        bool
+}
+
+// AbstractPiglinMetadata contains metadata fields for AbstractPiglin entities.
+type AbstractPiglinMetadata struct {
+	// field presence flags
+	HasFlags                 bool
+	HasAirSupply             bool
+	HasCustomNameVisible     bool
+	HasSilent                bool
+	HasNoGravity             bool
+	HasPose                  bool
+	HasTicksFrozen           bool
+	HasLivingFlags           bool
+	HasHealth                bool
+	HasEffectAmbient         bool
+	HasArrowCount            bool
+	HasStingerCount          bool
+	HasMobFlags              bool
+	HasImmuneToZombification bool
+
+	// field values
+	Flags                 byte
+	AirSupply             int32
+	CustomName            *string
+	CustomNameVisible     bool
+	Silent                bool
+	NoGravity             bool
+	Pose                  int32
+	TicksFrozen           int32
+	LivingFlags           byte
+	Health                float32
+	EffectParticles       []byte // passthrough
+	EffectAmbient         bool
+	ArrowCount            int32
+	StingerCount          int32
+	SleepingPos           []byte // passthrough
+	MobFlags              byte
+	ImmuneToZombification bool
+}
+
+// AbstractVillagerMetadata contains metadata fields for AbstractVillager entities.
+type AbstractVillagerMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasLivingFlags       bool
+	HasHealth            bool
+	HasEffectAmbient     bool
+	HasArrowCount        bool
+	HasStingerCount      bool
+	HasMobFlags          bool
+	HasIsBaby            bool
+	HasAgeLocked         bool
+	HasUnhappyCounter    bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	LivingFlags       byte
+	Health            float32
+	EffectParticles   []byte // passthrough
+	EffectAmbient     bool
+	ArrowCount        int32
+	StingerCount      int32
+	SleepingPos       []byte // passthrough
+	MobFlags          byte
+	IsBaby            bool
+	AgeLocked         bool
+	UnhappyCounter    int32
+}
+
+// AgeableMobMetadata contains metadata fields for AgeableMob entities.
+type AgeableMobMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasLivingFlags       bool
+	HasHealth            bool
+	HasEffectAmbient     bool
+	HasArrowCount        bool
+	HasStingerCount      bool
+	HasMobFlags          bool
+	HasIsBaby            bool
+	HasAgeLocked         bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	LivingFlags       byte
+	Health            float32
+	EffectParticles   []byte // passthrough
+	EffectAmbient     bool
+	ArrowCount        int32
+	StingerCount      int32
+	SleepingPos       []byte // passthrough
+	MobFlags          byte
+	IsBaby            bool
+	AgeLocked         bool
 }
 
 // ArmorStandMetadata contains metadata fields for ArmorStand entities.
@@ -519,6 +745,8 @@ type CatMetadata struct {
 	HasStingerCount      bool
 	HasMobFlags          bool
 	HasIsBaby            bool
+	HasAgeLocked         bool
+	HasTamableFlags      bool
 	HasVariant           bool
 	HasIsLying           bool
 	HasIsRelaxed         bool
@@ -543,6 +771,9 @@ type CatMetadata struct {
 	SleepingPos       []byte // passthrough
 	MobFlags          byte
 	IsBaby            bool
+	AgeLocked         bool
+	TamableFlags      byte
+	Owner             []byte // passthrough
 	Variant           int32
 	IsLying           bool
 	IsRelaxed         bool
@@ -567,6 +798,7 @@ type ChickenMetadata struct {
 	HasStingerCount      bool
 	HasMobFlags          bool
 	HasIsBaby            bool
+	HasAgeLocked         bool
 	HasVariant           bool
 	HasSoundVariant      bool
 
@@ -588,6 +820,7 @@ type ChickenMetadata struct {
 	SleepingPos       []byte // passthrough
 	MobFlags          byte
 	IsBaby            bool
+	AgeLocked         bool
 	Variant           int32
 	SoundVariant      int32
 }
@@ -646,6 +879,7 @@ type CowMetadata struct {
 	HasStingerCount      bool
 	HasMobFlags          bool
 	HasIsBaby            bool
+	HasAgeLocked         bool
 	HasVariant           bool
 	HasSoundVariant      bool
 
@@ -667,6 +901,7 @@ type CowMetadata struct {
 	SleepingPos       []byte // passthrough
 	MobFlags          byte
 	IsBaby            bool
+	AgeLocked         bool
 	Variant           int32
 	SoundVariant      int32
 }
@@ -921,6 +1156,50 @@ type GhastMetadata struct {
 	IsCharging        bool
 }
 
+// HappyGhastMetadata contains metadata fields for HappyGhast entities.
+type HappyGhastMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasLivingFlags       bool
+	HasHealth            bool
+	HasEffectAmbient     bool
+	HasArrowCount        bool
+	HasStingerCount      bool
+	HasMobFlags          bool
+	HasIsBaby            bool
+	HasAgeLocked         bool
+	HasIsLeashHolder     bool
+	HasStaysStill        bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	LivingFlags       byte
+	Health            float32
+	EffectParticles   []byte // passthrough
+	EffectAmbient     bool
+	ArrowCount        int32
+	StingerCount      int32
+	SleepingPos       []byte // passthrough
+	MobFlags          byte
+	IsBaby            bool
+	AgeLocked         bool
+	IsLeashHolder     bool
+	StaysStill        bool
+}
+
 // ItemEntityMetadata contains metadata fields for ItemEntity entities.
 type ItemEntityMetadata struct {
 	// field presence flags
@@ -1073,6 +1352,44 @@ type MobMetadata struct {
 	MobFlags          byte
 }
 
+// PhantomMetadata contains metadata fields for Phantom entities.
+type PhantomMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasLivingFlags       bool
+	HasHealth            bool
+	HasEffectAmbient     bool
+	HasArrowCount        bool
+	HasStingerCount      bool
+	HasMobFlags          bool
+	HasSize              bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	LivingFlags       byte
+	Health            float32
+	EffectParticles   []byte // passthrough
+	EffectAmbient     bool
+	ArrowCount        int32
+	StingerCount      int32
+	SleepingPos       []byte // passthrough
+	MobFlags          byte
+	Size              int32
+}
+
 // PigMetadata contains metadata fields for Pig entities.
 type PigMetadata struct {
 	// field presence flags
@@ -1090,6 +1407,7 @@ type PigMetadata struct {
 	HasStingerCount      bool
 	HasMobFlags          bool
 	HasIsBaby            bool
+	HasAgeLocked         bool
 	HasBoostTime         bool
 	HasVariant           bool
 	HasSoundVariant      bool
@@ -1112,9 +1430,54 @@ type PigMetadata struct {
 	SleepingPos       []byte // passthrough
 	MobFlags          byte
 	IsBaby            bool
+	AgeLocked         bool
 	BoostTime         int32
 	Variant           int32
 	SoundVariant      int32
+}
+
+// PiglinMetadata contains metadata fields for Piglin entities.
+type PiglinMetadata struct {
+	// field presence flags
+	HasFlags                 bool
+	HasAirSupply             bool
+	HasCustomNameVisible     bool
+	HasSilent                bool
+	HasNoGravity             bool
+	HasPose                  bool
+	HasTicksFrozen           bool
+	HasLivingFlags           bool
+	HasHealth                bool
+	HasEffectAmbient         bool
+	HasArrowCount            bool
+	HasStingerCount          bool
+	HasMobFlags              bool
+	HasImmuneToZombification bool
+	HasIsBaby                bool
+	HasIsChargingCrossbow    bool
+	HasIsDancing             bool
+
+	// field values
+	Flags                 byte
+	AirSupply             int32
+	CustomName            *string
+	CustomNameVisible     bool
+	Silent                bool
+	NoGravity             bool
+	Pose                  int32
+	TicksFrozen           int32
+	LivingFlags           byte
+	Health                float32
+	EffectParticles       []byte // passthrough
+	EffectAmbient         bool
+	ArrowCount            int32
+	StingerCount          int32
+	SleepingPos           []byte // passthrough
+	MobFlags              byte
+	ImmuneToZombification bool
+	IsBaby                bool
+	IsChargingCrossbow    bool
+	IsDancing             bool
 }
 
 // PlayerMetadata contains metadata fields for Player entities.
@@ -1161,6 +1524,86 @@ type PlayerMetadata struct {
 	RightShoulderEntity []byte // passthrough
 }
 
+// PufferfishMetadata contains metadata fields for Pufferfish entities.
+type PufferfishMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasLivingFlags       bool
+	HasHealth            bool
+	HasEffectAmbient     bool
+	HasArrowCount        bool
+	HasStingerCount      bool
+	HasMobFlags          bool
+	HasFromBucket        bool
+	HasPuffState         bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	LivingFlags       byte
+	Health            float32
+	EffectParticles   []byte // passthrough
+	EffectAmbient     bool
+	ArrowCount        int32
+	StingerCount      int32
+	SleepingPos       []byte // passthrough
+	MobFlags          byte
+	FromBucket        bool
+	PuffState         int32
+}
+
+// SalmonMetadata contains metadata fields for Salmon entities.
+type SalmonMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasLivingFlags       bool
+	HasHealth            bool
+	HasEffectAmbient     bool
+	HasArrowCount        bool
+	HasStingerCount      bool
+	HasMobFlags          bool
+	HasFromBucket        bool
+	HasVariant           bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	LivingFlags       byte
+	Health            float32
+	EffectParticles   []byte // passthrough
+	EffectAmbient     bool
+	ArrowCount        int32
+	StingerCount      int32
+	SleepingPos       []byte // passthrough
+	MobFlags          byte
+	FromBucket        bool
+	Variant           int32
+}
+
 // SheepMetadata contains metadata fields for Sheep entities.
 type SheepMetadata struct {
 	// field presence flags
@@ -1178,6 +1621,7 @@ type SheepMetadata struct {
 	HasStingerCount      bool
 	HasMobFlags          bool
 	HasIsBaby            bool
+	HasAgeLocked         bool
 	HasColorFlags        bool
 
 	// field values
@@ -1198,7 +1642,50 @@ type SheepMetadata struct {
 	SleepingPos       []byte // passthrough
 	MobFlags          byte
 	IsBaby            bool
+	AgeLocked         bool
 	ColorFlags        byte
+}
+
+// ShulkerMetadata contains metadata fields for Shulker entities.
+type ShulkerMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasLivingFlags       bool
+	HasHealth            bool
+	HasEffectAmbient     bool
+	HasArrowCount        bool
+	HasStingerCount      bool
+	HasMobFlags          bool
+	HasAttachFace        bool
+	HasPeek              bool
+	HasColor             bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	LivingFlags       byte
+	Health            float32
+	EffectParticles   []byte // passthrough
+	EffectAmbient     bool
+	ArrowCount        int32
+	StingerCount      int32
+	SleepingPos       []byte // passthrough
+	MobFlags          byte
+	AttachFace        int32
+	Peek              byte
+	Color             byte
 }
 
 // SkeletonMetadata contains metadata fields for Skeleton entities.
@@ -1255,6 +1742,8 @@ type SlimeMetadata struct {
 	HasArrowCount        bool
 	HasStingerCount      bool
 	HasMobFlags          bool
+	HasIsBaby            bool
+	HasAgeLocked         bool
 	HasSize              bool
 
 	// field values
@@ -1274,7 +1763,53 @@ type SlimeMetadata struct {
 	StingerCount      int32
 	SleepingPos       []byte // passthrough
 	MobFlags          byte
+	IsBaby            bool
+	AgeLocked         bool
 	Size              int32
+}
+
+// SnifferMetadata contains metadata fields for Sniffer entities.
+type SnifferMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasLivingFlags       bool
+	HasHealth            bool
+	HasEffectAmbient     bool
+	HasArrowCount        bool
+	HasStingerCount      bool
+	HasMobFlags          bool
+	HasIsBaby            bool
+	HasAgeLocked         bool
+	HasState             bool
+	HasDropSeedAtTick    bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	LivingFlags       byte
+	Health            float32
+	EffectParticles   []byte // passthrough
+	EffectAmbient     bool
+	ArrowCount        int32
+	StingerCount      int32
+	SleepingPos       []byte // passthrough
+	MobFlags          byte
+	IsBaby            bool
+	AgeLocked         bool
+	State             int32
+	DropSeedAtTick    int32
 }
 
 // SpiderMetadata contains metadata fields for Spider entities.
@@ -1315,6 +1850,49 @@ type SpiderMetadata struct {
 	SpiderFlags       byte
 }
 
+// TamableAnimalMetadata contains metadata fields for TamableAnimal entities.
+type TamableAnimalMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasLivingFlags       bool
+	HasHealth            bool
+	HasEffectAmbient     bool
+	HasArrowCount        bool
+	HasStingerCount      bool
+	HasMobFlags          bool
+	HasIsBaby            bool
+	HasAgeLocked         bool
+	HasTamableFlags      bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	LivingFlags       byte
+	Health            float32
+	EffectParticles   []byte // passthrough
+	EffectAmbient     bool
+	ArrowCount        int32
+	StingerCount      int32
+	SleepingPos       []byte // passthrough
+	MobFlags          byte
+	IsBaby            bool
+	AgeLocked         bool
+	TamableFlags      byte
+	Owner             []byte // passthrough
+}
+
 // TridentMetadata contains metadata fields for Trident entities.
 type TridentMetadata struct {
 	// field presence flags
@@ -1350,40 +1928,46 @@ type TridentMetadata struct {
 // VillagerMetadata contains metadata fields for Villager entities.
 type VillagerMetadata struct {
 	// field presence flags
-	HasFlags             bool
-	HasAirSupply         bool
-	HasCustomNameVisible bool
-	HasSilent            bool
-	HasNoGravity         bool
-	HasPose              bool
-	HasTicksFrozen       bool
-	HasLivingFlags       bool
-	HasHealth            bool
-	HasEffectAmbient     bool
-	HasArrowCount        bool
-	HasStingerCount      bool
-	HasMobFlags          bool
-	HasIsBaby            bool
+	HasFlags                 bool
+	HasAirSupply             bool
+	HasCustomNameVisible     bool
+	HasSilent                bool
+	HasNoGravity             bool
+	HasPose                  bool
+	HasTicksFrozen           bool
+	HasLivingFlags           bool
+	HasHealth                bool
+	HasEffectAmbient         bool
+	HasArrowCount            bool
+	HasStingerCount          bool
+	HasMobFlags              bool
+	HasIsBaby                bool
+	HasAgeLocked             bool
+	HasUnhappyCounter        bool
+	HasVillagerDataFinalized bool
 
 	// field values
-	Flags             byte
-	AirSupply         int32
-	CustomName        *string
-	CustomNameVisible bool
-	Silent            bool
-	NoGravity         bool
-	Pose              int32
-	TicksFrozen       int32
-	LivingFlags       byte
-	Health            float32
-	EffectParticles   []byte // passthrough
-	EffectAmbient     bool
-	ArrowCount        int32
-	StingerCount      int32
-	SleepingPos       []byte // passthrough
-	MobFlags          byte
-	IsBaby            bool
-	VillagerData      []byte // passthrough
+	Flags                 byte
+	AirSupply             int32
+	CustomName            *string
+	CustomNameVisible     bool
+	Silent                bool
+	NoGravity             bool
+	Pose                  int32
+	TicksFrozen           int32
+	LivingFlags           byte
+	Health                float32
+	EffectParticles       []byte // passthrough
+	EffectAmbient         bool
+	ArrowCount            int32
+	StingerCount          int32
+	SleepingPos           []byte // passthrough
+	MobFlags              byte
+	IsBaby                bool
+	AgeLocked             bool
+	UnhappyCounter        int32
+	VillagerData          []byte // passthrough
+	VillagerDataFinalized bool
 }
 
 // WitherMetadata contains metadata fields for Wither entities.
@@ -1447,11 +2031,13 @@ type WolfMetadata struct {
 	HasStingerCount      bool
 	HasMobFlags          bool
 	HasIsBaby            bool
-	HasIsTamed           bool
+	HasAgeLocked         bool
+	HasTamableFlags      bool
+	HasIsInterested      bool
+	HasCollarColor       bool
+	HasAngerEndTime      bool
 	HasVariant           bool
 	HasSoundVariant      bool
-	HasIsAngry           bool
-	HasCollarColor       bool
 
 	// field values
 	Flags             byte
@@ -1471,11 +2057,14 @@ type WolfMetadata struct {
 	SleepingPos       []byte // passthrough
 	MobFlags          byte
 	IsBaby            bool
-	IsTamed           bool
+	AgeLocked         bool
+	TamableFlags      byte
+	Owner             []byte // passthrough
+	IsInterested      bool
+	CollarColor       int32
+	AngerEndTime      int64
 	Variant           int32
 	SoundVariant      int32
-	IsAngry           bool
-	CollarColor       int32
 }
 
 // ZombieMetadata contains metadata fields for Zombie entities.
@@ -1530,6 +2119,86 @@ type FieldDef struct {
 
 // entityMetadataFields maps entity class names to their field definitions.
 var entityMetadataFields = map[string][]FieldDef{
+	"AbstractCubeMob": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 1, Name: "Size", Passthrough: false},
+	},
+	"AbstractFish": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "FromBucket", Passthrough: false},
+	},
+	"AbstractPiglin": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "ImmuneToZombification", Passthrough: false},
+	},
+	"AbstractVillager": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 1, Name: "UnhappyCounter", Passthrough: false},
+	},
 	"AgeableMob": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
 		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
@@ -1548,6 +2217,7 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
 	},
 	"ArmorStand": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -1677,11 +2347,14 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
-		{Index: 17, Serializer: 21, Name: "Variant", Passthrough: false},
-		{Index: 18, Serializer: 8, Name: "IsLying", Passthrough: false},
-		{Index: 19, Serializer: 8, Name: "IsRelaxed", Passthrough: false},
-		{Index: 20, Serializer: 1, Name: "CollarColor", Passthrough: false},
-		{Index: 21, Serializer: 22, Name: "SoundVariant", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 0, Name: "TamableFlags", Passthrough: false},
+		{Index: 19, Serializer: 13, Name: "Owner", Passthrough: true},
+		{Index: 20, Serializer: 21, Name: "Variant", Passthrough: false},
+		{Index: 21, Serializer: 8, Name: "IsLying", Passthrough: false},
+		{Index: 22, Serializer: 8, Name: "IsRelaxed", Passthrough: false},
+		{Index: 23, Serializer: 1, Name: "CollarColor", Passthrough: false},
+		{Index: 24, Serializer: 22, Name: "SoundVariant", Passthrough: false},
 	},
 	"Chicken": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -1701,8 +2374,9 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
-		{Index: 17, Serializer: 30, Name: "Variant", Passthrough: false},
-		{Index: 18, Serializer: 31, Name: "SoundVariant", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 30, Name: "Variant", Passthrough: false},
+		{Index: 19, Serializer: 31, Name: "SoundVariant", Passthrough: false},
 	},
 	"CommandBlockMinecart": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -1740,8 +2414,9 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
-		{Index: 17, Serializer: 23, Name: "Variant", Passthrough: false},
-		{Index: 18, Serializer: 24, Name: "SoundVariant", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 23, Name: "Variant", Passthrough: false},
+		{Index: 19, Serializer: 24, Name: "SoundVariant", Passthrough: false},
 	},
 	"Creeper": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -1865,6 +2540,28 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsCharging", Passthrough: false},
 	},
+	"HappyGhast": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 8, Name: "IsLeashHolder", Passthrough: false},
+		{Index: 19, Serializer: 8, Name: "StaysStill", Passthrough: false},
+	},
 	"ItemEntity": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
 		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
@@ -1939,6 +2636,25 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 	},
+	"Phantom": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 1, Name: "Size", Passthrough: false},
+	},
 	"Pig": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
 		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
@@ -1957,9 +2673,32 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
-		{Index: 17, Serializer: 1, Name: "BoostTime", Passthrough: false},
-		{Index: 18, Serializer: 28, Name: "Variant", Passthrough: false},
-		{Index: 19, Serializer: 29, Name: "SoundVariant", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 1, Name: "BoostTime", Passthrough: false},
+		{Index: 19, Serializer: 28, Name: "Variant", Passthrough: false},
+		{Index: 20, Serializer: 29, Name: "SoundVariant", Passthrough: false},
+	},
+	"Piglin": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "ImmuneToZombification", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "IsBaby", Passthrough: false},
+		{Index: 18, Serializer: 8, Name: "IsChargingCrossbow", Passthrough: false},
+		{Index: 19, Serializer: 8, Name: "IsDancing", Passthrough: false},
 	},
 	"Player": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -1984,6 +2723,46 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 19, Serializer: 19, Name: "LeftShoulderEntity", Passthrough: true},
 		{Index: 20, Serializer: 19, Name: "RightShoulderEntity", Passthrough: true},
 	},
+	"Pufferfish": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "FromBucket", Passthrough: false},
+		{Index: 17, Serializer: 1, Name: "PuffState", Passthrough: false},
+	},
+	"Salmon": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "FromBucket", Passthrough: false},
+		{Index: 17, Serializer: 1, Name: "Variant", Passthrough: false},
+	},
 	"Sheep": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
 		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
@@ -2002,7 +2781,29 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
-		{Index: 17, Serializer: 0, Name: "ColorFlags", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 0, Name: "ColorFlags", Passthrough: false},
+	},
+	"Shulker": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 12, Name: "AttachFace", Passthrough: false},
+		{Index: 17, Serializer: 0, Name: "Peek", Passthrough: false},
+		{Index: 18, Serializer: 0, Name: "Color", Passthrough: false},
 	},
 	"Skeleton": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -2040,7 +2841,31 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
-		{Index: 16, Serializer: 1, Name: "Size", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 1, Name: "Size", Passthrough: false},
+	},
+	"Sniffer": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 35, Name: "State", Passthrough: false},
+		{Index: 19, Serializer: 1, Name: "DropSeedAtTick", Passthrough: false},
 	},
 	"Spider": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -2060,6 +2885,28 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 0, Name: "SpiderFlags", Passthrough: false},
+	},
+	"TamableAnimal": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 0, Name: "LivingFlags", Passthrough: false},
+		{Index: 9, Serializer: 3, Name: "Health", Passthrough: false},
+		{Index: 10, Serializer: 17, Name: "EffectParticles", Passthrough: true},
+		{Index: 11, Serializer: 8, Name: "EffectAmbient", Passthrough: false},
+		{Index: 12, Serializer: 1, Name: "ArrowCount", Passthrough: false},
+		{Index: 13, Serializer: 1, Name: "StingerCount", Passthrough: false},
+		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
+		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
+		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 0, Name: "TamableFlags", Passthrough: false},
+		{Index: 19, Serializer: 13, Name: "Owner", Passthrough: true},
 	},
 	"Trident": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -2094,7 +2941,10 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
-		{Index: 17, Serializer: 18, Name: "VillagerData", Passthrough: true},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 1, Name: "UnhappyCounter", Passthrough: false},
+		{Index: 19, Serializer: 18, Name: "VillagerData", Passthrough: true},
+		{Index: 20, Serializer: 8, Name: "VillagerDataFinalized", Passthrough: false},
 	},
 	"Wither": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
@@ -2136,11 +2986,14 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 14, Serializer: 11, Name: "SleepingPos", Passthrough: true},
 		{Index: 15, Serializer: 0, Name: "MobFlags", Passthrough: false},
 		{Index: 16, Serializer: 8, Name: "IsBaby", Passthrough: false},
-		{Index: 17, Serializer: 8, Name: "IsTamed", Passthrough: false},
-		{Index: 18, Serializer: 25, Name: "Variant", Passthrough: false},
-		{Index: 19, Serializer: 26, Name: "SoundVariant", Passthrough: false},
-		{Index: 20, Serializer: 8, Name: "IsAngry", Passthrough: false},
+		{Index: 17, Serializer: 8, Name: "AgeLocked", Passthrough: false},
+		{Index: 18, Serializer: 0, Name: "TamableFlags", Passthrough: false},
+		{Index: 19, Serializer: 13, Name: "Owner", Passthrough: true},
+		{Index: 20, Serializer: 8, Name: "IsInterested", Passthrough: false},
 		{Index: 21, Serializer: 1, Name: "CollarColor", Passthrough: false},
+		{Index: 22, Serializer: 2, Name: "AngerEndTime", Passthrough: false},
+		{Index: 23, Serializer: 25, Name: "Variant", Passthrough: false},
+		{Index: 24, Serializer: 26, Name: "SoundVariant", Passthrough: false},
 	},
 	"Zombie": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},

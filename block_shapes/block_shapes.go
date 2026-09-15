@@ -25,5 +25,46 @@ func IsFullBlock(stateID int32) bool {
 	if stateID < 0 || int(stateID) >= len(shapeByState) {
 		return false
 	}
-	return shapeByState[stateID] == fullBlockShapeIdx
+	return collisionFlags[stateID]&8 != 0
+}
+
+// CollisionCoordinates returns the original voxel grid planes for axis 0/1/2
+// (X/Y/Z), retaining internal planes relevant to clipping an initial overlap.
+func CollisionCoordinates(stateID int32, axis int) []float64 {
+	if stateID < 0 || int(stateID) >= len(shapeByState) || axis < 0 || axis > 2 {
+		return nil
+	}
+	return shapeCoordinates[shapeByState[stateID]][axis]
+}
+
+// BlocksMotion reports the vanilla block-state motion-blocking property.
+// It is not interchangeable with the presence of collision geometry.
+func BlocksMotion(stateID int32) bool {
+	return stateID >= 0 && int(stateID) < len(collisionFlags) && collisionFlags[stateID]&1 != 0
+}
+
+// HasLargeCollisionShape reports whether collision geometry can leave its block cell.
+func HasLargeCollisionShape(stateID int32) bool {
+	return stateID >= 0 && int(stateID) < len(collisionFlags) && collisionFlags[stateID]&2 != 0
+}
+
+// IsSuffocating is the vanilla suffocation predicate, not merely a solid shape.
+func IsSuffocating(stateID int32) bool {
+	return stateID >= 0 && int(stateID) < len(collisionFlags) && collisionFlags[stateID]&4 != 0
+}
+
+// IsFaceSturdy uses vanilla direction IDs: down, up, north, south, west, east.
+func IsFaceSturdy(stateID int32, direction int) bool {
+	return stateID >= 0 && int(stateID) < len(sturdyFaces) && direction >= 0 && direction < 6 &&
+		sturdyFaces[stateID]&(1<<direction) != 0
+}
+
+// FluidState returns the contained fluid: kind 0 empty, 1 water, 2 lava,
+// amount in eighths, and the falling property. Waterlogged blocks are included.
+func FluidState(stateID int32) (kind uint8, amount uint8, falling bool) {
+	if stateID < 0 || int(stateID) >= len(fluidStates) {
+		return 0, 0, false
+	}
+	state := fluidStates[stateID]
+	return state & 3, (state >> 2) & 15, state&(1<<6) != 0
 }

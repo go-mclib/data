@@ -80,7 +80,15 @@
     "AgeableMob": {
       "parent": "Mob",
       "fields": [
-        {"index": 16, "name": "IsBaby", "serializer": 8, "goField": "IsBaby", "goType": "bool"}
+        {"index": 16, "name": "IsBaby", "serializer": 8, "goField": "IsBaby", "goType": "bool"},
+        {"index": 17, "name": "AgeLocked", "serializer": 8, "goField": "AgeLocked", "goType": "bool"}
+      ]
+    },
+    "TamableAnimal": {
+      "parent": "AgeableMob",
+      "fields": [
+        {"index": 18, "name": "TamableFlags", "serializer": 0, "goField": "TamableFlags", "goType": "byte"},
+        {"index": 19, "name": "Owner", "serializer": 13, "goField": "Owner", "goType": "*UUID", "passthrough": true}
       ]
     },
     "Avatar": {
@@ -118,9 +126,9 @@
     "Pig": {
       "parent": "AgeableMob",
       "fields": [
-        {"index": 17, "name": "BoostTime", "serializer": 1, "goField": "BoostTime", "goType": "int32"},
-        {"index": 18, "name": "Variant", "serializer": 28, "goField": "Variant", "goType": "int32"},
-        {"index": 19, "name": "SoundVariant", "serializer": 29, "goField": "SoundVariant", "goType": "int32"}
+        {"index": 18, "name": "BoostTime", "serializer": 1, "goField": "BoostTime", "goType": "int32"},
+        {"index": 19, "name": "Variant", "serializer": 28, "goField": "Variant", "goType": "int32"},
+        {"index": 20, "name": "SoundVariant", "serializer": 29, "goField": "SoundVariant", "goType": "int32"}
       ]
     },
     "ArmorStand": {
@@ -148,50 +156,57 @@
         {"index": 9, "name": "Rotation", "serializer": 1, "goField": "Rotation", "goType": "int32"}
       ]
     },
-    "Villager": {
+    "AbstractVillager": {
       "parent": "AgeableMob",
       "fields": [
-        {"index": 17, "name": "VillagerData", "serializer": 18, "goField": "VillagerData", "goType": "VillagerData", "passthrough": true}
+        {"index": 18, "name": "UnhappyCounter", "serializer": 1, "goField": "UnhappyCounter", "goType": "int32"}
+      ]
+    },
+    "Villager": {
+      "parent": "AbstractVillager",
+      "fields": [
+        {"index": 19, "name": "VillagerData", "serializer": 18, "goField": "VillagerData", "goType": "VillagerData", "passthrough": true},
+        {"index": 20, "name": "VillagerDataFinalized", "serializer": 8, "goField": "VillagerDataFinalized", "goType": "bool"}
       ]
     },
     "Wolf": {
-      "parent": "AgeableMob",
+      "parent": "TamableAnimal",
       "fields": [
-        {"index": 17, "name": "IsTamed", "serializer": 8, "goField": "IsTamed", "goType": "bool"},
-        {"index": 18, "name": "Variant", "serializer": 25, "goField": "Variant", "goType": "int32"},
-        {"index": 19, "name": "SoundVariant", "serializer": 26, "goField": "SoundVariant", "goType": "int32"},
-        {"index": 20, "name": "IsAngry", "serializer": 8, "goField": "IsAngry", "goType": "bool"},
-        {"index": 21, "name": "CollarColor", "serializer": 1, "goField": "CollarColor", "goType": "int32"}
+        {"index": 20, "name": "IsInterested", "serializer": 8, "goField": "IsInterested", "goType": "bool"},
+        {"index": 21, "name": "CollarColor", "serializer": 1, "goField": "CollarColor", "goType": "int32"},
+        {"index": 22, "name": "AngerEndTime", "serializer": 2, "goField": "AngerEndTime", "goType": "int64"},
+        {"index": 23, "name": "Variant", "serializer": 25, "goField": "Variant", "goType": "int32"},
+        {"index": 24, "name": "SoundVariant", "serializer": 26, "goField": "SoundVariant", "goType": "int32"}
       ]
     },
     "Cat": {
-      "parent": "AgeableMob",
+      "parent": "TamableAnimal",
       "fields": [
-        {"index": 17, "name": "Variant", "serializer": 21, "goField": "Variant", "goType": "int32"},
-        {"index": 18, "name": "IsLying", "serializer": 8, "goField": "IsLying", "goType": "bool"},
-        {"index": 19, "name": "IsRelaxed", "serializer": 8, "goField": "IsRelaxed", "goType": "bool"},
-        {"index": 20, "name": "CollarColor", "serializer": 1, "goField": "CollarColor", "goType": "int32"},
-        {"index": 21, "name": "SoundVariant", "serializer": 22, "goField": "SoundVariant", "goType": "int32"}
+        {"index": 20, "name": "Variant", "serializer": 21, "goField": "Variant", "goType": "int32"},
+        {"index": 21, "name": "IsLying", "serializer": 8, "goField": "IsLying", "goType": "bool"},
+        {"index": 22, "name": "IsRelaxed", "serializer": 8, "goField": "IsRelaxed", "goType": "bool"},
+        {"index": 23, "name": "CollarColor", "serializer": 1, "goField": "CollarColor", "goType": "int32"},
+        {"index": 24, "name": "SoundVariant", "serializer": 22, "goField": "SoundVariant", "goType": "int32"}
       ]
     },
     "Sheep": {
       "parent": "AgeableMob",
       "fields": [
-        {"index": 17, "name": "ColorAndSheared", "serializer": 0, "goField": "ColorFlags", "goType": "byte", "description": "color(0-3)|sheared(4)"}
+        {"index": 18, "name": "ColorAndSheared", "serializer": 0, "goField": "ColorFlags", "goType": "byte", "description": "color(0-3)|sheared(4)"}
       ]
     },
     "Cow": {
       "parent": "AgeableMob",
       "fields": [
-        {"index": 17, "name": "Variant", "serializer": 23, "goField": "Variant", "goType": "int32"},
-        {"index": 18, "name": "SoundVariant", "serializer": 24, "goField": "SoundVariant", "goType": "int32"}
+        {"index": 18, "name": "Variant", "serializer": 23, "goField": "Variant", "goType": "int32"},
+        {"index": 19, "name": "SoundVariant", "serializer": 24, "goField": "SoundVariant", "goType": "int32"}
       ]
     },
     "Chicken": {
       "parent": "AgeableMob",
       "fields": [
-        {"index": 17, "name": "Variant", "serializer": 30, "goField": "Variant", "goType": "int32"},
-        {"index": 18, "name": "SoundVariant", "serializer": 31, "goField": "SoundVariant", "goType": "int32"}
+        {"index": 18, "name": "Variant", "serializer": 30, "goField": "Variant", "goType": "int32"},
+        {"index": 19, "name": "SoundVariant", "serializer": 31, "goField": "SoundVariant", "goType": "int32"}
       ]
     },
     "Skeleton": {
@@ -206,10 +221,74 @@
         {"index": 16, "name": "SpiderFlags", "serializer": 0, "goField": "SpiderFlags", "goType": "byte", "description": "climbing"}
       ]
     },
+    "AbstractCubeMob": {
+      "parent": "AgeableMob",
+      "fields": [
+        {"index": 18, "name": "Size", "serializer": 1, "goField": "Size", "goType": "int32"}
+      ]
+    },
     "Slime": {
+      "parent": "AbstractCubeMob",
+      "fields": []
+    },
+    "Shulker": {
+      "parent": "Mob",
+      "fields": [
+        {"index": 16, "name": "AttachFace", "serializer": 12, "goField": "AttachFace", "goType": "int32"},
+        {"index": 17, "name": "Peek", "serializer": 0, "goField": "Peek", "goType": "byte"},
+        {"index": 18, "name": "Color", "serializer": 0, "goField": "Color", "goType": "byte"}
+      ]
+    },
+    "HappyGhast": {
+      "parent": "AgeableMob",
+      "fields": [
+        {"index": 18, "name": "IsLeashHolder", "serializer": 8, "goField": "IsLeashHolder", "goType": "bool"},
+        {"index": 19, "name": "StaysStill", "serializer": 8, "goField": "StaysStill", "goType": "bool"}
+      ]
+    },
+    "Sniffer": {
+      "parent": "AgeableMob",
+      "fields": [
+        {"index": 18, "name": "State", "serializer": 35, "goField": "State", "goType": "int32"},
+        {"index": 19, "name": "DropSeedAtTick", "serializer": 1, "goField": "DropSeedAtTick", "goType": "int32"}
+      ]
+    },
+    "Phantom": {
       "parent": "Mob",
       "fields": [
         {"index": 16, "name": "Size", "serializer": 1, "goField": "Size", "goType": "int32"}
+      ]
+    },
+    "AbstractPiglin": {
+      "parent": "Mob",
+      "fields": [
+        {"index": 16, "name": "ImmuneToZombification", "serializer": 8, "goField": "ImmuneToZombification", "goType": "bool"}
+      ]
+    },
+    "Piglin": {
+      "parent": "AbstractPiglin",
+      "fields": [
+        {"index": 17, "name": "IsBaby", "serializer": 8, "goField": "IsBaby", "goType": "bool"},
+        {"index": 18, "name": "IsChargingCrossbow", "serializer": 8, "goField": "IsChargingCrossbow", "goType": "bool"},
+        {"index": 19, "name": "IsDancing", "serializer": 8, "goField": "IsDancing", "goType": "bool"}
+      ]
+    },
+    "AbstractFish": {
+      "parent": "Mob",
+      "fields": [
+        {"index": 16, "name": "FromBucket", "serializer": 8, "goField": "FromBucket", "goType": "bool"}
+      ]
+    },
+    "Pufferfish": {
+      "parent": "AbstractFish",
+      "fields": [
+        {"index": 17, "name": "PuffState", "serializer": 1, "goField": "PuffState", "goType": "int32"}
+      ]
+    },
+    "Salmon": {
+      "parent": "AbstractFish",
+      "fields": [
+        {"index": 17, "name": "Variant", "serializer": 1, "goField": "Variant", "goType": "int32"}
       ]
     },
     "Enderman": {

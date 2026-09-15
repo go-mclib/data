@@ -568,9 +568,15 @@ func (p *S2CClearTitles) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Command_Suggestions_Response
 type S2CCommandSuggestions struct {
 	Id      ns.VarInt
-	Start   ns.VarInt
-	Length  ns.VarInt
-	Matches ns.ByteArray
+	Start   ns.VarInt // UTF-16 code units in the original request
+	Length  ns.VarInt // UTF-16 code units to replace
+	Matches []CommandSuggestion
+}
+
+// CommandSuggestion is one server-provided replacement and optional tooltip.
+type CommandSuggestion struct {
+	Text    ns.String
+	Tooltip ns.PrefixedOptional[ns.TextComponent]
 }
 
 func (p *S2CCommandSuggestions) Read(buf *ns.PacketBuffer) error {
@@ -584,8 +590,26 @@ func (p *S2CCommandSuggestions) Read(buf *ns.PacketBuffer) error {
 	if p.Length, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.Matches, err = buf.ReadByteArray(1048576)
-	return err
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if count < 0 || count > 65536 {
+		return fmt.Errorf("invalid command suggestion count %d", count)
+	}
+	p.Matches = make([]CommandSuggestion, count)
+	for i := range p.Matches {
+		entry := &p.Matches[i]
+		if entry.Text, err = buf.ReadString(32767); err != nil {
+			return err
+		}
+		if err := entry.Tooltip.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.TextComponent, error) {
+			return b.ReadTextComponent()
+		}); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (p *S2CCommandSuggestions) Write(buf *ns.PacketBuffer) error {
@@ -598,7 +622,23 @@ func (p *S2CCommandSuggestions) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.Length); err != nil {
 		return err
 	}
-	return buf.WriteByteArray(p.Matches)
+	if len(p.Matches) > 65536 {
+		return fmt.Errorf("too many command suggestions: %d", len(p.Matches))
+	}
+	if err := buf.WriteVarInt(ns.VarInt(len(p.Matches))); err != nil {
+		return err
+	}
+	for _, entry := range p.Matches {
+		if err := buf.WriteString(entry.Text); err != nil {
+			return err
+		}
+		if err := entry.Tooltip.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.TextComponent) error {
+			return b.WriteTextComponent(v)
+		}); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // S2CCommands represents "Commands".
@@ -610,12 +650,19 @@ type S2CCommands struct {
 
 func (p *S2CCommands) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.Data, err = buf.ReadByteArray(1048576)
+	p.Data, err = io.ReadAll(io.LimitReader(buf.Reader(), 1048577))
+	if err == nil && len(p.Data) > 1048576 {
+		return fmt.Errorf("command tree exceeds 1 MiB")
+	}
 	return err
 }
 
 func (p *S2CCommands) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteByteArray(p.Data)
+	if len(p.Data) > 1048576 {
+		return fmt.Errorf("command tree exceeds 1 MiB")
+	}
+	_, err := buf.Write(p.Data)
+	return err
 }
 
 // S2CContainerClose represents "Close Container".
