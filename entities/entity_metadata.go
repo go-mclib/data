@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/go-mclib/data/items"
+	"github.com/go-mclib/data/registries"
 	"github.com/go-mclib/nbt"
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
@@ -218,16 +219,84 @@ func copyParticle(buf, w *ns.PacketBuffer) error {
 	}
 	w.WriteVarInt(particleType)
 
-	// particle data varies by type - for now just copy the type ID
-	// full particle data parsing would require the particle registry
-	// TODO: implement Particle type, maybe in pkg/data/misc/particles_gen.go or something?
-	return nil
+	// Registry-dispatched ParticleOptions.STREAM_CODEC in vanilla 26.2.
+	// Even consumers that only need flags must consume every particle payload:
+	// otherwise its bytes become bogus metadata entries or an early terminator.
+	switch name := registries.ParticleType.ByID(int32(particleType)); name {
+	case "":
+		return fmt.Errorf("unknown particle type %d", particleType)
+	case "minecraft:block", "minecraft:block_marker", "minecraft:falling_dust", "minecraft:dust_pillar", "minecraft:block_crumble", "minecraft:shriek":
+		return copyVarIntValue(buf, w)
+	case "minecraft:entity_effect", "minecraft:tinted_leaves", "minecraft:flash", "minecraft:geyser", "minecraft:geyser_plume":
+		return w.CopyInt32(buf)
+	case "minecraft:dust", "minecraft:effect", "minecraft:instant_effect", "minecraft:geyser_base", "minecraft:geyser_poof":
+		if err := w.CopyInt32(buf); err != nil {
+			return err
+		}
+		return copyFloat32Value(buf, w)
+	case "minecraft:dragon_breath", "minecraft:sculk_charge":
+		return copyFloat32Value(buf, w)
+	case "minecraft:dust_color_transition":
+		for range 2 {
+			if err := w.CopyInt32(buf); err != nil {
+				return err
+			}
+		}
+		return copyFloat32Value(buf, w)
+	case "minecraft:trail":
+		for range 3 {
+			value, err := buf.ReadFloat64()
+			if err != nil {
+				return err
+			}
+			if err := w.WriteFloat64(value); err != nil {
+				return err
+			}
+		}
+		if err := w.CopyInt32(buf); err != nil {
+			return err
+		}
+		return copyVarIntValue(buf, w)
+	case "minecraft:item":
+		stack, err := items.ReadItemStackTemplate(buf)
+		if err != nil {
+			return err
+		}
+		return items.WriteItemStackTemplate(w, stack)
+	case "minecraft:vibration":
+		source, err := buf.ReadVarInt()
+		if err != nil {
+			return err
+		}
+		w.WriteVarInt(source)
+		switch registries.PositionSourceType.ByID(int32(source)) {
+		case "minecraft:block":
+			if err := copyPositionValue(buf, w); err != nil {
+				return err
+			}
+		case "minecraft:entity":
+			if err := copyVarIntValue(buf, w); err != nil {
+				return err
+			}
+			if err := copyFloat32Value(buf, w); err != nil {
+				return err
+			}
+		default:
+			return fmt.Errorf("unknown vibration position source %d", source)
+		}
+		return copyVarIntValue(buf, w)
+	default:
+		return nil // Registered SimpleParticleType: no option payload.
+	}
 }
 
 func copyParticleList(buf, w *ns.PacketBuffer) error {
 	count, err := buf.ReadVarInt()
 	if err != nil {
 		return err
+	}
+	if count < 0 {
+		return fmt.Errorf("negative particle count %d", count)
 	}
 	w.WriteVarInt(count)
 	for range int(count) {

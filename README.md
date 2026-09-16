@@ -12,6 +12,7 @@ Go bindings for Minecraft Java Edition network protocol and game data, for use w
   - Packet ID mappings
   - Vanilla collision boxes and voxel grid planes, suffocation/sturdy-face flags, and contained water/lava states
 - **ItemStack middleware** for typed component access
+- Entity metadata consumes full vanilla 26.2 particle option payloads, including effect colors, item templates and vibration destinations, so following metadata such as held-item use flags remains aligned.
 
 ## Dependency Chain
 
