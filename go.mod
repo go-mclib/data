@@ -3,8 +3,8 @@ module github.com/go-mclib/data
 go 1.25
 
 require (
-	github.com/go-mclib/nbt v0.0.0
-	github.com/go-mclib/protocol v0.0.0-20260917131707-73d35259594b
+	github.com/go-mclib/nbt v0.1.0
+	github.com/go-mclib/protocol v0.0.0-20260917154622-8c6e1640304a
 	github.com/stretchr/testify v1.11.1
 )
 

@@ -25,7 +25,7 @@ Go bindings for Minecraft Java Edition **26.3 only** (protocol **777**, data ver
 go get github.com/go-mclib/data
 ```
 
-The current protocol dependency also requires the unpublished `github.com/go-mclib/nbt` workspace module; provide it locally when building.
+Dependencies are resolved from `go.mod`; a local `go.work` file is optional.
 
 ## Usage
 
