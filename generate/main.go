@@ -54,6 +54,7 @@ func main() {
 	generateBlockSupport(mcdumpBlocks, filepath.Join(outDir, "blocks", "block_support_gen.go"))
 	generateRecipes(filepath.Join(datapackDir, "recipe"), filepath.Join(outDir, "recipes", "recipes_gen.go"))
 	generateEnchantments(filepath.Join(datapackDir, "enchantment"), filepath.Join(outDir, "enchantments", "enchantments_gen.go"))
+	generatePotions(filepath.Join(mcdumpDir, "potions.json"), filepath.Join(outDir, "items", "potions_gen.go"))
 
 	// fail loudly if any scraper produced implausibly few entries
 	reportSanityChecks()

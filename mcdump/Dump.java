@@ -3,6 +3,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,6 +17,7 @@ import net.minecraft.server.packs.repository.ServerPacksSource;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagLoader;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.EmptyBlockGetter;
@@ -71,8 +73,21 @@ public final class Dump {
 		write(out, "blocks.json", blocks());
 		write(out, "entities.json", entities());
 		write(out, "registries.json", registries());
+		write(out, "potions.json", potions());
 
 		System.out.println("[mcdump] dump written to " + out.toAbsolutePath());
+	}
+
+	private static JsonObject potions() {
+		final JsonObject result = new JsonObject();
+		for (final var potion : sortedByKey(BuiltInRegistries.POTION)) {
+			final JsonArray effects = new JsonArray();
+			for (final var effect : potion.getEffects()) {
+				effects.add(MobEffectInstance.CODEC.encodeStart(JsonOps.INSTANCE, effect).getOrThrow());
+			}
+			result.add(BuiltInRegistries.POTION.getKey(potion).toString(), effects);
+		}
+		return result;
 	}
 
 	// blocks: every state's palette id, properties, collision shape (deduped into

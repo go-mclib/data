@@ -16,9 +16,10 @@ just puts them on the classpath, compiles `Dump.java`, and runs it headless.
 - **`blocks.json`** — `{ blocks: { "minecraft:stone": { protocolId, hardness, requiresTool, states: [{ id, properties, shape }] } }, shapes: [[[minX,minY,minZ,maxX,maxY,maxZ], …], …] }`. `id` = global block-state (palette) id; `shape` indexes the deduped `shapes` table (real `BlockState.getCollisionShape().toAabbs()`).
 - **`entities.json`** — `{ "minecraft:zombie": { protocolId, width, height, eyeHeight, category, trackingRange } }`.
 - **`registries.json`** — every built-in registry → `{ entry name: protocolId }`.
+- **`potions.json`** — each built-in potion identifier → its complete list of `MobEffectInstance` codec values, including empty-effect potions.
 
 These feed `gen_block_shapes.go`, `gen_block_hardness.go`, `gen_entity_hitboxes.go`,
-and `gen_entities.go`. The dumper loads vanilla tags before evaluating state
+`gen_entities.go`, and `gen_potions.go`. The dumper loads vanilla tags before evaluating state
 predicates. Item component values and registry reports come from vanilla server
 datagen; recipes, registry definitions and tags also use the decompiled assets.
 
