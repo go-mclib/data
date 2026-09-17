@@ -38,7 +38,7 @@ type RecipeSlotDisplay struct {
 	Type        ns.VarInt
 	ItemID      ns.VarInt
 	Count       ns.VarInt
-	Tag         ns.Identifier
+	Holders     RecipeIngredient
 	ComponentID ns.VarInt
 	PatternID   ns.VarInt
 	Item        ns.Slot
@@ -295,8 +295,7 @@ func (d *RecipeSlotDisplay) read(buf *ns.PacketBuffer, depth int) error {
 		d.ItemID, d.Count = d.Item.ItemID, d.Item.Count
 		return err
 	case 6:
-		d.Tag, err = buf.ReadIdentifier()
-		return err
+		return d.Holders.read(buf)
 	case 7, 9:
 		first, err := readSlotDisplay(buf, depth+1)
 		if err != nil {
@@ -364,7 +363,7 @@ func (d RecipeSlotDisplay) write(buf *ns.PacketBuffer) error {
 		}
 		return items.WriteItemStackTemplate(buf, item)
 	case 6:
-		return buf.WriteIdentifier(d.Tag)
+		return d.Holders.write(buf)
 	case 7, 9:
 		if len(d.Children) != 2 {
 			return fmt.Errorf("binary slot display has %d children", len(d.Children))

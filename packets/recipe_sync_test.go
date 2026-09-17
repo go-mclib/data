@@ -153,3 +153,44 @@ func TestRecipeIngredientTagWire(t *testing.T) {
 		t.Fatalf("tag = %q", got)
 	}
 }
+
+func TestRecipeTagDisplayHolderSetWire(t *testing.T) {
+	packet := &packets.S2CRecipeBookAdd{Entries: []packets.RecipeBookEntry{{
+		DisplayID: 7,
+		Display: packets.RecipeDisplay{
+			Type: 0,
+			Ingredients: []packets.RecipeSlotDisplay{
+				{Type: 6, Holders: packets.RecipeIngredient{Tag: "minecraft:planks"}},
+				{Type: 6, Holders: packets.RecipeIngredient{Items: []ns.VarInt{1, 300}}},
+			},
+			Result:  packets.RecipeSlotDisplay{Type: 4, ItemID: 2},
+			Station: packets.RecipeSlotDisplay{Type: 4, ItemID: 3},
+		},
+		Group: -1, Category: 2, Flags: 3,
+	}}, Replace: true}
+	want := append([]byte{1, 7, 0, 2, 6, 0, 16}, []byte("minecraft:planks")...)
+	want = append(want, 6, 3, 1, 0xac, 2, 4, 2, 4, 3, 0, 2, 0, 3, 1)
+	writer := ns.NewWriter()
+	if err := packet.Write(writer); err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(writer.Bytes(), want) {
+		t.Fatalf("holder-set display wire = %x, want %x", writer.Bytes(), want)
+	}
+	var decoded packets.S2CRecipeBookAdd
+	reader := ns.NewReader(want)
+	if err := decoded.Read(reader); err != nil {
+		t.Fatal(err)
+	}
+	ingredients := decoded.Entries[0].Display.Ingredients
+	if ingredients[0].Holders.Tag != "minecraft:planks" ||
+		len(ingredients[1].Holders.Items) != 2 || ingredients[1].Holders.Items[0] != 1 || ingredients[1].Holders.Items[1] != 300 {
+		t.Fatalf("decoded holder sets = %+v", ingredients)
+	}
+	if decoded.Entries[0].Flags != 3 || !bool(decoded.Replace) {
+		t.Fatal("holder-set display desynchronized the following fields")
+	}
+	if _, err := reader.ReadByte(); err != io.EOF {
+		t.Fatalf("trailing data: %v", err)
+	}
+}
