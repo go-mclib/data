@@ -17,6 +17,19 @@ type Components struct {
 	AdditionalTradeCost    int32
 	AttributeModifiers     []AttributeModifier
 	AttackRange            *AttackRange
+	AttackAnimation        *SwingAnimation
+	InteractAnimation      *SwingAnimation
+	BlockTransformer       string
+	VillagerFood           *VillagerFood
+	Compostable            *Compostable
+	CookingFuel            *CookingFuel
+	BrewingFuel            *BrewingFuel
+	MobVisibility          *MobVisibility
+	ProvidesPotteryPattern string
+	SignTextFront          *SignText
+	SignTextBack           *SignText
+	Waxed                  bool
+	CushionColor           *int32
 	BannerPatterns         *[]BannerPatternLayer
 	BaseColor              *int32
 	BlocksAttacks          *BlocksAttacks
@@ -46,7 +59,6 @@ type Components struct {
 	KineticWeapon          *KineticWeapon
 	Lore                   []string
 	loreRaw                []byte
-	MapColor               int32
 	MaxDamage              int32
 	MaxStackSize           int32
 	MinimumAttackCharge    float64
@@ -239,10 +251,10 @@ type PiercingWeapon struct {
 }
 
 type PotDecorations struct {
-	Back  string
-	Left  string
-	Right string
-	Front string
+	Back  *ItemStack
+	Left  *ItemStack
+	Right *ItemStack
+	Front *ItemStack
 }
 
 type PotionContents struct {
@@ -357,6 +369,20 @@ func (c *Components) Clone() *Components {
 	}
 
 	clone := *c
+	clone.AttackAnimation = cloneValue(c.AttackAnimation)
+	clone.InteractAnimation = cloneValue(c.InteractAnimation)
+	clone.VillagerFood = cloneValue(c.VillagerFood)
+	clone.Compostable = cloneValue(c.Compostable)
+	clone.CookingFuel = cloneValue(c.CookingFuel)
+	clone.BrewingFuel = cloneValue(c.BrewingFuel)
+	clone.CushionColor = cloneValue(c.CushionColor)
+	if c.MobVisibility != nil {
+		v := *c.MobVisibility
+		v.TargetingEntityTypes = slices.Clone(v.TargetingEntityTypes)
+		clone.MobVisibility = &v
+	}
+	clone.SignTextFront = cloneSignText(c.SignTextFront)
+	clone.SignTextBack = cloneSignText(c.SignTextBack)
 
 	// clone slices
 	if c.AttributeModifiers != nil {
@@ -533,6 +559,10 @@ func (c *Components) Clone() *Components {
 	}
 	if c.PotDecorations != nil {
 		v := *c.PotDecorations
+		v.Back = cloneDecoration(v.Back)
+		v.Left = cloneDecoration(v.Left)
+		v.Right = cloneDecoration(v.Right)
+		v.Front = cloneDecoration(v.Front)
 		clone.PotDecorations = &v
 	}
 	if c.Repairable != nil {

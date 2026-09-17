@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+
+	"github.com/go-mclib/nbt"
 )
 
 func generateItems(items map[string]ItemJSON, registries map[string]RegistryJSON, outPath string) {
@@ -25,6 +27,14 @@ func generateItems(items map[string]ItemJSON, registries map[string]RegistryJSON
 		sb.WriteString("\t},\n")
 	}
 	sb.WriteString("}\n")
+	sb.WriteString("\nfunc init() {\n")
+	for _, itemName := range sortedKeys(items) {
+		if value, ok := items[itemName].Components["minecraft:pot_decorations"].(map[string]any); ok && len(value) > 0 {
+			data := componentDefaultNBT(value)
+			fmt.Fprintf(&sb, "\tdefaultComponents[%d].PotDecorations = defaultPotDecorations(%#v)\n", itemRegistry.Entries[itemName].ProtocolID, data)
+		}
+	}
+	sb.WriteString("}\n")
 
 	writeFile(outPath, sb.String())
 }
@@ -38,6 +48,55 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 		}
 
 		switch key {
+		case "minecraft:attack_animation", "minecraft:interact_animation":
+			m := value.(map[string]any)
+			kind, duration := int32(1), int32(6)
+			if name, ok := m["type"].(string); ok {
+				switch name {
+				case "none":
+					kind = 0
+				case "whack":
+					kind = 1
+				case "stab":
+					kind = 2
+				default:
+					panic("unknown swing animation " + name)
+				}
+			}
+			if v, ok := m["duration"].(float64); ok {
+				duration = int32(v)
+			}
+			fmt.Fprintf(sb, "%s%s: &SwingAnimation{Type: %d, Duration: %d},\n", indent, goField, kind, duration)
+		case "minecraft:block_transformer", "minecraft:provides_pottery_pattern":
+			fmt.Fprintf(sb, "%s%s: %q,\n", indent, goField, value.(string))
+		case "minecraft:villager_food":
+			fmt.Fprintf(sb, "%sVillagerFood: &VillagerFood{Nutrition: %d},\n", indent, int32(value.(map[string]any)["nutrition"].(float64)))
+		case "minecraft:compostable":
+			fmt.Fprintf(sb, "%sCompostable: &Compostable{Layers: %s},\n", indent, resolvableNumberLiteral(value.(map[string]any)["layers"], false))
+		case "minecraft:cooking_fuel":
+			m := value.(map[string]any)
+			fmt.Fprintf(sb, "%sCookingFuel: &CookingFuel{BurnTime: %s, SpeedMultiplier: %s},\n", indent, resolvableNumberLiteral(m["burn_time"], false), resolvableNumberLiteral(m["speed_multiplier"], true))
+		case "minecraft:brewing_fuel":
+			m := value.(map[string]any)
+			fmt.Fprintf(sb, "%sBrewingFuel: &BrewingFuel{Uses: %s, SpeedMultiplier: %s},\n", indent, resolvableNumberLiteral(m["uses"], false), resolvableNumberLiteral(m["speed_multiplier"], true))
+		case "minecraft:mob_visibility":
+			m := value.(map[string]any)
+			fmt.Fprintf(sb, "%sMobVisibility: &MobVisibility{Visibility: %v, TargetingEntityTypes: []string{", indent, m["visibility"])
+			generateStringValues(sb, m["targeting_entity_types"])
+			sb.WriteString("}},\n")
+		case "minecraft:sign_text_front", "minecraft:sign_text_back":
+			generateSignTextLiteral(sb, indent, goField, value.(map[string]any))
+		case "minecraft:waxed":
+			fmt.Fprintf(sb, "%sWaxed: true,\n", indent)
+		case "minecraft:cushion/color":
+			for id, name := range dyeColorNames {
+				if value == name {
+					fmt.Fprintf(sb, "%sCushionColor: int32Pointer(%d),\n", indent, id)
+					break
+				}
+			}
+		case "minecraft:pot_decorations":
+			fmt.Fprintf(sb, "%sPotDecorations: &PotDecorations{},\n", indent)
 		case "minecraft:max_stack_size":
 			if v, ok := value.(float64); ok {
 				sb.WriteString(fmt.Sprintf("%sMaxStackSize: %d,\n", indent, int32(v)))
@@ -347,10 +406,6 @@ func generateComponentsLiteral(sb *strings.Builder, components map[string]any, i
 					}
 				}
 			}
-		case "minecraft:map_color":
-			if v, ok := value.(float64); ok {
-				sb.WriteString(fmt.Sprintf("%sMapColor: %d,\n", indent, int32(v)))
-			}
 		case "minecraft:ominous_bottle_amplifier":
 			if v, ok := value.(float64); ok {
 				sb.WriteString(fmt.Sprintf("%sOminousBottleAmplifier: %d,\n", indent, int32(v)))
@@ -535,7 +590,7 @@ func generateComponentCodecs(registries map[string]RegistryJSON, metadataPath, o
 	// auto-derive entity variant components from registry
 	for name := range componentRegistry.Entries {
 		stripped := strings.TrimPrefix(name, "minecraft:")
-		if strings.Contains(stripped, "/") {
+		if strings.Contains(stripped, "/") && metadata.Components[name].GoField == "" {
 			constName := "Component" + toGoVarName(name)
 			entityVariants = append(entityVariants, constName)
 		}
@@ -781,6 +836,34 @@ func writeConsumeEffects(sb *strings.Builder, indent, field string, value any) {
 
 func componentKeyToGoField(key string) string {
 	switch key {
+	case "minecraft:attack_animation":
+		return "AttackAnimation"
+	case "minecraft:interact_animation":
+		return "InteractAnimation"
+	case "minecraft:block_transformer":
+		return "BlockTransformer"
+	case "minecraft:villager_food":
+		return "VillagerFood"
+	case "minecraft:compostable":
+		return "Compostable"
+	case "minecraft:cooking_fuel":
+		return "CookingFuel"
+	case "minecraft:brewing_fuel":
+		return "BrewingFuel"
+	case "minecraft:mob_visibility":
+		return "MobVisibility"
+	case "minecraft:provides_pottery_pattern":
+		return "ProvidesPotteryPattern"
+	case "minecraft:sign_text_front":
+		return "SignTextFront"
+	case "minecraft:sign_text_back":
+		return "SignTextBack"
+	case "minecraft:waxed":
+		return "Waxed"
+	case "minecraft:cushion/color":
+		return "CushionColor"
+	case "minecraft:pot_decorations":
+		return "PotDecorations"
 	case "minecraft:max_stack_size":
 		return "MaxStackSize"
 	case "minecraft:damage":
@@ -837,8 +920,6 @@ func componentKeyToGoField(key string) string {
 		return "DamageResistant"
 	case "minecraft:dye":
 		return "Dye"
-	case "minecraft:map_color":
-		return "MapColor"
 	case "minecraft:ominous_bottle_amplifier":
 		return "OminousBottleAmplifier"
 	case "minecraft:potion_duration_scale":
@@ -856,7 +937,6 @@ func componentKeyToGoField(key string) string {
 	// skip these for now as they're empty or complex
 	case "minecraft:enchantments",
 		"minecraft:lore",
-		"minecraft:swing_animation",
 		"minecraft:tooltip_display",
 		"minecraft:use_effects",
 		"minecraft:container",
@@ -871,7 +951,6 @@ func componentKeyToGoField(key string) string {
 		"minecraft:bees",
 		"minecraft:lock",
 		"minecraft:container_loot",
-		"minecraft:pot_decorations",
 		"minecraft:written_book_content",
 		"minecraft:trim",
 		"minecraft:suspicious_stew_effects",
@@ -1070,4 +1149,106 @@ func writeEncodeField(sb *strings.Builder, goField string, f WireField) {
 var dyeColorNames = [...]string{
 	"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
 	"light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
+}
+
+func resolvableNumberLiteral(value any, floating bool) string {
+	typeName := "ResolvableInt"
+	if floating {
+		typeName = "ResolvableFloat"
+	}
+	if reference, ok := value.(string); ok {
+		return fmt.Sprintf("%s{Reference: %q}", typeName, reference)
+	}
+	return fmt.Sprintf("%s{Value: %v}", typeName, value.(float64))
+}
+
+func generateSignTextLiteral(sb *strings.Builder, indent, field string, value map[string]any) {
+	color := 15
+	if name, ok := value["color"].(string); ok {
+		for id, candidate := range dyeColorNames {
+			if candidate == name {
+				color = id
+				break
+			}
+		}
+	}
+	glowing, _ := value["has_glowing_text"].(bool)
+	fmt.Fprintf(sb, "%s%s: &SignText{Color: %d, HasGlowingText: %t,\n", indent, field, color, glowing)
+	for _, messages := range []struct {
+		json, field string
+		optional    bool
+	}{
+		{"messages", "Messages", false}, {"filtered_messages", "FilteredMessages", true},
+	} {
+		raw, present := value[messages.json]
+		if !present && messages.optional {
+			continue
+		}
+		lines, ok := raw.([]any)
+		if !ok || len(lines) != 4 {
+			panic("sign text requires exactly four lines")
+		}
+		pointer := ""
+		if messages.optional {
+			pointer = "&"
+		}
+		fmt.Fprintf(sb, "%s\t%s: %s[4]ItemNameComponent{\n", indent, messages.field, pointer)
+		for _, line := range lines {
+			fmt.Fprintf(sb, "%s\t\t{Raw: %#v},\n", indent, componentDefaultNBT(line))
+		}
+		fmt.Fprintf(sb, "%s\t},\n", indent)
+	}
+	fmt.Fprintf(sb, "%s},\n", indent)
+}
+
+func componentDefaultNBT(value any) []byte {
+	data, err := nbt.Encode(componentDefaultTag(value), "", true)
+	if err != nil {
+		panic(err)
+	}
+	return data
+}
+
+func componentDefaultTag(value any) nbt.Tag {
+	switch v := value.(type) {
+	case map[string]any:
+		result := nbt.Compound{}
+		for name, child := range v {
+			result[name] = componentDefaultTag(child)
+		}
+		return result
+	case []any:
+		result := nbt.List{ElementType: nbt.TagEnd, Elements: make([]nbt.Tag, len(v))}
+		for i, child := range v {
+			result.Elements[i] = componentDefaultTag(child)
+			if i == 0 {
+				result.ElementType = result.Elements[i].ID()
+			} else if result.ElementType != result.Elements[i].ID() {
+				result.ElementType = nbt.TagCompound
+			}
+		}
+		if result.ElementType == nbt.TagCompound {
+			for i, child := range result.Elements {
+				compound, ok := child.(nbt.Compound)
+				if !ok || len(compound) == 1 && compound[""] != nil {
+					result.Elements[i] = nbt.Compound{"": child}
+				}
+			}
+		}
+		return result
+	case string:
+		return nbt.String(v)
+	case bool:
+		if v {
+			return nbt.Byte(1)
+		}
+		return nbt.Byte(0)
+	case float64:
+		if v >= -2147483648 && v <= 2147483647 && v == float64(int32(v)) {
+			return nbt.Int(int32(v))
+		}
+		return nbt.Double(v)
+	default:
+		panic(fmt.Sprintf("unsupported component default value %T", value))
+	}
 }

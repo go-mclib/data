@@ -1,4 +1,4 @@
-// Code generated for Minecraft 26.2 (Protocol 776); DO NOT EDIT.
+// Code generated for Minecraft 26.3 (Protocol 777); DO NOT EDIT.
 
 package entities
 
@@ -36,6 +36,7 @@ var entityCategory = map[string]string{
 	"minecraft:cow":                    "creature",
 	"minecraft:creaking":               "monster",
 	"minecraft:creeper":                "monster",
+	"minecraft:cushion":                "misc",
 	"minecraft:dark_oak_boat":          "misc",
 	"minecraft:dark_oak_chest_boat":    "misc",
 	"minecraft:dolphin":                "water_creature",
@@ -111,6 +112,8 @@ var entityCategory = map[string]string{
 	"minecraft:pillager":               "monster",
 	"minecraft:player":                 "misc",
 	"minecraft:polar_bear":             "creature",
+	"minecraft:poplar_boat":            "misc",
+	"minecraft:poplar_chest_boat":      "misc",
 	"minecraft:pufferfish":             "water_ambient",
 	"minecraft:rabbit":                 "creature",
 	"minecraft:ravager":                "monster",

@@ -114,6 +114,12 @@ func (p *S2CPingConfiguration) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2
 func (p *S2CPingConfiguration) State() jp.State { return jp.StateConfiguration }
 func (p *S2CPingConfiguration) Bound() jp.Bound { return jp.S2C }
 
+func (p *S2CPostEffectsConfiguration) ID() ns.VarInt {
+	return ns.VarInt(packet_ids.S2CPostEffectsConfigurationID)
+}
+func (p *S2CPostEffectsConfiguration) State() jp.State { return jp.StateConfiguration }
+func (p *S2CPostEffectsConfiguration) Bound() jp.Bound { return jp.S2C }
+
 func (p *S2CRegistryData) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CRegistryDataID) }
 func (p *S2CRegistryData) State() jp.State { return jp.StateConfiguration }
 func (p *S2CRegistryData) Bound() jp.Bound { return jp.S2C }
@@ -430,6 +436,10 @@ func (p *C2SPongPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SPongPlay
 func (p *C2SPongPlay) State() jp.State { return jp.StatePlay }
 func (p *C2SPongPlay) Bound() jp.Bound { return jp.C2S }
 
+func (p *C2SPunch) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SPunchID) }
+func (p *C2SPunch) State() jp.State { return jp.StatePlay }
+func (p *C2SPunch) Bound() jp.Bound { return jp.C2S }
+
 func (p *C2SRecipeBookChangeSettings) ID() ns.VarInt {
 	return ns.VarInt(packet_ids.C2SRecipeBookChangeSettingsID)
 }
@@ -504,10 +514,6 @@ func (p *C2SSpectatorAction) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SS
 func (p *C2SSpectatorAction) State() jp.State { return jp.StatePlay }
 func (p *C2SSpectatorAction) Bound() jp.Bound { return jp.C2S }
 
-func (p *C2SSwing) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2SSwingID) }
-func (p *C2SSwing) State() jp.State { return jp.StatePlay }
-func (p *C2SSwing) Bound() jp.Bound { return jp.C2S }
-
 func (p *C2STeleportToEntity) ID() ns.VarInt   { return ns.VarInt(packet_ids.C2STeleportToEntityID) }
 func (p *C2STeleportToEntity) State() jp.State { return jp.StatePlay }
 func (p *C2STeleportToEntity) Bound() jp.Bound { return jp.C2S }
@@ -529,6 +535,10 @@ func (p *C2SUseItemOn) Bound() jp.Bound { return jp.C2S }
 func (p *S2CAddEntity) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CAddEntityID) }
 func (p *S2CAddEntity) State() jp.State { return jp.StatePlay }
 func (p *S2CAddEntity) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CAddTransientBlock) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CAddTransientBlockID) }
+func (p *S2CAddTransientBlock) State() jp.State { return jp.StatePlay }
+func (p *S2CAddTransientBlock) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CAnimate) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CAnimateID) }
 func (p *S2CAnimate) State() jp.State { return jp.StatePlay }
@@ -844,6 +854,10 @@ func (p *S2CPongResponsePlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2C
 func (p *S2CPongResponsePlay) State() jp.State { return jp.StatePlay }
 func (p *S2CPongResponsePlay) Bound() jp.Bound { return jp.S2C }
 
+func (p *S2CPostEffectsPlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CPostEffectsPlayID) }
+func (p *S2CPostEffectsPlay) State() jp.State { return jp.StatePlay }
+func (p *S2CPostEffectsPlay) Bound() jp.Bound { return jp.S2C }
+
 func (p *S2CProjectilePower) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CProjectilePowerID) }
 func (p *S2CProjectilePower) State() jp.State { return jp.StatePlay }
 func (p *S2CProjectilePower) Bound() jp.Bound { return jp.S2C }
@@ -1065,6 +1079,10 @@ func (p *S2CStopSound) Bound() jp.Bound { return jp.S2C }
 func (p *S2CStoreCookiePlay) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CStoreCookiePlayID) }
 func (p *S2CStoreCookiePlay) State() jp.State { return jp.StatePlay }
 func (p *S2CStoreCookiePlay) Bound() jp.Bound { return jp.S2C }
+
+func (p *S2CSwingAnimation) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSwingAnimationID) }
+func (p *S2CSwingAnimation) State() jp.State { return jp.StatePlay }
+func (p *S2CSwingAnimation) Bound() jp.Bound { return jp.S2C }
 
 func (p *S2CSystemChat) ID() ns.VarInt   { return ns.VarInt(packet_ids.S2CSystemChatID) }
 func (p *S2CSystemChat) State() jp.State { return jp.StatePlay }

@@ -4,7 +4,7 @@ go 1.25
 
 require (
 	github.com/go-mclib/nbt v0.0.0
-	github.com/go-mclib/protocol v0.0.0-20260915044803-070acbb8d0aa
+	github.com/go-mclib/protocol v0.0.0-20260917131707-73d35259594b
 	github.com/stretchr/testify v1.11.1
 )
 

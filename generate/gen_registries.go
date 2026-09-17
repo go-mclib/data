@@ -9,7 +9,7 @@ import (
 
 // synchronizedRegistryIDs lists the registry identifiers that are sent over the
 // network from server to client during the configuration phase.
-// Source: decompiled RegistryDataLoader.SYNCHRONIZED_REGISTRIES (Minecraft 26.1).
+// Source: decompiled RegistryDataLoader.SYNCHRONIZED_REGISTRIES (Minecraft 26.3).
 var synchronizedRegistryIDs = []string{
 	"minecraft:worldgen/biome",
 	"minecraft:chat_type",
@@ -39,6 +39,10 @@ var synchronizedRegistryIDs = []string{
 	"minecraft:dialog",
 	"minecraft:world_clock",
 	"minecraft:timeline",
+	"minecraft:sulfur_cube_archetype",
+	"minecraft:decorated_pot_pattern",
+	"minecraft:block_transformer",
+	"minecraft:worldgen/block_state_provider",
 }
 
 func generateRegistries(registries map[string]RegistryJSON, datapackDir string, outPath string) {

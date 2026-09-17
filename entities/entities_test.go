@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/go-mclib/data/entities"
+	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
 func TestEntityTypeIDLookup(t *testing.T) {
@@ -55,26 +56,21 @@ func TestCommonEntityTypes(t *testing.T) {
 	}
 }
 
-func TestMetadataSerializerConstants(t *testing.T) {
-	tests := []struct {
-		name string
-		id   int32
-	}{
-		{"BYTE", entities.SerializerBYTE},
-		{"INT", entities.SerializerINT},
-		{"FLOAT", entities.SerializerFLOAT},
-		{"STRING", entities.SerializerSTRING},
-		{"BOOLEAN", entities.SerializerBOOLEAN},
-		{"ROTATIONS", entities.SerializerROTATIONS},
-		{"BLOCK_POS", entities.SerializerBLOCK_POS},
+func TestCushionColorMetadata(t *testing.T) {
+	// Index 8, DYE_COLOR serializer 43, black; then the base Entity flags.
+	reader := ns.NewReader([]byte{8, 43, 15, 0, 0, 0x40, 0xff, 0x6a})
+	metadata, err := entities.ReadMetadata(reader)
+	if err != nil {
+		t.Fatal(err)
 	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if tt.id < 0 {
-				t.Errorf("serializer %s should have non-negative ID", tt.name)
-			}
-		})
+	if color := metadata.Get(entities.CushionIndexColor); len(color) != 1 || color[0] != 15 {
+		t.Fatalf("cushion color lost: %v", metadata)
+	}
+	if flags := metadata.Get(entities.EntityIndexFlags); len(flags) != 1 || flags[0] != 0x40 {
+		t.Fatalf("color consumed following entity flags: %v", metadata)
+	}
+	if next, err := reader.ReadByte(); err != nil || next != 0x6a {
+		t.Fatalf("metadata crossed packet boundary: %x, %v", next, err)
 	}
 }
 

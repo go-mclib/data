@@ -1,6 +1,6 @@
 # go-mclib/data
 
-Go bindings for Minecraft Java Edition network protocol and game data, for use with [go-mclib/protocol](https://github.com/go-mclib/protocol) in [go-mclib/client](https://github.com/go-mclib/client) and other projects.
+Go bindings for Minecraft Java Edition **26.3 only** (protocol **777**, data version **5023**), for use with [go-mclib/protocol](https://github.com/go-mclib/protocol) in [go-mclib/client](https://github.com/go-mclib/client) and other projects.
 
 ## Features
 
@@ -8,11 +8,12 @@ Go bindings for Minecraft Java Edition network protocol and game data, for use w
 - **Generated data** from Minecraft server reports:
   - 95 registries with bidirectional lookups
   - Blocks with state calculations
-  - 1,505 items with component metadata
+  - 1,658 items with component metadata
   - Packet ID mappings
-  - Vanilla collision boxes and voxel grid planes, suffocation/sturdy-face flags, and contained water/lava states
+  - Vanilla collision boxes and voxel grid planes, tag-bound suffocation/motion/fluid-flow flags, sturdy faces, and contained water/lava states
 - **ItemStack middleware** for typed component access
-- Entity metadata consumes full vanilla 26.2 particle option payloads, including effect colors, item templates and vibration destinations, so following metadata such as held-item use flags remains aligned.
+- Entity metadata consumes full vanilla 26.3 particle option payloads, including effect colors, item templates and vibration destinations, so following metadata such as held-item use flags remains aligned.
+- Brewing and crafting recipes preserve result component patches; contextual fuel providers and predicates are available as server-side registry data.
 
 ## Dependency Chain
 
@@ -38,7 +39,7 @@ See package documentation:
 1. **Generate the server JSON reports** (downloads the vanilla server jar and runs its data generator):
 
    ```bash
-   cd vanilla_server_reports && ./generate.sh <version>
+   (cd vanilla_server_reports && ./generate.sh <version>)
    ```
 
 2. **Dump collision, fluid and entity metadata** directly from the matching vanilla jar (run from the module root):
@@ -47,7 +48,7 @@ See package documentation:
    ./mcdump/dump.sh <version>
    ```
 
-   The standalone bootstrap does not bind datapack fluid tags; the dumper identifies source/flowing fluid types directly.
+   The dumper binds vanilla block tags before reading state predicates and identifies source/flowing fluid types directly.
 
 3. **Regenerate data** from the server reports, dumped metadata and decompiled source (`../mcsrc/current`):
 

@@ -24,11 +24,6 @@ func init() {
 		layers := []BannerPatternLayer{}
 		shield.BannerPatterns = &layers
 	}
-	if pot := defaultComponents[ItemID("minecraft:decorated_pot")]; pot != nil {
-		pot.PotDecorations = &PotDecorations{
-			Back: "minecraft:brick", Left: "minecraft:brick", Right: "minecraft:brick", Front: "minecraft:brick",
-		}
-	}
 }
 
 // ItemID returns the protocol ID for an item identifier, or -1 if not found.

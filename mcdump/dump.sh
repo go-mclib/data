@@ -7,7 +7,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-VERSION="${1:-26.2}"
+VERSION="${1:-26.3}"
 SERVER_JAR="../vanilla_server_reports/server-${VERSION}.jar"
 WORK=".work"
 OUT="../generate/mcdump"

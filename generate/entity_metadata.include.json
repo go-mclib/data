@@ -43,7 +43,8 @@
     "39": {"name": "VECTOR3", "wireType": "vector3f"},
     "40": {"name": "QUATERNION", "wireType": "quaternionf"},
     "41": {"name": "RESOLVABLE_PROFILE", "wireType": "resolvable_profile"},
-    "42": {"name": "HUMANOID_ARM", "wireType": "varint"}
+    "42": {"name": "HUMANOID_ARM", "wireType": "varint"},
+    "43": {"name": "DYE_COLOR", "wireType": "varint"}
   },
   "entities": {
     "Entity": {
@@ -57,6 +58,12 @@
         {"index": 5, "name": "NoGravity", "serializer": 8, "goField": "NoGravity", "goType": "bool"},
         {"index": 6, "name": "Pose", "serializer": 20, "goField": "Pose", "goType": "int32", "description": "standing=0,fall_flying=1,sleeping=2,swimming=3,spin_attack=4,sneaking=5,long_jumping=6,dying=7,croaking=8,using_tongue=9,sitting=10,roaring=11,sniffing=12,emerging=13,digging=14,sliding=15,shooting=16,inhaling=17"},
         {"index": 7, "name": "TicksFrozen", "serializer": 1, "goField": "TicksFrozen", "goType": "int32", "description": "ticks in powder snow"}
+      ]
+    },
+    "Cushion": {
+      "parent": "Entity",
+      "fields": [
+        {"index": 8, "name": "Color", "serializer": 43, "goField": "Color", "goType": "int32", "description": "dye color"}
       ]
     },
     "LivingEntity": {

@@ -1,4 +1,4 @@
-// Package recipes provides vanilla crafting and smelting recipe tables,
+// Package recipes provides vanilla crafting, cooking, and brewing recipe tables,
 // generated from the datapack recipe JSONs.
 package recipes
 
@@ -50,16 +50,42 @@ type Imbue struct {
 	Count    int
 }
 
-// Transmute changes one input while preserving its component patch.
+// Transmute changes one input while preserving its component patch, then applies
+// Components. Keys prefixed with "!" remove components.
 type Transmute struct {
 	Info
-	Input                    Ingredient
-	Material                 Ingredient
-	MinMaterialCount         int
-	MaxMaterialCount         int
-	Result                   string
-	Count                    int
+	Input            Ingredient
+	Material         Ingredient
+	MinMaterialCount int
+	MaxMaterialCount int
+	Result           string
+	Count            int
+	// KeepInput selects the input item instead of Result.
+	KeepInput                bool
+	Components               map[string]any
 	AddMaterialCountToResult bool
+}
+
+// PotionIngredient matches an item and optionally its potion contents.
+type PotionIngredient struct {
+	Item Ingredient
+	// PotionContents is the persisted PotionsPredicate: optional "potions"
+	// (a holder name, #tag, or list of names) and "effects" (the complete
+	// collection predicate, including contains, count, and size). Nil means
+	// no potion-contents constraint; an empty map requires potion contents.
+	PotionContents map[string]any
+}
+
+// Brewing has no recipe-book display or common recipe-book metadata.
+type Brewing struct {
+	Name    string
+	Input   PotionIngredient
+	Reagent PotionIngredient
+	Result  string
+	Count   int
+	// Components is the output template's persisted component patch.
+	// Keys prefixed with "!" remove components.
+	Components map[string]any
 }
 
 // Smelting is a furnace recipe.

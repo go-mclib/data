@@ -1,6 +1,72 @@
 {
   "_comment": "Wire format metadata for item components. Used by go generate to auto-generate codec registrations.",
   "components": {
+    "minecraft:attack_animation": {
+      "goField": "AttackAnimation",
+      "goType": "*SwingAnimation",
+      "wireType": "manual"
+    },
+    "minecraft:interact_animation": {
+      "goField": "InteractAnimation",
+      "goType": "*SwingAnimation",
+      "wireType": "manual"
+    },
+    "minecraft:block_transformer": {
+      "goField": "BlockTransformer",
+      "goType": "string",
+      "wireType": "manual"
+    },
+    "minecraft:villager_food": {
+      "goField": "VillagerFood",
+      "goType": "*VillagerFood",
+      "wireType": "struct",
+      "wireFormat": [{"name": "nutrition", "type": "varint", "goField": "Nutrition"}]
+    },
+    "minecraft:compostable": {
+      "goField": "Compostable",
+      "goType": "*Compostable",
+      "wireType": "manual"
+    },
+    "minecraft:cooking_fuel": {
+      "goField": "CookingFuel",
+      "goType": "*CookingFuel",
+      "wireType": "manual"
+    },
+    "minecraft:brewing_fuel": {
+      "goField": "BrewingFuel",
+      "goType": "*BrewingFuel",
+      "wireType": "manual"
+    },
+    "minecraft:mob_visibility": {
+      "goField": "MobVisibility",
+      "goType": "*MobVisibility",
+      "wireType": "manual"
+    },
+    "minecraft:provides_pottery_pattern": {
+      "goField": "ProvidesPotteryPattern",
+      "goType": "string",
+      "wireType": "manual"
+    },
+    "minecraft:sign_text_front": {
+      "goField": "SignTextFront",
+      "goType": "*SignText",
+      "wireType": "manual"
+    },
+    "minecraft:sign_text_back": {
+      "goField": "SignTextBack",
+      "goType": "*SignText",
+      "wireType": "manual"
+    },
+    "minecraft:waxed": {
+      "goField": "Waxed",
+      "goType": "bool",
+      "wireType": "empty"
+    },
+    "minecraft:cushion/color": {
+      "goField": "CushionColor",
+      "goType": "*int32",
+      "wireType": "manual"
+    },
     "minecraft:max_stack_size": {
       "goField": "MaxStackSize",
       "goType": "int32",
@@ -18,11 +84,6 @@
     },
     "minecraft:repair_cost": {
       "goField": "RepairCost",
-      "goType": "int32",
-      "wireType": "varint"
-    },
-    "minecraft:map_color": {
-      "goField": "MapColor",
       "goType": "int32",
       "wireType": "varint"
     },
@@ -245,10 +306,6 @@
       "passthrough": true
     },
     "minecraft:base_color": {
-      "wireType": "varint",
-      "passthrough": true
-    },
-    "minecraft:swing_animation": {
       "wireType": "varint",
       "passthrough": true
     },

@@ -43,8 +43,13 @@ func aquaticVariantComponentID(component, name string) (int32, bool) {
 // SupportsNBTComponent reports whether a component has an NBT/wire bridge.
 func SupportsNBTComponent(name string) bool {
 	switch name {
+	case "minecraft:attack_animation", "minecraft:interact_animation", "minecraft:block_transformer",
+		"minecraft:villager_food", "minecraft:compostable", "minecraft:cooking_fuel", "minecraft:brewing_fuel",
+		"minecraft:mob_visibility", "minecraft:provides_pottery_pattern", "minecraft:sign_text_front",
+		"minecraft:sign_text_back", "minecraft:waxed", "minecraft:cushion/color":
+		return true
 	case "minecraft:damage", "minecraft:repair_cost", "minecraft:ominous_bottle_amplifier", "minecraft:unbreakable",
-		"minecraft:max_stack_size", "minecraft:max_damage", "minecraft:map_color", "minecraft:additional_trade_cost",
+		"minecraft:max_stack_size", "minecraft:max_damage", "minecraft:additional_trade_cost",
 		"minecraft:potion_duration_scale", "minecraft:minimum_attack_charge", "minecraft:enchantment_glint_override", "minecraft:suspicious_stew_effects",
 		"minecraft:item_model", "minecraft:break_sound", "minecraft:instrument", "minecraft:jukebox_playable", "minecraft:provides_trim_material", "minecraft:rarity",
 		"minecraft:note_block_sound", "minecraft:tooltip_style", "minecraft:glider", "minecraft:creative_slot_lock", "minecraft:intangible_projectile",
@@ -82,6 +87,10 @@ func ComponentsToNBT(slot ns.Slot) nbt.Compound {
 		if name == "" {
 			continue
 		}
+		if value := componentPayloadNBT(name, stack.Components); value != nil {
+			result[name] = value
+			continue
+		}
 		switch name {
 		case "minecraft:axolotl/variant", "minecraft:tropical_fish/pattern",
 			"minecraft:tropical_fish/base_color", "minecraft:tropical_fish/pattern_color":
@@ -96,8 +105,6 @@ func ComponentsToNBT(slot ns.Slot) nbt.Compound {
 			result[name] = nbt.Int(stack.Components.MaxStackSize)
 		case "minecraft:max_damage":
 			result[name] = nbt.Int(stack.Components.MaxDamage)
-		case "minecraft:map_color":
-			result[name] = nbt.Int(stack.Components.MapColor)
 		case "minecraft:additional_trade_cost":
 			result[name] = nbt.Int(stack.Components.AdditionalTradeCost)
 		case "minecraft:attribute_modifiers":
@@ -350,12 +357,6 @@ func ComponentsToNBT(slot ns.Slot) nbt.Compound {
 				}
 				result[name] = layers
 			}
-		case "minecraft:pot_decorations":
-			if decorations := stack.Components.PotDecorations; decorations != nil {
-				result[name] = nbt.List{ElementType: nbt.TagString, Elements: []nbt.Tag{
-					nbt.String(decorations.Back), nbt.String(decorations.Left), nbt.String(decorations.Right), nbt.String(decorations.Front),
-				}}
-			}
 		case "minecraft:firework_explosion":
 			if explosion := stack.Components.FireworkExplosion; explosion != nil {
 				result[name] = fireworkExplosionNBT(*explosion)
@@ -403,6 +404,13 @@ func ApplyNBTComponents(slot ns.Slot, patch nbt.Compound) (ns.Slot, error) {
 		if id < 0 {
 			continue
 		}
+		if handled, err := applyComponentPayloadNBT(stack.Components, key, value); handled {
+			if err != nil {
+				return ns.Slot{}, err
+			}
+			stack.Components.SetPresent(id)
+			continue
+		}
 		switch key {
 		case "minecraft:axolotl/variant", "minecraft:tropical_fish/pattern",
 			"minecraft:tropical_fish/base_color", "minecraft:tropical_fish/pattern_color":
@@ -425,9 +433,6 @@ func ApplyNBTComponents(slot ns.Slot, patch nbt.Compound) (ns.Slot, error) {
 			stack.Components.SetPresent(id)
 		case "minecraft:max_damage":
 			stack.Components.MaxDamage = intValue(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:map_color":
-			stack.Components.MapColor = intValue(value)
 			stack.Components.SetPresent(id)
 		case "minecraft:additional_trade_cost":
 			stack.Components.AdditionalTradeCost = intValue(value)
@@ -931,23 +936,6 @@ func ApplyNBTComponents(slot ns.Slot, patch nbt.Compound) (ns.Slot, error) {
 			}
 			stack.Components.Fireworks = &Fireworks{FlightDuration: flight}
 			stack.Components.FireworkExplosions = explosions
-			stack.Components.SetPresent(id)
-		case "minecraft:pot_decorations":
-			list, ok := value.(nbt.List)
-			if !ok || list.ElementType != nbt.TagString || len(list.Elements) > 4 {
-				return ns.Slot{}, fmt.Errorf("pot_decorations component must be a string list of at most four items")
-			}
-			decorations := [4]string{"minecraft:brick", "minecraft:brick", "minecraft:brick", "minecraft:brick"}
-			for index, element := range list.Elements {
-				name, ok := element.(nbt.String)
-				if !ok || registries.Item.Get(string(name)) < 0 {
-					return ns.Slot{}, fmt.Errorf("unknown pot decoration item %q", name)
-				}
-				decorations[index] = string(name)
-			}
-			stack.Components.PotDecorations = &PotDecorations{
-				Back: decorations[0], Left: decorations[1], Right: decorations[2], Front: decorations[3],
-			}
 			stack.Components.SetPresent(id)
 		case "minecraft:banner_patterns":
 			list, ok := value.(nbt.List)

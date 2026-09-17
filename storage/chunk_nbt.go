@@ -12,8 +12,8 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
-// DataVersion is the 26.2 world data version written to saved data.
-const DataVersion = 4903
+// DataVersion is the 26.3 world data version written to saved data.
+const DataVersion = 5023
 
 // ChunkToNBT serializes a ChunkColumn to Anvil-format NBT bytes (uncompressed).
 func ChunkToNBT(col *chunks.ChunkColumn) ([]byte, error) {
@@ -173,13 +173,13 @@ func blockStatesToNBT(sec *chunks.ChunkSection) (nbt.Compound, error) {
 	// build NBT palette
 	paletteTags := make([]nbt.Tag, len(palette))
 	for i, entry := range palette {
-		comp := nbt.Compound{"Name": nbt.String(entry.name)}
+		comp := nbt.Compound{"id": nbt.String(entry.name)}
 		if len(entry.props) > 0 {
 			propsComp := nbt.Compound{}
 			for k, v := range entry.props {
 				propsComp[k] = nbt.String(v)
 			}
-			comp["Properties"] = propsComp
+			comp["properties"] = propsComp
 		}
 		paletteTags[i] = comp
 	}
@@ -380,7 +380,7 @@ func loadBlockStates(sec *chunks.ChunkSection, comp nbt.Compound) error {
 		if !ok {
 			continue
 		}
-		name := entry.GetString("Name")
+		name := entry.GetString("id")
 		if name == "minecraft:air" || name == "" {
 			stateIDs[i] = 0
 			continue
@@ -391,7 +391,7 @@ func loadBlockStates(sec *chunks.ChunkSection, comp nbt.Compound) error {
 			continue
 		}
 
-		propsComp := entry.GetCompound("Properties")
+		propsComp := entry.GetCompound("properties")
 		if len(propsComp) > 0 {
 			props := make(map[string]string, len(propsComp))
 			for k, v := range propsComp {

@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # download the vanilla server jar and run its data generator to produce the
 # JSON reports (blocks, items, registries, packets, commands) used by the Go
-# bindings generator in ../pkg/data/generate.
+# bindings generator in ../generate.
 #
 # usage: ./generate.sh [version]   (default: latest known, see DEFAULT_VERSION)
 set -euo pipefail
 cd "$(dirname "$0")"
 
-DEFAULT_VERSION="26.2"
+DEFAULT_VERSION="26.3"
 VERSION="${1:-$DEFAULT_VERSION}"
 JAR="server-$VERSION.jar"
 
@@ -42,10 +42,10 @@ echo "running data generator..."
 java -DbundlerMainClass="net.minecraft.data.Main" -jar "$JAR" --server --reports
 
 # symlink reports into the Go bindings generator's working dir
-ln -sf "$PWD/generated/reports/commands.json"   ../pkg/data/generate/commands.json
-ln -sf "$PWD/generated/reports/blocks.json"     ../pkg/data/generate/blocks.json
-ln -sf "$PWD/generated/reports/registries.json" ../pkg/data/generate/registries.json
-ln -sf "$PWD/generated/reports/packets.json"    ../pkg/data/generate/packets.json
-ln -sf "$PWD/generated/reports/minecraft/components/item" ../pkg/data/generate/items
+ln -sfn "$PWD/generated/reports/commands.json"   ../generate/commands.json
+ln -sfn "$PWD/generated/reports/blocks.json"     ../generate/blocks.json
+ln -sfn "$PWD/generated/reports/registries.json" ../generate/registries.json
+ln -sfn "$PWD/generated/reports/packets.json"    ../generate/packets.json
+ln -sfn "$PWD/generated/reports/minecraft/components/item" ../generate/items
 
-echo "reports generated; now run 'go generate ./...' in ../pkg/data/generate"
+echo "reports generated; now run 'go generate ./...' in .."

@@ -1,4 +1,4 @@
-// Code generated for Minecraft 26.2 (Protocol 776); DO NOT EDIT.
+// Code generated for Minecraft 26.3 (Protocol 777); DO NOT EDIT.
 
 package packet_ids
 
@@ -50,24 +50,24 @@ const (
 	C2SPlayerInputID               = 43
 	C2SPlayerLoadedID              = 44
 	C2SPongPlayID                  = 45
-	C2SRecipeBookChangeSettingsID  = 46
-	C2SRecipeBookSeenRecipeID      = 47
-	C2SRenameItemID                = 48
-	C2SResourcePackPlayID          = 49
-	C2SSeenAdvancementsID          = 50
-	C2SSelectTradeID               = 51
-	C2SSetBeaconID                 = 52
-	C2SSetCarriedItemID            = 53
-	C2SSetCommandBlockID           = 54
-	C2SSetCommandMinecartID        = 55
-	C2SSetCreativeModeSlotID       = 56
-	C2SSetGameRuleID               = 57
-	C2SSetJigsawBlockID            = 58
-	C2SSetStructureBlockID         = 59
-	C2SSetTestBlockID              = 60
-	C2SSignUpdateID                = 61
-	C2SSpectatorActionID           = 62
-	C2SSwingID                     = 63
+	C2SPunchID                     = 46
+	C2SRecipeBookChangeSettingsID  = 47
+	C2SRecipeBookSeenRecipeID      = 48
+	C2SRenameItemID                = 49
+	C2SResourcePackPlayID          = 50
+	C2SSeenAdvancementsID          = 51
+	C2SSelectTradeID               = 52
+	C2SSetBeaconID                 = 53
+	C2SSetCarriedItemID            = 54
+	C2SSetCommandBlockID           = 55
+	C2SSetCommandMinecartID        = 56
+	C2SSetCreativeModeSlotID       = 57
+	C2SSetGameRuleID               = 58
+	C2SSetJigsawBlockID            = 59
+	C2SSetStructureBlockID         = 60
+	C2SSetTestBlockID              = 61
+	C2SSignUpdateID                = 62
+	C2SSpectatorActionID           = 63
 	C2STeleportToEntityID          = 64
 	C2STestInstanceBlockActionID   = 65
 	C2SUseItemOnID                 = 66

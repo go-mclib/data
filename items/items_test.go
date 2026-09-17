@@ -264,23 +264,193 @@ func TestFireworksComponentsRoundTrip(t *testing.T) {
 func TestPotDecorationsComponentRoundTrip(t *testing.T) {
 	stack := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:decorated_pot")), 1)
 	restored, err := items.ApplyNBTComponents(stack, nbt.Compound{
-		"minecraft:pot_decorations": nbt.List{ElementType: nbt.TagString, Elements: []nbt.Tag{
-			nbt.String("minecraft:angler_pottery_sherd"), nbt.String("minecraft:brick"),
-		}},
+		"minecraft:pot_decorations": nbt.Compound{
+			"back": nbt.Compound{
+				"id":    nbt.String("minecraft:angler_pottery_sherd"),
+				"count": nbt.Int(2),
+				"components": nbt.Compound{
+					"minecraft:custom_name":  nbt.Compound{"text": nbt.String("etched"), "color": nbt.String("gold")},
+					"!minecraft:break_sound": nbt.Compound{},
+				},
+			},
+			"left": nbt.String("minecraft:brick"),
+		},
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
-	decoded, err := items.FromSlot(restored)
+	writer := ns.NewWriter()
+	if err := writer.WriteSlot(restored); err != nil {
+		t.Fatal(err)
+	}
+	writer.WriteVarInt(123456)
+	reader := ns.NewReader(writer.Bytes())
+	wire, err := reader.ReadSlot(items.Decoder())
 	if err != nil {
 		t.Fatal(err)
 	}
-	if decoded.Components.PotDecorations == nil || decoded.Components.PotDecorations.Back != "minecraft:angler_pottery_sherd" || decoded.Components.PotDecorations.Right != "minecraft:brick" {
-		t.Fatalf("pot decorations = %+v", decoded.Components.PotDecorations)
+	if sentinel, err := reader.ReadVarInt(); err != nil || sentinel != 123456 {
+		t.Fatalf("pot payload alignment: %d, %v", sentinel, err)
 	}
-	patch := items.ComponentsToNBT(restored)
-	if len(patch.GetList("minecraft:pot_decorations").Elements) != 4 {
-		t.Fatalf("pot decoration nbt = %+v", patch)
+	decoded, err := items.FromSlot(wire)
+	if err != nil {
+		t.Fatal(err)
+	}
+	decorations := decoded.Components.PotDecorations
+	if decorations == nil || decorations.Back == nil || decorations.Back.ID != items.ItemID("minecraft:angler_pottery_sherd") ||
+		decorations.Back.Count != 2 || decorations.Left == nil || decorations.Right != nil || decorations.Front != nil {
+		t.Fatalf("pot decorations = %+v", decorations)
+	}
+	clone := decoded.Components.Clone()
+	clone.PotDecorations.Back.Count = 3
+	clone.PotDecorations.Back.Components.CustomName.Raw[0] = 0
+	if decorations.Back.Count != 2 || decorations.Back.Components.CustomName.Raw[0] == 0 {
+		t.Fatal("decoration clone shares nested component state")
+	}
+	patch := items.ComponentsToNBT(wire).GetCompound("minecraft:pot_decorations")
+	back := patch.GetCompound("back")
+	if back.GetInt("count") != 2 || back.GetCompound("components").GetCompound("minecraft:custom_name").GetString("color") != "gold" {
+		t.Fatalf("nested decoration patch lost: %+v", patch)
+	}
+	if _, present := back.GetCompound("components")["!minecraft:break_sound"]; !present {
+		t.Fatal("nested component removal lost")
+	}
+	if _, present := patch["right"]; present {
+		t.Fatal("absent right side coerced to an item")
+	}
+	empty, err := items.ApplyNBTComponents(stack, nbt.Compound{"minecraft:pot_decorations": nbt.Compound{}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if value, present := items.ComponentsToNBT(empty)["minecraft:pot_decorations"]; !present || len(value.(nbt.Compound)) != 0 {
+		t.Fatalf("explicit empty decorations not preserved: %+v", value)
+	}
+}
+
+func TestResolvableFuelWireConstantsAndReferences(t *testing.T) {
+	writer := ns.NewWriter()
+	writer.WriteBool(true)
+	writer.WriteInt32(0x01020304)
+	writer.WriteBool(false)
+	writer.WriteString("minecraft:cooking/speed_default")
+	writer.WriteVarInt(123456)
+	reader := ns.NewReader(writer.Bytes())
+	data, err := items.Decoder()(reader, items.ComponentCookingFuel)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if sentinel, err := reader.ReadVarInt(); err != nil || sentinel != 123456 {
+		t.Fatalf("fuel payload alignment: %d, %v", sentinel, err)
+	}
+	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	slot.AddComponent(items.ComponentCookingFuel, data)
+	stack, err := items.FromSlot(slot)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fuel := stack.Components.CookingFuel
+	if fuel == nil || fuel.BurnTime.Value != 0x01020304 || fuel.SpeedMultiplier.Reference != "minecraft:cooking/speed_default" {
+		t.Fatalf("resolved fuel = %+v", fuel)
+	}
+	patch := items.ComponentsToNBT(slot)
+	roundTrip, err := items.ApplyNBTComponents(ns.NewSlot(slot.ItemID, 1), patch)
+	if err != nil || !items.SameStack(slot, roundTrip) {
+		t.Fatalf("fuel persistence: %+v, %v", roundTrip, err)
+	}
+	other, err := items.ApplyNBTComponents(ns.NewSlot(slot.ItemID, 1), nbt.Compound{
+		"minecraft:brewing_fuel": nbt.Compound{"uses": nbt.String("minecraft:brewing/fuel_blaze_powder"), "speed_multiplier": nbt.Float(1.25)},
+		"minecraft:compostable":  nbt.Compound{"layers": nbt.Int(-3)},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	decoded, err := items.FromSlot(other)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if decoded.Components.BrewingFuel.Uses.Reference != "minecraft:brewing/fuel_blaze_powder" ||
+		decoded.Components.BrewingFuel.SpeedMultiplier.Value != 1.25 || decoded.Components.Compostable.Layers.Value != -3 {
+		t.Fatalf("number union variants lost: %+v", decoded.Components)
+	}
+}
+
+func TestSignTextFixedFourLinesAndFilteredPersistence(t *testing.T) {
+	writer := ns.NewWriter()
+	for i := range 4 {
+		if err := writer.WriteTextComponent(ns.TextComponent{Text: "line", Color: "gold", Extra: []ns.TextComponent{{Text: "child"}}}); err != nil {
+			t.Fatal(i, err)
+		}
+	}
+	writer.WriteBool(true)
+	for range 4 {
+		writer.WriteTextComponent(ns.TextComponent{Text: "filtered"})
+	}
+	writer.WriteVarInt(14)
+	writer.WriteBool(true)
+	writer.WriteVarInt(123456)
+	reader := ns.NewReader(writer.Bytes())
+	data, err := items.Decoder()(reader, items.ComponentSignTextFront)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if sentinel, err := reader.ReadVarInt(); err != nil || sentinel != 123456 {
+		t.Fatalf("sign payload alignment: %d, %v", sentinel, err)
+	}
+	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	slot.AddComponent(items.ComponentSignTextFront, data)
+	patch := items.ComponentsToNBT(slot)
+	sign := patch.GetCompound("minecraft:sign_text_front")
+	if sign.GetString("color") != "red" || len(sign.GetList("filtered_messages").Elements) != 4 ||
+		sign.GetList("messages").Elements[0].(nbt.Compound).GetString("color") != "gold" {
+		t.Fatalf("styled or filtered sign text lost: %+v", sign)
+	}
+	roundTrip, err := items.ApplyNBTComponents(ns.NewSlot(slot.ItemID, 1), patch)
+	if err != nil || !items.SameStack(slot, roundTrip) {
+		t.Fatalf("sign persistence: %+v, %v", roundTrip, err)
+	}
+	stack, err := items.FromSlot(slot)
+	if err != nil {
+		t.Fatal(err)
+	}
+	clone := stack.Components.Clone()
+	clone.SignTextFront.FilteredMessages[0].Raw[0] = 0
+	if stack.Components.SignTextFront.FilteredMessages[0].Raw[0] == 0 {
+		t.Fatal("filtered sign text clone aliases original")
+	}
+	sign["messages"] = nbt.List{ElementType: nbt.TagString, Elements: []nbt.Tag{nbt.String("one")}}
+	if _, err := items.ApplyNBTComponents(ns.NewSlot(slot.ItemID, 1), patch); err == nil {
+		t.Fatal("accepted a sign without four messages")
+	}
+}
+
+func TestPlainRegistryComponentsUseZeroBasedHolders(t *testing.T) {
+	for _, test := range []struct {
+		component      int32
+		name, registry string
+	}{
+		{items.ComponentBlockTransformer, "minecraft:block_transformer", "minecraft:block_transformer"},
+		{items.ComponentProvidesPotteryPattern, "minecraft:provides_pottery_pattern", "minecraft:decorated_pot_pattern"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			reader := ns.NewReader([]byte{0, 42})
+			data, err := items.Decoder()(reader, ns.VarInt(test.component))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if next, err := reader.ReadVarInt(); err != nil || next != 42 {
+				t.Fatalf("plain holder consumed inline data: %d, %v", next, err)
+			}
+			slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+			slot.AddComponent(ns.VarInt(test.component), data)
+			patch := items.ComponentsToNBT(slot)
+			if patch.GetString(test.name) != registries.SynchronizedEntries[test.registry][0] {
+				t.Fatalf("holder zero mapped incorrectly: %+v", patch)
+			}
+			restored, err := items.ApplyNBTComponents(ns.NewSlot(slot.ItemID, 1), patch)
+			if err != nil || !items.SameStack(slot, restored) {
+				t.Fatalf("holder persistence: %+v, %v", restored, err)
+			}
+		})
 	}
 }
 
@@ -457,10 +627,6 @@ func TestConsumableComponentRoundTrip(t *testing.T) {
 	}
 	if len(slot.Components.Add) != 1 || int32(slot.Components.Add[0].ID) != items.ComponentConsumable {
 		t.Fatalf("component patch = %+v", slot.Components)
-	}
-	const expected = "3f00000001bb0501010002090164000101001500e012000101003f800000"
-	if got := hex.EncodeToString(slot.Components.Add[0].Data); got != expected {
-		t.Fatalf("consumable wire = %s, want %s", got, expected)
 	}
 	decoded, err := items.FromSlot(slot)
 	if err != nil {

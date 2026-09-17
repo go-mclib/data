@@ -37,10 +37,15 @@ func CollisionCoordinates(stateID int32, axis int) []float64 {
 	return shapeCoordinates[shapeByState[stateID]][axis]
 }
 
-// BlocksMotion reports the vanilla block-state motion-blocking property.
-// It is not interchangeable with the presence of collision geometry.
+// BlocksMotion reports membership in the vanilla blocks_motion tag.
+// It is not interchangeable with collision geometry or fluid-flow blocking.
 func BlocksMotion(stateID int32) bool {
 	return stateID >= 0 && int(stateID) < len(collisionFlags) && collisionFlags[stateID]&1 != 0
+}
+
+// BlocksFluidFlow reports membership in the vanilla blocks_fluid_flow tag.
+func BlocksFluidFlow(stateID int32) bool {
+	return stateID >= 0 && int(stateID) < len(collisionFlags) && collisionFlags[stateID]&16 != 0
 }
 
 // HasLargeCollisionShape reports whether collision geometry can leave its block cell.

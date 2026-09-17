@@ -38,7 +38,7 @@ type equipmentDropEffectJSON struct {
 		Value levelBasedValueJSON `json:"value"`
 	} `json:"effect"`
 	Requirements *struct {
-		Condition string `json:"condition"`
+		Type      string `json:"type"`
 		Entity    string `json:"entity"`
 		Predicate struct {
 			EntityType string `json:"minecraft:entity_type"`
@@ -124,7 +124,7 @@ func equipmentDropEffectsLiteral(enchantment string, effects []equipmentDropEffe
 		}
 		requiresAttackerPlayer := false
 		if requirement := effect.Requirements; requirement != nil {
-			if requirement.Condition != "minecraft:entity_properties" || requirement.Entity != "attacker" ||
+			if requirement.Type != "minecraft:entity_properties" || requirement.Entity != "attacker" ||
 				requirement.Predicate.EntityType != "minecraft:player" {
 				panic(fmt.Sprintf("%s has unsupported equipment drop requirement", enchantment))
 			}

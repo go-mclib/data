@@ -12,8 +12,8 @@ import (
 
 // Protocol version info - update these when regenerating for a new Minecraft version
 const (
-	ProtocolVersion  = 776
-	MinecraftVersion = "26.2"
+	ProtocolVersion  = 777
+	MinecraftVersion = "26.3"
 )
 
 // lowCountWarnings accumulates scrapers that produced implausibly few entries.

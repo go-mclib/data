@@ -79,7 +79,7 @@ type InventorySlot struct {
 	Components nbt.Compound
 }
 
-// EquipmentSlot represents one entry in the 26.2 equipment compound.
+// EquipmentSlot represents one entry in the 26.3 equipment compound.
 type EquipmentSlot struct {
 	Slot       string
 	ID         string

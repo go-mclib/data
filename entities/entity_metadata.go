@@ -121,7 +121,7 @@ var wireCopiers = map[string]wireCopier{
 	"optional_position":   copyOptionalValue(copyPositionValue),
 	"optional_uuid":       copyOptionalValue(func(buf, w *ns.PacketBuffer) error { return w.CopyUUID(buf) }),
 	"optional_global_pos": copyOptionalValue(copyGlobalPos),
-	"particle":            copyParticle,
+	"particle":            CopyParticle,
 	"particle_list":       copyParticleList,
 	"id_or_inline":        copyPaintingVariant,
 	"resolvable_profile":  copyResolvableProfile,
@@ -211,8 +211,8 @@ func copyGlobalPos(buf, w *ns.PacketBuffer) error {
 	return copyPositionValue(buf, w)
 }
 
-// copyParticle copies a particle from buf to w.
-func copyParticle(buf, w *ns.PacketBuffer) error {
+// CopyParticle copies a particle from buf to w.
+func CopyParticle(buf, w *ns.PacketBuffer) error {
 	particleType, err := buf.ReadVarInt()
 	if err != nil {
 		return err
@@ -300,7 +300,7 @@ func copyParticleList(buf, w *ns.PacketBuffer) error {
 	}
 	w.WriteVarInt(count)
 	for range int(count) {
-		if err := copyParticle(buf, w); err != nil {
+		if err := CopyParticle(buf, w); err != nil {
 			return err
 		}
 	}

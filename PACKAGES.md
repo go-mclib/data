@@ -18,9 +18,9 @@ id := registries.Block.Get("minecraft:stone")  // returns 1
 name := registries.Block.ByID(1)  // returns "minecraft:stone"
 
 // available registries
-registries.Block          // 1166 entries
-registries.Item           // 1505 entries
-registries.EntityType     // 157 entries
+registries.Block          // 1286 entries
+registries.Item           // 1658 entries
+registries.EntityType     // 161 entries
 registries.MobEffect      // 40 entries
 // ... 95 total registries
 ```
@@ -293,8 +293,8 @@ go generate ./... && go fmt ./...
 
 Source JSON files:
 
-- `blocks.json`: 1,166 blocks, 29,671 total states, 92 unique properties
-- `items.json`: 1,505 items, 104 component types
+- `blocks.json`: 1,286 blocks, 35,723 total states, 93 unique properties
+- `items/`: 1,658 items, 122 component types
 - `registries.json`: 95 registries
 
 ## Testing

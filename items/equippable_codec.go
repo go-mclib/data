@@ -157,6 +157,10 @@ func readOptionalEntityTypeHolderSet(buf *ns.PacketBuffer) ([]string, error) {
 	if err != nil || !present {
 		return nil, err
 	}
+	return readEntityTypeHolderSet(buf)
+}
+
+func readEntityTypeHolderSet(buf *ns.PacketBuffer) ([]string, error) {
 	marker, err := buf.ReadVarInt()
 	if err != nil {
 		return nil, err
@@ -191,6 +195,10 @@ func writeOptionalEntityTypeHolderSet(w *ns.PacketBuffer, types []string) error 
 	if types == nil {
 		return nil
 	}
+	return writeEntityTypeHolderSet(w, types)
+}
+
+func writeEntityTypeHolderSet(w *ns.PacketBuffer, types []string) error {
 	if len(types) == 1 && strings.HasPrefix(types[0], "#") {
 		w.WriteVarInt(0)
 		w.WriteString(ns.String(strings.TrimPrefix(types[0], "#")))

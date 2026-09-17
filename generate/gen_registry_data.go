@@ -4,14 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
-// generateRegistryData reads datapack JSON files for synchronized registries
-// and embeds them as raw JSON in Go code. The server converts JSON→NBT at
-// startup using the nbt package's JSON conversion.
+// generateRegistryData embeds vanilla registry entries as raw JSON. Synchronized
+// entries become configuration packets; reloadable entries support item components
+// whose values depend on their block context.
 func generateRegistryData(datapackDir, outPath string) {
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("registries"))
@@ -22,52 +23,51 @@ func generateRegistryData(datapackDir, outPath string) {
 	sb.WriteString("// The server converts these to NBT at startup for S2CRegistryData packets.\n")
 	sb.WriteString("var SynchronizedRegistryData = map[string]map[string]json.RawMessage{\n")
 
-	for _, regID := range synchronizedRegistryIDs {
-		relPath := strings.TrimPrefix(regID, "minecraft:")
-		dir := filepath.Join(datapackDir, relPath)
-
-		dirEntries, err := os.ReadDir(dir)
-		if err != nil {
-			continue
-		}
-
-		type entry struct {
-			name string
-			data []byte
-		}
-		var entries []entry
-
-		for _, e := range dirEntries {
-			if e.IsDir() || !strings.HasSuffix(e.Name(), ".json") {
-				continue
-			}
-			name := "minecraft:" + strings.TrimSuffix(e.Name(), ".json")
-			data, err := os.ReadFile(filepath.Join(dir, e.Name()))
-			if err != nil {
-				fmt.Printf("  warn: failed to read %s/%s: %v\n", regID, e.Name(), err)
-				continue
-			}
-			// compact the JSON
-			var buf bytes.Buffer
-			if err := json.Compact(&buf, data); err != nil {
-				entries = append(entries, entry{name, data})
-			} else {
-				entries = append(entries, entry{name, buf.Bytes()})
-			}
-		}
-
-		if len(entries) == 0 {
-			continue
-		}
-
-		sb.WriteString(fmt.Sprintf("\t%q: {\n", regID))
-		for _, e := range entries {
-			// use backtick raw string to avoid escaping issues
-			sb.WriteString(fmt.Sprintf("\t\t%q: json.RawMessage(`%s`),\n", e.name, e.data))
-		}
-		sb.WriteString("\t},\n")
-	}
+	writeRegistryDataMap(&sb, datapackDir, synchronizedRegistryIDs)
+	sb.WriteString("}\n\n")
+	sb.WriteString("// ReloadableRegistryData contains contextual number providers and their predicates.\n")
+	sb.WriteString("// These server-side registries are not sent in configuration packets.\n")
+	sb.WriteString("var ReloadableRegistryData = map[string]map[string]json.RawMessage{\n")
+	writeRegistryDataMap(&sb, datapackDir, []string{
+		"minecraft:context_int_provider",
+		"minecraft:context_float_provider",
+		"minecraft:predicate",
+	})
 	sb.WriteString("}\n")
 
 	writeFile(outPath, sb.String())
+}
+
+func writeRegistryDataMap(sb *strings.Builder, datapackDir string, registryIDs []string) {
+	for _, regID := range registryIDs {
+		dir := filepath.Join(datapackDir, strings.TrimPrefix(regID, "minecraft:"))
+		sb.WriteString(fmt.Sprintf("\t%q: {\n", regID))
+		err := filepath.WalkDir(dir, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".json") {
+				return nil
+			}
+			rel, err := filepath.Rel(dir, path)
+			if err != nil {
+				return err
+			}
+			data, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+			var compact bytes.Buffer
+			if err := json.Compact(&compact, data); err != nil {
+				return fmt.Errorf("%s: %w", path, err)
+			}
+			name := "minecraft:" + strings.TrimSuffix(filepath.ToSlash(rel), ".json")
+			sb.WriteString(fmt.Sprintf("\t\t%q: json.RawMessage(%q),\n", name, compact.String()))
+			return nil
+		})
+		if err != nil {
+			panic(fmt.Errorf("load registry %s: %w", regID, err))
+		}
+		sb.WriteString("\t},\n")
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated for Minecraft 26.2 (Protocol 776); DO NOT EDIT.
+// Code generated for Minecraft 26.3 (Protocol 777); DO NOT EDIT.
 
 package packet_ids
 
@@ -14,14 +14,15 @@ const (
 	S2CRegistryDataID                     = 7
 	S2CResourcePackPopConfigurationID     = 8
 	S2CResourcePackPushConfigurationID    = 9
-	S2CStoreCookieConfigurationID         = 10
-	S2CTransferConfigurationID            = 11
-	S2CUpdateEnabledFeaturesID            = 12
-	S2CUpdateTagsConfigurationID          = 13
-	S2CSelectKnownPacksID                 = 14
-	S2CCustomReportDetailsConfigurationID = 15
-	S2CServerLinksConfigurationID         = 16
-	S2CClearDialogConfigurationID         = 17
-	S2CShowDialogConfigurationID          = 18
-	S2CCodeOfConductID                    = 19
+	S2CPostEffectsConfigurationID         = 10
+	S2CStoreCookieConfigurationID         = 11
+	S2CTransferConfigurationID            = 12
+	S2CUpdateEnabledFeaturesID            = 13
+	S2CUpdateTagsConfigurationID          = 14
+	S2CSelectKnownPacksID                 = 15
+	S2CCustomReportDetailsConfigurationID = 16
+	S2CServerLinksConfigurationID         = 17
+	S2CClearDialogConfigurationID         = 18
+	S2CShowDialogConfigurationID          = 19
+	S2CCodeOfConductID                    = 20
 )

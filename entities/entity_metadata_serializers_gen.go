@@ -1,4 +1,4 @@
-// Code generated for Minecraft 26.2 (Protocol 776); DO NOT EDIT.
+// Code generated for Minecraft 26.3 (Protocol 777); DO NOT EDIT.
 
 package entities
 
@@ -47,6 +47,7 @@ const (
 	SerializerQUATERNION                       = 40
 	SerializerRESOLVABLE_PROFILE               = 41
 	SerializerHUMANOID_ARM                     = 42
+	SerializerDYE_COLOR                        = 43
 )
 
 // serializerNames maps serializer IDs to names.
@@ -94,6 +95,7 @@ var serializerNames = map[int32]string{
 	40: "QUATERNION",
 	41: "RESOLVABLE_PROFILE",
 	42: "HUMANOID_ARM",
+	43: "DYE_COLOR",
 }
 
 // serializerWireTypes maps serializer IDs to wire types.
@@ -141,4 +143,5 @@ var serializerWireTypes = map[int32]string{
 	40: "quaternionf",
 	41: "resolvable_profile",
 	42: "varint",
+	43: "varint",
 }

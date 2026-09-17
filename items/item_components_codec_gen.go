@@ -1,4 +1,4 @@
-// Code generated for Minecraft 26.2 (Protocol 776); DO NOT EDIT.
+// Code generated for Minecraft 26.3 (Protocol 777); DO NOT EDIT.
 
 package items
 
@@ -19,10 +19,6 @@ func init() {
 	RegisterCodec(ComponentDamage, &varIntCodec{
 		get: func(c *Components) int32 { return c.Damage },
 		set: func(c *Components, v int32) { c.Damage = v },
-	})
-	RegisterCodec(ComponentMapColor, &varIntCodec{
-		get: func(c *Components) int32 { return c.MapColor },
-		set: func(c *Components, v int32) { c.MapColor = v },
 	})
 	RegisterCodec(ComponentMaxDamage, &varIntCodec{
 		get: func(c *Components) int32 { return c.MaxDamage },
@@ -66,6 +62,10 @@ func init() {
 		get: func(c *Components) bool { return c.Unbreakable },
 		set: func(c *Components, v bool) { c.Unbreakable = v },
 	})
+	RegisterCodec(ComponentWaxed, &emptyMarkerCodec{
+		get: func(c *Components) bool { return c.Waxed },
+		set: func(c *Components, v bool) { c.Waxed = v },
+	})
 
 	// Struct codecs
 	RegisterCodec(ComponentEnchantable, genEnchantableCodec{})
@@ -73,6 +73,7 @@ func init() {
 	RegisterCodec(ComponentFood, genFoodCodec{})
 	RegisterCodec(ComponentTooltipDisplay, genTooltipDisplayCodec{})
 	RegisterCodec(ComponentUseCooldown, genUseCooldownCodec{})
+	RegisterCodec(ComponentVillagerFood, genVillagerFoodCodec{})
 	RegisterCodec(ComponentWeapon, genWeaponCodec{})
 
 	// VarInt passthrough
@@ -82,7 +83,6 @@ func init() {
 		ComponentDye,
 		ComponentMapId,
 		ComponentMapPostProcessing,
-		ComponentSwingAnimation,
 	} {
 		registerVarIntPassthrough(id)
 	}
@@ -508,6 +508,53 @@ func (genUseCooldownCodec) Encode(c *Components) ([]byte, error) {
 	if c.UseCooldown.CooldownGroup != "" {
 		w.WriteIdentifier(ns.Identifier(c.UseCooldown.CooldownGroup))
 	}
+	return w.Bytes(), nil
+}
+
+type genVillagerFoodCodec struct{}
+
+func (genVillagerFoodCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+	w := ns.NewWriter()
+	if err := w.CopyVarInt(buf); err != nil {
+		return nil, err
+	}
+	return w.Bytes(), nil
+}
+
+func (genVillagerFoodCodec) Apply(c *Components, data []byte) error {
+	buf := ns.NewReader(data)
+	s := &VillagerFood{}
+	{
+		v, err := buf.ReadVarInt()
+		if err != nil {
+			return err
+		}
+		s.Nutrition = int32(v)
+	}
+	c.VillagerFood = s
+	return nil
+}
+
+func (genVillagerFoodCodec) Clear(c *Components) { c.VillagerFood = nil }
+
+func (genVillagerFoodCodec) Differs(c, defaults *Components) (bool, bool) {
+	cHas := c.VillagerFood != nil
+	dHas := defaults.VillagerFood != nil
+	if cHas != dHas {
+		return true, cHas
+	}
+	if cHas && dHas {
+		return *c.VillagerFood != *defaults.VillagerFood, true
+	}
+	return false, false
+}
+
+func (genVillagerFoodCodec) Encode(c *Components) ([]byte, error) {
+	if c.VillagerFood == nil {
+		return nil, nil
+	}
+	w := ns.NewWriter()
+	w.WriteVarInt(ns.VarInt(c.VillagerFood.Nutrition))
 	return w.Bytes(), nil
 }
 

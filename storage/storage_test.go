@@ -116,7 +116,9 @@ func TestChunkNBTRoundTrip(t *testing.T) {
 
 	col.Sections[0].SetBlockState(0, 0, 0, stoneID)
 	col.Sections[0].SetBlockState(1, 0, 0, stoneID)
-	col.Sections[0].BlockCount = 2
+	logID := blocks.StateID(int(blocks.BlockID("minecraft:oak_log")), map[string]string{"axis": "x"})
+	col.Sections[0].SetBlockState(3, 0, 0, logID)
+	col.Sections[0].BlockCount = 3
 
 	// compute sky light so it round-trips
 	col.ComputeSkylight()
@@ -124,7 +126,24 @@ func TestChunkNBTRoundTrip(t *testing.T) {
 	// serialize to NBT
 	data, err := storage.ChunkToNBT(col)
 	require.NoError(t, err)
-	require.NotEmpty(t, data)
+	tag, _, err := nbt.DecodeFile(data, nbt.WithMaxBytes(0))
+	require.NoError(t, err)
+	root := tag.(nbt.Compound)
+	assert.Equal(t, int32(5023), root.GetInt("DataVersion"))
+	var savedLog nbt.Compound
+	for _, sectionTag := range root.GetList("sections").Elements {
+		section := sectionTag.(nbt.Compound)
+		for _, paletteTag := range section.GetCompound("block_states").GetList("palette").Elements {
+			entry := paletteTag.(nbt.Compound)
+			assert.NotContains(t, entry, "Name")
+			assert.NotContains(t, entry, "Properties")
+			if entry.GetString("id") == "minecraft:oak_log" {
+				savedLog = entry
+			}
+		}
+	}
+	require.NotNil(t, savedLog)
+	assert.Equal(t, "x", savedLog.GetCompound("properties").GetString("axis"))
 
 	// deserialize
 	loaded, err := storage.NBTToChunk(data)
@@ -136,7 +155,8 @@ func TestChunkNBTRoundTrip(t *testing.T) {
 	assert.Equal(t, stoneID, loaded.GetBlockState(0, -64, 0))
 	assert.Equal(t, stoneID, loaded.GetBlockState(1, -64, 0))
 	assert.Equal(t, int32(0), loaded.GetBlockState(2, -64, 0)) // air
-	assert.Equal(t, int16(2), loaded.Sections[0].BlockCount)
+	assert.Equal(t, logID, loaded.GetBlockState(3, -64, 0))
+	assert.Equal(t, int16(3), loaded.Sections[0].BlockCount)
 }
 
 func TestChunkNBTDimensionHeight(t *testing.T) {
@@ -163,10 +183,6 @@ func TestChunkNBTDimensionHeight(t *testing.T) {
 	require.NotNil(t, loaded.Light)
 	assert.True(t, loaded.Light.SkyLightMask.Get(sectionCount+1))
 	assert.Len(t, loaded.Light.SkyLightArrays, sectionCount+1)
-}
-
-func TestCurrentDataVersion(t *testing.T) {
-	assert.Equal(t, 4903, storage.DataVersion)
 }
 
 func TestChunkNBTWithRegionStorage(t *testing.T) {
@@ -256,7 +272,7 @@ func TestPlayerDataRoundTrip(t *testing.T) {
 	uuid := "12345678-1234-1234-1234-123456789abc"
 	require.NoError(t, storage.SavePlayer(pdDir, uuid, pd))
 
-	// verify the 26.2 inventory/equipment layout on disk
+	// verify the 26.3 inventory/equipment layout on disk
 	path := filepath.Join(pdDir, uuid+".dat")
 	file, err := os.Open(path)
 	require.NoError(t, err)

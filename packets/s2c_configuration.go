@@ -7,6 +7,23 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
+// S2CPostEffectsConfiguration replaces the active post-processing effects.
+type S2CPostEffectsConfiguration struct {
+	Effects ns.PrefixedArray[ns.Identifier]
+}
+
+func (p *S2CPostEffectsConfiguration) Read(buf *ns.PacketBuffer) error {
+	return p.Effects.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.Identifier, error) {
+		return b.ReadIdentifier()
+	})
+}
+
+func (p *S2CPostEffectsConfiguration) Write(buf *ns.PacketBuffer) error {
+	return p.Effects.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.Identifier) error {
+		return b.WriteIdentifier(v)
+	})
+}
+
 // S2CCookieRequestConfiguration represents "Cookie Request (configuration)".
 //
 // Requests a cookie that was previously stored.

@@ -20,6 +20,8 @@ type recipeJSON struct {
 	Target                   any             `json:"target"`
 	Dye                      any             `json:"dye"`
 	Input                    any             `json:"input"`
+	Reagent                  any             `json:"reagent"`
+	Output                   json.RawMessage `json:"output"`
 	Source                   any             `json:"source"`
 	Material                 any             `json:"material"`
 	Template                 any             `json:"template"`
@@ -47,49 +49,62 @@ func (r *recipeJSON) patternRows() []string {
 }
 
 type recipeResult struct {
-	ID    string `json:"id"`
-	Count int    `json:"count"`
+	ID         string         `json:"id"`
+	Count      int            `json:"count"`
+	Components map[string]any `json:"components"`
 }
 
-// generateRecipes emits crafting, cooking, stonecutting, and smithing recipes
+// generateRecipes emits crafting, cooking, brewing, stonecutting, and smithing recipes
 // from the datapack JSONs. Ingredients keep tag references ("#minecraft:planks")
 // for runtime resolution via items.ItemTag.
 func generateRecipes(recipeDir, outPath string) {
-	entries, err := os.ReadDir(recipeDir)
+	var names []string
+	err := filepath.WalkDir(recipeDir, func(path string, entry os.DirEntry, err error) error {
+		if err != nil || entry.IsDir() || !strings.HasSuffix(entry.Name(), ".json") {
+			return err
+		}
+		rel, err := filepath.Rel(recipeDir, path)
+		if err != nil {
+			return err
+		}
+		names = append(names, filepath.ToSlash(rel))
+		return nil
+	})
 	if err != nil {
 		panic(fmt.Sprintf("failed to read recipe dir %s: %v", recipeDir, err))
-	}
-	names := make([]string, 0, len(entries))
-	for _, e := range entries {
-		if strings.HasSuffix(e.Name(), ".json") {
-			names = append(names, e.Name())
-		}
 	}
 	sort.Strings(names)
 
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("recipes"))
 
-	var shaped, shapeless, dye, imbue, transmute, smelting, blasting, smoking, campfire, stonecutting, smithing strings.Builder
+	var shaped, shapeless, dye, imbue, transmute, brewing, smelting, blasting, smoking, campfire, stonecutting, smithing strings.Builder
 	nShaped, nShapeless, nDye, nImbue, nTransmute, nSmelting := 0, 0, 0, 0, 0, 0
-	nBlasting, nSmoking, nCampfire, nStonecutting, nSmithing := 0, 0, 0, 0, 0
+	nBlasting, nSmoking, nCampfire, nStonecutting, nSmithing, nBrewing := 0, 0, 0, 0, 0, 0
 	displayID := 0
 	groups := make(map[string]int)
 
 	for _, name := range names {
 		r := loadJSON[recipeJSON](filepath.Join(recipeDir, name))
-		var res recipeResult
-		if len(r.Result) > 0 {
-			// smelting results may be a bare string in older formats; modern is an object
-			if err := json.Unmarshal(r.Result, &res); err != nil {
-				var s string
-				if json.Unmarshal(r.Result, &s) == nil {
-					res.ID = s
+		result := r.Result
+		if r.Type == "minecraft:brewing" {
+			result = r.Output
+		}
+		res := recipeResult{Count: 1}
+		if len(result) > 0 {
+			// Both item templates and transmute results accept a bare item name.
+			if err := json.Unmarshal(result, &res); err != nil {
+				if err := json.Unmarshal(result, &res.ID); err != nil {
+					panic(fmt.Sprintf("failed to parse recipe result %s: %v", name, err))
 				}
 			}
 		}
-		if res.Count == 0 {
-			res.Count = 1
+		recipeName := "minecraft:" + strings.TrimSuffix(name, ".json")
+		if r.Type == "minecraft:brewing" {
+			fmt.Fprintf(&brewing, "\t{Name: %q, Input: %s, Reagent: %s, Result: %q, Count: %d, Components: %s},\n",
+				recipeName, potionIngredientLiteral(r.Input), potionIngredientLiteral(r.Reagent), res.ID, res.Count, recipeJSONLiteral(res.Components))
+			nBrewing++
+			continue
 		}
 		groupID := -1
 		if r.Group != "" {
@@ -100,7 +115,6 @@ func generateRecipes(recipeDir, outPath string) {
 				groups[r.Group] = groupID
 			}
 		}
-		recipeName := "minecraft:" + strings.TrimSuffix(name, ".json")
 		showNotification := true
 		if r.ShowNotification != nil {
 			showNotification = *r.ShowNotification
@@ -139,8 +153,8 @@ func generateRecipes(recipeDir, outPath string) {
 					maxCount = *r.MaterialCount.Max
 				}
 			}
-			fmt.Fprintf(&transmute, "\t{%s, Input: %s, Material: %s, MinMaterialCount: %d, MaxMaterialCount: %d, Result: %q, Count: %d, AddMaterialCountToResult: %t},\n",
-				info, ingredientLiteral(parseIngredient(r.Input)), ingredientLiteral(parseIngredient(r.Material)), minCount, maxCount, res.ID, res.Count, r.AddMaterialCountToResult)
+			fmt.Fprintf(&transmute, "\t{%s, Input: %s, Material: %s, MinMaterialCount: %d, MaxMaterialCount: %d, Result: %q, Count: %d, KeepInput: %t, Components: %s, AddMaterialCountToResult: %t},\n",
+				info, ingredientLiteral(parseIngredient(r.Input)), ingredientLiteral(parseIngredient(r.Material)), minCount, maxCount, res.ID, res.Count, res.ID == "", recipeJSONLiteral(res.Components), r.AddMaterialCountToResult)
 			nTransmute++
 		case "minecraft:smelting":
 			writeCookingRecipe(&smelting, info, r, res, 200)
@@ -177,6 +191,8 @@ func generateRecipes(recipeDir, outPath string) {
 	sb.WriteString(imbue.String())
 	sb.WriteString("}\n\nvar TransmuteRecipes = []Transmute{\n")
 	sb.WriteString(transmute.String())
+	sb.WriteString("}\n\nvar BrewingRecipes = []Brewing{\n")
+	sb.WriteString(brewing.String())
 	sb.WriteString("}\n\nvar SmeltingRecipes = []Smelting{\n")
 	sb.WriteString(smelting.String())
 	sb.WriteString("}\n\nvar BlastingRecipes = []Smelting{\n")
@@ -195,6 +211,7 @@ func generateRecipes(recipeDir, outPath string) {
 	checkMinCount("dye recipes", nDye, 6)
 	checkMinCount("imbue recipes", nImbue, 1)
 	checkMinCount("transmute recipes", nTransmute, 33)
+	checkMinCount("brewing recipes", nBrewing, 1)
 	checkMinCount("shapeless recipes", nShapeless, 100)
 	checkMinCount("smelting recipes", nSmelting, 50)
 	checkMinCount("blasting recipes", nBlasting, 20)
@@ -203,8 +220,8 @@ func generateRecipes(recipeDir, outPath string) {
 	checkMinCount("stonecutting recipes", nStonecutting, 300)
 	checkMinCount("smithing recipes", nSmithing, 25)
 	writeFile(outPath, sb.String())
-	fmt.Printf("generated %d shaped, %d shapeless, %d dye, %d imbue, %d transmute, %d cooking, %d stonecutting, %d smithing recipes\n",
-		nShaped, nShapeless, nDye, nImbue, nTransmute, nSmelting+nBlasting+nSmoking+nCampfire, nStonecutting, nSmithing)
+	fmt.Printf("generated %d shaped, %d shapeless, %d dye, %d imbue, %d transmute, %d brewing, %d cooking, %d stonecutting, %d smithing recipes\n",
+		nShaped, nShapeless, nDye, nImbue, nTransmute, nBrewing, nSmelting+nBlasting+nSmoking+nCampfire, nStonecutting, nSmithing)
 }
 
 func recipeDisplayCount(recipe recipeJSON) int {
@@ -329,4 +346,48 @@ func ingredientsLiteral(cells []ingredient) string {
 		parts[i] = ingredientLiteral(c)
 	}
 	return "[]Ingredient{" + strings.Join(parts, ", ") + "}"
+}
+
+func potionIngredientLiteral(v any) string {
+	predicate, ok := v.(map[string]any)
+	if !ok {
+		panic(fmt.Sprintf("invalid potion ingredient: %v", v))
+	}
+	return fmt.Sprintf("PotionIngredient{Item: %s, PotionContents: %s}",
+		ingredientLiteral(parseIngredient(predicate["item"])), recipeJSONLiteral(predicate["potion_contents"]))
+}
+
+// recipeJSONLiteral preserves JSON values, including empty maps and lists, in
+// predicates and component patches without decoding JSON at package startup.
+func recipeJSONLiteral(v any) string {
+	switch value := v.(type) {
+	case nil:
+		return "nil"
+	case string:
+		return fmt.Sprintf("%q", value)
+	case bool:
+		return fmt.Sprintf("%t", value)
+	case float64:
+		return fmt.Sprintf("float64(%g)", value)
+	case []any:
+		if value == nil {
+			return "nil"
+		}
+		parts := make([]string, len(value))
+		for i, entry := range value {
+			parts[i] = recipeJSONLiteral(entry)
+		}
+		return "[]any{" + strings.Join(parts, ", ") + "}"
+	case map[string]any:
+		if value == nil {
+			return "nil"
+		}
+		parts := make([]string, 0, len(value))
+		for _, key := range sortedKeys(value) {
+			parts = append(parts, fmt.Sprintf("%q: %s", key, recipeJSONLiteral(value[key])))
+		}
+		return "map[string]any{" + strings.Join(parts, ", ") + "}"
+	default:
+		panic(fmt.Sprintf("unsupported recipe JSON value %T", v))
+	}
 }

@@ -7,9 +7,15 @@ import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.Bootstrap;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.ServerPacksSource;
+import net.minecraft.server.packs.resources.MultiPackResourceManager;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagLoader;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.EmptyBlockGetter;
@@ -41,8 +47,8 @@ import java.util.TreeMap;
 //
 // covers the data that previously needed PrismarineJS / source scraping
 // (collision shapes, entity hitboxes, hardness, mob categories) plus the
-// built-in registry id maps. Datapack-bound data (item component values, tags,
-// biomes) needs a loaded world and still comes from the vanilla server datagen.
+// built-in registry id maps. Vanilla tags are bound before querying state
+// predicates; dynamic item components and biomes come from server datagen.
 public final class Dump {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 	private static final Method FIRE_IGNITE_ODDS = fireOddsMethod("getIgniteOdds");
@@ -54,6 +60,13 @@ public final class Dump {
 
 		SharedConstants.tryDetectVersion();
 		Bootstrap.bootStrap();
+		final var packs = ServerPacksSource.createVanillaTrustedRepository();
+		packs.reload();
+		packs.setSelected(List.of("vanilla"));
+		try (var resources = new MultiPackResourceManager(PackType.SERVER_DATA, packs.openAllSelected())) {
+			TagLoader.loadTagsForExistingRegistries(resources, RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY))
+				.forEach(Registry.PendingTags::apply);
+		}
 
 		write(out, "blocks.json", blocks());
 		write(out, "entities.json", entities());
@@ -95,7 +108,8 @@ public final class Dump {
 				sobj.addProperty("igniteOdds", fireOdds(FIRE_IGNITE_ODDS, state));
 				sobj.addProperty("burnOdds", fireOdds(FIRE_BURN_ODDS, state));
 				sobj.addProperty("sturdyTop", state.isFaceSturdy(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, Direction.UP));
-				sobj.addProperty("blocksMotion", state.blocksMotion());
+				sobj.addProperty("blocksMotion", state.is(BlockTags.BLOCKS_MOTION));
+				sobj.addProperty("blocksFluidFlow", state.is(BlockTags.BLOCKS_FLUID_FLOW));
 				sobj.addProperty("largeCollisionShape", state.hasLargeCollisionShape());
 				sobj.addProperty("suffocating", state.isSuffocating(EmptyBlockGetter.INSTANCE, BlockPos.ZERO));
 				int sturdyFaces = 0;
@@ -106,7 +120,7 @@ public final class Dump {
 				}
 				sobj.addProperty("sturdyFaces", sturdyFaces);
 				final var fluid = state.getFluidState();
-				// Bootstrap does not bind datapack tags; identify both flowing and source variants directly.
+				// Both source and flowing variants share the same contained-fluid kind.
 				sobj.addProperty("fluidKind", fluid.getType().isSame(Fluids.WATER) ? 1 : fluid.getType().isSame(Fluids.LAVA) ? 2 : 0);
 				sobj.addProperty("fluidAmount", fluid.getAmount());
 				sobj.addProperty("fluidFalling", !fluid.isEmpty() && fluid.hasProperty(FlowingFluid.FALLING) && fluid.getValue(FlowingFluid.FALLING));

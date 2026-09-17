@@ -11,22 +11,23 @@ just puts them on the classpath, compiles `Dump.java`, and runs it headless.
 
 ## What it dumps
 
-`./dump.sh` writes to `../pkg/data/generate/mcdump/`:
+`./dump.sh` writes to `../generate/mcdump/`:
 
 - **`blocks.json`** — `{ blocks: { "minecraft:stone": { protocolId, hardness, requiresTool, states: [{ id, properties, shape }] } }, shapes: [[[minX,minY,minZ,maxX,maxY,maxZ], …], …] }`. `id` = global block-state (palette) id; `shape` indexes the deduped `shapes` table (real `BlockState.getCollisionShape().toAabbs()`).
 - **`entities.json`** — `{ "minecraft:zombie": { protocolId, width, height, eyeHeight, category, trackingRange } }`.
 - **`registries.json`** — every built-in registry → `{ entry name: protocolId }`.
 
 These feed `gen_block_shapes.go`, `gen_block_hardness.go`, `gen_entity_hitboxes.go`,
-and `gen_entities.go`. (Datapack-bound data — item component values, tags, biomes —
-needs a loaded world and still comes from the vanilla server `--reports` datagen.)
+and `gen_entities.go`. The dumper loads vanilla tags before evaluating state
+predicates. Item component values and registry reports come from vanilla server
+datagen; recipes, registry definitions and tags also use the decompiled assets.
 
 ## Usage
 
 ```bash
-./dump.sh                       # needs ../vanilla_server_reports/server-26.2.jar
+./dump.sh                       # needs ../vanilla_server_reports/server-26.3.jar
                                 #   (run ../vanilla_server_reports/generate.sh first if missing)
-cd ../pkg/data && go generate ./...
+cd .. && go generate ./...
 ```
 
 `Dump.java` and `dump.sh` are committed; the extracted jars (`.work/`) and the

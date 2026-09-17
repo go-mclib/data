@@ -18,6 +18,7 @@ type mcdumpBlocks struct {
 			BurnOdds            uint8 `json:"burnOdds"`
 			SturdyTop           bool  `json:"sturdyTop"`
 			BlocksMotion        bool  `json:"blocksMotion"`
+			BlocksFluidFlow     bool  `json:"blocksFluidFlow"`
 			LargeCollisionShape bool  `json:"largeCollisionShape"`
 			Suffocating         bool  `json:"suffocating"`
 			SturdyFaces         uint8 `json:"sturdyFaces"`
@@ -82,6 +83,9 @@ func generateBlockShapes(mcdumpPath, outPath string) {
 			}
 			if isFullBlockShape(dump.Shapes[s.Shape]) {
 				collisionFlags[s.ID] |= 8
+			}
+			if s.BlocksFluidFlow {
+				collisionFlags[s.ID] |= 16
 			}
 			sturdyFaces[s.ID] = s.SturdyFaces
 			fluidStates[s.ID] = s.FluidKind | s.FluidAmount<<2

@@ -16,16 +16,51 @@ import (
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Confirm_Teleportation
 type C2SAcceptTeleportation struct {
 	TeleportId ns.VarInt
+	X          ns.Float64
+	Y          ns.Float64
+	Z          ns.Float64
+	Yaw        ns.Float32
+	Pitch      ns.Float32
 }
 
 func (p *C2SAcceptTeleportation) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.TeleportId, err = buf.ReadVarInt()
+	if p.TeleportId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.X, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Y, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Z, err = buf.ReadFloat64(); err != nil {
+		return err
+	}
+	if p.Yaw, err = buf.ReadFloat32(); err != nil {
+		return err
+	}
+	p.Pitch, err = buf.ReadFloat32()
 	return err
 }
 
 func (p *C2SAcceptTeleportation) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteVarInt(p.TeleportId)
+	if err := buf.WriteVarInt(p.TeleportId); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.X); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Y); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat64(p.Z); err != nil {
+		return err
+	}
+	if err := buf.WriteFloat32(p.Yaw); err != nil {
+		return err
+	}
+	return buf.WriteFloat32(p.Pitch)
 }
 
 // C2SBlockEntityTagQuery represents "Query Block Entity Tag".
@@ -1256,6 +1291,19 @@ func (p *C2SPlayerAbilities) Write(buf *ns.PacketBuffer) error {
 	return buf.WriteInt8(p.Flags)
 }
 
+// Player action ordinals in the 26.3 protocol.
+const (
+	PlayerActionStartDestroyBlock ns.VarInt = iota
+	PlayerActionChangeDestroyDirection
+	PlayerActionAbortDestroyBlock
+	PlayerActionStopDestroyBlock
+	PlayerActionDropAllItems
+	PlayerActionDropItem
+	PlayerActionReleaseUseItem
+	PlayerActionSwapItemWithOffhand
+	PlayerActionStab
+)
+
 // C2SPlayerAction represents "Player Action".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Action
@@ -1867,20 +1915,17 @@ func (p *C2SSetTestBlock) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Sign
 type C2SSignUpdate struct {
-	Location    ns.Position
-	IsFrontText ns.Boolean
-	Line1       ns.String
-	Line2       ns.String
-	Line3       ns.String
-	Line4       ns.String
+	Location ns.Position
+	Slot     ns.VarInt
+	Line1    ns.String
+	Line2    ns.String
+	Line3    ns.String
+	Line4    ns.String
 }
 
 func (p *C2SSignUpdate) Read(buf *ns.PacketBuffer) error {
 	var err error
 	if p.Location, err = buf.ReadPosition(); err != nil {
-		return err
-	}
-	if p.IsFrontText, err = buf.ReadBool(); err != nil {
 		return err
 	}
 	if p.Line1, err = buf.ReadString(384); err != nil {
@@ -1892,15 +1937,15 @@ func (p *C2SSignUpdate) Read(buf *ns.PacketBuffer) error {
 	if p.Line3, err = buf.ReadString(384); err != nil {
 		return err
 	}
-	p.Line4, err = buf.ReadString(384)
+	if p.Line4, err = buf.ReadString(384); err != nil {
+		return err
+	}
+	p.Slot, err = buf.ReadVarInt()
 	return err
 }
 
 func (p *C2SSignUpdate) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WritePosition(p.Location); err != nil {
-		return err
-	}
-	if err := buf.WriteBool(p.IsFrontText); err != nil {
 		return err
 	}
 	if err := buf.WriteString(p.Line1); err != nil {
@@ -1912,25 +1957,18 @@ func (p *C2SSignUpdate) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteString(p.Line3); err != nil {
 		return err
 	}
-	return buf.WriteString(p.Line4)
+	if err := buf.WriteString(p.Line4); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.Slot)
 }
 
-// C2SSwing represents "Swing Arm".
-//
-// https://minecraft.wiki/w/Java_Edition_protocol/Packets#Swing_Arm
-type C2SSwing struct {
-	Hand ns.VarInt
-}
+// C2SPunch requests a main-hand air punch.
+type C2SPunch struct{}
 
-func (p *C2SSwing) Read(buf *ns.PacketBuffer) error {
-	var err error
-	p.Hand, err = buf.ReadVarInt()
-	return err
-}
+func (p *C2SPunch) Read(buf *ns.PacketBuffer) error { return nil }
 
-func (p *C2SSwing) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteVarInt(p.Hand)
-}
+func (p *C2SPunch) Write(buf *ns.PacketBuffer) error { return nil }
 
 // C2STeleportToEntity represents "Teleport To Entity".
 //

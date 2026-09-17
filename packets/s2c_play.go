@@ -11,6 +11,121 @@ import (
 	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
+const (
+	SignTextBack ns.VarInt = iota
+	SignTextFront
+)
+
+const (
+	ParticleRandomizationDefault ns.VarInt = iota
+	ParticleRandomizationAlternative
+	ParticleRandomizationAlternativeWithSpeed
+)
+
+const (
+	SwingAnimationNone ns.VarInt = iota
+	SwingAnimationWhack
+	SwingAnimationStab
+)
+
+const (
+	SwingMainHand ns.VarInt = iota
+	SwingOffHand
+)
+
+// S2CAddTransientBlock renders a temporary block without changing the world.
+type S2CAddTransientBlock struct {
+	Location   ns.Position
+	BlockState ns.VarInt
+}
+
+func (p *S2CAddTransientBlock) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.Location, err = buf.ReadPosition(); err != nil {
+		return err
+	}
+	p.BlockState, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CAddTransientBlock) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WritePosition(p.Location); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.BlockState)
+}
+
+// S2CPostEffectsPlay replaces the active post-processing effects.
+type S2CPostEffectsPlay struct {
+	Effects ns.PrefixedArray[ns.Identifier]
+}
+
+func (p *S2CPostEffectsPlay) Read(buf *ns.PacketBuffer) error {
+	return p.Effects.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.Identifier, error) {
+		return b.ReadIdentifier()
+	})
+}
+
+func (p *S2CPostEffectsPlay) Write(buf *ns.PacketBuffer) error {
+	return p.Effects.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.Identifier) error {
+		return b.WriteIdentifier(v)
+	})
+}
+
+// S2CSwingAnimation plays a hand swing with an explicit type and duration.
+type S2CSwingAnimation struct {
+	EntityId ns.VarInt
+	Hand     ns.VarInt
+	Type     ns.VarInt
+	Duration ns.VarInt
+}
+
+func (p *S2CSwingAnimation) Read(buf *ns.PacketBuffer) error {
+	var err error
+	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Hand, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	if p.Type, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.Duration, err = buf.ReadVarInt()
+	return err
+}
+
+func (p *S2CSwingAnimation) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.EntityId); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Hand); err != nil {
+		return err
+	}
+	if err := buf.WriteVarInt(p.Type); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.Duration)
+}
+
+func readPreviousGameMode(buf *ns.PacketBuffer) (ns.VarInt, error) {
+	value, err := buf.ReadVarInt()
+	if err != nil {
+		return 0, err
+	}
+	if value < 0 || value > 4 {
+		return 0, fmt.Errorf("invalid optional game mode %d", value)
+	}
+	return value - 1, nil
+}
+
+func writePreviousGameMode(buf *ns.PacketBuffer, value ns.VarInt) error {
+	if value < -1 || value > 3 {
+		return fmt.Errorf("invalid previous game mode %d", value)
+	}
+	return buf.WriteVarInt(value + 1)
+}
+
 // S2CBundleDelimiter represents "Bundle Delimiter".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Bundle_Delimiter
@@ -105,6 +220,13 @@ func (p *S2CAddEntity) Write(buf *ns.PacketBuffer) error {
 	}
 	return buf.WriteVarInt(p.Data)
 }
+
+// Animate no longer carries hand-swing animations; use S2CSwingAnimation.
+const (
+	AnimateWakeUp ns.Uint8 = iota
+	AnimateCriticalHit
+	AnimateMagicCriticalHit
+)
 
 // S2CAnimate represents "Entity Animation".
 //
@@ -1155,16 +1277,11 @@ func (p *S2CEntityEvent) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Teleport_Entity
 type S2CEntityPositionSync struct {
-	EntityId  ns.VarInt
-	X         ns.Float64
-	Y         ns.Float64
-	Z         ns.Float64
-	VelocityX ns.Float64
-	VelocityY ns.Float64
-	VelocityZ ns.Float64
-	Yaw       ns.Float32
-	Pitch     ns.Float32
-	OnGround  ns.Boolean
+	EntityId ns.VarInt
+	Path     PositionPath
+	Yaw      ns.Float32
+	Pitch    ns.Float32
+	OnGround ns.Boolean
 }
 
 func (p *S2CEntityPositionSync) Read(buf *ns.PacketBuffer) error {
@@ -1172,22 +1289,7 @@ func (p *S2CEntityPositionSync) Read(buf *ns.PacketBuffer) error {
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.X, err = buf.ReadFloat64(); err != nil {
-		return err
-	}
-	if p.Y, err = buf.ReadFloat64(); err != nil {
-		return err
-	}
-	if p.Z, err = buf.ReadFloat64(); err != nil {
-		return err
-	}
-	if p.VelocityX, err = buf.ReadFloat64(); err != nil {
-		return err
-	}
-	if p.VelocityY, err = buf.ReadFloat64(); err != nil {
-		return err
-	}
-	if p.VelocityZ, err = buf.ReadFloat64(); err != nil {
+	if err = p.Path.Read(buf); err != nil {
 		return err
 	}
 	if p.Yaw, err = buf.ReadFloat32(); err != nil {
@@ -1204,22 +1306,7 @@ func (p *S2CEntityPositionSync) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.EntityId); err != nil {
 		return err
 	}
-	if err := buf.WriteFloat64(p.X); err != nil {
-		return err
-	}
-	if err := buf.WriteFloat64(p.Y); err != nil {
-		return err
-	}
-	if err := buf.WriteFloat64(p.Z); err != nil {
-		return err
-	}
-	if err := buf.WriteFloat64(p.VelocityX); err != nil {
-		return err
-	}
-	if err := buf.WriteFloat64(p.VelocityY); err != nil {
-		return err
-	}
-	if err := buf.WriteFloat64(p.VelocityZ); err != nil {
+	if err := p.Path.Write(buf); err != nil {
 		return err
 	}
 	if err := buf.WriteFloat32(p.Yaw); err != nil {
@@ -1239,6 +1326,8 @@ type S2CExplode struct {
 	Y    ns.Float64
 	Z    ns.Float64
 	Data ns.ByteArray
+	// PlaySound follows the unframed explosion data.
+	PlaySound ns.Boolean
 }
 
 func (p *S2CExplode) Read(buf *ns.PacketBuffer) error {
@@ -1252,8 +1341,16 @@ func (p *S2CExplode) Read(buf *ns.PacketBuffer) error {
 	if p.Z, err = buf.ReadFloat64(); err != nil {
 		return err
 	}
-	p.Data, err = io.ReadAll(buf.Reader())
-	return err
+	data, err := io.ReadAll(buf.Reader())
+	if err != nil {
+		return err
+	}
+	if len(data) == 0 {
+		return io.ErrUnexpectedEOF
+	}
+	p.Data = data[:len(data)-1]
+	p.PlaySound = data[len(data)-1] != 0
+	return nil
 }
 
 func (p *S2CExplode) Write(buf *ns.PacketBuffer) error {
@@ -1266,7 +1363,10 @@ func (p *S2CExplode) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteFloat64(p.Z); err != nil {
 		return err
 	}
-	return buf.WriteFixedByteArray(p.Data)
+	if err := buf.WriteFixedByteArray(p.Data); err != nil {
+		return err
+	}
+	return buf.WriteBool(p.PlaySound)
 }
 
 // S2CForgetLevelChunk represents "Unload Chunk".
@@ -1551,22 +1651,34 @@ func (p *S2CLevelEvent) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Particle
 type S2CLevelParticles struct {
-	LongDistance  ns.Boolean
-	AlwaysVisible ns.Boolean
-	X             ns.Float64
-	Y             ns.Float64
-	Z             ns.Float64
-	OffsetX       ns.Float32
-	OffsetY       ns.Float32
-	OffsetZ       ns.Float32
-	MaxSpeed      ns.Float32
-	ParticleCount ns.Int32
-	ParticleId    ns.VarInt
-	Data          ns.ByteArray
+	LongDistance      ns.Boolean
+	AlwaysVisible     ns.Boolean
+	X                 ns.Float64
+	Y                 ns.Float64
+	Z                 ns.Float64
+	OffsetX           ns.Float32
+	OffsetY           ns.Float32
+	OffsetZ           ns.Float32
+	MaxSpeedX         ns.Float32
+	MaxSpeedY         ns.Float32
+	MaxSpeedZ         ns.Float32
+	ParticleCount     ns.VarInt
+	RandomizationType ns.VarInt
+	ParticleId        ns.VarInt
+	Data              ns.ByteArray
 }
 
 func (p *S2CLevelParticles) Read(buf *ns.PacketBuffer) error {
 	var err error
+	options := ns.NewWriter()
+	if err = entities.CopyParticle(buf, options); err != nil {
+		return err
+	}
+	optionReader := bytes.NewReader(options.Bytes())
+	if p.ParticleId, err = ns.NewReaderFrom(optionReader).ReadVarInt(); err != nil {
+		return err
+	}
+	p.Data = options.Bytes()[len(options.Bytes())-optionReader.Len():]
 	if p.LongDistance, err = buf.ReadBool(); err != nil {
 		return err
 	}
@@ -1591,20 +1703,29 @@ func (p *S2CLevelParticles) Read(buf *ns.PacketBuffer) error {
 	if p.OffsetZ, err = buf.ReadFloat32(); err != nil {
 		return err
 	}
-	if p.MaxSpeed, err = buf.ReadFloat32(); err != nil {
+	if p.MaxSpeedX, err = buf.ReadFloat32(); err != nil {
 		return err
 	}
-	if p.ParticleCount, err = buf.ReadInt32(); err != nil {
+	if p.MaxSpeedY, err = buf.ReadFloat32(); err != nil {
 		return err
 	}
-	if p.ParticleId, err = buf.ReadVarInt(); err != nil {
+	if p.MaxSpeedZ, err = buf.ReadFloat32(); err != nil {
 		return err
 	}
-	p.Data, err = io.ReadAll(buf.Reader())
+	if p.ParticleCount, err = buf.ReadVarInt(); err != nil {
+		return err
+	}
+	p.RandomizationType, err = buf.ReadVarInt()
 	return err
 }
 
 func (p *S2CLevelParticles) Write(buf *ns.PacketBuffer) error {
+	if err := buf.WriteVarInt(p.ParticleId); err != nil {
+		return err
+	}
+	if err := buf.WriteFixedByteArray(p.Data); err != nil {
+		return err
+	}
 	if err := buf.WriteBool(p.LongDistance); err != nil {
 		return err
 	}
@@ -1629,16 +1750,19 @@ func (p *S2CLevelParticles) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteFloat32(p.OffsetZ); err != nil {
 		return err
 	}
-	if err := buf.WriteFloat32(p.MaxSpeed); err != nil {
+	if err := buf.WriteFloat32(p.MaxSpeedX); err != nil {
 		return err
 	}
-	if err := buf.WriteInt32(p.ParticleCount); err != nil {
+	if err := buf.WriteFloat32(p.MaxSpeedY); err != nil {
 		return err
 	}
-	if err := buf.WriteVarInt(p.ParticleId); err != nil {
+	if err := buf.WriteFloat32(p.MaxSpeedZ); err != nil {
 		return err
 	}
-	return buf.WriteFixedByteArray(p.Data)
+	if err := buf.WriteVarInt(p.ParticleCount); err != nil {
+		return err
+	}
+	return buf.WriteVarInt(p.RandomizationType)
 }
 
 // S2CLightUpdate represents "Update Light".
@@ -1687,8 +1811,8 @@ type S2CLogin struct {
 	DimensionType       ns.VarInt
 	DimensionName       ns.Identifier
 	HashedSeed          ns.Int64
-	GameMode            ns.Uint8
-	PreviousGameMode    ns.Int8
+	GameMode            ns.VarInt
+	PreviousGameMode    ns.VarInt // -1 means absent; encoded as OPTIONAL_VAR_INT.
 	IsDebug             ns.Boolean
 	IsFlat              ns.Boolean
 	DeathLocation       ns.PrefixedOptional[ns.GlobalPos]
@@ -1739,10 +1863,10 @@ func (p *S2CLogin) Read(buf *ns.PacketBuffer) error {
 	if p.HashedSeed, err = buf.ReadInt64(); err != nil {
 		return err
 	}
-	if p.GameMode, err = buf.ReadUint8(); err != nil {
+	if p.GameMode, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.PreviousGameMode, err = buf.ReadInt8(); err != nil {
+	if p.PreviousGameMode, err = readPreviousGameMode(buf); err != nil {
 		return err
 	}
 	if p.IsDebug, err = buf.ReadBool(); err != nil {
@@ -1808,10 +1932,10 @@ func (p *S2CLogin) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt64(p.HashedSeed); err != nil {
 		return err
 	}
-	if err := buf.WriteUint8(p.GameMode); err != nil {
+	if err := buf.WriteVarInt(p.GameMode); err != nil {
 		return err
 	}
-	if err := buf.WriteInt8(p.PreviousGameMode); err != nil {
+	if err := writePreviousGameMode(buf, p.PreviousGameMode); err != nil {
 		return err
 	}
 	if err := buf.WriteBool(p.IsDebug); err != nil {
@@ -1890,9 +2014,7 @@ func (p *S2CMerchantOffers) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Entity_Position
 type S2CMoveEntityPos struct {
 	EntityId ns.VarInt
-	DeltaX   ns.Int16
-	DeltaY   ns.Int16
-	DeltaZ   ns.Int16
+	Delta    VecDelta
 	OnGround ns.Boolean
 }
 
@@ -1901,16 +2023,7 @@ func (p *S2CMoveEntityPos) Read(buf *ns.PacketBuffer) error {
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.DeltaX, err = buf.ReadInt16(); err != nil {
-		return err
-	}
-	if p.DeltaY, err = buf.ReadInt16(); err != nil {
-		return err
-	}
-	if p.DeltaZ, err = buf.ReadInt16(); err != nil {
-		return err
-	}
-	p.OnGround, err = buf.ReadBool()
+	p.Delta, p.OnGround, err = readVecDelta(buf)
 	return err
 }
 
@@ -1918,16 +2031,7 @@ func (p *S2CMoveEntityPos) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.EntityId); err != nil {
 		return err
 	}
-	if err := buf.WriteInt16(p.DeltaX); err != nil {
-		return err
-	}
-	if err := buf.WriteInt16(p.DeltaY); err != nil {
-		return err
-	}
-	if err := buf.WriteInt16(p.DeltaZ); err != nil {
-		return err
-	}
-	return buf.WriteBool(p.OnGround)
+	return writeVecDelta(buf, p.Delta, p.OnGround)
 }
 
 // S2CMoveEntityPosRot represents "Update Entity Position and Rotation".
@@ -1935,9 +2039,7 @@ func (p *S2CMoveEntityPos) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Entity_Position_And_Rotation
 type S2CMoveEntityPosRot struct {
 	EntityId ns.VarInt
-	DeltaX   ns.Int16
-	DeltaY   ns.Int16
-	DeltaZ   ns.Int16
+	Delta    VecDelta
 	Yaw      ns.Angle
 	Pitch    ns.Angle
 	OnGround ns.Boolean
@@ -1948,22 +2050,13 @@ func (p *S2CMoveEntityPosRot) Read(buf *ns.PacketBuffer) error {
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.DeltaX, err = buf.ReadInt16(); err != nil {
-		return err
-	}
-	if p.DeltaY, err = buf.ReadInt16(); err != nil {
-		return err
-	}
-	if p.DeltaZ, err = buf.ReadInt16(); err != nil {
+	if p.Delta, p.OnGround, err = readVecDelta(buf); err != nil {
 		return err
 	}
 	if p.Yaw, err = buf.ReadAngle(); err != nil {
 		return err
 	}
-	if p.Pitch, err = buf.ReadAngle(); err != nil {
-		return err
-	}
-	p.OnGround, err = buf.ReadBool()
+	p.Pitch, err = buf.ReadAngle()
 	return err
 }
 
@@ -1971,22 +2064,13 @@ func (p *S2CMoveEntityPosRot) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.EntityId); err != nil {
 		return err
 	}
-	if err := buf.WriteInt16(p.DeltaX); err != nil {
-		return err
-	}
-	if err := buf.WriteInt16(p.DeltaY); err != nil {
-		return err
-	}
-	if err := buf.WriteInt16(p.DeltaZ); err != nil {
+	if err := writeVecDelta(buf, p.Delta, p.OnGround); err != nil {
 		return err
 	}
 	if err := buf.WriteAngle(p.Yaw); err != nil {
 		return err
 	}
-	if err := buf.WriteAngle(p.Pitch); err != nil {
-		return err
-	}
-	return buf.WriteBool(p.OnGround)
+	return buf.WriteAngle(p.Pitch)
 }
 
 // S2CMoveMinecartAlongTrack represents "Move Minecart Along Track".
@@ -2028,13 +2112,13 @@ func (p *S2CMoveEntityRot) Read(buf *ns.PacketBuffer) error {
 	if p.EntityId, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
+	if p.OnGround, err = buf.ReadBool(); err != nil {
+		return err
+	}
 	if p.Yaw, err = buf.ReadAngle(); err != nil {
 		return err
 	}
-	if p.Pitch, err = buf.ReadAngle(); err != nil {
-		return err
-	}
-	p.OnGround, err = buf.ReadBool()
+	p.Pitch, err = buf.ReadAngle()
 	return err
 }
 
@@ -2042,13 +2126,13 @@ func (p *S2CMoveEntityRot) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.EntityId); err != nil {
 		return err
 	}
+	if err := buf.WriteBool(p.OnGround); err != nil {
+		return err
+	}
 	if err := buf.WriteAngle(p.Yaw); err != nil {
 		return err
 	}
-	if err := buf.WriteAngle(p.Pitch); err != nil {
-		return err
-	}
-	return buf.WriteBool(p.OnGround)
+	return buf.WriteAngle(p.Pitch)
 }
 
 // S2CMoveVehicle represents "Move Vehicle (clientbound)".
@@ -2148,8 +2232,8 @@ func (p *S2COpenScreen) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Open_Sign_Editor
 type S2COpenSignEditor struct {
-	Location    ns.Position
-	IsFrontText ns.Boolean
+	Location ns.Position
+	Slot     ns.VarInt
 }
 
 func (p *S2COpenSignEditor) Read(buf *ns.PacketBuffer) error {
@@ -2157,7 +2241,7 @@ func (p *S2COpenSignEditor) Read(buf *ns.PacketBuffer) error {
 	if p.Location, err = buf.ReadPosition(); err != nil {
 		return err
 	}
-	p.IsFrontText, err = buf.ReadBool()
+	p.Slot, err = buf.ReadVarInt()
 	return err
 }
 
@@ -2165,7 +2249,7 @@ func (p *S2COpenSignEditor) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WritePosition(p.Location); err != nil {
 		return err
 	}
-	return buf.WriteBool(p.IsFrontText)
+	return buf.WriteVarInt(p.Slot)
 }
 
 // S2CPingPlay represents "Ping (play)".
@@ -3070,8 +3154,8 @@ type S2CRespawn struct {
 	DimensionType    ns.VarInt
 	DimensionName    ns.Identifier
 	HashedSeed       ns.Int64
-	GameMode         ns.Uint8
-	PreviousGameMode ns.Int8
+	GameMode         ns.VarInt
+	PreviousGameMode ns.VarInt // -1 means absent; encoded as OPTIONAL_VAR_INT.
 	IsDebug          ns.Boolean
 	IsFlat           ns.Boolean
 	DeathLocation    ns.PrefixedOptional[ns.GlobalPos]
@@ -3091,10 +3175,10 @@ func (p *S2CRespawn) Read(buf *ns.PacketBuffer) error {
 	if p.HashedSeed, err = buf.ReadInt64(); err != nil {
 		return err
 	}
-	if p.GameMode, err = buf.ReadUint8(); err != nil {
+	if p.GameMode, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.PreviousGameMode, err = buf.ReadInt8(); err != nil {
+	if p.PreviousGameMode, err = readPreviousGameMode(buf); err != nil {
 		return err
 	}
 	if p.IsDebug, err = buf.ReadBool(); err != nil {
@@ -3128,10 +3212,10 @@ func (p *S2CRespawn) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteInt64(p.HashedSeed); err != nil {
 		return err
 	}
-	if err := buf.WriteUint8(p.GameMode); err != nil {
+	if err := buf.WriteVarInt(p.GameMode); err != nil {
 		return err
 	}
-	if err := buf.WriteInt8(p.PreviousGameMode); err != nil {
+	if err := writePreviousGameMode(buf, p.PreviousGameMode); err != nil {
 		return err
 	}
 	if err := buf.WriteBool(p.IsDebug); err != nil {
@@ -4642,17 +4726,19 @@ func (p *S2CTransferPlay) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Update_Advancements
 type S2CUpdateAdvancements struct {
-	Data ns.ByteArray
+	Reset            ns.Boolean
+	Added            []PositionedAdvancement
+	Removed          []ns.Identifier
+	Progress         []AdvancementProgress
+	ShowAdvancements ns.Boolean
 }
 
 func (p *S2CUpdateAdvancements) Read(buf *ns.PacketBuffer) error {
-	var err error
-	p.Data, err = buf.ReadByteArray(1048576)
-	return err
+	return p.readAdvancements(buf)
 }
 
 func (p *S2CUpdateAdvancements) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteByteArray(p.Data)
+	return p.writeAdvancements(buf)
 }
 
 // S2CUpdateAttributes represents "Update Attributes".

@@ -77,6 +77,7 @@ func init() {
 type holderStringCodec struct {
 	id       int32
 	registry string
+	plain    bool // registry holder, without the inline-value discriminator
 	get      func(*Components) string
 	set      func(*Components, string)
 	direct   func(*ns.PacketBuffer, *ns.PacketBuffer) error
@@ -93,7 +94,7 @@ func (codec *holderStringCodec) DecodeWire(reader *ns.PacketBuffer) ([]byte, err
 		return nil, err
 	}
 	writer.WriteVarInt(holderID)
-	if holderID == 0 {
+	if holderID == 0 && !codec.plain {
 		if err := codec.direct(reader, writer); err != nil {
 			return nil, err
 		}
@@ -110,7 +111,7 @@ func (codec *holderStringCodec) Apply(components *Components, data []byte) error
 	if holderID < 0 {
 		return fmt.Errorf("invalid %s holder %d", codec.registry, holderID)
 	}
-	if holderID == 0 {
+	if holderID == 0 && !codec.plain {
 		validated := ns.NewWriter()
 		validated.WriteVarInt(0)
 		if err := codec.direct(reader, validated); err != nil {
@@ -123,17 +124,21 @@ func (codec *holderStringCodec) Apply(components *Components, data []byte) error
 		codec.set(components, "")
 		return nil
 	}
+	entryID := int(holderID)
+	if !codec.plain {
+		entryID--
+	}
 	entries := registries.SynchronizedEntries[codec.registry]
 	if codec.registry == "minecraft:sound_event" {
-		name := registries.SoundEvent.ByID(int32(holderID - 1))
+		name := registries.SoundEvent.ByID(int32(entryID))
 		if name == "" {
 			return fmt.Errorf("unknown %s holder %d", codec.registry, holderID)
 		}
 		codec.set(components, name)
-	} else if int(holderID-1) >= len(entries) {
+	} else if entryID >= len(entries) {
 		return fmt.Errorf("unknown %s holder %d", codec.registry, holderID)
 	} else {
-		codec.set(components, entries[holderID-1])
+		codec.set(components, entries[entryID])
 	}
 	delete(components.rawPassthrough, codec.id)
 	return nil
@@ -174,7 +179,10 @@ func (codec *holderStringCodec) Encode(components *Components) ([]byte, error) {
 		return nil, fmt.Errorf("unknown %s entry %q", codec.registry, value)
 	}
 	writer := ns.NewWriter()
-	writer.WriteVarInt(ns.VarInt(entryID + 1))
+	if !codec.plain {
+		entryID++
+	}
+	writer.WriteVarInt(ns.VarInt(entryID))
 	return writer.Bytes(), nil
 }
 
@@ -461,19 +469,24 @@ func (potDecorationsCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 
 func (potDecorationsCodec) Apply(components *Components, data []byte) error {
 	reader := ns.NewReader(data)
-	count, err := reader.ReadVarInt()
-	if err != nil || count < 0 || count > 4 {
-		return fmt.Errorf("invalid pot decoration count %d", count)
-	}
-	items := [4]string{"minecraft:brick", "minecraft:brick", "minecraft:brick", "minecraft:brick"}
-	for i := range int(count) {
-		itemID, err := reader.ReadVarInt()
-		if err != nil || registries.Item.ByID(int32(itemID)) == "" {
-			return fmt.Errorf("unknown pot decoration item id %d", itemID)
+	decorations := &PotDecorations{}
+	for _, side := range []**ItemStack{&decorations.Back, &decorations.Left, &decorations.Right, &decorations.Front} {
+		present, err := reader.ReadBool()
+		if err != nil {
+			return err
 		}
-		items[i] = registries.Item.ByID(int32(itemID))
+		if present {
+			slot, err := ReadItemStackTemplate(reader)
+			if err != nil {
+				return err
+			}
+			*side, err = FromSlot(slot)
+			if err != nil {
+				return err
+			}
+		}
 	}
-	components.PotDecorations = &PotDecorations{Back: items[0], Left: items[1], Right: items[2], Front: items[3]}
+	components.PotDecorations = decorations
 	return nil
 }
 
@@ -482,25 +495,28 @@ func (potDecorationsCodec) Differs(components, defaults *Components) (bool, bool
 	if components.PotDecorations == nil || defaults.PotDecorations == nil {
 		return components.PotDecorations != nil || defaults.PotDecorations != nil, components.PotDecorations != nil
 	}
-	return *components.PotDecorations != *defaults.PotDecorations, true
+	a, b := components.PotDecorations, defaults.PotDecorations
+	return !equalDecoration(a.Back, b.Back) || !equalDecoration(a.Left, b.Left) ||
+		!equalDecoration(a.Right, b.Right) || !equalDecoration(a.Front, b.Front), true
 }
 func (potDecorationsCodec) Encode(components *Components) ([]byte, error) {
 	if components.PotDecorations == nil {
 		return nil, fmt.Errorf("pot decorations are absent")
 	}
 	writer := ns.NewWriter()
-	if err := writer.WriteVarInt(4); err != nil {
-		return nil, err
-	}
-	for _, name := range []string{
+	for _, side := range []*ItemStack{
 		components.PotDecorations.Back, components.PotDecorations.Left,
 		components.PotDecorations.Right, components.PotDecorations.Front,
 	} {
-		itemID := registries.Item.Get(name)
-		if itemID < 0 {
-			return nil, fmt.Errorf("unknown pot decoration item %q", name)
+		writer.WriteBool(ns.Boolean(side != nil))
+		if side == nil {
+			continue
 		}
-		if err := writer.WriteVarInt(ns.VarInt(itemID)); err != nil {
+		slot, err := side.ToSlot()
+		if err != nil {
+			return nil, err
+		}
+		if err := WriteItemStackTemplate(writer, slot); err != nil {
 			return nil, err
 		}
 	}
@@ -1086,16 +1102,16 @@ func decodeBannerPatternsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 }
 
 func decodePotDecorationsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
-	if err != nil || count < 0 || count > 4 {
-		return fmt.Errorf("invalid pot decoration count %d", count)
-	}
-	if err := w.WriteVarInt(count); err != nil {
-		return err
-	}
-	for range int(count) {
-		if err := w.CopyVarInt(buf); err != nil {
+	for range 4 {
+		present, err := buf.ReadBool()
+		if err != nil {
 			return err
+		}
+		w.WriteBool(present)
+		if present {
+			if err := copyItemStackTemplate(buf, w); err != nil {
+				return err
+			}
 		}
 	}
 	return nil

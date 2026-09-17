@@ -1,4 +1,4 @@
-// Code generated for Minecraft 26.2 (Protocol 776); DO NOT EDIT.
+// Code generated for Minecraft 26.3 (Protocol 777); DO NOT EDIT.
 
 package entities
 
@@ -106,6 +106,11 @@ const (
 	CreeperIndexSwellDir  = 16
 	CreeperIndexIsPowered = 17
 	CreeperIndexIsIgnited = 18
+)
+
+// Cushion metadata indices
+const (
+	CushionIndexColor = 8
 )
 
 // EnderDragon metadata indices
@@ -946,6 +951,30 @@ type CreeperMetadata struct {
 	SwellDir          int32
 	IsPowered         bool
 	IsIgnited         bool
+}
+
+// CushionMetadata contains metadata fields for Cushion entities.
+type CushionMetadata struct {
+	// field presence flags
+	HasFlags             bool
+	HasAirSupply         bool
+	HasCustomNameVisible bool
+	HasSilent            bool
+	HasNoGravity         bool
+	HasPose              bool
+	HasTicksFrozen       bool
+	HasColor             bool
+
+	// field values
+	Flags             byte
+	AirSupply         int32
+	CustomName        *string
+	CustomNameVisible bool
+	Silent            bool
+	NoGravity         bool
+	Pose              int32
+	TicksFrozen       int32
+	Color             int32
 }
 
 // EnderDragonMetadata contains metadata fields for EnderDragon entities.
@@ -2438,6 +2467,17 @@ var entityMetadataFields = map[string][]FieldDef{
 		{Index: 16, Serializer: 1, Name: "SwellDir", Passthrough: false},
 		{Index: 17, Serializer: 8, Name: "IsPowered", Passthrough: false},
 		{Index: 18, Serializer: 8, Name: "IsIgnited", Passthrough: false},
+	},
+	"Cushion": {
+		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
+		{Index: 1, Serializer: 1, Name: "AirSupply", Passthrough: false},
+		{Index: 2, Serializer: 6, Name: "CustomName", Passthrough: false},
+		{Index: 3, Serializer: 8, Name: "CustomNameVisible", Passthrough: false},
+		{Index: 4, Serializer: 8, Name: "Silent", Passthrough: false},
+		{Index: 5, Serializer: 8, Name: "NoGravity", Passthrough: false},
+		{Index: 6, Serializer: 20, Name: "Pose", Passthrough: false},
+		{Index: 7, Serializer: 1, Name: "TicksFrozen", Passthrough: false},
+		{Index: 8, Serializer: 43, Name: "Color", Passthrough: false},
 	},
 	"EnderDragon": {
 		{Index: 0, Serializer: 0, Name: "Flags", Passthrough: false},
