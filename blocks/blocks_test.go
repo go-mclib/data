@@ -19,11 +19,11 @@ func TestBlockIDLookup(t *testing.T) {
 
 	for _, name := range names {
 		t.Run(name, func(t *testing.T) {
-			id := blocks.BlockID(name)
+			id := blocks.ID(name)
 			if id < 0 {
 				t.Fatalf("BlockID(%q) = %d, want >= 0", name, id)
 			}
-			if got := blocks.BlockName(id); got != name {
+			if got := blocks.Name(id); got != name {
 				t.Errorf("BlockName(%d) = %q, want %q", id, got, name)
 			}
 		})
@@ -31,10 +31,10 @@ func TestBlockIDLookup(t *testing.T) {
 }
 
 func TestBlockIDNotFound(t *testing.T) {
-	if got := blocks.BlockID("minecraft:nonexistent_block"); got != -1 {
+	if got := blocks.ID("minecraft:nonexistent_block"); got != -1 {
 		t.Errorf("BlockID for nonexistent block = %d, want -1", got)
 	}
-	if got := blocks.BlockName(-999); got != "" {
+	if got := blocks.Name(-999); got != "" {
 		t.Errorf("BlockName for invalid ID = %q, want empty string", got)
 	}
 }

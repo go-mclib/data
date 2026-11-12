@@ -1,22 +1,24 @@
 package storage
 
 import (
+	"cmp"
 	"fmt"
 	"math/bits"
-	"sync"
+	"slices"
 
+	"github.com/go-mclib/data"
 	"github.com/go-mclib/data/blocks"
 	"github.com/go-mclib/data/chunks"
 	"github.com/go-mclib/data/registries"
 	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
-// DataVersion is the 26.3 world data version written to saved data.
-const DataVersion = 5023
+// DataVersion is the world data version written to saved data.
+const DataVersion = data.DataVersion
 
-// ChunkToNBT serializes a ChunkColumn to Anvil-format NBT bytes (uncompressed).
-func ChunkToNBT(col *chunks.ChunkColumn) ([]byte, error) {
+// ChunkToNBT serializes a chunks.Column to Anvil-format NBT bytes (uncompressed).
+func ChunkToNBT(col *chunks.Column) ([]byte, error) {
 	root := nbt.Compound{
 		"DataVersion": nbt.Int(DataVersion),
 		"xPos":        nbt.Int(col.X),
@@ -37,13 +39,7 @@ func ChunkToNBT(col *chunks.ChunkColumn) ([]byte, error) {
 			continue
 		}
 		sectionY := int8(i + (col.MinY >> 4))
-		tag, err := sectionToNBT(sec, sectionY, col, i)
-		if err != nil {
-			return nil, fmt.Errorf("section %d: %w", i, err)
-		}
-		if tag != nil {
-			sectionTags = append(sectionTags, tag)
-		}
+		sectionTags = append(sectionTags, sectionToNBT(sec, sectionY, col, i))
 	}
 	if tag := lightSectionToNBT(col, int8((col.MinY>>4)+len(col.Sections)), len(col.Sections)+1); tag != nil {
 		sectionTags = append(sectionTags, tag)
@@ -58,9 +54,7 @@ func ChunkToNBT(col *chunks.ChunkColumn) ([]byte, error) {
 			if name == "" {
 				continue
 			}
-			la := make(nbt.LongArray, len(longs))
-			copy(la, longs)
-			hm[name] = la
+			hm[name] = nbt.LongArray(slices.Clone(longs))
 		}
 		root["Heightmaps"] = hm
 	}
@@ -78,20 +72,12 @@ func ChunkToNBT(col *chunks.ChunkColumn) ([]byte, error) {
 	return nbt.EncodeFile(root, "")
 }
 
-func sectionToNBT(sec *chunks.ChunkSection, sectionY int8, col *chunks.ChunkColumn, sectionIdx int) (nbt.Compound, error) {
+func sectionToNBT(sec *chunks.Section, sectionY int8, col *chunks.Column, sectionIdx int) nbt.Compound {
 	tag := nbt.Compound{
-		"Y": nbt.Byte(sectionY),
+		"Y":            nbt.Byte(sectionY),
+		"block_states": blockStatesToNBT(sec),
+		"biomes":       biomesToNBT(sec),
 	}
-
-	// block states
-	bsTag, err := blockStatesToNBT(sec)
-	if err != nil {
-		return nil, err
-	}
-	tag["block_states"] = bsTag
-
-	// biomes
-	tag["biomes"] = biomesToNBT(sec)
 
 	// light data from the column
 	if col.Light != nil {
@@ -104,10 +90,10 @@ func sectionToNBT(sec *chunks.ChunkSection, sectionY int8, col *chunks.ChunkColu
 		}
 	}
 
-	return tag, nil
+	return tag
 }
 
-func lightSectionToNBT(col *chunks.ChunkColumn, sectionY int8, lightIdx int) nbt.Compound {
+func lightSectionToNBT(col *chunks.Column, sectionY int8, lightIdx int) nbt.Compound {
 	if col.Light == nil {
 		return nil
 	}
@@ -141,7 +127,7 @@ func getLightArray(mask ns.BitSet, arrays [][]byte, sectionIdx int) []byte {
 	return arrays[arrIdx]
 }
 
-func blockStatesToNBT(sec *chunks.ChunkSection) (nbt.Compound, error) {
+func blockStatesToNBT(sec *chunks.Section) nbt.Compound {
 	// collect unique states and build palette
 	type paletteEntry struct {
 		name  string
@@ -161,11 +147,8 @@ func blockStatesToNBT(sec *chunks.ChunkSection) (nbt.Compound, error) {
 		if stateID == 0 {
 			palette = append(palette, paletteEntry{name: "minecraft:air"})
 		} else {
-			blockID, props := blocks.StateProperties(int(stateID))
-			name := blocks.BlockName(blockID)
-			if name == "" {
-				name = "minecraft:air"
-			}
+			blockID, props := blocks.StateProperties(stateID)
+			name := cmp.Or(blocks.Name(blockID), "minecraft:air")
 			palette = append(palette, paletteEntry{name: name, props: props})
 		}
 	}
@@ -194,11 +177,11 @@ func blockStatesToNBT(sec *chunks.ChunkSection) (nbt.Compound, error) {
 		result["data"] = packLongArray(sec.BlockStates, stateToIdx, 4096, bpe)
 	}
 
-	return result, nil
+	return result
 }
 
-func biomesToNBT(sec *chunks.ChunkSection) nbt.Compound {
-	biomeNames := registries.SynchronizedEntries["minecraft:worldgen/biome"]
+func biomesToNBT(sec *chunks.Section) nbt.Compound {
+	biomes := registries.SynchronizedEntries["minecraft:worldgen/biome"]
 
 	// collect unique biome IDs
 	biomeToIdx := make(map[int32]int32)
@@ -216,9 +199,9 @@ func biomesToNBT(sec *chunks.ChunkSection) nbt.Compound {
 		idx := int32(len(palette))
 		biomeToIdx[biomeID] = idx
 
-		name := "minecraft:plains"
-		if int(biomeID) < len(biomeNames) {
-			name = biomeNames[biomeID]
+		name := biomes.ByID(biomeID)
+		if name == "" {
+			name = "minecraft:plains"
 		}
 		palette = append(palette, biomeEntry{id: biomeID, name: name})
 	}
@@ -257,13 +240,13 @@ func packLongArray(container *chunks.PalettedContainer, idMap map[int32]int32, e
 	return longs
 }
 
-// NBTToChunk deserializes an overworld-height ChunkColumn from Anvil-format NBT bytes.
-func NBTToChunk(data []byte) (*chunks.ChunkColumn, error) {
+// NBTToChunk deserializes an overworld-height chunks.Column from Anvil-format NBT bytes.
+func NBTToChunk(data []byte) (*chunks.Column, error) {
 	return NBTToChunkWithHeight(data, chunks.MinY, chunks.SectionCount)
 }
 
-// NBTToChunkWithHeight deserializes a ChunkColumn for a dimension height.
-func NBTToChunkWithHeight(data []byte, minY, sectionCount int) (*chunks.ChunkColumn, error) {
+// NBTToChunkWithHeight deserializes a chunks.Column for a dimension height.
+func NBTToChunkWithHeight(data []byte, minY, sectionCount int) (*chunks.Column, error) {
 	if minY%16 != 0 || sectionCount <= 0 {
 		return nil, fmt.Errorf("invalid chunk height minY=%d sections=%d", minY, sectionCount)
 	}
@@ -276,11 +259,11 @@ func NBTToChunkWithHeight(data []byte, minY, sectionCount int) (*chunks.ChunkCol
 		return nil, fmt.Errorf("root is not compound")
 	}
 
-	col := &chunks.ChunkColumn{
+	col := &chunks.Column{
 		X:          root.GetInt("xPos"),
 		Z:          root.GetInt("zPos"),
 		MinY:       minY,
-		Sections:   make([]*chunks.ChunkSection, sectionCount),
+		Sections:   make([]*chunks.Section, sectionCount),
 		Heightmaps: make(map[int32][]int64),
 	}
 
@@ -302,8 +285,10 @@ func NBTToChunkWithHeight(data []byte, minY, sectionCount int) (*chunks.ChunkCol
 	}
 
 	sectionList := root.GetList("sections")
-	var skyLightArrays [][]byte
-	var blockLightArrays [][]byte
+	// light arrays indexed by light section, compacted in index order below:
+	// the packet layout orders arrays by mask bit, not by NBT list order
+	skyLight := make([][]byte, sectionCount+2)
+	blockLight := make([][]byte, sectionCount+2)
 	skyMask := ns.NewBitSet(sectionCount + 2)
 	emptySkyMask := ns.NewBitSet(sectionCount + 2)
 	blockMask := ns.NewBitSet(sectionCount + 2)
@@ -320,14 +305,16 @@ func NBTToChunkWithHeight(data []byte, minY, sectionCount int) (*chunks.ChunkCol
 		if lightIdx >= 0 && lightIdx < sectionCount+2 {
 			if skyData := secTag.GetByteArray("SkyLight"); len(skyData) == 2048 {
 				skyMask.Set(lightIdx)
-				skyLightArrays = append(skyLightArrays, skyData)
-			} else if secIdx >= 0 && secIdx < sectionCount {
+				emptySkyMask.Clear(lightIdx)
+				skyLight[lightIdx] = skyData
+			} else if secIdx >= 0 && secIdx < sectionCount && skyLight[lightIdx] == nil {
 				emptySkyMask.Set(lightIdx)
 			}
 			if blockData := secTag.GetByteArray("BlockLight"); len(blockData) == 2048 {
 				blockMask.Set(lightIdx)
-				blockLightArrays = append(blockLightArrays, blockData)
-			} else if secIdx >= 0 && secIdx < sectionCount {
+				emptyBlockMask.Clear(lightIdx)
+				blockLight[lightIdx] = blockData
+			} else if secIdx >= 0 && secIdx < sectionCount && blockLight[lightIdx] == nil {
 				emptyBlockMask.Set(lightIdx)
 			}
 		}
@@ -351,6 +338,8 @@ func NBTToChunkWithHeight(data []byte, minY, sectionCount int) (*chunks.ChunkCol
 
 	}
 
+	skyLightArrays := slices.DeleteFunc(skyLight, func(b []byte) bool { return b == nil })
+	blockLightArrays := slices.DeleteFunc(blockLight, func(b []byte) bool { return b == nil })
 	// build light data if any arrays were found
 	if len(skyLightArrays) > 0 || len(blockLightArrays) > 0 {
 		col.Light = &ns.LightData{
@@ -366,7 +355,7 @@ func NBTToChunkWithHeight(data []byte, minY, sectionCount int) (*chunks.ChunkCol
 	return col, nil
 }
 
-func loadBlockStates(sec *chunks.ChunkSection, comp nbt.Compound) error {
+func loadBlockStates(sec *chunks.Section, comp nbt.Compound) error {
 	paletteList := comp.GetList("palette")
 	if paletteList.Len() == 0 {
 		return nil
@@ -386,7 +375,7 @@ func loadBlockStates(sec *chunks.ChunkSection, comp nbt.Compound) error {
 			continue
 		}
 
-		blockID := blocks.BlockID(name)
+		blockID := blocks.ID(name)
 		if blockID < 0 {
 			continue
 		}
@@ -399,7 +388,7 @@ func loadBlockStates(sec *chunks.ChunkSection, comp nbt.Compound) error {
 					props[k] = string(s)
 				}
 			}
-			stateIDs[i] = blocks.StateID(int(blockID), props)
+			stateIDs[i] = blocks.StateID(blockID, props)
 		} else {
 			stateIDs[i] = blocks.DefaultStateID(blockID)
 		}
@@ -449,35 +438,19 @@ func loadBlockStates(sec *chunks.ChunkSection, comp nbt.Compound) error {
 	return nil
 }
 
-// biomeNameToID maps biome names to protocol IDs (built lazily).
-var (
-	biomeNameMap     map[string]int32
-	biomeNameMapOnce sync.Once
-)
-
-func getBiomeNameMap() map[string]int32 {
-	biomeNameMapOnce.Do(func() {
-		biomeNameMap = make(map[string]int32)
-		for id, name := range registries.SynchronizedEntries["minecraft:worldgen/biome"] {
-			biomeNameMap[name] = int32(id)
-		}
-	})
-	return biomeNameMap
-}
-
-func loadBiomes(sec *chunks.ChunkSection, comp nbt.Compound) {
+func loadBiomes(sec *chunks.Section, comp nbt.Compound) {
 	paletteList := comp.GetList("palette")
 	if paletteList.Len() == 0 {
 		return
 	}
 
-	nameMap := getBiomeNameMap()
+	biomes := registries.SynchronizedEntries["minecraft:worldgen/biome"]
 
 	// build biome ID palette
 	biomeIDs := make([]int32, paletteList.Len())
 	for i, elem := range paletteList.Elements {
 		if s, ok := elem.(nbt.String); ok {
-			biomeIDs[i] = nameMap[string(s)]
+			biomeIDs[i] = max(biomes.Get(string(s)), 0) // unknown biomes load as ID 0
 		}
 	}
 

@@ -20,6 +20,7 @@ import net.minecraft.tags.TagLoader;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -47,9 +48,10 @@ import java.util.TreeMap;
 // (real Mojang names — no Fabric, no remapping) and writes the game's own data
 // as JSON. The actual game code is the single source of truth.
 //
-// covers the data that previously needed PrismarineJS / source scraping
-// (collision shapes, entity hitboxes, hardness, mob categories) plus the
-// built-in registry id maps. Vanilla tags are bound before querying state
+// covers the data that previously needed PrismarineJS / source scraping or
+// hand-kept Go tables (collision shapes, entity hitboxes, hardness, mob
+// categories, friction, light emission/dampening, effect colors, crafting
+// remainders) plus the built-in registry id maps. Vanilla tags are bound before querying state
 // predicates; dynamic item components and biomes come from server datagen.
 public final class Dump {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
@@ -74,6 +76,8 @@ public final class Dump {
 		write(out, "entities.json", entities());
 		write(out, "registries.json", registries());
 		write(out, "potions.json", potions());
+		write(out, "effects.json", effects());
+		write(out, "items.json", items());
 
 		System.out.println("[mcdump] dump written to " + out.toAbsolutePath());
 	}
@@ -86,6 +90,32 @@ public final class Dump {
 				effects.add(MobEffectInstance.CODEC.encodeStart(JsonOps.INSTANCE, effect).getOrThrow());
 			}
 			result.add(BuiltInRegistries.POTION.getKey(potion).toString(), effects);
+		}
+		return result;
+	}
+
+	// effects: every mob effect's particle/potion color.
+	private static JsonObject effects() {
+		final JsonObject result = new JsonObject();
+		for (final var effect : sortedByKey(BuiltInRegistries.MOB_EFFECT)) {
+			final JsonObject obj = new JsonObject();
+			obj.addProperty("color", effect.getColor());
+			result.add(BuiltInRegistries.MOB_EFFECT.getKey(effect).toString(), obj);
+		}
+		return result;
+	}
+
+	// items: the crafting remainder of every item that leaves one behind.
+	private static JsonObject items() {
+		final JsonObject result = new JsonObject();
+		for (final Item item : sortedByKey(BuiltInRegistries.ITEM)) {
+			final var remainder = item.getCraftingRemainder();
+			if (remainder == null) {
+				continue;
+			}
+			final JsonObject obj = new JsonObject();
+			obj.addProperty("craftingRemainder", BuiltInRegistries.ITEM.getKey(remainder.item().value()).toString());
+			result.add(BuiltInRegistries.ITEM.getKey(item).toString(), obj);
 		}
 		return result;
 	}
@@ -107,6 +137,7 @@ public final class Dump {
 			bobj.addProperty("protocolId", BuiltInRegistries.BLOCK.getId(block));
 			bobj.addProperty("hardness", round(def.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)));
 			bobj.addProperty("requiresTool", def.requiresCorrectToolForDrops());
+			bobj.addProperty("friction", block.getFriction());
 
 			final JsonArray states = new JsonArray();
 			for (final BlockState state : block.getStateDefinition().getPossibleStates()) {
@@ -139,6 +170,9 @@ public final class Dump {
 				sobj.addProperty("fluidKind", fluid.getType().isSame(Fluids.WATER) ? 1 : fluid.getType().isSame(Fluids.LAVA) ? 2 : 0);
 				sobj.addProperty("fluidAmount", fluid.getAmount());
 				sobj.addProperty("fluidFalling", !fluid.isEmpty() && fluid.hasProperty(FlowingFluid.FALLING) && fluid.getValue(FlowingFluid.FALLING));
+				sobj.addProperty("lightEmission", state.getLightEmission());
+				sobj.addProperty("lightDampening", state.getLightDampening());
+				sobj.addProperty("mapColor", Byte.toUnsignedInt(state.getMapColor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).getPackedId(net.minecraft.world.level.material.MapColor.Brightness.NORMAL)) >> 2);
 				states.add(sobj);
 			}
 			bobj.add("states", states);

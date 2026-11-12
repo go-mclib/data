@@ -7575,10 +7575,9 @@ var worldgenTrunkPlacerTypeEntries = map[string]int32{
 }
 
 // SynchronizedEntries maps synchronized registry identifiers to their
-// vanilla datapack entry names. For registries that also appear in
-// ByIdentifier (static registries), entries come from there instead.
-var SynchronizedEntries = map[string][]string{
-	"minecraft:worldgen/biome": {
+// vanilla datapack registries; protocol IDs follow the sorted entry names.
+var SynchronizedEntries = map[string]*Registry{
+	"minecraft:worldgen/biome": newSynchronizedRegistry("minecraft:worldgen/biome", []string{
 		"minecraft:badlands",
 		"minecraft:bamboo_jungle",
 		"minecraft:basalt_deltas",
@@ -7646,8 +7645,8 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:windswept_hills",
 		"minecraft:windswept_savanna",
 		"minecraft:wooded_badlands",
-	},
-	"minecraft:chat_type": {
+	}),
+	"minecraft:chat_type": newSynchronizedRegistry("minecraft:chat_type", []string{
 		"minecraft:chat",
 		"minecraft:emote_command",
 		"minecraft:msg_command_incoming",
@@ -7655,8 +7654,8 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:say_command",
 		"minecraft:team_msg_command_incoming",
 		"minecraft:team_msg_command_outgoing",
-	},
-	"minecraft:trim_pattern": {
+	}),
+	"minecraft:trim_pattern": newSynchronizedRegistry("minecraft:trim_pattern", []string{
 		"minecraft:bolt",
 		"minecraft:coast",
 		"minecraft:dune",
@@ -7675,8 +7674,8 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:ward",
 		"minecraft:wayfinder",
 		"minecraft:wild",
-	},
-	"minecraft:trim_material": {
+	}),
+	"minecraft:trim_material": newSynchronizedRegistry("minecraft:trim_material", []string{
 		"minecraft:amethyst",
 		"minecraft:copper",
 		"minecraft:diamond",
@@ -7688,8 +7687,8 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:quartz",
 		"minecraft:redstone",
 		"minecraft:resin",
-	},
-	"minecraft:wolf_variant": {
+	}),
+	"minecraft:wolf_variant": newSynchronizedRegistry("minecraft:wolf_variant", []string{
 		"minecraft:ashen",
 		"minecraft:black",
 		"minecraft:chestnut",
@@ -7699,8 +7698,8 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:spotted",
 		"minecraft:striped",
 		"minecraft:woods",
-	},
-	"minecraft:wolf_sound_variant": {
+	}),
+	"minecraft:wolf_sound_variant": newSynchronizedRegistry("minecraft:wolf_sound_variant", []string{
 		"minecraft:angry",
 		"minecraft:big",
 		"minecraft:classic",
@@ -7708,23 +7707,23 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:grumpy",
 		"minecraft:puglin",
 		"minecraft:sad",
-	},
-	"minecraft:pig_variant": {
+	}),
+	"minecraft:pig_variant": newSynchronizedRegistry("minecraft:pig_variant", []string{
 		"minecraft:cold",
 		"minecraft:temperate",
 		"minecraft:warm",
-	},
-	"minecraft:pig_sound_variant": {
+	}),
+	"minecraft:pig_sound_variant": newSynchronizedRegistry("minecraft:pig_sound_variant", []string{
 		"minecraft:big",
 		"minecraft:classic",
 		"minecraft:mini",
-	},
-	"minecraft:frog_variant": {
+	}),
+	"minecraft:frog_variant": newSynchronizedRegistry("minecraft:frog_variant", []string{
 		"minecraft:cold",
 		"minecraft:temperate",
 		"minecraft:warm",
-	},
-	"minecraft:cat_variant": {
+	}),
+	"minecraft:cat_variant": newSynchronizedRegistry("minecraft:cat_variant", []string{
 		"minecraft:all_black",
 		"minecraft:black",
 		"minecraft:british_shorthair",
@@ -7736,34 +7735,34 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:siamese",
 		"minecraft:tabby",
 		"minecraft:white",
-	},
-	"minecraft:cat_sound_variant": {
+	}),
+	"minecraft:cat_sound_variant": newSynchronizedRegistry("minecraft:cat_sound_variant", []string{
 		"minecraft:classic",
 		"minecraft:royal",
-	},
-	"minecraft:cow_variant": {
+	}),
+	"minecraft:cow_variant": newSynchronizedRegistry("minecraft:cow_variant", []string{
 		"minecraft:cold",
 		"minecraft:temperate",
 		"minecraft:warm",
-	},
-	"minecraft:cow_sound_variant": {
+	}),
+	"minecraft:cow_sound_variant": newSynchronizedRegistry("minecraft:cow_sound_variant", []string{
 		"minecraft:classic",
 		"minecraft:moody",
-	},
-	"minecraft:chicken_variant": {
+	}),
+	"minecraft:chicken_variant": newSynchronizedRegistry("minecraft:chicken_variant", []string{
 		"minecraft:cold",
 		"minecraft:temperate",
 		"minecraft:warm",
-	},
-	"minecraft:chicken_sound_variant": {
+	}),
+	"minecraft:chicken_sound_variant": newSynchronizedRegistry("minecraft:chicken_sound_variant", []string{
 		"minecraft:classic",
 		"minecraft:picky",
-	},
-	"minecraft:zombie_nautilus_variant": {
+	}),
+	"minecraft:zombie_nautilus_variant": newSynchronizedRegistry("minecraft:zombie_nautilus_variant", []string{
 		"minecraft:temperate",
 		"minecraft:warm",
-	},
-	"minecraft:painting_variant": {
+	}),
+	"minecraft:painting_variant": newSynchronizedRegistry("minecraft:painting_variant", []string{
 		"minecraft:alban",
 		"minecraft:aztec",
 		"minecraft:aztec2",
@@ -7815,14 +7814,14 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:water",
 		"minecraft:wind",
 		"minecraft:wither",
-	},
-	"minecraft:dimension_type": {
+	}),
+	"minecraft:dimension_type": newSynchronizedRegistry("minecraft:dimension_type", []string{
 		"minecraft:overworld",
 		"minecraft:overworld_caves",
 		"minecraft:the_end",
 		"minecraft:the_nether",
-	},
-	"minecraft:damage_type": {
+	}),
+	"minecraft:damage_type": newSynchronizedRegistry("minecraft:damage_type", []string{
 		"minecraft:arrow",
 		"minecraft:bad_respawn_point",
 		"minecraft:cactus",
@@ -7874,8 +7873,8 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:wind_charge",
 		"minecraft:wither",
 		"minecraft:wither_skull",
-	},
-	"minecraft:banner_pattern": {
+	}),
+	"minecraft:banner_pattern": newSynchronizedRegistry("minecraft:banner_pattern", []string{
 		"minecraft:base",
 		"minecraft:border",
 		"minecraft:bricks",
@@ -7919,8 +7918,8 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:triangle_top",
 		"minecraft:triangles_bottom",
 		"minecraft:triangles_top",
-	},
-	"minecraft:enchantment": {
+	}),
+	"minecraft:enchantment": newSynchronizedRegistry("minecraft:enchantment", []string{
 		"minecraft:aqua_affinity",
 		"minecraft:bane_of_arthropods",
 		"minecraft:binding_curse",
@@ -7964,8 +7963,8 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:unbreaking",
 		"minecraft:vanishing_curse",
 		"minecraft:wind_burst",
-	},
-	"minecraft:jukebox_song": {
+	}),
+	"minecraft:jukebox_song": newSynchronizedRegistry("minecraft:jukebox_song", []string{
 		"minecraft:11",
 		"minecraft:13",
 		"minecraft:5",
@@ -7988,8 +7987,8 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:tears",
 		"minecraft:wait",
 		"minecraft:ward",
-	},
-	"minecraft:instrument": {
+	}),
+	"minecraft:instrument": newSynchronizedRegistry("minecraft:instrument", []string{
 		"minecraft:admire_goat_horn",
 		"minecraft:call_goat_horn",
 		"minecraft:dream_goat_horn",
@@ -7998,29 +7997,29 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:seek_goat_horn",
 		"minecraft:sing_goat_horn",
 		"minecraft:yearn_goat_horn",
-	},
-	"minecraft:test_environment": {
+	}),
+	"minecraft:test_environment": newSynchronizedRegistry("minecraft:test_environment", []string{
 		"minecraft:default",
-	},
-	"minecraft:test_instance": {
+	}),
+	"minecraft:test_instance": newSynchronizedRegistry("minecraft:test_instance", []string{
 		"minecraft:always_pass",
-	},
-	"minecraft:dialog": {
+	}),
+	"minecraft:dialog": newSynchronizedRegistry("minecraft:dialog", []string{
 		"minecraft:custom_options",
 		"minecraft:quick_actions",
 		"minecraft:server_links",
-	},
-	"minecraft:world_clock": {
+	}),
+	"minecraft:world_clock": newSynchronizedRegistry("minecraft:world_clock", []string{
 		"minecraft:overworld",
 		"minecraft:the_end",
-	},
-	"minecraft:timeline": {
+	}),
+	"minecraft:timeline": newSynchronizedRegistry("minecraft:timeline", []string{
 		"minecraft:day",
 		"minecraft:early_game",
 		"minecraft:moon",
 		"minecraft:villager_schedule",
-	},
-	"minecraft:sulfur_cube_archetype": {
+	}),
+	"minecraft:sulfur_cube_archetype": newSynchronizedRegistry("minecraft:sulfur_cube_archetype", []string{
 		"minecraft:bouncy",
 		"minecraft:explosive",
 		"minecraft:fast_flat",
@@ -8033,8 +8032,8 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:slow_flat",
 		"minecraft:slow_sliding",
 		"minecraft:sticky",
-	},
-	"minecraft:decorated_pot_pattern": {
+	}),
+	"minecraft:decorated_pot_pattern": newSynchronizedRegistry("minecraft:decorated_pot_pattern", []string{
 		"minecraft:angler",
 		"minecraft:archer",
 		"minecraft:arms_up",
@@ -8058,13 +8057,13 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:shelter",
 		"minecraft:skull",
 		"minecraft:snort",
-	},
-	"minecraft:block_transformer": {
+	}),
+	"minecraft:block_transformer": newSynchronizedRegistry("minecraft:block_transformer", []string{
 		"minecraft:axe",
 		"minecraft:hoe",
 		"minecraft:shovel",
-	},
-	"minecraft:worldgen/block_state_provider": {
+	}),
+	"minecraft:worldgen/block_state_provider": newSynchronizedRegistry("minecraft:worldgen/block_state_provider", []string{
 		"minecraft:cave_vines_body",
 		"minecraft:cave_vines_head",
 		"minecraft:flower_flower_forest",
@@ -8073,5 +8072,5 @@ var SynchronizedEntries = map[string][]string{
 		"minecraft:mangrove_propagule",
 		"minecraft:podzol_beneath_tree",
 		"minecraft:soil_beneath_tree",
-	},
+	}),
 }

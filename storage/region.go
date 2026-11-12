@@ -6,10 +6,13 @@ import (
 	"bytes"
 	"compress/zlib"
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"sync"
+	"time"
 )
 
 const (
@@ -19,11 +22,18 @@ const (
 	chunksPerAxis   = 32
 	chunksPerFile   = chunksPerAxis * chunksPerAxis
 	compressionZlib = 2
+	compressionNone = 3
+	// externalFlag marks a chunk whose stream lives in a c.<x>.<z>.mcc file
+	// next to the region (vanilla RegionFile.EXTERNAL_STREAM_FLAG).
+	externalFlag = 0x80
+	// maxChunkSectors is the most sectors a location entry can address
+	// (8-bit count); larger chunks are stored externally.
+	maxChunkSectors = 255
 )
 
-// RegionFile handles reading and writing chunks in one .mca region file.
+// regionFile handles reading and writing chunks in one .mca region file.
 // Each region file holds up to 32×32 = 1024 chunks.
-type RegionFile struct {
+type regionFile struct {
 	path       string
 	file       *os.File
 	mu         sync.Mutex
@@ -32,14 +42,14 @@ type RegionFile struct {
 	sectors    []bool // bitmap of used sectors
 }
 
-// OpenRegion opens or creates a region file at the given path.
-func OpenRegion(path string) (*RegionFile, error) {
+// openRegion opens or creates a region file at the given path.
+func openRegion(path string) (*regionFile, error) {
 	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		return nil, err
 	}
 
-	r := &RegionFile{path: path, file: f}
+	r := &regionFile{path: path, file: f}
 
 	stat, err := f.Stat()
 	if err != nil {
@@ -49,21 +59,19 @@ func OpenRegion(path string) (*RegionFile, error) {
 
 	if stat.Size() < headerBytes {
 		// new file — write empty header
-		if err := r.initHeader(); err != nil {
-			f.Close()
-			return nil, err
-		}
+		err = r.initHeader()
 	} else {
-		if err := r.readHeader(); err != nil {
-			f.Close()
-			return nil, err
-		}
+		err = r.readHeader(stat.Size())
+	}
+	if err != nil {
+		f.Close()
+		return nil, err
 	}
 
 	return r, nil
 }
 
-func (r *RegionFile) initHeader() error {
+func (r *regionFile) initHeader() error {
 	header := make([]byte, headerBytes)
 	if _, err := r.file.WriteAt(header, 0); err != nil {
 		return err
@@ -74,39 +82,32 @@ func (r *RegionFile) initHeader() error {
 	return nil
 }
 
-func (r *RegionFile) readHeader() error {
+// readHeader loads the location and timestamp tables. Like vanilla
+// (RegionFile.java), entries that overlap the header, have zero sectors or
+// start past the end of the file are cleared instead of trusted.
+func (r *regionFile) readHeader(size int64) error {
 	var buf [headerBytes]byte
 	if _, err := r.file.ReadAt(buf[:], 0); err != nil {
 		return fmt.Errorf("read header: %w", err)
 	}
 
-	for i := range chunksPerFile {
-		r.locations[i] = binary.BigEndian.Uint32(buf[i*4:])
-		r.timestamps[i] = binary.BigEndian.Uint32(buf[sectorSize+i*4:])
-	}
-
-	// build sector bitmap from file size
-	stat, err := r.file.Stat()
-	if err != nil {
-		return err
-	}
-	totalSectors := int((stat.Size() + sectorSize - 1) / sectorSize)
-	if totalSectors < headerSectors {
-		totalSectors = headerSectors
-	}
+	totalSectors := max(int((size+sectorSize-1)/sectorSize), headerSectors)
 	r.sectors = make([]bool, totalSectors)
 	r.sectors[0] = true
 	r.sectors[1] = true
 
-	for _, loc := range r.locations {
+	for i := range chunksPerFile {
+		r.timestamps[i] = binary.BigEndian.Uint32(buf[sectorSize+i*4:])
+		loc := binary.BigEndian.Uint32(buf[i*4:])
 		if loc == 0 {
 			continue
 		}
-		offset := int(loc >> 8)
-		count := int(loc & 0xFF)
-		for s := offset; s < offset+count && s < len(r.sectors); s++ {
-			r.sectors[s] = true
+		offset, count := int(loc>>8), int(loc&0xFF)
+		if offset < headerSectors || count == 0 || int64(offset)*sectorSize > size {
+			continue
 		}
+		r.locations[i] = loc
+		r.markSectors(offset, count, true)
 	}
 
 	return nil
@@ -116,15 +117,19 @@ func chunkIndex(chunkX, chunkZ int32) int {
 	return int(chunkX&31) + int(chunkZ&31)*chunksPerAxis
 }
 
+func (r *regionFile) externalChunkPath(chunkX, chunkZ int32) string {
+	return filepath.Join(filepath.Dir(r.path), fmt.Sprintf("c.%d.%d.mcc", chunkX, chunkZ))
+}
+
 // HasChunk returns true if the region file contains data for the given chunk.
-func (r *RegionFile) HasChunk(chunkX, chunkZ int32) bool {
+func (r *regionFile) HasChunk(chunkX, chunkZ int32) bool {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	return r.locations[chunkIndex(chunkX, chunkZ)] != 0
 }
 
 // ReadChunk reads and decompresses chunk data. Returns nil, nil if chunk is absent.
-func (r *RegionFile) ReadChunk(chunkX, chunkZ int32) ([]byte, error) {
+func (r *regionFile) ReadChunk(chunkX, chunkZ int32) ([]byte, error) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
@@ -133,13 +138,15 @@ func (r *RegionFile) ReadChunk(chunkX, chunkZ int32) ([]byte, error) {
 		return nil, nil
 	}
 
-	offset := int64(loc>>8) * sectorSize
-	count := int(loc & 0xFF)
-
-	// read raw sector data
-	raw := make([]byte, count*sectorSize)
-	if _, err := r.file.ReadAt(raw, offset); err != nil {
+	// read raw sector data; the last sector may be truncated at end of file
+	raw := make([]byte, int(loc&0xFF)*sectorSize)
+	n, err := r.file.ReadAt(raw, int64(loc>>8)*sectorSize)
+	if err != nil && !errors.Is(err, io.EOF) {
 		return nil, fmt.Errorf("read sectors: %w", err)
+	}
+	raw = raw[:n]
+	if len(raw) < 5 {
+		return nil, fmt.Errorf("chunk (%d,%d) header truncated: %d bytes", chunkX, chunkZ, len(raw))
 	}
 
 	// parse chunk header: 4-byte length + 1-byte compression
@@ -149,6 +156,12 @@ func (r *RegionFile) ReadChunk(chunkX, chunkZ int32) ([]byte, error) {
 	}
 	compression := raw[4]
 	compressed := raw[5 : 4+length]
+	if compression&externalFlag != 0 {
+		compression &^= externalFlag
+		if compressed, err = os.ReadFile(r.externalChunkPath(chunkX, chunkZ)); err != nil {
+			return nil, fmt.Errorf("read external chunk: %w", err)
+		}
+	}
 
 	switch compression {
 	case compressionZlib:
@@ -158,16 +171,18 @@ func (r *RegionFile) ReadChunk(chunkX, chunkZ int32) ([]byte, error) {
 		}
 		defer zr.Close()
 		return io.ReadAll(zr)
-	case 3: // no compression
+	case compressionNone:
 		return compressed, nil
 	default:
 		return nil, fmt.Errorf("unsupported compression type %d", compression)
 	}
 }
 
-// WriteChunk compresses and writes chunk data to the region file.
-func (r *RegionFile) WriteChunk(chunkX, chunkZ int32, data []byte) error {
-	// compress with zlib
+// WriteChunk compresses and writes chunk data to the region file. Like
+// vanilla, the new sectors are written and the header updated before the old
+// sectors are released, so a failed or interrupted write keeps the old chunk.
+// Chunks needing more than 255 sectors go to an external .mcc file.
+func (r *regionFile) WriteChunk(chunkX, chunkZ int32, data []byte) error {
 	var buf bytes.Buffer
 	zw := zlib.NewWriter(&buf)
 	if _, err := zw.Write(data); err != nil {
@@ -178,75 +193,98 @@ func (r *RegionFile) WriteChunk(chunkX, chunkZ int32, data []byte) error {
 	}
 	compressed := buf.Bytes()
 
-	// chunk payload: 4-byte length + 1-byte compression + compressed data
-	payloadLen := 1 + len(compressed) // compression byte + data
-	totalLen := 4 + payloadLen        // length field + payload
-	neededSectors := (totalLen + sectorSize - 1) / sectorSize
-
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	idx := chunkIndex(chunkX, chunkZ)
+	externalPath := r.externalChunkPath(chunkX, chunkZ)
 
-	// free old sectors
-	oldLoc := r.locations[idx]
-	if oldLoc != 0 {
-		oldOffset := int(oldLoc >> 8)
-		oldCount := int(oldLoc & 0xFF)
-		for s := oldOffset; s < oldOffset+oldCount && s < len(r.sectors); s++ {
-			r.sectors[s] = false
+	// chunk payload: 4-byte length + 1-byte compression + compressed data
+	payloadLen := 1 + len(compressed)
+	neededSectors := (4 + payloadLen + sectorSize - 1) / sectorSize
+	var sectorData []byte
+	externalTmp := ""
+	if neededSectors > maxChunkSectors {
+		tmp, err := writeTempFile(filepath.Dir(r.path), compressed)
+		if err != nil {
+			return fmt.Errorf("write external chunk: %w", err)
 		}
+		externalTmp = tmp
+		neededSectors = 1
+		sectorData = make([]byte, sectorSize)
+		binary.BigEndian.PutUint32(sectorData[0:4], 1)
+		sectorData[4] = compressionZlib | externalFlag
+	} else {
+		sectorData = make([]byte, neededSectors*sectorSize)
+		binary.BigEndian.PutUint32(sectorData[0:4], uint32(payloadLen))
+		sectorData[4] = compressionZlib
+		copy(sectorData[5:], compressed)
 	}
 
-	// allocate new sectors (first-fit)
 	newOffset := r.allocateSectors(neededSectors)
-
-	// write chunk data
-	sectorData := make([]byte, neededSectors*sectorSize)
-	binary.BigEndian.PutUint32(sectorData[0:4], uint32(payloadLen))
-	sectorData[4] = compressionZlib
-	copy(sectorData[5:], compressed)
-
-	fileOffset := int64(newOffset) * sectorSize
-	if _, err := r.file.WriteAt(sectorData, fileOffset); err != nil {
-		return fmt.Errorf("write sectors: %w", err)
+	fail := func(err error) error {
+		r.markSectors(newOffset, neededSectors, false)
+		if externalTmp != "" {
+			os.Remove(externalTmp)
+		}
+		return err
+	}
+	if _, err := r.file.WriteAt(sectorData, int64(newOffset)*sectorSize); err != nil {
+		return fail(fmt.Errorf("write sectors: %w", err))
 	}
 
-	// update location table
+	idx := chunkIndex(chunkX, chunkZ)
+	oldLoc, oldTimestamp := r.locations[idx], r.timestamps[idx]
 	r.locations[idx] = uint32(newOffset)<<8 | uint32(neededSectors)
-	r.timestamps[idx] = 0 // TODO: unix timestamp
+	r.timestamps[idx] = uint32(time.Now().Unix())
+	if err := r.writeHeader(); err != nil {
+		r.locations[idx], r.timestamps[idx] = oldLoc, oldTimestamp
+		return fail(fmt.Errorf("write header: %w", err))
+	}
 
-	return r.writeHeader()
+	var commitErr error
+	if externalTmp != "" {
+		commitErr = os.Rename(externalTmp, externalPath)
+	} else if err := os.Remove(externalPath); err != nil && !errors.Is(err, os.ErrNotExist) {
+		commitErr = err
+	}
+	if oldLoc != 0 {
+		r.markSectors(int(oldLoc>>8), int(oldLoc&0xFF), false)
+	}
+	return commitErr
 }
 
-func (r *RegionFile) allocateSectors(count int) int {
-	// find first contiguous run of `count` free sectors
-	for start := headerSectors; start <= len(r.sectors)-count; start++ {
-		found := true
-		for s := start; s < start+count; s++ {
-			if r.sectors[s] {
-				found = false
-				start = s // skip ahead
-				break
-			}
+// markSectors sets the used state of sectors [start, start+count), growing
+// the bitmap as needed. The header sectors always stay used.
+func (r *regionFile) markSectors(start, count int, used bool) {
+	if end := start + count; end > len(r.sectors) {
+		r.sectors = append(r.sectors, make([]bool, end-len(r.sectors))...)
+	}
+	for s := max(start, headerSectors); s < start+count; s++ {
+		r.sectors[s] = used
+	}
+}
+
+// allocateSectors reserves the first run of count free sectors, appending at
+// the end of the file when no gap is large enough.
+func (r *regionFile) allocateSectors(count int) int {
+	run := 0
+	for s := headerSectors; s < len(r.sectors); s++ {
+		if r.sectors[s] {
+			run = 0
+			continue
 		}
-		if found {
-			for s := start; s < start+count; s++ {
-				r.sectors[s] = true
-			}
+		if run++; run == count {
+			start := s - count + 1
+			r.markSectors(start, count, true)
 			return start
 		}
 	}
-
-	// append at end of file
-	start := len(r.sectors)
-	for range count {
-		r.sectors = append(r.sectors, true)
-	}
+	start := len(r.sectors) - run
+	r.markSectors(start, count, true)
 	return start
 }
 
-func (r *RegionFile) writeHeader() error {
+func (r *regionFile) writeHeader() error {
 	var buf [headerBytes]byte
 	for i := range chunksPerFile {
 		binary.BigEndian.PutUint32(buf[i*4:], r.locations[i])
@@ -257,7 +295,7 @@ func (r *RegionFile) writeHeader() error {
 }
 
 // Close closes the underlying file.
-func (r *RegionFile) Close() error {
+func (r *regionFile) Close() error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	return r.file.Close()

@@ -1,7 +1,7 @@
 package packets
 
 import (
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // C2SHello represents "Login Start".
@@ -11,7 +11,7 @@ type C2SHello struct {
 	// Player's Username.
 	Name ns.String
 	// The UUID of the player logging in. Unused by the vanilla server.
-	PlayerUuid ns.UUID
+	PlayerUUID ns.UUID
 }
 
 func (p *C2SHello) Read(buf *ns.PacketBuffer) error {
@@ -19,7 +19,7 @@ func (p *C2SHello) Read(buf *ns.PacketBuffer) error {
 	if p.Name, err = buf.ReadString(16); err != nil {
 		return err
 	}
-	p.PlayerUuid, err = buf.ReadUUID()
+	p.PlayerUUID, err = buf.ReadUUID()
 	return err
 }
 
@@ -27,7 +27,7 @@ func (p *C2SHello) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteString(p.Name); err != nil {
 		return err
 	}
-	return buf.WriteUUID(p.PlayerUuid)
+	return buf.WriteUUID(p.PlayerUUID)
 }
 
 // C2SKey represents "Encryption Response".
@@ -63,14 +63,14 @@ func (p *C2SKey) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Login_Plugin_Response
 type C2SCustomQueryAnswer struct {
 	// Should match ID from server.
-	MessageId ns.VarInt
+	MessageID ns.VarInt
 	// Any data, depending on the channel. Only present if the client understood the request.
 	Data ns.PrefixedOptional[ns.ByteArray]
 }
 
 func (p *C2SCustomQueryAnswer) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.MessageId, err = buf.ReadVarInt(); err != nil {
+	if p.MessageID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	return p.Data.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.ByteArray, error) {
@@ -79,7 +79,7 @@ func (p *C2SCustomQueryAnswer) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SCustomQueryAnswer) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.MessageId); err != nil {
+	if err := buf.WriteVarInt(p.MessageID); err != nil {
 		return err
 	}
 	return p.Data.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.ByteArray) error {

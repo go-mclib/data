@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/go-mclib/data/packet_ids"
+	"github.com/go-mclib/data/packetids"
 	"github.com/go-mclib/data/packets"
 	"github.com/go-mclib/nbt"
-	jp "github.com/go-mclib/protocol/java_protocol"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	jp "github.com/go-mclib/protocol/javaproto"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // buildRegistryWire builds a registry_data payload exactly as the server sends
@@ -60,12 +60,12 @@ func buildRegistryWire(t *testing.T) []byte {
 func TestRegistryDataRoundTrip(t *testing.T) {
 	wire := buildRegistryWire(t)
 
-	in := &jp.WirePacket{PacketID: ns.VarInt(packet_ids.S2CRegistryDataID), Data: wire}
+	in := &jp.WirePacket{PacketID: ns.VarInt(packetids.S2CRegistryDataID), Data: wire}
 	var d packets.S2CRegistryData
 	if err := in.ReadInto(&d); err != nil {
 		t.Fatalf("ReadInto failed: %v", err)
 	}
-	t.Logf("parsed registry=%s entries=%d", d.RegistryId, len(d.Entries))
+	t.Logf("parsed registry=%s entries=%d", d.RegistryID, len(d.Entries))
 
 	out, err := jp.ToWire(&d)
 	if err != nil {
@@ -77,21 +77,21 @@ func TestRegistryDataRoundTrip(t *testing.T) {
 	}
 }
 
-// TestInlineNbtPacketsRoundTrip covers the other packets that carry a trailing
+// TestInlineNBTPacketsRoundTrip covers the other packets that carry a trailing
 // inline-NBT field, ensuring read consumes exactly the tag (no length prefix).
-func TestInlineNbtPacketsRoundTrip(t *testing.T) {
+func TestInlineNBTPacketsRoundTrip(t *testing.T) {
 	be := &packets.S2CBlockEntityData{
 		Location: ns.Position{X: 10, Y: 64, Z: -20},
 		Type:     7,
-		NbtData:  nbt.Compound{"Items": nbt.Compound{}, "id": nbt.String("minecraft:chest")},
+		NBTData:  nbt.Compound{"Items": nbt.Compound{}, "id": nbt.String("minecraft:chest")},
 	}
 	roundTrip(t, be, &packets.S2CBlockEntityData{})
 
-	tq := &packets.S2CTagQuery{TransactionId: 42, Nbt: nbt.Compound{"foo": nbt.Int(1)}}
+	tq := &packets.S2CTagQuery{TransactionID: 42, NBT: nbt.Compound{"foo": nbt.Int(1)}}
 	roundTrip(t, tq, &packets.S2CTagQuery{})
 
 	// nullable tag (server sends TAG_End when absent)
-	tqEmpty := &packets.S2CTagQuery{TransactionId: 1, Nbt: nbt.End{}}
+	tqEmpty := &packets.S2CTagQuery{TransactionID: 1, NBT: nbt.End{}}
 	roundTrip(t, tqEmpty, &packets.S2CTagQuery{})
 }
 

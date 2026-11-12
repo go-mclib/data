@@ -3,7 +3,7 @@
 package packets
 
 import (
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // C2SIntention represents "Handshake".

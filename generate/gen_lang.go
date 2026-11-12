@@ -14,8 +14,7 @@ func generateLang(langPath, outPath string) {
 	// generate the map
 	sb.WriteString("var translations = map[string]string{\n")
 	for _, key := range sortedKeys(translations) {
-		value := translations[key]
-		sb.WriteString(fmt.Sprintf("\t%q: %q,\n", key, value))
+		fmt.Fprintf(&sb, "\t%q: %q,\n", key, translations[key])
 	}
 	sb.WriteString("}\n")
 

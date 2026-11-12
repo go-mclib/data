@@ -3,13 +3,20 @@ package items
 import (
 	"fmt"
 	"reflect"
-	"strings"
+	"slices"
 
 	"github.com/go-mclib/data/registries"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 type consumableCodec struct{}
+
+// Vanilla Consumable defaults (Consumable.DEFAULT_CONSUME_SECONDS, ItemUseAnimation.EAT, SoundEvents.GENERIC_EAT).
+const (
+	defaultConsumeSeconds   = 1.6
+	defaultConsumeAnimation = "eat"
+	defaultConsumeSound     = "minecraft:entity.generic.eat"
+)
 
 var consumeAnimations = []string{
 	"none", "eat", "drink", "block", "bow", "trident", "crossbow", "spyglass", "toot_horn", "brush", "bundle", "spear",
@@ -36,7 +43,7 @@ func (consumableCodec) Apply(c *Components, data []byte) error {
 	if animationID < 0 || int(animationID) >= len(consumeAnimations) {
 		return fmt.Errorf("invalid consume animation %d", animationID)
 	}
-	consumeSound, err := readConsumableSound(buf)
+	consumeSound, err := readSoundHolder(buf)
 	if err != nil {
 		return err
 	}
@@ -51,7 +58,7 @@ func (consumableCodec) Apply(c *Components, data []byte) error {
 	if count < 0 {
 		return fmt.Errorf("negative consume effect count %d", count)
 	}
-	effects := make([]ConsumeEffect, 0, count)
+	effects := makeCapped[ConsumeEffect](count)
 	for range int(count) {
 		effect, err := readConsumeEffect(buf)
 		if err != nil {
@@ -81,20 +88,14 @@ func (consumableCodec) Encode(c *Components) ([]byte, error) {
 	if c.Consumable == nil {
 		return nil, fmt.Errorf("consumable component is nil")
 	}
-	animationID := -1
-	for id, animation := range consumeAnimations {
-		if c.Consumable.Animation == animation {
-			animationID = id
-			break
-		}
-	}
+	animationID := slices.Index(consumeAnimations, c.Consumable.Animation)
 	if animationID < 0 {
 		return nil, fmt.Errorf("unknown consume animation %q", c.Consumable.Animation)
 	}
 	w := ns.NewWriter()
 	w.WriteFloat32(ns.Float32(c.Consumable.ConsumeSeconds))
 	w.WriteVarInt(ns.VarInt(animationID))
-	if err := writeConsumableSound(w, c.Consumable.Sound, c.Consumable.SoundDirect, c.Consumable.SoundRange); err != nil {
+	if err := writeSoundHolder(w, c.Consumable.Sound, c.Consumable.SoundDirect, c.Consumable.SoundRange); err != nil {
 		return nil, err
 	}
 	w.WriteBool(ns.Boolean(c.Consumable.HasParticles))
@@ -107,19 +108,21 @@ func (consumableCodec) Encode(c *Components) ([]byte, error) {
 	return w.Bytes(), nil
 }
 
-type consumableSound struct {
+// soundHolder is a decoded vanilla Holder<SoundEvent>: a registry sound
+// event, or a direct sound with an optional fixed range.
+type soundHolder struct {
 	name       string
 	direct     bool
 	fixedRange *float64
 }
 
-func readConsumableSound(buf *ns.PacketBuffer) (consumableSound, error) {
+func readSoundHolder(buf *ns.PacketBuffer) (soundHolder, error) {
 	var sound ns.SoundEvent
 	if err := sound.Decode(buf); err != nil {
-		return consumableSound{}, err
+		return soundHolder{}, err
 	}
 	if sound.Direct {
-		result := consumableSound{name: string(sound.SoundID), direct: true}
+		result := soundHolder{name: string(sound.SoundID), direct: true}
 		if sound.FixedRange.Present {
 			value := float64(sound.FixedRange.Value)
 			result.fixedRange = &value
@@ -128,12 +131,12 @@ func readConsumableSound(buf *ns.PacketBuffer) (consumableSound, error) {
 	}
 	name := registries.SoundEvent.ByID(int32(sound.RegistryID))
 	if name == "" {
-		return consumableSound{}, fmt.Errorf("unknown sound event %d", sound.RegistryID)
+		return soundHolder{}, fmt.Errorf("unknown sound event %d", sound.RegistryID)
 	}
-	return consumableSound{name: name}, nil
+	return soundHolder{name: name}, nil
 }
 
-func writeConsumableSound(w *ns.PacketBuffer, name string, direct bool, fixedRange *float64) error {
+func writeSoundHolder(w *ns.PacketBuffer, name string, direct bool, fixedRange *float64) error {
 	id := registries.SoundEvent.Get(name)
 	if !direct && id >= 0 {
 		return ns.RegistrySoundEvent(id).Encode(w)
@@ -175,7 +178,7 @@ func readConsumeEffect(buf *ns.PacketBuffer) (ConsumeEffect, error) {
 		effect.Probability = float64(probability)
 	case 1:
 		effect.Type = "minecraft:remove_effects"
-		effect.EffectIDs, err = readEffectHolderSet(buf)
+		effect.EffectIDs, err = readHolderSet(buf, "mob effect", registries.MobEffect.ByID)
 		if err != nil {
 			return ConsumeEffect{}, err
 		}
@@ -190,7 +193,7 @@ func readConsumeEffect(buf *ns.PacketBuffer) (ConsumeEffect, error) {
 		effect.Diameter = float64(diameter)
 	case 4:
 		effect.Type = "minecraft:play_sound"
-		sound, soundErr := readConsumableSound(buf)
+		sound, soundErr := readSoundHolder(buf)
 		if soundErr != nil {
 			return ConsumeEffect{}, soundErr
 		}
@@ -214,7 +217,7 @@ func writeConsumeEffect(w *ns.PacketBuffer, effect ConsumeEffect) error {
 		w.WriteFloat32(ns.Float32(effect.Probability))
 	case "minecraft:remove_effects":
 		w.WriteVarInt(1)
-		if err := writeEffectHolderSet(w, effect.EffectIDs); err != nil {
+		if err := writeHolderSet(w, "mob effect", effect.EffectIDs, registries.MobEffect.Get); err != nil {
 			return err
 		}
 	case "minecraft:clear_all_effects":
@@ -224,7 +227,7 @@ func writeConsumeEffect(w *ns.PacketBuffer, effect ConsumeEffect) error {
 		w.WriteFloat32(ns.Float32(effect.Diameter))
 	case "minecraft:play_sound":
 		w.WriteVarInt(4)
-		if err := writeConsumableSound(w, effect.Sound, effect.SoundDirect, effect.SoundRange); err != nil {
+		if err := writeSoundHolder(w, effect.Sound, effect.SoundDirect, effect.SoundRange); err != nil {
 			return err
 		}
 	default:
@@ -306,49 +309,6 @@ func writeStatusEffectDetails(w *ns.PacketBuffer, status StatusEffect) error {
 	w.WriteBool(ns.Boolean(status.Hidden != nil))
 	if status.Hidden != nil {
 		return writeStatusEffectDetails(w, *status.Hidden)
-	}
-	return nil
-}
-
-func readEffectHolderSet(buf *ns.PacketBuffer) ([]string, error) {
-	marker, err := buf.ReadVarInt()
-	if err != nil {
-		return nil, err
-	}
-	if marker == 0 {
-		tag, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return nil, err
-		}
-		return []string{"#" + string(tag)}, nil
-	}
-	ids := make([]string, 0, marker-1)
-	for range int(marker) - 1 {
-		id, err := buf.ReadVarInt()
-		if err != nil {
-			return nil, err
-		}
-		name := registries.MobEffect.ByID(int32(id))
-		if name == "" {
-			return nil, fmt.Errorf("unknown mob effect %d", id)
-		}
-		ids = append(ids, name)
-	}
-	return ids, nil
-}
-
-func writeEffectHolderSet(w *ns.PacketBuffer, effects []string) error {
-	if len(effects) == 1 && strings.HasPrefix(effects[0], "#") {
-		w.WriteVarInt(0)
-		return w.WriteString(ns.String(strings.TrimPrefix(effects[0], "#")))
-	}
-	w.WriteVarInt(ns.VarInt(len(effects) + 1))
-	for _, name := range effects {
-		id := registries.MobEffect.Get(name)
-		if id < 0 {
-			return fmt.Errorf("unknown mob effect %q", name)
-		}
-		w.WriteVarInt(ns.VarInt(id))
 	}
 	return nil
 }

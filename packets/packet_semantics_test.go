@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/go-mclib/data/packets"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 func TestLoginOptionalPreviousGameMode(t *testing.T) {
@@ -21,7 +21,7 @@ func TestLoginOptionalPreviousGameMode(t *testing.T) {
 	if err := packet.Read(ns.NewReaderFrom(reader)); err != nil {
 		t.Fatal(err)
 	}
-	if packet.EntityId != 7 || packet.GameMode != 3 || packet.PreviousGameMode != 0 || !bool(packet.IsDebug) || bool(packet.IsFlat) || packet.DeathLocation.Present || packet.PortalCooldown != 5 || packet.SeaLevel != 63 || !bool(packet.OnlineMode) || bool(packet.EnforcesSecureChat) {
+	if packet.EntityID != 7 || packet.GameMode != 3 || packet.PreviousGameMode != 0 || !bool(packet.IsDebug) || bool(packet.IsFlat) || packet.DeathLocation.Present || packet.PortalCooldown != 5 || packet.SeaLevel != 63 || !bool(packet.OnlineMode) || bool(packet.EnforcesSecureChat) {
 		t.Fatalf("login spawn info = %+v", packet)
 	}
 	if sentinel, err := reader.ReadByte(); err != nil || sentinel != 0x5a || reader.Len() != 0 {
@@ -69,7 +69,7 @@ func TestPlayerActionAndAnimateOrdinals(t *testing.T) {
 		{packets.AnimateCriticalHit, 1},
 		{packets.AnimateMagicCriticalHit, 2},
 	} {
-		p := packets.S2CAnimate{EntityId: 1, Animation: tc.animation}
+		p := packets.S2CAnimate{EntityID: 1, Animation: tc.animation}
 		out := ns.NewWriter()
 		if err := p.Write(out); err != nil {
 			t.Fatal(err)

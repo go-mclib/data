@@ -1,10 +1,8 @@
 package packets
 
 import (
-	"io"
-
 	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // S2CPostEffectsConfiguration replaces the active post-processing effects.
@@ -61,7 +59,7 @@ func (p *S2CCustomPayloadConfiguration) Read(buf *ns.PacketBuffer) error {
 	if p.Channel, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
-	p.Data, err = io.ReadAll(buf.Reader())
+	p.Data, err = buf.ReadRemaining()
 	return err
 }
 
@@ -107,17 +105,17 @@ func (p *S2CFinishConfiguration) Write(*ns.PacketBuffer) error { return nil }
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Clientbound_Keep_Alive_(Configuration)
 type S2CKeepAliveConfiguration struct {
-	KeepAliveId ns.Int64
+	KeepAliveID ns.Int64
 }
 
 func (p *S2CKeepAliveConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.KeepAliveId, err = buf.ReadInt64()
+	p.KeepAliveID, err = buf.ReadInt64()
 	return err
 }
 
 func (p *S2CKeepAliveConfiguration) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteInt64(p.KeepAliveId)
+	return buf.WriteInt64(p.KeepAliveID)
 }
 
 // S2CPingConfiguration represents "Ping (configuration)".
@@ -126,17 +124,17 @@ func (p *S2CKeepAliveConfiguration) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Ping_(Configuration)
 type S2CPingConfiguration struct {
-	Id ns.Int32
+	PingID ns.Int32
 }
 
 func (p *S2CPingConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.Id, err = buf.ReadInt32()
+	p.PingID, err = buf.ReadInt32()
 	return err
 }
 
 func (p *S2CPingConfiguration) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteInt32(p.Id)
+	return buf.WriteInt32(p.PingID)
 }
 
 // S2CResetChat represents "Reset Chat".
@@ -149,7 +147,7 @@ func (p *S2CResetChat) Write(*ns.PacketBuffer) error { return nil }
 
 // RegistryEntry represents a single registry entry.
 type RegistryEntry struct {
-	EntryId ns.Identifier
+	EntryID ns.Identifier
 	HasData ns.Boolean
 	Data    nbt.Tag // only present if HasData is true
 }
@@ -160,22 +158,22 @@ type RegistryEntry struct {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Registry_Data
 type S2CRegistryData struct {
-	RegistryId ns.Identifier
+	RegistryID ns.Identifier
 	Entries    []RegistryEntry
 }
 
 func (p *S2CRegistryData) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.RegistryId, err = buf.ReadIdentifier(); err != nil {
+	if p.RegistryID, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
-	count, err := buf.ReadVarInt()
+	count, err := readCount(buf, "registry entry", maxListCount)
 	if err != nil {
 		return err
 	}
 	p.Entries = make([]RegistryEntry, count)
 	for i := range p.Entries {
-		if p.Entries[i].EntryId, err = buf.ReadIdentifier(); err != nil {
+		if p.Entries[i].EntryID, err = buf.ReadIdentifier(); err != nil {
 			return err
 		}
 		if p.Entries[i].HasData, err = buf.ReadBool(); err != nil {
@@ -184,8 +182,7 @@ func (p *S2CRegistryData) Read(buf *ns.PacketBuffer) error {
 		if p.Entries[i].HasData {
 			// inline network NBT (no length prefix); read directly from the
 			// buffer so it consumes exactly this entry's tag
-			nbtReader := nbt.NewReaderFrom(buf.Reader())
-			if p.Entries[i].Data, _, err = nbtReader.ReadTag(true); err != nil {
+			if p.Entries[i].Data, err = buf.ReadNBT(); err != nil {
 				return err
 			}
 		}
@@ -194,25 +191,21 @@ func (p *S2CRegistryData) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *S2CRegistryData) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteIdentifier(p.RegistryId); err != nil {
+	if err := buf.WriteIdentifier(p.RegistryID); err != nil {
 		return err
 	}
 	if err := buf.WriteVarInt(ns.VarInt(len(p.Entries))); err != nil {
 		return err
 	}
 	for _, entry := range p.Entries {
-		if err := buf.WriteIdentifier(entry.EntryId); err != nil {
+		if err := buf.WriteIdentifier(entry.EntryID); err != nil {
 			return err
 		}
 		if err := buf.WriteBool(entry.HasData); err != nil {
 			return err
 		}
 		if entry.HasData {
-			data, err := nbt.EncodeNetwork(entry.Data)
-			if err != nil {
-				return err
-			}
-			if err := buf.WriteFixedByteArray(data); err != nil {
+			if err := buf.WriteNBT(entry.Data); err != nil {
 				return err
 			}
 		}
@@ -225,17 +218,17 @@ func (p *S2CRegistryData) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Remove_Resource_Pack_(Configuration)
 type S2CResourcePackPopConfiguration struct {
 	// The UUID of the resource pack to be removed. If not present, every resource pack will be removed.
-	Uuid ns.PrefixedOptional[ns.UUID]
+	UUID ns.PrefixedOptional[ns.UUID]
 }
 
 func (p *S2CResourcePackPopConfiguration) Read(buf *ns.PacketBuffer) error {
-	return p.Uuid.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.UUID, error) {
+	return p.UUID.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.UUID, error) {
 		return b.ReadUUID()
 	})
 }
 
 func (p *S2CResourcePackPopConfiguration) Write(buf *ns.PacketBuffer) error {
-	return p.Uuid.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.UUID) error {
+	return p.UUID.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.UUID) error {
 		return b.WriteUUID(v)
 	})
 }
@@ -245,9 +238,9 @@ func (p *S2CResourcePackPopConfiguration) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Add_Resource_Pack_(Configuration)
 type S2CResourcePackPushConfiguration struct {
 	// The unique identifier of the resource pack.
-	Uuid ns.UUID
+	UUID ns.UUID
 	// The URL to the resource pack.
-	Url ns.String
+	URL ns.String
 	// A 40 character hexadecimal SHA-1 hash of the resource pack file.
 	Hash ns.String
 	// The vanilla client will be forced to use the resource pack from the server.
@@ -258,10 +251,10 @@ type S2CResourcePackPushConfiguration struct {
 
 func (p *S2CResourcePackPushConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.Uuid, err = buf.ReadUUID(); err != nil {
+	if p.UUID, err = buf.ReadUUID(); err != nil {
 		return err
 	}
-	if p.Url, err = buf.ReadString(32767); err != nil {
+	if p.URL, err = buf.ReadString(32767); err != nil {
 		return err
 	}
 	if p.Hash, err = buf.ReadString(40); err != nil {
@@ -276,10 +269,10 @@ func (p *S2CResourcePackPushConfiguration) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *S2CResourcePackPushConfiguration) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteUUID(p.Uuid); err != nil {
+	if err := buf.WriteUUID(p.UUID); err != nil {
 		return err
 	}
-	if err := buf.WriteString(p.Url); err != nil {
+	if err := buf.WriteString(p.URL); err != nil {
 		return err
 	}
 	if err := buf.WriteString(p.Hash); err != nil {
@@ -359,7 +352,7 @@ type S2CUpdateEnabledFeatures struct {
 }
 
 func (p *S2CUpdateEnabledFeatures) Read(buf *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
+	count, err := readCount(buf, "feature flag", maxListCount)
 	if err != nil {
 		return err
 	}
@@ -404,7 +397,7 @@ type S2CUpdateTagsConfiguration struct {
 }
 
 func (p *S2CUpdateTagsConfiguration) Read(buf *ns.PacketBuffer) error {
-	registryCount, err := buf.ReadVarInt()
+	registryCount, err := readCount(buf, "tag registry", maxListCount)
 	if err != nil {
 		return err
 	}
@@ -413,7 +406,7 @@ func (p *S2CUpdateTagsConfiguration) Read(buf *ns.PacketBuffer) error {
 		if p.ArrayOfTags[i].Registry, err = buf.ReadIdentifier(); err != nil {
 			return err
 		}
-		tagCount, err := buf.ReadVarInt()
+		tagCount, err := readCount(buf, "tag", maxListCount)
 		if err != nil {
 			return err
 		}
@@ -422,7 +415,7 @@ func (p *S2CUpdateTagsConfiguration) Read(buf *ns.PacketBuffer) error {
 			if p.ArrayOfTags[i].Tags[j].TagName, err = buf.ReadIdentifier(); err != nil {
 				return err
 			}
-			entryCount, err := buf.ReadVarInt()
+			entryCount, err := readCount(buf, "tag entry", maxListCount)
 			if err != nil {
 				return err
 			}
@@ -475,7 +468,7 @@ type S2CSelectKnownPacks struct {
 }
 
 func (p *S2CSelectKnownPacks) Read(buf *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
+	count, err := readCount(buf, "known pack", maxListCount)
 	if err != nil {
 		return err
 	}
@@ -484,7 +477,7 @@ func (p *S2CSelectKnownPacks) Read(buf *ns.PacketBuffer) error {
 		if p.KnownPacks[i].Namespace, err = buf.ReadString(32767); err != nil {
 			return err
 		}
-		if p.KnownPacks[i].Id, err = buf.ReadString(32767); err != nil {
+		if p.KnownPacks[i].ID, err = buf.ReadString(32767); err != nil {
 			return err
 		}
 		if p.KnownPacks[i].Version, err = buf.ReadString(32767); err != nil {
@@ -502,7 +495,7 @@ func (p *S2CSelectKnownPacks) Write(buf *ns.PacketBuffer) error {
 		if err := buf.WriteString(pack.Namespace); err != nil {
 			return err
 		}
-		if err := buf.WriteString(pack.Id); err != nil {
+		if err := buf.WriteString(pack.ID); err != nil {
 			return err
 		}
 		if err := buf.WriteString(pack.Version); err != nil {
@@ -528,7 +521,7 @@ type S2CCustomReportDetailsConfiguration struct {
 }
 
 func (p *S2CCustomReportDetailsConfiguration) Read(buf *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
+	count, err := readCount(buf, "report detail", 32)
 	if err != nil {
 		return err
 	}
@@ -566,7 +559,7 @@ type ServerLink struct {
 	// If IsBuiltIn is false, this is a TextComponent for custom label.
 	BuiltInLabel ns.VarInt
 	CustomLabel  ns.TextComponent
-	Url          ns.String
+	URL          ns.String
 }
 
 // S2CServerLinksConfiguration represents "Server Links (configuration)".
@@ -579,7 +572,7 @@ type S2CServerLinksConfiguration struct {
 }
 
 func (p *S2CServerLinksConfiguration) Read(buf *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
+	count, err := readCount(buf, "server link", maxListCount)
 	if err != nil {
 		return err
 	}
@@ -597,7 +590,7 @@ func (p *S2CServerLinksConfiguration) Read(buf *ns.PacketBuffer) error {
 				return err
 			}
 		}
-		if p.Links[i].Url, err = buf.ReadString(32767); err != nil {
+		if p.Links[i].URL, err = buf.ReadString(32767); err != nil {
 			return err
 		}
 	}
@@ -621,7 +614,7 @@ func (p *S2CServerLinksConfiguration) Write(buf *ns.PacketBuffer) error {
 				return err
 			}
 		}
-		if err := buf.WriteString(link.Url); err != nil {
+		if err := buf.WriteString(link.URL); err != nil {
 			return err
 		}
 	}
@@ -650,18 +643,13 @@ type S2CShowDialogConfiguration struct {
 
 func (p *S2CShowDialogConfiguration) Read(buf *ns.PacketBuffer) error {
 	// inline network NBT (no length prefix)
-	nbtReader := nbt.NewReaderFrom(buf.Reader())
-	tag, _, err := nbtReader.ReadTag(true)
+	tag, err := buf.ReadNBT()
 	p.Dialog = tag
 	return err
 }
 
 func (p *S2CShowDialogConfiguration) Write(buf *ns.PacketBuffer) error {
-	data, err := nbt.EncodeNetwork(p.Dialog)
-	if err != nil {
-		return err
-	}
-	return buf.WriteFixedByteArray(data)
+	return buf.WriteNBT(p.Dialog)
 }
 
 // S2CCodeOfConduct represents "Code of Conduct".

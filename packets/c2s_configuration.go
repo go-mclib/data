@@ -1,10 +1,8 @@
 package packets
 
 import (
-	"io"
-
 	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // C2SClientInformationConfiguration represents "Client Information (configuration)".
@@ -140,7 +138,7 @@ func (p *C2SCustomPayloadConfiguration) Read(buf *ns.PacketBuffer) error {
 	if p.Channel, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
-	p.Data, err = io.ReadAll(buf.Reader())
+	p.Data, err = buf.ReadRemaining()
 	return err
 }
 
@@ -169,17 +167,17 @@ func (p *C2SFinishConfiguration) Write(*ns.PacketBuffer) error { return nil }
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Serverbound_Keep_Alive_(Configuration)
 type C2SKeepAliveConfiguration struct {
-	KeepAliveId ns.Int64
+	KeepAliveID ns.Int64
 }
 
 func (p *C2SKeepAliveConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.KeepAliveId, err = buf.ReadInt64()
+	p.KeepAliveID, err = buf.ReadInt64()
 	return err
 }
 
 func (p *C2SKeepAliveConfiguration) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteInt64(p.KeepAliveId)
+	return buf.WriteInt64(p.KeepAliveID)
 }
 
 // C2SPongConfiguration represents "Pong (configuration)".
@@ -188,17 +186,17 @@ func (p *C2SKeepAliveConfiguration) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Pong_(Configuration)
 type C2SPongConfiguration struct {
-	Id ns.Int32
+	PingID ns.Int32
 }
 
 func (p *C2SPongConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.Id, err = buf.ReadInt32()
+	p.PingID, err = buf.ReadInt32()
 	return err
 }
 
 func (p *C2SPongConfiguration) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteInt32(p.Id)
+	return buf.WriteInt32(p.PingID)
 }
 
 // C2SResourcePackConfiguration represents "Resource Pack Response (configuration)".
@@ -206,14 +204,14 @@ func (p *C2SPongConfiguration) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Resource_Pack_Response_(Configuration)
 type C2SResourcePackConfiguration struct {
 	// The unique identifier of the resource pack received in the Add Resource Pack request.
-	Uuid ns.UUID
+	UUID ns.UUID
 	// Result ID (see protocol docs).
 	Result ns.VarInt
 }
 
 func (p *C2SResourcePackConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.Uuid, err = buf.ReadUUID(); err != nil {
+	if p.UUID, err = buf.ReadUUID(); err != nil {
 		return err
 	}
 	p.Result, err = buf.ReadVarInt()
@@ -221,7 +219,7 @@ func (p *C2SResourcePackConfiguration) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SResourcePackConfiguration) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteUUID(p.Uuid); err != nil {
+	if err := buf.WriteUUID(p.UUID); err != nil {
 		return err
 	}
 	return buf.WriteVarInt(p.Result)
@@ -230,7 +228,7 @@ func (p *C2SResourcePackConfiguration) Write(buf *ns.PacketBuffer) error {
 // KnownPack represents a single known resource pack entry.
 type KnownPack struct {
 	Namespace ns.String
-	Id        ns.String
+	ID        ns.String
 	Version   ns.String
 }
 
@@ -244,7 +242,7 @@ type C2SSelectKnownPacks struct {
 }
 
 func (p *C2SSelectKnownPacks) Read(buf *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
+	count, err := readCount(buf, "known pack", 64)
 	if err != nil {
 		return err
 	}
@@ -253,7 +251,7 @@ func (p *C2SSelectKnownPacks) Read(buf *ns.PacketBuffer) error {
 		if p.KnownPacks[i].Namespace, err = buf.ReadString(32767); err != nil {
 			return err
 		}
-		if p.KnownPacks[i].Id, err = buf.ReadString(32767); err != nil {
+		if p.KnownPacks[i].ID, err = buf.ReadString(32767); err != nil {
 			return err
 		}
 		if p.KnownPacks[i].Version, err = buf.ReadString(32767); err != nil {
@@ -271,7 +269,7 @@ func (p *C2SSelectKnownPacks) Write(buf *ns.PacketBuffer) error {
 		if err := buf.WriteString(pack.Namespace); err != nil {
 			return err
 		}
-		if err := buf.WriteString(pack.Id); err != nil {
+		if err := buf.WriteString(pack.ID); err != nil {
 			return err
 		}
 		if err := buf.WriteString(pack.Version); err != nil {
@@ -298,29 +296,24 @@ func (p *C2SAcceptCodeOfConduct) Write(*ns.PacketBuffer) error { return nil }
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Custom_Click_Action_(Configuration)
 type C2SCustomClickActionConfiguration struct {
 	// The identifier for the click action.
-	Id ns.Identifier
+	ActionID ns.Identifier
 	// The data to send with the click action. May be a TAG_END (0).
 	Payload nbt.Tag
 }
 
 func (p *C2SCustomClickActionConfiguration) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.Id, err = buf.ReadIdentifier(); err != nil {
+	if p.ActionID, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
 	// inline network NBT (no length prefix)
-	nbtReader := nbt.NewReaderFrom(buf.Reader())
-	p.Payload, _, err = nbtReader.ReadTag(true)
+	p.Payload, err = buf.ReadNBT()
 	return err
 }
 
 func (p *C2SCustomClickActionConfiguration) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteIdentifier(p.Id); err != nil {
+	if err := buf.WriteIdentifier(p.ActionID); err != nil {
 		return err
 	}
-	data, err := nbt.EncodeNetwork(p.Payload)
-	if err != nil {
-		return err
-	}
-	return buf.WriteFixedByteArray(data)
+	return buf.WriteNBT(p.Payload)
 }

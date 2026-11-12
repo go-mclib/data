@@ -5,173 +5,144 @@ package items
 import (
 	"slices"
 
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
-// Auto-generated codec registrations.
+// auto-generated codec registrations.
 
 func init() {
-	// Simple VarInt codecs
-	RegisterCodec(ComponentAdditionalTradeCost, &varIntCodec{
+	// simple VarInt codecs
+	registerCodec(ComponentAdditionalTradeCost, &varIntCodec{
 		get: func(c *Components) int32 { return c.AdditionalTradeCost },
 		set: func(c *Components, v int32) { c.AdditionalTradeCost = v },
 	})
-	RegisterCodec(ComponentDamage, &varIntCodec{
+	registerCodec(ComponentDamage, &varIntCodec{
 		get: func(c *Components) int32 { return c.Damage },
 		set: func(c *Components, v int32) { c.Damage = v },
 	})
-	RegisterCodec(ComponentMaxDamage, &varIntCodec{
+	registerCodec(ComponentMaxDamage, &varIntCodec{
 		get: func(c *Components) int32 { return c.MaxDamage },
 		set: func(c *Components, v int32) { c.MaxDamage = v },
 	})
-	RegisterCodec(ComponentMaxStackSize, &varIntCodec{
+	registerCodec(ComponentMaxStackSize, &varIntCodec{
 		get: func(c *Components) int32 { return c.MaxStackSize },
 		set: func(c *Components, v int32) { c.MaxStackSize = v },
 	})
-	RegisterCodec(ComponentOminousBottleAmplifier, &varIntCodec{
+	registerCodec(ComponentOminousBottleAmplifier, &varIntCodec{
 		get: func(c *Components) int32 { return c.OminousBottleAmplifier },
 		set: func(c *Components, v int32) { c.OminousBottleAmplifier = v },
 	})
-	RegisterCodec(ComponentRepairCost, &varIntCodec{
+	registerCodec(ComponentRepairCost, &varIntCodec{
 		get: func(c *Components) int32 { return c.RepairCost },
 		set: func(c *Components, v int32) { c.RepairCost = v },
 	})
 
-	// Simple Float32 codecs
-	RegisterCodec(ComponentMinimumAttackCharge, &float32Codec{
+	// zero-valued optional VarInt codecs
+	registerCodec(ComponentMapId, pointerComponentCodec[int32]{
+		get:  func(c *Components) *int32 { return c.MapID },
+		set:  func(c *Components, v *int32) { c.MapID = v },
+		read: readVarIntPointer, write: writeVarIntPointer, equal: equalValue[int32],
+	})
+	registerCodec(ComponentMapPostProcessing, pointerComponentCodec[int32]{
+		get:  func(c *Components) *int32 { return c.MapPostProcessing },
+		set:  func(c *Components, v *int32) { c.MapPostProcessing = v },
+		read: readVarIntPointer, write: writeVarIntPointer, equal: equalValue[int32],
+	})
+
+	// simple Float32 codecs
+	registerCodec(ComponentMinimumAttackCharge, &float32Codec{
 		get: func(c *Components) float64 { return c.MinimumAttackCharge },
 		set: func(c *Components, v float64) { c.MinimumAttackCharge = v },
 	})
-	RegisterCodec(ComponentPotionDurationScale, &float32Codec{
+	registerCodec(ComponentPotionDurationScale, &float32Codec{
 		get: func(c *Components) float64 { return c.PotionDurationScale },
 		set: func(c *Components, v float64) { c.PotionDurationScale = v },
 	})
 
-	// Simple String/Identifier codecs
-	RegisterCodec(ComponentItemModel, &stringCodec{
+	// simple string/identifier codecs
+	registerCodec(ComponentItemModel, &stringCodec{
 		get: func(c *Components) string { return c.ItemModel },
 		set: func(c *Components, v string) { c.ItemModel = v },
 	})
 
-	// Empty marker codecs (bool flags)
-	RegisterCodec(ComponentGlider, &emptyMarkerCodec{
+	// empty marker codecs (bool flags)
+	registerCodec(ComponentGlider, &emptyMarkerCodec{
 		get: func(c *Components) bool { return c.Glider },
 		set: func(c *Components, v bool) { c.Glider = v },
 	})
-	RegisterCodec(ComponentUnbreakable, &emptyMarkerCodec{
+	registerCodec(ComponentUnbreakable, &emptyMarkerCodec{
 		get: func(c *Components) bool { return c.Unbreakable },
 		set: func(c *Components, v bool) { c.Unbreakable = v },
 	})
-	RegisterCodec(ComponentWaxed, &emptyMarkerCodec{
+	registerCodec(ComponentWaxed, &emptyMarkerCodec{
 		get: func(c *Components) bool { return c.Waxed },
 		set: func(c *Components, v bool) { c.Waxed = v },
 	})
 
-	// Struct codecs
-	RegisterCodec(ComponentEnchantable, genEnchantableCodec{})
-	RegisterCodec(ComponentFireworks, genFireworksCodec{})
-	RegisterCodec(ComponentFood, genFoodCodec{})
-	RegisterCodec(ComponentTooltipDisplay, genTooltipDisplayCodec{})
-	RegisterCodec(ComponentUseCooldown, genUseCooldownCodec{})
-	RegisterCodec(ComponentVillagerFood, genVillagerFoodCodec{})
-	RegisterCodec(ComponentWeapon, genWeaponCodec{})
+	// struct codecs
+	registerCodec(ComponentEnchantable, genEnchantableCodec{})
+	registerCodec(ComponentFood, genFoodCodec{})
+	registerCodec(ComponentTooltipDisplay, genTooltipDisplayCodec{})
+	registerCodec(ComponentUseCooldown, genUseCooldownCodec{})
+	registerCodec(ComponentVillagerFood, genVillagerFoodCodec{})
+	registerCodec(ComponentWeapon, genWeaponCodec{})
 
 	// VarInt passthrough
-	for _, id := range []int32{
-		ComponentBaseColor,
-		ComponentDamageType,
-		ComponentDye,
-		ComponentMapId,
-		ComponentMapPostProcessing,
-	} {
-		registerVarIntPassthrough(id)
-	}
+	registerPassthrough(ComponentDamageType, decodeVarIntWire)
 
 	// Bool passthrough
-	for _, id := range []int32{
-		ComponentEnchantmentGlintOverride,
-	} {
-		registerBoolPassthrough(id)
-	}
+	registerPassthrough(ComponentEnchantmentGlintOverride, decodeBoolWire)
 
 	// String passthrough
-	for _, id := range []int32{
-		ComponentNoteBlockSound,
-		ComponentTooltipStyle,
-	} {
-		registerStringPassthrough(id)
-	}
+	registerPassthrough(ComponentNoteBlockSound, decodeStringWire)
+	registerPassthrough(ComponentTooltipStyle, decodeStringWire)
 
 	// Empty passthrough
-	for _, id := range []int32{
-		ComponentCreativeSlotLock,
-	} {
-		registerEmptyPassthrough(id)
-	}
-
-	// Int32 passthrough
-	for _, id := range []int32{
-		ComponentDyedColor,
-	} {
-		registerInt32Passthrough(id)
-	}
+	registerPassthrough(ComponentCreativeSlotLock, decodeEmptyWire)
 
 	// NBT passthrough
-	for _, id := range []int32{
-		ComponentBucketEntityData,
-		ComponentContainerLoot,
-		ComponentCustomData,
-		ComponentDebugStickState,
-		ComponentIntangibleProjectile,
-		ComponentLock,
-		ComponentMapDecorations,
-	} {
-		registerNBTPassthrough(id)
-	}
+	registerPassthrough(ComponentBucketEntityData, decodeNBTWire)
+	registerPassthrough(ComponentContainerLoot, decodeNBTWire)
+	registerPassthrough(ComponentCustomData, decodeNBTWire)
+	registerPassthrough(ComponentDebugStickState, decodeNBTWire)
+	registerPassthrough(ComponentIntangibleProjectile, decodeNBTWire)
+	registerPassthrough(ComponentLock, decodeNBTWire)
+	registerPassthrough(ComponentMapDecorations, decodeNBTWire)
 
 	// HolderSet passthrough
-	for _, id := range []int32{
-		ComponentDamageResistant,
-		ComponentProvidesBannerPatterns,
-		ComponentRepairable,
-	} {
-		registerHolderSetPassthrough(id)
-	}
+	registerPassthrough(ComponentDamageResistant, decodeHolderSetWire)
+	registerPassthrough(ComponentProvidesBannerPatterns, decodeHolderSetWire)
+	registerPassthrough(ComponentRepairable, decodeHolderSetWire)
 
 	// Entity variant (VarInt) passthrough
-	for _, id := range []int32{
-		ComponentAxolotlVariant,
-		ComponentCatCollar,
-		ComponentCatSoundVariant,
-		ComponentCatVariant,
-		ComponentChickenSoundVariant,
-		ComponentChickenVariant,
-		ComponentCowSoundVariant,
-		ComponentCowVariant,
-		ComponentFoxVariant,
-		ComponentFrogVariant,
-		ComponentHorseVariant,
-		ComponentLlamaVariant,
-		ComponentMooshroomVariant,
-		ComponentPaintingVariant,
-		ComponentParrotVariant,
-		ComponentPigSoundVariant,
-		ComponentPigVariant,
-		ComponentRabbitVariant,
-		ComponentSalmonSize,
-		ComponentSheepColor,
-		ComponentShulkerColor,
-		ComponentTropicalFishBaseColor,
-		ComponentTropicalFishPattern,
-		ComponentTropicalFishPatternColor,
-		ComponentVillagerVariant,
-		ComponentWolfCollar,
-		ComponentWolfSoundVariant,
-		ComponentWolfVariant,
-		ComponentZombieNautilusVariant,
-	} {
-		registerVarIntPassthrough(id)
-	}
+	registerPassthrough(ComponentAxolotlVariant, decodeVarIntWire)
+	registerPassthrough(ComponentCatCollar, decodeVarIntWire)
+	registerPassthrough(ComponentCatSoundVariant, decodeVarIntWire)
+	registerPassthrough(ComponentCatVariant, decodeVarIntWire)
+	registerPassthrough(ComponentChickenSoundVariant, decodeVarIntWire)
+	registerPassthrough(ComponentChickenVariant, decodeVarIntWire)
+	registerPassthrough(ComponentCowSoundVariant, decodeVarIntWire)
+	registerPassthrough(ComponentCowVariant, decodeVarIntWire)
+	registerPassthrough(ComponentFoxVariant, decodeVarIntWire)
+	registerPassthrough(ComponentFrogVariant, decodeVarIntWire)
+	registerPassthrough(ComponentHorseVariant, decodeVarIntWire)
+	registerPassthrough(ComponentLlamaVariant, decodeVarIntWire)
+	registerPassthrough(ComponentMooshroomVariant, decodeVarIntWire)
+	registerPassthrough(ComponentParrotVariant, decodeVarIntWire)
+	registerPassthrough(ComponentPigSoundVariant, decodeVarIntWire)
+	registerPassthrough(ComponentPigVariant, decodeVarIntWire)
+	registerPassthrough(ComponentRabbitVariant, decodeVarIntWire)
+	registerPassthrough(ComponentSalmonSize, decodeVarIntWire)
+	registerPassthrough(ComponentSheepColor, decodeVarIntWire)
+	registerPassthrough(ComponentShulkerColor, decodeVarIntWire)
+	registerPassthrough(ComponentTropicalFishBaseColor, decodeVarIntWire)
+	registerPassthrough(ComponentTropicalFishPattern, decodeVarIntWire)
+	registerPassthrough(ComponentTropicalFishPatternColor, decodeVarIntWire)
+	registerPassthrough(ComponentVillagerVariant, decodeVarIntWire)
+	registerPassthrough(ComponentWolfCollar, decodeVarIntWire)
+	registerPassthrough(ComponentWolfSoundVariant, decodeVarIntWire)
+	registerPassthrough(ComponentWolfVariant, decodeVarIntWire)
+	registerPassthrough(ComponentZombieNautilusVariant, decodeVarIntWire)
 
 }
 
@@ -219,66 +190,6 @@ func (genEnchantableCodec) Encode(c *Components) ([]byte, error) {
 	}
 	w := ns.NewWriter()
 	w.WriteVarInt(ns.VarInt(c.Enchantable.Value))
-	return w.Bytes(), nil
-}
-
-type genFireworksCodec struct{}
-
-func (genFireworksCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
-	w := ns.NewWriter()
-	if err := w.CopyVarInt(buf); err != nil {
-		return nil, err
-	}
-	{
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return nil, err
-		}
-		w.WriteVarInt(count)
-		for range int(count) {
-			if err := copyFireworkExplosion(buf, w); err != nil {
-				return nil, err
-			}
-		}
-	}
-	return w.Bytes(), nil
-}
-
-func (genFireworksCodec) Apply(c *Components, data []byte) error {
-	buf := ns.NewReader(data)
-	s := &Fireworks{}
-	{
-		v, err := buf.ReadVarInt()
-		if err != nil {
-			return err
-		}
-		s.FlightDuration = int32(v)
-	}
-	c.Fireworks = s
-	return nil
-}
-
-func (genFireworksCodec) Clear(c *Components) { c.Fireworks = nil }
-
-func (genFireworksCodec) Differs(c, defaults *Components) (bool, bool) {
-	cHas := c.Fireworks != nil
-	dHas := defaults.Fireworks != nil
-	if cHas != dHas {
-		return true, cHas
-	}
-	if cHas && dHas {
-		return *c.Fireworks != *defaults.Fireworks, true
-	}
-	return false, false
-}
-
-func (genFireworksCodec) Encode(c *Components) ([]byte, error) {
-	if c.Fireworks == nil {
-		return nil, nil
-	}
-	w := ns.NewWriter()
-	w.WriteVarInt(ns.VarInt(c.Fireworks.FlightDuration))
-	w.WriteVarInt(0)
 	return w.Bytes(), nil
 }
 

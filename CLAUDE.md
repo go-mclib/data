@@ -5,10 +5,10 @@
 ## Folders
 
 - `./packets` — Go bindings for packet structures (see `./packets/README.md`)
-- `./blocks`, `./items`, `./entities`, `./registries`, `./lang`, `./packet_ids`, `./block_shapes`, `./entity_hitboxes`, `./hitboxes` — game data bindings with serialization; auto-generated (see `./generate/README.md`)
-- `./chunks`, `./storage`, `./misc` — hand-written runtime helpers (chunk containers, world storage, server status)
+- `./blocks`, `./items`, `./entities`, `./registries`, `./lang`, `./packetids` — game data bindings with serialization; auto-generated (see `./generate/README.md`)
+- `./chunks`, `./storage`, `./slots` — hand-written runtime helpers (chunk containers, world storage, player inventory slot layout)
 - `./vanilla_server_reports` — downloads the vanilla server jar and runs its data generator → blocks/items/registries/packets/commands/tags JSON
-- `./mcdump` — standalone Java tool that boots the server jar's registries and dumps collision shapes, entity hitboxes, hardness, mob categories straight from the game (replaced PrismarineJS and the decompiled-source scrapers)
+- `./mcdump` — standalone Java tool that boots the server jar's registries and dumps collision shapes, entity hitboxes, hardness, mob categories, light, friction, effect colors and crafting remainders straight from the game (replaced PrismarineJS, the decompiled-source scrapers and hand-kept Go tables)
 
 Decompiled Minecraft source (for reading protocol internals) lives in the sibling [go-mclib/mcsrc](https://github.com/go-mclib/mcsrc) repo — checked out as `../mcsrc`, latest version in `../mcsrc/current/`.
 

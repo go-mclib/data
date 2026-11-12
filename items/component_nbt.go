@@ -1,68 +1,635 @@
 package items
 
 import (
-	"bytes"
+	"cmp"
 	"fmt"
+	"maps"
 	"math"
 	"slices"
-	"sort"
 	"strings"
 
 	"github.com/go-mclib/data/registries"
 	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
-var aquaticVariantComponentNames = map[string]map[int32]string{
-	"minecraft:axolotl/variant": {
-		0: "lucy", 1: "wild", 2: "gold", 3: "cyan", 4: "blue",
-	},
-	"minecraft:tropical_fish/pattern": {
-		0: "kob", 256: "sunstreak", 512: "snooper", 768: "dasher", 1024: "brinely", 1280: "spotty",
-		1: "flopper", 257: "stripey", 513: "glitter", 769: "blockfish", 1025: "betty", 1281: "clayfish",
-	},
-	"minecraft:tropical_fish/base_color": {
-		0: "white", 1: "orange", 2: "magenta", 3: "light_blue", 4: "yellow", 5: "lime", 6: "pink", 7: "gray",
-		8: "light_gray", 9: "cyan", 10: "purple", 11: "blue", 12: "brown", 13: "green", 14: "red", 15: "black",
-	},
-	"minecraft:tropical_fish/pattern_color": {
-		0: "white", 1: "orange", 2: "magenta", 3: "light_blue", 4: "yellow", 5: "lime", 6: "pink", 7: "gray",
-		8: "light_gray", 9: "cyan", 10: "purple", 11: "blue", 12: "brown", 13: "green", 14: "red", 15: "black",
-	},
+// nbtBridge converts one component between vanilla item NBT and its wire payload.
+type nbtBridge struct {
+	// toNBT renders a patched component. c holds the decoded stack and data
+	// the component's wire payload; a nil tag omits the component.
+	toNBT func(c *Components, data []byte) (nbt.Tag, error)
+	// fromNBT encodes a vanilla NBT value as the component's wire payload.
+	fromNBT func(value nbt.Tag) ([]byte, error)
 }
 
-func aquaticVariantComponentID(component, name string) (int32, bool) {
-	for id, candidate := range aquaticVariantComponentNames[component] {
-		if candidate == name {
-			return id, true
-		}
+// fieldBridge bridges a typed component through its Components field: fromNBT
+// fills a scratch Components that the component's wire codec then encodes.
+func fieldBridge(id int32, toNBT func(*Components) nbt.Tag, fromNBT func(*Components, nbt.Tag) error) nbtBridge {
+	return nbtBridge{
+		toNBT: func(c *Components, _ []byte) (nbt.Tag, error) { return toNBT(c), nil },
+		fromNBT: func(value nbt.Tag) ([]byte, error) {
+			var c Components
+			if err := fromNBT(&c, value); err != nil {
+				return nil, err
+			}
+			return encodeComponent(&c, id)
+		},
 	}
-	return 0, false
+}
+
+// wireBridge bridges a component directly between NBT and its wire payload.
+func wireBridge(toNBT func(*ns.PacketBuffer) (nbt.Tag, error), fromNBT func(*ns.PacketBuffer, nbt.Tag) error) nbtBridge {
+	return nbtBridge{
+		toNBT: func(_ *Components, data []byte) (nbt.Tag, error) { return toNBT(ns.NewReader(data)) },
+		fromNBT: func(value nbt.Tag) ([]byte, error) {
+			w := ns.NewWriter()
+			if err := fromNBT(w, value); err != nil {
+				return nil, err
+			}
+			return w.Bytes(), nil
+		},
+	}
+}
+
+func intFieldBridge(id int32, field func(*Components) *int32) nbtBridge {
+	return fieldBridge(id,
+		func(c *Components) nbt.Tag { return nbt.Int(*field(c)) },
+		func(c *Components, value nbt.Tag) error { *field(c) = intValue(value); return nil })
+}
+
+func floatFieldBridge(id int32, field func(*Components) *float64) nbtBridge {
+	return fieldBridge(id,
+		func(c *Components) nbt.Tag { return nbt.Float(*field(c)) },
+		func(c *Components, value nbt.Tag) error { *field(c) = floatValue(value); return nil })
+}
+
+// stringFieldBridge bridges a string component; valid rejects unknown values.
+func stringFieldBridge(id int32, name string, field func(*Components) *string, valid func(string) bool) nbtBridge {
+	return fieldBridge(id,
+		func(c *Components) nbt.Tag {
+			if *field(c) == "" {
+				return nil
+			}
+			return nbt.String(*field(c))
+		},
+		func(c *Components, value nbt.Tag) error {
+			text, ok := value.(nbt.String)
+			if !ok || text == "" || valid != nil && !valid(string(text)) {
+				return fmt.Errorf("%s must be a valid identifier, got %v", name, value)
+			}
+			*field(c) = string(text)
+			return nil
+		})
+}
+
+// markerFieldBridge bridges a unit component rendered as an empty compound.
+func markerFieldBridge(id int32, field func(*Components) *bool) nbtBridge {
+	return fieldBridge(id,
+		func(*Components) nbt.Tag { return nbt.Compound{} },
+		func(c *Components, value nbt.Tag) error {
+			if _, ok := value.(nbt.Compound); !ok {
+				return fmt.Errorf("unit component must be an empty compound")
+			}
+			*field(c) = true
+			return nil
+		})
+}
+
+// rawNBTBridge bridges a component whose wire payload is a single NBT tag.
+func rawNBTBridge(valid func(nbt.Tag) bool) nbtBridge {
+	return wireBridge(
+		func(r *ns.PacketBuffer) (nbt.Tag, error) { return r.ReadNBT() },
+		func(w *ns.PacketBuffer, value nbt.Tag) error {
+			if !valid(value) {
+				return fmt.Errorf("invalid NBT component value %v", value)
+			}
+			return w.WriteNBT(value)
+		})
+}
+
+func isCompound(value nbt.Tag) bool {
+	_, ok := value.(nbt.Compound)
+	return ok
+}
+
+func textFieldBridge(id int32, field func(*Components) **ItemNameComponent) nbtBridge {
+	return fieldBridge(id,
+		func(c *Components) nbt.Tag { return textComponentNBT(*field(c)) },
+		func(c *Components, value nbt.Tag) error {
+			if *field(c) = textComponentFromNBT(value); *field(c) == nil {
+				return fmt.Errorf("invalid text component %v", value)
+			}
+			return nil
+		})
+}
+
+func enchantmentsFieldBridge(id int32, field func(*Components) *map[string]int32) nbtBridge {
+	return fieldBridge(id,
+		func(c *Components) nbt.Tag { return enchantmentsNBT(*field(c)) },
+		func(c *Components, value nbt.Tag) error { *field(c) = enchantmentsFromNBT(value); return nil })
+}
+
+func dyeFieldBridge(id int32, field func(*Components) **int32) nbtBridge {
+	return fieldBridge(id,
+		func(c *Components) nbt.Tag {
+			if color := *field(c); color != nil && *color >= 0 && int(*color) < len(dyeNames) {
+				return nbt.String(dyeNames[*color])
+			}
+			return nil
+		},
+		func(c *Components, value nbt.Tag) error {
+			name, ok := value.(nbt.String)
+			color := dyeID(string(name))
+			if !ok || color < 0 {
+				return fmt.Errorf("unknown dye color %v", value)
+			}
+			*field(c) = &color
+			return nil
+		})
+}
+
+// aquaticVariantBridge bridges an enum entity-variant component stored as a VarInt.
+func aquaticVariantBridge(names map[int32]string) nbtBridge {
+	return wireBridge(
+		func(r *ns.PacketBuffer) (nbt.Tag, error) {
+			id, err := r.ReadVarInt()
+			if err != nil {
+				return nil, err
+			}
+			name, ok := names[int32(id)]
+			if !ok {
+				return nil, fmt.Errorf("unknown variant %d", id)
+			}
+			return nbt.String(name), nil
+		},
+		func(w *ns.PacketBuffer, value nbt.Tag) error {
+			name, ok := value.(nbt.String)
+			if !ok {
+				return fmt.Errorf("variant must be a string")
+			}
+			for id, candidate := range names {
+				if candidate == string(name) {
+					return w.WriteVarInt(ns.VarInt(id))
+				}
+			}
+			return fmt.Errorf("unknown variant %q", name)
+		})
+}
+
+func dyeNameMap() map[int32]string {
+	names := make(map[int32]string, len(dyeNames))
+	for id, name := range dyeNames {
+		names[int32(id)] = name
+	}
+	return names
+}
+
+// nbtBridges maps component IDs to their NBT bridges. It is built in init
+// because bridges for item lists recurse into ApplyNBTComponents.
+var nbtBridges map[int32]nbtBridge
+
+func init() {
+	nbtBridges = map[int32]nbtBridge{
+		ComponentAttackAnimation: fieldBridge(ComponentAttackAnimation,
+			func(c *Components) nbt.Tag { return swingAnimationNBT(c.AttackAnimation) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.AttackAnimation, err = swingAnimationFromNBT(value)
+				return err
+			}),
+		ComponentInteractAnimation: fieldBridge(ComponentInteractAnimation,
+			func(c *Components) nbt.Tag { return swingAnimationNBT(c.InteractAnimation) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.InteractAnimation, err = swingAnimationFromNBT(value)
+				return err
+			}),
+		ComponentBlockTransformer: stringFieldBridge(ComponentBlockTransformer, "minecraft:block_transformer",
+			func(c *Components) *string { return &c.BlockTransformer }, nil),
+		ComponentProvidesPotteryPattern: stringFieldBridge(ComponentProvidesPotteryPattern, "minecraft:provides_pottery_pattern",
+			func(c *Components) *string { return &c.ProvidesPotteryPattern }, nil),
+		ComponentVillagerFood: fieldBridge(ComponentVillagerFood,
+			func(c *Components) nbt.Tag {
+				if c.VillagerFood == nil {
+					return nil
+				}
+				return nbt.Compound{"nutrition": nbt.Int(c.VillagerFood.Nutrition)}
+			},
+			func(c *Components, value nbt.Tag) error {
+				compound, ok := value.(nbt.Compound)
+				if !ok {
+					return fmt.Errorf("villager_food must be a compound")
+				}
+				nutrition, err := componentIntNBT(compound["nutrition"])
+				if err != nil {
+					return err
+				}
+				if nutrition <= 0 {
+					return fmt.Errorf("villager food nutrition must be positive")
+				}
+				c.VillagerFood = &VillagerFood{Nutrition: nutrition}
+				return nil
+			}),
+		ComponentCompostable: fieldBridge(ComponentCompostable,
+			func(c *Components) nbt.Tag {
+				if c.Compostable == nil {
+					return nil
+				}
+				return nbt.Compound{"layers": resolvableIntNBT(c.Compostable.Layers)}
+			},
+			func(c *Components, value nbt.Tag) error {
+				compound, ok := value.(nbt.Compound)
+				if !ok {
+					return fmt.Errorf("compostable must be a compound")
+				}
+				layers, err := resolvableIntFromNBT(compound["layers"])
+				if err != nil {
+					return err
+				}
+				c.Compostable = &Compostable{Layers: layers}
+				return nil
+			}),
+		ComponentCookingFuel: fieldBridge(ComponentCookingFuel,
+			func(c *Components) nbt.Tag {
+				if c.CookingFuel == nil {
+					return nil
+				}
+				return nbt.Compound{"burn_time": resolvableIntNBT(c.CookingFuel.BurnTime), "speed_multiplier": resolvableFloatNBT(c.CookingFuel.SpeedMultiplier)}
+			},
+			func(c *Components, value nbt.Tag) error {
+				amount, speed, err := fuelFromNBT(value, "burn_time")
+				c.CookingFuel = &CookingFuel{BurnTime: amount, SpeedMultiplier: speed}
+				return err
+			}),
+		ComponentBrewingFuel: fieldBridge(ComponentBrewingFuel,
+			func(c *Components) nbt.Tag {
+				if c.BrewingFuel == nil {
+					return nil
+				}
+				return nbt.Compound{"uses": resolvableIntNBT(c.BrewingFuel.Uses), "speed_multiplier": resolvableFloatNBT(c.BrewingFuel.SpeedMultiplier)}
+			},
+			func(c *Components, value nbt.Tag) error {
+				amount, speed, err := fuelFromNBT(value, "uses")
+				c.BrewingFuel = &BrewingFuel{Uses: amount, SpeedMultiplier: speed}
+				return err
+			}),
+		ComponentMobVisibility: fieldBridge(ComponentMobVisibility,
+			func(c *Components) nbt.Tag {
+				if c.MobVisibility == nil {
+					return nil
+				}
+				return nbt.Compound{"targeting_entity_types": holderSetNBT(c.MobVisibility.TargetingEntityTypes), "visibility": nbt.Float(c.MobVisibility.Visibility)}
+			},
+			func(c *Components, value nbt.Tag) (err error) {
+				c.MobVisibility, err = mobVisibilityFromNBT(value)
+				return err
+			}),
+		ComponentSignTextFront: fieldBridge(ComponentSignTextFront,
+			func(c *Components) nbt.Tag { return signTextNBT(c.SignTextFront) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.SignTextFront, err = signTextFromNBT(value)
+				return err
+			}),
+		ComponentSignTextBack: fieldBridge(ComponentSignTextBack,
+			func(c *Components) nbt.Tag { return signTextNBT(c.SignTextBack) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.SignTextBack, err = signTextFromNBT(value)
+				return err
+			}),
+		ComponentWaxed:        markerFieldBridge(ComponentWaxed, func(c *Components) *bool { return &c.Waxed }),
+		ComponentCushionColor: dyeFieldBridge(ComponentCushionColor, func(c *Components) **int32 { return &c.CushionColor }),
+		ComponentPotDecorations: fieldBridge(ComponentPotDecorations,
+			func(c *Components) nbt.Tag { return potDecorationsNBT(c.PotDecorations) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.PotDecorations, err = potDecorationsFromNBT(value)
+				return err
+			}),
+
+		ComponentAxolotlVariant: aquaticVariantBridge(map[int32]string{
+			0: "lucy", 1: "wild", 2: "gold", 3: "cyan", 4: "blue",
+		}),
+		ComponentTropicalFishPattern: aquaticVariantBridge(map[int32]string{
+			0: "kob", 256: "sunstreak", 512: "snooper", 768: "dasher", 1024: "brinely", 1280: "spotty",
+			1: "flopper", 257: "stripey", 513: "glitter", 769: "blockfish", 1025: "betty", 1281: "clayfish",
+		}),
+		ComponentTropicalFishBaseColor:    aquaticVariantBridge(dyeNameMap()),
+		ComponentTropicalFishPatternColor: aquaticVariantBridge(dyeNameMap()),
+
+		ComponentDamage:                 intFieldBridge(ComponentDamage, func(c *Components) *int32 { return &c.Damage }),
+		ComponentMaxStackSize:           intFieldBridge(ComponentMaxStackSize, func(c *Components) *int32 { return &c.MaxStackSize }),
+		ComponentMaxDamage:              intFieldBridge(ComponentMaxDamage, func(c *Components) *int32 { return &c.MaxDamage }),
+		ComponentAdditionalTradeCost:    intFieldBridge(ComponentAdditionalTradeCost, func(c *Components) *int32 { return &c.AdditionalTradeCost }),
+		ComponentRepairCost:             intFieldBridge(ComponentRepairCost, func(c *Components) *int32 { return &c.RepairCost }),
+		ComponentOminousBottleAmplifier: intFieldBridge(ComponentOminousBottleAmplifier, func(c *Components) *int32 { return &c.OminousBottleAmplifier }),
+		ComponentMapId: fieldBridge(ComponentMapId,
+			func(c *Components) nbt.Tag {
+				if c.MapID == nil {
+					return nil
+				}
+				return nbt.Int(*c.MapID)
+			},
+			func(c *Components, value nbt.Tag) error { c.MapID = int32Pointer(intValue(value)); return nil }),
+		ComponentPotionDurationScale: floatFieldBridge(ComponentPotionDurationScale, func(c *Components) *float64 { return &c.PotionDurationScale }),
+		ComponentMinimumAttackCharge: floatFieldBridge(ComponentMinimumAttackCharge, func(c *Components) *float64 { return &c.MinimumAttackCharge }),
+		ComponentItemModel:           stringFieldBridge(ComponentItemModel, "minecraft:item_model", func(c *Components) *string { return &c.ItemModel }, nil),
+		ComponentRarity: stringFieldBridge(ComponentRarity, "minecraft:rarity", func(c *Components) *string { return &c.Rarity },
+			func(name string) bool { return slices.Contains(rarityNames, name) }),
+		ComponentAttributeModifiers: fieldBridge(ComponentAttributeModifiers,
+			func(c *Components) nbt.Tag { return attributeModifiersNBT(c.AttributeModifiers) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.AttributeModifiers, err = attributeModifiersFromNBT(value)
+				return err
+			}),
+		ComponentEquippable: fieldBridge(ComponentEquippable,
+			func(c *Components) nbt.Tag { return equippableNBT(c.Equippable) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.Equippable, err = equippableFromNBT(value)
+				return err
+			}),
+
+		ComponentBreakSound:           wireBridge(soundEventHolderNBT, writeSoundEventHolderNBT),
+		ComponentInstrument:           wireBridge(instrumentHolderNBT, writeInstrumentHolderNBT),
+		ComponentJukeboxPlayable:      wireBridge(jukeboxSongHolderNBT, writeJukeboxSongHolderNBT),
+		ComponentProvidesTrimMaterial: wireBridge(trimMaterialHolderNBT, writeTrimMaterialHolderNBT),
+
+		ComponentFood: fieldBridge(ComponentFood,
+			func(c *Components) nbt.Tag {
+				if c.Food == nil {
+					return nil
+				}
+				return nbt.Compound{
+					"nutrition": nbt.Int(c.Food.Nutrition), "saturation": nbt.Float(c.Food.Saturation),
+					"can_always_eat": nbtBool(c.Food.CanAlwaysEat),
+				}
+			},
+			func(c *Components, value nbt.Tag) error {
+				compound, ok := value.(nbt.Compound)
+				if !ok {
+					return fmt.Errorf("food component must be a compound")
+				}
+				nutrition := intValue(compound["nutrition"])
+				if nutrition < 0 {
+					return fmt.Errorf("food nutrition must be non-negative")
+				}
+				c.Food = &Food{
+					Nutrition: nutrition, Saturation: floatValue(compound["saturation"]),
+					CanAlwaysEat: nbtBoolOr(compound, "can_always_eat", false),
+				}
+				return nil
+			}),
+		ComponentBlocksAttacks: fieldBridge(ComponentBlocksAttacks,
+			func(c *Components) nbt.Tag { return blocksAttacksNBT(c.BlocksAttacks) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.BlocksAttacks, err = blocksAttacksFromNBT(value)
+				return err
+			}),
+		ComponentConsumable: fieldBridge(ComponentConsumable,
+			func(c *Components) nbt.Tag { return consumableNBT(c.Consumable) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.Consumable, err = consumableFromNBT(value)
+				return err
+			}),
+		ComponentDeathProtection: fieldBridge(ComponentDeathProtection,
+			func(c *Components) nbt.Tag {
+				if c.DeathProtection == nil {
+					return nil
+				}
+				return nbt.Compound{"death_effects": consumeEffectsNBT(c.DeathProtection.DeathEffects)}
+			},
+			func(c *Components, value nbt.Tag) error {
+				compound, ok := value.(nbt.Compound)
+				if !ok {
+					return fmt.Errorf("death_protection component must be a compound")
+				}
+				effects, err := consumeEffectsFromNBT(compound.GetList("death_effects"))
+				c.DeathProtection = &DeathProtection{DeathEffects: effects}
+				return err
+			}),
+		ComponentWeapon: fieldBridge(ComponentWeapon,
+			func(c *Components) nbt.Tag {
+				if c.Weapon == nil {
+					return nil
+				}
+				return nbt.Compound{
+					"item_damage_per_attack":       nbt.Int(c.Weapon.ItemDamagePerAttack),
+					"disable_blocking_for_seconds": nbt.Float(c.Weapon.DisableBlockingForSeconds),
+				}
+			},
+			func(c *Components, value nbt.Tag) error {
+				compound, ok := value.(nbt.Compound)
+				if !ok {
+					return fmt.Errorf("weapon component must be a compound")
+				}
+				damage := int32(1)
+				if tag, present := compound["item_damage_per_attack"]; present {
+					damage = intValue(tag)
+				}
+				disable := floatValue(compound["disable_blocking_for_seconds"])
+				if damage < 0 || disable < 0 {
+					return fmt.Errorf("weapon values must be non-negative")
+				}
+				c.Weapon = &Weapon{ItemDamagePerAttack: damage, DisableBlockingForSeconds: disable}
+				return nil
+			}),
+		ComponentAttackRange: fieldBridge(ComponentAttackRange,
+			func(c *Components) nbt.Tag { return attackRangeNBT(c.AttackRange) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.AttackRange, err = attackRangeFromNBT(value)
+				return err
+			}),
+		ComponentTool: fieldBridge(ComponentTool,
+			func(c *Components) nbt.Tag { return toolNBT(c.Tool) },
+			func(c *Components, value nbt.Tag) (err error) { c.Tool, err = toolFromNBT(value); return err }),
+		ComponentEnchantable: fieldBridge(ComponentEnchantable,
+			func(c *Components) nbt.Tag {
+				if c.Enchantable == nil {
+					return nil
+				}
+				return nbt.Compound{"value": nbt.Int(c.Enchantable.Value)}
+			},
+			func(c *Components, value nbt.Tag) error {
+				compound, ok := value.(nbt.Compound)
+				if !ok || intValue(compound["value"]) <= 0 {
+					return fmt.Errorf("enchantable value must be positive")
+				}
+				c.Enchantable = &Enchantable{Value: intValue(compound["value"])}
+				return nil
+			}),
+		ComponentTooltipDisplay: fieldBridge(ComponentTooltipDisplay,
+			func(c *Components) nbt.Tag { return tooltipDisplayNBT(c.TooltipDisplay) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.TooltipDisplay, err = tooltipDisplayFromNBT(value)
+				return err
+			}),
+		ComponentUseEffects: fieldBridge(ComponentUseEffects,
+			func(c *Components) nbt.Tag {
+				if c.UseEffects == nil {
+					return nil
+				}
+				return nbt.Compound{
+					"can_sprint": nbtBool(c.UseEffects.CanSprint), "interact_vibrations": nbtBool(c.UseEffects.InteractVibrations),
+					"speed_multiplier": nbt.Float(c.UseEffects.SpeedMultiplier),
+				}
+			},
+			func(c *Components, value nbt.Tag) error {
+				compound, ok := value.(nbt.Compound)
+				if !ok {
+					return fmt.Errorf("use_effects component must be a compound")
+				}
+				speed := 0.2
+				if tag, present := compound["speed_multiplier"]; present {
+					speed = floatValue(tag)
+				}
+				if speed < 0 || speed > 1 {
+					return fmt.Errorf("use_effects speed_multiplier must be between 0 and 1")
+				}
+				c.UseEffects = &UseEffects{
+					CanSprint:          nbtBoolOr(compound, "can_sprint", false),
+					InteractVibrations: nbtBoolOr(compound, "interact_vibrations", true),
+					SpeedMultiplier:    speed,
+				}
+				return nil
+			}),
+		ComponentUseCooldown: fieldBridge(ComponentUseCooldown,
+			func(c *Components) nbt.Tag {
+				if c.UseCooldown == nil {
+					return nil
+				}
+				value := nbt.Compound{"seconds": nbt.Float(c.UseCooldown.Seconds)}
+				if c.UseCooldown.CooldownGroup != "" {
+					value["cooldown_group"] = nbt.String(c.UseCooldown.CooldownGroup)
+				}
+				return value
+			},
+			func(c *Components, value nbt.Tag) error {
+				compound, ok := value.(nbt.Compound)
+				seconds := floatValue(compound["seconds"])
+				if !ok || seconds <= 0 {
+					return fmt.Errorf("use_cooldown seconds must be positive")
+				}
+				c.UseCooldown = &UseCooldown{Seconds: seconds, CooldownGroup: compound.GetString("cooldown_group")}
+				return nil
+			}),
+		ComponentGlider:      markerFieldBridge(ComponentGlider, func(c *Components) *bool { return &c.Glider }),
+		ComponentUnbreakable: markerFieldBridge(ComponentUnbreakable, func(c *Components) *bool { return &c.Unbreakable }),
+		ComponentCreativeSlotLock: wireBridge(
+			func(*ns.PacketBuffer) (nbt.Tag, error) { return nbt.Compound{}, nil },
+			func(*ns.PacketBuffer, nbt.Tag) error { return nil }),
+		ComponentIntangibleProjectile: rawNBTBridge(isCompound),
+		ComponentEnchantmentGlintOverride: wireBridge(
+			func(r *ns.PacketBuffer) (nbt.Tag, error) {
+				value, err := r.ReadBool()
+				return nbtBool(bool(value)), err
+			},
+			func(w *ns.PacketBuffer, value nbt.Tag) error { return w.WriteBool(intValue(value) != 0) }),
+		ComponentNoteBlockSound: stringWireBridge(),
+		ComponentTooltipStyle:   stringWireBridge(),
+
+		ComponentBundleContents:     wireBridge(func(r *ns.PacketBuffer) (nbt.Tag, error) { return slotListComponentNBT(r, false) }, writeSlotListNBT),
+		ComponentChargedProjectiles: wireBridge(func(r *ns.PacketBuffer) (nbt.Tag, error) { return slotListComponentNBT(r, false) }, writeSlotListNBT),
+		ComponentContainer:          wireBridge(func(r *ns.PacketBuffer) (nbt.Tag, error) { return slotListComponentNBT(r, true) }, writeContainerNBT),
+		ComponentSulfurCubeContent:  wireBridge(itemTemplateNBT, writeItemTemplateNBT),
+		ComponentUseRemainder:       wireBridge(itemTemplateNBT, writeItemTemplateNBT),
+		ComponentEntityData: wireBridge(
+			func(r *ns.PacketBuffer) (nbt.Tag, error) { return readTypedEntityDataNBT(r, registries.EntityType) },
+			func(w *ns.PacketBuffer, value nbt.Tag) error {
+				return writeTypedEntityDataNBT(w, value, registries.EntityType)
+			}),
+		ComponentBlockEntityData: wireBridge(
+			func(r *ns.PacketBuffer) (nbt.Tag, error) {
+				return readTypedEntityDataNBT(r, registries.BlockEntityType)
+			},
+			func(w *ns.PacketBuffer, value nbt.Tag) error {
+				return writeTypedEntityDataNBT(w, value, registries.BlockEntityType)
+			}),
+		ComponentCustomData:       rawNBTBridge(isCompound),
+		ComponentBucketEntityData: rawNBTBridge(isCompound),
+		ComponentDebugStickState:  rawNBTBridge(isCompound),
+		ComponentMapDecorations:   rawNBTBridge(isCompound),
+		ComponentLock:             rawNBTBridge(isCompound),
+		ComponentContainerLoot:    rawNBTBridge(isCompound),
+		ComponentRecipes: rawNBTBridge(func(value nbt.Tag) bool {
+			list, ok := value.(nbt.List)
+			return ok && list.ElementType == nbt.TagString && len(list.Elements) <= maxPrealloc
+		}),
+		ComponentBlockState:          wireBridge(stringMapComponentNBT, writeStringMapNBT),
+		ComponentWritableBookContent: wireBridge(writableBookNBT, writeWritableBookNBT),
+		ComponentWrittenBookContent:  wireBridge(writtenBookNBT, writeWrittenBookNBT),
+		ComponentCustomName:          textFieldBridge(ComponentCustomName, func(c *Components) **ItemNameComponent { return &c.CustomName }),
+		ComponentItemName:            textFieldBridge(ComponentItemName, func(c *Components) **ItemNameComponent { return &c.ItemName }),
+		ComponentLore:                wireBridge(textComponentListNBT, writeTextComponentListNBT),
+		ComponentEnchantments: enchantmentsFieldBridge(ComponentEnchantments,
+			func(c *Components) *map[string]int32 { return &c.Enchantments }),
+		ComponentStoredEnchantments: enchantmentsFieldBridge(ComponentStoredEnchantments,
+			func(c *Components) *map[string]int32 { return &c.StoredEnchantments }),
+		ComponentTrim: fieldBridge(ComponentTrim,
+			func(c *Components) nbt.Tag {
+				if c.Trim == nil {
+					return nil
+				}
+				return nbt.Compound{"material": nbt.String(c.Trim.Material), "pattern": nbt.String(c.Trim.Pattern)}
+			},
+			func(c *Components, value nbt.Tag) error {
+				compound, ok := value.(nbt.Compound)
+				if !ok {
+					return fmt.Errorf("trim component must be a compound")
+				}
+				c.Trim = &ArmorTrim{Material: compound.GetString("material"), Pattern: compound.GetString("pattern")}
+				if c.Trim.Material == "" || c.Trim.Pattern == "" {
+					return fmt.Errorf("trim component requires material and pattern")
+				}
+				return nil
+			}),
+		ComponentSuspiciousStewEffects: wireBridge(suspiciousStewNBT, writeSuspiciousStewNBT),
+		ComponentPotionContents:        wireBridge(potionContentsNBT, writePotionContentsNBT),
+		ComponentPaintingVariant: stringFieldBridge(ComponentPaintingVariant, "minecraft:painting/variant",
+			func(c *Components) *string { return &c.PaintingVariant },
+			func(name string) bool {
+				return registries.SynchronizedEntries["minecraft:painting_variant"].Get(name) >= 0
+			}),
+		ComponentDye:       dyeFieldBridge(ComponentDye, func(c *Components) **int32 { return &c.Dye }),
+		ComponentBaseColor: dyeFieldBridge(ComponentBaseColor, func(c *Components) **int32 { return &c.BaseColor }),
+		ComponentDyedColor: fieldBridge(ComponentDyedColor,
+			func(c *Components) nbt.Tag {
+				if c.DyedColor == nil {
+					return nil
+				}
+				return nbt.Int(*c.DyedColor)
+			},
+			func(c *Components, value nbt.Tag) error {
+				color := intValue(value)
+				if color < 0 || color > 0xffffff {
+					return fmt.Errorf("dyed_color %d is outside RGB range", color)
+				}
+				c.DyedColor = &color
+				return nil
+			}),
+		ComponentBannerPatterns: fieldBridge(ComponentBannerPatterns,
+			func(c *Components) nbt.Tag { return bannerPatternsNBT(c.BannerPatterns) },
+			func(c *Components, value nbt.Tag) (err error) {
+				c.BannerPatterns, err = bannerPatternsFromNBT(value)
+				return err
+			}),
+		ComponentFireworkExplosion: fieldBridge(ComponentFireworkExplosion,
+			func(c *Components) nbt.Tag {
+				if c.FireworkExplosion == nil {
+					return nil
+				}
+				return fireworkExplosionNBT(*c.FireworkExplosion)
+			},
+			func(c *Components, value nbt.Tag) error {
+				explosion, err := fireworkExplosionFromNBT(value)
+				c.FireworkExplosion = &explosion
+				return err
+			}),
+		ComponentFireworks: fieldBridge(ComponentFireworks,
+			func(c *Components) nbt.Tag { return fireworksNBT(c) },
+			fireworksFromNBT),
+	}
 }
 
 // SupportsNBTComponent reports whether a component has an NBT/wire bridge.
 func SupportsNBTComponent(name string) bool {
-	switch name {
-	case "minecraft:attack_animation", "minecraft:interact_animation", "minecraft:block_transformer",
-		"minecraft:villager_food", "minecraft:compostable", "minecraft:cooking_fuel", "minecraft:brewing_fuel",
-		"minecraft:mob_visibility", "minecraft:provides_pottery_pattern", "minecraft:sign_text_front",
-		"minecraft:sign_text_back", "minecraft:waxed", "minecraft:cushion/color":
-		return true
-	case "minecraft:damage", "minecraft:repair_cost", "minecraft:ominous_bottle_amplifier", "minecraft:unbreakable",
-		"minecraft:max_stack_size", "minecraft:max_damage", "minecraft:additional_trade_cost",
-		"minecraft:potion_duration_scale", "minecraft:minimum_attack_charge", "minecraft:enchantment_glint_override", "minecraft:suspicious_stew_effects",
-		"minecraft:item_model", "minecraft:break_sound", "minecraft:instrument", "minecraft:jukebox_playable", "minecraft:provides_trim_material", "minecraft:rarity",
-		"minecraft:note_block_sound", "minecraft:tooltip_style", "minecraft:glider", "minecraft:creative_slot_lock", "minecraft:intangible_projectile",
-		"minecraft:bundle_contents", "minecraft:charged_projectiles", "minecraft:container", "minecraft:sulfur_cube_content", "minecraft:writable_book_content", "minecraft:written_book_content",
-		"minecraft:food", "minecraft:consumable", "minecraft:death_protection", "minecraft:weapon", "minecraft:attack_range", "minecraft:blocks_attacks", "minecraft:tool", "minecraft:enchantable", "minecraft:equippable", "minecraft:tooltip_display", "minecraft:use_cooldown", "minecraft:use_remainder", "minecraft:use_effects",
-		"minecraft:entity_data", "minecraft:block_entity_data", "minecraft:bucket_entity_data", "minecraft:debug_stick_state", "minecraft:map_decorations", "minecraft:lock", "minecraft:container_loot", "minecraft:recipes", "minecraft:block_state",
-		"minecraft:attribute_modifiers", "minecraft:custom_name", "minecraft:item_name", "minecraft:lore", "minecraft:enchantments", "minecraft:stored_enchantments",
-		"minecraft:trim", "minecraft:potion_contents", "minecraft:painting/variant", "minecraft:dye", "minecraft:dyed_color", "minecraft:base_color", "minecraft:banner_patterns", "minecraft:pot_decorations", "minecraft:firework_explosion", "minecraft:fireworks", "minecraft:custom_data",
-		"minecraft:axolotl/variant", "minecraft:tropical_fish/pattern", "minecraft:tropical_fish/base_color", "minecraft:tropical_fish/pattern_color":
-		return true
-	default:
-		return false
-	}
+	_, ok := nbtBridges[registries.DataComponentType.Get(name)]
+	return ok
 }
 
 // HasWritableBookContent reports whether the effective stack is editable.
@@ -76,304 +643,21 @@ func HasWritableBookContent(slot ns.Slot) bool {
 }
 
 // ComponentsToNBT converts a slot's component patch to vanilla item NBT.
+// Components without an NBT bridge or with an invalid payload are omitted.
 func ComponentsToNBT(slot ns.Slot) nbt.Compound {
 	result := nbt.Compound{}
 	stack, err := FromSlot(slot)
 	if err != nil {
-		stack = &ItemStack{Components: &Components{}}
+		stack = &Stack{Components: &Components{}}
 	}
 	for _, raw := range slot.Components.Add {
 		name := registries.DataComponentType.ByID(int32(raw.ID))
-		if name == "" {
+		bridge, ok := nbtBridges[int32(raw.ID)]
+		if name == "" || !ok {
 			continue
 		}
-		if value := componentPayloadNBT(name, stack.Components); value != nil {
+		if value, err := bridge.toNBT(stack.Components, raw.Data); err == nil && value != nil {
 			result[name] = value
-			continue
-		}
-		switch name {
-		case "minecraft:axolotl/variant", "minecraft:tropical_fish/pattern",
-			"minecraft:tropical_fish/base_color", "minecraft:tropical_fish/pattern_color":
-			if enumID, err := ns.NewReader(raw.Data).ReadVarInt(); err == nil {
-				if enumName := aquaticVariantComponentNames[name][int32(enumID)]; enumName != "" {
-					result[name] = nbt.String(enumName)
-				}
-			}
-		case "minecraft:damage":
-			result[name] = nbt.Int(stack.Components.Damage)
-		case "minecraft:max_stack_size":
-			result[name] = nbt.Int(stack.Components.MaxStackSize)
-		case "minecraft:max_damage":
-			result[name] = nbt.Int(stack.Components.MaxDamage)
-		case "minecraft:additional_trade_cost":
-			result[name] = nbt.Int(stack.Components.AdditionalTradeCost)
-		case "minecraft:attribute_modifiers":
-			result[name] = attributeModifiersNBT(stack.Components.AttributeModifiers)
-		case "minecraft:equippable":
-			if stack.Components.Equippable != nil {
-				result[name] = equippableNBT(stack.Components.Equippable)
-			}
-		case "minecraft:potion_duration_scale":
-			result[name] = nbt.Float(stack.Components.PotionDurationScale)
-		case "minecraft:minimum_attack_charge":
-			result[name] = nbt.Float(stack.Components.MinimumAttackCharge)
-		case "minecraft:item_model":
-			result[name] = nbt.String(stack.Components.ItemModel)
-		case "minecraft:break_sound":
-			if value, err := soundEventHolderNBT(ns.NewReader(raw.Data)); err == nil {
-				result[name] = value
-			}
-		case "minecraft:instrument":
-			if value, err := instrumentHolderNBT(ns.NewReader(raw.Data)); err == nil {
-				result[name] = value
-			}
-		case "minecraft:jukebox_playable":
-			if value, err := jukeboxSongHolderNBT(ns.NewReader(raw.Data)); err == nil {
-				result[name] = value
-			}
-		case "minecraft:provides_trim_material":
-			if value, err := trimMaterialHolderNBT(ns.NewReader(raw.Data)); err == nil {
-				result[name] = value
-			}
-		case "minecraft:rarity":
-			result[name] = nbt.String(stack.Components.Rarity)
-		case "minecraft:food":
-			if food := stack.Components.Food; food != nil {
-				result[name] = nbt.Compound{
-					"nutrition": nbt.Int(food.Nutrition), "saturation": nbt.Float(food.Saturation),
-					"can_always_eat": nbt.Byte(map[bool]int8{true: 1}[food.CanAlwaysEat]),
-				}
-			}
-		case "minecraft:blocks_attacks":
-			if component := stack.Components.BlocksAttacks; component != nil {
-				result[name] = blocksAttacksNBT(component)
-			}
-		case "minecraft:consumable":
-			if consumable := stack.Components.Consumable; consumable != nil {
-				effects := nbt.List{ElementType: nbt.TagCompound}
-				for _, effect := range consumable.OnConsumeEffects {
-					if effectNBT := consumeEffectNBT(effect); effectNBT != nil {
-						effects.Elements = append(effects.Elements, effectNBT)
-					}
-				}
-				result[name] = nbt.Compound{
-					"consume_seconds": nbt.Float(consumable.ConsumeSeconds), "animation": nbt.String(consumable.Animation),
-					"sound":                 componentSoundNBT(consumable.Sound, consumable.SoundDirect, consumable.SoundRange),
-					"has_consume_particles": nbt.Byte(map[bool]int8{true: 1}[consumable.HasParticles]), "on_consume_effects": effects,
-				}
-			}
-		case "minecraft:death_protection":
-			if protection := stack.Components.DeathProtection; protection != nil {
-				effects := nbt.List{ElementType: nbt.TagCompound}
-				for _, effect := range protection.DeathEffects {
-					effects.Elements = append(effects.Elements, consumeEffectNBT(effect))
-				}
-				result[name] = nbt.Compound{"death_effects": effects}
-			}
-		case "minecraft:weapon":
-			if weapon := stack.Components.Weapon; weapon != nil {
-				result[name] = nbt.Compound{
-					"item_damage_per_attack":       nbt.Int(weapon.ItemDamagePerAttack),
-					"disable_blocking_for_seconds": nbt.Float(weapon.DisableBlockingForSeconds),
-				}
-			}
-		case "minecraft:attack_range":
-			if attackRange := stack.Components.AttackRange; attackRange != nil {
-				result[name] = nbt.Compound{
-					"min_reach": nbt.Float(attackRange.MinReach), "max_reach": nbt.Float(attackRange.MaxReach),
-					"min_creative_reach": nbt.Float(attackRange.MinCreativeReach), "max_creative_reach": nbt.Float(attackRange.MaxCreativeReach),
-					"hitbox_margin": nbt.Float(attackRange.HitboxMargin), "mob_factor": nbt.Float(attackRange.MobFactor),
-				}
-			}
-		case "minecraft:tool":
-			if tool := stack.Components.Tool; tool != nil {
-				result[name] = toolNBT(tool)
-			}
-		case "minecraft:enchantable":
-			if enchantable := stack.Components.Enchantable; enchantable != nil {
-				result[name] = nbt.Compound{"value": nbt.Int(enchantable.Value)}
-			}
-		case "minecraft:tooltip_display":
-			if tooltip := stack.Components.TooltipDisplay; tooltip != nil {
-				hidden := nbt.List{ElementType: nbt.TagString}
-				for _, componentID := range tooltip.HiddenComponents {
-					componentName := registries.DataComponentType.ByID(componentID)
-					if componentName != "" {
-						hidden.Elements = append(hidden.Elements, nbt.String(componentName))
-					}
-				}
-				result[name] = nbt.Compound{
-					"hide_tooltip": nbt.Byte(map[bool]int8{true: 1}[tooltip.HideTooltip]), "hidden_components": hidden,
-				}
-			}
-		case "minecraft:use_effects":
-			reader := ns.NewReader(raw.Data)
-			canSprint, sprintErr := reader.ReadBool()
-			vibrations, vibrationErr := reader.ReadBool()
-			speed, speedErr := reader.ReadFloat32()
-			if sprintErr == nil && vibrationErr == nil && speedErr == nil {
-				result[name] = nbt.Compound{
-					"can_sprint":          nbt.Byte(map[bool]int8{true: 1}[bool(canSprint)]),
-					"interact_vibrations": nbt.Byte(map[bool]int8{true: 1}[bool(vibrations)]), "speed_multiplier": nbt.Float(speed),
-				}
-			}
-		case "minecraft:use_cooldown":
-			if cooldown := stack.Components.UseCooldown; cooldown != nil {
-				value := nbt.Compound{"seconds": nbt.Float(cooldown.Seconds)}
-				if cooldown.CooldownGroup != "" {
-					value["cooldown_group"] = nbt.String(cooldown.CooldownGroup)
-				}
-				result[name] = value
-			}
-		case "minecraft:glider", "minecraft:creative_slot_lock", "minecraft:intangible_projectile":
-			result[name] = nbt.Compound{}
-		case "minecraft:enchantment_glint_override":
-			if value, err := ns.NewReader(raw.Data).ReadBool(); err == nil {
-				result[name] = nbt.Byte(map[bool]int8{true: 1}[bool(value)])
-			}
-		case "minecraft:note_block_sound", "minecraft:tooltip_style":
-			if value, err := ns.NewReader(raw.Data).ReadString(32767); err == nil {
-				result[name] = nbt.String(value)
-			}
-		case "minecraft:bundle_contents", "minecraft:charged_projectiles", "minecraft:container":
-			if value, err := slotListComponentNBT(raw.Data, name == "minecraft:container"); err == nil {
-				result[name] = value
-			}
-		case "minecraft:sulfur_cube_content", "minecraft:use_remainder":
-			if slot, err := ReadItemStackTemplate(ns.NewReader(raw.Data)); err == nil {
-				result[name] = componentSlotNBT(slot)
-			}
-		case "minecraft:entity_data":
-			if value, err := typedEntityDataNBT(raw.Data, registries.EntityType); err == nil {
-				result[name] = value
-			}
-		case "minecraft:block_entity_data":
-			if value, err := typedEntityDataNBT(raw.Data, registries.BlockEntityType); err == nil {
-				result[name] = value
-			}
-		case "minecraft:bucket_entity_data", "minecraft:debug_stick_state", "minecraft:map_decorations", "minecraft:lock", "minecraft:container_loot":
-			if value, err := rawNBTComponent(raw.Data); err == nil {
-				result[name] = value
-			}
-		case "minecraft:recipes":
-			if value, err := rawNBTComponent(raw.Data); err == nil {
-				result[name] = value
-			}
-		case "minecraft:block_state":
-			if value, err := stringMapComponentNBT(raw.Data); err == nil {
-				result[name] = value
-			}
-		case "minecraft:writable_book_content":
-
-			if value, err := writableBookNBT(raw.Data); err == nil {
-				result[name] = value
-			}
-		case "minecraft:written_book_content":
-			if value, err := writtenBookNBT(raw.Data); err == nil {
-				result[name] = value
-			}
-		case "minecraft:repair_cost":
-			result[name] = nbt.Int(stack.Components.RepairCost)
-		case "minecraft:ominous_bottle_amplifier":
-			result[name] = nbt.Int(stack.Components.OminousBottleAmplifier)
-		case "minecraft:unbreakable":
-			result[name] = nbt.Compound{}
-		case "minecraft:custom_name":
-			if value := textComponentNBT(stack.Components.CustomName); value != nil {
-				result[name] = value
-			}
-		case "minecraft:item_name":
-			if value := textComponentNBT(stack.Components.ItemName); value != nil {
-				result[name] = value
-			}
-		case "minecraft:lore":
-			if value, err := textComponentListNBT(raw.Data); err == nil {
-				result[name] = value
-			}
-		case "minecraft:enchantments":
-			result[name] = enchantmentsNBT(stack.Components.Enchantments)
-		case "minecraft:stored_enchantments":
-			result[name] = enchantmentsNBT(stack.Components.StoredEnchantments)
-		case "minecraft:trim":
-			if trim := stack.Components.Trim; trim != nil {
-				result[name] = nbt.Compound{"material": nbt.String(trim.Material), "pattern": nbt.String(trim.Pattern)}
-			}
-		case "minecraft:suspicious_stew_effects":
-			if effects, err := ReadSuspiciousStewEffects(slot); err == nil {
-				list := nbt.List{ElementType: nbt.TagCompound}
-				for _, effect := range effects {
-					list.Elements = append(list.Elements, nbt.Compound{"id": nbt.String(effect.Effect), "duration": nbt.Int(effect.Duration)})
-				}
-				result[name] = list
-			}
-		case "minecraft:potion_contents":
-			if contents, err := ReadPotionContents(slot); err == nil {
-				value := nbt.Compound{}
-				if contents.Potion != "" {
-					value["potion"] = nbt.String(contents.Potion)
-				}
-				if contents.CustomColor != nil {
-					value["custom_color"] = nbt.Int(*contents.CustomColor)
-				}
-				if len(contents.Effects) > 0 {
-					effects := nbt.List{ElementType: nbt.TagCompound}
-					for _, potionEffect := range contents.Effects {
-						effects.Elements = append(effects.Elements, potionEffectNBT(potionEffect, true))
-					}
-					value["custom_effects"] = effects
-				}
-				if contents.CustomName != "" {
-					value["custom_name"] = nbt.String(contents.CustomName)
-				}
-				result[name] = value
-			}
-		case "minecraft:painting/variant":
-			if stack.Components.PaintingVariant != "" {
-				result[name] = nbt.String(stack.Components.PaintingVariant)
-			}
-		case "minecraft:dye":
-			if stack.Components.Dye != nil {
-				result[name] = nbt.String(dyeNames[*stack.Components.Dye])
-			}
-		case "minecraft:dyed_color":
-			if stack.Components.DyedColor != nil {
-				result[name] = nbt.Int(*stack.Components.DyedColor)
-			}
-		case "minecraft:base_color":
-			if stack.Components.BaseColor != nil {
-				result[name] = nbt.String(dyeNames[*stack.Components.BaseColor])
-			}
-		case "minecraft:banner_patterns":
-			if stack.Components.BannerPatterns != nil {
-				layers := nbt.List{ElementType: nbt.TagCompound}
-				for _, layer := range *stack.Components.BannerPatterns {
-					var pattern nbt.Tag = nbt.String(layer.Pattern)
-					if layer.Pattern == "" {
-						pattern = nbt.Compound{"asset_id": nbt.String(layer.AssetID), "translation_key": nbt.String(layer.TranslationKey)}
-					}
-					layers.Elements = append(layers.Elements, nbt.Compound{
-						"pattern": pattern, "color": nbt.String(dyeNames[layer.Color]),
-					})
-				}
-				result[name] = layers
-			}
-		case "minecraft:firework_explosion":
-			if explosion := stack.Components.FireworkExplosion; explosion != nil {
-				result[name] = fireworkExplosionNBT(*explosion)
-			}
-		case "minecraft:fireworks":
-			if fireworks := stack.Components.Fireworks; fireworks != nil {
-				explosions := nbt.List{ElementType: nbt.TagCompound}
-				for _, explosion := range stack.Components.FireworkExplosions {
-					explosions.Elements = append(explosions.Elements, fireworkExplosionNBT(explosion))
-				}
-				result[name] = nbt.Compound{"flight_duration": nbt.Int(fireworks.FlightDuration), "explosions": explosions}
-			}
-		case "minecraft:custom_data":
-			reader := nbt.NewReaderFrom(bytes.NewReader(raw.Data))
-			if value, _, err := reader.ReadTag(true); err == nil {
-				result[name] = value
-			}
 		}
 	}
 	for _, id := range slot.Components.Remove {
@@ -385,744 +669,652 @@ func ComponentsToNBT(slot ns.Slot) nbt.Compound {
 }
 
 // ApplyNBTComponents applies a vanilla item component patch to a slot.
+// Components without an NBT bridge are ignored.
 func ApplyNBTComponents(slot ns.Slot, patch nbt.Compound) (ns.Slot, error) {
 	stack, err := FromSlot(slot)
 	if err != nil {
 		return ns.Slot{}, err
 	}
-	var rawComponents []ns.RawSlotComponent
-	var removals []ns.VarInt
+	var removals []int32
 	for key, value := range patch {
 		if name, removed := strings.CutPrefix(key, "!"); removed {
-			id := registries.DataComponentType.Get(name)
-			if id >= 0 {
-				removals = append(removals, ns.VarInt(id))
+			if id := registries.DataComponentType.Get(name); id >= 0 {
+				removals = append(removals, id)
 			}
 			continue
 		}
 		id := registries.DataComponentType.Get(key)
-		if id < 0 {
+		bridge, ok := nbtBridges[id]
+		if !ok {
 			continue
 		}
-		if handled, err := applyComponentPayloadNBT(stack.Components, key, value); handled {
-			if err != nil {
-				return ns.Slot{}, err
-			}
-			stack.Components.SetPresent(id)
-			continue
+		data, err := bridge.fromNBT(value)
+		if err != nil {
+			return ns.Slot{}, fmt.Errorf("%s: %w", key, err)
 		}
-		switch key {
-		case "minecraft:axolotl/variant", "minecraft:tropical_fish/pattern",
-			"minecraft:tropical_fish/base_color", "minecraft:tropical_fish/pattern_color":
-			enumName, ok := value.(nbt.String)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("%s component must be a string", key)
-			}
-			enumID, ok := aquaticVariantComponentID(key, string(enumName))
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("unknown %s value %q", key, enumName)
-			}
-			writer := ns.NewWriter()
-			writer.WriteVarInt(ns.VarInt(enumID))
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:damage":
-			stack.Components.Damage = intValue(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:max_stack_size":
-			stack.Components.MaxStackSize = intValue(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:max_damage":
-			stack.Components.MaxDamage = intValue(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:additional_trade_cost":
-			stack.Components.AdditionalTradeCost = intValue(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:attribute_modifiers":
-			modifiers, err := attributeModifiersFromNBT(value)
-			if err != nil {
-				return ns.Slot{}, err
-			}
-			stack.Components.AttributeModifiers = modifiers
-			stack.Components.SetPresent(id)
-		case "minecraft:equippable":
-			equippable, err := equippableFromNBT(value)
-			if err != nil {
-				return ns.Slot{}, err
-			}
-			stack.Components.Equippable = equippable
-			stack.Components.SetPresent(id)
-		case "minecraft:potion_duration_scale":
-			stack.Components.PotionDurationScale = floatValue(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:minimum_attack_charge":
-			stack.Components.MinimumAttackCharge = floatValue(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:food":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("food component must be a compound")
-			}
-			nutrition := compound.GetInt("nutrition")
-			if nutrition < 0 {
-				return ns.Slot{}, fmt.Errorf("food nutrition must be non-negative")
-			}
-			stack.Components.Food = &Food{
-				Nutrition: nutrition, Saturation: floatValue(compound["saturation"]),
-				CanAlwaysEat: nbtBoolOr(compound, "can_always_eat", false),
-			}
-			stack.Components.SetPresent(id)
-		case "minecraft:blocks_attacks":
-			component, err := blocksAttacksFromNBT(value)
-			if err != nil {
-				return ns.Slot{}, err
-			}
-			stack.Components.BlocksAttacks = component
-			stack.Components.SetPresent(id)
-		case "minecraft:consumable":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("consumable component must be a compound")
-			}
-			seconds := 1.6
-			if _, present := compound["consume_seconds"]; present {
-				seconds = floatValue(compound["consume_seconds"])
-			}
-			if seconds < 0 {
-				return ns.Slot{}, fmt.Errorf("consume_seconds must be non-negative")
-			}
-			animation := compound.GetString("animation")
-			if animation == "" {
-				animation = "eat"
-			}
-			if !slices.Contains(consumeAnimations, animation) {
-				return ns.Slot{}, fmt.Errorf("unknown consume animation %q", animation)
-			}
-			soundName := "minecraft:entity.generic.eat"
-			soundDirect := false
-			var soundRange *float64
-			if soundTag, present := compound["sound"]; present {
-				parsedSound, err := consumableSoundFromNBT(soundTag)
-				if err != nil {
-					return ns.Slot{}, err
-				}
-				soundName, soundDirect, soundRange = parsedSound.name, parsedSound.direct, parsedSound.fixedRange
-			}
-			effectList := compound.GetList("on_consume_effects")
-			effects := make([]ConsumeEffect, 0, len(effectList.Elements))
-			for _, element := range effectList.Elements {
-				effect, err := consumeEffectFromNBT(element)
-				if err != nil {
-					return ns.Slot{}, err
-				}
-				effects = append(effects, effect)
-			}
-			stack.Components.Consumable = &Consumable{
-				ConsumeSeconds: seconds, Animation: animation, Sound: soundName, SoundDirect: soundDirect, SoundRange: soundRange,
-				HasParticles: nbtBoolOr(compound, "has_consume_particles", true), OnConsumeEffects: effects,
-			}
-			stack.Components.SetPresent(id)
-		case "minecraft:death_protection":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("death_protection component must be a compound")
-			}
-			effectList := compound.GetList("death_effects")
-			effects := make([]ConsumeEffect, 0, len(effectList.Elements))
-			for _, element := range effectList.Elements {
-				effect, err := consumeEffectFromNBT(element)
-				if err != nil {
-					return ns.Slot{}, err
-				}
-				effects = append(effects, effect)
-			}
-			stack.Components.DeathProtection = &DeathProtection{DeathEffects: effects}
-			stack.Components.SetPresent(id)
-		case "minecraft:weapon":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("weapon component must be a compound")
-			}
-			damage := int32(1)
-			if _, present := compound["item_damage_per_attack"]; present {
-				damage = compound.GetInt("item_damage_per_attack")
-			}
-			disable := floatValue(compound["disable_blocking_for_seconds"])
-			if damage < 0 || disable < 0 {
-				return ns.Slot{}, fmt.Errorf("weapon values must be non-negative")
-			}
-			stack.Components.Weapon = &Weapon{ItemDamagePerAttack: damage, DisableBlockingForSeconds: disable}
-			stack.Components.SetPresent(id)
-		case "minecraft:attack_range":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("attack_range component must be a compound")
-			}
-			attackRange := &AttackRange{
-				MinReach: 0, MaxReach: 3, MinCreativeReach: 0,
-				MaxCreativeReach: 5, HitboxMargin: 0.3, MobFactor: 1,
-			}
-			if tag, present := compound["min_reach"]; present {
-				attackRange.MinReach = floatValue(tag)
-			}
-			if tag, present := compound["max_reach"]; present {
-				attackRange.MaxReach = floatValue(tag)
-			}
-			if tag, present := compound["min_creative_reach"]; present {
-				attackRange.MinCreativeReach = floatValue(tag)
-			}
-			if tag, present := compound["max_creative_reach"]; present {
-				attackRange.MaxCreativeReach = floatValue(tag)
-			}
-			if tag, present := compound["hitbox_margin"]; present {
-				attackRange.HitboxMargin = floatValue(tag)
-			}
-			if tag, present := compound["mob_factor"]; present {
-				attackRange.MobFactor = floatValue(tag)
-			}
-			if attackRange.MinReach < 0 || attackRange.MinReach > 64 ||
-				attackRange.MaxReach < 0 || attackRange.MaxReach > 64 ||
-				attackRange.MinCreativeReach < 0 || attackRange.MinCreativeReach > 64 ||
-				attackRange.MaxCreativeReach < 0 || attackRange.MaxCreativeReach > 64 ||
-				attackRange.HitboxMargin < 0 || attackRange.HitboxMargin > 1 ||
-				attackRange.MobFactor < 0 || attackRange.MobFactor > 2 {
-				return ns.Slot{}, fmt.Errorf("attack_range values are outside vanilla bounds")
-			}
-			stack.Components.AttackRange = attackRange
-			stack.Components.SetPresent(id)
-		case "minecraft:tool":
-			tool, err := toolFromNBT(value)
-			if err != nil {
-				return ns.Slot{}, err
-			}
-			stack.Components.Tool = tool
-			stack.Components.SetPresent(id)
-		case "minecraft:enchantable":
-			compound, ok := value.(nbt.Compound)
-			if !ok || compound.GetInt("value") <= 0 {
-				return ns.Slot{}, fmt.Errorf("enchantable value must be positive")
-			}
-			stack.Components.Enchantable = &Enchantable{Value: compound.GetInt("value")}
-			stack.Components.SetPresent(id)
-		case "minecraft:tooltip_display":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("tooltip_display component must be a compound")
-			}
-			hiddenList := compound.GetList("hidden_components")
-			hidden := make([]int32, 0, len(hiddenList.Elements))
-			seen := make(map[int32]bool)
-			for _, element := range hiddenList.Elements {
-				name, ok := element.(nbt.String)
-				componentID := registries.DataComponentType.Get(string(name))
-				if !ok || componentID < 0 {
-					return ns.Slot{}, fmt.Errorf("unknown hidden component %q", name)
-				}
-				if !seen[componentID] {
-					hidden = append(hidden, componentID)
-					seen[componentID] = true
-				}
-			}
-			stack.Components.TooltipDisplay = &TooltipDisplay{HideTooltip: nbtBoolOr(compound, "hide_tooltip", false), HiddenComponents: hidden}
-			stack.Components.SetPresent(id)
-		case "minecraft:use_effects":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("use_effects component must be a compound")
-			}
-			speed := 0.2
-			if speedTag, present := compound["speed_multiplier"]; present {
-				speed = floatValue(speedTag)
-			}
-			if speed < 0 || speed > 1 {
-				return ns.Slot{}, fmt.Errorf("use_effects speed_multiplier must be between 0 and 1")
-			}
-			writer := ns.NewWriter()
-			writer.WriteBool(ns.Boolean(nbtBoolOr(compound, "can_sprint", false)))
-			writer.WriteBool(ns.Boolean(nbtBoolOr(compound, "interact_vibrations", true)))
-			writer.WriteFloat32(ns.Float32(speed))
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:use_cooldown":
-			compound, ok := value.(nbt.Compound)
-			seconds := floatValue(compound["seconds"])
-			if !ok || seconds <= 0 {
-				return ns.Slot{}, fmt.Errorf("use_cooldown seconds must be positive")
-			}
-			stack.Components.UseCooldown = &UseCooldown{Seconds: seconds, CooldownGroup: compound.GetString("cooldown_group")}
-			stack.Components.SetPresent(id)
-		case "minecraft:item_model", "minecraft:rarity":
-			stringValue, ok := value.(nbt.String)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("%s component must be a string", key)
-			}
-			if key == "minecraft:item_model" {
-				stack.Components.ItemModel = string(stringValue)
-			} else {
-				stack.Components.Rarity = string(stringValue)
-			}
-			stack.Components.SetPresent(id)
-		case "minecraft:break_sound", "minecraft:instrument", "minecraft:jukebox_playable", "minecraft:provides_trim_material":
-			if stringValue, ok := value.(nbt.String); ok {
-				switch key {
-				case "minecraft:break_sound":
-					stack.Components.BreakSound = string(stringValue)
-				case "minecraft:instrument":
-					stack.Components.Instrument = string(stringValue)
-				case "minecraft:jukebox_playable":
-					stack.Components.JukeboxPlayable = string(stringValue)
-				case "minecraft:provides_trim_material":
-					stack.Components.ProvidesTrimMaterial = string(stringValue)
-				}
-				stack.Components.SetPresent(id)
-				break
-			}
-			writer := ns.NewWriter()
-			var err error
-			switch key {
-			case "minecraft:break_sound":
-				err = writeSoundEventHolderNBT(writer, value)
-			case "minecraft:instrument":
-				err = writeInstrumentHolderNBT(writer, value)
-			case "minecraft:jukebox_playable":
-				err = writeJukeboxSongHolderNBT(writer, value)
-			case "minecraft:provides_trim_material":
-				err = writeTrimMaterialHolderNBT(writer, value)
-			}
-			if err != nil {
-				return ns.Slot{}, fmt.Errorf("%s: %w", key, err)
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:glider":
-			stack.Components.Glider = true
-			stack.Components.SetPresent(id)
-		case "minecraft:enchantment_glint_override":
-			writer := ns.NewWriter()
-			writer.WriteBool(ns.Boolean(intValue(value) != 0))
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:note_block_sound", "minecraft:tooltip_style":
-			stringValue, ok := value.(nbt.String)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("%s component must be a string", key)
-			}
-			writer := ns.NewWriter()
-			writer.WriteString(ns.String(stringValue))
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:creative_slot_lock":
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id)})
-		case "minecraft:intangible_projectile":
-			var encoded bytes.Buffer
-			if err := nbt.NewWriterTo(&encoded).WriteTag(nbt.Compound{}, "", true); err != nil {
-				return ns.Slot{}, err
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: encoded.Bytes()})
-		case "minecraft:bundle_contents", "minecraft:charged_projectiles", "minecraft:container":
-			list, ok := value.(nbt.List)
-			if !ok || list.ElementType != nbt.TagCompound || len(list.Elements) > 256 {
-				return ns.Slot{}, fmt.Errorf("%s component must be a compound list of at most 256 items", key)
-			}
-			writer := ns.NewWriter()
-			if key == "minecraft:container" {
-				slots := make(map[int]ns.Slot, len(list.Elements))
-				maxSlot := -1
-				for _, element := range list.Elements {
-					entry, ok := element.(nbt.Compound)
-					if !ok {
-						return ns.Slot{}, fmt.Errorf("container entry must be a compound")
-					}
-					slotIndex := int(entry.GetInt("slot"))
-					if slotIndex < 0 || slotIndex > 255 {
-						return ns.Slot{}, fmt.Errorf("container slot %d is invalid", slotIndex)
-					}
-					item, err := slotFromComponentNBT(entry["item"])
-					if err != nil {
-						return ns.Slot{}, err
-					}
-					slots[slotIndex] = item
-					maxSlot = max(maxSlot, slotIndex)
-				}
-				writer.WriteVarInt(ns.VarInt(maxSlot + 1))
-				for slotIndex := range maxSlot + 1 {
-					item, present := slots[slotIndex]
-					writer.WriteBool(ns.Boolean(present))
-					if present {
-						if err := WriteItemStackTemplate(writer, item); err != nil {
-							return ns.Slot{}, err
-						}
-					}
-				}
-			} else {
-				writer.WriteVarInt(ns.VarInt(len(list.Elements)))
-				for _, element := range list.Elements {
-					item, err := slotFromComponentNBT(element)
-					if err != nil {
-						return ns.Slot{}, err
-					}
-					if err := WriteItemStackTemplate(writer, item); err != nil {
-						return ns.Slot{}, err
-					}
-				}
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:sulfur_cube_content", "minecraft:use_remainder":
-			item, err := slotFromComponentNBT(value)
-			if err != nil {
-				return ns.Slot{}, err
-			}
-			writer := ns.NewWriter()
-			if err := WriteItemStackTemplate(writer, item); err != nil {
-				return ns.Slot{}, err
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:writable_book_content":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("writable_book_content component must be a compound")
-			}
-			pages := compound.GetList("pages")
-			if len(pages.Elements) > 100 {
-				return ns.Slot{}, fmt.Errorf("writable book has too many pages")
-			}
-			writer := ns.NewWriter()
-			writer.WriteVarInt(ns.VarInt(len(pages.Elements)))
-			for _, page := range pages.Elements {
-				raw, filtered, hasFiltered, err := filterableStringNBT(page, 1024)
-				if err != nil {
-					return ns.Slot{}, err
-				}
-				writer.WriteString(ns.String(raw))
-				writer.WriteBool(ns.Boolean(hasFiltered))
-				if hasFiltered {
-					writer.WriteString(ns.String(filtered))
-				}
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:written_book_content":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("written_book_content component must be a compound")
-			}
-			titleRaw, titleFiltered, titleHasFiltered, err := filterableStringNBT(compound["title"], 32)
-			if err != nil {
-				return ns.Slot{}, err
-			}
-			generation := compound.GetInt("generation")
-			if generation < 0 || generation > 3 {
-				return ns.Slot{}, fmt.Errorf("written book generation %d is invalid", generation)
-			}
-			writer := ns.NewWriter()
-			writer.WriteString(ns.String(titleRaw))
-			writer.WriteBool(ns.Boolean(titleHasFiltered))
-			if titleHasFiltered {
-				writer.WriteString(ns.String(titleFiltered))
-			}
-			writer.WriteString(ns.String(compound.GetString("author")))
-			writer.WriteVarInt(ns.VarInt(generation))
-			pages := compound.GetList("pages")
-			if len(pages.Elements) > 100 {
-				return ns.Slot{}, fmt.Errorf("written book has too many pages")
-			}
-			writer.WriteVarInt(ns.VarInt(len(pages.Elements)))
-			for _, page := range pages.Elements {
-				raw, filtered, hasFiltered := filterableTagNBT(page)
-				if raw == nil {
-					return ns.Slot{}, fmt.Errorf("written book page is invalid")
-				}
-				if err := nbt.NewWriterTo(writer.Writer()).WriteTag(raw, "", true); err != nil {
-					return ns.Slot{}, err
-				}
-				writer.WriteBool(ns.Boolean(hasFiltered))
-				if hasFiltered {
-					if err := nbt.NewWriterTo(writer.Writer()).WriteTag(filtered, "", true); err != nil {
-						return ns.Slot{}, err
-					}
-				}
-			}
-			writer.WriteBool(ns.Boolean(nbtBoolOr(compound, "resolved", false)))
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:repair_cost":
-			stack.Components.RepairCost = intValue(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:ominous_bottle_amplifier":
-			stack.Components.OminousBottleAmplifier = intValue(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:unbreakable":
-			stack.Components.Unbreakable = true
-			stack.Components.SetPresent(id)
-		case "minecraft:custom_name":
-			stack.Components.CustomName = textComponentFromNBT(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:item_name":
-			stack.Components.ItemName = textComponentFromNBT(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:lore":
-			list, ok := value.(nbt.List)
-			if !ok || len(list.Elements) > 256 {
-				return ns.Slot{}, fmt.Errorf("lore component must be a list of at most 256 components")
-			}
-			writer := ns.NewWriter()
-			writer.WriteVarInt(ns.VarInt(len(list.Elements)))
-			for _, line := range list.Elements {
-				if err := nbt.NewWriterTo(writer.Writer()).WriteTag(line, "", true); err != nil {
-					return ns.Slot{}, err
-				}
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:enchantments":
-			stack.Components.Enchantments = enchantmentsFromNBT(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:stored_enchantments":
-			stack.Components.StoredEnchantments = enchantmentsFromNBT(value)
-			stack.Components.SetPresent(id)
-		case "minecraft:trim":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("trim component must be a compound")
-			}
-			trim := &ArmorTrim{Material: compound.GetString("material"), Pattern: compound.GetString("pattern")}
-			if trim.Material == "" || trim.Pattern == "" {
-				return ns.Slot{}, fmt.Errorf("trim component requires material and pattern")
-			}
-			stack.Components.Trim = trim
-			stack.Components.SetPresent(id)
-		case "minecraft:dye":
-			name, ok := value.(nbt.String)
-			dye := dyeID(string(name))
-			if !ok || dye < 0 {
-				return ns.Slot{}, fmt.Errorf("unknown dye %q", name)
-			}
-			stack.Components.Dye = &dye
-			stack.Components.SetPresent(id)
-		case "minecraft:base_color":
-			name, ok := value.(nbt.String)
-			color := dyeID(string(name))
-			if !ok || color < 0 {
-				return ns.Slot{}, fmt.Errorf("unknown base color %q", name)
-			}
-			stack.Components.BaseColor = &color
-			stack.Components.SetPresent(id)
-		case "minecraft:dyed_color":
-			color := intValue(value)
-			if color < 0 || color > 0xffffff {
-				return ns.Slot{}, fmt.Errorf("dyed_color %d is outside RGB range", color)
-			}
-			stack.Components.DyedColor = &color
-			stack.Components.SetPresent(id)
-		case "minecraft:firework_explosion":
-			explosion, err := fireworkExplosionFromNBT(value)
-			if err != nil {
-				return ns.Slot{}, err
-			}
-			stack.Components.FireworkExplosion = &explosion
-			stack.Components.SetPresent(id)
-		case "minecraft:fireworks":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("fireworks component must be a compound")
-			}
-			flight := intValue(compound["flight_duration"])
-			if flight < 0 || flight > 255 {
-				return ns.Slot{}, fmt.Errorf("firework flight duration %d is invalid", flight)
-			}
-			list := compound.GetList("explosions")
-			if len(list.Elements) > 256 {
-				return ns.Slot{}, fmt.Errorf("too many firework explosions")
-			}
-			explosions := make([]FireworkExplosion, 0, len(list.Elements))
-			for _, element := range list.Elements {
-				explosion, err := fireworkExplosionFromNBT(element)
-				if err != nil {
-					return ns.Slot{}, err
-				}
-				explosions = append(explosions, explosion)
-			}
-			stack.Components.Fireworks = &Fireworks{FlightDuration: flight}
-			stack.Components.FireworkExplosions = explosions
-			stack.Components.SetPresent(id)
-		case "minecraft:banner_patterns":
-			list, ok := value.(nbt.List)
-			if !ok || list.ElementType != nbt.TagCompound || len(list.Elements) > 256 {
-				return ns.Slot{}, fmt.Errorf("banner_patterns component must be a compound list of at most 256 layers")
-			}
-			layers := make([]BannerPatternLayer, 0, len(list.Elements))
-			for _, element := range list.Elements {
-				layer, ok := element.(nbt.Compound)
-				if !ok {
-					return ns.Slot{}, fmt.Errorf("banner pattern layer must be a compound")
-				}
-				pattern := layer.GetString("pattern")
-				patternData := BannerPatternLayer{Pattern: pattern}
-				if direct, ok := layer["pattern"].(nbt.Compound); ok {
-					patternData.Pattern = ""
-					patternData.AssetID = direct.GetString("asset_id")
-					patternData.TranslationKey = direct.GetString("translation_key")
-				}
-				color := dyeID(layer.GetString("color"))
-				if color < 0 || patternData.Pattern != "" && registryEntryID("minecraft:banner_pattern", patternData.Pattern) < 0 || patternData.Pattern == "" && (patternData.AssetID == "" || patternData.TranslationKey == "") {
-					return ns.Slot{}, fmt.Errorf("invalid banner pattern %q color %q", pattern, layer.GetString("color"))
-				}
-				patternData.Color = color
-				layers = append(layers, patternData)
-			}
-			stack.Components.BannerPatterns = &layers
-			stack.Components.SetPresent(id)
-		case "minecraft:painting/variant":
-			variant, ok := value.(nbt.String)
-			if !ok || registryEntryID("minecraft:painting_variant", string(variant)) < 0 {
-				return ns.Slot{}, fmt.Errorf("unknown painting variant %q", variant)
-			}
-			stack.Components.PaintingVariant = string(variant)
-			stack.Components.SetPresent(id)
-		case "minecraft:suspicious_stew_effects":
-			list, ok := value.(nbt.List)
-			if !ok || list.ElementType != nbt.TagCompound || len(list.Elements) > 256 {
-				return ns.Slot{}, fmt.Errorf("suspicious_stew_effects must be a compound list")
-			}
-			writer := ns.NewWriter()
-			writer.WriteVarInt(ns.VarInt(len(list.Elements)))
-			for _, element := range list.Elements {
-				entry, ok := element.(nbt.Compound)
-				if !ok {
-					return ns.Slot{}, fmt.Errorf("suspicious stew effect must be a compound")
-				}
-				effectID := registries.MobEffect.Get(entry.GetString("id"))
-				if effectID < 0 {
-					return ns.Slot{}, fmt.Errorf("unknown suspicious stew effect %q", entry.GetString("id"))
-				}
-				duration := int32(160)
-				if _, present := entry["duration"]; present {
-					duration = entry.GetInt("duration")
-				}
-				writer.WriteVarInt(ns.VarInt(effectID))
-				writer.WriteVarInt(ns.VarInt(duration))
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:potion_contents":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("potion_contents component must be a compound")
-			}
-			potion := compound.GetString("potion")
-			if potion != "" && registries.Potion.Get(potion) < 0 {
-				return ns.Slot{}, fmt.Errorf("unknown potion %q", potion)
-			}
-			writer := ns.NewWriter()
-			writer.WriteBool(ns.Boolean(potion != ""))
-			if potion != "" {
-				writer.WriteVarInt(ns.VarInt(registries.Potion.Get(potion)))
-			}
-			color, hasColor := compound["custom_color"]
-			writer.WriteBool(ns.Boolean(hasColor))
-			if hasColor {
-				writer.WriteInt32(ns.Int32(intValue(color)))
-			}
-			effects := compound.GetList("custom_effects")
-			if len(effects.Elements) > 256 {
-				return ns.Slot{}, fmt.Errorf("too many custom potion effects")
-			}
-			writer.WriteVarInt(ns.VarInt(len(effects.Elements)))
-			for _, element := range effects.Elements {
-				potionEffect, ok := element.(nbt.Compound)
-				if !ok {
-					return ns.Slot{}, fmt.Errorf("custom potion effect must be a compound")
-				}
-				effectName := potionEffect.GetString("id")
-				effectID := registries.MobEffect.Get(effectName)
-				if effectID < 0 {
-					return ns.Slot{}, fmt.Errorf("unknown potion effect %q", effectName)
-				}
-				writer.WriteVarInt(ns.VarInt(effectID))
-				if err := writePotionEffectNBT(writer, potionEffect); err != nil {
-					return ns.Slot{}, err
-				}
-			}
-			customName := compound.GetString("custom_name")
-			writer.WriteBool(ns.Boolean(customName != ""))
-			if customName != "" {
-				writer.WriteString(ns.String(customName))
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:entity_data", "minecraft:block_entity_data":
-			compound, ok := value.(nbt.Compound)
-			if !ok {
-				return ns.Slot{}, fmt.Errorf("%s component must be a compound", key)
-			}
-			registry := registries.EntityType
-			if key == "minecraft:block_entity_data" {
-				registry = registries.BlockEntityType
-			}
-			typeName := compound.GetString("id")
-			typeID := registry.Get(typeName)
-			if typeID < 0 {
-				return ns.Slot{}, fmt.Errorf("unknown %s type %q", key, typeName)
-			}
-			payload := make(nbt.Compound, len(compound)-1)
-			for field, fieldValue := range compound {
-				if field != "id" {
-					payload[field] = fieldValue
-				}
-			}
-			writer := ns.NewWriter()
-			writer.WriteVarInt(ns.VarInt(typeID))
-			if err := nbt.NewWriterTo(writer.Writer()).WriteTag(payload, "", true); err != nil {
-				return ns.Slot{}, err
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:recipes":
-			list, ok := value.(nbt.List)
-			if !ok || list.ElementType != nbt.TagString || len(list.Elements) > 256 {
-				return ns.Slot{}, fmt.Errorf("recipes component must be a string list")
-			}
-			var encoded bytes.Buffer
-			if err := nbt.NewWriterTo(&encoded).WriteTag(list, "", true); err != nil {
-				return ns.Slot{}, err
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: encoded.Bytes()})
-		case "minecraft:block_state":
-			compound, ok := value.(nbt.Compound)
-			if !ok || len(compound) > 256 {
-				return ns.Slot{}, fmt.Errorf("block_state component must be a compound")
-			}
-			keys := make([]string, 0, len(compound))
-			for property := range compound {
-				keys = append(keys, property)
-			}
-			sort.Strings(keys)
-			writer := ns.NewWriter()
-			writer.WriteVarInt(ns.VarInt(len(keys)))
-			for _, property := range keys {
-				propertyValue, ok := compound[property].(nbt.String)
-				if !ok {
-					return ns.Slot{}, fmt.Errorf("block state property %q must be a string", property)
-				}
-				writer.WriteString(ns.String(property))
-				writer.WriteString(ns.String(propertyValue))
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: writer.Bytes()})
-		case "minecraft:custom_data", "minecraft:bucket_entity_data", "minecraft:debug_stick_state", "minecraft:map_decorations", "minecraft:lock", "minecraft:container_loot":
-			if _, ok := value.(nbt.Compound); !ok {
-				return ns.Slot{}, fmt.Errorf("%s component must be a compound", key)
-			}
-			var encoded bytes.Buffer
-			if err := nbt.NewWriterTo(&encoded).WriteTag(value, "", true); err != nil {
-				return ns.Slot{}, err
-			}
-			rawComponents = append(rawComponents, ns.RawSlotComponent{ID: ns.VarInt(id), Data: encoded.Bytes()})
+		if err := applyComponent(stack.Components, id, data); err != nil {
+			return ns.Slot{}, fmt.Errorf("%s: %w", key, err)
 		}
+	}
+	for _, id := range removals {
+		clearComponent(stack.Components, id)
 	}
 	encoded, err := stack.ToSlot()
 	if err != nil {
 		return ns.Slot{}, fmt.Errorf("encode item components: %w", err)
 	}
-	for _, raw := range rawComponents {
-		encoded.Components.Add = replaceRawComponent(encoded.Components.Add, raw)
-	}
-	for _, id := range removals {
-		encoded.Components.Add = removeRawComponent(encoded.Components.Add, id)
-		encoded.Components.Remove = append(encoded.Components.Remove, id)
-	}
 	return encoded, nil
 }
 
+func nbtBool(value bool) nbt.Byte {
+	if value {
+		return 1
+	}
+	return 0
+}
+
+func stringWireBridge() nbtBridge {
+	return wireBridge(
+		func(r *ns.PacketBuffer) (nbt.Tag, error) {
+			value, err := r.ReadString(maxStringLen)
+			return nbt.String(value), err
+		},
+		func(w *ns.PacketBuffer, value nbt.Tag) error {
+			text, ok := value.(nbt.String)
+			if !ok {
+				return fmt.Errorf("component must be a string")
+			}
+			return w.WriteString(ns.String(text))
+		})
+}
+
+func swingAnimationNBT(value *SwingAnimation) nbt.Tag {
+	if value == nil || value.Type < 0 || int(value.Type) >= len(swingAnimationNames) {
+		return nil
+	}
+	return nbt.Compound{"type": nbt.String(swingAnimationNames[value.Type]), "duration": nbt.Int(value.Duration)}
+}
+
+func swingAnimationFromNBT(value nbt.Tag) (*SwingAnimation, error) {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return nil, fmt.Errorf("swing animation must be a compound")
+	}
+	animation := &SwingAnimation{Type: 1, Duration: 6}
+	if kind, present := compound["type"]; present {
+		text, _ := kind.(nbt.String)
+		animation.Type = int32(slices.Index(swingAnimationNames[:], string(text)))
+		if animation.Type < 0 {
+			return nil, fmt.Errorf("invalid animation type %v", kind)
+		}
+	}
+	if duration, present := compound["duration"]; present {
+		var err error
+		if animation.Duration, err = componentIntNBT(duration); err != nil {
+			return nil, err
+		}
+	}
+	if animation.Duration < 0 {
+		return nil, fmt.Errorf("negative animation duration")
+	}
+	return animation, nil
+}
+
+func fuelFromNBT(value nbt.Tag, amountField string) (ResolvableInt, ResolvableFloat, error) {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return ResolvableInt{}, ResolvableFloat{}, fmt.Errorf("fuel component must be a compound")
+	}
+	amount, err := resolvableIntFromNBT(compound[amountField])
+	if err != nil {
+		return ResolvableInt{}, ResolvableFloat{}, err
+	}
+	speed, err := resolvableFloatFromNBT(compound["speed_multiplier"])
+	return amount, speed, err
+}
+
+func mobVisibilityFromNBT(value nbt.Tag) (*MobVisibility, error) {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return nil, fmt.Errorf("mob_visibility must be a compound")
+	}
+	types, err := holderSetFromNBT(compound["targeting_entity_types"])
+	if err != nil {
+		return nil, err
+	}
+	visibility, err := componentFloatNBT(compound["visibility"])
+	if err != nil {
+		return nil, err
+	}
+	if visibility < 0 || visibility > 10 || math.IsNaN(float64(visibility)) {
+		return nil, fmt.Errorf("mob visibility outside [0,10]")
+	}
+	return &MobVisibility{TargetingEntityTypes: types, Visibility: visibility}, nil
+}
+
+func consumeEffectsNBT(effects []ConsumeEffect) nbt.List {
+	list := nbt.List{ElementType: nbt.TagCompound}
+	for _, effect := range effects {
+		list.Elements = append(list.Elements, consumeEffectNBT(effect))
+	}
+	return list
+}
+
+func consumeEffectsFromNBT(list nbt.List) ([]ConsumeEffect, error) {
+	effects := make([]ConsumeEffect, 0, len(list.Elements))
+	for _, element := range list.Elements {
+		effect, err := consumeEffectFromNBT(element)
+		if err != nil {
+			return nil, err
+		}
+		effects = append(effects, effect)
+	}
+	return effects, nil
+}
+
+func consumableNBT(consumable *Consumable) nbt.Tag {
+	if consumable == nil {
+		return nil
+	}
+	return nbt.Compound{
+		"consume_seconds": nbt.Float(consumable.ConsumeSeconds), "animation": nbt.String(consumable.Animation),
+		"sound":                 componentSoundNBT(consumable.Sound, consumable.SoundDirect, consumable.SoundRange),
+		"has_consume_particles": nbtBool(consumable.HasParticles), "on_consume_effects": consumeEffectsNBT(consumable.OnConsumeEffects),
+	}
+}
+
+func consumableFromNBT(value nbt.Tag) (*Consumable, error) {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return nil, fmt.Errorf("consumable component must be a compound")
+	}
+	seconds := defaultConsumeSeconds
+	if tag, present := compound["consume_seconds"]; present {
+		seconds = floatValue(tag)
+	}
+	if seconds < 0 {
+		return nil, fmt.Errorf("consume_seconds must be non-negative")
+	}
+	animation := cmp.Or(compound.GetString("animation"), defaultConsumeAnimation)
+	if !slices.Contains(consumeAnimations, animation) {
+		return nil, fmt.Errorf("unknown consume animation %q", animation)
+	}
+	sound := soundHolder{name: defaultConsumeSound}
+	if soundTag, present := compound["sound"]; present {
+		var err error
+		if sound, err = soundHolderFromNBT(soundTag); err != nil {
+			return nil, err
+		}
+	}
+	effects, err := consumeEffectsFromNBT(compound.GetList("on_consume_effects"))
+	if err != nil {
+		return nil, err
+	}
+	return &Consumable{
+		ConsumeSeconds: seconds, Animation: animation, Sound: sound.name, SoundDirect: sound.direct, SoundRange: sound.fixedRange,
+		HasParticles: nbtBoolOr(compound, "has_consume_particles", true), OnConsumeEffects: effects,
+	}, nil
+}
+
+func attackRangeNBT(attackRange *AttackRange) nbt.Tag {
+	if attackRange == nil {
+		return nil
+	}
+	return nbt.Compound{
+		"min_reach": nbt.Float(attackRange.MinReach), "max_reach": nbt.Float(attackRange.MaxReach),
+		"min_creative_reach": nbt.Float(attackRange.MinCreativeReach), "max_creative_reach": nbt.Float(attackRange.MaxCreativeReach),
+		"hitbox_margin": nbt.Float(attackRange.HitboxMargin), "mob_factor": nbt.Float(attackRange.MobFactor),
+	}
+}
+
+func attackRangeFromNBT(value nbt.Tag) (*AttackRange, error) {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return nil, fmt.Errorf("attack_range component must be a compound")
+	}
+	attackRange := &AttackRange{
+		MinReach: 0, MaxReach: 3, MinCreativeReach: 0,
+		MaxCreativeReach: 5, HitboxMargin: 0.3, MobFactor: 1,
+	}
+	for key, field := range map[string]*float64{
+		"min_reach": &attackRange.MinReach, "max_reach": &attackRange.MaxReach,
+		"min_creative_reach": &attackRange.MinCreativeReach, "max_creative_reach": &attackRange.MaxCreativeReach,
+		"hitbox_margin": &attackRange.HitboxMargin, "mob_factor": &attackRange.MobFactor,
+	} {
+		if tag, present := compound[key]; present {
+			*field = floatValue(tag)
+		}
+	}
+	if attackRange.MinReach < 0 || attackRange.MinReach > 64 ||
+		attackRange.MaxReach < 0 || attackRange.MaxReach > 64 ||
+		attackRange.MinCreativeReach < 0 || attackRange.MinCreativeReach > 64 ||
+		attackRange.MaxCreativeReach < 0 || attackRange.MaxCreativeReach > 64 ||
+		attackRange.HitboxMargin < 0 || attackRange.HitboxMargin > 1 ||
+		attackRange.MobFactor < 0 || attackRange.MobFactor > 2 {
+		return nil, fmt.Errorf("attack_range values are outside vanilla bounds")
+	}
+	return attackRange, nil
+}
+
+func tooltipDisplayNBT(tooltip *TooltipDisplay) nbt.Tag {
+	if tooltip == nil {
+		return nil
+	}
+	hidden := nbt.List{ElementType: nbt.TagString}
+	for _, componentID := range tooltip.HiddenComponents {
+		if name := registries.DataComponentType.ByID(componentID); name != "" {
+			hidden.Elements = append(hidden.Elements, nbt.String(name))
+		}
+	}
+	return nbt.Compound{"hide_tooltip": nbtBool(tooltip.HideTooltip), "hidden_components": hidden}
+}
+
+func tooltipDisplayFromNBT(value nbt.Tag) (*TooltipDisplay, error) {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return nil, fmt.Errorf("tooltip_display component must be a compound")
+	}
+	hiddenList := compound.GetList("hidden_components")
+	hidden := make([]int32, 0, len(hiddenList.Elements))
+	for _, element := range hiddenList.Elements {
+		name, ok := element.(nbt.String)
+		componentID := registries.DataComponentType.Get(string(name))
+		if !ok || componentID < 0 {
+			return nil, fmt.Errorf("unknown hidden component %q", name)
+		}
+		if !slices.Contains(hidden, componentID) {
+			hidden = append(hidden, componentID)
+		}
+	}
+	return &TooltipDisplay{HideTooltip: nbtBoolOr(compound, "hide_tooltip", false), HiddenComponents: hidden}, nil
+}
+
+func writeSlotListNBT(w *ns.PacketBuffer, value nbt.Tag) error {
+	list, ok := value.(nbt.List)
+	if !ok || len(list.Elements) > 0 && list.ElementType != nbt.TagCompound || len(list.Elements) > maxPrealloc {
+		return fmt.Errorf("item list must be a compound list of at most %d items", maxPrealloc)
+	}
+	w.WriteVarInt(ns.VarInt(len(list.Elements)))
+	for _, element := range list.Elements {
+		item, err := SlotFromNBT(element)
+		if err != nil {
+			return err
+		}
+		if err := WriteItemStackTemplate(w, item); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func writeContainerNBT(w *ns.PacketBuffer, value nbt.Tag) error {
+	list, ok := value.(nbt.List)
+	if !ok || len(list.Elements) > 0 && list.ElementType != nbt.TagCompound || len(list.Elements) > maxPrealloc {
+		return fmt.Errorf("container must be a compound list of at most %d items", maxPrealloc)
+	}
+	slots := make(map[int]ns.Slot, len(list.Elements))
+	maxSlot := -1
+	for _, element := range list.Elements {
+		entry, ok := element.(nbt.Compound)
+		if !ok {
+			return fmt.Errorf("container entry must be a compound")
+		}
+		slotIndex := int(entry.GetInt("slot"))
+		if slotIndex < 0 || slotIndex >= maxPrealloc {
+			return fmt.Errorf("container slot %d is invalid", slotIndex)
+		}
+		item, err := SlotFromNBT(entry["item"])
+		if err != nil {
+			return err
+		}
+		slots[slotIndex] = item
+		maxSlot = max(maxSlot, slotIndex)
+	}
+	w.WriteVarInt(ns.VarInt(maxSlot + 1))
+	for slotIndex := range maxSlot + 1 {
+		item, present := slots[slotIndex]
+		w.WriteBool(ns.Boolean(present))
+		if present {
+			if err := WriteItemStackTemplate(w, item); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func itemTemplateNBT(r *ns.PacketBuffer) (nbt.Tag, error) {
+	slot, err := ReadItemStackTemplate(r)
+	if err != nil {
+		return nil, err
+	}
+	return SlotToNBT(slot), nil
+}
+
+func writeItemTemplateNBT(w *ns.PacketBuffer, value nbt.Tag) error {
+	item, err := SlotFromNBT(value)
+	if err != nil {
+		return err
+	}
+	return WriteItemStackTemplate(w, item)
+}
+
+func writeStringMapNBT(w *ns.PacketBuffer, value nbt.Tag) error {
+	compound, ok := value.(nbt.Compound)
+	if !ok || len(compound) > maxPrealloc {
+		return fmt.Errorf("block_state component must be a compound")
+	}
+	w.WriteVarInt(ns.VarInt(len(compound)))
+	for _, property := range slices.Sorted(maps.Keys(compound)) {
+		propertyValue, ok := compound[property].(nbt.String)
+		if !ok {
+			return fmt.Errorf("block state property %q must be a string", property)
+		}
+		w.WriteString(ns.String(property))
+		w.WriteString(ns.String(propertyValue))
+	}
+	return nil
+}
+
+func writeWritableBookNBT(w *ns.PacketBuffer, value nbt.Tag) error {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return fmt.Errorf("writable_book_content component must be a compound")
+	}
+	pages := compound.GetList("pages")
+	if len(pages.Elements) > 100 {
+		return fmt.Errorf("writable book has too many pages")
+	}
+	w.WriteVarInt(ns.VarInt(len(pages.Elements)))
+	for _, page := range pages.Elements {
+		raw, filtered, hasFiltered, err := filterableStringNBT(page, 1024)
+		if err != nil {
+			return err
+		}
+		w.WriteString(ns.String(raw))
+		w.WriteBool(ns.Boolean(hasFiltered))
+		if hasFiltered {
+			w.WriteString(ns.String(filtered))
+		}
+	}
+	return nil
+}
+
+func writeWrittenBookNBT(w *ns.PacketBuffer, value nbt.Tag) error {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return fmt.Errorf("written_book_content component must be a compound")
+	}
+	titleRaw, titleFiltered, titleHasFiltered, err := filterableStringNBT(compound["title"], 32)
+	if err != nil {
+		return err
+	}
+	generation := compound.GetInt("generation")
+	if generation < 0 || generation > 3 {
+		return fmt.Errorf("written book generation %d is invalid", generation)
+	}
+	w.WriteString(ns.String(titleRaw))
+	w.WriteBool(ns.Boolean(titleHasFiltered))
+	if titleHasFiltered {
+		w.WriteString(ns.String(titleFiltered))
+	}
+	w.WriteString(ns.String(compound.GetString("author")))
+	w.WriteVarInt(ns.VarInt(generation))
+	pages := compound.GetList("pages")
+	if len(pages.Elements) > 100 {
+		return fmt.Errorf("written book has too many pages")
+	}
+	w.WriteVarInt(ns.VarInt(len(pages.Elements)))
+	for _, page := range pages.Elements {
+		raw, filtered, hasFiltered := filterableTagNBT(page)
+		if raw == nil {
+			return fmt.Errorf("written book page is invalid")
+		}
+		if err := w.WriteNBT(raw); err != nil {
+			return err
+		}
+		w.WriteBool(ns.Boolean(hasFiltered))
+		if hasFiltered {
+			if err := w.WriteNBT(filtered); err != nil {
+				return err
+			}
+		}
+	}
+	return w.WriteBool(ns.Boolean(nbtBoolOr(compound, "resolved", false)))
+}
+
+func writeTextComponentListNBT(w *ns.PacketBuffer, value nbt.Tag) error {
+	list, ok := value.(nbt.List)
+	if !ok || len(list.Elements) > maxLoreLines {
+		return fmt.Errorf("lore component must be a list of at most %d components", maxLoreLines)
+	}
+	w.WriteVarInt(ns.VarInt(len(list.Elements)))
+	for _, line := range list.Elements {
+		if err := w.WriteNBT(line); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func suspiciousStewNBT(r *ns.PacketBuffer) (nbt.Tag, error) {
+	count, err := r.ReadVarInt()
+	if err != nil || count < 0 || count > maxPotionEffects {
+		return nil, fmt.Errorf("invalid suspicious stew effect count %d", count)
+	}
+	list := nbt.List{ElementType: nbt.TagCompound}
+	for range int(count) {
+		id, err := r.ReadVarInt()
+		if err != nil {
+			return nil, err
+		}
+		name := registries.MobEffect.ByID(int32(id))
+		if name == "" {
+			return nil, fmt.Errorf("unknown suspicious stew effect %d", id)
+		}
+		duration, err := r.ReadVarInt()
+		if err != nil {
+			return nil, err
+		}
+		list.Elements = append(list.Elements, nbt.Compound{"id": nbt.String(name), "duration": nbt.Int(duration)})
+	}
+	return list, nil
+}
+
+func writeSuspiciousStewNBT(w *ns.PacketBuffer, value nbt.Tag) error {
+	list, ok := value.(nbt.List)
+	if !ok || len(list.Elements) > 0 && list.ElementType != nbt.TagCompound || len(list.Elements) > maxPotionEffects {
+		return fmt.Errorf("suspicious_stew_effects must be a compound list")
+	}
+	w.WriteVarInt(ns.VarInt(len(list.Elements)))
+	for _, element := range list.Elements {
+		entry, ok := element.(nbt.Compound)
+		if !ok {
+			return fmt.Errorf("suspicious stew effect must be a compound")
+		}
+		effectID := registries.MobEffect.Get(entry.GetString("id"))
+		if effectID < 0 {
+			return fmt.Errorf("unknown suspicious stew effect %q", entry.GetString("id"))
+		}
+		duration := int32(160)
+		if tag, present := entry["duration"]; present {
+			duration = intValue(tag)
+		}
+		w.WriteVarInt(ns.VarInt(effectID))
+		w.WriteVarInt(ns.VarInt(duration))
+	}
+	return nil
+}
+
+func potionContentsNBT(r *ns.PacketBuffer) (nbt.Tag, error) {
+	contents, err := readPotionContents(r)
+	if err != nil {
+		return nil, err
+	}
+	value := nbt.Compound{}
+	if contents.Potion != "" {
+		value["potion"] = nbt.String(contents.Potion)
+	}
+	if contents.CustomColor != nil {
+		value["custom_color"] = nbt.Int(*contents.CustomColor)
+	}
+	if len(contents.Effects) > 0 {
+		effects := nbt.List{ElementType: nbt.TagCompound}
+		for _, effect := range contents.Effects {
+			effects.Elements = append(effects.Elements, statusEffectNBT(effect, true))
+		}
+		value["custom_effects"] = effects
+	}
+	if contents.CustomName != "" {
+		value["custom_name"] = nbt.String(contents.CustomName)
+	}
+	return value, nil
+}
+
+func writePotionContentsNBT(w *ns.PacketBuffer, value nbt.Tag) error {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return fmt.Errorf("potion_contents component must be a compound")
+	}
+	contents := PotionContentsData{Potion: compound.GetString("potion"), CustomName: compound.GetString("custom_name")}
+	if color, present := compound["custom_color"]; present {
+		contents.CustomColor = int32Pointer(intValue(color))
+	}
+	effects := compound.GetList("custom_effects")
+	if len(effects.Elements) > maxPotionEffects {
+		return fmt.Errorf("too many custom potion effects")
+	}
+	for _, element := range effects.Elements {
+		effect, err := statusEffectFromNBT(element, "")
+		if err != nil {
+			return err
+		}
+		contents.Effects = append(contents.Effects, effect)
+	}
+	return writePotionContents(w, contents)
+}
+
+func readTypedEntityDataNBT(r *ns.PacketBuffer, registry *registries.Registry) (nbt.Tag, error) {
+	return typedEntityDataNBTFrom(r, registry)
+}
+
+func writeTypedEntityDataNBT(w *ns.PacketBuffer, value nbt.Tag, registry *registries.Registry) error {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return fmt.Errorf("typed entity data must be a compound")
+	}
+	typeName := compound.GetString("id")
+	typeID := registry.Get(typeName)
+	if typeID < 0 {
+		return fmt.Errorf("unknown typed entity data type %q", typeName)
+	}
+	payload := maps.Clone(compound)
+	delete(payload, "id")
+	w.WriteVarInt(ns.VarInt(typeID))
+	return w.WriteNBT(payload)
+}
+
+func bannerPatternsNBT(patterns *[]BannerPatternLayer) nbt.Tag {
+	if patterns == nil {
+		return nil
+	}
+	layers := nbt.List{ElementType: nbt.TagCompound}
+	for _, layer := range *patterns {
+		var pattern nbt.Tag = nbt.String(layer.Pattern)
+		if layer.Pattern == "" {
+			pattern = nbt.Compound{"asset_id": nbt.String(layer.AssetID), "translation_key": nbt.String(layer.TranslationKey)}
+		}
+		layers.Elements = append(layers.Elements, nbt.Compound{"pattern": pattern, "color": nbt.String(dyeNames[layer.Color])})
+	}
+	return layers
+}
+
+func bannerPatternsFromNBT(value nbt.Tag) (*[]BannerPatternLayer, error) {
+	list, ok := value.(nbt.List)
+	if !ok || len(list.Elements) > 0 && list.ElementType != nbt.TagCompound || len(list.Elements) > maxPrealloc {
+		return nil, fmt.Errorf("banner_patterns component must be a compound list of at most %d layers", maxPrealloc)
+	}
+	layers := make([]BannerPatternLayer, 0, len(list.Elements))
+	for _, element := range list.Elements {
+		layer, ok := element.(nbt.Compound)
+		if !ok {
+			return nil, fmt.Errorf("banner pattern layer must be a compound")
+		}
+		pattern := layer.GetString("pattern")
+		patternData := BannerPatternLayer{Pattern: pattern}
+		if direct, ok := layer["pattern"].(nbt.Compound); ok {
+			patternData.Pattern = ""
+			patternData.AssetID = direct.GetString("asset_id")
+			patternData.TranslationKey = direct.GetString("translation_key")
+		}
+		color := dyeID(layer.GetString("color"))
+		if color < 0 || patternData.Pattern != "" && registries.SynchronizedEntries["minecraft:banner_pattern"].Get(patternData.Pattern) < 0 || patternData.Pattern == "" && (patternData.AssetID == "" || patternData.TranslationKey == "") {
+			return nil, fmt.Errorf("invalid banner pattern %q color %q", pattern, layer.GetString("color"))
+		}
+		patternData.Color = color
+		layers = append(layers, patternData)
+	}
+	return &layers, nil
+}
+
+func fireworksNBT(c *Components) nbt.Tag {
+	if c.Fireworks == nil {
+		return nil
+	}
+	explosions := nbt.List{ElementType: nbt.TagCompound}
+	for _, explosion := range c.FireworkExplosions {
+		explosions.Elements = append(explosions.Elements, fireworkExplosionNBT(explosion))
+	}
+	return nbt.Compound{"flight_duration": nbt.Int(c.Fireworks.FlightDuration), "explosions": explosions}
+}
+
+func fireworksFromNBT(c *Components, value nbt.Tag) error {
+	compound, ok := value.(nbt.Compound)
+	if !ok {
+		return fmt.Errorf("fireworks component must be a compound")
+	}
+	flight := intValue(compound["flight_duration"])
+	if flight < 0 || flight > 255 {
+		return fmt.Errorf("firework flight duration %d is invalid", flight)
+	}
+	list := compound.GetList("explosions")
+	if len(list.Elements) > maxPrealloc {
+		return fmt.Errorf("too many firework explosions")
+	}
+	explosions := make([]FireworkExplosion, 0, len(list.Elements))
+	for _, element := range list.Elements {
+		explosion, err := fireworkExplosionFromNBT(element)
+		if err != nil {
+			return err
+		}
+		explosions = append(explosions, explosion)
+	}
+	c.Fireworks = &Fireworks{FlightDuration: flight}
+	c.FireworkExplosions = explosions
+	return nil
+}
+
+func potDecorationsNBT(decorations *PotDecorations) nbt.Tag {
+	if decorations == nil {
+		return nil
+	}
+	result := nbt.Compound{}
+	for name, stack := range map[string]*Stack{
+		"back": decorations.Back, "left": decorations.Left, "right": decorations.Right, "front": decorations.Front,
+	} {
+		if stack != nil {
+			if slot, err := stack.ToSlot(); err == nil {
+				result[name] = SlotToNBT(slot)
+			}
+		}
+	}
+	return result
+}
+
 func equippableNBT(component *Equippable) nbt.Tag {
+	if component == nil {
+		return nil
+	}
 	result := nbt.Compound{"slot": nbt.String(component.Slot)}
 	if component.EquipSound != "" && component.EquipSound != "minecraft:item.armor.equip_generic" ||
 		component.EquipSoundDirect || component.EquipSoundRange != nil {
@@ -1174,7 +1366,7 @@ func equippableFromNBT(value nbt.Tag) (*Equippable, error) {
 		ShearingSound: "minecraft:item.shears.snip",
 	}
 	if soundTag, present := compound["equip_sound"]; present {
-		sound, err := consumableSoundFromNBT(soundTag)
+		sound, err := soundHolderFromNBT(soundTag)
 		if err != nil {
 			return nil, err
 		}
@@ -1195,7 +1387,7 @@ func equippableFromNBT(value nbt.Tag) (*Equippable, error) {
 	component.EquipOnInteract = nbtBoolOr(compound, "equip_on_interact", false)
 	component.CanBeSheared = nbtBoolOr(compound, "can_be_sheared", false)
 	if soundTag, present := compound["shearing_sound"]; present {
-		sound, err := consumableSoundFromNBT(soundTag)
+		sound, err := soundHolderFromNBT(soundTag)
 		if err != nil {
 			return nil, err
 		}
@@ -1205,6 +1397,9 @@ func equippableFromNBT(value nbt.Tag) (*Equippable, error) {
 }
 
 func blocksAttacksNBT(component *BlocksAttacks) nbt.Tag {
+	if component == nil {
+		return nil
+	}
 	reductions := nbt.List{ElementType: nbt.TagCompound}
 	for _, reduction := range component.DamageReductions {
 		entry := nbt.Compound{
@@ -1321,14 +1516,14 @@ func blocksAttacksFromNBT(value nbt.Tag) (*BlocksAttacks, error) {
 		}
 	}
 	if soundTag, present := compound["block_sound"]; present {
-		sound, err := consumableSoundFromNBT(soundTag)
+		sound, err := soundHolderFromNBT(soundTag)
 		if err != nil {
 			return nil, err
 		}
 		component.BlockSound, component.BlockSoundDirect, component.BlockSoundRange = sound.name, sound.direct, sound.fixedRange
 	}
 	if soundTag, present := compound["disabled_sound"]; present {
-		sound, err := consumableSoundFromNBT(soundTag)
+		sound, err := soundHolderFromNBT(soundTag)
 		if err != nil {
 			return nil, err
 		}
@@ -1338,6 +1533,9 @@ func blocksAttacksFromNBT(value nbt.Tag) (*BlocksAttacks, error) {
 }
 
 func toolNBT(tool *Tool) nbt.Tag {
+	if tool == nil {
+		return nil
+	}
 	rules := nbt.List{ElementType: nbt.TagCompound}
 	for _, rule := range tool.Rules {
 		entry := nbt.Compound{"blocks": holderSetNBT(rule.Blocks)}
@@ -1345,7 +1543,7 @@ func toolNBT(tool *Tool) nbt.Tag {
 			entry["speed"] = nbt.Float(rule.Speed)
 		}
 		if rule.HasCorrectForDrops {
-			entry["correct_for_drops"] = nbt.Byte(map[bool]int8{true: 1}[rule.CorrectForDrops])
+			entry["correct_for_drops"] = nbtBool(rule.CorrectForDrops)
 		}
 		rules.Elements = append(rules.Elements, entry)
 	}
@@ -1420,7 +1618,7 @@ func toolFromNBT(value nbt.Tag) (*Tool, error) {
 }
 
 func holderSetNBT(entries []string) nbt.Tag {
-	if len(entries) == 1 && strings.HasPrefix(entries[0], "#") {
+	if _, ok := singleTagRef(entries); ok {
 		return nbt.String(entries[0])
 	}
 	list := nbt.List{ElementType: nbt.TagString}
@@ -1465,8 +1663,10 @@ func textComponentNBT(component *ItemNameComponent) nbt.Tag {
 }
 
 func textComponentFromNBT(value nbt.Tag) *ItemNameComponent {
-	var encoded bytes.Buffer
-	_ = nbt.NewWriterTo(&encoded).WriteTag(value, "", true)
+	encoded := ns.NewWriter()
+	if value == nil || encoded.WriteNBT(value) != nil {
+		return nil
+	}
 	switch value := value.(type) {
 	case nbt.String:
 		return &ItemNameComponent{Text: string(value), Raw: encoded.Bytes()}
@@ -1519,10 +1719,7 @@ func attributeModifiersFromNBT(value nbt.Tag) ([]AttributeModifier, error) {
 			ID:        entry.GetString("id"),
 			Amount:    floatValue(entry["amount"]),
 			Operation: entry.GetString("operation"),
-			Slot:      entry.GetString("slot"),
-		}
-		if modifier.Slot == "" {
-			modifier.Slot = "any"
+			Slot:      normalizedEquipmentSlotGroup(entry.GetString("slot")),
 		}
 		if registries.Attribute.Get(modifier.Type) < 0 {
 			return nil, fmt.Errorf("unknown attribute type %q", modifier.Type)
@@ -1533,10 +1730,10 @@ func attributeModifiersFromNBT(value nbt.Tag) ([]AttributeModifier, error) {
 		if _, present := entry["amount"]; !present {
 			return nil, fmt.Errorf("attribute modifier %q requires an amount", modifier.ID)
 		}
-		if _, ok := attributeModifierOperationIDs[modifier.Operation]; !ok {
+		if !slices.Contains(attributeModifierOperations, modifier.Operation) {
 			return nil, fmt.Errorf("unknown attribute modifier operation %q", modifier.Operation)
 		}
-		if _, ok := equipmentSlotGroupIDs[modifier.Slot]; !ok {
+		if !slices.Contains(equipmentSlotGroups, modifier.Slot) {
 			return nil, fmt.Errorf("unknown equipment slot group %q", modifier.Slot)
 		}
 		if displayTag, present := entry["display"]; present {
@@ -1545,7 +1742,7 @@ func attributeModifiersFromNBT(value nbt.Tag) ([]AttributeModifier, error) {
 				return nil, fmt.Errorf("attribute modifier display must be a compound")
 			}
 			modifier.Display.Type = display.GetString("type")
-			if _, ok := attributeModifierDisplayTypeIDs[modifier.Display.Type]; !ok {
+			if !slices.Contains(attributeModifierDisplayTypes, modifier.Display.Type) {
 				return nil, fmt.Errorf("unknown attribute modifier display type %q", modifier.Display.Type)
 			}
 			if modifier.Display.Type == "override" {
@@ -1583,64 +1780,37 @@ func enchantmentsFromNBT(value nbt.Tag) map[string]int32 {
 }
 
 func synchronizedHolderName(registry string, holderID ns.VarInt) (string, error) {
-	entries := registries.SynchronizedEntries[registry]
-	index := int(holderID) - 1
-	if index < 0 || index >= len(entries) {
+	name := registries.SynchronizedEntries[registry].HolderName(int32(holderID))
+	if name == "" {
 		return "", fmt.Errorf("unknown %s holder %d", registry, holderID)
 	}
-	return entries[index], nil
+	return name, nil
 }
 
 func writeSynchronizedHolderReference(writer *ns.PacketBuffer, registry, name string) error {
-	entryID := registryEntryID(registry, name)
-	if entryID < 0 {
+	holderID := registries.SynchronizedEntries[registry].HolderID(name)
+	if holderID < 0 {
 		return fmt.Errorf("unknown %s entry %q", registry, name)
 	}
-	writer.WriteVarInt(ns.VarInt(entryID + 1))
+	writer.WriteVarInt(ns.VarInt(holderID))
 	return nil
 }
 
 func soundEventHolderNBT(reader *ns.PacketBuffer) (nbt.Tag, error) {
-	holderID, err := reader.ReadVarInt()
+	sound, err := readSoundHolder(reader)
 	if err != nil {
 		return nil, err
 	}
-	if holderID > 0 {
-		name := registries.SoundEvent.ByID(int32(holderID - 1))
-		if name == "" {
-			return nil, fmt.Errorf("unknown sound event holder %d", holderID)
-		}
-		return nbt.String(name), nil
-	}
-	if holderID < 0 {
-		return nil, fmt.Errorf("invalid sound event holder %d", holderID)
-	}
-	soundID, err := reader.ReadString(maxStringLen)
-	if err != nil {
-		return nil, err
-	}
-	result := nbt.Compound{"sound_id": nbt.String(soundID)}
-	hasRange, err := reader.ReadBool()
-	if err != nil {
-		return nil, err
-	}
-	if hasRange {
-		rangeValue, err := reader.ReadFloat32()
-		if err != nil {
-			return nil, err
-		}
-		result["range"] = nbt.Float(rangeValue)
-	}
-	return result, nil
+	return componentSoundNBT(sound.name, sound.direct, sound.fixedRange), nil
 }
 
 func writeSoundEventHolderNBT(writer *ns.PacketBuffer, value nbt.Tag) error {
 	if name, ok := value.(nbt.String); ok {
-		entryID := registries.SoundEvent.Get(string(name))
-		if entryID < 0 {
+		holderID := registries.SoundEvent.HolderID(string(name))
+		if holderID < 0 {
 			return fmt.Errorf("unknown sound event %q", name)
 		}
-		writer.WriteVarInt(ns.VarInt(entryID + 1))
+		writer.WriteVarInt(ns.VarInt(holderID))
 		return nil
 	}
 	direct, ok := value.(nbt.Compound)
@@ -1681,7 +1851,7 @@ func instrumentHolderNBT(reader *ns.PacketBuffer) (nbt.Tag, error) {
 	if err != nil {
 		return nil, err
 	}
-	description, err := readNetworkTag(reader)
+	description, err := reader.ReadNBT()
 	if err != nil {
 		return nil, err
 	}
@@ -1709,7 +1879,7 @@ func writeInstrumentHolderNBT(writer *ns.PacketBuffer, value nbt.Tag) error {
 	if description == nil {
 		return fmt.Errorf("direct instrument requires description")
 	}
-	return nbt.NewWriterTo(writer.Writer()).WriteTag(description, "", true)
+	return writer.WriteNBT(description)
 }
 
 func jukeboxSongHolderNBT(reader *ns.PacketBuffer) (nbt.Tag, error) {
@@ -1728,7 +1898,7 @@ func jukeboxSongHolderNBT(reader *ns.PacketBuffer) (nbt.Tag, error) {
 	if err != nil {
 		return nil, err
 	}
-	description, err := readNetworkTag(reader)
+	description, err := reader.ReadNBT()
 	if err != nil {
 		return nil, err
 	}
@@ -1762,7 +1932,7 @@ func writeJukeboxSongHolderNBT(writer *ns.PacketBuffer, value nbt.Tag) error {
 	if description == nil {
 		return fmt.Errorf("direct jukebox song requires description")
 	}
-	if err := nbt.NewWriterTo(writer.Writer()).WriteTag(description, "", true); err != nil {
+	if err := writer.WriteNBT(description); err != nil {
 		return err
 	}
 	writer.WriteFloat32(ns.Float32(floatValue(direct["length_in_seconds"])))
@@ -1802,7 +1972,7 @@ func trimMaterialHolderNBT(reader *ns.PacketBuffer) (nbt.Tag, error) {
 		}
 		overrides[string(asset)] = nbt.String(suffix)
 	}
-	description, err := readNetworkTag(reader)
+	description, err := reader.ReadNBT()
 	if err != nil {
 		return nil, err
 	}
@@ -1828,11 +1998,7 @@ func writeTrimMaterialHolderNBT(writer *ns.PacketBuffer, value nbt.Tag) error {
 	writer.WriteVarInt(0)
 	writer.WriteString(ns.String(assetName))
 	overrides := direct.GetCompound("override_armor_assets")
-	keys := make([]string, 0, len(overrides))
-	for key := range overrides {
-		keys = append(keys, key)
-	}
-	sort.Strings(keys)
+	keys := slices.Sorted(maps.Keys(overrides))
 	writer.WriteVarInt(ns.VarInt(len(keys)))
 	for _, key := range keys {
 		suffix, ok := overrides[key].(nbt.String)
@@ -1846,7 +2012,7 @@ func writeTrimMaterialHolderNBT(writer *ns.PacketBuffer, value nbt.Tag) error {
 	if description == nil {
 		return fmt.Errorf("direct trim material requires description")
 	}
-	return nbt.NewWriterTo(writer.Writer()).WriteTag(description, "", true)
+	return writer.WriteNBT(description)
 }
 
 type filterableString struct {
@@ -1873,8 +2039,7 @@ func filterableStringNBT(value nbt.Tag, maxLength int) (string, string, bool, er
 	return raw, string(filtered), hasFiltered, nil
 }
 
-func writableBookNBT(data []byte) (nbt.Compound, error) {
-	reader := ns.NewReader(data)
+func writableBookNBT(reader *ns.PacketBuffer) (nbt.Tag, error) {
 	count, err := reader.ReadVarInt()
 	if err != nil || count < 0 || count > 100 {
 		return nil, fmt.Errorf("invalid writable book page count %d", count)
@@ -1929,13 +2094,7 @@ func filterableTagNBT(value nbt.Tag) (nbt.Tag, nbt.Tag, bool) {
 	return value, nil, false
 }
 
-func readNetworkTag(reader *ns.PacketBuffer) (nbt.Tag, error) {
-	tag, _, err := nbt.NewReaderFrom(reader.Reader()).ReadTag(true)
-	return tag, err
-}
-
-func writtenBookNBT(data []byte) (nbt.Compound, error) {
-	reader := ns.NewReader(data)
+func writtenBookNBT(reader *ns.PacketBuffer) (nbt.Tag, error) {
 	titleRaw, err := reader.ReadString(32)
 	if err != nil {
 		return nil, err
@@ -1971,7 +2130,7 @@ func writtenBookNBT(data []byte) (nbt.Compound, error) {
 	pages := make([]pageData, 0, int(count))
 	hasFilteredPages := false
 	for range int(count) {
-		raw, err := readNetworkTag(reader)
+		raw, err := reader.ReadNBT()
 		if err != nil {
 			return nil, err
 		}
@@ -1981,7 +2140,7 @@ func writtenBookNBT(data []byte) (nbt.Compound, error) {
 		}
 		page := pageData{raw: raw, hasFiltered: bool(hasFiltered)}
 		if hasFiltered {
-			page.filtered, err = readNetworkTag(reader)
+			page.filtered, err = reader.ReadNBT()
 			if err != nil {
 				return nil, err
 			}
@@ -2013,27 +2172,26 @@ func writtenBookNBT(data []byte) (nbt.Compound, error) {
 	}
 	return nbt.Compound{
 		"title": title, "author": nbt.String(author), "generation": nbt.Int(generation),
-		"pages": pageList, "resolved": nbt.Byte(map[bool]int8{true: 1}[bool(resolved)]),
+		"pages": pageList, "resolved": nbtBool(bool(resolved)),
 	}, nil
 }
 
-func textComponentListNBT(data []byte) (nbt.List, error) {
-	reader := ns.NewReader(data)
+func textComponentListNBT(reader *ns.PacketBuffer) (nbt.Tag, error) {
 	count, err := reader.ReadVarInt()
-	if err != nil || count < 0 || count > 256 {
-		return nbt.List{}, fmt.Errorf("invalid text component list length %d", count)
+	if err != nil || count < 0 || count > maxLoreLines {
+		return nil, fmt.Errorf("invalid text component list length %d", count)
 	}
 	values := make([]nbt.Tag, 0, int(count))
 	elementType := byte(nbt.TagEnd)
 	for range int(count) {
-		value, err := readNetworkTag(reader)
+		value, err := reader.ReadNBT()
 		if err != nil {
-			return nbt.List{}, err
+			return nil, err
 		}
 		if elementType == nbt.TagEnd {
 			elementType = value.ID()
 		} else if value.ID() != elementType {
-			return nbt.List{}, fmt.Errorf("mixed text component tag types cannot be represented in NBT list")
+			return nil, fmt.Errorf("mixed text component tag types cannot be represented in NBT list")
 		}
 		values = append(values, value)
 	}
@@ -2043,27 +2201,9 @@ func textComponentListNBT(data []byte) (nbt.List, error) {
 	return nbt.List{ElementType: elementType, Elements: values}, nil
 }
 
-func stringListComponentNBT(data []byte) (nbt.List, error) {
-	reader := ns.NewReader(data)
+func stringMapComponentNBT(reader *ns.PacketBuffer) (nbt.Tag, error) {
 	count, err := reader.ReadVarInt()
-	if err != nil || count < 0 || count > 256 {
-		return nbt.List{}, fmt.Errorf("invalid string list length %d", count)
-	}
-	result := nbt.List{ElementType: nbt.TagString}
-	for range int(count) {
-		value, err := reader.ReadString(maxStringLen)
-		if err != nil {
-			return nbt.List{}, err
-		}
-		result.Elements = append(result.Elements, nbt.String(value))
-	}
-	return result, nil
-}
-
-func stringMapComponentNBT(data []byte) (nbt.Compound, error) {
-	reader := ns.NewReader(data)
-	count, err := reader.ReadVarInt()
-	if err != nil || count < 0 || count > 256 {
+	if err != nil || count < 0 || count > maxPrealloc {
 		return nil, fmt.Errorf("invalid string map length %d", count)
 	}
 	result := nbt.Compound{}
@@ -2082,12 +2222,14 @@ func stringMapComponentNBT(data []byte) (nbt.Compound, error) {
 }
 
 func rawNBTComponent(data []byte) (nbt.Tag, error) {
-	tag, _, err := nbt.NewReaderFrom(bytes.NewReader(data)).ReadTag(true)
-	return tag, err
+	return ns.NewReader(data).ReadNBT()
 }
 
 func typedEntityDataNBT(data []byte, registry *registries.Registry) (nbt.Compound, error) {
-	reader := ns.NewReader(data)
+	return typedEntityDataNBTFrom(ns.NewReader(data), registry)
+}
+
+func typedEntityDataNBTFrom(reader *ns.PacketBuffer, registry *registries.Registry) (nbt.Compound, error) {
 	typeID, err := reader.ReadVarInt()
 	if err != nil {
 		return nil, err
@@ -2096,7 +2238,7 @@ func typedEntityDataNBT(data []byte, registry *registries.Registry) (nbt.Compoun
 	if typeName == "" {
 		return nil, fmt.Errorf("unknown typed entity data id %d", typeID)
 	}
-	tag, err := readNetworkTag(reader)
+	tag, err := reader.ReadNBT()
 	if err != nil {
 		return nil, err
 	}
@@ -2105,43 +2247,31 @@ func typedEntityDataNBT(data []byte, registry *registries.Registry) (nbt.Compoun
 		return nil, fmt.Errorf("typed entity data payload must be a compound")
 	}
 	result := make(nbt.Compound, len(compound)+1)
-	for key, value := range compound {
-		result[key] = value
-	}
+	maps.Copy(result, compound)
 	result["id"] = nbt.String(typeName)
 	return result, nil
 }
 
 // SlotToNBT converts a non-empty slot to vanilla's item-stack compound.
 func SlotToNBT(slot ns.Slot) nbt.Compound {
-	return componentSlotNBT(slot)
-}
-
-// SlotFromNBT decodes vanilla's item-stack compound.
-func SlotFromNBT(value nbt.Tag) (ns.Slot, error) {
-	return slotFromComponentNBT(value)
-}
-
-func componentSlotNBT(slot ns.Slot) nbt.Compound {
-	item := nbt.Compound{"id": nbt.String(ItemName(int32(slot.ItemID))), "count": nbt.Int(slot.Count)}
+	item := nbt.Compound{"id": nbt.String(Name(int32(slot.ItemID))), "count": nbt.Int(slot.Count)}
 	if components := ComponentsToNBT(slot); len(components) > 0 {
 		item["components"] = components
 	}
 	return item
 }
 
-func slotListComponentNBT(data []byte, optional bool) (nbt.List, error) {
-	reader := ns.NewReader(data)
+func slotListComponentNBT(reader *ns.PacketBuffer, optional bool) (nbt.Tag, error) {
 	count, err := reader.ReadVarInt()
-	if err != nil || count < 0 || count > 256 {
-		return nbt.List{}, fmt.Errorf("invalid item component list length %d", count)
+	if err != nil || count < 0 || count > maxPrealloc {
+		return nil, fmt.Errorf("invalid item component list length %d", count)
 	}
 	result := nbt.List{ElementType: nbt.TagCompound}
 	for slotIndex := range int(count) {
 		if optional {
 			hasItem, err := reader.ReadBool()
 			if err != nil {
-				return nbt.List{}, err
+				return nil, err
 			}
 			if !hasItem {
 				continue
@@ -2149,9 +2279,9 @@ func slotListComponentNBT(data []byte, optional bool) (nbt.List, error) {
 		}
 		slot, err := ReadItemStackTemplate(reader)
 		if err != nil {
-			return nbt.List{}, err
+			return nil, err
 		}
-		item := componentSlotNBT(slot)
+		item := SlotToNBT(slot)
 		if optional {
 			result.Elements = append(result.Elements, nbt.Compound{"slot": nbt.Int(slotIndex), "item": item})
 		} else {
@@ -2161,12 +2291,13 @@ func slotListComponentNBT(data []byte, optional bool) (nbt.List, error) {
 	return result, nil
 }
 
-func slotFromComponentNBT(value nbt.Tag) (ns.Slot, error) {
+// SlotFromNBT decodes vanilla's item-stack compound.
+func SlotFromNBT(value nbt.Tag) (ns.Slot, error) {
 	item, ok := value.(nbt.Compound)
 	if !ok {
 		return ns.Slot{}, fmt.Errorf("item component list entry must be a compound")
 	}
-	id := ItemID(item.GetString("id"))
+	id := ID(item.GetString("id"))
 	count := item.GetInt("count")
 	if id < 0 || count <= 0 {
 		return ns.Slot{}, fmt.Errorf("invalid component item %q count %d", item.GetString("id"), count)
@@ -2185,49 +2316,49 @@ func componentSoundNBT(name string, direct bool, fixedRange *float64) nbt.Tag {
 	return value
 }
 
-func consumableSoundFromNBT(value nbt.Tag) (consumableSound, error) {
+func soundHolderFromNBT(value nbt.Tag) (soundHolder, error) {
 	writer := ns.NewWriter()
 	if err := writeSoundEventHolderNBT(writer, value); err != nil {
-		return consumableSound{}, err
+		return soundHolder{}, err
 	}
-	return readConsumableSound(ns.NewReader(writer.Bytes()))
+	return readSoundHolder(ns.NewReader(writer.Bytes()))
 }
 
-func statusEffectComponentNBT(effect StatusEffect, includeID bool) nbt.Compound {
+// statusEffectNBT renders a vanilla MobEffectInstance; the amplifier is an
+// unsigned byte (MobEffectInstance.Details uses ExtraCodecs.UNSIGNED_BYTE).
+func statusEffectNBT(effect StatusEffect, includeID bool) nbt.Compound {
 	result := nbt.Compound{
-		"amplifier": nbt.Int(effect.Amplifier), "duration": nbt.Int(effect.Duration),
-		"ambient":        nbt.Byte(map[bool]int8{true: 1}[effect.Ambient]),
-		"show_particles": nbt.Byte(map[bool]int8{true: 1}[effect.ShowParticles]),
-		"show_icon":      nbt.Byte(map[bool]int8{true: 1}[effect.ShowIcon]),
+		"amplifier": nbt.Byte(int8(uint8(effect.Amplifier))), "duration": nbt.Int(effect.Duration),
+		"ambient": nbtBool(effect.Ambient), "show_particles": nbtBool(effect.ShowParticles), "show_icon": nbtBool(effect.ShowIcon),
 	}
 	if includeID {
 		result["id"] = nbt.String(effect.ID)
 	}
 	if effect.Hidden != nil {
-		result["hidden_effect"] = statusEffectComponentNBT(*effect.Hidden, false)
+		result["hidden_effect"] = statusEffectNBT(*effect.Hidden, false)
 	}
 	return result
 }
 
-func statusEffectComponentFromNBT(value nbt.Tag, inheritedID string) (StatusEffect, error) {
+// statusEffectFromNBT parses a vanilla MobEffectInstance. Hidden effects
+// inherit the outer effect ID; the amplifier accepts any integer tag and is
+// read as an unsigned byte.
+func statusEffectFromNBT(value nbt.Tag, inheritedID string) (StatusEffect, error) {
 	compound, ok := value.(nbt.Compound)
 	if !ok {
 		return StatusEffect{}, fmt.Errorf("status effect must be a compound")
 	}
-	effectID := compound.GetString("id")
-	if effectID == "" {
-		effectID = inheritedID
-	}
+	effectID := cmp.Or(compound.GetString("id"), inheritedID)
 	if registries.MobEffect.Get(effectID) < 0 {
 		return StatusEffect{}, fmt.Errorf("unknown status effect %q", effectID)
 	}
 	status := StatusEffect{
-		ID: effectID, Amplifier: compound.GetInt("amplifier"), Duration: compound.GetInt("duration"),
+		ID: effectID, Amplifier: intValue(compound["amplifier"]) & 0xFF, Duration: intValue(compound["duration"]),
 		Ambient: nbtBoolOr(compound, "ambient", false), ShowParticles: nbtBoolOr(compound, "show_particles", true),
 	}
 	status.ShowIcon = nbtBoolOr(compound, "show_icon", status.ShowParticles)
 	if hidden, present := compound["hidden_effect"]; present {
-		parsed, err := statusEffectComponentFromNBT(hidden, effectID)
+		parsed, err := statusEffectFromNBT(hidden, effectID)
 		if err != nil {
 			return StatusEffect{}, err
 		}
@@ -2242,20 +2373,12 @@ func consumeEffectNBT(effect ConsumeEffect) nbt.Compound {
 	case "minecraft:apply_effects":
 		effects := nbt.List{ElementType: nbt.TagCompound}
 		for _, status := range effect.Effects {
-			effects.Elements = append(effects.Elements, statusEffectComponentNBT(status, true))
+			effects.Elements = append(effects.Elements, statusEffectNBT(status, true))
 		}
 		result["effects"] = effects
 		result["probability"] = nbt.Float(effect.Probability)
 	case "minecraft:remove_effects":
-		if len(effect.EffectIDs) == 1 && strings.HasPrefix(effect.EffectIDs[0], "#") {
-			result["effects"] = nbt.String(effect.EffectIDs[0])
-		} else {
-			effects := nbt.List{ElementType: nbt.TagString}
-			for _, effectID := range effect.EffectIDs {
-				effects.Elements = append(effects.Elements, nbt.String(effectID))
-			}
-			result["effects"] = effects
-		}
+		result["effects"] = holderSetNBT(effect.EffectIDs)
 	case "minecraft:teleport_randomly":
 		result["diameter"] = nbt.Float(effect.Diameter)
 	case "minecraft:play_sound":
@@ -2275,7 +2398,7 @@ func consumeEffectFromNBT(value nbt.Tag) (ConsumeEffect, error) {
 	case "minecraft:apply_effects":
 		list := compound.GetList("effects")
 		for _, element := range list.Elements {
-			status, err := statusEffectComponentFromNBT(element, "")
+			status, err := statusEffectFromNBT(element, "")
 			if err != nil {
 				return ConsumeEffect{}, err
 			}
@@ -2312,7 +2435,7 @@ func consumeEffectFromNBT(value nbt.Tag) (ConsumeEffect, error) {
 			return ConsumeEffect{}, fmt.Errorf("teleport diameter must be positive")
 		}
 	case "minecraft:play_sound":
-		sound, err := consumableSoundFromNBT(compound["sound"])
+		sound, err := soundHolderFromNBT(compound["sound"])
 		if err != nil {
 			return ConsumeEffect{}, err
 		}
@@ -2323,43 +2446,12 @@ func consumeEffectFromNBT(value nbt.Tag) (ConsumeEffect, error) {
 	return effect, nil
 }
 
-func potionEffectNBT(effect PotionEffect, includeID bool) nbt.Compound {
-	result := nbt.Compound{
-		"amplifier": nbt.Int(effect.Amplifier), "duration": nbt.Int(effect.Duration),
-		"ambient":        nbt.Byte(map[bool]int8{true: 1}[effect.Ambient]),
-		"show_particles": nbt.Byte(map[bool]int8{true: 1}[effect.ShowParticles]),
-		"show_icon":      nbt.Byte(map[bool]int8{true: 1}[effect.ShowIcon]),
-	}
-	if includeID {
-		result["id"] = nbt.String(effect.Effect)
-	}
-	if effect.Hidden != nil {
-		result["hidden_effect"] = potionEffectNBT(*effect.Hidden, false)
-	}
-	return result
-}
-
 func nbtBoolOr(compound nbt.Compound, key string, fallback bool) bool {
 	value, present := compound[key]
 	if !present {
 		return fallback
 	}
 	return intValue(value) != 0
-}
-
-func writePotionEffectNBT(writer *ns.PacketBuffer, effect nbt.Compound) error {
-	writer.WriteVarInt(ns.VarInt(effect.GetInt("amplifier")))
-	writer.WriteVarInt(ns.VarInt(effect.GetInt("duration")))
-	writer.WriteBool(ns.Boolean(nbtBoolOr(effect, "ambient", false)))
-	showParticles := nbtBoolOr(effect, "show_particles", true)
-	writer.WriteBool(ns.Boolean(showParticles))
-	writer.WriteBool(ns.Boolean(nbtBoolOr(effect, "show_icon", showParticles)))
-	hidden, hasHidden := effect["hidden_effect"].(nbt.Compound)
-	writer.WriteBool(ns.Boolean(hasHidden))
-	if hasHidden {
-		return writePotionEffectNBT(writer, hidden)
-	}
-	return nil
 }
 
 func floatValue(value nbt.Tag) float64 {
@@ -2401,8 +2493,8 @@ var fireworkShapeNames = [5]string{"small_ball", "large_ball", "star", "creeper"
 func fireworkExplosionNBT(explosion FireworkExplosion) nbt.Compound {
 	return nbt.Compound{
 		"shape": nbt.String(fireworkShapeNames[explosion.Shape]), "colors": nbt.IntArray(explosion.Colors),
-		"fade_colors": nbt.IntArray(explosion.FadeColors), "has_trail": nbt.Byte(map[bool]int8{true: 1}[explosion.HasTrail]),
-		"has_twinkle": nbt.Byte(map[bool]int8{true: 1}[explosion.HasTwinkle]),
+		"fade_colors": nbt.IntArray(explosion.FadeColors), "has_trail": nbtBool(explosion.HasTrail),
+		"has_twinkle": nbtBool(explosion.HasTwinkle),
 	}
 }
 
@@ -2411,13 +2503,7 @@ func fireworkExplosionFromNBT(value nbt.Tag) (FireworkExplosion, error) {
 	if !ok {
 		return FireworkExplosion{}, fmt.Errorf("firework explosion must be a compound")
 	}
-	shape := int32(-1)
-	for id, name := range fireworkShapeNames {
-		if compound.GetString("shape") == name {
-			shape = int32(id)
-			break
-		}
-	}
+	shape := int32(slices.Index(fireworkShapeNames[:], compound.GetString("shape")))
 	if shape < 0 {
 		return FireworkExplosion{}, fmt.Errorf("unknown firework shape %q", compound.GetString("shape"))
 	}
@@ -2433,7 +2519,7 @@ func fireworkExplosionFromNBT(value nbt.Tag) (FireworkExplosion, error) {
 		return FireworkExplosion{}, fmt.Errorf("too many firework colors")
 	}
 	return FireworkExplosion{
-		Shape: shape, Colors: append([]int32(nil), colors...), FadeColors: append([]int32(nil), fadeColors...),
+		Shape: shape, Colors: slices.Clone([]int32(colors)), FadeColors: slices.Clone([]int32(fadeColors)),
 		HasTrail: compound.GetByte("has_trail") != 0, HasTwinkle: compound.GetByte("has_twinkle") != 0,
 	}, nil
 }
@@ -2443,39 +2529,4 @@ var dyeNames = [16]string{
 	"light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
 }
 
-func dyeID(name string) int32 {
-	for id, entry := range dyeNames {
-		if entry == name {
-			return int32(id)
-		}
-	}
-	return -1
-}
-
-func registryEntryID(registry, name string) int {
-	for id, entry := range registries.SynchronizedEntries[registry] {
-		if entry == name {
-			return id
-		}
-	}
-	return -1
-}
-
-func replaceRawComponent(components []ns.RawSlotComponent, replacement ns.RawSlotComponent) []ns.RawSlotComponent {
-	for i := range components {
-		if components[i].ID == replacement.ID {
-			components[i] = replacement
-			return components
-		}
-	}
-	return append(components, replacement)
-}
-
-func removeRawComponent(components []ns.RawSlotComponent, id ns.VarInt) []ns.RawSlotComponent {
-	for i := range components {
-		if components[i].ID == id {
-			return append(components[:i], components[i+1:]...)
-		}
-	}
-	return components
-}
+func dyeID(name string) int32 { return int32(slices.Index(dyeNames[:], name)) }

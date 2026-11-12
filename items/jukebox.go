@@ -1,12 +1,10 @@
 package items
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 
-	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 
 	"github.com/go-mclib/data/registries"
 )
@@ -53,19 +51,12 @@ func registeredJukeboxSong(name string) (JukeboxSong, error) {
 	if err := json.Unmarshal(raw, &value); err != nil {
 		return JukeboxSong{}, fmt.Errorf("decode jukebox song %q: %w", name, err)
 	}
-	registryID := int32(-1)
-	for id, entry := range registries.SynchronizedEntries["minecraft:jukebox_song"] {
-		if entry == name {
-			registryID = int32(id)
-			break
-		}
-	}
+	registryID := registries.SynchronizedEntries["minecraft:jukebox_song"].Get(name)
 	return JukeboxSong{SoundEvent: value.SoundEvent, LengthInSeconds: value.LengthInSeconds, ComparatorOutput: value.ComparatorOutput, RegistryID: registryID}, nil
 }
 
 func directJukeboxSong(raw []byte) (JukeboxSong, error) {
-	source := bytes.NewReader(raw)
-	reader := ns.NewReaderFrom(source)
+	reader := ns.NewReader(raw)
 	holder, err := reader.ReadVarInt()
 	if err != nil {
 		return JukeboxSong{}, err
@@ -73,11 +64,11 @@ func directJukeboxSong(raw []byte) (JukeboxSong, error) {
 	if holder != 0 {
 		return JukeboxSong{}, fmt.Errorf("invalid direct jukebox song holder %d", holder)
 	}
-	sound, err := readSoundEventHolder(reader)
+	sound, err := readSoundHolder(reader)
 	if err != nil {
 		return JukeboxSong{}, err
 	}
-	if _, _, err := nbt.NewReaderFrom(source).ReadTag(true); err != nil {
+	if _, err := reader.ReadNBT(); err != nil {
 		return JukeboxSong{}, fmt.Errorf("decode jukebox song description: %w", err)
 	}
 	length, err := reader.ReadFloat32()
@@ -88,36 +79,5 @@ func directJukeboxSong(raw []byte) (JukeboxSong, error) {
 	if err != nil {
 		return JukeboxSong{}, err
 	}
-	return JukeboxSong{SoundEvent: sound, LengthInSeconds: float32(length), ComparatorOutput: int32(output), RegistryID: -1}, nil
-}
-
-func readSoundEventHolder(reader *ns.PacketBuffer) (string, error) {
-	holder, err := reader.ReadVarInt()
-	if err != nil {
-		return "", err
-	}
-	if holder > 0 {
-		name := registries.SoundEvent.ByID(int32(holder - 1))
-		if name == "" {
-			return "", fmt.Errorf("unknown sound event holder %d", holder)
-		}
-		return name, nil
-	}
-	if holder < 0 {
-		return "", fmt.Errorf("invalid sound event holder %d", holder)
-	}
-	name, err := reader.ReadString(maxStringLen)
-	if err != nil {
-		return "", err
-	}
-	hasRange, err := reader.ReadBool()
-	if err != nil {
-		return "", err
-	}
-	if hasRange {
-		if _, err := reader.ReadFloat32(); err != nil {
-			return "", err
-		}
-	}
-	return string(name), nil
+	return JukeboxSong{SoundEvent: sound.name, LengthInSeconds: float32(length), ComparatorOutput: int32(output), RegistryID: -1}, nil
 }

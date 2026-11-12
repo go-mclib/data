@@ -7,7 +7,7 @@ import (
 
 	"github.com/go-mclib/data/items"
 	"github.com/go-mclib/data/packets"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 func TestUpdateRecipesWireLayout(t *testing.T) {

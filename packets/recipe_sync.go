@@ -3,7 +3,7 @@ package packets
 import (
 	"fmt"
 
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // RecipePropertySet contains the item registry ids accepted by a recipe input role.

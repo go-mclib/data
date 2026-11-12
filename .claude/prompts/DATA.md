@@ -14,7 +14,7 @@ This prompt covers hand-written data logic that cannot be auto-generated from se
 
 ### Architecture
 
-Each component has a `ComponentCodec` implementing:
+Each component has a `componentCodec` implementing:
 
 - `DecodeWire(buf)` - reads wire bytes into an intermediate representation
 - `Apply(stack, decoded)` - applies decoded data to the typed `Components` struct
@@ -22,15 +22,21 @@ Each component has a `ComponentCodec` implementing:
 - `Differs(stack, defaults)` - checks if a component differs from defaults
 - `Encode(stack, buf)` - writes the component to wire format
 
-Codecs are registered in `item_components_codec_registry.go` via `RegisterCodec()`.
+Codecs are registered from `init` in `item_components_codec_registry.go` and `component_payloads.go` via `registerCodec(id, codec)`; `registerCodec` panics when an ID is registered twice. Components that only need their wire bytes preserved use `registerPassthrough(id, decode)`, where `decode` copies the payload (`decodeVarIntWire`, `decodeNBTWire`, `decodeHolderSetWire`, ...).
 
 ### Auto-generated codecs
 
-Simple struct codecs (Food, Weapon, Enchantable, TooltipDisplay, UseCooldown, Fireworks) are generated from field-level metadata in `component_metadata.include.json`. To add or update these:
+Each entry in `component_metadata.include.json` describes one component:
 
-1. Update `wireFormat` in `component_metadata.include.json` with field definitions
+- `goField` / `goType`: the `Components` field and its type. Default item literals in `items_gen.go` are written by the per-component writers in `componentLiteralWriters` (`generate/gen_items.go`), which take the field name from `goField`.
+- `wireType`: `varint`, `float32`, `identifier`, `empty` (plus `allowZero` for pointer VarInt fields such as `MapID`) generate simple typed codecs; `struct` with `wireFormat` generates a full struct codec (Food, Weapon, Enchantable, TooltipDisplay, UseCooldown, VillagerFood); `manual` means items registers the codec by hand, so the generator emits nothing for it.
+- `passthrough: true` with a basic `wireType` (`varint`, `bool`, `identifier`, `empty`, `int32`, `nbt`, `holderSet`, `slotList`, `slot`) generates a `registerPassthrough` call.
+
+Registry components with a `/` in their name that have no metadata entry are generated as VarInt entity-variant passthroughs; add an entry (e.g. `"wireType": "manual"`) to opt out. To add or update generated codecs:
+
+1. Update `component_metadata.include.json` (and `componentLiteralWriters` if the component appears in vanilla item defaults)
 2. Run `cd pkg/data && go generate ./...`
-3. The generator produces codec implementations in `item_components_codec_gen.go`
+3. The generator produces registrations and codec implementations in `item_components_codec_gen.go`
 
 ### Hand-written codecs
 

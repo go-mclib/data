@@ -5,12 +5,14 @@ import (
 	"slices"
 )
 
-// Components holds all item component data.
-// The present bitset tracks which component IDs are explicitly set,
-// mirroring Java's DataComponentPatch — only present components are
-// encoded on the wire as adds or removes relative to the item's defaults.
+// componentWords is the number of uint64 words in the presence bitset.
+const componentWords = MaxComponentID/64 + 1
+
+// Components holds all item component data. Optional components are pointers
+// (nil = absent). present tracks which component IDs ToSlot considers when
+// diffing against the item defaults.
 type Components struct {
-	present            [2]uint64 // bitset: which component IDs are explicitly set
+	present            [componentWords]uint64
 	rawPassthrough     map[int32][]byte
 	removedPassthrough map[int32]bool
 
@@ -35,7 +37,6 @@ type Components struct {
 	BlocksAttacks          *BlocksAttacks
 	BreakSound             string
 	Consumable             *Consumable
-	Container              []any
 	CustomName             *ItemNameComponent
 	Damage                 int32
 	DamageResistant        *DamageResistant
@@ -56,22 +57,20 @@ type Components struct {
 	ItemModel              string
 	ItemName               *ItemNameComponent
 	JukeboxPlayable        string
-	KineticWeapon          *KineticWeapon
 	Lore                   []string
 	loreRaw                []byte
+	MapID                  *int32
+	MapPostProcessing      *int32
 	MaxDamage              int32
 	MaxStackSize           int32
 	MinimumAttackCharge    float64
 	OminousBottleAmplifier int32
 	PaintingVariant        string
-	PiercingWeapon         *PiercingWeapon
-	PotionContents         *PotionContents
 	PotDecorations         *PotDecorations
 	PotionDurationScale    float64
 	ProvidesBannerPatterns string
 	ProvidesTrimMaterial   string
 	Rarity                 string
-	Recipes                []any
 	Repairable             *Repairable
 	RepairCost             int32
 	StoredEnchantments     map[string]int32
@@ -228,37 +227,11 @@ type ItemNameComponent struct {
 	Raw       []byte
 }
 
-type KineticWeapon struct {
-	DamageConditions    *KineticConditions
-	DamageMultiplier    float64
-	DelayTicks          int32
-	DismountConditions  *KineticConditions
-	ForwardMovement     float64
-	HitSound            string
-	KnockbackConditions *KineticConditions
-	Sound               string
-}
-
-type KineticConditions struct {
-	MaxDurationTicks int32
-	MinRelativeSpeed float64
-	MinSpeed         float64
-}
-
-type PiercingWeapon struct {
-	HitSound string
-	Sound    string
-}
-
 type PotDecorations struct {
-	Back  *ItemStack
-	Left  *ItemStack
-	Right *ItemStack
-	Front *ItemStack
-}
-
-type PotionContents struct {
-	// contents vary by potion type
+	Back  *Stack
+	Left  *Stack
+	Right *Stack
+	Front *Stack
 }
 
 type Repairable struct {
@@ -315,51 +288,64 @@ type AttackRange struct {
 	MobFactor        float64
 }
 
-// HasComponent returns true if the given component ID is marked as present.
-func (c *Components) HasComponent(id int32) bool {
-	if id < 0 || id >= 128 {
+// hasComponent reports whether a component ID is tracked for patch encoding.
+func (c *Components) hasComponent(id int32) bool {
+	if id < 0 || id > MaxComponentID {
 		return false
 	}
-	return c.present[id/64]&(1<<uint(id%64)) != 0
+	return c.present[id/64]&(1<<(id%64)) != 0
 }
 
-// SetPresent marks the given component ID as present.
+// SetPresent marks a component ID for patch encoding. Stacks from NewStack and
+// FromSlot already track every component, so SetPresent is only needed for
+// Components built by hand (e.g. &Components{} literals).
 func (c *Components) SetPresent(id int32) {
-	if id >= 0 && id < 128 {
-		c.present[id/64] |= 1 << uint(id%64)
+	if id >= 0 && id <= MaxComponentID {
+		c.present[id/64] |= 1 << (id % 64)
+	}
+}
+
+// ClearPresent excludes a component ID from patch encoding: ToSlot neither
+// adds nor removes it.
+func (c *Components) ClearPresent(id int32) {
+	if id >= 0 && id <= MaxComponentID {
+		c.present[id/64] &^= 1 << (id % 64)
 	}
 }
 
 func cloneFireworkExplosion(explosion FireworkExplosion) FireworkExplosion {
-	explosion.Colors = append([]int32(nil), explosion.Colors...)
-	explosion.FadeColors = append([]int32(nil), explosion.FadeColors...)
+	explosion.Colors = slices.Clone(explosion.Colors)
+	explosion.FadeColors = slices.Clone(explosion.FadeColors)
 	return explosion
 }
 
-func cloneStatusEffects(source []StatusEffect) []StatusEffect {
-	result := make([]StatusEffect, len(source))
+func cloneStatusEffect(effect StatusEffect) StatusEffect {
+	if effect.Hidden != nil {
+		hidden := cloneStatusEffect(*effect.Hidden)
+		effect.Hidden = &hidden
+	}
+	return effect
+}
+
+func cloneConsumeEffects(source []ConsumeEffect) []ConsumeEffect {
+	result := slices.Clone(source)
 	for i, effect := range source {
-		result[i] = effect
-		if effect.Hidden != nil {
-			hidden := cloneStatusEffects([]StatusEffect{*effect.Hidden})
-			result[i].Hidden = &hidden[0]
+		result[i].Effects = slices.Clone(effect.Effects)
+		for j, status := range effect.Effects {
+			result[i].Effects[j] = cloneStatusEffect(status)
 		}
+		result[i].EffectIDs = slices.Clone(effect.EffectIDs)
+		result[i].SoundRange = cloneValue(effect.SoundRange)
 	}
 	return result
 }
 
-func cloneConsumeEffects(source []ConsumeEffect) []ConsumeEffect {
-	result := make([]ConsumeEffect, len(source))
-	for i, effect := range source {
-		result[i] = effect
-		result[i].Effects = cloneStatusEffects(effect.Effects)
-		result[i].EffectIDs = append([]string(nil), effect.EffectIDs...)
-		if effect.SoundRange != nil {
-			value := *effect.SoundRange
-			result[i].SoundRange = &value
-		}
+func cloneItemName(value *ItemNameComponent) *ItemNameComponent {
+	clone := cloneValue(value)
+	if clone != nil {
+		clone.Raw = slices.Clone(value.Raw)
 	}
-	return result
+	return clone
 }
 
 // Clone returns a deep copy of the Components struct.
@@ -376,232 +362,101 @@ func (c *Components) Clone() *Components {
 	clone.CookingFuel = cloneValue(c.CookingFuel)
 	clone.BrewingFuel = cloneValue(c.BrewingFuel)
 	clone.CushionColor = cloneValue(c.CushionColor)
-	if c.MobVisibility != nil {
-		v := *c.MobVisibility
-		v.TargetingEntityTypes = slices.Clone(v.TargetingEntityTypes)
-		clone.MobVisibility = &v
+	if clone.MobVisibility = cloneValue(c.MobVisibility); clone.MobVisibility != nil {
+		clone.MobVisibility.TargetingEntityTypes = slices.Clone(c.MobVisibility.TargetingEntityTypes)
 	}
 	clone.SignTextFront = cloneSignText(c.SignTextFront)
 	clone.SignTextBack = cloneSignText(c.SignTextBack)
 
-	// clone slices
-	if c.AttributeModifiers != nil {
-		clone.AttributeModifiers = make([]AttributeModifier, len(c.AttributeModifiers))
-		for i, modifier := range c.AttributeModifiers {
-			clone.AttributeModifiers[i] = modifier
-			if modifier.Display.Value != nil {
-				value := *modifier.Display.Value
-				value.Raw = append([]byte(nil), modifier.Display.Value.Raw...)
-				clone.AttributeModifiers[i].Display.Value = &value
-			}
-		}
+	clone.AttributeModifiers = slices.Clone(c.AttributeModifiers)
+	for i := range clone.AttributeModifiers {
+		clone.AttributeModifiers[i].Display.Value = cloneItemName(c.AttributeModifiers[i].Display.Value)
 	}
-	if c.Container != nil {
-		clone.Container = make([]any, len(c.Container))
-		copy(clone.Container, c.Container)
-	}
-	if c.Lore != nil {
-		clone.Lore = make([]string, len(c.Lore))
-		copy(clone.Lore, c.Lore)
-	}
-	clone.loreRaw = append([]byte(nil), c.loreRaw...)
-	if c.Recipes != nil {
-		clone.Recipes = make([]any, len(c.Recipes))
-		copy(clone.Recipes, c.Recipes)
-	}
-
-	// clone maps
-	if c.Enchantments != nil {
-		clone.Enchantments = make(map[string]int32, len(c.Enchantments))
-		maps.Copy(clone.Enchantments, c.Enchantments)
-	}
-	if c.StoredEnchantments != nil {
-		clone.StoredEnchantments = make(map[string]int32, len(c.StoredEnchantments))
-		maps.Copy(clone.StoredEnchantments, c.StoredEnchantments)
-	}
+	clone.Lore = slices.Clone(c.Lore)
+	clone.loreRaw = slices.Clone(c.loreRaw)
+	clone.Enchantments = maps.Clone(c.Enchantments)
+	clone.StoredEnchantments = maps.Clone(c.StoredEnchantments)
 	clone.removedPassthrough = maps.Clone(c.removedPassthrough)
 	if c.rawPassthrough != nil {
 		clone.rawPassthrough = make(map[int32][]byte, len(c.rawPassthrough))
 		for id, data := range c.rawPassthrough {
-			clone.rawPassthrough[id] = append([]byte(nil), data...)
+			clone.rawPassthrough[id] = slices.Clone(data)
 		}
 	}
 
-	// clone pointer types
-	if c.AttackRange != nil {
-		v := *c.AttackRange
-		clone.AttackRange = &v
-	}
+	clone.AttackRange = cloneValue(c.AttackRange)
 	if c.BannerPatterns != nil {
-		layers := append([]BannerPatternLayer(nil), (*c.BannerPatterns)...)
+		layers := slices.Clone(*c.BannerPatterns)
 		clone.BannerPatterns = &layers
 	}
-	if c.BaseColor != nil {
-		v := *c.BaseColor
-		clone.BaseColor = &v
-	}
-	if c.BlocksAttacks != nil {
-		v := *c.BlocksAttacks
-		v.DamageReductions = slices.Clone(c.BlocksAttacks.DamageReductions)
+	clone.BaseColor = cloneValue(c.BaseColor)
+	if clone.BlocksAttacks = cloneValue(c.BlocksAttacks); clone.BlocksAttacks != nil {
+		v := clone.BlocksAttacks
+		v.DamageReductions = slices.Clone(v.DamageReductions)
 		for i := range v.DamageReductions {
 			v.DamageReductions[i].Types = slices.Clone(v.DamageReductions[i].Types)
 		}
-		v.BypassedBy = slices.Clone(c.BlocksAttacks.BypassedBy)
-		if c.BlocksAttacks.BlockSoundRange != nil {
-			rangeValue := *c.BlocksAttacks.BlockSoundRange
-			v.BlockSoundRange = &rangeValue
-		}
-		if c.BlocksAttacks.DisabledSoundRange != nil {
-			rangeValue := *c.BlocksAttacks.DisabledSoundRange
-			v.DisabledSoundRange = &rangeValue
-		}
-		clone.BlocksAttacks = &v
+		v.BypassedBy = slices.Clone(v.BypassedBy)
+		v.BlockSoundRange = cloneValue(v.BlockSoundRange)
+		v.DisabledSoundRange = cloneValue(v.DisabledSoundRange)
 	}
-	if c.Consumable != nil {
-		v := *c.Consumable
-		if c.Consumable.SoundRange != nil {
-			rangeValue := *c.Consumable.SoundRange
-			v.SoundRange = &rangeValue
-		}
-		v.OnConsumeEffects = cloneConsumeEffects(c.Consumable.OnConsumeEffects)
-		clone.Consumable = &v
+	if clone.Consumable = cloneValue(c.Consumable); clone.Consumable != nil {
+		clone.Consumable.SoundRange = cloneValue(c.Consumable.SoundRange)
+		clone.Consumable.OnConsumeEffects = cloneConsumeEffects(c.Consumable.OnConsumeEffects)
 	}
-	if c.DamageResistant != nil {
-		v := *c.DamageResistant
-		clone.DamageResistant = &v
+	clone.DamageResistant = cloneValue(c.DamageResistant)
+	clone.CustomName = cloneItemName(c.CustomName)
+	if clone.DeathProtection = cloneValue(c.DeathProtection); clone.DeathProtection != nil {
+		clone.DeathProtection.DeathEffects = cloneConsumeEffects(c.DeathProtection.DeathEffects)
 	}
-	if c.CustomName != nil {
-		v := *c.CustomName
-		v.Raw = append([]byte(nil), c.CustomName.Raw...)
-		clone.CustomName = &v
+	clone.Dye = cloneValue(c.Dye)
+	clone.DyedColor = cloneValue(c.DyedColor)
+	clone.Enchantable = cloneValue(c.Enchantable)
+	if clone.EntityData = cloneValue(c.EntityData); clone.EntityData != nil {
+		clone.EntityData.Raw = slices.Clone(c.EntityData.Raw)
 	}
-	if c.DeathProtection != nil {
-		v := *c.DeathProtection
-		v.DeathEffects = cloneConsumeEffects(c.DeathProtection.DeathEffects)
-		clone.DeathProtection = &v
-	}
-	if c.Dye != nil {
-		v := *c.Dye
-		clone.Dye = &v
-	}
-	if c.DyedColor != nil {
-		v := *c.DyedColor
-		clone.DyedColor = &v
-	}
-	if c.Enchantable != nil {
-		v := *c.Enchantable
-		clone.Enchantable = &v
-	}
-	if c.EntityData != nil {
-		v := *c.EntityData
-		v.Raw = append([]byte(nil), c.EntityData.Raw...)
-		clone.EntityData = &v
-	}
-	if c.Equippable != nil {
-		v := *c.Equippable
-		v.AllowedEntities = append([]string(nil), c.Equippable.AllowedEntities...)
-		if c.Equippable.EquipSoundRange != nil {
-			value := *c.Equippable.EquipSoundRange
-			v.EquipSoundRange = &value
-		}
-		if c.Equippable.ShearingSoundRange != nil {
-			value := *c.Equippable.ShearingSoundRange
-			v.ShearingSoundRange = &value
-		}
-		clone.Equippable = &v
+	if clone.Equippable = cloneValue(c.Equippable); clone.Equippable != nil {
+		clone.Equippable.AllowedEntities = slices.Clone(c.Equippable.AllowedEntities)
+		clone.Equippable.EquipSoundRange = cloneValue(c.Equippable.EquipSoundRange)
+		clone.Equippable.ShearingSoundRange = cloneValue(c.Equippable.ShearingSoundRange)
 	}
 	if c.FireworkExplosion != nil {
 		v := cloneFireworkExplosion(*c.FireworkExplosion)
 		clone.FireworkExplosion = &v
 	}
-	if c.Fireworks != nil {
-		v := *c.Fireworks
-		clone.Fireworks = &v
-	}
+	clone.Fireworks = cloneValue(c.Fireworks)
 	if c.FireworkExplosions != nil {
 		clone.FireworkExplosions = make([]FireworkExplosion, len(c.FireworkExplosions))
 		for i, explosion := range c.FireworkExplosions {
 			clone.FireworkExplosions[i] = cloneFireworkExplosion(explosion)
 		}
 	}
-	if c.Food != nil {
-		v := *c.Food
-		clone.Food = &v
-	}
-	if c.ItemName != nil {
-		v := *c.ItemName
-		v.Raw = append([]byte(nil), c.ItemName.Raw...)
-		clone.ItemName = &v
-	}
-	if c.KineticWeapon != nil {
-		v := *c.KineticWeapon
-		if v.DamageConditions != nil {
-			conditions := *v.DamageConditions
-			v.DamageConditions = &conditions
-		}
-		if v.DismountConditions != nil {
-			conditions := *v.DismountConditions
-			v.DismountConditions = &conditions
-		}
-		if v.KnockbackConditions != nil {
-			conditions := *v.KnockbackConditions
-			v.KnockbackConditions = &conditions
-		}
-		clone.KineticWeapon = &v
-	}
-	if c.PiercingWeapon != nil {
-		v := *c.PiercingWeapon
-		clone.PiercingWeapon = &v
-	}
-	if c.PotionContents != nil {
-		v := *c.PotionContents
-		clone.PotionContents = &v
-	}
-	if c.PotDecorations != nil {
-		v := *c.PotDecorations
+	clone.Food = cloneValue(c.Food)
+	clone.ItemName = cloneItemName(c.ItemName)
+	clone.MapID = cloneValue(c.MapID)
+	clone.MapPostProcessing = cloneValue(c.MapPostProcessing)
+	if clone.PotDecorations = cloneValue(c.PotDecorations); clone.PotDecorations != nil {
+		v := clone.PotDecorations
 		v.Back = cloneDecoration(v.Back)
 		v.Left = cloneDecoration(v.Left)
 		v.Right = cloneDecoration(v.Right)
 		v.Front = cloneDecoration(v.Front)
-		clone.PotDecorations = &v
 	}
-	if c.Repairable != nil {
-		v := *c.Repairable
-		clone.Repairable = &v
-	}
-	if c.Tool != nil {
-		v := *c.Tool
-		v.Rules = append([]ToolRule(nil), c.Tool.Rules...)
-		for i := range v.Rules {
-			v.Rules[i].Blocks = append([]string(nil), v.Rules[i].Blocks...)
+	clone.Repairable = cloneValue(c.Repairable)
+	if clone.Tool = cloneValue(c.Tool); clone.Tool != nil {
+		clone.Tool.Rules = slices.Clone(c.Tool.Rules)
+		for i := range clone.Tool.Rules {
+			clone.Tool.Rules[i].Blocks = slices.Clone(clone.Tool.Rules[i].Blocks)
 		}
-		clone.Tool = &v
 	}
-	if c.Trim != nil {
-		v := *c.Trim
-		clone.Trim = &v
+	clone.Trim = cloneValue(c.Trim)
+	if clone.TooltipDisplay = cloneValue(c.TooltipDisplay); clone.TooltipDisplay != nil {
+		clone.TooltipDisplay.HiddenComponents = slices.Clone(c.TooltipDisplay.HiddenComponents)
 	}
-	if c.TooltipDisplay != nil {
-		v := *c.TooltipDisplay
-		v.HiddenComponents = append([]int32(nil), c.TooltipDisplay.HiddenComponents...)
-		clone.TooltipDisplay = &v
-	}
-	if c.UseCooldown != nil {
-		v := *c.UseCooldown
-		clone.UseCooldown = &v
-	}
-	if c.UseEffects != nil {
-		v := *c.UseEffects
-		clone.UseEffects = &v
-	}
-	if c.UseRemainder != nil {
-		v := *c.UseRemainder
-		clone.UseRemainder = &v
-	}
-	if c.Weapon != nil {
-		v := *c.Weapon
-		clone.Weapon = &v
-	}
+	clone.UseCooldown = cloneValue(c.UseCooldown)
+	clone.UseEffects = cloneValue(c.UseEffects)
+	clone.UseRemainder = cloneValue(c.UseRemainder)
+	clone.Weapon = cloneValue(c.Weapon)
 
 	return &clone
 }

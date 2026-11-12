@@ -1,11 +1,9 @@
 package main
 
 import (
+	"cmp"
 	"encoding/json"
 	"fmt"
-	"os"
-	"path/filepath"
-	"sort"
 	"strings"
 )
 
@@ -56,25 +54,8 @@ type recipeResult struct {
 
 // generateRecipes emits crafting, cooking, brewing, stonecutting, and smithing recipes
 // from the datapack JSONs. Ingredients keep tag references ("#minecraft:planks")
-// for runtime resolution via items.ItemTag.
+// for runtime resolution via items.Tag.
 func generateRecipes(recipeDir, outPath string) {
-	var names []string
-	err := filepath.WalkDir(recipeDir, func(path string, entry os.DirEntry, err error) error {
-		if err != nil || entry.IsDir() || !strings.HasSuffix(entry.Name(), ".json") {
-			return err
-		}
-		rel, err := filepath.Rel(recipeDir, path)
-		if err != nil {
-			return err
-		}
-		names = append(names, filepath.ToSlash(rel))
-		return nil
-	})
-	if err != nil {
-		panic(fmt.Sprintf("failed to read recipe dir %s: %v", recipeDir, err))
-	}
-	sort.Strings(names)
-
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("recipes"))
 
@@ -84,8 +65,9 @@ func generateRecipes(recipeDir, outPath string) {
 	displayID := 0
 	groups := make(map[string]int)
 
-	for _, name := range names {
-		r := loadJSON[recipeJSON](filepath.Join(recipeDir, name))
+	for _, entry := range datapackEntries(recipeDir) {
+		recipeName := entry.ID
+		r := loadJSON[recipeJSON](entry.Path)
 		result := r.Result
 		if r.Type == "minecraft:brewing" {
 			result = r.Output
@@ -95,11 +77,10 @@ func generateRecipes(recipeDir, outPath string) {
 			// Both item templates and transmute results accept a bare item name.
 			if err := json.Unmarshal(result, &res); err != nil {
 				if err := json.Unmarshal(result, &res.ID); err != nil {
-					panic(fmt.Sprintf("failed to parse recipe result %s: %v", name, err))
+					panic(fmt.Sprintf("failed to parse recipe result %s: %v", entry.Path, err))
 				}
 			}
 		}
-		recipeName := "minecraft:" + strings.TrimSuffix(name, ".json")
 		if r.Type == "minecraft:brewing" {
 			fmt.Fprintf(&brewing, "\t{Name: %q, Input: %s, Reagent: %s, Result: %q, Count: %d, Components: %s},\n",
 				recipeName, potionIngredientLiteral(r.Input), potionIngredientLiteral(r.Reagent), res.ID, res.Count, recipeJSONLiteral(res.Components))
@@ -249,19 +230,13 @@ func recipeDisplayCount(recipe recipeJSON) int {
 func recipeBookCategory(recipe recipeJSON) string {
 	switch recipe.Type {
 	case "minecraft:crafting_shaped", "minecraft:crafting_shapeless", "minecraft:crafting_dye", "minecraft:crafting_imbue", "minecraft:crafting_transmute":
-		category := recipe.Category
-		if category == "" {
-			category = "misc"
-		}
+		category := cmp.Or(recipe.Category, "misc")
 		if category == "building" {
 			category = "building_blocks"
 		}
 		return "minecraft:crafting_" + category
 	case "minecraft:smelting":
-		category := recipe.Category
-		if category == "" {
-			category = "misc"
-		}
+		category := cmp.Or(recipe.Category, "misc")
 		return "minecraft:furnace_" + category
 	case "minecraft:blasting":
 		if recipe.Category == "blocks" {

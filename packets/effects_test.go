@@ -7,7 +7,7 @@ import (
 	"github.com/go-mclib/data/items"
 	"github.com/go-mclib/data/packets"
 	"github.com/go-mclib/data/registries"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 func TestSoundPacketsRoundTrip(t *testing.T) {
@@ -22,7 +22,7 @@ func TestSoundPacketsRoundTrip(t *testing.T) {
 			Direct: true, SoundID: "minecraft:custom.sound",
 			FixedRange: ns.Some(ns.Float32(32)),
 		},
-		SoundCategory: 7, EntityId: 99, Volume: 2, Pitch: 1, Seed: 456,
+		SoundCategory: 7, EntityID: 99, Volume: 2, Pitch: 1, Seed: 456,
 	}, &packets.S2CSoundEntity{})
 }
 
@@ -38,7 +38,7 @@ func TestItemParticleOptionsPreserveFollowingFields(t *testing.T) {
 	// An unframed item template with a variable-length component payload must
 	// end before the limiter flags and coordinates, not at packet EOF.
 	options := ns.NewWriter()
-	options.WriteVarInt(ns.VarInt(items.ItemID("minecraft:diamond_sword")))
+	options.WriteVarInt(ns.VarInt(items.ID("minecraft:diamond_sword")))
 	options.WriteVarInt(2)
 	options.WriteVarInt(1)
 	options.WriteVarInt(1)
@@ -68,7 +68,7 @@ func TestItemParticleOptionsPreserveFollowingFields(t *testing.T) {
 	if err := packet.Read(ns.NewReaderFrom(reader)); err != nil {
 		t.Fatal(err)
 	}
-	if packet.ParticleId != id || !bytes.Equal(packet.Data, options.Bytes()) || !bool(packet.LongDistance) || !bool(packet.AlwaysVisible) || packet.X != 1 || packet.Y != 2 || packet.Z != 3 || packet.OffsetX != 4 || packet.OffsetY != 5 || packet.OffsetZ != 6 || packet.MaxSpeedX != 7 || packet.MaxSpeedY != 8 || packet.MaxSpeedZ != 9 || packet.ParticleCount != 300 || packet.RandomizationType != packets.ParticleRandomizationAlternative {
+	if packet.ParticleID != id || !bytes.Equal(packet.Data, options.Bytes()) || !bool(packet.LongDistance) || !bool(packet.AlwaysVisible) || packet.X != 1 || packet.Y != 2 || packet.Z != 3 || packet.OffsetX != 4 || packet.OffsetY != 5 || packet.OffsetZ != 6 || packet.MaxSpeedX != 7 || packet.MaxSpeedY != 8 || packet.MaxSpeedZ != 9 || packet.ParticleCount != 300 || packet.RandomizationType != packets.ParticleRandomizationAlternative {
 		t.Fatalf("item particle fields = %+v", packet)
 	}
 	if sentinel, err := reader.ReadByte(); err != nil || sentinel != 0x5a || reader.Len() != 0 {

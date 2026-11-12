@@ -8,7 +8,7 @@ import (
 	"github.com/go-mclib/data/items"
 	"github.com/go-mclib/data/registries"
 	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 func TestFormattedLoreRetainsNestedTextAndWireStyle(t *testing.T) {
@@ -22,7 +22,7 @@ func TestFormattedLoreRetainsNestedTextAndWireStyle(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:recovery_compass")), 1)
+	slot := ns.NewSlot(ns.VarInt(items.ID("minecraft:recovery_compass")), 1)
 	slot.Components.Add = []ns.RawSlotComponent{{ID: items.ComponentLore, Data: writer.Bytes()}}
 	stack, err := items.FromSlot(slot)
 	if err != nil {
@@ -52,7 +52,7 @@ func TestReadPotionContentsCustomFields(t *testing.T) {
 	writer.WriteBool(true)
 	writer.WriteBool(false)
 	writer.WriteBool(false)
-	stack := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:splash_potion")), 1)
+	stack := ns.NewSlot(ns.VarInt(items.ID("minecraft:splash_potion")), 1)
 	stack.Components.Add = []ns.RawSlotComponent{{ID: ns.VarInt(items.ComponentPotionContents), Data: writer.Bytes()}}
 	contents, err := items.ReadPotionContents(stack)
 	if err != nil {
@@ -61,13 +61,13 @@ func TestReadPotionContentsCustomFields(t *testing.T) {
 	if contents.Potion != "minecraft:water" || contents.CustomColor == nil || *contents.CustomColor != 0x123456 {
 		t.Fatalf("contents = %+v", contents)
 	}
-	if len(contents.Effects) != 1 || contents.Effects[0].Effect != "minecraft:poison" || contents.Effects[0].Amplifier != 1 || contents.Effects[0].Duration != 200 {
+	if len(contents.Effects) != 1 || contents.Effects[0].ID != "minecraft:poison" || contents.Effects[0].Amplifier != 1 || contents.Effects[0].Duration != 200 {
 		t.Fatalf("custom effects = %+v", contents.Effects)
 	}
 }
 
 func TestPassthroughComponentsSurviveTypedRoundTrip(t *testing.T) {
-	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	slot := ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1)
 	slot.Components.Add = []ns.RawSlotComponent{{ID: ns.VarInt(items.ComponentCreativeSlotLock)}}
 	slot.Components.Remove = []ns.VarInt{ns.VarInt(items.ComponentCanBreak)}
 	stack, err := items.FromSlot(slot)
@@ -90,7 +90,7 @@ func TestPassthroughComponentsSurviveTypedRoundTrip(t *testing.T) {
 }
 
 func TestAttributeModifierWireLayout(t *testing.T) {
-	stack := items.NewStack(items.ItemID("minecraft:stone"), 1)
+	stack := items.NewStack(items.ID("minecraft:stone"), 1)
 	stack.Components.AttributeModifiers = []items.AttributeModifier{{
 		Type: "minecraft:attack_damage", Amount: 1.5, ID: "minecraft:test",
 		Operation: "add_multiplied_base", Slot: "mainhand",
@@ -119,7 +119,7 @@ func TestAttributeModifierWireLayout(t *testing.T) {
 	if modifier.Slot != "mainhand" || modifier.Display.Type != "hidden" {
 		t.Fatalf("decoded modifier = %+v", modifier)
 	}
-	defaults := items.DefaultComponents(items.ItemID("minecraft:carved_pumpkin"))
+	defaults := items.DefaultComponents(items.ID("minecraft:carved_pumpkin"))
 	if defaults == nil || len(defaults.AttributeModifiers) != 1 || defaults.AttributeModifiers[0].Display.Type != "hidden" {
 		t.Fatalf("carved pumpkin modifiers = %+v", defaults)
 	}
@@ -127,7 +127,7 @@ func TestAttributeModifierWireLayout(t *testing.T) {
 
 func TestEquipmentSlotGroupWireOrdinals(t *testing.T) {
 	for ordinal, slotName := range []string{"any", "mainhand", "offhand", "hand", "feet", "legs", "chest", "head", "armor", "body", "saddle"} {
-		stack := items.NewStack(items.ItemID("minecraft:stone"), 1)
+		stack := items.NewStack(items.ID("minecraft:stone"), 1)
 		stack.Components.AttributeModifiers = []items.AttributeModifier{{
 			Type: "minecraft:attack_damage", ID: "minecraft:test", Operation: "add_value", Slot: slotName,
 		}}
@@ -180,7 +180,7 @@ func TestAttributeModifierOverrideNBTRoundTrip(t *testing.T) {
 			"display": nbt.Compound{"type": nbt.String("override"), "value": override},
 		}},
 	}}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -237,7 +237,7 @@ func TestSameStackIgnoresPatchOrder(t *testing.T) {
 }
 
 func TestFireworksComponentsRoundTrip(t *testing.T) {
-	rocket := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:firework_rocket")), 1)
+	rocket := ns.NewSlot(ns.VarInt(items.ID("minecraft:firework_rocket")), 1)
 	restored, err := items.ApplyNBTComponents(rocket, nbt.Compound{
 		"minecraft:fireworks": nbt.Compound{
 			"flight_duration": nbt.Int(3),
@@ -262,7 +262,7 @@ func TestFireworksComponentsRoundTrip(t *testing.T) {
 }
 
 func TestPotDecorationsComponentRoundTrip(t *testing.T) {
-	stack := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:decorated_pot")), 1)
+	stack := ns.NewSlot(ns.VarInt(items.ID("minecraft:decorated_pot")), 1)
 	restored, err := items.ApplyNBTComponents(stack, nbt.Compound{
 		"minecraft:pot_decorations": nbt.Compound{
 			"back": nbt.Compound{
@@ -297,7 +297,7 @@ func TestPotDecorationsComponentRoundTrip(t *testing.T) {
 		t.Fatal(err)
 	}
 	decorations := decoded.Components.PotDecorations
-	if decorations == nil || decorations.Back == nil || decorations.Back.ID != items.ItemID("minecraft:angler_pottery_sherd") ||
+	if decorations == nil || decorations.Back == nil || decorations.Back.ID != items.ID("minecraft:angler_pottery_sherd") ||
 		decorations.Back.Count != 2 || decorations.Left == nil || decorations.Right != nil || decorations.Front != nil {
 		t.Fatalf("pot decorations = %+v", decorations)
 	}
@@ -342,7 +342,7 @@ func TestResolvableFuelWireConstantsAndReferences(t *testing.T) {
 	if sentinel, err := reader.ReadVarInt(); err != nil || sentinel != 123456 {
 		t.Fatalf("fuel payload alignment: %d, %v", sentinel, err)
 	}
-	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	slot := ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1)
 	slot.AddComponent(items.ComponentCookingFuel, data)
 	stack, err := items.FromSlot(slot)
 	if err != nil {
@@ -396,7 +396,7 @@ func TestSignTextFixedFourLinesAndFilteredPersistence(t *testing.T) {
 	if sentinel, err := reader.ReadVarInt(); err != nil || sentinel != 123456 {
 		t.Fatalf("sign payload alignment: %d, %v", sentinel, err)
 	}
-	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	slot := ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1)
 	slot.AddComponent(items.ComponentSignTextFront, data)
 	patch := items.ComponentsToNBT(slot)
 	sign := patch.GetCompound("minecraft:sign_text_front")
@@ -440,10 +440,10 @@ func TestPlainRegistryComponentsUseZeroBasedHolders(t *testing.T) {
 			if next, err := reader.ReadVarInt(); err != nil || next != 42 {
 				t.Fatalf("plain holder consumed inline data: %d, %v", next, err)
 			}
-			slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+			slot := ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1)
 			slot.AddComponent(ns.VarInt(test.component), data)
 			patch := items.ComponentsToNBT(slot)
-			if patch.GetString(test.name) != registries.SynchronizedEntries[test.registry][0] {
+			if patch.GetString(test.name) != registries.SynchronizedEntries[test.registry].ByID(0) {
 				t.Fatalf("holder zero mapped incorrectly: %+v", patch)
 			}
 			restored, err := items.ApplyNBTComponents(ns.NewSlot(slot.ItemID, 1), patch)
@@ -455,7 +455,7 @@ func TestPlainRegistryComponentsUseZeroBasedHolders(t *testing.T) {
 }
 
 func TestBannerPatternsComponentRoundTrip(t *testing.T) {
-	stack := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:red_banner")), 1)
+	stack := ns.NewSlot(ns.VarInt(items.ID("minecraft:red_banner")), 1)
 	restored, err := items.ApplyNBTComponents(stack, nbt.Compound{
 		"minecraft:base_color": nbt.String("red"),
 		"minecraft:banner_patterns": nbt.List{ElementType: nbt.TagCompound, Elements: []nbt.Tag{
@@ -478,8 +478,7 @@ func TestBannerPatternsComponentRoundTrip(t *testing.T) {
 		t.Fatalf("banner pattern count = %d, %v", count, err)
 	}
 	holder, err := wire.ReadVarInt()
-	entries := registries.SynchronizedEntries["minecraft:banner_pattern"]
-	if err != nil || holder <= 0 || int(holder) > len(entries) || entries[holder-1] != "minecraft:stripe_top" {
+	if err != nil || registries.SynchronizedEntries["minecraft:banner_pattern"].HolderName(int32(holder)) != "minecraft:stripe_top" {
 		t.Fatalf("banner pattern holder = %d, %v", holder, err)
 	}
 	decoded, err := items.FromSlot(restored)
@@ -503,12 +502,12 @@ func TestDyeComponentsRoundTrip(t *testing.T) {
 		"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
 		"light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
 	} {
-		defaults := items.DefaultComponents(items.ItemID("minecraft:" + name + "_dye"))
+		defaults := items.DefaultComponents(items.ID("minecraft:" + name + "_dye"))
 		if defaults == nil || defaults.Dye == nil || *defaults.Dye != int32(id) {
 			t.Fatalf("%s dye default = %+v, want %d", name, defaults, id)
 		}
 	}
-	stack := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:leather_chestplate")), 1)
+	stack := ns.NewSlot(ns.VarInt(items.ID("minecraft:leather_chestplate")), 1)
 	restored, err := items.ApplyNBTComponents(stack, nbt.Compound{
 		"minecraft:dye":        nbt.String("white"),
 		"minecraft:dyed_color": nbt.Int(0x102030),
@@ -530,7 +529,7 @@ func TestDyeComponentsRoundTrip(t *testing.T) {
 }
 
 func TestPaintingVariantComponentRoundTrip(t *testing.T) {
-	stack := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:painting")), 1)
+	stack := ns.NewSlot(ns.VarInt(items.ID("minecraft:painting")), 1)
 	restored, err := items.ApplyNBTComponents(stack, nbt.Compound{
 		"minecraft:painting/variant": nbt.String("minecraft:kebab"),
 	})
@@ -550,7 +549,7 @@ func TestPaintingVariantComponentRoundTrip(t *testing.T) {
 }
 
 func TestItemStackTemplateRoundTrip(t *testing.T) {
-	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:diamond_sword")), 1)
+	slot := ns.NewSlot(ns.VarInt(items.ID("minecraft:diamond_sword")), 1)
 	slot.Components.Add = []ns.RawSlotComponent{{ID: items.ComponentDamage, Data: []byte{7}}}
 	slot.Components.Remove = []ns.VarInt{items.ComponentCustomName}
 	writer := ns.NewWriter()
@@ -574,12 +573,12 @@ func TestCraftingRemainders(t *testing.T) {
 		"minecraft:dragon_breath": "minecraft:glass_bottle",
 		"minecraft:honey_bottle":  "minecraft:glass_bottle",
 	} {
-		got, ok := items.CraftingRemainder(items.ItemID(ingredient))
-		if !ok || got != items.ItemID(remainder) {
-			t.Errorf("CraftingRemainder(%s) = %s, %v", ingredient, items.ItemName(got), ok)
+		got, ok := items.CraftingRemainder(items.ID(ingredient))
+		if !ok || got != items.ID(remainder) {
+			t.Errorf("CraftingRemainder(%s) = %s, %v", ingredient, items.Name(got), ok)
 		}
 	}
-	if _, ok := items.CraftingRemainder(items.ItemID("minecraft:stick")); ok {
+	if _, ok := items.CraftingRemainder(items.ID("minecraft:stick")); ok {
 		t.Fatal("stick has a crafting remainder")
 	}
 }
@@ -598,11 +597,11 @@ func TestItemIDLookup(t *testing.T) {
 
 	for _, name := range tests {
 		t.Run(name, func(t *testing.T) {
-			id := items.ItemID(name)
+			id := items.ID(name)
 			if id < 0 {
 				t.Fatalf("ItemID(%q) = %d, want >= 0", name, id)
 			}
-			if got := items.ItemName(id); got != name {
+			if got := items.Name(id); got != name {
 				t.Errorf("ItemName(%d) = %q, want %q", id, got, name)
 			}
 		})
@@ -610,16 +609,16 @@ func TestItemIDLookup(t *testing.T) {
 }
 
 func TestItemIDNotFound(t *testing.T) {
-	if got := items.ItemID("minecraft:nonexistent_item"); got != -1 {
+	if got := items.ID("minecraft:nonexistent_item"); got != -1 {
 		t.Errorf("ItemID for nonexistent item = %d, want -1", got)
 	}
-	if got := items.ItemName(-999); got != "" {
+	if got := items.Name(-999); got != "" {
 		t.Errorf("ItemName for invalid ID = %q, want empty string", got)
 	}
 }
 
 func TestConsumableComponentRoundTrip(t *testing.T) {
-	stack := items.NewStack(items.ItemID("minecraft:golden_apple"), 1)
+	stack := items.NewStack(items.ID("minecraft:golden_apple"), 1)
 	stack.Components.Consumable.ConsumeSeconds = 0.5
 	slot, err := stack.ToSlot()
 	if err != nil {
@@ -639,7 +638,7 @@ func TestConsumableComponentRoundTrip(t *testing.T) {
 		t.Fatalf("decoded consume effects = %+v", effects)
 	}
 
-	removed := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:golden_apple")), 1)
+	removed := ns.NewSlot(ns.VarInt(items.ID("minecraft:golden_apple")), 1)
 	removed.Components.Remove = []ns.VarInt{ns.VarInt(items.ComponentConsumable)}
 	decoded, err = items.FromSlot(removed)
 	if err != nil {
@@ -651,7 +650,7 @@ func TestConsumableComponentRoundTrip(t *testing.T) {
 }
 
 func TestComponentNBTRoundTrip(t *testing.T) {
-	stack := items.NewStack(items.ItemID("minecraft:diamond_chestplate"), 1)
+	stack := items.NewStack(items.ID("minecraft:diamond_chestplate"), 1)
 	stack.Components.Damage = 17
 	stack.Components.Trim = &items.ArmorTrim{Material: "minecraft:gold", Pattern: "minecraft:sentry"}
 	stack.Components.Enchantments = map[string]int32{"minecraft:protection": 4}
@@ -667,7 +666,7 @@ func TestComponentNBTRoundTrip(t *testing.T) {
 	if name, ok := components["minecraft:custom_name"].(nbt.String); !ok || string(name) != "Test Armor" {
 		t.Fatalf("custom name NBT = %+v", components["minecraft:custom_name"])
 	}
-	restored, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:diamond_chestplate")), 1), components)
+	restored, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:diamond_chestplate")), 1), components)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -679,7 +678,7 @@ func TestComponentNBTRoundTrip(t *testing.T) {
 		t.Fatalf("restored components = %+v", decoded.Components)
 	}
 
-	potion := items.PotionSlot(ns.VarInt(items.ItemID("minecraft:potion")), "minecraft:strong_swiftness")
+	potion := items.PotionSlot(ns.VarInt(items.ID("minecraft:potion")), "minecraft:strong_swiftness")
 	potionNBT := items.ComponentsToNBT(potion)
 	restoredPotion, err := items.ApplyNBTComponents(ns.NewSlot(potion.ItemID, 1), potionNBT)
 	if err != nil || items.PotionName(restoredPotion) != "minecraft:strong_swiftness" {
@@ -693,7 +692,7 @@ func TestWrittenBookContentNBTRoundTrip(t *testing.T) {
 		"author": nbt.String("Author"), "generation": nbt.Int(2), "resolved": nbt.Byte(1),
 		"pages": nbt.List{ElementType: nbt.TagString, Elements: []nbt.Tag{nbt.String("Page one"), nbt.String("Page two")}},
 	}}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:written_book")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:written_book")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -712,8 +711,8 @@ func TestWrittenBookContentNBTRoundTrip(t *testing.T) {
 }
 
 func TestWritableBookHasDefaultEditableContent(t *testing.T) {
-	writable := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:writable_book")), 1)
-	written := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:written_book")), 1)
+	writable := ns.NewSlot(ns.VarInt(items.ID("minecraft:writable_book")), 1)
+	written := ns.NewSlot(ns.VarInt(items.ID("minecraft:written_book")), 1)
 	if !items.HasWritableBookContent(writable) || items.HasWritableBookContent(written) {
 		t.Fatal("generated writable-book content default is incorrect")
 	}
@@ -730,7 +729,7 @@ func TestWritableBookContentNBTRoundTrip(t *testing.T) {
 			nbt.Compound{"raw": nbt.String("world")},
 		}},
 	}}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:writable_book")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:writable_book")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -750,7 +749,7 @@ func TestItemContainerComponentNBTRoundTrip(t *testing.T) {
 			nbt.Compound{"slot": nbt.Int(2), "item": nbt.Compound{"id": nbt.String("minecraft:stone"), "count": nbt.Int(3)}},
 		}},
 	}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:bundle")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:bundle")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -784,7 +783,7 @@ func TestCustomPotionContentsNBTRoundTrip(t *testing.T) {
 			"id": nbt.String("minecraft:poison"), "duration": nbt.Int(200), "amplifier": nbt.Int(1), "hidden_effect": hidden,
 		}}},
 	}}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:splash_potion")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:splash_potion")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -805,7 +804,7 @@ func TestStyledTextComponentsRoundTrip(t *testing.T) {
 			nbt.Compound{"text": nbt.String("Line"), "italic": nbt.Byte(0), "color": nbt.String("gold")},
 		}},
 	}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -830,7 +829,7 @@ func TestTypedEntityDataComponentRoundTrip(t *testing.T) {
 		"minecraft:block_entity_data":  nbt.Compound{"id": nbt.String("minecraft:chest"), "CustomName": nbt.String("Chest")},
 		"minecraft:bucket_entity_data": nbt.Compound{"Health": nbt.Float(4)},
 	}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -846,7 +845,7 @@ func TestTypedEntityDataComponentRoundTrip(t *testing.T) {
 	if err != nil || stack.Components.EntityData == nil || stack.Components.EntityData.Type != "minecraft:pig" {
 		t.Fatalf("decoded entity data = %+v, %v", stack.Components.EntityData, err)
 	}
-	pigEgg := items.DefaultComponents(items.ItemID("minecraft:pig_spawn_egg"))
+	pigEgg := items.DefaultComponents(items.ID("minecraft:pig_spawn_egg"))
 	if pigEgg == nil || pigEgg.EntityData == nil || pigEgg.EntityData.Type != "minecraft:pig" {
 		t.Fatalf("pig spawn egg entity data = %+v", pigEgg)
 	}
@@ -873,7 +872,7 @@ func TestConsumableDirectSoundRangesRoundTrip(t *testing.T) {
 	writer.WriteString("minecraft:test.effect")
 	writer.WriteBool(true)
 	writer.WriteFloat32(8)
-	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	slot := ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1)
 	slot.Components.Add = []ns.RawSlotComponent{{ID: ns.VarInt(items.ComponentConsumable), Data: writer.Bytes()}}
 	stack, err := items.FromSlot(slot)
 	if err != nil {
@@ -886,7 +885,7 @@ func TestConsumableDirectSoundRangesRoundTrip(t *testing.T) {
 }
 
 func TestEquippableComponentWireAndNBTRoundTrip(t *testing.T) {
-	stack := items.NewStack(items.ItemID("minecraft:iron_helmet"), 1)
+	stack := items.NewStack(items.ID("minecraft:iron_helmet"), 1)
 	equipRange, shearRange := 12.5, 7.5
 	stack.Components.Equippable = &items.Equippable{
 		Slot:       "head",
@@ -919,7 +918,7 @@ func TestEquippableComponentWireAndNBTRoundTrip(t *testing.T) {
 		t.Fatalf("decoded equippable = %+v", equippable)
 	}
 	patch := items.ComponentsToNBT(decoded)
-	restored, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:iron_helmet")), 1), patch)
+	restored, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:iron_helmet")), 1), patch)
 	if err != nil || !items.SameStack(decoded, restored) {
 		t.Fatalf("equippable NBT round trip = %+v, %v", patch, err)
 	}
@@ -941,7 +940,7 @@ func TestDirectHolderComponentNBTRoundTrip(t *testing.T) {
 			"description": nbt.String("Material"),
 		},
 	}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -969,7 +968,7 @@ func TestHolderComponentReferencesUseVanillaHolderEncoding(t *testing.T) {
 		"minecraft:jukebox_playable":       nbt.String("minecraft:13"),
 		"minecraft:provides_trim_material": nbt.String("minecraft:quartz"),
 	}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -987,17 +986,11 @@ func TestHolderComponentReferencesUseVanillaHolderEncoding(t *testing.T) {
 			t.Fatalf("component %d holder: %v", component.ID, err)
 		}
 		if int32(component.ID) == items.ComponentBreakSound {
-			if want := registries.SoundEvent.Get("minecraft:block.note_block.harp") + 1; int32(id) != want {
+			if want := registries.SoundEvent.HolderID("minecraft:block.note_block.harp"); int32(id) != want {
 				t.Fatalf("break sound holder = %d, want %d", id, want)
 			}
 		} else if entry, ok := registriesByComponent[int32(component.ID)]; ok {
-			want := int32(1)
-			for index, name := range registries.SynchronizedEntries[entry.registry] {
-				if name == entry.name {
-					want = int32(index + 1)
-				}
-			}
-			if int32(id) != want {
+			if want := registries.SynchronizedEntries[entry.registry].HolderID(entry.name); int32(id) != want {
 				t.Fatalf("component %d holder = %d, want %d", component.ID, id, want)
 			}
 		}
@@ -1021,7 +1014,7 @@ func TestAquaticVariantComponentNBTRoundTrip(t *testing.T) {
 		"minecraft:tropical_fish/pattern_color": nbt.String("magenta"),
 	}
 	slot, err := items.ApplyNBTComponents(
-		ns.NewSlot(ns.VarInt(items.ItemID("minecraft:tropical_fish_bucket")), 1), patch,
+		ns.NewSlot(ns.VarInt(items.ID("minecraft:tropical_fish_bucket")), 1), patch,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -1063,7 +1056,7 @@ func TestBasicPositiveComponentNBTRoundTrip(t *testing.T) {
 		"minecraft:tooltip_style": nbt.String("minecraft:test"), "minecraft:creative_slot_lock": nbt.Compound{},
 		"minecraft:intangible_projectile": nbt.Compound{},
 	}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -1094,7 +1087,7 @@ func TestBasicPositiveComponentNBTRoundTrip(t *testing.T) {
 }
 
 func TestTrimComponentRoundTrip(t *testing.T) {
-	stack := items.NewStack(items.ItemID("minecraft:diamond_chestplate"), 1)
+	stack := items.NewStack(items.ID("minecraft:diamond_chestplate"), 1)
 	stack.Components.Trim = &items.ArmorTrim{Material: "minecraft:gold", Pattern: "minecraft:sentry"}
 	slot, err := stack.ToSlot()
 	if err != nil {
@@ -1113,7 +1106,7 @@ func TestTrimComponentRoundTrip(t *testing.T) {
 }
 
 func TestUseCooldownGroupRoundTrip(t *testing.T) {
-	stack := items.NewStack(items.ItemID("minecraft:chorus_fruit"), 1)
+	stack := items.NewStack(items.ID("minecraft:chorus_fruit"), 1)
 	stack.Components.UseCooldown.CooldownGroup = "minecraft:test_group"
 	slot, err := stack.ToSlot()
 	if err != nil {
@@ -1129,7 +1122,7 @@ func TestUseCooldownGroupRoundTrip(t *testing.T) {
 }
 
 func TestDefaultComponents(t *testing.T) {
-	appleID := items.ItemID("minecraft:apple")
+	appleID := items.ID("minecraft:apple")
 	apple := items.DefaultComponents(appleID)
 	if apple == nil {
 		t.Fatal("DefaultComponents(apple) = nil")
@@ -1140,21 +1133,21 @@ func TestDefaultComponents(t *testing.T) {
 		t.Errorf("apple food = %+v, want nutrition 4 and can_always_eat false", apple.Food)
 	}
 	for _, name := range []string{"minecraft:golden_apple", "minecraft:enchanted_golden_apple", "minecraft:chorus_fruit", "minecraft:honey_bottle", "minecraft:suspicious_stew"} {
-		component := items.DefaultComponents(items.ItemID(name))
+		component := items.DefaultComponents(items.ID(name))
 		if component == nil || component.Food == nil || !component.Food.CanAlwaysEat {
 			t.Errorf("%s should have can_always_eat food", name)
 		}
 	}
-	goldenApple := items.DefaultComponents(items.ItemID("minecraft:golden_apple"))
+	goldenApple := items.DefaultComponents(items.ID("minecraft:golden_apple"))
 	if goldenApple.Consumable == nil || len(goldenApple.Consumable.OnConsumeEffects) != 1 || len(goldenApple.Consumable.OnConsumeEffects[0].Effects) != 2 {
 		t.Fatalf("golden apple consumable = %+v", goldenApple.Consumable)
 	}
-	honey := items.DefaultComponents(items.ItemID("minecraft:honey_bottle"))
+	honey := items.DefaultComponents(items.ID("minecraft:honey_bottle"))
 	if honey.Consumable == nil || honey.Consumable.ConsumeSeconds != 2 || len(honey.Consumable.OnConsumeEffects[0].EffectIDs) != 1 {
 		t.Fatalf("honey consumable = %+v", honey.Consumable)
 	}
 
-	swordID := items.ItemID("minecraft:diamond_sword")
+	swordID := items.ID("minecraft:diamond_sword")
 	sword := items.DefaultComponents(swordID)
 	if sword == nil {
 		t.Fatal("DefaultComponents(diamond_sword) = nil")
@@ -1165,7 +1158,7 @@ func TestDefaultComponents(t *testing.T) {
 }
 
 func TestBlocksAttacksComponentRoundTrip(t *testing.T) {
-	shield := items.DefaultComponents(items.ItemID("minecraft:shield"))
+	shield := items.DefaultComponents(items.ID("minecraft:shield"))
 	if shield == nil || shield.BlocksAttacks == nil {
 		t.Fatal("shield blocks_attacks default is missing")
 	}
@@ -1192,7 +1185,7 @@ func TestBlocksAttacksComponentRoundTrip(t *testing.T) {
 		"bypassed_by": nbt.String("#minecraft:bypasses_armor"),
 		"block_sound": nbt.Compound{"sound_id": nbt.String("minecraft:test.block"), "range": nbt.Float(8)},
 	}}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -1224,7 +1217,7 @@ func TestBlocksAttacksComponentRoundTrip(t *testing.T) {
 }
 
 func TestDeathProtectionComponentRoundTrip(t *testing.T) {
-	defaults := items.DefaultComponents(items.ItemID("minecraft:totem_of_undying"))
+	defaults := items.DefaultComponents(items.ID("minecraft:totem_of_undying"))
 	if defaults == nil || defaults.DeathProtection == nil || len(defaults.DeathProtection.DeathEffects) != 2 {
 		t.Fatalf("totem death protection defaults = %+v", defaults)
 	}
@@ -1241,7 +1234,7 @@ func TestDeathProtectionComponentRoundTrip(t *testing.T) {
 			}}},
 		}},
 	}}
-	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1), patch)
+	slot, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1), patch)
 	if err != nil {
 		t.Fatalf("ApplyNBTComponents: %v", err)
 	}
@@ -1268,7 +1261,7 @@ func TestDeathProtectionComponentRoundTrip(t *testing.T) {
 }
 
 func TestAttackRangeDefaultsWireAndNBTRoundTrip(t *testing.T) {
-	itemID := items.ItemID("minecraft:diamond_spear")
+	itemID := items.ID("minecraft:diamond_spear")
 	defaults := items.DefaultComponents(itemID)
 	if defaults.AttackRange == nil || defaults.AttackRange.MinReach != 2 ||
 		defaults.AttackRange.MaxReach != 4.5 || defaults.AttackRange.HitboxMargin != 0.125 {
@@ -1313,7 +1306,7 @@ func TestAttackRangeDefaultsWireAndNBTRoundTrip(t *testing.T) {
 }
 
 func TestToolComponentWireRoundTripPreservesDefaultsAndOptionals(t *testing.T) {
-	stack := items.NewStack(items.ItemID("minecraft:stick"), 1)
+	stack := items.NewStack(items.ID("minecraft:stick"), 1)
 	want := &items.Tool{
 		DefaultMiningSpeed: 0.75,
 		DamagePerBlock:     2,
@@ -1359,7 +1352,7 @@ func TestComponentConstants(t *testing.T) {
 }
 
 func TestToolComponentNBTRoundTripPreservesOptionalRules(t *testing.T) {
-	stack := items.NewStack(items.ItemID("minecraft:diamond_pickaxe"), 1)
+	stack := items.NewStack(items.ID("minecraft:diamond_pickaxe"), 1)
 	stack.Components.Tool = &items.Tool{
 		Rules: []items.ToolRule{
 			{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 8, HasSpeed: true},
@@ -1391,7 +1384,7 @@ func TestToolComponentNBTRoundTripPreservesOptionalRules(t *testing.T) {
 	if _, present := first["correct_for_drops"]; present {
 		t.Fatal("absent correct-for-drops was encoded")
 	}
-	restored, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:diamond_pickaxe")), 1), nbt.Compound{
+	restored, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:diamond_pickaxe")), 1), nbt.Compound{
 		"minecraft:tool": component,
 	})
 	if err != nil {
@@ -1430,7 +1423,7 @@ func TestToolComponentNBTRejectsInvalidValues(t *testing.T) {
 	}
 	for name, tool := range tests {
 		t.Run(name, func(t *testing.T) {
-			_, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ItemID("minecraft:diamond_pickaxe")), 1), nbt.Compound{
+			_, err := items.ApplyNBTComponents(ns.NewSlot(ns.VarInt(items.ID("minecraft:diamond_pickaxe")), 1), nbt.Compound{
 				"minecraft:tool": tool,
 			})
 			if err == nil {
@@ -1441,7 +1434,7 @@ func TestToolComponentNBTRejectsInvalidValues(t *testing.T) {
 }
 
 func TestSlotMaxStackSizeUsesComponentPatch(t *testing.T) {
-	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	slot := ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1)
 	writer := ns.NewWriter()
 	writer.WriteVarInt(7)
 	slot.Components.Add = []ns.RawSlotComponent{{ID: items.ComponentMaxStackSize, Data: writer.Bytes()}}
@@ -1456,7 +1449,7 @@ func TestSlotMaxStackSizeUsesComponentPatch(t *testing.T) {
 }
 
 func TestSlotResistsDamageUsesComponentPatch(t *testing.T) {
-	netherite := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:netherite_ingot")), 1)
+	netherite := ns.NewSlot(ns.VarInt(items.ID("minecraft:netherite_ingot")), 1)
 	if !items.SlotResistsDamage(netherite, "minecraft:lava") {
 		t.Fatal("netherite ingot should resist fire")
 	}
@@ -1465,7 +1458,7 @@ func TestSlotResistsDamageUsesComponentPatch(t *testing.T) {
 		t.Fatal("removed resistance still applied")
 	}
 
-	stone := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
+	stone := ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 1)
 	writer := ns.NewWriter()
 	writer.WriteVarInt(0)
 	if err := writer.WriteString("minecraft:is_fire"); err != nil {
@@ -1478,7 +1471,7 @@ func TestSlotResistsDamageUsesComponentPatch(t *testing.T) {
 }
 
 func TestSlotNBTRoundTrip(t *testing.T) {
-	slot := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 3)
+	slot := ns.NewSlot(ns.VarInt(items.ID("minecraft:stone")), 3)
 	writer := ns.NewWriter()
 	writer.WriteVarInt(7)
 	slot.Components.Add = []ns.RawSlotComponent{{ID: items.ComponentMaxStackSize, Data: writer.Bytes()}}
@@ -1493,11 +1486,11 @@ func TestSlotNBTRoundTrip(t *testing.T) {
 }
 
 func TestStackEquippableSlotUsesDefaultsAndPatch(t *testing.T) {
-	helmet := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:diamond_helmet")), 1)
+	helmet := ns.NewSlot(ns.VarInt(items.ID("minecraft:diamond_helmet")), 1)
 	if slot, ok := items.StackEquippableSlot(helmet); !ok || slot != "head" {
 		t.Fatalf("helmet equippable slot = %q/%v", slot, ok)
 	}
-	shield := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:shield")), 1)
+	shield := ns.NewSlot(ns.VarInt(items.ID("minecraft:shield")), 1)
 	if slot, ok := items.StackEquippableSlot(shield); !ok || slot != "offhand" {
 		t.Fatalf("shield equippable slot = %q/%v", slot, ok)
 	}
@@ -1505,11 +1498,35 @@ func TestStackEquippableSlotUsesDefaultsAndPatch(t *testing.T) {
 	if slot, ok := items.StackEquippableSlot(helmet); ok {
 		t.Fatalf("removed equippable slot = %q", slot)
 	}
-	stone := ns.NewSlot(ns.VarInt(items.ItemID("minecraft:stone")), 1)
-	writer := ns.NewWriter()
-	writer.WriteVarInt(5)
-	stone.Components.Add = []ns.RawSlotComponent{{ID: items.ComponentEquippable, Data: writer.Bytes()}}
+	stack := items.NewStack(items.ID("minecraft:stone"), 1)
+	stack.Components.Equippable = &items.Equippable{Slot: "head"}
+	stone, err := stack.ToSlot()
+	if err != nil {
+		t.Fatal(err)
+	}
 	if slot, ok := items.StackEquippableSlot(stone); !ok || slot != "head" {
 		t.Fatalf("patched equippable slot = %q/%v", slot, ok)
+	}
+}
+
+func TestApplyNBTComponentsAcceptsJSONDerivedLists(t *testing.T) {
+	tag, err := nbt.FromJSON([]byte(`{"minecraft:lore":["heart","explorer"]}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	patch, ok := tag.(nbt.Compound)
+	if !ok {
+		t.Fatalf("JSON patch type = %T, want nbt.Compound", tag)
+	}
+	slot := ns.NewSlot(ns.VarInt(items.ID("minecraft:decorated_pot")), 1)
+	applied, err := items.ApplyNBTComponents(slot, patch)
+	if err != nil {
+		t.Fatal(err)
+	}
+	lore := items.ComponentsToNBT(applied).GetList("minecraft:lore")
+	if len(lore.Elements) != 2 ||
+		lore.Elements[0] != nbt.String("heart") ||
+		lore.Elements[1] != nbt.String("explorer") {
+		t.Fatalf("lore = %#v", lore)
 	}
 }

@@ -1,9 +1,9 @@
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/go-mclib/nbt v0.1.0 h1:QoUm5C59yOHEhrVqCKLgJN9FC1ZUViUvboVkwOv045A=
-github.com/go-mclib/nbt v0.1.0/go.mod h1:+x+ZNoaxWssfBPMDC+7KOwitLjtePY3Wt/HqRMciRWc=
-github.com/go-mclib/protocol v0.0.0-20260917154622-8c6e1640304a h1:fy5cs0EP6nOB0JDWAwGozUei1UwNtZMskw7pnKuIPtA=
-github.com/go-mclib/protocol v0.0.0-20260917154622-8c6e1640304a/go.mod h1:efK3tqUfPkyhH0gdQp6KmUfQ/QAWW2R2E0p1zJ+08xg=
+github.com/go-mclib/nbt v0.1.1-0.20261112211432-5d6433d23d08 h1:PQL9m6Xsrcv66COP0vqNw+Ew2buNnkW3mBhWSKw/r+U=
+github.com/go-mclib/nbt v0.1.1-0.20261112211432-5d6433d23d08/go.mod h1:+x+ZNoaxWssfBPMDC+7KOwitLjtePY3Wt/HqRMciRWc=
+github.com/go-mclib/protocol v0.0.0-20261112211446-c9e7c6761849 h1:go9occirkNtI50rqLlz+vu/D8jzKPE93H5aATqimxb4=
+github.com/go-mclib/protocol v0.0.0-20261112211446-c9e7c6761849/go.mod h1:zbvmiGVK2OjbAi4mfEw22WUhYwkJq9hBVS5cMoz/fms=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=

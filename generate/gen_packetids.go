@@ -1,9 +1,10 @@
 package main
 
 import (
+	"cmp"
 	"fmt"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strings"
 )
 
@@ -75,18 +76,16 @@ func generatePacketFile(pktMap map[string]PacketEntryJSON, prefix, phaseSuffix s
 	for name, entry := range pktMap {
 		pkts = append(pkts, packetInfo{name, entry.ProtocolID})
 	}
-	sort.Slice(pkts, func(i, j int) bool {
-		return pkts[i].protocolID < pkts[j].protocolID
-	})
+	slices.SortFunc(pkts, func(a, b packetInfo) int { return cmp.Compare(a.protocolID, b.protocolID) })
 
 	var sb strings.Builder
-	sb.WriteString(generatedFileHeader("packet_ids"))
+	sb.WriteString(generatedFileHeader("packetids"))
 	sb.WriteString("// Packet IDs for " + strings.ToLower(phaseSuffix) + " phase (" + bound + ")\n")
 	sb.WriteString("const (\n")
 
 	for _, pkt := range pkts {
 		constName := packetConstName(pkt.name, prefix, phaseSuffix, needsSuffix, bound)
-		sb.WriteString(fmt.Sprintf("\t%s = %d\n", constName, pkt.protocolID))
+		fmt.Fprintf(&sb, "\t%s = %d\n", constName, pkt.protocolID)
 	}
 
 	sb.WriteString(")\n")

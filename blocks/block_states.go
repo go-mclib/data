@@ -1,96 +1,78 @@
 package blocks
 
-import "sync"
-
-// cache for StateID lookups (StateProperties uses binary search which is fast enough)
-var (
-	stateIDCache    = make(map[uint64]int32)
-	stateIDCacheMu  sync.RWMutex
-	stateIDCacheMax = 4096
+import (
+	"slices"
+	"strings"
 )
 
-// SetCacheSize sets the maximum cache size for StateID. Set to 0 to disable caching.
-func SetCacheSize(maxEntries int) {
-	stateIDCacheMu.Lock()
-	stateIDCacheMax = maxEntries
-	if maxEntries == 0 {
-		stateIDCache = make(map[uint64]int32)
+// StateID calculates the state protocol ID from a block ID and property values.
+// Returns -1 if the block ID is invalid or properties are missing/invalid.
+func StateID(blockID int32, props map[string]string) int32 {
+	state := blockStates[blockID]
+	if state == nil {
+		return -1
 	}
-	stateIDCacheMu.Unlock()
+
+	offset := int32(0)
+	multiplier := int32(1)
+	for i := len(state.Properties) - 1; i >= 0; i-- {
+		p := &state.Properties[i]
+		propValue, ok := props[p.Name]
+		if !ok {
+			return -1
+		}
+		valueIdx := slices.Index(p.Values, propValue)
+		if valueIdx < 0 {
+			return -1
+		}
+		offset += int32(valueIdx) * multiplier
+		multiplier *= int32(len(p.Values))
+	}
+
+	return state.BaseID + offset
 }
 
-// StateID calculates the state protocol ID from a block ID and property values.
-// Results are cached for performance. Returns -1 if the block ID is invalid or properties are missing/invalid.
-func StateID(blockID int, props map[string]string) int32 {
-	if stateIDCacheMax > 0 {
-		key := stateIDCacheKey(blockID, props)
-		stateIDCacheMu.RLock()
-		if result, ok := stateIDCache[key]; ok {
-			stateIDCacheMu.RUnlock()
-			return result
+// stateRange returns the stateRanges entry containing stateID.
+func stateRange(stateID int32) (*stateRangeEntry, bool) {
+	i, found := slices.BinarySearchFunc(stateRanges, stateID, func(e stateRangeEntry, id int32) int {
+		switch {
+		case id < e.BaseID:
+			return 1
+		case id >= e.EndID:
+			return -1
 		}
-		stateIDCacheMu.RUnlock()
+		return 0
+	})
+	if !found {
+		return nil, false
 	}
-
-	result := stateIDUncached(blockID, props)
-
-	if stateIDCacheMax > 0 && result != -1 {
-		key := stateIDCacheKey(blockID, props)
-		stateIDCacheMu.Lock()
-		if len(stateIDCache) >= stateIDCacheMax {
-			for k := range stateIDCache {
-				delete(stateIDCache, k)
-				if len(stateIDCache) < stateIDCacheMax/2 {
-					break
-				}
-			}
-		}
-		stateIDCache[key] = result
-		stateIDCacheMu.Unlock()
-	}
-
-	return result
+	return &stateRanges[i], true
 }
 
 // StateBlockID returns the block protocol ID for a state ID without decoding its properties.
 func StateBlockID(stateID int32) int32 {
-	lo, hi := 0, len(stateRanges)-1
-	for lo <= hi {
-		mid := (lo + hi) / 2
-		entry := &stateRanges[mid]
-		switch {
-		case stateID < entry.BaseID:
-			hi = mid - 1
-		case stateID >= entry.EndID:
-			lo = mid + 1
-		default:
-			return entry.BlockID
-		}
+	if r, ok := stateRange(stateID); ok {
+		return r.BlockID
 	}
 	return -1
 }
 
-// Friction returns the vanilla friction coefficient for a block state.
+// Friction returns the vanilla friction coefficient (Block.getFriction) for a block state.
 func Friction(stateID int32) float64 {
-	switch BlockName(StateBlockID(stateID)) {
-	case "minecraft:ice", "minecraft:packed_ice", "minecraft:frosted_ice":
-		return 0.98
-	case "minecraft:blue_ice":
-		return 0.989
-	case "minecraft:slime_block":
-		return 0.8
-	default:
-		return 0.6
+	blockID := StateBlockID(stateID)
+	if blockID < 0 || int(blockID) >= len(blockFriction) {
+		return 0.6 // vanilla BlockBehaviour.Properties default
 	}
+	return blockFriction[blockID]
 }
 
 // BounceRestitution returns the vanilla bounce coefficient for a block state.
 func BounceRestitution(stateID int32) float64 {
-	name := BlockName(StateBlockID(stateID))
+	name := Name(StateBlockID(stateID))
 	if name == "minecraft:slime_block" {
 		return 1
 	}
-	if len(name) > len("_bed") && name[len(name)-len("_bed"):] == "_bed" {
+	if strings.HasSuffix(name, "_bed") {
 		return 0.75
 	}
 	return 0
@@ -98,32 +80,23 @@ func BounceRestitution(stateID int32) float64 {
 
 // StateProperties returns the block ID and property values for a given state ID.
 // Uses binary search for O(log n) block lookup. Returns -1 and nil if the state ID is invalid.
-func StateProperties(stateID int) (blockID int32, props map[string]string) {
-	stateID32 := int32(stateID)
-	lo, hi := 0, len(stateRanges)-1
-	for lo <= hi {
-		mid := (lo + hi) / 2
-		r := &stateRanges[mid]
-		if stateID32 < r.BaseID {
-			hi = mid - 1
-		} else if stateID32 >= r.EndID {
-			lo = mid + 1
-		} else {
-			blockID = r.BlockID
-			state := blockStates[blockID]
-			offset := stateID32 - state.BaseID
-
-			props = make(map[string]string)
-			for i := len(state.Properties) - 1; i >= 0; i-- {
-				p := &state.Properties[i]
-				valueIdx := offset % int32(p.Cardinality)
-				offset /= int32(p.Cardinality)
-				props[p.Name] = p.Values[valueIdx]
-			}
-			return blockID, props
-		}
+func StateProperties(stateID int32) (blockID int32, props map[string]string) {
+	r, ok := stateRange(stateID)
+	if !ok {
+		return -1, nil
 	}
-	return -1, nil
+	blockID = r.BlockID
+	state := blockStates[blockID]
+	offset := stateID - state.BaseID
+
+	props = make(map[string]string, len(state.Properties))
+	for i := len(state.Properties) - 1; i >= 0; i-- {
+		p := &state.Properties[i]
+		cardinality := int32(len(p.Values))
+		props[p.Name] = p.Values[offset%cardinality]
+		offset /= cardinality
+	}
+	return blockID, props
 }
 
 // DefaultStateID returns the default state ID for a block, or -1 if invalid.
@@ -156,20 +129,39 @@ func FireBurnOdds(stateID int32) int {
 	return int(fireBurnOdds[stateID])
 }
 
-// HasSturdyTop reports whether the block state's upper face supports fire.
-func HasSturdyTop(stateID int32) bool {
-	if stateID < 0 || int(stateID/64) >= len(sturdyTopStates) {
-		return false
-	}
-	return sturdyTopStates[stateID/64]&(uint64(1)<<(stateID%64)) != 0
-}
-
 // IsReplaceable reports whether vanilla permits replacing the block state.
 func IsReplaceable(stateID int32) bool {
 	if stateID < 0 || int(stateID/64) >= len(replaceableStates) {
 		return false
 	}
 	return replaceableStates[stateID/64]&(uint64(1)<<(stateID%64)) != 0
+}
+
+// MapColor returns the vanilla base map-color ID for a block state.
+func MapColor(stateID int32) uint8 {
+	if stateID < 0 || int(stateID) >= len(mapColors) {
+		return 0
+	}
+	return mapColors[stateID]
+}
+
+// LightEmission returns the light level (0-15) the block state emits
+// (BlockState.getLightEmission).
+func LightEmission(stateID int32) uint8 {
+	if stateID < 0 || int(stateID) >= len(lightEmission) {
+		return 0
+	}
+	return lightEmission[stateID]
+}
+
+// LightDampening returns how much light the block state absorbs (0-15,
+// BlockState.getLightDampening): 15 for solid-render blocks, 0 for blocks
+// that let skylight pass down, 1 otherwise.
+func LightDampening(stateID int32) uint8 {
+	if stateID < 0 || int(stateID) >= len(lightDampening) {
+		return 0
+	}
+	return lightDampening[stateID]
 }
 
 // blockStateData holds the data needed to calculate state IDs.
@@ -180,62 +172,11 @@ type blockStateData struct {
 }
 
 type blockProperty struct {
-	Name        string
-	Values      []string
-	Cardinality int
+	Name   string
+	Values []string
 }
 
 // stateRangeEntry maps a range of state IDs to a block ID for O(log n) lookup.
 type stateRangeEntry struct {
 	BaseID, EndID, BlockID int32
-}
-
-// stateIDCacheKey creates a cache key from blockID and properties
-func stateIDCacheKey(blockID int, props map[string]string) uint64 {
-	h := uint64(blockID)
-	for k, v := range props {
-		for _, c := range k {
-			h = h*31 + uint64(c)
-		}
-		for _, c := range v {
-			h = h*31 + uint64(c)
-		}
-	}
-	return h
-}
-
-// stateIDUncached is the uncached implementation of StateID.
-func stateIDUncached(blockID int, props map[string]string) int32 {
-	state := blockStates[int32(blockID)]
-	if state == nil {
-		return -1
-	}
-	if len(state.Properties) == 0 {
-		return state.BaseID
-	}
-
-	offset := int32(0)
-	multiplier := int32(1)
-
-	for i := len(state.Properties) - 1; i >= 0; i-- {
-		p := &state.Properties[i]
-		propValue, ok := props[p.Name]
-		if !ok {
-			return -1
-		}
-		valueIdx := -1
-		for j, v := range p.Values {
-			if v == propValue {
-				valueIdx = j
-				break
-			}
-		}
-		if valueIdx == -1 {
-			return -1
-		}
-		offset += int32(valueIdx) * multiplier
-		multiplier *= int32(p.Cardinality)
-	}
-
-	return state.BaseID + offset
 }

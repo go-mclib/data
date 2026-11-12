@@ -71,3 +71,45 @@ func TestDataComponentTypeRegistry(t *testing.T) {
 		t.Error("DataComponentType.Get(food) should return valid ID")
 	}
 }
+
+func TestSynchronizedRegistry(t *testing.T) {
+	enchantments := registries.SynchronizedEntries["minecraft:enchantment"]
+	if enchantments.ProtocolID != -1 {
+		t.Errorf("synchronized registry ProtocolID = %d, want -1", enchantments.ProtocolID)
+	}
+	// datapack entries are sorted, so protocol IDs follow name order
+	if got := enchantments.ByID(0); got != "minecraft:aqua_affinity" {
+		t.Errorf("ByID(0) = %q, want minecraft:aqua_affinity", got)
+	}
+	for id := range int32(enchantments.Size()) {
+		name := enchantments.ByID(id)
+		if got := enchantments.Get(name); got != id {
+			t.Fatalf("Get(ByID(%d) = %q) = %d", id, name, got)
+		}
+		if got := enchantments.HolderID(name); got != id+1 {
+			t.Fatalf("HolderID(%q) = %d, want %d", name, got, id+1)
+		}
+		if got := enchantments.HolderName(id + 1); got != name {
+			t.Fatalf("HolderName(%d) = %q, want %q", id+1, got, name)
+		}
+	}
+}
+
+func TestRegistryHolderEncoding(t *testing.T) {
+	id := registries.SoundEvent.Get("minecraft:music_disc.cat")
+	if got := registries.SoundEvent.HolderID("minecraft:music_disc.cat"); got != id+1 {
+		t.Errorf("HolderID = %d, want %d", got, id+1)
+	}
+	if got := registries.SoundEvent.HolderName(id + 1); got != "minecraft:music_disc.cat" {
+		t.Errorf("HolderName(%d) = %q", id+1, got)
+	}
+	if got := registries.SoundEvent.HolderID("minecraft:nonexistent"); got != -1 {
+		t.Errorf("HolderID(unknown) = %d, want -1", got)
+	}
+	size := int32(registries.SoundEvent.Size())
+	for _, holder := range []int32{0, -1, size + 1} {
+		if got := registries.SoundEvent.HolderName(holder); got != "" {
+			t.Errorf("HolderName(%d) = %q, want empty (inline or unknown)", holder, got)
+		}
+	}
+}

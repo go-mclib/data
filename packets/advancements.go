@@ -2,15 +2,16 @@ package packets
 
 import (
 	"fmt"
+	"math"
 
 	"github.com/go-mclib/data/items"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // PositionedAdvancement contains the complete holder followed by layout
 // coordinates. Coordinates are present even when Display is nil.
 type PositionedAdvancement struct {
-	Id                  ns.Identifier
+	ID                  ns.Identifier
 	Parent              ns.PrefixedOptional[ns.Identifier]
 	Display             *AdvancementDisplay
 	Requirements        [][]ns.String
@@ -37,7 +38,7 @@ const (
 
 // AdvancementProgress is one identifier-keyed entry in the progress map.
 type AdvancementProgress struct {
-	Id       ns.Identifier
+	ID       ns.Identifier
 	Criteria []AdvancementCriterion
 }
 
@@ -59,7 +60,7 @@ func readAdvancementCount(buf *ns.PacketBuffer) (int, error) {
 }
 
 func writeAdvancementCount(buf *ns.PacketBuffer, count int) error {
-	if count > (1<<31)-1 {
+	if count > math.MaxInt32 {
 		return fmt.Errorf("advancement collection too large: %d", count)
 	}
 	return buf.WriteVarInt(ns.VarInt(count))
@@ -101,7 +102,7 @@ func (p *S2CUpdateAdvancements) readAdvancements(buf *ns.PacketBuffer) error {
 	p.Progress = nil
 	for range count {
 		var progress AdvancementProgress
-		if progress.Id, err = buf.ReadIdentifier(); err != nil {
+		if progress.ID, err = buf.ReadIdentifier(); err != nil {
 			return err
 		}
 		criterionCount, err := readAdvancementCount(buf)
@@ -150,7 +151,7 @@ func (p *S2CUpdateAdvancements) writeAdvancements(buf *ns.PacketBuffer) error {
 		return err
 	}
 	for _, progress := range p.Progress {
-		if err := buf.WriteIdentifier(progress.Id); err != nil {
+		if err := buf.WriteIdentifier(progress.ID); err != nil {
 			return err
 		}
 		if err := writeAdvancementCount(buf, len(progress.Criteria)); err != nil {
@@ -172,7 +173,7 @@ func (p *S2CUpdateAdvancements) writeAdvancements(buf *ns.PacketBuffer) error {
 
 func (a *PositionedAdvancement) read(buf *ns.PacketBuffer) error {
 	var err error
-	if a.Id, err = buf.ReadIdentifier(); err != nil {
+	if a.ID, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
 	if err := a.Parent.DecodeWith(buf, func(b *ns.PacketBuffer) (ns.Identifier, error) {
@@ -222,7 +223,7 @@ func (a *PositionedAdvancement) read(buf *ns.PacketBuffer) error {
 }
 
 func (a PositionedAdvancement) write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteIdentifier(a.Id); err != nil {
+	if err := buf.WriteIdentifier(a.ID); err != nil {
 		return err
 	}
 	if err := a.Parent.EncodeWith(buf, func(b *ns.PacketBuffer, v ns.Identifier) error {

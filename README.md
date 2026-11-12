@@ -11,7 +11,7 @@ Go bindings for Minecraft Java Edition **26.3 only** (protocol **777**, data ver
   - 1,658 items with component metadata
   - Packet ID mappings
   - Vanilla collision boxes and voxel grid planes, tag-bound suffocation/motion/fluid-flow flags, sturdy faces, and contained water/lava states
-- **ItemStack middleware** for typed component access
+- **`items.Stack` middleware** for typed component access
 - Entity metadata consumes full vanilla 26.3 particle option payloads, including effect colors, item templates and vibration destinations, so following metadata such as held-item use flags remains aligned.
 - Brewing and crafting recipes preserve result component patches; contextual fuel providers and predicates are available as server-side registry data.
 

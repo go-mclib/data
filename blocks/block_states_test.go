@@ -38,7 +38,7 @@ func TestAllBlockStates(t *testing.T) {
 	failedStates := 0
 
 	for blockName, blockData := range blocksData {
-		blockID := blocks.BlockID(blockName)
+		blockID := blocks.ID(blockName)
 		if blockID == -1 {
 			t.Errorf("block %q not found in registry", blockName)
 			continue
@@ -46,7 +46,7 @@ func TestAllBlockStates(t *testing.T) {
 
 		for _, state := range blockData.States {
 			totalStates++
-			calculated := blocks.StateID(int(blockID), state.Properties)
+			calculated := blocks.StateID(blockID, state.Properties)
 			if calculated != state.ID {
 				failedStates++
 				if failedStates <= 10 {
@@ -69,7 +69,7 @@ func TestDefaultStates(t *testing.T) {
 	blocksData := loadBlocksJSON(t)
 
 	for blockName, blockData := range blocksData {
-		blockID := blocks.BlockID(blockName)
+		blockID := blocks.ID(blockName)
 		if blockID == -1 {
 			continue
 		}
@@ -106,7 +106,7 @@ func TestStateProperties(t *testing.T) {
 			continue
 		}
 
-		blockID := blocks.BlockID(blockName)
+		blockID := blocks.ID(blockName)
 		if blockID == -1 {
 			continue
 		}
@@ -118,7 +118,7 @@ func TestStateProperties(t *testing.T) {
 			}
 			state := blockData.States[idx]
 
-			gotBlockID, gotProps := blocks.StateProperties(int(state.ID))
+			gotBlockID, gotProps := blocks.StateProperties(state.ID)
 			if gotBlockID != blockID {
 				t.Errorf("StateProperties(%d): expected block %d (%s), got %d",
 					state.ID, blockID, blockName, gotBlockID)
@@ -171,8 +171,8 @@ func TestBlockSupportMetadata(t *testing.T) {
 			if got := blocks.FireBurnOdds(state.ID); got != state.BurnOdds {
 				t.Errorf("FireBurnOdds(%s, %d) = %d, want %d", name, state.ID, got, state.BurnOdds)
 			}
-			if got := blocks.HasSturdyTop(state.ID); got != state.SturdyTop {
-				t.Errorf("HasSturdyTop(%s, %d) = %v, want %v", name, state.ID, got, state.SturdyTop)
+			if got := blocks.IsFaceSturdy(state.ID, blocks.DirectionUp); got != state.SturdyTop {
+				t.Errorf("IsFaceSturdy(%s, %d, up) = %v, want %v", name, state.ID, got, state.SturdyTop)
 			}
 			if got := blocks.IsReplaceable(state.ID); got != state.Replaceable {
 				t.Errorf("IsReplaceable(%s, %d) = %v, want %v", name, state.ID, got, state.Replaceable)
@@ -191,12 +191,12 @@ func TestBlockFriction(t *testing.T) {
 		"minecraft:slime_block": 0.8,
 	}
 	for name, want := range tests {
-		stateID := blocks.DefaultStateID(blocks.BlockID(name))
+		stateID := blocks.DefaultStateID(blocks.ID(name))
 		if got := blocks.Friction(stateID); got != want {
 			t.Errorf("Friction(%s) = %v, want %v", name, got, want)
 		}
-		if got := blocks.StateBlockID(stateID); got != blocks.BlockID(name) {
-			t.Errorf("StateBlockID(%s) = %d, want %d", name, got, blocks.BlockID(name))
+		if got := blocks.StateBlockID(stateID); got != blocks.ID(name) {
+			t.Errorf("StateBlockID(%s) = %d, want %d", name, got, blocks.ID(name))
 		}
 	}
 }
@@ -208,9 +208,44 @@ func TestBlockBounceRestitution(t *testing.T) {
 		"minecraft:red_bed":     0.75,
 	}
 	for name, want := range tests {
-		stateID := blocks.DefaultStateID(blocks.BlockID(name))
+		stateID := blocks.DefaultStateID(blocks.ID(name))
 		if got := blocks.BounceRestitution(stateID); got != want {
 			t.Errorf("BounceRestitution(%s) = %v, want %v", name, got, want)
+		}
+	}
+}
+
+func TestBlockLight(t *testing.T) {
+	stateOf := func(name string, props map[string]string) int32 {
+		if props == nil {
+			return blocks.DefaultStateID(blocks.ID(name))
+		}
+		return blocks.StateID(blocks.ID(name), props)
+	}
+	tests := []struct {
+		name                string
+		props               map[string]string
+		emission, dampening uint8
+	}{
+		{"minecraft:air", nil, 0, 0},
+		{"minecraft:stone", nil, 0, 15},
+		{"minecraft:packed_ice", nil, 0, 15},
+		{"minecraft:ice", nil, 0, 1},
+		{"minecraft:glass", nil, 0, 0},
+		{"minecraft:oak_leaves", nil, 0, 1},
+		{"minecraft:water", nil, 0, 1},
+		{"minecraft:torch", nil, 14, 0},
+		{"minecraft:glowstone", nil, 15, 15},
+		{"minecraft:furnace", map[string]string{"facing": "north", "lit": "true"}, 13, 15},
+		{"minecraft:furnace", map[string]string{"facing": "north", "lit": "false"}, 0, 15},
+	}
+	for _, tt := range tests {
+		state := stateOf(tt.name, tt.props)
+		if got := blocks.LightEmission(state); got != tt.emission {
+			t.Errorf("LightEmission(%s %v) = %d, want %d", tt.name, tt.props, got, tt.emission)
+		}
+		if got := blocks.LightDampening(state); got != tt.dampening {
+			t.Errorf("LightDampening(%s %v) = %d, want %d", tt.name, tt.props, got, tt.dampening)
 		}
 	}
 }

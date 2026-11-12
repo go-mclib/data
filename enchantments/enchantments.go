@@ -4,7 +4,7 @@ package enchantments
 
 // Enchantment mirrors a datapack enchantment definition. Item matchers are
 // item names or tag references ("#minecraft:enchantable/armor"); resolve tags
-// with items.ItemTag. ExclusiveSet entries are enchantment names or
+// with items.Tag. ExclusiveSet entries are enchantment names or
 // "#minecraft:exclusive_set/..." tags (registries.TagData resolves them).
 type Enchantment struct {
 	Name      string

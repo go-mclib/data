@@ -5,73 +5,110 @@ package items
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/go-mclib/data/registries"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 func init() {
 	// struct components with dedicated codecs
-	RegisterCodec(ComponentCustomName, &customNameCodec{})
-	RegisterCodec(ComponentItemName, &itemNameCodec{})
-	RegisterCodec(ComponentAttributeModifiers, &attributeModifiersCodec{})
-	RegisterCodec(ComponentRarity, &rarityCodec{})
-	RegisterCodec(ComponentBreakSound, newHolderStringCodec(ComponentBreakSound, "minecraft:sound_event", func(c *Components) string { return c.BreakSound }, func(c *Components, value string) { c.BreakSound = value }, copySoundEventDirect))
-	RegisterCodec(ComponentInstrument, newHolderStringCodec(ComponentInstrument, "minecraft:instrument", func(c *Components) string { return c.Instrument }, func(c *Components, value string) { c.Instrument = value }, copyInstrumentDirect))
-	RegisterCodec(ComponentJukeboxPlayable, newHolderStringCodec(ComponentJukeboxPlayable, "minecraft:jukebox_song", func(c *Components) string { return c.JukeboxPlayable }, func(c *Components, value string) { c.JukeboxPlayable = value }, copyJukeboxSongDirect))
-	RegisterCodec(ComponentProvidesTrimMaterial, newHolderStringCodec(ComponentProvidesTrimMaterial, "minecraft:trim_material", func(c *Components) string { return c.ProvidesTrimMaterial }, func(c *Components, value string) { c.ProvidesTrimMaterial = value }, copyTrimMaterialDirect))
+	registerCodec(ComponentCustomName, textComponentCodec{
+		get: func(c *Components) *ItemNameComponent { return c.CustomName },
+		set: func(c *Components, v *ItemNameComponent) { c.CustomName = v },
+	})
+	registerCodec(ComponentItemName, textComponentCodec{
+		get: func(c *Components) *ItemNameComponent { return c.ItemName },
+		set: func(c *Components, v *ItemNameComponent) { c.ItemName = v },
+	})
+	registerCodec(ComponentAttributeModifiers, &attributeModifiersCodec{})
+	registerCodec(ComponentRarity, &rarityCodec{})
+	registerCodec(ComponentBreakSound, newHolderStringCodec(ComponentBreakSound, "minecraft:sound_event", func(c *Components) string { return c.BreakSound }, func(c *Components, value string) { c.BreakSound = value }, copySoundEventDirect))
+	registerCodec(ComponentInstrument, newHolderStringCodec(ComponentInstrument, "minecraft:instrument", func(c *Components) string { return c.Instrument }, func(c *Components, value string) { c.Instrument = value }, copyInstrumentDirect))
+	registerCodec(ComponentJukeboxPlayable, newHolderStringCodec(ComponentJukeboxPlayable, "minecraft:jukebox_song", func(c *Components) string { return c.JukeboxPlayable }, func(c *Components, value string) { c.JukeboxPlayable = value }, copyJukeboxSongDirect))
+	registerCodec(ComponentProvidesTrimMaterial, newHolderStringCodec(ComponentProvidesTrimMaterial, "minecraft:trim_material", func(c *Components) string { return c.ProvidesTrimMaterial }, func(c *Components, value string) { c.ProvidesTrimMaterial = value }, copyTrimMaterialDirect))
 
 	// lore, enchantments, and tool codecs (full implementations)
-	RegisterCodec(ComponentLore, &loreCodec{})
-	RegisterCodec(ComponentEnchantments, &enchantmentsCodec{
+	registerCodec(ComponentLore, &loreCodec{})
+	registerCodec(ComponentEnchantments, &enchantmentsCodec{
 		get: func(c *Components) map[string]int32 { return c.Enchantments },
 		set: func(c *Components, v map[string]int32) { c.Enchantments = v },
 	})
-	RegisterCodec(ComponentStoredEnchantments, &enchantmentsCodec{
+	registerCodec(ComponentStoredEnchantments, &enchantmentsCodec{
 		get: func(c *Components) map[string]int32 { return c.StoredEnchantments },
 		set: func(c *Components, v map[string]int32) { c.StoredEnchantments = v },
 	})
-	RegisterCodec(ComponentTool, &toolCodec{})
+	registerCodec(ComponentTool, &toolCodec{})
+
+	// typed optional components
+	registerCodec(ComponentUseEffects, pointerComponentCodec[UseEffects]{
+		get:  func(c *Components) *UseEffects { return c.UseEffects },
+		set:  func(c *Components, v *UseEffects) { c.UseEffects = v },
+		read: readUseEffects, write: writeUseEffects, equal: equalUseEffects,
+	})
+	registerCodec(ComponentAttackRange, pointerComponentCodec[AttackRange]{
+		get:  func(c *Components) *AttackRange { return c.AttackRange },
+		set:  func(c *Components, v *AttackRange) { c.AttackRange = v },
+		read: readAttackRange, write: writeAttackRange, equal: equalValue[AttackRange],
+	})
+	registerCodec(ComponentEquippable, pointerComponentCodec[Equippable]{
+		get:  func(c *Components) *Equippable { return c.Equippable },
+		set:  func(c *Components, v *Equippable) { c.Equippable = v },
+		read: readEquippable, write: writeEquippable, equal: deepEqual[Equippable],
+	})
+	registerCodec(ComponentBlocksAttacks, pointerComponentCodec[BlocksAttacks]{
+		get:  func(c *Components) *BlocksAttacks { return c.BlocksAttacks },
+		set:  func(c *Components, v *BlocksAttacks) { c.BlocksAttacks = v },
+		read: readBlocksAttacks, write: writeBlocksAttacks, equal: deepEqual[BlocksAttacks],
+	})
+	registerCodec(ComponentDye, pointerComponentCodec[int32]{
+		get:  func(c *Components) *int32 { return c.Dye },
+		set:  func(c *Components, v *int32) { c.Dye = v },
+		read: readDyeColor, write: writeDyeColor, equal: equalValue[int32],
+	})
+	registerCodec(ComponentBaseColor, pointerComponentCodec[int32]{
+		get:  func(c *Components) *int32 { return c.BaseColor },
+		set:  func(c *Components, v *int32) { c.BaseColor = v },
+		read: readDyeColor, write: writeDyeColor, equal: equalValue[int32],
+	})
+	registerCodec(ComponentDyedColor, pointerComponentCodec[int32]{
+		get:  func(c *Components) *int32 { return c.DyedColor },
+		set:  func(c *Components, v *int32) { c.DyedColor = v },
+		read: readInt32Pointer, write: writeInt32Pointer, equal: equalValue[int32],
+	})
 
 	// complex passthrough codecs - these have custom decoders
 	// simple passthroughs (varint, bool, string, empty, int32, nbt, holderSet, slot, slotList)
 	// are registered in item_components_codec_gen.go
-	RegisterCodec(ComponentCanBreak, &passthroughCodec{decode: decodeBlockPredicatesWire})
-	RegisterCodec(ComponentCanPlaceOn, &passthroughCodec{decode: decodeBlockPredicatesWire})
-	RegisterCodec(ComponentCustomModelData, &passthroughCodec{decode: decodeCustomModelDataWire})
-	RegisterCodec(ComponentBundleContents, &passthroughCodec{decode: decodeTemplateListWire})
-	RegisterCodec(ComponentChargedProjectiles, &passthroughCodec{decode: decodeTemplateListWire})
-	RegisterCodec(ComponentContainer, &passthroughCodec{decode: decodeOptionalTemplateListWire})
-	RegisterCodec(ComponentSulfurCubeContent, &passthroughCodec{decode: copyItemStackTemplate})
-	RegisterCodec(ComponentEntityData, entityDataCodec{})
-	RegisterCodec(ComponentBlockEntityData, &passthroughCodec{decode: decodeTypedEntityDataWire})
-	RegisterCodec(ComponentUseRemainder, &passthroughCodec{decode: copyItemStackTemplate})
-	RegisterCodec(ComponentConsumable, consumableCodec{})
-	RegisterCodec(ComponentUseEffects, &passthroughCodec{decode: decodeUseEffectsWire})
-	RegisterCodec(ComponentAttackRange, attackRangeCodec{})
-	RegisterCodec(ComponentEquippable, equippableCodec{})
-	RegisterCodec(ComponentDeathProtection, deathProtectionCodec{})
-	RegisterCodec(ComponentBlocksAttacks, blocksAttacksCodec{})
-	RegisterCodec(ComponentKineticWeapon, &passthroughCodec{decode: decodeKineticWeaponWire})
-	RegisterCodec(ComponentPiercingWeapon, &passthroughCodec{decode: decodePiercingWeaponWire})
-	RegisterCodec(ComponentPotionContents, &passthroughCodec{decode: decodePotionContentsWire})
-	RegisterCodec(ComponentSuspiciousStewEffects, &passthroughCodec{decode: decodeSuspiciousStewWire})
-	RegisterCodec(ComponentWritableBookContent, &passthroughCodec{decode: decodeWritableBookWire})
-	RegisterCodec(ComponentWrittenBookContent, &passthroughCodec{decode: decodeWrittenBookWire})
-	RegisterCodec(ComponentTrim, trimCodec{})
-	RegisterCodec(ComponentPaintingVariant, paintingVariantCodec{})
-	RegisterCodec(ComponentDye, dyeCodec{})
-	RegisterCodec(ComponentDyedColor, dyedColorCodec{})
-	RegisterCodec(ComponentBannerPatterns, bannerPatternsCodec{})
-	RegisterCodec(ComponentPotDecorations, potDecorationsCodec{})
-	RegisterCodec(ComponentFireworkExplosion, fireworkExplosionCodec{})
-	RegisterCodec(ComponentFireworks, fireworksCodec{})
-	RegisterCodec(ComponentBaseColor, baseColorCodec{})
-	RegisterCodec(ComponentRecipes, &passthroughCodec{decode: decodeNBTWire})
-	RegisterCodec(ComponentLodestoneTracker, &passthroughCodec{decode: decodeLodestoneWire})
-	RegisterCodec(ComponentProfile, &passthroughCodec{decode: decodeProfileWire})
-	RegisterCodec(ComponentBlockState, &passthroughCodec{decode: decodeBlockStateWire})
-	RegisterCodec(ComponentBees, &passthroughCodec{decode: decodeBeesWire})
+	registerPassthrough(ComponentCanBreak, decodeBlockPredicatesWire)
+	registerPassthrough(ComponentCanPlaceOn, decodeBlockPredicatesWire)
+	registerPassthrough(ComponentCustomModelData, decodeCustomModelDataWire)
+	registerPassthrough(ComponentBundleContents, decodeTemplateListWire)
+	registerPassthrough(ComponentChargedProjectiles, decodeTemplateListWire)
+	registerPassthrough(ComponentContainer, decodeOptionalTemplateListWire)
+	registerPassthrough(ComponentSulfurCubeContent, copyItemStackTemplate)
+	registerCodec(ComponentEntityData, entityDataCodec{})
+	registerPassthrough(ComponentBlockEntityData, decodeTypedEntityDataWire)
+	registerPassthrough(ComponentUseRemainder, copyItemStackTemplate)
+	registerCodec(ComponentConsumable, consumableCodec{})
+	registerCodec(ComponentDeathProtection, deathProtectionCodec{})
+	registerPassthrough(ComponentKineticWeapon, decodeKineticWeaponWire)
+	registerPassthrough(ComponentPiercingWeapon, decodePiercingWeaponWire)
+	registerPassthrough(ComponentPotionContents, decodePotionContentsWire)
+	registerPassthrough(ComponentSuspiciousStewEffects, decodeSuspiciousStewWire)
+	registerPassthrough(ComponentWritableBookContent, decodeWritableBookWire)
+	registerPassthrough(ComponentWrittenBookContent, decodeWrittenBookWire)
+	registerCodec(ComponentTrim, trimCodec{})
+	registerCodec(ComponentPaintingVariant, paintingVariantCodec{})
+	registerCodec(ComponentBannerPatterns, bannerPatternsCodec{})
+	registerCodec(ComponentPotDecorations, potDecorationsCodec{})
+	registerCodec(ComponentFireworkExplosion, fireworkExplosionCodec{})
+	registerCodec(ComponentFireworks, fireworksCodec{})
+	registerPassthrough(ComponentRecipes, decodeNBTWire)
+	registerPassthrough(ComponentLodestoneTracker, decodeLodestoneWire)
+	registerPassthrough(ComponentProfile, CopyResolvableProfile)
+	registerPassthrough(ComponentBlockState, decodeBlockStateWire)
+	registerPassthrough(ComponentBees, decodeBeesWire)
 }
 
 type holderStringCodec struct {
@@ -85,6 +122,15 @@ type holderStringCodec struct {
 
 func newHolderStringCodec(id int32, registry string, get func(*Components) string, set func(*Components, string), direct func(*ns.PacketBuffer, *ns.PacketBuffer) error) *holderStringCodec {
 	return &holderStringCodec{id: id, registry: registry, get: get, set: set, direct: direct}
+}
+
+// entries returns the registry codec.registry names: the built-in sound event
+// registry or a synchronized one.
+func (codec *holderStringCodec) entries() *registries.Registry {
+	if codec.registry == "minecraft:sound_event" {
+		return registries.SoundEvent
+	}
+	return registries.SynchronizedEntries[codec.registry]
 }
 
 func (codec *holderStringCodec) DecodeWire(reader *ns.PacketBuffer) ([]byte, error) {
@@ -120,26 +166,20 @@ func (codec *holderStringCodec) Apply(components *Components, data []byte) error
 		if components.rawPassthrough == nil {
 			components.rawPassthrough = make(map[int32][]byte)
 		}
-		components.rawPassthrough[codec.id] = append([]byte(nil), data...)
+		components.rawPassthrough[codec.id] = slices.Clone(data)
 		codec.set(components, "")
 		return nil
 	}
-	entryID := int(holderID)
-	if !codec.plain {
-		entryID--
-	}
-	entries := registries.SynchronizedEntries[codec.registry]
-	if codec.registry == "minecraft:sound_event" {
-		name := registries.SoundEvent.ByID(int32(entryID))
-		if name == "" {
-			return fmt.Errorf("unknown %s holder %d", codec.registry, holderID)
-		}
-		codec.set(components, name)
-	} else if entryID >= len(entries) {
-		return fmt.Errorf("unknown %s holder %d", codec.registry, holderID)
+	var name string
+	if codec.plain {
+		name = codec.entries().ByID(int32(holderID))
 	} else {
-		codec.set(components, entries[entryID])
+		name = codec.entries().HolderName(int32(holderID))
 	}
+	if name == "" {
+		return fmt.Errorf("unknown %s holder %d", codec.registry, holderID)
+	}
+	codec.set(components, name)
 	delete(components.rawPassthrough, codec.id)
 	return nil
 }
@@ -166,22 +206,19 @@ func (codec *holderStringCodec) Differs(components, defaults *Components) (bool,
 
 func (codec *holderStringCodec) Encode(components *Components) ([]byte, error) {
 	if direct, ok := components.rawPassthrough[codec.id]; ok {
-		return append([]byte(nil), direct...), nil
+		return slices.Clone(direct), nil
 	}
 	value := codec.get(components)
-	var entryID int
-	if codec.registry == "minecraft:sound_event" {
-		entryID = int(registries.SoundEvent.Get(value))
+	var entryID int32
+	if codec.plain {
+		entryID = codec.entries().Get(value)
 	} else {
-		entryID = registryEntryID(codec.registry, value)
+		entryID = codec.entries().HolderID(value)
 	}
 	if entryID < 0 {
 		return nil, fmt.Errorf("unknown %s entry %q", codec.registry, value)
 	}
 	writer := ns.NewWriter()
-	if !codec.plain {
-		entryID++
-	}
 	writer.WriteVarInt(ns.VarInt(entryID))
 	return writer.Bytes(), nil
 }
@@ -201,20 +238,17 @@ func copySoundEventDirect(reader, writer *ns.PacketBuffer) error {
 	return nil
 }
 
-func copySoundEventHolder(reader, writer *ns.PacketBuffer) error {
-	holderID, err := reader.ReadVarInt()
-	if err != nil {
+// copySoundHolder validates and copies a vanilla Holder<SoundEvent>.
+func copySoundHolder(reader, writer *ns.PacketBuffer) error {
+	var sound ns.SoundEvent
+	if err := sound.Decode(reader); err != nil {
 		return err
 	}
-	writer.WriteVarInt(holderID)
-	if holderID == 0 {
-		return copySoundEventDirect(reader, writer)
-	}
-	return nil
+	return sound.Encode(writer)
 }
 
 func copyInstrumentDirect(reader, writer *ns.PacketBuffer) error {
-	if err := copySoundEventHolder(reader, writer); err != nil {
+	if err := copySoundHolder(reader, writer); err != nil {
 		return err
 	}
 	if err := writer.CopyFloat32(reader); err != nil {
@@ -227,7 +261,7 @@ func copyInstrumentDirect(reader, writer *ns.PacketBuffer) error {
 }
 
 func copyJukeboxSongDirect(reader, writer *ns.PacketBuffer) error {
-	if err := copySoundEventHolder(reader, writer); err != nil {
+	if err := copySoundHolder(reader, writer); err != nil {
 		return err
 	}
 	if err := copyNBT(reader, writer); err != nil {
@@ -341,15 +375,8 @@ func (fireworksCodec) Differs(components, defaults *Components) (bool, bool) {
 	if components.Fireworks == nil || defaults.Fireworks == nil {
 		return components.Fireworks != nil || defaults.Fireworks != nil, components.Fireworks != nil
 	}
-	if components.Fireworks.FlightDuration != defaults.Fireworks.FlightDuration || len(components.FireworkExplosions) != len(defaults.FireworkExplosions) {
-		return true, true
-	}
-	for i := range components.FireworkExplosions {
-		if !equalFireworkExplosion(components.FireworkExplosions[i], defaults.FireworkExplosions[i]) {
-			return true, true
-		}
-	}
-	return false, true
+	return components.Fireworks.FlightDuration != defaults.Fireworks.FlightDuration ||
+		!slices.EqualFunc(components.FireworkExplosions, defaults.FireworkExplosions, equalFireworkExplosion), true
 }
 func (fireworksCodec) Encode(components *Components) ([]byte, error) {
 	if components.Fireworks == nil {
@@ -441,20 +468,8 @@ func equalFireworkExplosionPointers(a, b *FireworkExplosion) bool {
 }
 
 func equalFireworkExplosion(a, b FireworkExplosion) bool {
-	if a.Shape != b.Shape || a.HasTrail != b.HasTrail || a.HasTwinkle != b.HasTwinkle || len(a.Colors) != len(b.Colors) || len(a.FadeColors) != len(b.FadeColors) {
-		return false
-	}
-	for i := range a.Colors {
-		if a.Colors[i] != b.Colors[i] {
-			return false
-		}
-	}
-	for i := range a.FadeColors {
-		if a.FadeColors[i] != b.FadeColors[i] {
-			return false
-		}
-	}
-	return true
+	return a.Shape == b.Shape && a.HasTrail == b.HasTrail && a.HasTwinkle == b.HasTwinkle &&
+		slices.Equal(a.Colors, b.Colors) && slices.Equal(a.FadeColors, b.FadeColors)
 }
 
 type potDecorationsCodec struct{}
@@ -470,7 +485,7 @@ func (potDecorationsCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 func (potDecorationsCodec) Apply(components *Components, data []byte) error {
 	reader := ns.NewReader(data)
 	decorations := &PotDecorations{}
-	for _, side := range []**ItemStack{&decorations.Back, &decorations.Left, &decorations.Right, &decorations.Front} {
+	for _, side := range []**Stack{&decorations.Back, &decorations.Left, &decorations.Right, &decorations.Front} {
 		present, err := reader.ReadBool()
 		if err != nil {
 			return err
@@ -504,7 +519,7 @@ func (potDecorationsCodec) Encode(components *Components) ([]byte, error) {
 		return nil, fmt.Errorf("pot decorations are absent")
 	}
 	writer := ns.NewWriter()
-	for _, side := range []*ItemStack{
+	for _, side := range []*Stack{
 		components.PotDecorations.Back, components.PotDecorations.Left,
 		components.PotDecorations.Right, components.PotDecorations.Front,
 	} {
@@ -519,39 +534,6 @@ func (potDecorationsCodec) Encode(components *Components) ([]byte, error) {
 		if err := WriteItemStackTemplate(writer, slot); err != nil {
 			return nil, err
 		}
-	}
-	return writer.Bytes(), nil
-}
-
-type baseColorCodec struct{}
-
-func (baseColorCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
-	writer := ns.NewWriter()
-	if err := writer.CopyVarInt(buf); err != nil {
-		return nil, err
-	}
-	return writer.Bytes(), nil
-}
-func (baseColorCodec) Apply(components *Components, data []byte) error {
-	color, err := ns.NewReader(data).ReadVarInt()
-	if err != nil || color < 0 || color >= 16 {
-		return fmt.Errorf("unknown base color id %d", color)
-	}
-	value := int32(color)
-	components.BaseColor = &value
-	return nil
-}
-func (baseColorCodec) Clear(components *Components) { components.BaseColor = nil }
-func (baseColorCodec) Differs(components, defaults *Components) (bool, bool) {
-	return !equalInt32Pointers(components.BaseColor, defaults.BaseColor), components.BaseColor != nil
-}
-func (baseColorCodec) Encode(components *Components) ([]byte, error) {
-	if components.BaseColor == nil || *components.BaseColor < 0 || *components.BaseColor >= 16 {
-		return nil, fmt.Errorf("invalid base color")
-	}
-	writer := ns.NewWriter()
-	if err := writer.WriteVarInt(ns.VarInt(*components.BaseColor)); err != nil {
-		return nil, err
 	}
 	return writer.Bytes(), nil
 }
@@ -572,11 +554,11 @@ func (bannerPatternsCodec) Apply(components *Components, data []byte) error {
 	if err != nil || count < 0 || count > 256 {
 		return fmt.Errorf("invalid banner pattern count %d", count)
 	}
-	entries := registries.SynchronizedEntries["minecraft:banner_pattern"]
+	patterns := registries.SynchronizedEntries["minecraft:banner_pattern"]
 	layers := make([]BannerPatternLayer, count)
 	for i := range layers {
 		holder, err := reader.ReadVarInt()
-		if err != nil || holder < 0 || holder > ns.VarInt(len(entries)) {
+		if err != nil || holder < 0 || holder > ns.VarInt(patterns.Size()) {
 			return fmt.Errorf("unknown banner pattern holder %d", holder)
 		}
 		if holder == 0 {
@@ -591,7 +573,7 @@ func (bannerPatternsCodec) Apply(components *Components, data []byte) error {
 			layers[i].AssetID = string(assetID)
 			layers[i].TranslationKey = string(translationKey)
 		} else {
-			layers[i].Pattern = entries[holder-1]
+			layers[i].Pattern = patterns.HolderName(int32(holder))
 		}
 		color, err := reader.ReadVarInt()
 		if err != nil || color < 0 || color >= 16 {
@@ -615,20 +597,13 @@ func (bannerPatternsCodec) Encode(components *Components) ([]byte, error) {
 	if err := writer.WriteVarInt(ns.VarInt(len(*components.BannerPatterns))); err != nil {
 		return nil, err
 	}
-	entries := registries.SynchronizedEntries["minecraft:banner_pattern"]
 	for _, layer := range *components.BannerPatterns {
-		pattern := -1
-		for id, name := range entries {
-			if name == layer.Pattern {
-				pattern = id
-				break
-			}
-		}
+		pattern := registries.SynchronizedEntries["minecraft:banner_pattern"].HolderID(layer.Pattern)
 		if layer.Color < 0 || layer.Color >= 16 {
 			return nil, fmt.Errorf("invalid banner color %d", layer.Color)
 		}
 		if pattern >= 0 {
-			if err := writer.WriteVarInt(ns.VarInt(pattern + 1)); err != nil {
+			if err := writer.WriteVarInt(ns.VarInt(pattern)); err != nil {
 				return nil, err
 			}
 		} else {
@@ -654,86 +629,9 @@ func (bannerPatternsCodec) Encode(components *Components) ([]byte, error) {
 
 func equalBannerPatterns(a, b *[]BannerPatternLayer) bool {
 	if a == nil || b == nil {
-		return a == nil && b == nil
+		return a == b
 	}
-	if len(*a) != len(*b) {
-		return false
-	}
-	for i := range *a {
-		if (*a)[i] != (*b)[i] {
-			return false
-		}
-	}
-	return true
-}
-
-type dyeCodec struct{}
-
-func (dyeCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
-	writer := ns.NewWriter()
-	if err := writer.CopyVarInt(buf); err != nil {
-		return nil, err
-	}
-	return writer.Bytes(), nil
-}
-
-func (dyeCodec) Apply(components *Components, data []byte) error {
-	id, err := ns.NewReader(data).ReadVarInt()
-	if err != nil || id < 0 || id >= 16 {
-		return fmt.Errorf("unknown dye id %d", id)
-	}
-	value := int32(id)
-	components.Dye = &value
-	return nil
-}
-
-func (dyeCodec) Clear(components *Components) { components.Dye = nil }
-func (dyeCodec) Differs(components, defaults *Components) (bool, bool) {
-	return !equalInt32Pointers(components.Dye, defaults.Dye), components.Dye != nil
-}
-func (dyeCodec) Encode(components *Components) ([]byte, error) {
-	if components.Dye == nil || *components.Dye < 0 || *components.Dye >= 16 {
-		return nil, fmt.Errorf("unknown dye id %v", components.Dye)
-	}
-	writer := ns.NewWriter()
-	if err := writer.WriteVarInt(ns.VarInt(*components.Dye)); err != nil {
-		return nil, err
-	}
-	return writer.Bytes(), nil
-}
-
-type dyedColorCodec struct{}
-
-func (dyedColorCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
-	writer := ns.NewWriter()
-	if err := writer.CopyInt32(buf); err != nil {
-		return nil, err
-	}
-	return writer.Bytes(), nil
-}
-func (dyedColorCodec) Apply(components *Components, data []byte) error {
-	color, err := ns.NewReader(data).ReadInt32()
-	value := int32(color)
-	components.DyedColor = &value
-	return err
-}
-func (dyedColorCodec) Clear(components *Components) { components.DyedColor = nil }
-func (dyedColorCodec) Differs(components, defaults *Components) (bool, bool) {
-	return !equalInt32Pointers(components.DyedColor, defaults.DyedColor), components.DyedColor != nil
-}
-func (dyedColorCodec) Encode(components *Components) ([]byte, error) {
-	if components.DyedColor == nil {
-		return nil, fmt.Errorf("dyed color is absent")
-	}
-	writer := ns.NewWriter()
-	if err := writer.WriteInt32(ns.Int32(*components.DyedColor)); err != nil {
-		return nil, err
-	}
-	return writer.Bytes(), nil
-}
-
-func equalInt32Pointers(a, b *int32) bool {
-	return a == nil && b == nil || a != nil && b != nil && *a == *b
+	return slices.Equal(*a, *b)
 }
 
 type paintingVariantCodec struct{}
@@ -748,11 +646,11 @@ func (paintingVariantCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 
 func (paintingVariantCodec) Apply(components *Components, data []byte) error {
 	id, err := ns.NewReader(data).ReadVarInt()
-	entries := registries.SynchronizedEntries["minecraft:painting_variant"]
-	if err != nil || id < 0 || int(id) >= len(entries) {
+	name := registries.SynchronizedEntries["minecraft:painting_variant"].ByID(int32(id))
+	if err != nil || name == "" {
 		return fmt.Errorf("unknown painting variant id %d", id)
 	}
-	components.PaintingVariant = entries[id]
+	components.PaintingVariant = name
 	return nil
 }
 
@@ -763,52 +661,15 @@ func (paintingVariantCodec) Differs(components, defaults *Components) (bool, boo
 }
 
 func (paintingVariantCodec) Encode(components *Components) ([]byte, error) {
-	for id, name := range registries.SynchronizedEntries["minecraft:painting_variant"] {
-		if name == components.PaintingVariant {
-			writer := ns.NewWriter()
-			if err := writer.WriteVarInt(ns.VarInt(id)); err != nil {
-				return nil, err
-			}
-			return writer.Bytes(), nil
-		}
+	id := registries.SynchronizedEntries["minecraft:painting_variant"].Get(components.PaintingVariant)
+	if id < 0 {
+		return nil, fmt.Errorf("unknown painting variant %q", components.PaintingVariant)
 	}
-	return nil, fmt.Errorf("unknown painting variant %q", components.PaintingVariant)
-}
-
-func registerVarIntPassthrough(id int32) {
-	RegisterCodec(id, &passthroughCodec{decode: decodeVarIntWire})
-}
-
-func registerBoolPassthrough(id int32) {
-	RegisterCodec(id, &passthroughCodec{decode: decodeBoolWire})
-}
-
-func registerStringPassthrough(id int32) {
-	RegisterCodec(id, &passthroughCodec{decode: decodeStringWire})
-}
-
-func registerEmptyPassthrough(id int32) {
-	RegisterCodec(id, &passthroughCodec{decode: decodeEmptyWire})
-}
-
-func registerInt32Passthrough(id int32) {
-	RegisterCodec(id, &passthroughCodec{decode: decodeInt32Wire})
-}
-
-func registerNBTPassthrough(id int32) {
-	RegisterCodec(id, &passthroughCodec{decode: decodeNBTWire})
-}
-
-func registerHolderSetPassthrough(id int32) {
-	RegisterCodec(id, &passthroughCodec{decode: decodeHolderSetWire})
-}
-
-func registerSlotListPassthrough(id int32) {
-	RegisterCodec(id, &passthroughCodec{decode: decodeSlotListWire})
-}
-
-func registerSlotPassthrough(id int32) {
-	RegisterCodec(id, &passthroughCodec{decode: decodeSlotWire})
+	writer := ns.NewWriter()
+	if err := writer.WriteVarInt(ns.VarInt(id)); err != nil {
+		return nil, err
+	}
+	return writer.Bytes(), nil
 }
 
 func decodeVarIntWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -833,13 +694,6 @@ func decodeEmptyWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 
 func decodeNBTWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return copyNBT(buf, w)
-}
-
-func decodeBlockPredicatesWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	if err := copyVarIntPrefixedList(buf, w, copyBlockPredicate); err != nil {
-		return err
-	}
-	return w.CopyBool(buf)
 }
 
 func decodeCustomModelDataWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -867,7 +721,7 @@ func decodeConsumableWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	if err := w.CopyVarInt(buf); err != nil { // animation
 		return err
 	}
-	if err := copySoundEvent(buf, w); err != nil {
+	if err := copySoundHolder(buf, w); err != nil {
 		return err
 	}
 	if err := w.CopyBool(buf); err != nil { // has particles
@@ -884,52 +738,8 @@ func decodeSlotListWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return copyVarIntPrefixedList(buf, w, copySlot)
 }
 
-func decodeUseEffectsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	if err := w.CopyBool(buf); err != nil { // can sprint
-		return err
-	}
-	if err := w.CopyBool(buf); err != nil { // interact vibrations
-		return err
-	}
-	return w.CopyFloat32(buf) // speed multiplier
-}
-
 func decodeHolderSetWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return copyHolderSet(buf, w)
-}
-
-func decodeEquippableWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	if err := w.CopyVarInt(buf); err != nil { // slot
-		return err
-	}
-	if err := copySoundEvent(buf, w); err != nil {
-		return err
-	}
-	if err := copyOptionalString(buf, w); err != nil { // optional asset
-		return err
-	}
-	if err := copyOptionalIdentifier(buf, w); err != nil { // optional camera overlay
-		return err
-	}
-	if err := copyOptionalHolderSet(buf, w); err != nil {
-		return err
-	}
-	// dispensable, swappable, damages on hurt
-	for range 3 {
-		if err := w.CopyBool(buf); err != nil {
-			return err
-		}
-	}
-	// can be sheared (conditional)
-	canBeSheared, err := buf.ReadBool()
-	if err != nil {
-		return err
-	}
-	w.WriteBool(canBeSheared)
-	if canBeSheared {
-		return copySoundEvent(buf, w)
-	}
-	return nil
 }
 
 func decodeDeathProtectionWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -1070,31 +880,11 @@ func decodeTrimWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return nil
 }
 
-func decodeRecipesWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	return copyVarIntPrefixedList(buf, w, func(buf, w *ns.PacketBuffer) error {
-		return w.CopyString(buf, maxStringLen)
-	})
-}
-
 func decodeLodestoneWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	if err := copyOptionalGlobalPos(buf, w); err != nil {
 		return err
 	}
 	return w.CopyBool(buf) // tracked
-}
-
-func decodeFireworkExplosionWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	return copyFireworkExplosion(buf, w)
-}
-
-func decodeProfileWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	if err := copyOptionalString(buf, w); err != nil { // name
-		return err
-	}
-	if err := copyOptionalUUID(buf, w); err != nil {
-		return err
-	}
-	return copyVarIntPrefixedList(buf, w, copyGameProfileProperty)
 }
 
 func decodeBannerPatternsWire(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -1144,6 +934,9 @@ func copyVarIntPrefixedList(buf *ns.PacketBuffer, w *ns.PacketBuffer, copyFn fun
 	if err != nil {
 		return err
 	}
+	if count < 0 {
+		return fmt.Errorf("negative list count %d", count)
+	}
 	w.WriteVarInt(count)
 	for range int(count) {
 		if err := copyFn(buf, w); err != nil {
@@ -1181,6 +974,9 @@ func copySlot(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 		return err
 	}
 	w.WriteVarInt(removeCount)
+	if addCount < 0 || removeCount < 0 {
+		return fmt.Errorf("invalid slot patch size %d/%d", addCount, removeCount)
+	}
 
 	for range int(addCount) {
 		compID, err := buf.ReadVarInt()
@@ -1249,10 +1045,6 @@ func copyOptionalString(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return nil
 }
 
-func copyOptionalIdentifier(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	return copyOptionalString(buf, w)
-}
-
 func copyOptionalNBT(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	present, err := buf.ReadBool()
 	if err != nil {
@@ -1282,6 +1074,9 @@ func copyHolderSet(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	if err != nil {
 		return err
 	}
+	if typeID < 0 {
+		return fmt.Errorf("invalid holder set marker %d", typeID)
+	}
 	w.WriteVarInt(typeID)
 
 	if typeID == 0 {
@@ -1307,10 +1102,6 @@ func copyOptionalHolderSet(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return nil
 }
 
-func copySoundEvent(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	return copySoundEventHolder(buf, w)
-}
-
 func copyOptionalSoundEvent(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	present, err := buf.ReadBool()
 	if err != nil {
@@ -1318,7 +1109,7 @@ func copyOptionalSoundEvent(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	}
 	w.WriteBool(present)
 	if present {
-		return copySoundEvent(buf, w)
+		return copySoundHolder(buf, w)
 	}
 	return nil
 }
@@ -1343,9 +1134,9 @@ func copyConsumeEffect(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	case 3: // teleport_randomly
 		return w.CopyFloat32(buf) // diameter
 	case 4: // play_sound
-		return copySoundEvent(buf, w)
+		return copySoundHolder(buf, w)
 	}
-	return nil
+	return fmt.Errorf("unknown consume effect type %d", typeID)
 }
 
 func copyStatusEffect(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -1406,48 +1197,6 @@ func copyToolRule(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 		return w.CopyBool(buf)
 	}
 	return nil
-}
-
-func copyBlockPredicate(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	// optional blocks
-	if err := copyOptionalHolderSet(buf, w); err != nil {
-		return err
-	}
-	// optional properties
-	propCount, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(propCount)
-	for range int(propCount) {
-		if err := copyPropertyMatcher(buf, w); err != nil {
-			return err
-		}
-	}
-	// optional NBT
-	if err := copyOptionalNBT(buf, w); err != nil {
-		return err
-	}
-	return nil
-}
-
-func copyPropertyMatcher(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	if err := w.CopyString(buf, maxStringLen); err != nil { // property name
-		return err
-	}
-	isExact, err := buf.ReadBool()
-	if err != nil {
-		return err
-	}
-	w.WriteBool(isExact)
-	if isExact {
-		return w.CopyString(buf, maxStringLen) // value
-	}
-	// range: min, max
-	if err := copyOptionalString(buf, w); err != nil {
-		return err
-	}
-	return copyOptionalString(buf, w)
 }
 
 func copyOptionalKineticConditions(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
@@ -1539,14 +1288,85 @@ func copyBannerPattern(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
 	return w.CopyVarInt(buf) // color
 }
 
-func copyGameProfileProperty(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	if err := w.CopyString(buf, maxStringLen); err != nil { // name
+// CopyResolvableProfile validates and copies a vanilla ResolvableProfile
+// (the minecraft:profile component and the resolvable_profile entity
+// metadata serializer): either a complete GameProfile or a partial profile,
+// followed by the PlayerSkin.Patch overrides.
+func CopyResolvableProfile(buf, w *ns.PacketBuffer) error {
+	complete, err := buf.ReadBool()
+	if err != nil {
 		return err
 	}
-	if err := w.CopyString(buf, maxStringLen); err != nil { // value
+	w.WriteBool(complete)
+	if complete {
+		if err := w.CopyUUID(buf); err != nil {
+			return err
+		}
+		if err := w.CopyString(buf, maxPlayerNameLen); err != nil {
+			return err
+		}
+	} else {
+		if err := copyOptional(buf, w, func(buf, w *ns.PacketBuffer) error { return w.CopyString(buf, maxPlayerNameLen) }); err != nil {
+			return err
+		}
+		if err := copyOptionalUUID(buf, w); err != nil {
+			return err
+		}
+	}
+	if err := copyGameProfileProperties(buf, w); err != nil {
 		return err
 	}
-	return copyOptionalString(buf, w) // signature
+	// skin patch: body, cape and elytra textures, then the player model type
+	for range 3 {
+		if err := copyOptional(buf, w, func(buf, w *ns.PacketBuffer) error { return w.CopyString(buf, maxStringLen) }); err != nil {
+			return err
+		}
+	}
+	return copyOptional(buf, w, func(buf, w *ns.PacketBuffer) error { return w.CopyBool(buf) })
+}
+
+// Vanilla GameProfile limits (ByteBufCodecs.PLAYER_NAME, GAME_PROFILE_PROPERTIES).
+const (
+	maxPlayerNameLen          = 16
+	maxProfileProperties      = 16
+	maxProfilePropertyNameLen = 64
+	maxProfileSignatureLen    = 1024
+)
+
+func copyGameProfileProperties(buf, w *ns.PacketBuffer) error {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return err
+	}
+	if count < 0 || count > maxProfileProperties {
+		return fmt.Errorf("profile property count %d outside 0..%d", count, maxProfileProperties)
+	}
+	w.WriteVarInt(count)
+	for range int(count) {
+		if err := w.CopyString(buf, maxProfilePropertyNameLen); err != nil {
+			return err
+		}
+		if err := w.CopyString(buf, maxStringLen); err != nil {
+			return err
+		}
+		if err := copyOptional(buf, w, func(buf, w *ns.PacketBuffer) error { return w.CopyString(buf, maxProfileSignatureLen) }); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// copyOptional copies a boolean presence flag and, when set, the value.
+func copyOptional(buf, w *ns.PacketBuffer, copyValue func(buf, w *ns.PacketBuffer) error) error {
+	present, err := buf.ReadBool()
+	if err != nil {
+		return err
+	}
+	w.WriteBool(present)
+	if !present {
+		return nil
+	}
+	return copyValue(buf, w)
 }
 
 func copyOptionalGlobalPos(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {

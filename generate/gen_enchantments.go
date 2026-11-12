@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
-	"sort"
 	"strings"
 )
 
@@ -55,24 +52,13 @@ type levelBasedValueJSON struct {
 // generateEnchantments emits the enchantment definitions from the datapack.
 // Item/tag matchers stay symbolic for runtime resolution.
 func generateEnchantments(enchDir, outPath string) {
-	entries, err := os.ReadDir(enchDir)
-	if err != nil {
-		panic(fmt.Sprintf("failed to read enchantment dir %s: %v", enchDir, err))
-	}
-	names := make([]string, 0, len(entries))
-	for _, e := range entries {
-		if strings.HasSuffix(e.Name(), ".json") {
-			names = append(names, e.Name())
-		}
-	}
-	sort.Strings(names)
-
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("enchantments"))
 	sb.WriteString("var Enchantments = []Enchantment{\n")
-	for _, name := range names {
-		e := loadJSON[enchantmentJSON](filepath.Join(enchDir, name))
-		id := "minecraft:" + strings.TrimSuffix(name, ".json")
+	entries := datapackEntries(enchDir)
+	for _, entry := range entries {
+		e := loadJSON[enchantmentJSON](entry.Path)
+		id := entry.ID
 		fmt.Fprintf(&sb, "\t{Name: %q, MaxLevel: %d, Weight: %d, AnvilCost: %d, MinCostBase: %d, MinCostPerLevel: %d, MaxCostBase: %d, MaxCostPerLevel: %d, SupportedItems: %s, PrimaryItems: %s, ExclusiveSet: %s, Slots: %s, EquipmentDropEffects: %s},\n",
 			id, e.MaxLevel, e.Weight, e.AnvilCost,
 			e.MinCost.Base, e.MinCost.PerLevel, e.MaxCost.Base, e.MaxCost.PerLevel,
@@ -81,9 +67,9 @@ func generateEnchantments(enchDir, outPath string) {
 	}
 	sb.WriteString("}\n")
 
-	checkMinCount("enchantments", len(names), 40)
+	checkMinCount("enchantments", len(entries), 40)
 	writeFile(outPath, sb.String())
-	fmt.Printf("generated %d enchantments\n", len(names))
+	fmt.Printf("generated %d enchantments\n", len(entries))
 }
 
 // matcherListLiteral renders an item/tag matcher field (string or list) as a

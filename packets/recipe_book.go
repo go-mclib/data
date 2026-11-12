@@ -4,10 +4,8 @@ import (
 	"fmt"
 
 	"github.com/go-mclib/data/items"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
-
-const maxRecipeDisplays = 65536
 
 type RecipeBookEntry struct {
 	DisplayID       ns.VarInt
@@ -67,7 +65,7 @@ func (e *RecipeBookEntry) read(buf *ns.PacketBuffer) error {
 	}
 	e.HasRequirements = bool(hasRequirements)
 	if e.HasRequirements {
-		count, err := readRecipeCount(buf, "requirements")
+		count, err := readCount(buf, "requirements", maxListCount)
 		if err != nil {
 			return err
 		}
@@ -401,7 +399,7 @@ func readSlotDisplayList(buf *ns.PacketBuffer) ([]RecipeSlotDisplay, error) {
 }
 
 func readSlotDisplayListDepth(buf *ns.PacketBuffer, depth int) ([]RecipeSlotDisplay, error) {
-	count, err := readRecipeCount(buf, "slot displays")
+	count, err := readCount(buf, "slot displays", maxListCount)
 	if err != nil {
 		return nil, err
 	}
@@ -424,15 +422,4 @@ func writeSlotDisplayList(buf *ns.PacketBuffer, displays []RecipeSlotDisplay) er
 		}
 	}
 	return nil
-}
-
-func readRecipeCount(buf *ns.PacketBuffer, label string) (int, error) {
-	count, err := buf.ReadVarInt()
-	if err != nil {
-		return 0, err
-	}
-	if count < 0 || count > maxRecipeDisplays {
-		return 0, fmt.Errorf("invalid %s count %d", label, count)
-	}
-	return int(count), nil
 }

@@ -6,11 +6,11 @@ import (
 	"testing"
 
 	"github.com/go-mclib/data/packets"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 func TestSetPassengersWireLayout(t *testing.T) {
-	packet := &packets.S2CSetPassengers{EntityId: 300, Passengers: []ns.VarInt{1, 400}}
+	packet := &packets.S2CSetPassengers{EntityID: 300, Passengers: []ns.VarInt{1, 400}}
 	buf := ns.NewWriter()
 	if err := packet.Write(buf); err != nil {
 		t.Fatalf("Write: %v", err)
@@ -24,14 +24,14 @@ func TestSetPassengersWireLayout(t *testing.T) {
 	if err := decoded.Read(reader); err != nil {
 		t.Fatalf("Read: %v", err)
 	}
-	if decoded.EntityId != 300 || len(decoded.Passengers) != 2 || decoded.Passengers[1] != 400 {
+	if decoded.EntityID != 300 || len(decoded.Passengers) != 2 || decoded.Passengers[1] != 400 {
 		t.Fatalf("decoded = %+v", decoded)
 	}
 }
 
 func TestSetEquipmentWireLayout(t *testing.T) {
 	packet := &packets.S2CSetEquipment{
-		EntityId: 300,
+		EntityID: 300,
 		Slots: []packets.EquipmentEntry{
 			{Slot: 2, Item: ns.NewSlot(5, 1)},
 			{Slot: 4, Item: ns.EmptySlot()},
@@ -50,7 +50,7 @@ func TestSetEquipmentWireLayout(t *testing.T) {
 	if err := decoded.Read(reader); err != nil {
 		t.Fatalf("Read: %v", err)
 	}
-	if decoded.EntityId != 300 || len(decoded.Slots) != 2 || decoded.Slots[0].Slot != 2 || decoded.Slots[0].Item.ItemID != 5 || decoded.Slots[1].Slot != 4 || !decoded.Slots[1].Item.IsEmpty() {
+	if decoded.EntityID != 300 || len(decoded.Slots) != 2 || decoded.Slots[0].Slot != 2 || decoded.Slots[0].Item.ItemID != 5 || decoded.Slots[1].Slot != 4 || !decoded.Slots[1].Item.IsEmpty() {
 		t.Fatalf("decoded = %+v", decoded)
 	}
 	if _, err := reader.ReadByte(); err != io.EOF {

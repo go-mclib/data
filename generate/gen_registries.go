@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 	"strings"
 )
@@ -45,7 +44,18 @@ var synchronizedRegistryIDs = []string{
 	"minecraft:worldgen/block_state_provider",
 }
 
-func generateRegistries(registries map[string]RegistryJSON, datapackDir string, outPath string) {
+// loadSynchronizedEntries walks each synchronized registry's datapack directory
+// once; the sorted entries decide both the protocol IDs (SynchronizedEntries)
+// and the embedded data (SynchronizedRegistryData).
+func loadSynchronizedEntries(datapackDir string) map[string][]datapackEntry {
+	result := make(map[string][]datapackEntry, len(synchronizedRegistryIDs))
+	for _, regID := range synchronizedRegistryIDs {
+		result[regID] = datapackEntries(filepath.Join(datapackDir, strings.TrimPrefix(regID, "minecraft:")))
+	}
+	return result
+}
+
+func generateRegistries(registries map[string]RegistryJSON, synchronized map[string][]datapackEntry, outPath string) {
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("registries"))
 
@@ -55,7 +65,7 @@ func generateRegistries(registries map[string]RegistryJSON, datapackDir string, 
 		reg := registries[name]
 		goName := toGoVarName(name)
 		entriesVar := strings.ToLower(goName[:1]) + goName[1:] + "Entries"
-		sb.WriteString(fmt.Sprintf("\t%s = newRegistry(%q, %d, %s)\n", goName, name, reg.ProtocolID, entriesVar))
+		fmt.Fprintf(&sb, "\t%s = newRegistry(%q, %d, %s)\n", goName, name, reg.ProtocolID, entriesVar)
 	}
 	sb.WriteString(")\n\n")
 
@@ -63,8 +73,7 @@ func generateRegistries(registries map[string]RegistryJSON, datapackDir string, 
 	sb.WriteString("// ByIdentifier maps registry identifier strings to registry instances.\n")
 	sb.WriteString("var ByIdentifier = map[string]*Registry{\n")
 	for _, name := range sortedKeys(registries) {
-		goName := toGoVarName(name)
-		sb.WriteString(fmt.Sprintf("\t%q: %s,\n", name, goName))
+		fmt.Fprintf(&sb, "\t%q: %s,\n", name, toGoVarName(name))
 	}
 	sb.WriteString("}\n\n")
 
@@ -72,7 +81,7 @@ func generateRegistries(registries map[string]RegistryJSON, datapackDir string, 
 	sb.WriteString("// SynchronizedRegistryIDs lists registry identifiers sent over the network during configuration.\n")
 	sb.WriteString("var SynchronizedRegistryIDs = [...]string{\n")
 	for _, id := range synchronizedRegistryIDs {
-		sb.WriteString(fmt.Sprintf("\t%q,\n", id))
+		fmt.Fprintf(&sb, "\t%q,\n", id)
 	}
 	sb.WriteString("}\n\n")
 
@@ -82,49 +91,28 @@ func generateRegistries(registries map[string]RegistryJSON, datapackDir string, 
 		goName := toGoVarName(name)
 		varName := strings.ToLower(goName[:1]) + goName[1:] + "Entries"
 
-		sb.WriteString(fmt.Sprintf("var %s = map[string]int32{\n", varName))
+		fmt.Fprintf(&sb, "var %s = map[string]int32{\n", varName)
 		for _, entryName := range sortedKeys(reg.Entries) {
-			entry := reg.Entries[entryName]
-			sb.WriteString(fmt.Sprintf("\t%q: %d,\n", entryName, entry.ProtocolID))
+			fmt.Fprintf(&sb, "\t%q: %d,\n", entryName, reg.Entries[entryName].ProtocolID)
 		}
 		sb.WriteString("}\n\n")
 	}
 
-	// generate SynchronizedEntries: entry names for data-driven registries
-	// scanned from the vanilla datapack (data/minecraft/<registry>/*.json)
+	// generate SynchronizedEntries: registries for data-driven entries from the
+	// vanilla datapack (data/minecraft/<registry>/**.json), in protocol ID order
 	sb.WriteString("// SynchronizedEntries maps synchronized registry identifiers to their\n")
-	sb.WriteString("// vanilla datapack entry names. For registries that also appear in\n")
-	sb.WriteString("// ByIdentifier (static registries), entries come from there instead.\n")
-	sb.WriteString("var SynchronizedEntries = map[string][]string{\n")
+	sb.WriteString("// vanilla datapack registries; protocol IDs follow the sorted entry names.\n")
+	sb.WriteString("var SynchronizedEntries = map[string]*Registry{\n")
 	for _, regID := range synchronizedRegistryIDs {
-		// strip "minecraft:" prefix to get relative path
-		relPath := strings.TrimPrefix(regID, "minecraft:")
-		dir := filepath.Join(datapackDir, relPath)
-
-		dirEntries, err := os.ReadDir(dir)
-		if err != nil {
-			fmt.Printf("  warn: no datapack dir for %s: %v\n", regID, err)
+		entries := synchronized[regID]
+		if len(entries) == 0 {
 			continue
 		}
-
-		var names []string
-		for _, e := range dirEntries {
-			if e.IsDir() || !strings.HasSuffix(e.Name(), ".json") {
-				continue
-			}
-			name := "minecraft:" + strings.TrimSuffix(e.Name(), ".json")
-			names = append(names, name)
+		fmt.Fprintf(&sb, "\t%q: newSynchronizedRegistry(%q, []string{\n", regID, regID)
+		for _, entry := range entries {
+			fmt.Fprintf(&sb, "\t\t%q,\n", entry.ID)
 		}
-
-		if len(names) == 0 {
-			continue
-		}
-
-		sb.WriteString(fmt.Sprintf("\t%q: {\n", regID))
-		for _, name := range names {
-			sb.WriteString(fmt.Sprintf("\t\t%q,\n", name))
-		}
-		sb.WriteString("\t},\n")
+		sb.WriteString("\t}),\n")
 	}
 	sb.WriteString("}\n\n")
 

@@ -3,26 +3,27 @@ package chunks
 import (
 	"fmt"
 	"math/bits"
+	"slices"
 
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
-// ContainerKind defines the palette strategy parameters for a paletted container.
-type ContainerKind struct {
+// containerKind defines the palette strategy parameters for a paletted container.
+type containerKind struct {
 	EntryCount      int
 	MinIndirectBits int
 	MaxIndirectBits int
 	DirectBits      int
 }
 
-// DirectBits is the global-palette bit width = ceil(log2(registry size)). It is
-// only used when encoding a container that overflows to the direct palette;
-// decoding reads the width from the wire (see Decode). Bump these when the
-// registries grow past a power of two (26.2: 32366 block states -> 15 bits,
-// 66 biomes -> 7 bits).
+// DirectBits is the global-palette bit width = ceil(log2(registry size)), as in
+// vanilla's PalettedContainer strategy. It is only used when encoding a
+// container that overflows to the direct palette; decoding reads the width from
+// the wire (see Decode). Bump these when the registries grow past a power of
+// two (26.3: 35723 block states -> 16 bits, 66 biomes -> 7 bits).
 var (
-	BlockStatesKind = ContainerKind{EntryCount: 4096, MinIndirectBits: 4, MaxIndirectBits: 8, DirectBits: 15}
-	BiomesKind      = ContainerKind{EntryCount: 64, MinIndirectBits: 1, MaxIndirectBits: 3, DirectBits: 7}
+	blockStatesKind = containerKind{EntryCount: 4096, MinIndirectBits: 4, MaxIndirectBits: 8, DirectBits: 16}
+	biomesKind      = containerKind{EntryCount: 64, MinIndirectBits: 1, MaxIndirectBits: 3, DirectBits: 7}
 )
 
 // PalettedContainer stores entries (block state IDs or biome IDs) using palette compression.
@@ -32,15 +33,15 @@ var (
 //   - Indirect (bitsPerEntry in [minIndirect, maxIndirect]): palette maps indices to IDs
 //   - Direct (bitsPerEntry=directBits): no palette, data stores IDs directly
 type PalettedContainer struct {
-	kind         ContainerKind
+	kind         containerKind
 	bitsPerEntry int
 	palette      []int32  // nil for single-value and direct modes
 	data         []uint64 // packed entries; empty for single-value
 	singleValue  int32    // used when bitsPerEntry == 0
 }
 
-// NewSingleValue creates a container where all entries have the same value.
-func NewSingleValue(kind ContainerKind, value int32) *PalettedContainer {
+// newSingleValue creates a container where all entries have the same value.
+func newSingleValue(kind containerKind, value int32) *PalettedContainer {
 	return &PalettedContainer{
 		kind:         kind,
 		bitsPerEntry: 0,
@@ -72,11 +73,7 @@ func (p *PalettedContainer) Get(index int) int32 {
 	if p.bitsPerEntry == 0 {
 		return p.singleValue
 	}
-	entriesPerLong := 64 / p.bitsPerEntry
-	longIdx := index / entriesPerLong
-	bitIdx := (index % entriesPerLong) * p.bitsPerEntry
-	mask := uint64((1 << p.bitsPerEntry) - 1)
-	raw := int32((p.data[longIdx] >> bitIdx) & mask)
+	raw := extractEntry(p.data, p.bitsPerEntry, index)
 	if p.palette != nil {
 		if int(raw) < len(p.palette) {
 			return p.palette[raw]
@@ -86,9 +83,9 @@ func (p *PalettedContainer) Get(index int) int32 {
 	return raw
 }
 
-// GetXYZ returns the entry at the given x, y, z coordinates.
+// getXYZ returns the entry at the given x, y, z coordinates.
 // For blocks: 0-15 each. For biomes: 0-3 each.
-func (p *PalettedContainer) GetXYZ(x, y, z int) int32 {
+func (p *PalettedContainer) getXYZ(x, y, z int) int32 {
 	return p.Get(p.flatIndex(x, y, z))
 }
 
@@ -104,13 +101,7 @@ func (p *PalettedContainer) Set(index int, value int32) {
 	paletteIdx := value
 	if p.palette != nil {
 		// indirect mode: find or add to palette
-		found := -1
-		for i, v := range p.palette {
-			if v == value {
-				found = i
-				break
-			}
-		}
+		found := slices.Index(p.palette, value)
 		if found >= 0 {
 			paletteIdx = int32(found)
 		} else {
@@ -127,22 +118,25 @@ func (p *PalettedContainer) Set(index int, value int32) {
 		}
 	}
 
-	entriesPerLong := 64 / p.bitsPerEntry
-	longIdx := index / entriesPerLong
-	bitIdx := (index % entriesPerLong) * p.bitsPerEntry
-	mask := uint64((1 << p.bitsPerEntry) - 1)
-	p.data[longIdx] &= ^(mask << bitIdx)
-	p.data[longIdx] |= uint64(paletteIdx) << bitIdx
+	setEntry(p.data, p.bitsPerEntry, index, paletteIdx)
 }
 
-// SetXYZ sets the entry at the given x, y, z coordinates.
-func (p *PalettedContainer) SetXYZ(x, y, z int, value int32) {
+// setXYZ sets the entry at the given x, y, z coordinates.
+func (p *PalettedContainer) setXYZ(x, y, z int, value int32) {
 	p.Set(p.flatIndex(x, y, z), value)
 }
 
 // BitsPerEntry returns the current bits per entry.
 func (p *PalettedContainer) BitsPerEntry() int {
 	return p.bitsPerEntry
+}
+
+// Clone returns a deep copy of the container.
+func (p *PalettedContainer) Clone() *PalettedContainer {
+	out := *p
+	out.palette = slices.Clone(p.palette)
+	out.data = slices.Clone(p.data)
+	return &out
 }
 
 // expandFromSingleValue converts from single-value to indirect palette with two entries.
@@ -198,7 +192,7 @@ func setEntry(data []uint64, bpe, index int, value int32) {
 	bitIdx := (index % entriesPerLong) * bpe
 	mask := uint64((1 << bpe) - 1)
 	data[longIdx] &= ^(mask << bitIdx)
-	data[longIdx] |= uint64(value) << bitIdx
+	data[longIdx] |= (uint64(value) & mask) << bitIdx
 }
 
 // Decode reads a PalettedContainer from the buffer.
@@ -230,6 +224,9 @@ func (p *PalettedContainer) Decode(buf *ns.PacketBuffer) error {
 		paletteLen, err := buf.ReadVarInt()
 		if err != nil {
 			return err
+		}
+		if paletteLen < 1 || int(paletteLen) > 1<<p.bitsPerEntry {
+			return fmt.Errorf("invalid palette length %d for %d bits", paletteLen, p.bitsPerEntry)
 		}
 		p.palette = make([]int32, paletteLen)
 		for i := range p.palette {

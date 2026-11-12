@@ -1,6 +1,6 @@
 # Packet Definitions
 
-This directory contains Minecraft protocol packet definitions. Each packet implements the `java_protocol.Packet` interface from the [`go-mclib/protocol`](https://github.com/go-mclib/protocol) package.
+This directory contains Minecraft protocol packet definitions. Each packet implements the `javaproto.Packet` interface from the [`go-mclib/protocol`](https://github.com/go-mclib/protocol) package.
 
 ## Imports
 
@@ -8,8 +8,8 @@ This directory contains Minecraft protocol packet definitions. Each packet imple
 package packets
 
 import (
-    jp "github.com/go-mclib/protocol/java_protocol"
-    ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+    jp "github.com/go-mclib/protocol/javaproto"
+    ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 ```
 
@@ -176,7 +176,7 @@ func (p *C2SSelectKnownPacks) Write(buf *ns.PacketBuffer) error {
 
 ### Using Composite Types (Recommended)
 
-For arrays and optionals, use the composite types from `net_structures` for cleaner code:
+For arrays and optionals, use the composite types from `wire` for cleaner code:
 
 ```go
 // KnownPack represents a single known resource pack entry.
@@ -403,14 +403,18 @@ func (p *ExamplePacket) Write(buf *ns.PacketBuffer) error {
 
 Examples: `c2s_handshaking.go`, `s2c_login.go`, `c2s_play.go`
 
+## Field Naming Convention
+
+Field names follow Go initialisms: `EntityID`, `PlayerUUID`, `URL`, `NBT`, `JSONResponse` (never `EntityId`, `Uuid`, `Url`, `Nbt`, `Json`). A packet field must not be named `ID`, since that is the generated packet-ID method; name it after its role instead (`PingID`, `TransactionID`, `ActionID`).
+
 ## Complete Example
 
 ```go
 package packets
 
 import (
-    jp "github.com/go-mclib/protocol/java_protocol"
-    ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+    jp "github.com/go-mclib/protocol/javaproto"
+    ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // C2SLoginStart initiates the login sequence.

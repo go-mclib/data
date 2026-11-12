@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # download the vanilla server jar and run its data generator to produce the
-# JSON reports (blocks, items, registries, packets, commands) used by the Go
-# bindings generator in ../generate.
+# JSON reports (blocks, items, registries, packets, commands) and the jar's
+# version.json (protocol/data version) used by the Go bindings generator in
+# ../generate.
 #
 # usage: ./generate.sh [version]   (default: latest known, see DEFAULT_VERSION)
 set -euo pipefail
@@ -40,6 +41,7 @@ download_server_jar
 
 echo "running data generator..."
 java -DbundlerMainClass="net.minecraft.data.Main" -jar "$JAR" --server --reports
+unzip -p "$JAR" version.json > generated/version.json
 
 # symlink reports into the Go bindings generator's working dir
 ln -sfn "$PWD/generated/reports/commands.json"   ../generate/commands.json
@@ -47,5 +49,6 @@ ln -sfn "$PWD/generated/reports/blocks.json"     ../generate/blocks.json
 ln -sfn "$PWD/generated/reports/registries.json" ../generate/registries.json
 ln -sfn "$PWD/generated/reports/packets.json"    ../generate/packets.json
 ln -sfn "$PWD/generated/reports/minecraft/components/item" ../generate/items
+ln -sfn "$PWD/generated/version.json"            ../generate/version.json
 
 echo "reports generated; now run 'go generate ./...' in .."

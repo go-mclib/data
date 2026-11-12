@@ -7,8 +7,8 @@ import (
 	"github.com/go-mclib/data/blocks"
 )
 
-func BenchmarkStateIDCached(b *testing.B) {
-	blockID := int(blocks.BlockID("minecraft:redstone_wire"))
+func BenchmarkStateID(b *testing.B) {
+	blockID := int(blocks.ID("minecraft:redstone_wire"))
 	props := map[string]string{
 		"east":  "side",
 		"north": "up",
@@ -17,31 +17,8 @@ func BenchmarkStateIDCached(b *testing.B) {
 		"west":  "side",
 	}
 
-	// warm up cache
-	blocks.StateID(blockID, props)
-
-	b.ResetTimer()
 	for b.Loop() {
-		blocks.StateID(blockID, props)
-	}
-}
-
-func BenchmarkStateIDUncached(b *testing.B) {
-	blockID := int(blocks.BlockID("minecraft:redstone_wire"))
-	props := map[string]string{
-		"east":  "side",
-		"north": "up",
-		"power": "8",
-		"south": "none",
-		"west":  "side",
-	}
-
-	// disable caching
-	blocks.SetCacheSize(0)
-	defer blocks.SetCacheSize(4096)
-
-	for b.Loop() {
-		blocks.StateID(blockID, props)
+		blocks.StateID(int32(blockID), props)
 	}
 }
 
@@ -49,6 +26,6 @@ func BenchmarkStateProperties(b *testing.B) {
 	stateID := 4020 // redstone_wire state
 
 	for b.Loop() {
-		blocks.StateProperties(stateID)
+		blocks.StateProperties(int32(stateID))
 	}
 }

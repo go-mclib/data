@@ -1,7 +1,7 @@
 package packets
 
 import (
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // S2CStatusResponse represents "Status Response".
@@ -9,17 +9,17 @@ import (
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Status_Response
 type S2CStatusResponse struct {
 	// See Server List Ping; as with all strings, this is prefixed by its length as a VarInt.
-	JsonResponse ns.String
+	JSONResponse ns.String
 }
 
 func (p *S2CStatusResponse) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.JsonResponse, err = buf.ReadString(32767)
+	p.JSONResponse, err = buf.ReadString(32767)
 	return err
 }
 
 func (p *S2CStatusResponse) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteString(p.JsonResponse)
+	return buf.WriteString(p.JSONResponse)
 }
 
 // S2CPongResponseStatus represents "Pong Response (status)".

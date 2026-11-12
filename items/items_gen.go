@@ -13,6 +13,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	983: { // minecraft:acacia_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -24,6 +25,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	862: { // minecraft:acacia_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -35,6 +37,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	984: { // minecraft:acacia_chest_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -46,6 +49,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	893: { // minecraft:acacia_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -57,6 +61,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	421: { // minecraft:acacia_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -68,6 +73,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	936: { // minecraft:acacia_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -79,6 +85,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1119: { // minecraft:acacia_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -106,6 +113,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	219: { // minecraft:acacia_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -117,6 +125,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	167: { // minecraft:acacia_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -128,6 +137,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	67: { // minecraft:acacia_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -139,6 +149,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	879: { // minecraft:acacia_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -150,6 +161,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	81: { // minecraft:acacia_sapling
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -162,6 +174,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	377: { // minecraft:acacia_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -173,6 +186,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1106: { // minecraft:acacia_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -200,6 +214,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	345: { // minecraft:acacia_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -211,6 +226,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	519: { // minecraft:acacia_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -222,6 +238,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	915: { // minecraft:acacia_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -233,6 +250,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	207: { // minecraft:acacia_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -244,6 +262,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	948: { // minecraft:activator_rail
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -254,6 +273,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	0: { // minecraft:air
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -264,6 +284,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1313: { // minecraft:allay_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -275,6 +296,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	304: { // minecraft:allium
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -286,6 +308,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	117: { // minecraft:amethyst_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -296,6 +319,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1570: { // minecraft:amethyst_cluster
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -306,6 +330,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1016: { // minecraft:amethyst_shard
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -317,6 +342,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:amethyst",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	111: { // minecraft:ancient_debris
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -328,6 +354,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	6: { // minecraft:andesite
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -338,6 +365,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	815: { // minecraft:andesite_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -348,6 +376,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	798: { // minecraft:andesite_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -358,6 +387,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	541: { // minecraft:andesite_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -368,6 +398,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1598: { // minecraft:angler_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -379,6 +410,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:angler",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	553: { // minecraft:anvil
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -389,15 +421,16 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1007: { // minecraft:apple
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/medium"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -410,6 +443,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1599: { // minecraft:archer_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -421,6 +455,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:archer",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1003: { // minecraft:armadillo_scute
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -431,6 +466,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1291: { // minecraft:armadillo_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -442,6 +478,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1405: { // minecraft:armor_stand
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -452,6 +489,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1600: { // minecraft:arms_up_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -463,6 +501,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:arms_up",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1009: { // minecraft:arrow
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -473,6 +512,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1139: { // minecraft:axolotl_bucket
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -483,6 +523,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1301: { // minecraft:axolotl_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -494,6 +535,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	242: { // minecraft:azalea
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -506,6 +548,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	227: { // minecraft:azalea_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -517,6 +560,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	305: { // minecraft:azure_bluet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -528,15 +572,16 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1380: { // minecraft:baked_potato
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/medium_high"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -549,6 +594,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	340: { // minecraft:bamboo
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -560,6 +606,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	177: { // minecraft:bamboo_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -571,6 +618,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	868: { // minecraft:bamboo_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -582,6 +630,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	996: { // minecraft:bamboo_chest_raft
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -593,6 +642,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	899: { // minecraft:bamboo_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -604,6 +654,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	427: { // minecraft:bamboo_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -615,6 +666,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	942: { // minecraft:bamboo_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -626,6 +678,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1125: { // minecraft:bamboo_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -653,6 +706,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	76: { // minecraft:bamboo_mosaic
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -664,6 +718,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	352: { // minecraft:bamboo_mosaic_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -675,6 +730,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	526: { // minecraft:bamboo_mosaic_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -686,6 +742,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	73: { // minecraft:bamboo_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -697,6 +754,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	885: { // minecraft:bamboo_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -708,6 +766,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	995: { // minecraft:bamboo_raft
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -719,6 +778,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	378: { // minecraft:bamboo_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -730,6 +790,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1112: { // minecraft:bamboo_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -757,6 +818,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	351: { // minecraft:bamboo_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -768,6 +830,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	525: { // minecraft:bamboo_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -779,6 +842,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	921: { // minecraft:bamboo_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -790,6 +854,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1506: { // minecraft:barrel
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -801,6 +866,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	577: { // minecraft:barrier
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -811,6 +877,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	436: { // minecraft:basalt
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -821,6 +888,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1292: { // minecraft:bat_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -832,6 +900,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	530: { // minecraft:beacon
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -842,6 +911,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	87: { // minecraft:bedrock
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -852,6 +922,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1531: { // minecraft:bee_nest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -862,6 +933,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1293: { // minecraft:bee_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -873,14 +945,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1260: { // minecraft:beef
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -893,6 +966,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1532: { // minecraft:beehive
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -903,15 +977,16 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1438: { // minecraft:beetroot
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/medium"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -924,6 +999,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		VillagerFood:      &VillagerFood{Nutrition: 1},
 	},
 	1439: { // minecraft:beetroot_seeds
@@ -936,14 +1012,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1440: { // minecraft:beetroot_soup
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -956,6 +1033,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		UseRemainder: &UseRemainder{
 			ID: "minecraft:bowl",
 		},
@@ -969,6 +1047,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	338: { // minecraft:big_dripleaf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -980,6 +1059,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	979: { // minecraft:birch_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -991,6 +1071,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	860: { // minecraft:birch_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1002,6 +1083,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	980: { // minecraft:birch_chest_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1013,6 +1095,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	891: { // minecraft:birch_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1024,6 +1107,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	419: { // minecraft:birch_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1035,6 +1119,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	934: { // minecraft:birch_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1046,6 +1131,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1117: { // minecraft:birch_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1073,6 +1159,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	217: { // minecraft:birch_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1084,6 +1171,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	165: { // minecraft:birch_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1095,6 +1183,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	65: { // minecraft:birch_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1106,6 +1195,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	877: { // minecraft:birch_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1117,6 +1207,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	79: { // minecraft:birch_sapling
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1129,6 +1220,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	379: { // minecraft:birch_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1140,6 +1232,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1104: { // minecraft:birch_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1167,6 +1260,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	343: { // minecraft:birch_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1178,6 +1272,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	517: { // minecraft:birch_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1189,6 +1284,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	913: { // minecraft:birch_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1200,6 +1296,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	205: { // minecraft:birch_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1211,9 +1308,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1432: { // minecraft:black_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -1222,6 +1321,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1234: { // minecraft:black_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1232,6 +1332,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1169: { // minecraft:black_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1242,6 +1343,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1566: { // minecraft:black_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1252,6 +1354,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	595: { // minecraft:black_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1264,6 +1367,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	704: { // minecraft:black_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1274,6 +1378,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	752: { // minecraft:black_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1284,6 +1389,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	736: { // minecraft:black_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1294,6 +1400,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	720: { // minecraft:black_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1304,6 +1411,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1185: { // minecraft:black_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1316,6 +1424,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1214: { // minecraft:black_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1327,6 +1436,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	688: { // minecraft:black_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1337,6 +1447,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	965: { // minecraft:black_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1348,6 +1459,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	672: { // minecraft:black_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1358,6 +1470,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	620: { // minecraft:black_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1368,6 +1481,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	636: { // minecraft:black_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1378,6 +1492,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	576: { // minecraft:black_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1388,6 +1503,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	265: { // minecraft:black_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1399,6 +1515,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	297: { // minecraft:black_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1410,6 +1527,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	281: { // minecraft:black_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1421,6 +1539,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1537: { // minecraft:blackstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1431,6 +1550,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1538: { // minecraft:blackstone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1441,6 +1561,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1539: { // minecraft:blackstone_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1451,6 +1572,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	546: { // minecraft:blackstone_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1461,6 +1583,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1601: { // minecraft:blade_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -1472,6 +1595,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:blade",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1508: { // minecraft:blast_furnace
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1482,6 +1606,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1274: { // minecraft:blaze_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1493,6 +1618,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1266: { // minecraft:blaze_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1504,6 +1630,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1354: { // minecraft:blaze_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1515,9 +1642,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1428: { // minecraft:blue_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -1526,6 +1655,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1230: { // minecraft:blue_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1536,6 +1666,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1165: { // minecraft:blue_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1546,6 +1677,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1562: { // minecraft:blue_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1556,6 +1688,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	591: { // minecraft:blue_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1568,6 +1701,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	700: { // minecraft:blue_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1578,6 +1712,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	748: { // minecraft:blue_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1588,6 +1723,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	732: { // minecraft:blue_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1598,6 +1734,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	716: { // minecraft:blue_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1608,6 +1745,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1181: { // minecraft:blue_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1620,6 +1758,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1210: { // minecraft:blue_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1631,6 +1770,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1149: { // minecraft:blue_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1641,6 +1781,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	684: { // minecraft:blue_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1651,6 +1792,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	961: { // minecraft:blue_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1662,6 +1804,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	786: { // minecraft:blue_ice
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1672,6 +1815,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	303: { // minecraft:blue_orchid
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1683,6 +1827,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	668: { // minecraft:blue_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1693,6 +1838,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	616: { // minecraft:blue_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1703,6 +1849,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	632: { // minecraft:blue_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1713,6 +1860,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	572: { // minecraft:blue_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1723,6 +1871,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	261: { // minecraft:blue_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1734,6 +1883,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	293: { // minecraft:blue_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1745,6 +1895,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	277: { // minecraft:blue_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1756,6 +1907,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1323: { // minecraft:bogged_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1767,6 +1919,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1597: { // minecraft:bolt_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1777,6 +1930,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1216: { // minecraft:bone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1787,6 +1941,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	654: { // minecraft:bone_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1797,6 +1952,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1215: { // minecraft:bone_meal
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1807,6 +1963,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1146: { // minecraft:book
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1818,6 +1975,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	390: { // minecraft:bookshelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1829,6 +1987,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1503: { // minecraft:bordure_indented_banner_pattern
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -1840,6 +1999,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesBannerPatterns: "#minecraft:pattern_item/bordure_indented",
 		Rarity:                 "common",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1008: { // minecraft:bow
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1854,6 +2014,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1006: { // minecraft:bowl
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1865,6 +2026,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	767: { // minecraft:brain_coral
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1875,6 +2037,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	762: { // minecraft:brain_coral_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1885,6 +2048,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	777: { // minecraft:brain_coral_fan
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1895,15 +2059,16 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1067: { // minecraft:bread
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/medium_high"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -1916,6 +2081,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		VillagerFood:      &VillagerFood{Nutrition: 4},
 	},
 	1373: { // minecraft:breeze_rod
@@ -1927,6 +2093,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1339: { // minecraft:breeze_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1938,6 +2105,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1602: { // minecraft:brewer_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -1949,6 +2117,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:brewer",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1276: { // minecraft:brewing_stand
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1959,6 +2128,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1142: { // minecraft:brick
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1969,6 +2139,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	361: { // minecraft:brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1979,6 +2150,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	493: { // minecraft:brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1989,6 +2161,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	533: { // minecraft:brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -1999,6 +2172,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	376: { // minecraft:bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2009,9 +2183,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1429: { // minecraft:brown_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -2020,6 +2196,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1231: { // minecraft:brown_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2030,6 +2207,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1166: { // minecraft:brown_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2040,6 +2218,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1563: { // minecraft:brown_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2050,6 +2229,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	592: { // minecraft:brown_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2062,6 +2242,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	701: { // minecraft:brown_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2072,6 +2253,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	749: { // minecraft:brown_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2082,6 +2264,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	733: { // minecraft:brown_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2092,6 +2275,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	717: { // minecraft:brown_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2102,6 +2286,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1182: { // minecraft:brown_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2114,6 +2299,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1211: { // minecraft:brown_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2125,6 +2311,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1150: { // minecraft:brown_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2135,6 +2322,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	685: { // minecraft:brown_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2145,6 +2333,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	962: { // minecraft:brown_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2156,6 +2345,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	317: { // minecraft:brown_mushroom
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2167,6 +2357,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	461: { // minecraft:brown_mushroom_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2178,6 +2369,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	669: { // minecraft:brown_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2188,6 +2380,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	617: { // minecraft:brown_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2198,6 +2391,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	633: { // minecraft:brown_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2208,6 +2402,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	573: { // minecraft:brown_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2218,6 +2413,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	262: { // minecraft:brown_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2229,6 +2425,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	294: { // minecraft:brown_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2240,6 +2437,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	278: { // minecraft:brown_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2251,6 +2449,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1578: { // minecraft:brush
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2263,6 +2462,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	768: { // minecraft:bubble_coral
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2273,6 +2473,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	763: { // minecraft:bubble_coral_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2283,6 +2484,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	778: { // minecraft:bubble_coral_fan
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2293,6 +2495,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1128: { // minecraft:bucket
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2303,6 +2506,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	118: { // minecraft:budding_amethyst
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2313,6 +2517,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1153: { // minecraft:bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2323,6 +2528,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1250: { // minecraft:buried_ancient_city_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2333,6 +2539,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1251: { // minecraft:buried_mineshaft_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2343,6 +2550,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1249: { // minecraft:buried_treasure_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2353,6 +2561,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1241: { // minecraft:buried_trial_chambers_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2363,6 +2572,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1603: { // minecraft:burn_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -2374,6 +2584,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:burn",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	240: { // minecraft:bush
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2385,6 +2596,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	413: { // minecraft:cactus
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2396,6 +2608,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	414: { // minecraft:cactus_flower
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2407,6 +2620,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1218: { // minecraft:cake
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2418,6 +2632,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	11: { // minecraft:calcite
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2428,6 +2643,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	850: { // minecraft:calibrated_sculk_sensor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2438,6 +2654,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1324: { // minecraft:camel_husk_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2449,6 +2666,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1284: { // minecraft:camel_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2460,6 +2678,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1527: { // minecraft:campfire
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2470,6 +2689,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1550: { // minecraft:candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2480,15 +2700,16 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1378: { // minecraft:carrot
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/medium"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -2501,6 +2722,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		VillagerFood:      &VillagerFood{Nutrition: 1},
 	},
 	971: { // minecraft:carrot_on_a_stick
@@ -2514,6 +2736,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1509: { // minecraft:cartography_table
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2525,6 +2748,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	431: { // minecraft:carved_pumpkin
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -2540,6 +2764,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1288: { // minecraft:cat_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2551,6 +2776,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1277: { // minecraft:cauldron
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2561,6 +2787,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1337: { // minecraft:cave_spider_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2572,6 +2799,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	649: { // minecraft:chain_command_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2582,6 +2810,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1079: { // minecraft:chainmail_boots
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -2601,6 +2830,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "uncommon",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_chain_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1077: { // minecraft:chainmail_chestplate
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -2620,6 +2850,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "uncommon",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_chain_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1076: { // minecraft:chainmail_helmet
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -2639,6 +2870,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "uncommon",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_chain_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1078: { // minecraft:chainmail_leggings
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -2658,6 +2890,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "uncommon",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_chain_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1011: { // minecraft:charcoal
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2669,6 +2902,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	985: { // minecraft:cherry_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2680,6 +2914,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	863: { // minecraft:cherry_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2691,6 +2926,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	986: { // minecraft:cherry_chest_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2702,6 +2938,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	894: { // minecraft:cherry_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2713,6 +2950,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	422: { // minecraft:cherry_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2724,6 +2962,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	937: { // minecraft:cherry_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2735,6 +2974,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1120: { // minecraft:cherry_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2762,6 +3002,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	220: { // minecraft:cherry_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2773,6 +3014,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	168: { // minecraft:cherry_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2784,6 +3026,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	68: { // minecraft:cherry_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2795,6 +3038,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	880: { // minecraft:cherry_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2806,6 +3050,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	82: { // minecraft:cherry_sapling
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2818,6 +3063,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	380: { // minecraft:cherry_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2829,6 +3075,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1107: { // minecraft:cherry_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2856,6 +3103,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	346: { // minecraft:cherry_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2867,6 +3115,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	520: { // minecraft:cherry_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2878,6 +3127,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	916: { // minecraft:cherry_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2889,6 +3139,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	208: { // minecraft:cherry_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2900,6 +3151,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	404: { // minecraft:chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2911,6 +3163,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	967: { // minecraft:chest_minecart
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2921,14 +3174,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1262: { // minecraft:chicken
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 			OnConsumeEffects: []ConsumeEffect{
 				{Type: "minecraft:apply_effects", Probability: 0.3, Effects: []StatusEffect{{ID: "minecraft:hunger", Duration: 600, ShowParticles: true, ShowIcon: true}}},
@@ -2944,6 +3198,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1280: { // minecraft:chicken_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2955,6 +3210,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	554: { // minecraft:chipped_anvil
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2965,6 +3221,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	391: { // minecraft:chiseled_bookshelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2976,6 +3233,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	52: { // minecraft:chiseled_cinnabar
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2986,6 +3244,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	131: { // minecraft:chiseled_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -2996,6 +3255,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	459: { // minecraft:chiseled_deepslate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3006,6 +3266,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	500: { // minecraft:chiseled_nether_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3016,6 +3277,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1544: { // minecraft:chiseled_polished_blackstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3026,6 +3288,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	556: { // minecraft:chiseled_quartz_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3036,6 +3299,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	645: { // minecraft:chiseled_red_sandstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3046,6 +3310,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	492: { // minecraft:chiseled_resin_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3056,6 +3321,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	235: { // minecraft:chiseled_sandstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3066,6 +3332,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	452: { // minecraft:chiseled_stone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3076,6 +3343,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	39: { // minecraft:chiseled_sulfur
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3086,6 +3354,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	16: { // minecraft:chiseled_tuff
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3096,6 +3365,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	25: { // minecraft:chiseled_tuff_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3106,6 +3376,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	398: { // minecraft:chorus_flower
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3116,14 +3387,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1434: { // minecraft:chorus_fruit
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 			OnConsumeEffects: []ConsumeEffect{
 				{Type: "minecraft:teleport_randomly", Probability: 1, Diameter: 16},
@@ -3141,6 +3413,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		UseCooldown:       &UseCooldown{Seconds: 1},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	397: { // minecraft:chorus_plant
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3151,6 +3424,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	40: { // minecraft:cinnabar
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3161,6 +3435,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	49: { // minecraft:cinnabar_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3171,6 +3446,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	50: { // minecraft:cinnabar_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3181,6 +3457,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	51: { // minecraft:cinnabar_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3191,6 +3468,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	48: { // minecraft:cinnabar_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3201,6 +3479,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	41: { // minecraft:cinnabar_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3211,6 +3490,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	42: { // minecraft:cinnabar_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3221,6 +3501,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	43: { // minecraft:cinnabar_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3231,6 +3512,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	415: { // minecraft:clay
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3241,6 +3523,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1143: { // minecraft:clay_ball
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3251,6 +3534,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1187: { // minecraft:clock
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3261,6 +3545,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	301: { // minecraft:closed_eyeblossom
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3272,6 +3557,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1010: { // minecraft:coal
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3283,6 +3569,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	112: { // minecraft:coal_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3294,6 +3581,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	93: { // minecraft:coal_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3304,6 +3592,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	56: { // minecraft:coarse_dirt
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3314,6 +3603,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1582: { // minecraft:coast_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3324,6 +3614,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	9: { // minecraft:cobbled_deepslate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3334,6 +3625,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	819: { // minecraft:cobbled_deepslate_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3344,6 +3636,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	802: { // minecraft:cobbled_deepslate_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3354,6 +3647,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	549: { // minecraft:cobbled_deepslate_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3364,6 +3658,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	62: { // minecraft:cobblestone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3374,6 +3669,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	360: { // minecraft:cobblestone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3384,6 +3680,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	409: { // minecraft:cobblestone_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3394,6 +3691,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	531: { // minecraft:cobblestone_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3404,6 +3702,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	237: { // minecraft:cobweb
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3414,6 +3713,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1198: { // minecraft:cocoa_beans
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3425,14 +3725,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1190: { // minecraft:cod
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -3445,6 +3746,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1137: { // minecraft:cod_bucket
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -3459,6 +3761,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1302: { // minecraft:cod_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3470,6 +3773,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	529: { // minecraft:command_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3480,6 +3784,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1414: { // minecraft:command_block_minecart
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3490,6 +3795,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	828: { // minecraft:comparator
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3500,6 +3806,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1151: { // minecraft:compass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3510,6 +3817,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1505: { // minecraft:composter
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3521,6 +3829,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	787: { // minecraft:conduit
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3531,14 +3840,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1261: { // minecraft:cooked_beef
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -3551,14 +3861,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1263: { // minecraft:cooked_chicken
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -3571,14 +3882,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1194: { // minecraft:cooked_cod
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -3591,14 +3903,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1416: { // minecraft:cooked_mutton
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -3611,14 +3924,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1098: { // minecraft:cooked_porkchop
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -3631,14 +3945,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1401: { // minecraft:cooked_rabbit
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -3651,14 +3966,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1195: { // minecraft:cooked_salmon
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -3671,15 +3987,16 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1236: { // minecraft:cookie
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/medium_high"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -3692,6 +4009,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1033: { // minecraft:copper_axe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -3718,6 +4036,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 5, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			DisableBlockingForSeconds: 5,
 			ItemDamagePerAttack:       2,
@@ -3732,6 +4051,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	120: { // minecraft:copper_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3742,6 +4062,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1075: { // minecraft:copper_boots
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -3761,6 +4082,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_copper_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1629: { // minecraft:copper_bulb
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3771,6 +4093,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	474: { // minecraft:copper_chain
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3781,6 +4104,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1637: { // minecraft:copper_chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3791,6 +4115,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1073: { // minecraft:copper_chestplate
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -3810,6 +4135,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_copper_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	902: { // minecraft:copper_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3820,6 +4146,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1317: { // minecraft:copper_golem_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3831,6 +4158,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1645: { // minecraft:copper_golem_statue
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3841,6 +4169,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1621: { // minecraft:copper_grate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3851,6 +4180,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1072: { // minecraft:copper_helmet
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -3870,6 +4200,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_copper_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1034: { // minecraft:copper_hoe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -3896,6 +4227,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 5, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -3914,6 +4246,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1020: { // minecraft:copper_ingot
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -3925,6 +4258,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:copper",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1517: { // minecraft:copper_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3935,6 +4269,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1074: { // minecraft:copper_leggings
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -3954,6 +4289,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_copper_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1489: { // minecraft:copper_nautilus_armor
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -3969,6 +4305,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1457: { // minecraft:copper_nugget
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3979,6 +4316,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	97: { // minecraft:copper_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -3989,6 +4327,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1032: { // minecraft:copper_pickaxe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -4014,6 +4353,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 5, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -4043,6 +4383,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 5, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -4074,6 +4415,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:              "common",
 		RepairCost:          0,
 		Repairable:          &Repairable{Items: "#minecraft:copper_tool_materials"},
+		UseEffects:          &UseEffects{CanSprint: true, InteractVibrations: false, SpeedMultiplier: 1},
 		Weapon:              &Weapon{},
 	},
 	1030: { // minecraft:copper_sword
@@ -4101,7 +4443,8 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
-		Weapon: &Weapon{},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
+		Weapon:     &Weapon{},
 	},
 	440: { // minecraft:copper_torch
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4112,6 +4455,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	924: { // minecraft:copper_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4122,6 +4466,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	311: { // minecraft:cornflower
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4133,6 +4478,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1281: { // minecraft:cow_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4144,6 +4490,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	456: { // minecraft:cracked_deepslate_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4154,6 +4501,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	458: { // minecraft:cracked_deepslate_tiles
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4164,6 +4512,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	499: { // minecraft:cracked_nether_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4174,6 +4523,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1548: { // minecraft:cracked_polished_blackstone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4184,6 +4534,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	451: { // minecraft:cracked_stone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4194,6 +4545,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1237: { // minecraft:crafter
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4204,6 +4556,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	405: { // minecraft:crafting_table
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4215,6 +4568,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	403: { // minecraft:creaking_heart
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4225,6 +4579,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1340: { // minecraft:creaking_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4236,6 +4591,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1495: { // minecraft:creeper_banner_pattern
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -4247,6 +4603,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesBannerPatterns: "#minecraft:pattern_item/creeper",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1388: { // minecraft:creeper_head
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -4262,6 +4619,7 @@ var defaultComponents = map[int32]*Components{
 		MobVisibility:     &MobVisibility{Visibility: 0.5, TargetingEntityTypes: []string{"minecraft:creeper"}},
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1341: { // minecraft:creeper_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4273,6 +4631,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	869: { // minecraft:crimson_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4283,6 +4642,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	900: { // minecraft:crimson_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4293,6 +4653,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	428: { // minecraft:crimson_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4303,6 +4664,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	943: { // minecraft:crimson_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4313,6 +4675,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	320: { // minecraft:crimson_fungus
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4324,6 +4687,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1126: { // minecraft:crimson_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4350,6 +4714,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	213: { // minecraft:crimson_hyphae
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4360,6 +4725,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	60: { // minecraft:crimson_nylium
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4370,6 +4736,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	74: { // minecraft:crimson_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4380,6 +4747,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	886: { // minecraft:crimson_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4390,6 +4758,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	322: { // minecraft:crimson_roots
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4401,6 +4770,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	381: { // minecraft:crimson_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4411,6 +4781,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1113: { // minecraft:crimson_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4437,6 +4808,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	353: { // minecraft:crimson_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4447,6 +4819,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	527: { // minecraft:crimson_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4457,6 +4830,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	175: { // minecraft:crimson_stem
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4467,6 +4841,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	922: { // minecraft:crimson_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4477,6 +4852,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1491: { // minecraft:crossbow
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4491,6 +4867,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1536: { // minecraft:crying_obsidian
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4501,6 +4878,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	139: { // minecraft:cut_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4511,6 +4889,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	155: { // minecraft:cut_copper_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4521,6 +4900,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	147: { // minecraft:cut_copper_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4531,6 +4911,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	646: { // minecraft:cut_red_sandstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4541,6 +4922,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	367: { // minecraft:cut_red_sandstone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4551,6 +4933,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	236: { // minecraft:cut_sandstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4561,6 +4944,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	358: { // minecraft:cut_sandstone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4571,9 +4955,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1426: { // minecraft:cyan_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -4582,6 +4968,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1228: { // minecraft:cyan_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4592,6 +4979,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1163: { // minecraft:cyan_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4602,6 +4990,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1560: { // minecraft:cyan_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4612,6 +5001,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	589: { // minecraft:cyan_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4624,6 +5014,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	698: { // minecraft:cyan_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4634,6 +5025,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	746: { // minecraft:cyan_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4644,6 +5036,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	730: { // minecraft:cyan_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4654,6 +5047,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	714: { // minecraft:cyan_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4664,6 +5058,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1179: { // minecraft:cyan_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4676,6 +5071,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1208: { // minecraft:cyan_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4687,6 +5083,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	682: { // minecraft:cyan_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4697,6 +5094,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	959: { // minecraft:cyan_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4708,6 +5106,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	666: { // minecraft:cyan_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4718,6 +5117,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	614: { // minecraft:cyan_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4728,6 +5128,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	630: { // minecraft:cyan_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4738,6 +5139,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	570: { // minecraft:cyan_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4748,6 +5150,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	259: { // minecraft:cyan_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4759,6 +5162,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	291: { // minecraft:cyan_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4770,6 +5174,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	275: { // minecraft:cyan_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4781,6 +5186,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	555: { // minecraft:damaged_anvil
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4791,6 +5197,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	298: { // minecraft:dandelion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4802,6 +5209,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1604: { // minecraft:danger_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -4813,6 +5221,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:danger",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	987: { // minecraft:dark_oak_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4824,6 +5233,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	864: { // minecraft:dark_oak_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4835,6 +5245,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	988: { // minecraft:dark_oak_chest_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4846,6 +5257,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	895: { // minecraft:dark_oak_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4857,6 +5269,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	423: { // minecraft:dark_oak_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4868,6 +5281,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	938: { // minecraft:dark_oak_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4879,6 +5293,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1121: { // minecraft:dark_oak_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4906,6 +5321,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	221: { // minecraft:dark_oak_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4917,6 +5333,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	170: { // minecraft:dark_oak_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4928,6 +5345,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	69: { // minecraft:dark_oak_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4939,6 +5357,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	881: { // minecraft:dark_oak_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4950,6 +5369,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	83: { // minecraft:dark_oak_sapling
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4962,6 +5382,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	382: { // minecraft:dark_oak_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -4973,6 +5394,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1108: { // minecraft:dark_oak_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5000,6 +5422,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	347: { // minecraft:dark_oak_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5011,6 +5434,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	521: { // minecraft:dark_oak_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5022,6 +5446,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	917: { // minecraft:dark_oak_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5033,6 +5458,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	210: { // minecraft:dark_oak_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5044,6 +5470,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	639: { // minecraft:dark_prismarine
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5054,6 +5481,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	371: { // minecraft:dark_prismarine_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5064,6 +5492,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	642: { // minecraft:dark_prismarine_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5074,6 +5503,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	848: { // minecraft:daylight_detector
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5085,6 +5515,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	771: { // minecraft:dead_brain_coral
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5095,6 +5526,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	757: { // minecraft:dead_brain_coral_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5105,6 +5537,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	782: { // minecraft:dead_brain_coral_fan
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5115,6 +5548,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	772: { // minecraft:dead_bubble_coral
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5125,6 +5559,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	758: { // minecraft:dead_bubble_coral_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5135,6 +5570,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	783: { // minecraft:dead_bubble_coral_fan
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5145,6 +5581,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	244: { // minecraft:dead_bush
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5156,6 +5593,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	773: { // minecraft:dead_fire_coral
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5166,6 +5604,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	759: { // minecraft:dead_fire_coral_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5176,6 +5615,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	784: { // minecraft:dead_fire_coral_fan
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5186,6 +5626,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	774: { // minecraft:dead_horn_coral
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5196,6 +5637,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	760: { // minecraft:dead_horn_coral_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5206,6 +5648,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	785: { // minecraft:dead_horn_coral_fan
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5216,6 +5659,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	775: { // minecraft:dead_tube_coral
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5226,6 +5670,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	756: { // minecraft:dead_tube_coral_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5236,6 +5681,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	781: { // minecraft:dead_tube_coral_fan
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5246,6 +5692,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1459: { // minecraft:debug_stick
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5256,6 +5703,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	392: { // minecraft:decorated_pot
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5267,6 +5715,7 @@ var defaultComponents = map[int32]*Components{
 		PotDecorations:    &PotDecorations{},
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	8: { // minecraft:deepslate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5277,6 +5726,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	821: { // minecraft:deepslate_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5287,6 +5737,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	804: { // minecraft:deepslate_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5297,6 +5748,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	551: { // minecraft:deepslate_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5307,6 +5759,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	455: { // minecraft:deepslate_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5317,6 +5770,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	94: { // minecraft:deepslate_coal_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5327,6 +5781,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	98: { // minecraft:deepslate_copper_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5337,6 +5792,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	108: { // minecraft:deepslate_diamond_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5347,6 +5803,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	104: { // minecraft:deepslate_emerald_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5357,6 +5814,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	100: { // minecraft:deepslate_gold_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5367,6 +5825,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	96: { // minecraft:deepslate_iron_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5377,6 +5836,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	106: { // minecraft:deepslate_lapis_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5387,6 +5847,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	102: { // minecraft:deepslate_redstone_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5397,6 +5858,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	822: { // minecraft:deepslate_tile_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5407,6 +5869,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	805: { // minecraft:deepslate_tile_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5417,6 +5880,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	552: { // minecraft:deepslate_tile_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5427,6 +5891,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	457: { // minecraft:deepslate_tiles
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5437,6 +5902,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1252: { // minecraft:desert_pyramid_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5447,6 +5913,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1244: { // minecraft:desert_village_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5457,6 +5924,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	946: { // minecraft:detector_rail
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5467,6 +5935,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1012: { // minecraft:diamond
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -5478,6 +5947,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:diamond",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1053: { // minecraft:diamond_axe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -5504,6 +5974,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 8, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			DisableBlockingForSeconds: 5,
 			ItemDamagePerAttack:       2,
@@ -5518,6 +5989,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1087: { // minecraft:diamond_boots
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -5537,6 +6009,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_diamond_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1085: { // minecraft:diamond_chestplate
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -5556,6 +6029,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_diamond_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1084: { // minecraft:diamond_helmet
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -5575,6 +6049,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_diamond_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1054: { // minecraft:diamond_hoe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -5601,6 +6076,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 8, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -5619,6 +6095,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1086: { // minecraft:diamond_leggings
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -5638,6 +6115,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_diamond_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1487: { // minecraft:diamond_nautilus_armor
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -5653,6 +6131,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	107: { // minecraft:diamond_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5663,6 +6142,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1052: { // minecraft:diamond_pickaxe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -5688,6 +6168,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 8, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -5717,6 +6198,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 8, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -5748,6 +6230,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:              "common",
 		RepairCost:          0,
 		Repairable:          &Repairable{Items: "#minecraft:diamond_tool_materials"},
+		UseEffects:          &UseEffects{CanSprint: true, InteractVibrations: false, SpeedMultiplier: 1},
 		Weapon:              &Weapon{},
 	},
 	1050: { // minecraft:diamond_sword
@@ -5775,7 +6258,8 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
-		Weapon: &Weapon{},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
+		Weapon:     &Weapon{},
 	},
 	4: { // minecraft:diorite
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5786,6 +6270,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	818: { // minecraft:diorite_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5796,6 +6281,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	801: { // minecraft:diorite_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5806,6 +6292,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	545: { // minecraft:diorite_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5816,6 +6303,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	55: { // minecraft:dirt
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5826,6 +6314,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	598: { // minecraft:dirt_path
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5836,6 +6325,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1482: { // minecraft:disc_fragment_5
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5846,6 +6336,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	835: { // minecraft:dispenser
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5856,6 +6347,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1303: { // minecraft:dolphin_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5867,6 +6359,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1285: { // minecraft:donkey_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5878,6 +6371,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1441: { // minecraft:dragon_breath
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5888,6 +6382,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	511: { // minecraft:dragon_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5898,6 +6393,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1389: { // minecraft:dragon_head
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -5912,6 +6408,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	755: { // minecraft:dried_ghast
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5922,6 +6419,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1257: { // minecraft:dried_kelp
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -5929,8 +6427,8 @@ var defaultComponents = map[int32]*Components{
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/low"}},
 		Consumable: &Consumable{
 			ConsumeSeconds: 0.8,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -5943,6 +6441,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1144: { // minecraft:dried_kelp_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5955,6 +6454,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	53: { // minecraft:dripstone_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5965,6 +6465,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	836: { // minecraft:dropper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5975,6 +6476,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1325: { // minecraft:drowned_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5986,6 +6488,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1581: { // minecraft:dune_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -5996,6 +6499,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1577: { // minecraft:echo_shard
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6006,6 +6510,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1148: { // minecraft:egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6016,6 +6521,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1342: { // minecraft:elder_guardian_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6027,6 +6533,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	974: { // minecraft:elytra
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6042,6 +6549,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "epic",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "minecraft:phantom_membrane"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1013: { // minecraft:emerald
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -6053,6 +6561,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:emerald",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	514: { // minecraft:emerald_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6063,6 +6572,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	103: { // minecraft:emerald_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6073,6 +6583,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1395: { // minecraft:enchanted_book
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6083,14 +6594,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1101: { // minecraft:enchanted_golden_apple
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 			OnConsumeEffects: []ConsumeEffect{
 				{Type: "minecraft:apply_effects", Probability: 1, Effects: []StatusEffect{{ID: "minecraft:regeneration", Duration: 400, Amplifier: 1, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:resistance", Duration: 6000, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:fire_resistance", Duration: 6000, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:absorption", Duration: 2400, Amplifier: 3, ShowParticles: true, ShowIcon: true}}},
@@ -6107,6 +6619,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	507: { // minecraft:enchanting_table
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6117,6 +6630,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1433: { // minecraft:end_crystal
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6127,6 +6641,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	508: { // minecraft:end_portal_frame
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6137,6 +6652,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	396: { // minecraft:end_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6147,6 +6663,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	509: { // minecraft:end_stone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6157,6 +6674,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	811: { // minecraft:end_stone_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6167,6 +6685,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	793: { // minecraft:end_stone_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6177,6 +6696,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	544: { // minecraft:end_stone_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6187,6 +6707,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	510: { // minecraft:end_stone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6197,6 +6718,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	513: { // minecraft:ender_chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6207,6 +6729,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1364: { // minecraft:ender_dragon_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6218,6 +6741,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1278: { // minecraft:ender_eye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6228,6 +6752,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1265: { // minecraft:ender_pearl
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6239,6 +6764,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		UseCooldown:       &UseCooldown{Seconds: 1},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1365: { // minecraft:enderman_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6250,6 +6776,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1366: { // minecraft:endermite_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6261,6 +6788,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1349: { // minecraft:evoker_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6272,6 +6800,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1368: { // minecraft:experience_bottle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6282,6 +6811,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1605: { // minecraft:explorer_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -6293,6 +6823,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:explorer",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	132: { // minecraft:exposed_chiseled_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6303,6 +6834,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	121: { // minecraft:exposed_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6313,6 +6845,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	466: { // minecraft:exposed_copper_bars
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6323,6 +6856,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1630: { // minecraft:exposed_copper_bulb
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6333,6 +6867,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	475: { // minecraft:exposed_copper_chain
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6343,6 +6878,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1638: { // minecraft:exposed_copper_chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6353,6 +6889,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	903: { // minecraft:exposed_copper_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6363,6 +6900,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1646: { // minecraft:exposed_copper_golem_statue
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6373,6 +6911,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1622: { // minecraft:exposed_copper_grate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6383,6 +6922,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1518: { // minecraft:exposed_copper_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6393,6 +6933,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	925: { // minecraft:exposed_copper_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6403,6 +6944,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	140: { // minecraft:exposed_cut_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6413,6 +6955,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	156: { // minecraft:exposed_cut_copper_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6423,6 +6966,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	148: { // minecraft:exposed_cut_copper_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6433,6 +6977,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	841: { // minecraft:exposed_lightning_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6443,6 +6988,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1585: { // minecraft:eye_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6453,6 +6999,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	406: { // minecraft:farmland
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6463,6 +7010,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1063: { // minecraft:feather
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6473,6 +7021,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1273: { // minecraft:fermented_spider_eye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6483,6 +7032,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	239: { // minecraft:fern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6494,6 +7044,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1502: { // minecraft:field_masoned_banner_pattern
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -6505,6 +7056,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesBannerPatterns: "#minecraft:pattern_item/field_masoned",
 		Rarity:                 "common",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1238: { // minecraft:filled_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6515,6 +7067,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1369: { // minecraft:fire_charge
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6525,6 +7078,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	769: { // minecraft:fire_coral
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6535,6 +7089,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	764: { // minecraft:fire_coral_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6545,6 +7100,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	779: { // minecraft:fire_coral_fan
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6555,6 +7111,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	245: { // minecraft:firefly_bush
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6566,6 +7123,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1393: { // minecraft:firework_rocket
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6577,6 +7135,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1394: { // minecraft:firework_star
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6587,6 +7146,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1186: { // minecraft:fishing_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6601,6 +7161,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1510: { // minecraft:fletching_table
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6612,6 +7173,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1096: { // minecraft:flint
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6622,6 +7184,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1005: { // minecraft:flint_and_steel
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6634,6 +7197,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1596: { // minecraft:flow_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6644,6 +7208,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1500: { // minecraft:flow_banner_pattern
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -6655,6 +7220,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesBannerPatterns: "#minecraft:pattern_item/flow",
 		Rarity:                 "rare",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1606: { // minecraft:flow_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -6666,6 +7232,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:flow",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1494: { // minecraft:flower_banner_pattern
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -6677,6 +7244,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesBannerPatterns: "#minecraft:pattern_item/flower",
 		Rarity:                 "common",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1377: { // minecraft:flower_pot
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6687,6 +7255,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	243: { // minecraft:flowering_azalea
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6699,6 +7268,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	228: { // minecraft:flowering_azalea_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6710,6 +7280,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1294: { // minecraft:fox_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6721,6 +7292,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1607: { // minecraft:friend_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -6732,6 +7304,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:friend",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1304: { // minecraft:frog_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6743,6 +7316,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1576: { // minecraft:frogspawn
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6753,6 +7327,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	407: { // minecraft:furnace
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6763,6 +7338,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	968: { // minecraft:furnace_minecart
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6773,6 +7349,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1355: { // minecraft:ghast_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6784,6 +7361,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1267: { // minecraft:ghast_tear
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6794,6 +7372,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1540: { // minecraft:gilded_blackstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6804,6 +7383,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	231: { // minecraft:glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6814,6 +7394,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1270: { // minecraft:glass_bottle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6824,6 +7405,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	482: { // minecraft:glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6834,6 +7416,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1279: { // minecraft:glistering_melon_slice
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6844,6 +7427,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1498: { // minecraft:globe_banner_pattern
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -6855,15 +7439,16 @@ var defaultComponents = map[int32]*Components{
 		ProvidesBannerPatterns: "#minecraft:pattern_item/globe",
 		Rarity:                 "common",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1526: { // minecraft:glow_berries
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/low"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -6876,6 +7461,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1197: { // minecraft:glow_ink_sac
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6886,6 +7472,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1376: { // minecraft:glow_item_frame
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6896,6 +7483,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	485: { // minecraft:glow_lichen
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6907,6 +7495,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1305: { // minecraft:glow_squid_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6918,6 +7507,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	441: { // minecraft:glowstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6928,6 +7518,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1189: { // minecraft:glowstone_dust
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6938,6 +7529,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1504: { // minecraft:goat_horn
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6949,6 +7541,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1295: { // minecraft:goat_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6960,6 +7553,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	128: { // minecraft:gold_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6970,6 +7564,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1022: { // minecraft:gold_ingot
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -6981,6 +7576,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:gold",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1268: { // minecraft:gold_nugget
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -6991,6 +7587,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	99: { // minecraft:gold_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7001,14 +7598,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1100: { // minecraft:golden_apple
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 			OnConsumeEffects: []ConsumeEffect{
 				{Type: "minecraft:apply_effects", Probability: 1, Effects: []StatusEffect{{ID: "minecraft:regeneration", Duration: 100, Amplifier: 1, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:absorption", Duration: 2400, ShowParticles: true, ShowIcon: true}}},
@@ -7025,6 +7623,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1043: { // minecraft:golden_axe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -7051,6 +7650,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 12, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			DisableBlockingForSeconds: 5,
 			ItemDamagePerAttack:       2,
@@ -7074,14 +7674,15 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_gold_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1383: { // minecraft:golden_carrot
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -7094,6 +7695,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1089: { // minecraft:golden_chestplate
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -7113,6 +7715,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_gold_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	299: { // minecraft:golden_dandelion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7123,6 +7726,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1088: { // minecraft:golden_helmet
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -7142,6 +7746,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_gold_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1044: { // minecraft:golden_hoe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -7168,6 +7773,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 12, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -7186,6 +7792,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1090: { // minecraft:golden_leggings
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -7205,6 +7812,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_gold_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1486: { // minecraft:golden_nautilus_armor
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -7220,6 +7828,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1042: { // minecraft:golden_pickaxe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -7245,6 +7854,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 12, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -7274,6 +7884,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 12, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -7305,6 +7916,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:              "common",
 		RepairCost:          0,
 		Repairable:          &Repairable{Items: "#minecraft:gold_tool_materials"},
+		UseEffects:          &UseEffects{CanSprint: true, InteractVibrations: false, SpeedMultiplier: 1},
 		Weapon:              &Weapon{},
 	},
 	1040: { // minecraft:golden_sword
@@ -7332,7 +7944,8 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
-		Weapon: &Weapon{},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
+		Weapon:     &Weapon{},
 	},
 	2: { // minecraft:granite
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7343,6 +7956,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	814: { // minecraft:granite_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7353,6 +7967,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	797: { // minecraft:granite_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7363,6 +7978,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	537: { // minecraft:granite_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7373,6 +7989,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	54: { // minecraft:grass_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7383,6 +8000,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	92: { // minecraft:gravel
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7393,9 +8011,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1424: { // minecraft:gray_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -7404,6 +8024,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1226: { // minecraft:gray_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7414,6 +8035,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1161: { // minecraft:gray_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7424,6 +8046,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1558: { // minecraft:gray_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7434,6 +8057,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	587: { // minecraft:gray_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7446,6 +8070,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	696: { // minecraft:gray_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7456,6 +8081,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	744: { // minecraft:gray_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7466,6 +8092,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	728: { // minecraft:gray_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7476,6 +8103,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	712: { // minecraft:gray_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7486,6 +8114,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1177: { // minecraft:gray_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7498,6 +8127,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1206: { // minecraft:gray_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7509,6 +8139,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	680: { // minecraft:gray_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7519,6 +8150,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	957: { // minecraft:gray_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7530,6 +8162,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	664: { // minecraft:gray_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7540,6 +8173,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	612: { // minecraft:gray_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7550,6 +8184,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	628: { // minecraft:gray_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7560,6 +8195,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	568: { // minecraft:gray_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7570,6 +8206,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	257: { // minecraft:gray_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7581,6 +8218,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	289: { // minecraft:gray_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7592,6 +8230,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	273: { // minecraft:gray_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7603,9 +8242,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1430: { // minecraft:green_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -7614,6 +8255,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1232: { // minecraft:green_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7624,6 +8266,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1167: { // minecraft:green_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7634,6 +8277,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1564: { // minecraft:green_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7644,6 +8288,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	593: { // minecraft:green_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7656,6 +8301,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	702: { // minecraft:green_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7666,6 +8312,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	750: { // minecraft:green_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7676,6 +8323,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	734: { // minecraft:green_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7686,6 +8334,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	718: { // minecraft:green_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7696,6 +8345,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1183: { // minecraft:green_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7708,6 +8358,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1212: { // minecraft:green_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7719,6 +8370,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	686: { // minecraft:green_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7729,6 +8381,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	963: { // minecraft:green_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7740,6 +8393,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	670: { // minecraft:green_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7750,6 +8404,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	618: { // minecraft:green_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7760,6 +8415,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	634: { // minecraft:green_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7770,6 +8426,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	574: { // minecraft:green_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7780,6 +8437,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	263: { // minecraft:green_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7791,6 +8449,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	295: { // minecraft:green_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7802,6 +8461,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	279: { // minecraft:green_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7813,6 +8473,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1511: { // minecraft:grindstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7823,6 +8484,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1343: { // minecraft:guardian_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7834,6 +8496,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1064: { // minecraft:gunpowder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7844,6 +8507,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1501: { // minecraft:guster_banner_pattern
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -7855,6 +8519,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesBannerPatterns: "#minecraft:pattern_item/guster",
 		Rarity:                 "rare",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1608: { // minecraft:guster_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -7866,6 +8531,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:guster",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	337: { // minecraft:hanging_roots
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7877,6 +8543,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1356: { // minecraft:happy_ghast_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7888,6 +8555,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	579: { // minecraft:hay_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7899,6 +8567,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1490: { // minecraft:heart_of_the_sea
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7909,6 +8578,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1609: { // minecraft:heart_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -7920,6 +8590,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:heart",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1610: { // minecraft:heartbreak_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -7931,6 +8602,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:heartbreak",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	116: { // minecraft:heavy_core
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7941,6 +8613,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	874: { // minecraft:heavy_weighted_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7951,6 +8624,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1357: { // minecraft:hoglin_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7962,6 +8636,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	832: { // minecraft:honey_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -7972,6 +8647,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1533: { // minecraft:honey_bottle
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -7996,6 +8672,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		UseRemainder: &UseRemainder{
 			ID: "minecraft:glass_bottle",
 		},
@@ -8009,6 +8686,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1534: { // minecraft:honeycomb_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8019,6 +8697,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	834: { // minecraft:hopper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8029,6 +8708,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	970: { // minecraft:hopper_minecart
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8039,6 +8719,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	770: { // minecraft:horn_coral
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8049,6 +8730,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	765: { // minecraft:horn_coral_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8059,6 +8741,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	780: { // minecraft:horn_coral_fan
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8069,6 +8752,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1286: { // minecraft:horse_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8080,6 +8764,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1595: { // minecraft:host_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8090,6 +8775,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1611: { // minecraft:howl_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -8101,6 +8787,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:howl",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1326: { // minecraft:husk_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8112,6 +8799,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	411: { // minecraft:ice
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8122,6 +8810,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	447: { // minecraft:infested_chiseled_stone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8132,6 +8821,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	443: { // minecraft:infested_cobblestone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8142,6 +8832,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	446: { // minecraft:infested_cracked_stone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8152,6 +8843,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	448: { // minecraft:infested_deepslate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8162,6 +8854,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	445: { // minecraft:infested_mossy_stone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8172,6 +8865,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	442: { // minecraft:infested_stone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8182,6 +8876,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	444: { // minecraft:infested_stone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8192,6 +8887,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1196: { // minecraft:ink_sac
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8202,6 +8898,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1048: { // minecraft:iron_axe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -8228,6 +8925,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 6, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			DisableBlockingForSeconds: 5,
 			ItemDamagePerAttack:       2,
@@ -8242,6 +8940,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	119: { // minecraft:iron_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8252,6 +8951,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1083: { // minecraft:iron_boots
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -8271,6 +8971,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_iron_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	473: { // minecraft:iron_chain
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8281,6 +8982,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1081: { // minecraft:iron_chestplate
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -8300,6 +9002,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_iron_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	888: { // minecraft:iron_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8310,6 +9013,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1318: { // minecraft:iron_golem_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8321,6 +9025,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1080: { // minecraft:iron_helmet
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -8340,6 +9045,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_iron_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1049: { // minecraft:iron_hoe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -8366,6 +9072,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 6, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -8384,6 +9091,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1018: { // minecraft:iron_ingot
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -8395,6 +9103,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:iron",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1082: { // minecraft:iron_leggings
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -8414,6 +9123,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_iron_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1485: { // minecraft:iron_nautilus_armor
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -8429,6 +9139,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1456: { // minecraft:iron_nugget
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8439,6 +9150,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	95: { // minecraft:iron_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8449,6 +9161,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1047: { // minecraft:iron_pickaxe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -8474,6 +9187,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 6, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -8503,6 +9217,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 6, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -8534,6 +9249,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:              "common",
 		RepairCost:          0,
 		Repairable:          &Repairable{Items: "#minecraft:iron_tool_materials"},
+		UseEffects:          &UseEffects{CanSprint: true, InteractVibrations: false, SpeedMultiplier: 1},
 		Weapon:              &Weapon{},
 	},
 	1045: { // minecraft:iron_sword
@@ -8561,7 +9277,8 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
-		Weapon: &Weapon{},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
+		Weapon:     &Weapon{},
 	},
 	910: { // minecraft:iron_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8572,6 +9289,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1375: { // minecraft:item_frame
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8582,6 +9300,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	432: { // minecraft:jack_o_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8592,6 +9311,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	998: { // minecraft:jigsaw
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8602,6 +9322,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	416: { // minecraft:jukebox
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8613,6 +9334,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	981: { // minecraft:jungle_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8624,6 +9346,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	861: { // minecraft:jungle_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8635,6 +9358,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	982: { // minecraft:jungle_chest_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8646,6 +9370,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	892: { // minecraft:jungle_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8657,6 +9382,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	420: { // minecraft:jungle_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8668,6 +9394,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	935: { // minecraft:jungle_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8679,6 +9406,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1118: { // minecraft:jungle_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8706,6 +9434,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	218: { // minecraft:jungle_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8717,6 +9446,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	166: { // minecraft:jungle_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8728,6 +9458,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	66: { // minecraft:jungle_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8739,6 +9470,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	878: { // minecraft:jungle_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8750,6 +9482,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1242: { // minecraft:jungle_pyramid_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8760,6 +9493,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	80: { // minecraft:jungle_sapling
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8772,6 +9506,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	383: { // minecraft:jungle_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8783,6 +9518,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1105: { // minecraft:jungle_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8810,6 +9546,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	344: { // minecraft:jungle_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8821,6 +9558,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	518: { // minecraft:jungle_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8832,6 +9570,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	914: { // minecraft:jungle_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8843,6 +9582,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	206: { // minecraft:jungle_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8854,6 +9594,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	328: { // minecraft:kelp
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8865,6 +9606,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1458: { // minecraft:knowledge_book
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8875,6 +9617,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	408: { // minecraft:ladder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8886,6 +9629,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1515: { // minecraft:lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8896,6 +9640,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	233: { // minecraft:lapis_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8906,6 +9651,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1014: { // minecraft:lapis_lazuli
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -8917,6 +9663,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:lapis",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	105: { // minecraft:lapis_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8927,6 +9674,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1569: { // minecraft:large_amethyst_bud
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8937,6 +9685,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	604: { // minecraft:large_fern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8948,6 +9697,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1130: { // minecraft:lava_bucket
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8959,6 +9709,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1412: { // minecraft:lead
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8969,6 +9720,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	331: { // minecraft:leaf_litter
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8981,6 +9733,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1133: { // minecraft:leather
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -8991,6 +9744,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1071: { // minecraft:leather_boots
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -9010,6 +9764,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_leather_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1069: { // minecraft:leather_chestplate
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -9029,6 +9784,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_leather_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1068: { // minecraft:leather_helmet
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -9048,6 +9804,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_leather_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1411: { // minecraft:leather_horse_armor
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -9063,6 +9820,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1070: { // minecraft:leather_leggings
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -9082,6 +9840,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_leather_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	837: { // minecraft:lectern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9093,6 +9852,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	839: { // minecraft:lever
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9103,6 +9863,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	578: { // minecraft:light
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9113,9 +9874,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1420: { // minecraft:light_blue_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -9124,6 +9887,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1222: { // minecraft:light_blue_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9134,6 +9898,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1157: { // minecraft:light_blue_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9144,6 +9909,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1554: { // minecraft:light_blue_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9154,6 +9920,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	583: { // minecraft:light_blue_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9166,6 +9933,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	692: { // minecraft:light_blue_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9176,6 +9944,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	740: { // minecraft:light_blue_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9186,6 +9955,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	724: { // minecraft:light_blue_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9196,6 +9966,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	708: { // minecraft:light_blue_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9206,6 +9977,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1173: { // minecraft:light_blue_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9218,6 +9990,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1202: { // minecraft:light_blue_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9229,6 +10002,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	676: { // minecraft:light_blue_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9239,6 +10013,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	953: { // minecraft:light_blue_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9250,6 +10025,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	660: { // minecraft:light_blue_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9260,6 +10036,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	608: { // minecraft:light_blue_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9270,6 +10047,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	624: { // minecraft:light_blue_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9280,6 +10058,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	564: { // minecraft:light_blue_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9290,6 +10069,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	253: { // minecraft:light_blue_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9301,6 +10081,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	285: { // minecraft:light_blue_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9312,6 +10093,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	269: { // minecraft:light_blue_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9323,9 +10105,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1425: { // minecraft:light_gray_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -9334,6 +10118,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1227: { // minecraft:light_gray_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9344,6 +10129,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1162: { // minecraft:light_gray_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9354,6 +10140,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1559: { // minecraft:light_gray_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9364,6 +10151,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	588: { // minecraft:light_gray_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9376,6 +10164,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	697: { // minecraft:light_gray_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9386,6 +10175,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	745: { // minecraft:light_gray_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9396,6 +10186,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	729: { // minecraft:light_gray_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9406,6 +10197,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	713: { // minecraft:light_gray_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9416,6 +10208,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1178: { // minecraft:light_gray_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9428,6 +10221,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1207: { // minecraft:light_gray_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9439,6 +10233,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	681: { // minecraft:light_gray_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9449,6 +10244,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	958: { // minecraft:light_gray_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9460,6 +10256,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	665: { // minecraft:light_gray_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9470,6 +10267,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	613: { // minecraft:light_gray_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9480,6 +10278,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	629: { // minecraft:light_gray_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9490,6 +10289,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	569: { // minecraft:light_gray_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9500,6 +10300,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	258: { // minecraft:light_gray_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9511,6 +10312,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	290: { // minecraft:light_gray_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9522,6 +10324,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	274: { // minecraft:light_gray_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9533,6 +10336,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	873: { // minecraft:light_weighted_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9543,6 +10347,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	840: { // minecraft:lightning_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9553,6 +10358,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	600: { // minecraft:lilac
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9564,6 +10370,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	312: { // minecraft:lily_of_the_valley
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9575,6 +10382,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	497: { // minecraft:lily_pad
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9586,9 +10394,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1422: { // minecraft:lime_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -9597,6 +10407,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1224: { // minecraft:lime_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9607,6 +10418,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1159: { // minecraft:lime_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9617,6 +10429,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1556: { // minecraft:lime_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9627,6 +10440,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	585: { // minecraft:lime_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9639,6 +10453,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	694: { // minecraft:lime_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9649,6 +10464,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	742: { // minecraft:lime_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9659,6 +10475,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	726: { // minecraft:lime_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9669,6 +10486,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	710: { // minecraft:lime_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9679,6 +10497,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1175: { // minecraft:lime_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9691,6 +10510,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1204: { // minecraft:lime_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9702,6 +10522,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	678: { // minecraft:lime_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9712,6 +10533,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	955: { // minecraft:lime_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9723,6 +10545,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	662: { // minecraft:lime_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9733,6 +10556,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	610: { // minecraft:lime_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9743,6 +10567,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	626: { // minecraft:lime_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9753,6 +10578,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	566: { // minecraft:lime_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9763,6 +10589,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	255: { // minecraft:lime_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9774,6 +10601,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	287: { // minecraft:lime_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9785,6 +10613,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	271: { // minecraft:lime_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9796,6 +10625,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1445: { // minecraft:lingering_potion
 		AttackAnimation:     &SwingAnimation{Type: 1, Duration: 6},
@@ -9807,6 +10637,7 @@ var defaultComponents = map[int32]*Components{
 		PotionDurationScale: 0.25,
 		Rarity:              "common",
 		RepairCost:          0,
+		UseEffects:          &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1296: { // minecraft:llama_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9818,6 +10649,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1535: { // minecraft:lodestone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9828,6 +10660,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1493: { // minecraft:loom
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9839,6 +10672,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1374: { // minecraft:mace
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -9860,10 +10694,12 @@ var defaultComponents = map[int32]*Components{
 		Tool: &Tool{
 			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
 		},
-		Weapon: &Weapon{},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
+		Weapon:     &Weapon{},
 	},
 	1419: { // minecraft:magenta_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -9872,6 +10708,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1221: { // minecraft:magenta_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9882,6 +10719,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1156: { // minecraft:magenta_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9892,6 +10730,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1553: { // minecraft:magenta_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9902,6 +10741,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	582: { // minecraft:magenta_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9914,6 +10754,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	691: { // minecraft:magenta_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9924,6 +10765,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	739: { // minecraft:magenta_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9934,6 +10776,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	723: { // minecraft:magenta_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9944,6 +10787,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	707: { // minecraft:magenta_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9954,6 +10798,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1172: { // minecraft:magenta_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9966,6 +10811,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1201: { // minecraft:magenta_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9977,6 +10823,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	675: { // minecraft:magenta_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9987,6 +10834,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	952: { // minecraft:magenta_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -9998,6 +10846,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	659: { // minecraft:magenta_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10008,6 +10857,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	607: { // minecraft:magenta_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10018,6 +10868,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	623: { // minecraft:magenta_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10028,6 +10879,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	563: { // minecraft:magenta_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10038,6 +10890,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	252: { // minecraft:magenta_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10049,6 +10902,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	284: { // minecraft:magenta_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10060,6 +10914,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	268: { // minecraft:magenta_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10071,6 +10926,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	650: { // minecraft:magma_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10081,6 +10937,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1275: { // minecraft:magma_cream
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10091,6 +10948,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1358: { // minecraft:magma_cube_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10102,6 +10960,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	991: { // minecraft:mangrove_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10113,6 +10972,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	866: { // minecraft:mangrove_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10124,6 +10984,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	992: { // minecraft:mangrove_chest_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10135,6 +10996,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	897: { // minecraft:mangrove_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10146,6 +11008,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	425: { // minecraft:mangrove_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10157,6 +11020,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	940: { // minecraft:mangrove_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10168,6 +11032,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1123: { // minecraft:mangrove_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10195,6 +11060,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	223: { // minecraft:mangrove_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10206,6 +11072,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	171: { // minecraft:mangrove_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10217,6 +11084,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	71: { // minecraft:mangrove_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10228,6 +11096,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	883: { // minecraft:mangrove_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10239,6 +11108,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	85: { // minecraft:mangrove_propagule
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10251,6 +11121,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	173: { // minecraft:mangrove_roots
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10263,6 +11134,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	384: { // minecraft:mangrove_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10274,6 +11146,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1110: { // minecraft:mangrove_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10301,6 +11174,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	349: { // minecraft:mangrove_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10312,6 +11186,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	523: { // minecraft:mangrove_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10323,6 +11198,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	919: { // minecraft:mangrove_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10334,6 +11210,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	211: { // minecraft:mangrove_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10345,6 +11222,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1382: { // minecraft:map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10355,6 +11233,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1568: { // minecraft:medium_amethyst_bud
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10365,6 +11244,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	483: { // minecraft:melon
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10376,6 +11256,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1259: { // minecraft:melon_seeds
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10387,15 +11268,16 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1256: { // minecraft:melon_slice
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/low_medium"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -10408,12 +11290,13 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1134: { // minecraft:milk_bucket
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
+			ConsumeSeconds: defaultConsumeSeconds,
 			Animation:      "drink",
 			Sound:          "minecraft:entity.generic.drink",
 			HasParticles:   false,
@@ -10427,6 +11310,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		UseRemainder: &UseRemainder{
 			ID: "minecraft:bucket",
 		},
@@ -10440,6 +11324,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1612: { // minecraft:miner_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -10451,6 +11336,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:miner",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1497: { // minecraft:mojang_banner_pattern
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -10462,6 +11348,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesBannerPatterns: "#minecraft:pattern_item/mojang",
 		Rarity:                 "rare",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1314: { // minecraft:mooshroom_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10473,6 +11360,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	333: { // minecraft:moss_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10484,6 +11372,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	332: { // minecraft:moss_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10495,6 +11384,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	393: { // minecraft:mossy_cobblestone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10505,6 +11395,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	810: { // minecraft:mossy_cobblestone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10515,6 +11406,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	792: { // minecraft:mossy_cobblestone_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10525,6 +11417,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	532: { // minecraft:mossy_cobblestone_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10535,6 +11428,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	808: { // minecraft:mossy_stone_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10545,6 +11439,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	790: { // minecraft:mossy_stone_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10555,6 +11450,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	536: { // minecraft:mossy_stone_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10565,6 +11461,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	450: { // minecraft:mossy_stone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10575,6 +11472,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1613: { // minecraft:mourner_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -10586,6 +11484,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:mourner",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	59: { // minecraft:mud
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10596,6 +11495,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	363: { // minecraft:mud_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10606,6 +11506,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	495: { // minecraft:mud_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10616,6 +11517,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	539: { // minecraft:mud_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10626,6 +11528,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	454: { // minecraft:mud_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10636,6 +11539,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	174: { // minecraft:muddy_mangrove_roots
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10646,6 +11550,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1287: { // minecraft:mule_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10657,6 +11562,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	463: { // minecraft:mushroom_stem
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10668,14 +11574,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1061: { // minecraft:mushroom_stew
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -10688,6 +11595,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		UseRemainder: &UseRemainder{
 			ID: "minecraft:bowl",
 		},
@@ -10702,6 +11610,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1460: { // minecraft:music_disc_13
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10713,6 +11622,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1478: { // minecraft:music_disc_5
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10724,6 +11634,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1462: { // minecraft:music_disc_blocks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10735,6 +11646,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1463: { // minecraft:music_disc_bounce
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10746,6 +11658,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1461: { // minecraft:music_disc_cat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10757,6 +11670,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1464: { // minecraft:music_disc_chirp
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10768,6 +11682,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1465: { // minecraft:music_disc_creator
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10779,6 +11694,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1466: { // minecraft:music_disc_creator_music_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10790,6 +11706,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1467: { // minecraft:music_disc_far
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10801,6 +11718,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1468: { // minecraft:music_disc_lava_chicken
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10812,6 +11730,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1469: { // minecraft:music_disc_mall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10823,6 +11742,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1470: { // minecraft:music_disc_mellohi
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10834,6 +11754,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1476: { // minecraft:music_disc_otherside
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10845,6 +11766,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1479: { // minecraft:music_disc_pigstep
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10856,6 +11778,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1480: { // minecraft:music_disc_precipice
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10867,6 +11790,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1477: { // minecraft:music_disc_relic
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10878,6 +11802,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1471: { // minecraft:music_disc_stal
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10889,6 +11814,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1472: { // minecraft:music_disc_strad
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10900,6 +11826,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1481: { // minecraft:music_disc_tears
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10911,6 +11838,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1475: { // minecraft:music_disc_wait
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10922,6 +11850,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1473: { // minecraft:music_disc_ward
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10933,14 +11862,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1415: { // minecraft:mutton
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -10953,6 +11883,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	496: { // minecraft:mycelium
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10963,6 +11894,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1413: { // minecraft:name_tag
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10973,6 +11905,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1484: { // minecraft:nautilus_shell
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10983,6 +11916,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1306: { // minecraft:nautilus_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -10994,6 +11928,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1396: { // minecraft:nether_brick
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11004,6 +11939,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	501: { // minecraft:nether_brick_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11014,6 +11950,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	364: { // minecraft:nether_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11024,6 +11961,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	502: { // minecraft:nether_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11034,6 +11972,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	540: { // minecraft:nether_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11044,6 +11983,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	498: { // minecraft:nether_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11054,6 +11994,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	109: { // minecraft:nether_gold_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11064,6 +12005,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	110: { // minecraft:nether_quartz_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11074,6 +12016,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	324: { // minecraft:nether_sprouts
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11085,6 +12028,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1391: { // minecraft:nether_star
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11096,6 +12040,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1269: { // minecraft:nether_wart
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11107,6 +12052,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	651: { // minecraft:nether_wart_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11118,6 +12064,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1058: { // minecraft:netherite_axe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -11145,6 +12092,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 9, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			DisableBlockingForSeconds: 5,
 			ItemDamagePerAttack:       2,
@@ -11160,6 +12108,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1095: { // minecraft:netherite_boots
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -11181,6 +12130,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_netherite_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1093: { // minecraft:netherite_chestplate
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -11202,6 +12152,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_netherite_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1092: { // minecraft:netherite_helmet
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -11223,6 +12174,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_netherite_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1059: { // minecraft:netherite_hoe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -11250,6 +12202,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 9, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -11270,6 +12223,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1023: { // minecraft:netherite_ingot
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -11282,6 +12236,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:netherite",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1094: { // minecraft:netherite_leggings
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -11303,6 +12258,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_netherite_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1488: { // minecraft:netherite_nautilus_armor
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -11320,6 +12276,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1057: { // minecraft:netherite_pickaxe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -11346,6 +12303,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 9, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -11360,6 +12318,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1056: { // minecraft:netherite_shovel
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -11387,6 +12346,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 9, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -11419,6 +12379,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:              "common",
 		RepairCost:          0,
 		Repairable:          &Repairable{Items: "#minecraft:netherite_tool_materials"},
+		UseEffects:          &UseEffects{CanSprint: true, InteractVibrations: false, SpeedMultiplier: 1},
 		Weapon:              &Weapon{},
 	},
 	1055: { // minecraft:netherite_sword
@@ -11447,7 +12408,8 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
-		Weapon: &Weapon{},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
+		Weapon:     &Weapon{},
 	},
 	1579: { // minecraft:netherite_upgrade_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11458,6 +12420,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	433: { // minecraft:netherrack
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11468,6 +12431,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	855: { // minecraft:note_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11479,6 +12443,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	975: { // minecraft:oak_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11490,6 +12455,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	858: { // minecraft:oak_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11501,6 +12467,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	976: { // minecraft:oak_chest_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11512,6 +12479,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	889: { // minecraft:oak_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11523,6 +12491,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	417: { // minecraft:oak_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11534,6 +12503,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	932: { // minecraft:oak_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11545,6 +12515,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1115: { // minecraft:oak_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11572,6 +12543,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	215: { // minecraft:oak_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11583,6 +12555,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	163: { // minecraft:oak_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11594,6 +12567,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	63: { // minecraft:oak_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11605,6 +12579,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	875: { // minecraft:oak_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11616,6 +12591,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	77: { // minecraft:oak_sapling
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11628,6 +12604,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	386: { // minecraft:oak_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11639,6 +12616,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1102: { // minecraft:oak_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11666,6 +12644,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	341: { // minecraft:oak_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11677,6 +12656,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	515: { // minecraft:oak_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11688,6 +12668,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	911: { // minecraft:oak_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11699,6 +12680,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	203: { // minecraft:oak_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11710,6 +12692,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	833: { // minecraft:observer
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11720,6 +12703,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	394: { // minecraft:obsidian
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11730,6 +12714,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1239: { // minecraft:ocean_monument_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11740,6 +12725,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1297: { // minecraft:ocelot_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11751,6 +12737,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1573: { // minecraft:ochre_froglight
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11761,12 +12748,13 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1657: { // minecraft:ominous_bottle
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
+			ConsumeSeconds: defaultConsumeSeconds,
 			Animation:      "drink",
 			Sound:          "minecraft:entity.generic.drink",
 			HasParticles:   false,
@@ -11781,6 +12769,7 @@ var defaultComponents = map[int32]*Components{
 		OminousBottleAmplifier: 0,
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1655: { // minecraft:ominous_trial_key
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11791,6 +12780,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	300: { // minecraft:open_eyeblossom
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11802,9 +12792,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1418: { // minecraft:orange_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -11813,6 +12805,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1220: { // minecraft:orange_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11823,6 +12816,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1155: { // minecraft:orange_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11833,6 +12827,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1552: { // minecraft:orange_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11843,6 +12838,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	581: { // minecraft:orange_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11855,6 +12851,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	690: { // minecraft:orange_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11865,6 +12862,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	738: { // minecraft:orange_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11875,6 +12873,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	722: { // minecraft:orange_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11885,6 +12884,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	706: { // minecraft:orange_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11895,6 +12895,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1171: { // minecraft:orange_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11907,6 +12908,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1200: { // minecraft:orange_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11918,6 +12920,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	674: { // minecraft:orange_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11928,6 +12931,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	951: { // minecraft:orange_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11939,6 +12943,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	225: { // minecraft:orange_poplar_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11950,6 +12955,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	658: { // minecraft:orange_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11960,6 +12966,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	606: { // minecraft:orange_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11970,6 +12977,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	622: { // minecraft:orange_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11980,6 +12988,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	562: { // minecraft:orange_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -11990,6 +12999,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	307: { // minecraft:orange_tulip
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12001,6 +13011,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	251: { // minecraft:orange_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12012,6 +13023,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	283: { // minecraft:orange_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12023,6 +13035,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	267: { // minecraft:orange_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12034,6 +13047,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	310: { // minecraft:oxeye_daisy
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12045,6 +13059,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	134: { // minecraft:oxidized_chiseled_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12055,6 +13070,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	123: { // minecraft:oxidized_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12065,6 +13081,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	468: { // minecraft:oxidized_copper_bars
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12075,6 +13092,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1632: { // minecraft:oxidized_copper_bulb
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12085,6 +13103,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	477: { // minecraft:oxidized_copper_chain
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12095,6 +13114,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1640: { // minecraft:oxidized_copper_chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12105,6 +13125,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	905: { // minecraft:oxidized_copper_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12115,6 +13136,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1648: { // minecraft:oxidized_copper_golem_statue
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12125,6 +13147,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1624: { // minecraft:oxidized_copper_grate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12135,6 +13158,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1520: { // minecraft:oxidized_copper_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12145,6 +13169,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	927: { // minecraft:oxidized_copper_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12155,6 +13180,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	142: { // minecraft:oxidized_cut_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12165,6 +13191,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	158: { // minecraft:oxidized_cut_copper_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12175,6 +13202,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	150: { // minecraft:oxidized_cut_copper_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12185,6 +13213,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	843: { // minecraft:oxidized_lightning_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12195,6 +13224,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	597: { // minecraft:packed_ice
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12205,6 +13235,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	453: { // minecraft:packed_mud
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12215,6 +13246,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1099: { // minecraft:painting
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12225,6 +13257,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	335: { // minecraft:pale_hanging_moss
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12236,6 +13269,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	336: { // minecraft:pale_moss_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12247,6 +13281,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	334: { // minecraft:pale_moss_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12258,6 +13293,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	989: { // minecraft:pale_oak_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12269,6 +13305,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	865: { // minecraft:pale_oak_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12280,6 +13317,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	990: { // minecraft:pale_oak_chest_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12291,6 +13329,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	896: { // minecraft:pale_oak_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12302,6 +13341,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	424: { // minecraft:pale_oak_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12313,6 +13353,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	939: { // minecraft:pale_oak_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12324,6 +13365,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1122: { // minecraft:pale_oak_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12351,6 +13393,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	222: { // minecraft:pale_oak_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12362,6 +13405,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	169: { // minecraft:pale_oak_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12373,6 +13417,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	70: { // minecraft:pale_oak_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12384,6 +13429,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	882: { // minecraft:pale_oak_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12395,6 +13441,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	84: { // minecraft:pale_oak_sapling
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12407,6 +13454,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	387: { // minecraft:pale_oak_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12418,6 +13466,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1109: { // minecraft:pale_oak_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12445,6 +13494,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	348: { // minecraft:pale_oak_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12456,6 +13506,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	522: { // minecraft:pale_oak_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12467,6 +13518,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	918: { // minecraft:pale_oak_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12478,6 +13530,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	209: { // minecraft:pale_oak_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12489,6 +13542,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1298: { // minecraft:panda_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12500,6 +13554,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1145: { // minecraft:paper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12510,6 +13565,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1327: { // minecraft:parched_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12521,6 +13577,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1289: { // minecraft:parrot_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12532,6 +13589,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1575: { // minecraft:pearlescent_froglight
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12542,6 +13600,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	602: { // minecraft:peony
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12553,6 +13612,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	359: { // minecraft:petrified_oak_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12563,6 +13623,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	973: { // minecraft:phantom_membrane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12573,6 +13634,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1344: { // minecraft:phantom_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12584,6 +13646,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1282: { // minecraft:pig_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12595,6 +13658,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1499: { // minecraft:piglin_banner_pattern
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -12606,6 +13670,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesBannerPatterns: "#minecraft:pattern_item/piglin",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1360: { // minecraft:piglin_brute_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12617,6 +13682,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1390: { // minecraft:piglin_head
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -12632,6 +13698,7 @@ var defaultComponents = map[int32]*Components{
 		MobVisibility:     &MobVisibility{Visibility: 0.5, TargetingEntityTypes: []string{"minecraft:piglin", "minecraft:piglin_brute"}},
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1359: { // minecraft:piglin_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12643,6 +13710,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1350: { // minecraft:pillager_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12654,9 +13722,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1423: { // minecraft:pink_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -12665,6 +13735,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1225: { // minecraft:pink_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12675,6 +13746,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1160: { // minecraft:pink_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12685,6 +13757,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1557: { // minecraft:pink_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12695,6 +13768,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	586: { // minecraft:pink_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12707,6 +13781,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	695: { // minecraft:pink_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12717,6 +13792,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	743: { // minecraft:pink_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12727,6 +13803,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	727: { // minecraft:pink_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12737,6 +13814,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	711: { // minecraft:pink_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12747,6 +13825,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1176: { // minecraft:pink_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12759,6 +13838,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1205: { // minecraft:pink_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12770,6 +13850,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	679: { // minecraft:pink_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12780,6 +13861,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	956: { // minecraft:pink_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12791,6 +13873,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	329: { // minecraft:pink_petals
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12802,6 +13885,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	663: { // minecraft:pink_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12812,6 +13896,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	611: { // minecraft:pink_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12822,6 +13907,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	627: { // minecraft:pink_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12832,6 +13918,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	567: { // minecraft:pink_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12842,6 +13929,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	309: { // minecraft:pink_tulip
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12853,6 +13941,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	256: { // minecraft:pink_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12864,6 +13953,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	288: { // minecraft:pink_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12875,6 +13965,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	272: { // minecraft:pink_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12886,6 +13977,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	829: { // minecraft:piston
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12896,6 +13988,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	315: { // minecraft:pitcher_plant
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12907,6 +14000,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1437: { // minecraft:pitcher_pod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12918,6 +14012,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1245: { // minecraft:plains_village_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12928,6 +14023,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1386: { // minecraft:player_head
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -12942,6 +14038,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1614: { // minecraft:plenty_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -12953,6 +14050,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:plenty",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	57: { // minecraft:podzol
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12963,6 +14061,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1571: { // minecraft:pointed_dripstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -12973,14 +14072,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1381: { // minecraft:poisonous_potato
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 			OnConsumeEffects: []ConsumeEffect{
 				{Type: "minecraft:apply_effects", Probability: 0.6, Effects: []StatusEffect{{ID: "minecraft:poison", Duration: 100, ShowParticles: true, ShowIcon: true}}},
@@ -12996,6 +14096,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1299: { // minecraft:polar_bear_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13007,6 +14108,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	7: { // minecraft:polished_andesite
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13017,6 +14119,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	817: { // minecraft:polished_andesite_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13027,6 +14130,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	800: { // minecraft:polished_andesite_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13037,6 +14141,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	437: { // minecraft:polished_basalt
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13047,6 +14152,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1541: { // minecraft:polished_blackstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13057,6 +14163,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1546: { // minecraft:polished_blackstone_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13067,6 +14174,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1547: { // minecraft:polished_blackstone_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13077,6 +14185,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	548: { // minecraft:polished_blackstone_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13087,6 +14196,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1545: { // minecraft:polished_blackstone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13097,6 +14207,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	857: { // minecraft:polished_blackstone_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13107,6 +14218,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	872: { // minecraft:polished_blackstone_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13117,6 +14229,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1542: { // minecraft:polished_blackstone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13127,6 +14240,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1543: { // minecraft:polished_blackstone_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13137,6 +14251,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	547: { // minecraft:polished_blackstone_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13147,6 +14262,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	44: { // minecraft:polished_cinnabar
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13157,6 +14273,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	45: { // minecraft:polished_cinnabar_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13167,6 +14284,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	46: { // minecraft:polished_cinnabar_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13177,6 +14295,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	47: { // minecraft:polished_cinnabar_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13187,6 +14306,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	10: { // minecraft:polished_deepslate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13197,6 +14317,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	820: { // minecraft:polished_deepslate_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13207,6 +14328,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	803: { // minecraft:polished_deepslate_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13217,6 +14339,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	550: { // minecraft:polished_deepslate_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13227,6 +14350,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	5: { // minecraft:polished_diorite
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13237,6 +14361,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	809: { // minecraft:polished_diorite_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13247,6 +14372,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	791: { // minecraft:polished_diorite_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13257,6 +14383,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	3: { // minecraft:polished_granite
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13267,6 +14394,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	806: { // minecraft:polished_granite_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13277,6 +14405,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	788: { // minecraft:polished_granite_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13287,6 +14416,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	31: { // minecraft:polished_sulfur
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13297,6 +14427,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	32: { // minecraft:polished_sulfur_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13307,6 +14438,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	33: { // minecraft:polished_sulfur_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13317,6 +14449,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	34: { // minecraft:polished_sulfur_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13327,6 +14460,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	17: { // minecraft:polished_tuff
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13337,6 +14471,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	18: { // minecraft:polished_tuff_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13347,6 +14482,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	19: { // minecraft:polished_tuff_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13357,6 +14493,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	20: { // minecraft:polished_tuff_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13367,6 +14504,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	993: { // minecraft:poplar_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13378,6 +14516,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	867: { // minecraft:poplar_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13389,6 +14528,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	994: { // minecraft:poplar_chest_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13400,6 +14540,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	898: { // minecraft:poplar_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13411,6 +14552,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	426: { // minecraft:poplar_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13422,6 +14564,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	941: { // minecraft:poplar_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13433,6 +14576,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1124: { // minecraft:poplar_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13460,6 +14604,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	172: { // minecraft:poplar_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13471,6 +14616,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	72: { // minecraft:poplar_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13482,6 +14628,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	884: { // minecraft:poplar_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13493,6 +14640,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	86: { // minecraft:poplar_sapling
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13505,6 +14653,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	385: { // minecraft:poplar_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13516,6 +14665,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1111: { // minecraft:poplar_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13543,6 +14693,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	350: { // minecraft:poplar_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13554,6 +14705,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	524: { // minecraft:poplar_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13565,6 +14717,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	920: { // minecraft:poplar_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13576,6 +14729,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	212: { // minecraft:poplar_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13587,6 +14741,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1435: { // minecraft:popped_chorus_fruit
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13597,6 +14752,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	302: { // minecraft:poppy
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13608,14 +14764,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1097: { // minecraft:porkchop
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -13628,15 +14785,16 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1379: { // minecraft:potato
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/medium"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -13649,6 +14807,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		VillagerFood:      &VillagerFood{Nutrition: 1},
 	},
 	27: { // minecraft:potent_sulfur
@@ -13660,12 +14819,13 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1271: { // minecraft:potion
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
+			ConsumeSeconds: defaultConsumeSeconds,
 			Animation:      "drink",
 			Sound:          "minecraft:entity.generic.drink",
 			HasParticles:   false,
@@ -13676,6 +14836,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		UseRemainder: &UseRemainder{
 			ID: "minecraft:glass_bottle",
 		},
@@ -13689,6 +14850,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	945: { // minecraft:powered_rail
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13699,6 +14861,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	637: { // minecraft:prismarine
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13709,6 +14872,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	370: { // minecraft:prismarine_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13719,6 +14883,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	641: { // minecraft:prismarine_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13729,6 +14894,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	638: { // minecraft:prismarine_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13739,6 +14905,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1399: { // minecraft:prismarine_crystals
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13749,6 +14916,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1398: { // minecraft:prismarine_shard
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13759,6 +14927,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	369: { // minecraft:prismarine_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13769,6 +14938,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	640: { // minecraft:prismarine_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13779,6 +14949,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	534: { // minecraft:prismarine_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13789,6 +14960,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1615: { // minecraft:prize_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -13800,14 +14972,15 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:prize",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1193: { // minecraft:pufferfish
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 			OnConsumeEffects: []ConsumeEffect{
 				{Type: "minecraft:apply_effects", Probability: 1, Effects: []StatusEffect{{ID: "minecraft:poison", Duration: 1200, Amplifier: 1, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:hunger", Duration: 300, Amplifier: 2, ShowParticles: true, ShowIcon: true}, {ID: "minecraft:nausea", Duration: 300, ShowParticles: true, ShowIcon: true}}},
@@ -13823,6 +14996,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1135: { // minecraft:pufferfish_bucket
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -13837,6 +15011,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1307: { // minecraft:pufferfish_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13848,6 +15023,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	430: { // minecraft:pumpkin
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13859,15 +15035,16 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1392: { // minecraft:pumpkin_pie
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/always_add_one"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -13880,6 +15057,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1258: { // minecraft:pumpkin_seeds
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13891,9 +15069,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1427: { // minecraft:purple_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -13902,6 +15082,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1229: { // minecraft:purple_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13912,6 +15093,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1164: { // minecraft:purple_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13922,6 +15104,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1561: { // minecraft:purple_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13932,6 +15115,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	590: { // minecraft:purple_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13944,6 +15128,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	699: { // minecraft:purple_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13954,6 +15139,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	747: { // minecraft:purple_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13964,6 +15150,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	731: { // minecraft:purple_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13974,6 +15161,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	715: { // minecraft:purple_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13984,6 +15172,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1180: { // minecraft:purple_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -13996,6 +15185,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1209: { // minecraft:purple_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14007,6 +15197,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	683: { // minecraft:purple_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14017,6 +15208,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	960: { // minecraft:purple_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14028,6 +15220,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	667: { // minecraft:purple_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14038,6 +15231,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	615: { // minecraft:purple_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14048,6 +15242,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	631: { // minecraft:purple_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14058,6 +15253,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	571: { // minecraft:purple_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14068,6 +15264,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	260: { // minecraft:purple_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14079,6 +15276,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	292: { // minecraft:purple_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14090,6 +15288,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	276: { // minecraft:purple_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14101,6 +15300,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	399: { // minecraft:purpur_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14111,6 +15311,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	400: { // minecraft:purpur_pillar
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14121,6 +15322,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	368: { // minecraft:purpur_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14131,6 +15333,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	401: { // minecraft:purpur_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14141,6 +15344,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1015: { // minecraft:quartz
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -14152,6 +15356,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:quartz",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	557: { // minecraft:quartz_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14162,6 +15367,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	558: { // minecraft:quartz_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14172,6 +15378,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	559: { // minecraft:quartz_pillar
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14182,6 +15389,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	365: { // minecraft:quartz_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14192,6 +15400,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	560: { // minecraft:quartz_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14202,14 +15411,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1400: { // minecraft:rabbit
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -14222,6 +15432,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1403: { // minecraft:rabbit_foot
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14232,6 +15443,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1404: { // minecraft:rabbit_hide
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14242,6 +15454,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1300: { // minecraft:rabbit_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14253,14 +15466,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1402: { // minecraft:rabbit_stew
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -14273,6 +15487,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		UseRemainder: &UseRemainder{
 			ID: "minecraft:bowl",
 		},
@@ -14286,6 +15501,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1594: { // minecraft:raiser_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14296,6 +15512,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1351: { // minecraft:ravager_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14307,6 +15524,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1019: { // minecraft:raw_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14317,6 +15535,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	114: { // minecraft:raw_copper_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14327,6 +15546,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1021: { // minecraft:raw_gold
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14337,6 +15557,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	115: { // minecraft:raw_gold_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14347,6 +15568,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1017: { // minecraft:raw_iron
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14357,6 +15579,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	113: { // minecraft:raw_iron_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14367,6 +15590,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1152: { // minecraft:recovery_compass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14377,9 +15601,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1431: { // minecraft:red_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -14388,6 +15614,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1233: { // minecraft:red_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14398,6 +15625,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1168: { // minecraft:red_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14408,6 +15636,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1565: { // minecraft:red_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14418,6 +15647,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	594: { // minecraft:red_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14430,6 +15660,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	703: { // minecraft:red_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14440,6 +15671,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	751: { // minecraft:red_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14450,6 +15682,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	735: { // minecraft:red_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14460,6 +15693,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	719: { // minecraft:red_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14470,6 +15704,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1184: { // minecraft:red_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14482,6 +15717,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1213: { // minecraft:red_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14493,6 +15729,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	687: { // minecraft:red_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14503,6 +15740,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	964: { // minecraft:red_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14514,6 +15752,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	318: { // minecraft:red_mushroom
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14525,6 +15764,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	462: { // minecraft:red_mushroom_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14536,6 +15776,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	816: { // minecraft:red_nether_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14546,6 +15787,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	799: { // minecraft:red_nether_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14556,6 +15798,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	542: { // minecraft:red_nether_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14566,6 +15809,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	653: { // minecraft:red_nether_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14576,6 +15820,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	224: { // minecraft:red_poplar_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14587,6 +15832,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	91: { // minecraft:red_sand
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14597,6 +15843,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	644: { // minecraft:red_sandstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14607,6 +15854,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	366: { // minecraft:red_sandstone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14617,6 +15865,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	647: { // minecraft:red_sandstone_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14627,6 +15876,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	535: { // minecraft:red_sandstone_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14637,6 +15887,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	241: { // minecraft:red_shrub
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14648,6 +15899,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	671: { // minecraft:red_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14658,6 +15910,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	619: { // minecraft:red_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14668,6 +15921,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	635: { // minecraft:red_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14678,6 +15932,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	575: { // minecraft:red_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14688,6 +15943,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	306: { // minecraft:red_tulip
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14699,6 +15955,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	264: { // minecraft:red_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14710,6 +15967,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	296: { // minecraft:red_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14721,6 +15979,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	280: { // minecraft:red_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14732,6 +15991,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	824: { // minecraft:redstone
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -14743,6 +16003,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:redstone",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	826: { // minecraft:redstone_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14753,6 +16014,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	854: { // minecraft:redstone_lamp
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14763,6 +16025,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	101: { // minecraft:redstone_ore
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14773,6 +16036,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	825: { // minecraft:redstone_torch
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14783,6 +16047,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	460: { // minecraft:reinforced_deepslate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14793,6 +16058,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	827: { // minecraft:repeater
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14803,6 +16069,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	648: { // minecraft:repeating_command_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14813,6 +16080,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	487: { // minecraft:resin_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14823,6 +16091,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1397: { // minecraft:resin_brick
 		AttackAnimation:      &SwingAnimation{Type: 1, Duration: 6},
@@ -14834,6 +16103,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesTrimMaterial: "minecraft:resin",
 		Rarity:               "common",
 		RepairCost:           0,
+		UseEffects:           &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	490: { // minecraft:resin_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14844,6 +16114,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	489: { // minecraft:resin_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14854,6 +16125,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	491: { // minecraft:resin_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14864,6 +16136,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	488: { // minecraft:resin_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14874,6 +16147,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	486: { // minecraft:resin_clump
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14884,6 +16158,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1549: { // minecraft:respawn_anchor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14894,6 +16169,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1589: { // minecraft:rib_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14904,6 +16180,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	58: { // minecraft:rooted_dirt
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14914,6 +16191,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	601: { // minecraft:rose_bush
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14925,14 +16203,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1264: { // minecraft:rotten_flesh
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 			OnConsumeEffects: []ConsumeEffect{
 				{Type: "minecraft:apply_effects", Probability: 0.8, Effects: []StatusEffect{{ID: "minecraft:hunger", Duration: 600, ShowParticles: true, ShowIcon: true}}},
@@ -14948,6 +16227,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	949: { // minecraft:saddle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -14959,14 +16239,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1191: { // minecraft:salmon
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -14979,6 +16260,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1136: { // minecraft:salmon_bucket
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -14993,6 +16275,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1308: { // minecraft:salmon_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15004,6 +16287,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	88: { // minecraft:sand
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15014,6 +16298,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	234: { // minecraft:sandstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15024,6 +16309,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	357: { // minecraft:sandstone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15034,6 +16320,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	512: { // minecraft:sandstone_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15044,6 +16331,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	543: { // minecraft:sandstone_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15054,6 +16342,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1246: { // minecraft:savanna_village_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15064,6 +16353,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	823: { // minecraft:scaffolding
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15075,6 +16365,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1616: { // minecraft:scrape_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -15086,6 +16377,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:scrape",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	503: { // minecraft:sculk
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15096,6 +16388,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	505: { // minecraft:sculk_catalyst
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15106,6 +16399,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	849: { // minecraft:sculk_sensor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15116,6 +16410,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	506: { // minecraft:sculk_shrieker
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15126,6 +16421,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	504: { // minecraft:sculk_vein
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15136,6 +16432,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	643: { // minecraft:sea_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15146,6 +16443,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	249: { // minecraft:sea_pickle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15157,6 +16455,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	248: { // minecraft:seagrass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15168,6 +16467,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1580: { // minecraft:sentry_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15178,6 +16478,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1592: { // minecraft:shaper_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15188,6 +16489,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1617: { // minecraft:sheaf_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -15199,6 +16501,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:sheaf",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1255: { // minecraft:shears
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15220,6 +16523,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:shears_minor_breaking_speed"}, Speed: 2, HasSpeed: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1283: { // minecraft:sheep_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15231,6 +16535,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	319: { // minecraft:shelf_mushroom
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15242,6 +16547,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1618: { // minecraft:shelter_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -15253,9 +16559,11 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:shelter",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1446: { // minecraft:shield
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:  &[]BannerPatternLayer{},
 		BlocksAttacks: &BlocksAttacks{
 			BlockDelaySeconds:    0.25,
 			DisableCooldownScale: 1,
@@ -15278,6 +16586,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:wooden_tool_materials"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	246: { // minecraft:short_dry_grass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15290,6 +16599,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	238: { // minecraft:short_grass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15301,6 +16611,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1529: { // minecraft:shroomlight
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15312,6 +16623,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	656: { // minecraft:shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15322,6 +16634,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1455: { // minecraft:shulker_shell
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15332,6 +16645,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1367: { // minecraft:shulker_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15343,6 +16657,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1593: { // minecraft:silence_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15353,6 +16668,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1345: { // minecraft:silverfish_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15364,6 +16680,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1329: { // minecraft:skeleton_horse_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15375,6 +16692,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1384: { // minecraft:skeleton_skull
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -15390,6 +16708,7 @@ var defaultComponents = map[int32]*Components{
 		MobVisibility:     &MobVisibility{Visibility: 0.5, TargetingEntityTypes: []string{"minecraft:skeleton"}},
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1328: { // minecraft:skeleton_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15401,6 +16720,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1496: { // minecraft:skull_banner_pattern
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -15412,6 +16732,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesBannerPatterns: "#minecraft:pattern_item/skull",
 		Rarity:                 "rare",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1619: { // minecraft:skull_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -15423,6 +16744,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:skull",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1147: { // minecraft:slime_ball
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15433,6 +16755,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	831: { // minecraft:slime_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15443,6 +16766,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1346: { // minecraft:slime_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15454,6 +16778,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1567: { // minecraft:small_amethyst_bud
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15464,6 +16789,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	339: { // minecraft:small_dripleaf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15475,6 +16801,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1512: { // minecraft:smithing_table
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15486,6 +16813,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1507: { // minecraft:smoker
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15496,6 +16824,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	438: { // minecraft:smooth_basalt
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15506,6 +16835,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	372: { // minecraft:smooth_quartz
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15516,6 +16846,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	813: { // minecraft:smooth_quartz_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15526,6 +16857,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	796: { // minecraft:smooth_quartz_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15536,6 +16868,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	373: { // minecraft:smooth_red_sandstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15546,6 +16879,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	807: { // minecraft:smooth_red_sandstone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15556,6 +16890,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	789: { // minecraft:smooth_red_sandstone_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15566,6 +16901,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	374: { // minecraft:smooth_sandstone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15576,6 +16912,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	812: { // minecraft:smooth_sandstone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15586,6 +16923,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	795: { // minecraft:smooth_sandstone_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15596,6 +16934,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	375: { // minecraft:smooth_stone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15606,6 +16945,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	356: { // minecraft:smooth_stone_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15616,6 +16956,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	754: { // minecraft:sniffer_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15626,6 +16967,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1315: { // minecraft:sniffer_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15637,6 +16979,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1620: { // minecraft:snort_pottery_sherd
 		AttackAnimation:        &SwingAnimation{Type: 1, Duration: 6},
@@ -15648,6 +16991,7 @@ var defaultComponents = map[int32]*Components{
 		ProvidesPotteryPattern: "minecraft:snort",
 		Rarity:                 "uncommon",
 		RepairCost:             0,
+		UseEffects:             &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1588: { // minecraft:snout_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15658,6 +17002,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	410: { // minecraft:snow
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15668,6 +17013,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	412: { // minecraft:snow_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15678,6 +17024,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1319: { // minecraft:snow_golem_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15689,6 +17036,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1132: { // minecraft:snowball
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15699,6 +17047,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1247: { // minecraft:snowy_village_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15709,6 +17058,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1528: { // minecraft:soul_campfire
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15719,6 +17069,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1516: { // minecraft:soul_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15729,6 +17080,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	434: { // minecraft:soul_sand
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15739,6 +17091,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	435: { // minecraft:soul_soil
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15749,6 +17102,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	439: { // minecraft:soul_torch
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15759,6 +17113,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	402: { // minecraft:spawner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15769,6 +17124,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1443: { // minecraft:spectral_arrow
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15779,14 +17135,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1272: { // minecraft:spider_eye
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 			OnConsumeEffects: []ConsumeEffect{
 				{Type: "minecraft:apply_effects", Probability: 1, Effects: []StatusEffect{{ID: "minecraft:poison", Duration: 100, ShowParticles: true, ShowIcon: true}}},
@@ -15802,6 +17159,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1338: { // minecraft:spider_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15813,6 +17171,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1590: { // minecraft:spire_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15823,6 +17182,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1442: { // minecraft:splash_potion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15833,6 +17193,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	229: { // minecraft:sponge
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15843,6 +17204,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	316: { // minecraft:spore_blossom
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15854,6 +17216,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	977: { // minecraft:spruce_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15865,6 +17228,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	859: { // minecraft:spruce_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15876,6 +17240,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	978: { // minecraft:spruce_chest_boat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15887,6 +17252,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	890: { // minecraft:spruce_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15898,6 +17264,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	418: { // minecraft:spruce_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15909,6 +17276,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	933: { // minecraft:spruce_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15920,6 +17288,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1116: { // minecraft:spruce_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15947,6 +17316,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	216: { // minecraft:spruce_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15958,6 +17328,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	164: { // minecraft:spruce_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15969,6 +17340,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	64: { // minecraft:spruce_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15980,6 +17352,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	876: { // minecraft:spruce_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -15991,6 +17364,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	78: { // minecraft:spruce_sapling
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16003,6 +17377,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	388: { // minecraft:spruce_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16014,6 +17389,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1103: { // minecraft:spruce_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16041,6 +17417,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	342: { // minecraft:spruce_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16052,6 +17429,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	516: { // minecraft:spruce_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16063,6 +17441,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	912: { // minecraft:spruce_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16074,6 +17453,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	204: { // minecraft:spruce_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16085,6 +17465,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1188: { // minecraft:spyglass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16095,6 +17476,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1309: { // minecraft:squid_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16106,6 +17488,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1060: { // minecraft:stick
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16117,6 +17500,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	830: { // minecraft:sticky_piston
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16127,6 +17511,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1: { // minecraft:stone
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16137,6 +17522,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1038: { // minecraft:stone_axe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -16163,6 +17549,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 4, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			DisableBlockingForSeconds: 5,
 			ItemDamagePerAttack:       2,
@@ -16177,6 +17564,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	494: { // minecraft:stone_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16187,6 +17575,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	538: { // minecraft:stone_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16197,6 +17586,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	449: { // minecraft:stone_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16207,6 +17597,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	856: { // minecraft:stone_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16217,6 +17608,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1039: { // minecraft:stone_hoe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -16243,6 +17635,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 4, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -16271,6 +17664,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 4, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -16284,6 +17678,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1036: { // minecraft:stone_shovel
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -16310,6 +17705,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 4, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -16323,6 +17719,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1448: { // minecraft:stone_spear
 		AttackAnimation: &SwingAnimation{Type: 2, Duration: 15},
@@ -16351,6 +17748,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:              "common",
 		RepairCost:          0,
 		Repairable:          &Repairable{Items: "#minecraft:stone_tool_materials"},
+		UseEffects:          &UseEffects{CanSprint: true, InteractVibrations: false, SpeedMultiplier: 1},
 		Weapon:              &Weapon{},
 	},
 	794: { // minecraft:stone_stairs
@@ -16362,6 +17760,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1035: { // minecraft:stone_sword
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -16388,7 +17787,8 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
-		Weapon: &Weapon{},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
+		Weapon:     &Weapon{},
 	},
 	1513: { // minecraft:stonecutter
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16399,6 +17799,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1235: { // minecraft:straw_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16410,6 +17811,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1330: { // minecraft:stray_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16421,6 +17823,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1361: { // minecraft:strider_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16432,6 +17835,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1062: { // minecraft:string
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16442,6 +17846,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	182: { // minecraft:stripped_acacia_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16453,6 +17858,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	194: { // minecraft:stripped_acacia_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16464,6 +17870,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	202: { // minecraft:stripped_bamboo_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16475,6 +17882,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	180: { // minecraft:stripped_birch_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16486,6 +17894,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	192: { // minecraft:stripped_birch_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16497,6 +17906,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	183: { // minecraft:stripped_cherry_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16508,6 +17918,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	195: { // minecraft:stripped_cherry_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16519,6 +17930,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	200: { // minecraft:stripped_crimson_hyphae
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16529,6 +17941,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	188: { // minecraft:stripped_crimson_stem
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16539,6 +17952,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	184: { // minecraft:stripped_dark_oak_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16550,6 +17964,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	196: { // minecraft:stripped_dark_oak_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16561,6 +17976,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	181: { // minecraft:stripped_jungle_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16572,6 +17988,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	193: { // minecraft:stripped_jungle_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16583,6 +18000,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	186: { // minecraft:stripped_mangrove_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16594,6 +18012,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	198: { // minecraft:stripped_mangrove_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16605,6 +18024,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	178: { // minecraft:stripped_oak_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16616,6 +18036,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	190: { // minecraft:stripped_oak_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16627,6 +18048,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	185: { // minecraft:stripped_pale_oak_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16638,6 +18060,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	197: { // minecraft:stripped_pale_oak_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16649,6 +18072,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	187: { // minecraft:stripped_poplar_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16660,6 +18084,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	199: { // minecraft:stripped_poplar_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16671,6 +18096,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	179: { // minecraft:stripped_spruce_log
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16682,6 +18108,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	191: { // minecraft:stripped_spruce_wood
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16693,6 +18120,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	201: { // minecraft:stripped_warped_hyphae
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16703,6 +18131,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	189: { // minecraft:stripped_warped_stem
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16713,6 +18142,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	997: { // minecraft:structure_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16723,6 +18153,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	655: { // minecraft:structure_void
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16733,6 +18164,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1217: { // minecraft:sugar
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16743,6 +18175,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	327: { // minecraft:sugar_cane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16754,6 +18187,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	26: { // minecraft:sulfur
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16764,6 +18198,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	36: { // minecraft:sulfur_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16774,6 +18209,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	37: { // minecraft:sulfur_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16784,6 +18220,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	38: { // minecraft:sulfur_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16794,6 +18231,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	35: { // minecraft:sulfur_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16804,6 +18242,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1140: { // minecraft:sulfur_cube_bucket
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16814,6 +18253,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1316: { // minecraft:sulfur_cube_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16825,6 +18265,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	28: { // minecraft:sulfur_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16835,6 +18276,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1572: { // minecraft:sulfur_spike
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16845,6 +18287,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	29: { // minecraft:sulfur_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16855,6 +18298,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	30: { // minecraft:sulfur_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16865,6 +18309,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	599: { // minecraft:sunflower
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16876,6 +18321,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	90: { // minecraft:suspicious_gravel
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16886,6 +18332,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	89: { // minecraft:suspicious_sand
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16896,14 +18343,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1492: { // minecraft:suspicious_stew
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -16917,6 +18365,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		UseRemainder: &UseRemainder{
 			ID: "minecraft:bowl",
 		},
@@ -16930,15 +18379,16 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1525: { // minecraft:sweet_berries
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Compostable:     &Compostable{Layers: ResolvableInt{Reference: "minecraft:compostable/low"}},
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -16951,6 +18401,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1141: { // minecraft:tadpole_bucket
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16961,6 +18412,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1310: { // minecraft:tadpole_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16972,6 +18424,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1248: { // minecraft:taiga_village_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16982,6 +18435,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	247: { // minecraft:tall_dry_grass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -16994,6 +18448,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	603: { // minecraft:tall_grass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17005,6 +18460,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	838: { // minecraft:target
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17015,6 +18471,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	596: { // minecraft:terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17025,6 +18482,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	999: { // minecraft:test_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17035,6 +18493,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1000: { // minecraft:test_instance_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17045,6 +18504,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "epic",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1587: { // minecraft:tide_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17055,6 +18515,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	232: { // minecraft:tinted_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17065,6 +18526,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1444: { // minecraft:tipped_arrow
 		AttackAnimation:     &SwingAnimation{Type: 1, Duration: 6},
@@ -17076,6 +18538,7 @@ var defaultComponents = map[int32]*Components{
 		PotionDurationScale: 0.125,
 		Rarity:              "common",
 		RepairCost:          0,
+		UseEffects:          &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	853: { // minecraft:tnt
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17086,6 +18549,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	969: { // minecraft:tnt_minecart
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17096,6 +18560,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	395: { // minecraft:torch
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17106,6 +18571,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	314: { // minecraft:torchflower
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17117,6 +18583,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1436: { // minecraft:torchflower_seeds
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17128,6 +18595,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1454: { // minecraft:totem_of_undying
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -17144,6 +18612,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1320: { // minecraft:trader_llama_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17155,6 +18624,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	852: { // minecraft:trapped_chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17166,6 +18636,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1654: { // minecraft:trial_key
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17176,6 +18647,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1653: { // minecraft:trial_spawner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17186,6 +18658,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1483: { // minecraft:trident
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -17206,7 +18679,8 @@ var defaultComponents = map[int32]*Components{
 		Tool: &Tool{
 			DefaultMiningSpeed: 1, DamagePerBlock: 2, CanDestroyBlocksInCreative: false,
 		},
-		Weapon: &Weapon{},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
+		Weapon:     &Weapon{},
 	},
 	851: { // minecraft:tripwire_hook
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17217,14 +18691,15 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1192: { // minecraft:tropical_fish
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
 		BreakSound:      "minecraft:entity.item.break",
 		Consumable: &Consumable{
-			ConsumeSeconds: 1.6,
-			Animation:      "eat",
-			Sound:          "minecraft:entity.generic.eat",
+			ConsumeSeconds: defaultConsumeSeconds,
+			Animation:      defaultConsumeAnimation,
+			Sound:          defaultConsumeSound,
 			HasParticles:   true,
 		},
 		Food: &Food{
@@ -17237,6 +18712,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1138: { // minecraft:tropical_fish_bucket
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -17251,6 +18727,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1311: { // minecraft:tropical_fish_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17262,6 +18739,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	766: { // minecraft:tube_coral
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17272,6 +18750,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	761: { // minecraft:tube_coral_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17282,6 +18761,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	776: { // minecraft:tube_coral_fan
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17292,6 +18772,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	12: { // minecraft:tuff
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17302,6 +18783,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	22: { // minecraft:tuff_brick_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17312,6 +18794,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	23: { // minecraft:tuff_brick_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17322,6 +18805,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	24: { // minecraft:tuff_brick_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17332,6 +18816,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	21: { // minecraft:tuff_bricks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17342,6 +18827,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	13: { // minecraft:tuff_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17352,6 +18838,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	14: { // minecraft:tuff_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17362,6 +18849,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	15: { // minecraft:tuff_wall
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17372,6 +18860,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	753: { // minecraft:turtle_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17382,6 +18871,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1001: { // minecraft:turtle_helmet
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -17401,6 +18891,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_turtle_helmet"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1002: { // minecraft:turtle_scute
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17411,6 +18902,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1312: { // minecraft:turtle_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17422,6 +18914,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	326: { // minecraft:twisting_vines
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17433,6 +18926,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1656: { // minecraft:vault
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17443,6 +18937,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1574: { // minecraft:verdant_froglight
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17453,6 +18948,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1586: { // minecraft:vex_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17463,6 +18959,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1353: { // minecraft:vex_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17474,6 +18971,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1321: { // minecraft:villager_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17485,6 +18983,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1352: { // minecraft:vindicator_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17496,6 +18995,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	484: { // minecraft:vine
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17507,6 +19007,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1322: { // minecraft:wandering_trader_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17518,6 +19019,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1584: { // minecraft:ward_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17528,6 +19030,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1347: { // minecraft:warden_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17539,6 +19042,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1254: { // minecraft:warm_ocean_ruins_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17549,6 +19053,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	870: { // minecraft:warped_button
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17559,6 +19064,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	901: { // minecraft:warped_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17569,6 +19075,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	429: { // minecraft:warped_fence
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17579,6 +19086,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	944: { // minecraft:warped_fence_gate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17589,6 +19097,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	321: { // minecraft:warped_fungus
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17600,6 +19109,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	972: { // minecraft:warped_fungus_on_a_stick
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17612,6 +19122,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1127: { // minecraft:warped_hanging_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17638,6 +19149,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	214: { // minecraft:warped_hyphae
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17648,6 +19160,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	61: { // minecraft:warped_nylium
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17658,6 +19171,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	75: { // minecraft:warped_planks
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17668,6 +19182,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	887: { // minecraft:warped_pressure_plate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17678,6 +19193,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	323: { // minecraft:warped_roots
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17689,6 +19205,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	389: { // minecraft:warped_shelf
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17699,6 +19216,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1114: { // minecraft:warped_sign
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17725,6 +19243,7 @@ var defaultComponents = map[int32]*Components{
 				{Raw: []byte{0x8, 0x0, 0x0}},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	354: { // minecraft:warped_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17735,6 +19254,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	528: { // minecraft:warped_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17745,6 +19265,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	176: { // minecraft:warped_stem
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17755,6 +19276,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	923: { // minecraft:warped_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17765,6 +19287,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	652: { // minecraft:warped_wart_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17776,6 +19299,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1129: { // minecraft:water_bucket
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17786,6 +19310,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	135: { // minecraft:waxed_chiseled_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17796,6 +19321,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	469: { // minecraft:waxed_copper_bars
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17806,6 +19332,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	124: { // minecraft:waxed_copper_block
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17816,6 +19343,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1633: { // minecraft:waxed_copper_bulb
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17826,6 +19354,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	478: { // minecraft:waxed_copper_chain
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17836,6 +19365,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1641: { // minecraft:waxed_copper_chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17846,6 +19376,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	906: { // minecraft:waxed_copper_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17856,6 +19387,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1649: { // minecraft:waxed_copper_golem_statue
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17866,6 +19398,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1625: { // minecraft:waxed_copper_grate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17876,6 +19409,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1521: { // minecraft:waxed_copper_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17886,6 +19420,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	928: { // minecraft:waxed_copper_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17896,6 +19431,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	143: { // minecraft:waxed_cut_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17906,6 +19442,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	159: { // minecraft:waxed_cut_copper_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17916,6 +19453,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	151: { // minecraft:waxed_cut_copper_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17926,6 +19464,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	136: { // minecraft:waxed_exposed_chiseled_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17936,6 +19475,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	125: { // minecraft:waxed_exposed_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17946,6 +19486,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	470: { // minecraft:waxed_exposed_copper_bars
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17956,6 +19497,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1634: { // minecraft:waxed_exposed_copper_bulb
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17966,6 +19508,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	479: { // minecraft:waxed_exposed_copper_chain
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17976,6 +19519,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1642: { // minecraft:waxed_exposed_copper_chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17986,6 +19530,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	907: { // minecraft:waxed_exposed_copper_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -17996,6 +19541,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1650: { // minecraft:waxed_exposed_copper_golem_statue
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18006,6 +19552,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1626: { // minecraft:waxed_exposed_copper_grate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18016,6 +19563,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1522: { // minecraft:waxed_exposed_copper_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18026,6 +19574,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	929: { // minecraft:waxed_exposed_copper_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18036,6 +19585,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	144: { // minecraft:waxed_exposed_cut_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18046,6 +19596,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	160: { // minecraft:waxed_exposed_cut_copper_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18056,6 +19607,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	152: { // minecraft:waxed_exposed_cut_copper_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18066,6 +19618,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	845: { // minecraft:waxed_exposed_lightning_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18076,6 +19629,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	844: { // minecraft:waxed_lightning_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18086,6 +19640,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	138: { // minecraft:waxed_oxidized_chiseled_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18096,6 +19651,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	127: { // minecraft:waxed_oxidized_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18106,6 +19662,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	472: { // minecraft:waxed_oxidized_copper_bars
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18116,6 +19673,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1636: { // minecraft:waxed_oxidized_copper_bulb
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18126,6 +19684,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	481: { // minecraft:waxed_oxidized_copper_chain
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18136,6 +19695,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1644: { // minecraft:waxed_oxidized_copper_chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18146,6 +19706,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	909: { // minecraft:waxed_oxidized_copper_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18156,6 +19717,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1652: { // minecraft:waxed_oxidized_copper_golem_statue
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18166,6 +19728,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1628: { // minecraft:waxed_oxidized_copper_grate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18176,6 +19739,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1524: { // minecraft:waxed_oxidized_copper_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18186,6 +19750,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	931: { // minecraft:waxed_oxidized_copper_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18196,6 +19761,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	146: { // minecraft:waxed_oxidized_cut_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18206,6 +19772,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	162: { // minecraft:waxed_oxidized_cut_copper_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18216,6 +19783,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	154: { // minecraft:waxed_oxidized_cut_copper_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18226,6 +19794,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	847: { // minecraft:waxed_oxidized_lightning_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18236,6 +19805,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	137: { // minecraft:waxed_weathered_chiseled_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18246,6 +19816,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	126: { // minecraft:waxed_weathered_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18256,6 +19827,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	471: { // minecraft:waxed_weathered_copper_bars
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18266,6 +19838,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1635: { // minecraft:waxed_weathered_copper_bulb
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18276,6 +19849,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	480: { // minecraft:waxed_weathered_copper_chain
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18286,6 +19860,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1643: { // minecraft:waxed_weathered_copper_chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18296,6 +19871,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	908: { // minecraft:waxed_weathered_copper_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18306,6 +19882,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1651: { // minecraft:waxed_weathered_copper_golem_statue
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18316,6 +19893,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1627: { // minecraft:waxed_weathered_copper_grate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18326,6 +19904,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1523: { // minecraft:waxed_weathered_copper_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18336,6 +19915,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	930: { // minecraft:waxed_weathered_copper_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18346,6 +19926,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	145: { // minecraft:waxed_weathered_cut_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18356,6 +19937,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	161: { // minecraft:waxed_weathered_cut_copper_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18366,6 +19948,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	153: { // minecraft:waxed_weathered_cut_copper_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18376,6 +19959,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	846: { // minecraft:waxed_weathered_lightning_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18386,6 +19970,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1591: { // minecraft:wayfinder_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18396,6 +19981,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	133: { // minecraft:weathered_chiseled_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18406,6 +19992,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	122: { // minecraft:weathered_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18416,6 +20003,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	467: { // minecraft:weathered_copper_bars
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18426,6 +20014,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1631: { // minecraft:weathered_copper_bulb
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18436,6 +20025,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	476: { // minecraft:weathered_copper_chain
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18446,6 +20036,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1639: { // minecraft:weathered_copper_chest
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18456,6 +20047,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	904: { // minecraft:weathered_copper_door
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18466,6 +20058,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1647: { // minecraft:weathered_copper_golem_statue
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18476,6 +20069,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1623: { // minecraft:weathered_copper_grate
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18486,6 +20080,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1519: { // minecraft:weathered_copper_lantern
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18496,6 +20091,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	926: { // minecraft:weathered_copper_trapdoor
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18506,6 +20102,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	141: { // minecraft:weathered_cut_copper
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18516,6 +20113,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	157: { // minecraft:weathered_cut_copper_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18526,6 +20124,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	149: { // minecraft:weathered_cut_copper_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18536,6 +20135,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	842: { // minecraft:weathered_lightning_rod
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18546,6 +20146,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	325: { // minecraft:weeping_vines
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18557,6 +20158,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	230: { // minecraft:wet_sponge
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18567,6 +20169,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1066: { // minecraft:wheat
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18578,6 +20181,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1065: { // minecraft:wheat_seeds
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18589,9 +20193,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1417: { // minecraft:white_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -18600,6 +20206,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1219: { // minecraft:white_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18610,6 +20217,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1154: { // minecraft:white_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18620,6 +20228,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1551: { // minecraft:white_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18630,6 +20239,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	580: { // minecraft:white_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18642,6 +20252,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	689: { // minecraft:white_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18652,6 +20263,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	737: { // minecraft:white_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18662,6 +20274,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	721: { // minecraft:white_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18672,6 +20285,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	705: { // minecraft:white_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18682,6 +20296,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1170: { // minecraft:white_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18694,6 +20309,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1199: { // minecraft:white_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18705,6 +20321,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	673: { // minecraft:white_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18715,6 +20332,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	950: { // minecraft:white_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18726,6 +20344,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	657: { // minecraft:white_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18736,6 +20355,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	605: { // minecraft:white_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18746,6 +20366,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	621: { // minecraft:white_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18756,6 +20377,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	561: { // minecraft:white_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18766,6 +20388,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	308: { // minecraft:white_tulip
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18777,6 +20400,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	250: { // minecraft:white_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18788,6 +20412,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	282: { // minecraft:white_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18799,6 +20424,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	266: { // minecraft:white_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18810,6 +20436,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1583: { // minecraft:wild_armor_trim_smithing_template
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18820,6 +20447,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	330: { // minecraft:wildflowers
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18831,6 +20459,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1370: { // minecraft:wind_charge
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18842,6 +20471,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		UseCooldown:       &UseCooldown{Seconds: 0.5},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1348: { // minecraft:witch_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18853,6 +20483,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	313: { // minecraft:wither_rose
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18864,6 +20495,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1385: { // minecraft:wither_skeleton_skull
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -18878,6 +20510,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "rare",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1332: { // minecraft:wither_skeleton_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18889,6 +20522,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1331: { // minecraft:wither_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18900,6 +20534,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1004: { // minecraft:wolf_armor
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -18918,6 +20553,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:            "common",
 		RepairCost:        0,
 		Repairable:        &Repairable{Items: "#minecraft:repairs_wolf_armor"},
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1290: { // minecraft:wolf_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -18929,6 +20565,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1028: { // minecraft:wooden_axe
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -18956,6 +20593,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/axe"}, Speed: 2, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			DisableBlockingForSeconds: 5,
 			ItemDamagePerAttack:       2,
@@ -18987,6 +20625,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/hoe"}, Speed: 2, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -19016,6 +20655,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/pickaxe"}, Speed: 2, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -19046,6 +20686,7 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:mineable/shovel"}, Speed: 2, HasSpeed: true, CorrectForDrops: true, HasCorrectForDrops: true},
 			},
 		},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		Weapon: &Weapon{
 			ItemDamagePerAttack: 2,
 		},
@@ -19078,6 +20719,7 @@ var defaultComponents = map[int32]*Components{
 		Rarity:              "common",
 		RepairCost:          0,
 		Repairable:          &Repairable{Items: "#minecraft:wooden_tool_materials"},
+		UseEffects:          &UseEffects{CanSprint: true, InteractVibrations: false, SpeedMultiplier: 1},
 		Weapon:              &Weapon{},
 	},
 	1025: { // minecraft:wooden_sword
@@ -19106,7 +20748,8 @@ var defaultComponents = map[int32]*Components{
 				{Blocks: []string{"#minecraft:sword_efficient"}, Speed: 1.5, HasSpeed: true},
 			},
 		},
-		Weapon: &Weapon{},
+		UseEffects: &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
+		Weapon:     &Weapon{},
 	},
 	1240: { // minecraft:woodland_mansion_map
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19117,6 +20760,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1371: { // minecraft:writable_book
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19127,6 +20771,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 		rawPassthrough:    map[int32][]byte{ComponentWritableBookContent: {0}},
 	},
 	1372: { // minecraft:written_book
@@ -19138,9 +20783,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1421: { // minecraft:yellow_banner
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
+		BannerPatterns:    &[]BannerPatternLayer{},
 		BreakSound:        "minecraft:entity.item.break",
 		CookingFuel:       &CookingFuel{BurnTime: ResolvableInt{Reference: "minecraft:cooking/time_wood_blocks"}, SpeedMultiplier: ResolvableFloat{Reference: "minecraft:cooking/speed_default"}},
 		InteractAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -19149,6 +20796,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1223: { // minecraft:yellow_bed
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19159,6 +20807,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1158: { // minecraft:yellow_bundle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19169,6 +20818,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1555: { // minecraft:yellow_candle
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19179,6 +20829,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	584: { // minecraft:yellow_carpet
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19191,6 +20842,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	693: { // minecraft:yellow_concrete
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19201,6 +20853,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	741: { // minecraft:yellow_concrete_powder
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19211,6 +20864,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	725: { // minecraft:yellow_concrete_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19221,6 +20875,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	709: { // minecraft:yellow_concrete_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19231,6 +20886,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1174: { // minecraft:yellow_cushion
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19243,6 +20899,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      16,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1203: { // minecraft:yellow_dye
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19254,6 +20911,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	677: { // minecraft:yellow_glazed_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19264,6 +20922,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	954: { // minecraft:yellow_harness
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19275,6 +20934,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	226: { // minecraft:yellow_poplar_leaves
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19286,6 +20946,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	661: { // minecraft:yellow_shulker_box
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19296,6 +20957,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      1,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	609: { // minecraft:yellow_stained_glass
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19306,6 +20968,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	625: { // minecraft:yellow_stained_glass_pane
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19316,6 +20979,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	565: { // minecraft:yellow_terracotta
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19326,6 +20990,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	254: { // minecraft:yellow_wool
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19337,6 +21002,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	286: { // minecraft:yellow_wool_slab
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19348,6 +21014,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	270: { // minecraft:yellow_wool_stairs
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19359,6 +21026,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1362: { // minecraft:zoglin_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19370,6 +21038,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1387: { // minecraft:zombie_head
 		AttackAnimation: &SwingAnimation{Type: 1, Duration: 6},
@@ -19385,6 +21054,7 @@ var defaultComponents = map[int32]*Components{
 		MobVisibility:     &MobVisibility{Visibility: 0.5, TargetingEntityTypes: []string{"minecraft:zombie"}},
 		Rarity:            "uncommon",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1334: { // minecraft:zombie_horse_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19396,6 +21066,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1335: { // minecraft:zombie_nautilus_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19407,6 +21078,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1333: { // minecraft:zombie_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19418,6 +21090,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1336: { // minecraft:zombie_villager_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19429,6 +21102,7 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 	1363: { // minecraft:zombified_piglin_spawn_egg
 		AttackAnimation:   &SwingAnimation{Type: 1, Duration: 6},
@@ -19440,9 +21114,11 @@ var defaultComponents = map[int32]*Components{
 		MaxStackSize:      64,
 		Rarity:            "common",
 		RepairCost:        0,
+		UseEffects:        &UseEffects{CanSprint: false, InteractVibrations: true, SpeedMultiplier: 0.2},
 	},
 }
 
-func init() {
-	defaultComponents[392].PotDecorations = defaultPotDecorations([]byte{0xa, 0xa, 0x0, 0x4, 0x62, 0x61, 0x63, 0x6b, 0x8, 0x0, 0x2, 0x69, 0x64, 0x0, 0xf, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x62, 0x72, 0x69, 0x63, 0x6b, 0x0, 0xa, 0x0, 0x5, 0x66, 0x72, 0x6f, 0x6e, 0x74, 0x8, 0x0, 0x2, 0x69, 0x64, 0x0, 0xf, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x62, 0x72, 0x69, 0x63, 0x6b, 0x0, 0xa, 0x0, 0x4, 0x6c, 0x65, 0x66, 0x74, 0x8, 0x0, 0x2, 0x69, 0x64, 0x0, 0xf, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x62, 0x72, 0x69, 0x63, 0x6b, 0x0, 0xa, 0x0, 0x5, 0x72, 0x69, 0x67, 0x68, 0x74, 0x8, 0x0, 0x2, 0x69, 0x64, 0x0, 0xf, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x62, 0x72, 0x69, 0x63, 0x6b, 0x0, 0x0})
+// defaultPotDecorationData holds the NBT of non-empty default pot decorations by item ID.
+var defaultPotDecorationData = map[int32][]byte{
+	392: {0xa, 0xa, 0x0, 0x4, 0x62, 0x61, 0x63, 0x6b, 0x8, 0x0, 0x2, 0x69, 0x64, 0x0, 0xf, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x62, 0x72, 0x69, 0x63, 0x6b, 0x0, 0xa, 0x0, 0x5, 0x66, 0x72, 0x6f, 0x6e, 0x74, 0x8, 0x0, 0x2, 0x69, 0x64, 0x0, 0xf, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x62, 0x72, 0x69, 0x63, 0x6b, 0x0, 0xa, 0x0, 0x4, 0x6c, 0x65, 0x66, 0x74, 0x8, 0x0, 0x2, 0x69, 0x64, 0x0, 0xf, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x62, 0x72, 0x69, 0x63, 0x6b, 0x0, 0xa, 0x0, 0x5, 0x72, 0x69, 0x67, 0x68, 0x74, 0x8, 0x0, 0x2, 0x69, 0x64, 0x0, 0xf, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x62, 0x72, 0x69, 0x63, 0x6b, 0x0, 0x0}, // minecraft:decorated_pot
 }

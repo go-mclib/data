@@ -1,18 +1,11 @@
 package items
 
 import (
-	"github.com/go-mclib/data/registries"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	"slices"
 	"strings"
-)
 
-var (
-	damageComponentID       = ns.VarInt(registries.DataComponentType.Get("minecraft:damage"))
-	repairCostComponentID   = ns.VarInt(registries.DataComponentType.Get("minecraft:repair_cost"))
-	repairableComponentID   = ns.VarInt(registries.DataComponentType.Get("minecraft:repairable"))
-	enchantmentsComponentID = ns.VarInt(registries.DataComponentType.Get("minecraft:enchantments"))
-	storedEnchantmentsID    = ns.VarInt(registries.DataComponentType.Get("minecraft:stored_enchantments"))
-	equippableComponentID   = ns.VarInt(registries.DataComponentType.Get("minecraft:equippable"))
+	"github.com/go-mclib/data/registries"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // StackEnchantment is one enchantment on an item stack (wire id + level).
@@ -21,48 +14,86 @@ type StackEnchantment struct {
 	Level int32
 }
 
-// StackDamage reads the stack's damage component (0 when absent).
-func StackDamage(s ns.Slot) int32 {
-	for _, c := range s.Components.Add {
-		if c.ID != damageComponentID {
-			continue
-		}
-		v, err := ns.NewReader(c.Data).ReadVarInt()
-		if err != nil {
-			return 0
-		}
-		return int32(v)
+// patchedComponent looks up a component in the slot's patch. As in vanilla's
+// DataComponentPatch decoding, a removal overrides an addition of the same ID,
+// and a later addition overrides an earlier one.
+func patchedComponent(slot ns.Slot, id int32) (data []byte, added, removed bool) {
+	if slices.Contains(slot.Components.Remove, ns.VarInt(id)) {
+		return nil, false, true
 	}
-	return 0
+	for _, component := range slot.Components.Add {
+		if int32(component.ID) == id {
+			data, added = component.Data, true
+		}
+	}
+	return data, added, false
 }
+
+// stackHasComponent reports whether a component is present after applying the
+// slot's patch over a default presence.
+func stackHasComponent(s ns.Slot, id int32, defaultPresent bool) bool {
+	_, added, removed := patchedComponent(s, id)
+	return added || !removed && defaultPresent
+}
+
+// StackCanStoreEnchantments reports whether the stack's crafting enchantment component is present.
+func StackCanStoreEnchantments(s ns.Slot) bool {
+	if s.IsEmpty() {
+		return false
+	}
+	if int32(s.ItemID) == ID("minecraft:enchanted_book") {
+		return stackHasComponent(s, ComponentStoredEnchantments, true)
+	}
+	return stackHasComponent(s, ComponentEnchantments, DefaultComponents(int32(s.ItemID)) != nil)
+}
+
+// StackHasStoredEnchantments reports whether the stored-enchantments component is present.
+func StackHasStoredEnchantments(s ns.Slot) bool {
+	defaultPresent := int32(s.ItemID) == ID("minecraft:enchanted_book")
+	return stackHasComponent(s, ComponentStoredEnchantments, defaultPresent)
+}
+
+// StackDamageable reports whether max-damage and damage are present and unbreakable is absent.
+func StackDamageable(s ns.Slot) bool {
+	defaults := DefaultComponents(int32(s.ItemID))
+	defaultDamageable := defaults != nil && defaults.MaxDamage > 0
+	defaultUnbreakable := defaults != nil && defaults.Unbreakable
+	return stackHasComponent(s, ComponentMaxDamage, defaultDamageable) &&
+		stackHasComponent(s, ComponentDamage, defaultDamageable) &&
+		!stackHasComponent(s, ComponentUnbreakable, defaultUnbreakable)
+}
+
+// patchedVarInt reads a VarInt component from the slot's patch (0 when absent or invalid).
+func patchedVarInt(s ns.Slot, id int32) int32 {
+	data, added, _ := patchedComponent(s, id)
+	if !added {
+		return 0
+	}
+	v, err := ns.NewReader(data).ReadVarInt()
+	if err != nil {
+		return 0
+	}
+	return int32(v)
+}
+
+// StackDamage reads the stack's damage component (0 when absent).
+func StackDamage(s ns.Slot) int32 { return patchedVarInt(s, ComponentDamage) }
 
 // WithStackDamage copies the stack with the damage component replaced.
 func WithStackDamage(s ns.Slot, dmg int32) ns.Slot {
 	buf := ns.NewWriter()
 	buf.WriteVarInt(ns.VarInt(dmg))
-	return withComponent(s, damageComponentID, buf.Bytes())
+	return withComponent(s, ComponentDamage, buf.Bytes())
 }
 
 // StackRepairCost reads the stack's prior-work penalty.
-func StackRepairCost(s ns.Slot) int32 {
-	for _, c := range s.Components.Add {
-		if c.ID != repairCostComponentID {
-			continue
-		}
-		v, err := ns.NewReader(c.Data).ReadVarInt()
-		if err != nil {
-			return 0
-		}
-		return int32(v)
-	}
-	return 0
-}
+func StackRepairCost(s ns.Slot) int32 { return patchedVarInt(s, ComponentRepairCost) }
 
 // WithStackRepairCost copies the stack with its prior-work penalty replaced.
 func WithStackRepairCost(s ns.Slot, cost int32) ns.Slot {
 	buf := ns.NewWriter()
 	buf.WriteVarInt(ns.VarInt(cost))
-	return withComponent(s, repairCostComponentID, buf.Bytes())
+	return withComponent(s, ComponentRepairCost, buf.Bytes())
 }
 
 // StackRepairableWith reports whether material matches the stack's effective repairable component.
@@ -70,74 +101,39 @@ func StackRepairableWith(stack, material ns.Slot) bool {
 	if stack.IsEmpty() || material.IsEmpty() {
 		return false
 	}
-	removed := false
-	for _, id := range stack.Components.Remove {
-		if id == repairableComponentID {
-			removed = true
-			break
-		}
-	}
-	for _, component := range stack.Components.Add {
-		if component.ID == repairableComponentID {
-			return holderSetContainsItem(component.Data, int32(material.ItemID))
-		}
-	}
+	data, added, removed := patchedComponent(stack, ComponentRepairable)
 	if removed {
 		return false
 	}
-	defaults := DefaultComponents(int32(stack.ItemID))
-	if defaults == nil || defaults.Repairable == nil {
-		return false
-	}
-	if tag, ok := strings.CutPrefix(defaults.Repairable.Items, "#"); ok {
-		for _, id := range ItemTag(tag) {
-			if id == int32(material.ItemID) {
-				return true
-			}
+	var items []string
+	if added {
+		var err error
+		if items, err = readHolderSet(ns.NewReader(data), "item", registries.Item.ByID); err != nil {
+			return false
 		}
-		return false
+	} else if defaults := DefaultComponents(int32(stack.ItemID)); defaults != nil && defaults.Repairable != nil {
+		items = []string{defaults.Repairable.Items}
 	}
-	return ItemID(defaults.Repairable.Items) == int32(material.ItemID)
+	return holderSetContainsItem(items, int32(material.ItemID))
 }
 
-func holderSetContainsItem(data []byte, itemID int32) bool {
-	buf := ns.NewReader(data)
-	marker, err := buf.ReadVarInt()
-	if err != nil || marker < 0 {
-		return false
+// holderSetContainsItem reports whether an item holder set (names or a single
+// "#tag") contains the item.
+func holderSetContainsItem(entries []string, itemID int32) bool {
+	if tag, ok := singleTagRef(entries); ok {
+		return slices.Contains(Tag(tag), itemID)
 	}
-	if marker == 0 {
-		tag, err := buf.ReadString(32767)
-		if err != nil {
-			return false
-		}
-		for _, id := range ItemTag(string(tag)) {
-			if id == itemID {
-				return true
-			}
-		}
-		return false
-	}
-	for range int(marker) - 1 {
-		id, err := buf.ReadVarInt()
-		if err != nil {
-			return false
-		}
-		if int32(id) == itemID {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(entries, Name(itemID))
 }
 
 // StackEnchantments reads the stack's enchantments component.
 func StackEnchantments(s ns.Slot) []StackEnchantment {
-	return readEnchantmentList(s, enchantmentsComponentID)
+	return readEnchantmentList(s, ComponentEnchantments)
 }
 
 // StackStoredEnchantments reads an enchanted book's stored enchantments.
 func StackStoredEnchantments(s ns.Slot) []StackEnchantment {
-	return readEnchantmentList(s, storedEnchantmentsID)
+	return readEnchantmentList(s, ComponentStoredEnchantments)
 }
 
 // StackEquippableSlot returns the effective equipment slot for a stack.
@@ -145,70 +141,49 @@ func StackEquippableSlot(slot ns.Slot) (string, bool) {
 	if slot.IsEmpty() {
 		return "", false
 	}
-	equippable := DefaultComponents(int32(slot.ItemID)).Equippable
-	for _, removed := range slot.Components.Remove {
-		if removed == equippableComponentID {
-			equippable = nil
-			break
-		}
+	data, added, removed := patchedComponent(slot, ComponentEquippable)
+	if removed {
+		return "", false
 	}
-	for _, component := range slot.Components.Add {
-		if component.ID != equippableComponentID {
-			continue
-		}
-		id, err := ns.NewReader(component.Data).ReadVarInt()
+	if added {
+		equippable, err := readEquippable(ns.NewReader(data))
 		if err != nil {
 			return "", false
 		}
-		slots := [...]string{"mainhand", "offhand", "feet", "legs", "chest", "head", "body", "saddle"}
-		if id < 0 || int(id) >= len(slots) {
-			return "", false
-		}
-		return slots[id], true
+		return equippable.Slot, true
 	}
-	if equippable == nil {
+	defaults := DefaultComponents(int32(slot.ItemID))
+	if defaults == nil || defaults.Equippable == nil {
 		return "", false
 	}
-	return equippable.Slot, true
+	return defaults.Equippable.Slot, true
 }
 
 // WithStackStoredEnchantments copies the stack with stored enchantments
 // replaced (enchanted books).
 func WithStackStoredEnchantments(s ns.Slot, enchs []StackEnchantment) ns.Slot {
-	return withEnchantmentList(s, storedEnchantmentsID, enchs)
+	return withEnchantmentList(s, ComponentStoredEnchantments, enchs)
 }
 
-func readEnchantmentList(s ns.Slot, componentID ns.VarInt) []StackEnchantment {
-	for _, c := range s.Components.Add {
-		if c.ID != componentID {
-			continue
-		}
-		buf := ns.NewReader(c.Data)
-		count, err := buf.ReadVarInt()
-		if err != nil {
-			return nil
-		}
-		out := make([]StackEnchantment, 0, int(count))
-		for range int(count) {
-			id, err1 := buf.ReadVarInt()
-			lvl, err2 := buf.ReadVarInt()
-			if err1 != nil || err2 != nil {
-				return nil
-			}
-			out = append(out, StackEnchantment{ID: int32(id), Level: int32(lvl)})
-		}
-		return out
+func readEnchantmentList(s ns.Slot, componentID int32) []StackEnchantment {
+	data, added, _ := patchedComponent(s, componentID)
+	if !added {
+		return nil
 	}
-	return nil
+	enchantments, err := readEnchantmentEntries(ns.NewReader(data))
+	if err != nil {
+		return nil
+	}
+	return enchantments
 }
 
 // WithStackEnchantments copies the stack with the enchantments component
 // replaced (an empty list removes it).
 func WithStackEnchantments(s ns.Slot, enchs []StackEnchantment) ns.Slot {
-	return withEnchantmentList(s, enchantmentsComponentID, enchs)
+	return withEnchantmentList(s, ComponentEnchantments, enchs)
 }
 
-func withEnchantmentList(s ns.Slot, componentID ns.VarInt, enchs []StackEnchantment) ns.Slot {
+func withEnchantmentList(s ns.Slot, componentID int32, enchs []StackEnchantment) ns.Slot {
 	if len(enchs) == 0 {
 		return withComponent(s, componentID, nil)
 	}
@@ -221,17 +196,54 @@ func withEnchantmentList(s ns.Slot, componentID ns.VarInt, enchs []StackEnchantm
 	return withComponent(s, componentID, buf.Bytes())
 }
 
-// withComponent copies the stack replacing one component (nil data removes it).
-func withComponent(s ns.Slot, id ns.VarInt, data []byte) ns.Slot {
+// withComponent copies the stack replacing one component (nil data drops it
+// from the patch, so the item default applies).
+func withComponent(s ns.Slot, id int32, data []byte) ns.Slot {
 	out := s
 	out.Components.Add = nil
 	for _, c := range s.Components.Add {
-		if c.ID != id {
+		if int32(c.ID) != id {
 			out.Components.Add = append(out.Components.Add, c)
 		}
 	}
+	out.Components.Remove = slices.DeleteFunc(slices.Clone(s.Components.Remove), func(removed ns.VarInt) bool {
+		return int32(removed) == id
+	})
 	if data != nil {
-		out.Components.Add = append(out.Components.Add, ns.RawSlotComponent{ID: id, Data: data})
+		out.Components.Add = append(out.Components.Add, ns.RawSlotComponent{ID: ns.VarInt(id), Data: data})
 	}
 	return out
+}
+
+// slotDamageResistantTypes returns the effective damage-resistant holder set.
+func slotDamageResistantTypes(slot ns.Slot) []string {
+	data, added, removed := patchedComponent(slot, ComponentDamageResistant)
+	if removed {
+		return nil
+	}
+	if added {
+		types, err := readHolderSet(ns.NewReader(data), "damage type", damageTypes.ByID)
+		if err != nil {
+			return nil
+		}
+		return types
+	}
+	if defaults := DefaultComponents(int32(slot.ItemID)); defaults != nil && defaults.DamageResistant != nil {
+		return []string{defaults.DamageResistant.Types}
+	}
+	return nil
+}
+
+// SlotResistsDamage reports whether a slot's effective damage-resistant component contains a damage type.
+func SlotResistsDamage(slot ns.Slot, damageType string) bool {
+	for _, entry := range slotDamageResistantTypes(slot) {
+		if entry == damageType {
+			return true
+		}
+		if tag, ok := strings.CutPrefix(entry, "#"); ok &&
+			slices.Contains(registries.TagData["minecraft:damage_type"][tag], damageType) {
+			return true
+		}
+	}
+	return false
 }

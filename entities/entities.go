@@ -2,13 +2,13 @@ package entities
 
 import "github.com/go-mclib/data/registries"
 
-// EntityTypeID returns the protocol ID for an entity type identifier, or -1 if not found.
-func EntityTypeID(name string) int32 {
+// TypeID returns the protocol ID for an entity type identifier, or -1 if not found.
+func TypeID(name string) int32 {
 	return registries.EntityType.Get(name)
 }
 
-// EntityTypeName returns the identifier for an entity type protocol ID, or empty string if not found.
-func EntityTypeName(protocolID int32) string {
+// TypeName returns the identifier for an entity type protocol ID, or empty string if not found.
+func TypeName(protocolID int32) string {
 	return registries.EntityType.ByID(protocolID)
 }
 

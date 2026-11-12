@@ -1,20 +1,28 @@
 package main
 
 import (
+	"cmp"
 	"encoding/json"
 	"fmt"
+	"io/fs"
+	"maps"
 	"os"
 	"path/filepath"
-	"sort"
+	"slices"
 	"strings"
 	"unicode"
 )
 
-// Protocol version info - update these when regenerating for a new Minecraft version
-const (
-	ProtocolVersion  = 777
-	MinecraftVersion = "26.3"
-)
+// versionJSON is the server jar's version.json, extracted by
+// vanilla_server_reports/generate.sh.
+type versionJSON struct {
+	Name            string `json:"name"`
+	ProtocolVersion int    `json:"protocol_version"`
+	DataVersion     int    `json:"world_version"`
+}
+
+// version is the Minecraft version being generated, loaded first in main.
+var version versionJSON
 
 // lowCountWarnings accumulates scrapers that produced implausibly few entries.
 var lowCountWarnings []string
@@ -51,7 +59,7 @@ func generatedFileHeader(pkg string) string {
 
 package %s
 
-`, MinecraftVersion, ProtocolVersion, pkg)
+`, version.Name, version.ProtocolVersion, pkg)
 }
 
 func loadJSON[T any](path string) T {
@@ -80,17 +88,13 @@ func writeFile(path, content string) {
 func toGoName(id string) string {
 	// minecraft:acacia_button -> AcaciaButton
 	id = strings.TrimPrefix(id, "minecraft:")
-	parts := strings.Split(id, "_")
 	var result strings.Builder
-	for _, part := range parts {
-		if len(part) > 0 {
-			// handle special cases like worldgen/biome_source
-			subparts := strings.SplitSeq(part, "/")
-			for sp := range subparts {
-				if len(sp) > 0 {
-					result.WriteString(strings.ToUpper(sp[:1]))
-					result.WriteString(sp[1:])
-				}
+	for part := range strings.SplitSeq(id, "_") {
+		// handle special cases like worldgen/biome_source
+		for sp := range strings.SplitSeq(part, "/") {
+			if len(sp) > 0 {
+				result.WriteString(strings.ToUpper(sp[:1]))
+				result.WriteString(sp[1:])
 			}
 		}
 	}
@@ -106,16 +110,9 @@ func toGoVarName(id string) string {
 	return name
 }
 
-// loadItems loads item component data. It supports both the legacy single-file
-// format (items.json) and the 26.1+ per-item file format (items/ directory).
+// loadItems loads item component data from the per-item report files
+// (items/<item_name>.json).
 func loadItems(baseDir string) map[string]ItemJSON {
-	// try legacy single-file format first
-	legacyPath := filepath.Join(baseDir, "items.json")
-	if _, err := os.Stat(legacyPath); err == nil {
-		return loadJSON[map[string]ItemJSON](legacyPath)
-	}
-
-	// 26.1+ per-item file format: items/<item_name>.json
 	itemsDir := filepath.Join(baseDir, "items")
 	entries, err := os.ReadDir(itemsDir)
 	if err != nil {
@@ -132,25 +129,53 @@ func loadItems(baseDir string) map[string]ItemJSON {
 	return items
 }
 
-func sortedKeys[V any](m map[string]V) []string {
-	keys := make([]string, 0, len(m))
-	for k := range m {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-	return keys
+func sortedKeys[K cmp.Ordered, V any](m map[K]V) []K {
+	return slices.Sorted(maps.Keys(m))
 }
 
-// generateVersion creates version_gen.go with protocol version constants.
+// datapackEntry is one JSON file of a vanilla datapack directory.
+type datapackEntry struct {
+	ID   string // "minecraft:" + path relative to the walked dir, without .json
+	Path string
+}
+
+// datapackEntries walks dir recursively and returns its JSON files as
+// "minecraft:<relative path>" identifiers, sorted by identifier like vanilla's
+// resource listing (which also decides synchronized registry protocol IDs).
+func datapackEntries(dir string) []datapackEntry {
+	var entries []datapackEntry
+	err := filepath.WalkDir(dir, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil || entry.IsDir() || filepath.Ext(path) != ".json" {
+			return err
+		}
+		rel, err := filepath.Rel(dir, path)
+		if err != nil {
+			return err
+		}
+		id := "minecraft:" + strings.TrimSuffix(filepath.ToSlash(rel), ".json")
+		entries = append(entries, datapackEntry{ID: id, Path: path})
+		return nil
+	})
+	if err != nil {
+		panic(fmt.Sprintf("failed to read datapack dir %s: %v", dir, err))
+	}
+	slices.SortFunc(entries, func(a, b datapackEntry) int { return cmp.Compare(a.ID, b.ID) })
+	return entries
+}
+
+// generateVersion creates version_gen.go with the version constants.
 func generateVersion(outPath string) {
 	var sb strings.Builder
 	sb.WriteString(generatedFileHeader("data"))
-	sb.WriteString(fmt.Sprintf(`// ProtocolVersion is the Minecraft protocol version this package was generated for.
+	fmt.Fprintf(&sb, `// ProtocolVersion is the Minecraft protocol version this package was generated for.
 const ProtocolVersion = %d
 
 // MinecraftVersion is the Minecraft game version this package was generated for.
-const MinecraftVersion = "%s"
-`, ProtocolVersion, MinecraftVersion))
+const MinecraftVersion = %q
+
+// DataVersion is the world data version saved data is written with.
+const DataVersion = %d
+`, version.ProtocolVersion, version.Name, version.DataVersion)
 
 	writeFile(outPath, sb.String())
 }

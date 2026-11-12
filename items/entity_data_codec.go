@@ -3,10 +3,11 @@ package items
 import (
 	"fmt"
 	"reflect"
+	"slices"
 
 	"github.com/go-mclib/data/registries"
 	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // EntityDataNBT decodes a typed entity-data component into its NBT compound.
@@ -42,7 +43,7 @@ func (entityDataCodec) Apply(c *Components, data []byte) error {
 	if err != nil {
 		return err
 	}
-	c.EntityData = &TypedEntityData{Type: compound.GetString("id"), Raw: append([]byte(nil), data...)}
+	c.EntityData = &TypedEntityData{Type: compound.GetString("id"), Raw: slices.Clone(data)}
 	return nil
 }
 
@@ -71,7 +72,7 @@ func (entityDataCodec) Encode(c *Components) ([]byte, error) {
 	}
 	w := ns.NewWriter()
 	w.WriteVarInt(ns.VarInt(typeID))
-	if err := nbt.NewWriterTo(w.Writer()).WriteTag(payload, "", true); err != nil {
+	if err := w.WriteNBT(payload); err != nil {
 		return nil, err
 	}
 	return w.Bytes(), nil

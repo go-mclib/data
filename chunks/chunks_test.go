@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-mclib/data/blocks"
 	"github.com/go-mclib/data/chunks"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -136,7 +136,7 @@ func TestChunkSectionDirectBiomeNoDesync(t *testing.T) {
 	require.NoError(t, second.Encode(buf))
 
 	r := ns.NewReader(buf.Bytes())
-	d1, d2 := &chunks.ChunkSection{}, &chunks.ChunkSection{}
+	d1, d2 := &chunks.Section{}, &chunks.Section{}
 	require.NoError(t, d1.Decode(r))
 	require.NoError(t, d2.Decode(r), "second section must stay aligned after a direct biome container")
 	assert.Equal(t, int32(20), d1.GetBiome(0, 0, 0))
@@ -154,7 +154,7 @@ func TestChunkSectionDecodeEncode(t *testing.T) {
 	buf := ns.NewWriter()
 	require.NoError(t, sec.Encode(buf))
 
-	decoded := &chunks.ChunkSection{}
+	decoded := &chunks.Section{}
 	require.NoError(t, decoded.Decode(ns.NewReader(buf.Bytes())))
 
 	assert.Equal(t, int16(2), decoded.BlockCount)
@@ -193,7 +193,7 @@ func TestChunkColumnEncodeDecodeSections(t *testing.T) {
 	col2 := chunks.NewColumn(0, 0)
 	buf := ns.NewReader(data)
 	for i := range chunks.SectionCount {
-		sec := &chunks.ChunkSection{}
+		sec := &chunks.Section{}
 		require.NoError(t, sec.Decode(buf))
 		col2.Sections[i] = sec
 	}
@@ -271,8 +271,8 @@ func TestDecodeBlockEntry(t *testing.T) {
 
 func TestChunkBlockLightPropagatesAndClears(t *testing.T) {
 	col := chunks.NewColumn(0, 0)
-	torch := blocks.DefaultStateID(blocks.BlockID("minecraft:torch"))
-	stone := blocks.DefaultStateID(blocks.BlockID("minecraft:stone"))
+	torch := blocks.DefaultStateID(blocks.ID("minecraft:torch"))
+	stone := blocks.DefaultStateID(blocks.ID("minecraft:stone"))
 	col.SetBlockState(8, 64, 8, torch)
 	col.SetBlockState(9, 64, 8, stone)
 	col.ComputeSkylight()
@@ -289,9 +289,9 @@ func TestChunkBlockLightPropagatesAndClears(t *testing.T) {
 
 func TestChunkBlockLightUsesDynamicStateEmission(t *testing.T) {
 	col := chunks.NewColumn(0, 0)
-	furnaceID := blocks.BlockID("minecraft:furnace")
-	lit := blocks.StateID(int(furnaceID), map[string]string{"facing": "north", "lit": "true"})
-	unlit := blocks.StateID(int(furnaceID), map[string]string{"facing": "north", "lit": "false"})
+	furnaceID := blocks.ID("minecraft:furnace")
+	lit := blocks.StateID(furnaceID, map[string]string{"facing": "north", "lit": "true"})
+	unlit := blocks.StateID(furnaceID, map[string]string{"facing": "north", "lit": "false"})
 	col.SetBlockState(4, 20, 4, lit)
 	col.ComputeSkylight()
 	assert.Equal(t, byte(13), lightAt(col.Light.BlockLightMask, col.Light.BlockLightArrays, 4, 20, 4))
@@ -318,4 +318,35 @@ func lightAt(mask ns.BitSet, arrays [][]byte, x, y, z int) byte {
 		return value & 15
 	}
 	return value >> 4
+}
+
+// TestPalettedContainerBlockStatesDirectHighIDs covers direct block-state
+// storage with state IDs above 32767, which need the 16-bit global palette.
+func TestPalettedContainerBlockStatesDirectHighIDs(t *testing.T) {
+	c := chunks.NewSingleValue(chunks.BlockStatesKind, 0)
+	for i := range 300 { // >256 distinct values force the direct palette
+		c.Set(i, int32(35000+i))
+	}
+	assert.Equal(t, 16, c.BitsPerEntry())
+
+	buf := ns.NewWriter()
+	require.NoError(t, c.Encode(buf))
+	decoded := chunks.NewSingleValue(chunks.BlockStatesKind, 0)
+	require.NoError(t, decoded.Decode(ns.NewReader(buf.Bytes())))
+	for i := range 300 {
+		assert.Equal(t, int32(35000+i), decoded.Get(i))
+	}
+	assert.Equal(t, int32(0), decoded.Get(300))
+}
+
+// TestPalettedContainerRejectsBadPaletteLength feeds crafted palette lengths
+// that would otherwise panic or allocate gigabytes.
+func TestPalettedContainerRejectsBadPaletteLength(t *testing.T) {
+	for _, length := range []ns.VarInt{-1, 0, 17, 1 << 30} {
+		w := ns.NewWriter()
+		require.NoError(t, w.WriteUint8(4))
+		require.NoError(t, w.WriteVarInt(length))
+		c := chunks.NewSingleValue(chunks.BlockStatesKind, 0)
+		assert.Error(t, c.Decode(ns.NewReader(w.Bytes())), "palette length %d", length)
+	}
 }

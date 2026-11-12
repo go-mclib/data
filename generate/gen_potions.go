@@ -21,7 +21,7 @@ func generatePotions(input, output string) {
 	code.WriteString(generatedFileHeader("items"))
 	code.WriteString("// PotionEffects contains each built-in potion's complete vanilla effects.\n")
 	code.WriteString("// Treat the map and its effect lists as read-only. Empty potions are included.\n")
-	code.WriteString("var PotionEffects = map[string][]PotionEffect{\n")
+	code.WriteString("var PotionEffects = map[string][]StatusEffect{\n")
 	for _, name := range sortedKeys(potions) {
 		fmt.Fprintf(&code, "\t%q: {", name)
 		for _, effect := range potions[name] {
@@ -46,8 +46,8 @@ func potionEffectLiteral(effect potionEffectJSON, id string) string {
 	}
 	hidden := "nil"
 	if effect.Hidden != nil {
-		hidden = "&PotionEffect" + potionEffectLiteral(*effect.Hidden, id)
+		hidden = "&StatusEffect" + potionEffectLiteral(*effect.Hidden, id)
 	}
-	return fmt.Sprintf("{Effect:%q,Amplifier:%d,Duration:%d,Ambient:%t,ShowParticles:%t,ShowIcon:%t,Hidden:%s}",
+	return fmt.Sprintf("{ID:%q,Amplifier:%d,Duration:%d,Ambient:%t,ShowParticles:%t,ShowIcon:%t,Hidden:%s}",
 		id, effect.Amplifier, effect.Duration, effect.Ambient, particles, icon, hidden)
 }

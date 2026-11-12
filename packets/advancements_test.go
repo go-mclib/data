@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-mclib/data/items"
 	"github.com/go-mclib/data/packets"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 func TestPositionedAdvancementsWireAlignment(t *testing.T) {
@@ -31,7 +31,7 @@ func TestPositionedAdvancementsWireAlignment(t *testing.T) {
 	wire.WriteBool(true) // display
 	wire.WriteTextComponent(ns.TextComponent{Text: "Title"})
 	wire.WriteTextComponent(ns.TextComponent{Text: "Description"})
-	itemID := ns.VarInt(items.ItemID("minecraft:stone"))
+	itemID := ns.VarInt(items.ID("minecraft:stone"))
 	wire.WriteVarInt(itemID) // template holder precedes count (not slot framing)
 	wire.WriteVarInt(2)
 	wire.WriteVarInt(0) // component additions
@@ -72,15 +72,15 @@ func TestPositionedAdvancementsWireAlignment(t *testing.T) {
 	if first.Display != nil || first.X != -1.5 || first.Y != 2.25 || !first.SendsTelemetryEvent || first.Requirements[0][0] != "first" {
 		t.Fatalf("no-display holder = %+v", first)
 	}
-	if second.Id != "minecraft:shown" || !second.Parent.Present || second.Parent.Value != first.Id || second.X != 7.5 || second.Y != -8.25 || bool(second.SendsTelemetryEvent) || len(second.Requirements) != 2 || second.Requirements[0][1] != "b" || second.Requirements[1][0] != "c" {
+	if second.ID != "minecraft:shown" || !second.Parent.Present || second.Parent.Value != first.ID || second.X != 7.5 || second.Y != -8.25 || bool(second.SendsTelemetryEvent) || len(second.Requirements) != 2 || second.Requirements[0][1] != "b" || second.Requirements[1][0] != "c" {
 		t.Fatalf("display holder = %+v", second)
 	}
 	display := second.Display
-	if display == nil || display.Title.PlainText() != "Title" || display.Description.PlainText() != "Description" || display.Icon.ItemID != itemID || display.Icon.Count != 2 || display.Frame != packets.AdvancementFrameChallenge || !bool(display.ShowToast) || !bool(display.Hidden) || !display.Background.Present || display.Background.Value != "minecraft:gui/advancements/backgrounds/stone" {
+	if display == nil || display.Title.String() != "Title" || display.Description.String() != "Description" || display.Icon.ItemID != itemID || display.Icon.Count != 2 || display.Frame != packets.AdvancementFrameChallenge || !bool(display.ShowToast) || !bool(display.Hidden) || !display.Background.Present || display.Background.Value != "minecraft:gui/advancements/backgrounds/stone" {
 		t.Fatalf("display = %+v", display)
 	}
 	progress := packet.Progress[0]
-	if progress.Id != second.Id || len(progress.Criteria) != 2 || progress.Criteria[0].Name != "a" || !progress.Criteria[0].Obtained.Present || progress.Criteria[0].Obtained.Value != 1700000000123 || progress.Criteria[1].Name != "b" || progress.Criteria[1].Obtained.Present {
+	if progress.ID != second.ID || len(progress.Criteria) != 2 || progress.Criteria[0].Name != "a" || !progress.Criteria[0].Obtained.Present || progress.Criteria[0].Obtained.Value != 1700000000123 || progress.Criteria[1].Name != "b" || progress.Criteria[1].Obtained.Present {
 		t.Fatalf("progress = %+v", progress)
 	}
 	if sentinel, err := reader.ReadByte(); err != nil || sentinel != 0x5a || reader.Len() != 0 {
@@ -105,5 +105,80 @@ func TestAdvancementRejectsInvalidCollectionCounts(t *testing.T) {
 		if err := packet.Read(ns.NewReader(wire)); err == nil {
 			t.Fatalf("accepted malformed advancement packet %x", wire)
 		}
+	}
+}
+
+func TestUpdateAdvancementsRoundTrip(t *testing.T) {
+	parent := ns.Identifier("minecraft:story/root")
+	background := ns.Identifier("minecraft:gui/advancements/backgrounds/stone")
+	obtainedAt := ns.Int64(1760000000123)
+	icon, err := items.NewStack(items.ID("minecraft:stone"), 1).ToSlot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	packet := packets.S2CUpdateAdvancements{
+		Reset: true,
+		Added: []packets.PositionedAdvancement{{
+			ID:     "minecraft:story/mine_stone",
+			Parent: ns.Some(parent),
+			Display: &packets.AdvancementDisplay{
+				Title:       ns.TextComponent{Translate: "advancements.story.mine_stone.title"},
+				Description: ns.TextComponent{Translate: "advancements.story.mine_stone.description"},
+				Icon:        icon,
+				Frame:       1,
+				Background:  ns.Some(background),
+				ShowToast:   true,
+				Hidden:      true,
+			},
+			X:                   1.5,
+			Y:                   -2.25,
+			Requirements:        [][]ns.String{{"has_stone", "has_pickaxe"}, {"in_overworld"}},
+			SendsTelemetryEvent: true,
+		}},
+		Removed: []ns.Identifier{"minecraft:story/obsolete"},
+		Progress: []packets.AdvancementProgress{{
+			ID: "minecraft:story/mine_stone",
+			Criteria: []packets.AdvancementCriterion{
+				{Name: "has_stone", Obtained: ns.Some(obtainedAt)},
+				{Name: "has_pickaxe"},
+			},
+		}},
+		ShowAdvancements: true,
+	}
+
+	writer := ns.NewWriter()
+	if err := packet.Write(writer); err != nil {
+		t.Fatal(err)
+	}
+	var decoded packets.S2CUpdateAdvancements
+	if err := decoded.Read(ns.NewReader(writer.Bytes())); err != nil {
+		t.Fatal(err)
+	}
+	if !decoded.Reset || !decoded.ShowAdvancements || len(decoded.Added) != 1 || len(decoded.Removed) != 1 || len(decoded.Progress) != 1 {
+		t.Fatalf("decoded packet counts or flags differ: %+v", decoded)
+	}
+	advancement := decoded.Added[0]
+	if !advancement.Parent.Present || advancement.Parent.Value != parent || advancement.Display == nil || !advancement.Display.Background.Present {
+		t.Fatalf("decoded optional fields differ: %+v", advancement)
+	}
+	if !advancement.Display.ShowToast || !advancement.Display.Hidden || advancement.Display.Frame != 1 {
+		t.Fatalf("decoded display flags differ: %+v", advancement.Display)
+	}
+	if advancement.X != 1.5 || advancement.Y != -2.25 || !advancement.SendsTelemetryEvent || len(advancement.Requirements) != 2 || len(advancement.Requirements[0]) != 2 {
+		t.Fatalf("decoded holder differs: %+v", advancement)
+	}
+	if got := decoded.Progress[0].Criteria[0].Obtained; !got.Present || got.Value != obtainedAt {
+		t.Fatalf("decoded obtained time = %v, want %d", got, obtainedAt)
+	}
+	if decoded.Progress[0].Criteria[1].Obtained.Present {
+		t.Fatalf("unfinished criterion gained a timestamp: %d", decoded.Progress[0].Criteria[1].Obtained.Value)
+	}
+
+	reencoded := ns.NewWriter()
+	if err := decoded.Write(reencoded); err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(writer.Bytes(), reencoded.Bytes()) {
+		t.Fatalf("wire round trip changed bytes:\n%x\n%x", writer.Bytes(), reencoded.Bytes())
 	}
 }

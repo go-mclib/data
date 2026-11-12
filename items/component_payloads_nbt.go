@@ -3,220 +3,15 @@ package items
 import (
 	"fmt"
 	"math"
+	"slices"
+	"strings"
 
+	"github.com/go-mclib/data/registries"
 	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 var swingAnimationNames = [3]string{"none", "whack", "stab"}
-
-func componentPayloadNBT(name string, c *Components) nbt.Tag {
-	switch name {
-	case "minecraft:attack_animation", "minecraft:interact_animation":
-		value := c.AttackAnimation
-		if name == "minecraft:interact_animation" {
-			value = c.InteractAnimation
-		}
-		if value != nil && value.Type >= 0 && value.Type < 3 {
-			return nbt.Compound{"type": nbt.String(swingAnimationNames[value.Type]), "duration": nbt.Int(value.Duration)}
-		}
-	case "minecraft:block_transformer":
-		if c.BlockTransformer != "" {
-			return nbt.String(c.BlockTransformer)
-		}
-	case "minecraft:provides_pottery_pattern":
-		if c.ProvidesPotteryPattern != "" {
-			return nbt.String(c.ProvidesPotteryPattern)
-		}
-	case "minecraft:villager_food":
-		if c.VillagerFood != nil {
-			return nbt.Compound{"nutrition": nbt.Int(c.VillagerFood.Nutrition)}
-		}
-	case "minecraft:compostable":
-		if c.Compostable != nil {
-			return nbt.Compound{"layers": resolvableIntNBT(c.Compostable.Layers)}
-		}
-	case "minecraft:cooking_fuel":
-		if c.CookingFuel != nil {
-			return nbt.Compound{"burn_time": resolvableIntNBT(c.CookingFuel.BurnTime), "speed_multiplier": resolvableFloatNBT(c.CookingFuel.SpeedMultiplier)}
-		}
-	case "minecraft:brewing_fuel":
-		if c.BrewingFuel != nil {
-			return nbt.Compound{"uses": resolvableIntNBT(c.BrewingFuel.Uses), "speed_multiplier": resolvableFloatNBT(c.BrewingFuel.SpeedMultiplier)}
-		}
-	case "minecraft:mob_visibility":
-		if c.MobVisibility != nil {
-			return nbt.Compound{"targeting_entity_types": holderSetNBT(c.MobVisibility.TargetingEntityTypes), "visibility": nbt.Float(c.MobVisibility.Visibility)}
-		}
-	case "minecraft:sign_text_front":
-		if c.SignTextFront != nil {
-			return signTextNBT(c.SignTextFront)
-		}
-	case "minecraft:sign_text_back":
-		if c.SignTextBack != nil {
-			return signTextNBT(c.SignTextBack)
-		}
-	case "minecraft:waxed":
-		return nbt.Compound{}
-	case "minecraft:cushion/color":
-		if c.CushionColor != nil && *c.CushionColor >= 0 && *c.CushionColor < 16 {
-			return nbt.String(dyeNames[*c.CushionColor])
-		}
-	case "minecraft:pot_decorations":
-		if c.PotDecorations != nil {
-			result := nbt.Compound{}
-			for _, side := range []struct {
-				name  string
-				stack *ItemStack
-			}{
-				{"back", c.PotDecorations.Back}, {"left", c.PotDecorations.Left},
-				{"right", c.PotDecorations.Right}, {"front", c.PotDecorations.Front},
-			} {
-				if side.stack != nil {
-					if slot, err := side.stack.ToSlot(); err == nil {
-						result[side.name] = componentSlotNBT(slot)
-					}
-				}
-			}
-			return result
-		}
-	}
-	return nil
-}
-
-func applyComponentPayloadNBT(c *Components, name string, value nbt.Tag) (bool, error) {
-	switch name {
-	case "minecraft:block_transformer", "minecraft:provides_pottery_pattern":
-		identifier, ok := value.(nbt.String)
-		if !ok || identifier == "" {
-			return true, fmt.Errorf("%s must be a registry identifier", name)
-		}
-		if name == "minecraft:block_transformer" {
-			c.BlockTransformer = string(identifier)
-		} else {
-			c.ProvidesPotteryPattern = string(identifier)
-		}
-		return true, nil
-	case "minecraft:waxed":
-		if _, ok := value.(nbt.Compound); !ok {
-			return true, fmt.Errorf("waxed must be a unit compound")
-		}
-		c.Waxed = true
-		return true, nil
-	case "minecraft:cushion/color":
-		color, ok := value.(nbt.String)
-		if !ok || dyeID(string(color)) < 0 {
-			return true, fmt.Errorf("invalid cushion color %v", value)
-		}
-		c.CushionColor = int32Pointer(dyeID(string(color)))
-		return true, nil
-	case "minecraft:sign_text_front", "minecraft:sign_text_back":
-		text, err := signTextFromNBT(value)
-		if err != nil {
-			return true, err
-		}
-		if name == "minecraft:sign_text_front" {
-			c.SignTextFront = text
-		} else {
-			c.SignTextBack = text
-		}
-		return true, nil
-	case "minecraft:pot_decorations":
-		decorations, err := potDecorationsFromNBT(value)
-		if err == nil {
-			c.PotDecorations = decorations
-		}
-		return true, err
-	case "minecraft:attack_animation", "minecraft:interact_animation", "minecraft:villager_food",
-		"minecraft:compostable", "minecraft:cooking_fuel", "minecraft:brewing_fuel", "minecraft:mob_visibility":
-	default:
-		return false, nil
-	}
-	compound, ok := value.(nbt.Compound)
-	if !ok {
-		return true, fmt.Errorf("%s must be a compound", name)
-	}
-	switch name {
-	case "minecraft:attack_animation", "minecraft:interact_animation":
-		animation := &SwingAnimation{Type: 1, Duration: 6}
-		if kind, present := compound["type"]; present {
-			text, ok := kind.(nbt.String)
-			animation.Type = -1
-			if ok {
-				for id, name := range swingAnimationNames {
-					if string(text) == name {
-						animation.Type = int32(id)
-					}
-				}
-			}
-			if animation.Type < 0 {
-				return true, fmt.Errorf("invalid animation type %v", kind)
-			}
-		}
-		if duration, present := compound["duration"]; present {
-			var err error
-			animation.Duration, err = componentIntNBT(duration)
-			if err != nil {
-				return true, err
-			}
-		}
-		if animation.Duration < 0 {
-			return true, fmt.Errorf("negative animation duration")
-		}
-		if name == "minecraft:attack_animation" {
-			c.AttackAnimation = animation
-		} else {
-			c.InteractAnimation = animation
-		}
-	case "minecraft:villager_food":
-		nutrition, err := componentIntNBT(compound["nutrition"])
-		if err != nil {
-			return true, err
-		}
-		if nutrition <= 0 {
-			return true, fmt.Errorf("villager food nutrition must be positive")
-		}
-		c.VillagerFood = &VillagerFood{Nutrition: nutrition}
-	case "minecraft:compostable":
-		layers, err := resolvableIntFromNBT(compound["layers"])
-		if err != nil {
-			return true, err
-		}
-		c.Compostable = &Compostable{Layers: layers}
-	case "minecraft:cooking_fuel", "minecraft:brewing_fuel":
-		field := "burn_time"
-		if name == "minecraft:brewing_fuel" {
-			field = "uses"
-		}
-		amount, err := resolvableIntFromNBT(compound[field])
-		if err != nil {
-			return true, err
-		}
-		speed, err := resolvableFloatFromNBT(compound["speed_multiplier"])
-		if err != nil {
-			return true, err
-		}
-		if name == "minecraft:cooking_fuel" {
-			c.CookingFuel = &CookingFuel{BurnTime: amount, SpeedMultiplier: speed}
-		} else {
-			c.BrewingFuel = &BrewingFuel{Uses: amount, SpeedMultiplier: speed}
-		}
-	case "minecraft:mob_visibility":
-		types, err := holderSetFromNBT(compound["targeting_entity_types"])
-		if err != nil {
-			return true, err
-		}
-		visibility, err := componentFloatNBT(compound["visibility"])
-		if err != nil {
-			return true, err
-		}
-		if visibility < 0 || visibility > 10 || math.IsNaN(float64(visibility)) {
-			return true, fmt.Errorf("mob visibility outside [0,10]")
-		}
-		c.MobVisibility = &MobVisibility{TargetingEntityTypes: types, Visibility: visibility}
-	}
-	return true, nil
-}
 
 func componentIntNBT(value nbt.Tag) (int32, error) {
 	switch value.(type) {
@@ -270,7 +65,10 @@ func resolvableFloatFromNBT(value nbt.Tag) (ResolvableFloat, error) {
 	return ResolvableFloat{Value: constant}, err
 }
 
-func signTextNBT(value *SignText) nbt.Compound {
+func signTextNBT(value *SignText) nbt.Tag {
+	if value == nil {
+		return nil
+	}
 	result := nbt.Compound{"messages": signMessagesNBT(&value.Messages), "color": nbt.String(dyeNames[value.Color]), "has_glowing_text": nbt.Byte(0)}
 	if value.HasGlowingText {
 		result["has_glowing_text"] = nbt.Byte(1)
@@ -342,12 +140,12 @@ func potDecorationsFromNBT(value nbt.Tag) (*PotDecorations, error) {
 	result := &PotDecorations{}
 	for _, side := range []struct {
 		name  string
-		stack **ItemStack
+		stack **Stack
 	}{
 		{"back", &result.Back}, {"left", &result.Left}, {"right", &result.Right}, {"front", &result.Front},
 	} {
 		if value, present := compound[side.name]; present {
-			slot, err := itemTemplateFromNBT(value)
+			slot, err := TemplateFromNBT(value)
 			if err != nil {
 				return nil, fmt.Errorf("pot decoration %s: %w", side.name, err)
 			}
@@ -359,9 +157,14 @@ func potDecorationsFromNBT(value nbt.Tag) (*PotDecorations, error) {
 	}
 	return result, nil
 }
-func itemTemplateFromNBT(value nbt.Tag) (ns.Slot, error) {
+
+// TemplateFromNBT decodes an ItemStackTemplate: an item identifier or
+// {id, count, components}. Components are a DataComponentPatch; `!component`
+// removals (value {}) are kept even when the item has no such default, as in
+// vanilla's ItemStackTemplate.
+func TemplateFromNBT(value nbt.Tag) (ns.Slot, error) {
 	if name, ok := value.(nbt.String); ok {
-		id := ItemID(string(name))
+		id := ID(string(name))
 		if id < 0 {
 			return ns.Slot{}, fmt.Errorf("unknown template item %q", name)
 		}
@@ -379,11 +182,37 @@ func itemTemplateFromNBT(value nbt.Tag) (ns.Slot, error) {
 			return ns.Slot{}, err
 		}
 	}
-	id := ItemID(compound.GetString("id"))
+	id := ID(compound.GetString("id"))
 	if id < 0 || count < 1 || count > 99 {
 		return ns.Slot{}, fmt.Errorf("invalid template item/count %q/%d", compound.GetString("id"), count)
 	}
-	return ApplyNBTComponents(ns.NewSlot(ns.VarInt(id), ns.VarInt(count)), compound.GetCompound("components"))
+	components := compound.GetCompound("components")
+	patch := make(nbt.Compound, len(components))
+	var removals []ns.VarInt
+	for key, value := range components {
+		name, removed := strings.CutPrefix(key, "!")
+		if !removed {
+			patch[key] = value
+			continue
+		}
+		componentID := registries.DataComponentType.Get(name)
+		if componentID < 0 {
+			return ns.Slot{}, fmt.Errorf("unknown removed component %q", name)
+		}
+		if unit, ok := value.(nbt.Compound); !ok || len(unit) != 0 {
+			return ns.Slot{}, fmt.Errorf("removed component %q must have value {}", name)
+		}
+		removals = append(removals, ns.VarInt(componentID))
+	}
+	slot, err := ApplyNBTComponents(ns.NewSlot(ns.VarInt(id), ns.VarInt(count)), patch)
+	if err != nil || len(removals) == 0 {
+		return slot, err
+	}
+	// The template is a raw DataComponentPatch: removals stay even when the
+	// item has no default for the component (unlike an applied stack patch).
+	slices.Sort(removals)
+	slot.Components.Remove = slices.Compact(removals)
+	return slot, nil
 }
 
 // defaultPotDecorations decodes generated defaults only after codec registration

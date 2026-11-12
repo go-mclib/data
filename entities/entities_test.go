@@ -4,10 +4,10 @@ import (
 	"testing"
 
 	"github.com/go-mclib/data/entities"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
-func TestEntityTypeIDLookup(t *testing.T) {
+func TestTypeIDLookup(t *testing.T) {
 	names := []string{
 		"minecraft:player", "minecraft:zombie", "minecraft:creeper",
 		"minecraft:skeleton", "minecraft:spider", "minecraft:pig",
@@ -17,23 +17,23 @@ func TestEntityTypeIDLookup(t *testing.T) {
 
 	for _, name := range names {
 		t.Run(name, func(t *testing.T) {
-			id := entities.EntityTypeID(name)
+			id := entities.TypeID(name)
 			if id < 0 {
-				t.Fatalf("EntityTypeID(%q) = %d, want >= 0", name, id)
+				t.Fatalf("TypeID(%q) = %d, want >= 0", name, id)
 			}
-			if got := entities.EntityTypeName(id); got != name {
-				t.Errorf("EntityTypeName(%d) = %q, want %q", id, got, name)
+			if got := entities.TypeName(id); got != name {
+				t.Errorf("TypeName(%d) = %q, want %q", id, got, name)
 			}
 		})
 	}
 }
 
-func TestEntityTypeIDNotFound(t *testing.T) {
-	if got := entities.EntityTypeID("minecraft:nonexistent_entity"); got != -1 {
-		t.Errorf("EntityTypeID for nonexistent entity = %d, want -1", got)
+func TestTypeIDNotFound(t *testing.T) {
+	if got := entities.TypeID("minecraft:nonexistent_entity"); got != -1 {
+		t.Errorf("TypeID for nonexistent entity = %d, want -1", got)
 	}
-	if got := entities.EntityTypeName(-999); got != "" {
-		t.Errorf("EntityTypeName for invalid ID = %q, want empty string", got)
+	if got := entities.TypeName(-999); got != "" {
+		t.Errorf("TypeName for invalid ID = %q, want empty string", got)
 	}
 }
 
@@ -46,12 +46,12 @@ func TestCommonEntityTypes(t *testing.T) {
 	}
 
 	for _, name := range commonTypes {
-		id := entities.EntityTypeID(name)
+		id := entities.TypeID(name)
 		if id < 0 {
-			t.Errorf("EntityTypeID(%q) = %d, want >= 0", name, id)
+			t.Errorf("TypeID(%q) = %d, want >= 0", name, id)
 		}
-		if got := entities.EntityTypeName(id); got != name {
-			t.Errorf("EntityTypeName(%d) = %q, want %q", id, got, name)
+		if got := entities.TypeName(id); got != name {
+			t.Errorf("TypeName(%d) = %q, want %q", id, got, name)
 		}
 	}
 }

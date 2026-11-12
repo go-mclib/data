@@ -2,8 +2,9 @@ package packets
 
 import (
 	"fmt"
+	"math"
 
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // VecDelta is a linear displacement, or a sequence of timed displacements when
@@ -157,7 +158,7 @@ func (p PositionPath) Write(buf *ns.PacketBuffer) error {
 		}
 		return writePathCoordinates(buf, p.X, p.Y, p.Z)
 	}
-	if len(p.Steps) == 0 || len(p.Steps) > (1<<31)-1 {
+	if len(p.Steps) == 0 || len(p.Steps) > math.MaxInt32 {
 		return fmt.Errorf("invalid position path step count %d", len(p.Steps))
 	}
 	if err := buf.WriteVarInt(1); err != nil {

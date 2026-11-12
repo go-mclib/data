@@ -1,12 +1,12 @@
 package packets
 
 import (
+	"errors"
 	"fmt"
-	"io"
 
 	"github.com/go-mclib/data/items"
 	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // C2SAcceptTeleportation represents "Confirm Teleportation".
@@ -15,7 +15,7 @@ import (
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Confirm_Teleportation
 type C2SAcceptTeleportation struct {
-	TeleportId ns.VarInt
+	TeleportID ns.VarInt
 	X          ns.Float64
 	Y          ns.Float64
 	Z          ns.Float64
@@ -25,7 +25,7 @@ type C2SAcceptTeleportation struct {
 
 func (p *C2SAcceptTeleportation) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.TeleportId, err = buf.ReadVarInt(); err != nil {
+	if p.TeleportID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	if p.X, err = buf.ReadFloat64(); err != nil {
@@ -45,7 +45,7 @@ func (p *C2SAcceptTeleportation) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SAcceptTeleportation) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.TeleportId); err != nil {
+	if err := buf.WriteVarInt(p.TeleportID); err != nil {
 		return err
 	}
 	if err := buf.WriteFloat64(p.X); err != nil {
@@ -67,13 +67,13 @@ func (p *C2SAcceptTeleportation) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Query_Block_Entity_Tag
 type C2SBlockEntityTagQuery struct {
-	TransactionId ns.VarInt
+	TransactionID ns.VarInt
 	Location      ns.Position
 }
 
 func (p *C2SBlockEntityTagQuery) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.TransactionId, err = buf.ReadVarInt(); err != nil {
+	if p.TransactionID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	p.Location, err = buf.ReadPosition()
@@ -81,7 +81,7 @@ func (p *C2SBlockEntityTagQuery) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SBlockEntityTagQuery) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.TransactionId); err != nil {
+	if err := buf.WriteVarInt(p.TransactionID); err != nil {
 		return err
 	}
 	return buf.WritePosition(p.Location)
@@ -227,12 +227,9 @@ func (p *C2SChatCommandSigned) Read(buf *ns.PacketBuffer) error {
 	if p.MessageCount, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.Acknowledged = ns.NewFixedBitSet(20)
-	ackBytes, err := buf.ReadFixedByteArray(3)
-	if err != nil {
+	if p.Acknowledged, err = buf.ReadFixedBitSet(20); err != nil {
 		return err
 	}
-	p.Acknowledged = ns.FixedBitSetFromBytes(ackBytes, 20)
 	p.Checksum, err = buf.ReadInt8()
 	return err
 }
@@ -267,7 +264,7 @@ func (p *C2SChatCommandSigned) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.MessageCount); err != nil {
 		return err
 	}
-	if err := buf.WriteFixedByteArray(p.Acknowledged.Bytes()); err != nil {
+	if err := writeAcknowledged(buf, p.Acknowledged); err != nil {
 		return err
 	}
 	return buf.WriteInt8(p.Checksum)
@@ -305,11 +302,9 @@ func (p *C2SChat) Read(buf *ns.PacketBuffer) error {
 	if p.MessageCount, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	ackBytes, err := buf.ReadFixedByteArray(3)
-	if err != nil {
+	if p.Acknowledged, err = buf.ReadFixedBitSet(20); err != nil {
 		return err
 	}
-	p.Acknowledged = ns.FixedBitSetFromBytes(ackBytes, 20)
 	p.Checksum, err = buf.ReadInt8()
 	return err
 }
@@ -332,7 +327,7 @@ func (p *C2SChat) Write(buf *ns.PacketBuffer) error {
 	if err := buf.WriteVarInt(p.MessageCount); err != nil {
 		return err
 	}
-	if err := buf.WriteFixedByteArray(p.Acknowledged.Bytes()); err != nil {
+	if err := writeAcknowledged(buf, p.Acknowledged); err != nil {
 		return err
 	}
 	return buf.WriteInt8(p.Checksum)
@@ -342,7 +337,7 @@ func (p *C2SChat) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Session
 type C2SChatSessionUpdate struct {
-	SessionId    ns.UUID
+	SessionID    ns.UUID
 	ExpiresAt    ns.Int64
 	PublicKey    ns.ByteArray
 	KeySignature ns.ByteArray
@@ -350,7 +345,7 @@ type C2SChatSessionUpdate struct {
 
 func (p *C2SChatSessionUpdate) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.SessionId, err = buf.ReadUUID(); err != nil {
+	if p.SessionID, err = buf.ReadUUID(); err != nil {
 		return err
 	}
 	if p.ExpiresAt, err = buf.ReadInt64(); err != nil {
@@ -364,7 +359,7 @@ func (p *C2SChatSessionUpdate) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SChatSessionUpdate) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteUUID(p.SessionId); err != nil {
+	if err := buf.WriteUUID(p.SessionID); err != nil {
 		return err
 	}
 	if err := buf.WriteInt64(p.ExpiresAt); err != nil {
@@ -397,17 +392,17 @@ func (p *C2SChunkBatchReceived) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Client_Status
 type C2SClientCommand struct {
-	ActionId ns.VarInt
+	ActionID ns.VarInt
 }
 
 func (p *C2SClientCommand) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.ActionId, err = buf.ReadVarInt()
+	p.ActionID, err = buf.ReadVarInt()
 	return err
 }
 
 func (p *C2SClientCommand) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteVarInt(p.ActionId)
+	return buf.WriteVarInt(p.ActionID)
 }
 
 // C2SClientTickEnd represents "Client Tick End".
@@ -495,13 +490,13 @@ func (p *C2SClientInformationPlay) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Command_Suggestions_Request
 type C2SCommandSuggestion struct {
-	TransactionId ns.VarInt
+	TransactionID ns.VarInt
 	Text          ns.String
 }
 
 func (p *C2SCommandSuggestion) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.TransactionId, err = buf.ReadVarInt(); err != nil {
+	if p.TransactionID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	p.Text, err = buf.ReadString(32500)
@@ -509,7 +504,7 @@ func (p *C2SCommandSuggestion) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SCommandSuggestion) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.TransactionId); err != nil {
+	if err := buf.WriteVarInt(p.TransactionID); err != nil {
 		return err
 	}
 	return buf.WriteString(p.Text)
@@ -527,32 +522,32 @@ func (p *C2SConfigurationAcknowledged) Write(*ns.PacketBuffer) error { return ni
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Click_Container_Button
 type C2SContainerButtonClick struct {
-	WindowId ns.VarInt
-	ButtonId ns.VarInt
+	WindowID ns.VarInt
+	ButtonID ns.VarInt
 }
 
 func (p *C2SContainerButtonClick) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+	if p.WindowID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.ButtonId, err = buf.ReadVarInt()
+	p.ButtonID, err = buf.ReadVarInt()
 	return err
 }
 
 func (p *C2SContainerButtonClick) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.WindowId); err != nil {
+	if err := buf.WriteVarInt(p.WindowID); err != nil {
 		return err
 	}
-	return buf.WriteVarInt(p.ButtonId)
+	return buf.WriteVarInt(p.ButtonID)
 }
 
 // C2SContainerClick represents "Click Container".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Click_Container
 type C2SContainerClick struct {
-	WindowId     ns.VarInt
-	StateId      ns.VarInt
+	WindowID     ns.VarInt
+	StateID      ns.VarInt
 	Slot         ns.Int16
 	Button       ns.Int8
 	Mode         ns.VarInt
@@ -568,10 +563,10 @@ type ChangedSlot struct {
 
 func (p *C2SContainerClick) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+	if p.WindowID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.StateId, err = buf.ReadVarInt(); err != nil {
+	if p.StateID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	if p.Slot, err = buf.ReadInt16(); err != nil {
@@ -585,7 +580,7 @@ func (p *C2SContainerClick) Read(buf *ns.PacketBuffer) error {
 	}
 
 	// changed slots: VarInt count, then (Int16 slotNum + HashedSlot) pairs
-	count, err := buf.ReadVarInt()
+	count, err := readCount(buf, "changed slot", 128)
 	if err != nil {
 		return err
 	}
@@ -604,10 +599,10 @@ func (p *C2SContainerClick) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SContainerClick) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.WindowId); err != nil {
+	if err := buf.WriteVarInt(p.WindowID); err != nil {
 		return err
 	}
-	if err := buf.WriteVarInt(p.StateId); err != nil {
+	if err := buf.WriteVarInt(p.StateID); err != nil {
 		return err
 	}
 	if err := buf.WriteInt16(p.Slot); err != nil {
@@ -639,34 +634,34 @@ func (p *C2SContainerClick) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Close_Container
 type C2SContainerClose struct {
-	WindowId ns.VarInt
+	WindowID ns.VarInt
 }
 
 func (p *C2SContainerClose) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.WindowId, err = buf.ReadVarInt()
+	p.WindowID, err = buf.ReadVarInt()
 	return err
 }
 
 func (p *C2SContainerClose) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteVarInt(p.WindowId)
+	return buf.WriteVarInt(p.WindowID)
 }
 
 // C2SContainerSlotStateChanged represents "Change Container Slot State".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Change_Container_Slot_State
 type C2SContainerSlotStateChanged struct {
-	SlotId      ns.VarInt
-	WindowId    ns.VarInt
+	SlotID      ns.VarInt
+	WindowID    ns.VarInt
 	SlotEnabled ns.Boolean
 }
 
 func (p *C2SContainerSlotStateChanged) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.SlotId, err = buf.ReadVarInt(); err != nil {
+	if p.SlotID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+	if p.WindowID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	p.SlotEnabled, err = buf.ReadBool()
@@ -674,10 +669,10 @@ func (p *C2SContainerSlotStateChanged) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SContainerSlotStateChanged) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.SlotId); err != nil {
+	if err := buf.WriteVarInt(p.SlotID); err != nil {
 		return err
 	}
-	if err := buf.WriteVarInt(p.WindowId); err != nil {
+	if err := buf.WriteVarInt(p.WindowID); err != nil {
 		return err
 	}
 	return buf.WriteBool(p.SlotEnabled)
@@ -723,7 +718,7 @@ func (p *C2SCustomPayloadPlay) Read(buf *ns.PacketBuffer) error {
 	if p.Channel, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
-	p.Data, err = io.ReadAll(buf.Reader())
+	p.Data, err = buf.ReadRemaining()
 	return err
 }
 
@@ -742,7 +737,7 @@ type C2SDebugSubscriptionRequest struct {
 }
 
 func (p *C2SDebugSubscriptionRequest) Read(buf *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
+	count, err := readCount(buf, "debug subscription", 32)
 	if err != nil {
 		return err
 	}
@@ -820,24 +815,24 @@ func (p *C2SEditBook) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Query_Entity_Tag
 type C2SEntityTagQuery struct {
-	TransactionId ns.VarInt
-	EntityId      ns.VarInt
+	TransactionID ns.VarInt
+	EntityID      ns.VarInt
 }
 
 func (p *C2SEntityTagQuery) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.TransactionId, err = buf.ReadVarInt(); err != nil {
+	if p.TransactionID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	p.EntityId, err = buf.ReadVarInt()
+	p.EntityID, err = buf.ReadVarInt()
 	return err
 }
 
 func (p *C2SEntityTagQuery) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.TransactionId); err != nil {
+	if err := buf.WriteVarInt(p.TransactionID); err != nil {
 		return err
 	}
-	return buf.WriteVarInt(p.EntityId)
+	return buf.WriteVarInt(p.EntityID)
 }
 
 // C2SInteract represents "Interact".
@@ -848,7 +843,7 @@ func (p *C2SEntityTagQuery) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Interact
 type C2SInteract struct {
-	EntityId             ns.VarInt
+	EntityID             ns.VarInt
 	Hand                 ns.VarInt
 	Location             ns.LpVec3
 	UsingSecondaryAction ns.Boolean
@@ -856,7 +851,7 @@ type C2SInteract struct {
 
 func (p *C2SInteract) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+	if p.EntityID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	if p.Hand, err = buf.ReadVarInt(); err != nil {
@@ -870,7 +865,7 @@ func (p *C2SInteract) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SInteract) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.EntityId); err != nil {
+	if err := buf.WriteVarInt(p.EntityID); err != nil {
 		return err
 	}
 	if err := buf.WriteVarInt(p.Hand); err != nil {
@@ -886,17 +881,17 @@ func (p *C2SInteract) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Attack
 type C2SAttack struct {
-	EntityId ns.VarInt
+	EntityID ns.VarInt
 }
 
 func (p *C2SAttack) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.EntityId, err = buf.ReadVarInt()
+	p.EntityID, err = buf.ReadVarInt()
 	return err
 }
 
 func (p *C2SAttack) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteVarInt(p.EntityId)
+	return buf.WriteVarInt(p.EntityID)
 }
 
 // C2SJigsawGenerate represents "Jigsaw Generate".
@@ -934,17 +929,17 @@ func (p *C2SJigsawGenerate) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Serverbound_Keep_Alive_(Play)
 type C2SKeepAlivePlay struct {
-	KeepAliveId ns.Int64
+	KeepAliveID ns.Int64
 }
 
 func (p *C2SKeepAlivePlay) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.KeepAliveId, err = buf.ReadInt64()
+	p.KeepAliveID, err = buf.ReadInt64()
 	return err
 }
 
 func (p *C2SKeepAlivePlay) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteInt64(p.KeepAliveId)
+	return buf.WriteInt64(p.KeepAliveID)
 }
 
 // C2SLockDifficulty represents "Lock Difficulty".
@@ -1206,13 +1201,13 @@ func (p *C2SPickItemFromBlock) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Pick_Item_From_Entity
 type C2SPickItemFromEntity struct {
-	EntityId    ns.VarInt
+	EntityID    ns.VarInt
 	IncludeData ns.Boolean
 }
 
 func (p *C2SPickItemFromEntity) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+	if p.EntityID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	p.IncludeData, err = buf.ReadBool()
@@ -1220,7 +1215,7 @@ func (p *C2SPickItemFromEntity) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SPickItemFromEntity) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.EntityId); err != nil {
+	if err := buf.WriteVarInt(p.EntityID); err != nil {
 		return err
 	}
 	return buf.WriteBool(p.IncludeData)
@@ -1247,17 +1242,17 @@ func (p *C2SPingRequestPlay) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Place_Recipe
 type C2SPlaceRecipe struct {
-	WindowId ns.VarInt
-	RecipeId ns.VarInt
+	WindowID ns.VarInt
+	RecipeID ns.VarInt
 	MakeAll  ns.Boolean
 }
 
 func (p *C2SPlaceRecipe) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.WindowId, err = buf.ReadVarInt(); err != nil {
+	if p.WindowID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.RecipeId, err = buf.ReadVarInt(); err != nil {
+	if p.RecipeID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	p.MakeAll, err = buf.ReadBool()
@@ -1265,10 +1260,10 @@ func (p *C2SPlaceRecipe) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SPlaceRecipe) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.WindowId); err != nil {
+	if err := buf.WriteVarInt(p.WindowID); err != nil {
 		return err
 	}
-	if err := buf.WriteVarInt(p.RecipeId); err != nil {
+	if err := buf.WriteVarInt(p.RecipeID); err != nil {
 		return err
 	}
 	return buf.WriteBool(p.MakeAll)
@@ -1346,17 +1341,17 @@ func (p *C2SPlayerAction) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Player_Command
 type C2SPlayerCommand struct {
-	EntityId  ns.VarInt
-	ActionId  ns.VarInt
+	EntityID  ns.VarInt
+	ActionID  ns.VarInt
 	JumpBoost ns.VarInt
 }
 
 func (p *C2SPlayerCommand) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+	if p.EntityID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
-	if p.ActionId, err = buf.ReadVarInt(); err != nil {
+	if p.ActionID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	p.JumpBoost, err = buf.ReadVarInt()
@@ -1364,10 +1359,10 @@ func (p *C2SPlayerCommand) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SPlayerCommand) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.EntityId); err != nil {
+	if err := buf.WriteVarInt(p.EntityID); err != nil {
 		return err
 	}
-	if err := buf.WriteVarInt(p.ActionId); err != nil {
+	if err := buf.WriteVarInt(p.ActionID); err != nil {
 		return err
 	}
 	return buf.WriteVarInt(p.JumpBoost)
@@ -1402,31 +1397,31 @@ func (p *C2SPlayerLoaded) Write(*ns.PacketBuffer) error { return nil }
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Pong_(Play)
 type C2SPongPlay struct {
-	Id ns.Int32
+	PingID ns.Int32
 }
 
 func (p *C2SPongPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.Id, err = buf.ReadInt32()
+	p.PingID, err = buf.ReadInt32()
 	return err
 }
 
 func (p *C2SPongPlay) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteInt32(p.Id)
+	return buf.WriteInt32(p.PingID)
 }
 
 // C2SRecipeBookChangeSettings represents "Change Recipe Book Settings".
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Change_Recipe_Book_Settings
 type C2SRecipeBookChangeSettings struct {
-	BookId       ns.VarInt
+	BookID       ns.VarInt
 	BookOpen     ns.Boolean
 	FilterActive ns.Boolean
 }
 
 func (p *C2SRecipeBookChangeSettings) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.BookId, err = buf.ReadVarInt(); err != nil {
+	if p.BookID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	if p.BookOpen, err = buf.ReadBool(); err != nil {
@@ -1437,7 +1432,7 @@ func (p *C2SRecipeBookChangeSettings) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SRecipeBookChangeSettings) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.BookId); err != nil {
+	if err := buf.WriteVarInt(p.BookID); err != nil {
 		return err
 	}
 	if err := buf.WriteBool(p.BookOpen); err != nil {
@@ -1450,17 +1445,17 @@ func (p *C2SRecipeBookChangeSettings) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Seen_Recipe
 type C2SRecipeBookSeenRecipe struct {
-	RecipeId ns.VarInt
+	RecipeID ns.VarInt
 }
 
 func (p *C2SRecipeBookSeenRecipe) Read(buf *ns.PacketBuffer) error {
 	var err error
-	p.RecipeId, err = buf.ReadVarInt()
+	p.RecipeID, err = buf.ReadVarInt()
 	return err
 }
 
 func (p *C2SRecipeBookSeenRecipe) Write(buf *ns.PacketBuffer) error {
-	return buf.WriteVarInt(p.RecipeId)
+	return buf.WriteVarInt(p.RecipeID)
 }
 
 // C2SRenameItem represents "Rename Item".
@@ -1484,13 +1479,13 @@ func (p *C2SRenameItem) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Resource_Pack_Response_(Play)
 type C2SResourcePackPlay struct {
-	Uuid   ns.UUID
+	UUID   ns.UUID
 	Result ns.VarInt
 }
 
 func (p *C2SResourcePackPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.Uuid, err = buf.ReadUUID(); err != nil {
+	if p.UUID, err = buf.ReadUUID(); err != nil {
 		return err
 	}
 	p.Result, err = buf.ReadVarInt()
@@ -1498,7 +1493,7 @@ func (p *C2SResourcePackPlay) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SResourcePackPlay) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteUUID(p.Uuid); err != nil {
+	if err := buf.WriteUUID(p.UUID); err != nil {
 		return err
 	}
 	return buf.WriteVarInt(p.Result)
@@ -1509,7 +1504,7 @@ func (p *C2SResourcePackPlay) Write(buf *ns.PacketBuffer) error {
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Seen_Advancements
 type C2SSeenAdvancements struct {
 	Action ns.VarInt
-	TabId  ns.Identifier // only present if Action is 0
+	TabID  ns.Identifier // only present if Action is 0
 }
 
 func (p *C2SSeenAdvancements) Read(buf *ns.PacketBuffer) error {
@@ -1518,7 +1513,7 @@ func (p *C2SSeenAdvancements) Read(buf *ns.PacketBuffer) error {
 		return err
 	}
 	if p.Action == 0 {
-		p.TabId, err = buf.ReadIdentifier()
+		p.TabID, err = buf.ReadIdentifier()
 	}
 	return err
 }
@@ -1528,7 +1523,7 @@ func (p *C2SSeenAdvancements) Write(buf *ns.PacketBuffer) error {
 		return err
 	}
 	if p.Action == 0 {
-		return buf.WriteIdentifier(p.TabId)
+		return buf.WriteIdentifier(p.TabID)
 	}
 	return nil
 }
@@ -1639,14 +1634,14 @@ func (p *C2SSetCommandBlock) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Program_Command_Block_Minecart
 type C2SSetCommandMinecart struct {
-	EntityId    ns.VarInt
+	EntityID    ns.VarInt
 	Command     ns.String
 	TrackOutput ns.Boolean
 }
 
 func (p *C2SSetCommandMinecart) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.EntityId, err = buf.ReadVarInt(); err != nil {
+	if p.EntityID, err = buf.ReadVarInt(); err != nil {
 		return err
 	}
 	if p.Command, err = buf.ReadString(32767); err != nil {
@@ -1657,7 +1652,7 @@ func (p *C2SSetCommandMinecart) Read(buf *ns.PacketBuffer) error {
 }
 
 func (p *C2SSetCommandMinecart) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteVarInt(p.EntityId); err != nil {
+	if err := buf.WriteVarInt(p.EntityID); err != nil {
 		return err
 	}
 	if err := buf.WriteString(p.Command); err != nil {
@@ -2189,30 +2184,25 @@ func (p *C2SUseItem) Write(buf *ns.PacketBuffer) error {
 //
 // https://minecraft.wiki/w/Java_Edition_protocol/Packets#Custom_Click_Action_(Play)
 type C2SCustomClickActionPlay struct {
-	Id      ns.Identifier
-	Payload nbt.Tag
+	ActionID ns.Identifier
+	Payload  nbt.Tag
 }
 
 func (p *C2SCustomClickActionPlay) Read(buf *ns.PacketBuffer) error {
 	var err error
-	if p.Id, err = buf.ReadIdentifier(); err != nil {
+	if p.ActionID, err = buf.ReadIdentifier(); err != nil {
 		return err
 	}
 	// inline network NBT (no length prefix)
-	nbtReader := nbt.NewReaderFrom(buf.Reader())
-	p.Payload, _, err = nbtReader.ReadTag(true)
+	p.Payload, err = buf.ReadNBT()
 	return err
 }
 
 func (p *C2SCustomClickActionPlay) Write(buf *ns.PacketBuffer) error {
-	if err := buf.WriteIdentifier(p.Id); err != nil {
+	if err := buf.WriteIdentifier(p.ActionID); err != nil {
 		return err
 	}
-	data, err := nbt.EncodeNetwork(p.Payload)
-	if err != nil {
-		return err
-	}
-	return buf.WriteFixedByteArray(data)
+	return buf.WriteNBT(p.Payload)
 }
 
 // C2SSetGameRule represents "Set Game Rule" (new in 26.1).
@@ -2229,7 +2219,7 @@ type GameRuleSetEntry struct {
 }
 
 func (p *C2SSetGameRule) Read(buf *ns.PacketBuffer) error {
-	count, err := buf.ReadVarInt()
+	count, err := readCount(buf, "game rule", maxListCount)
 	if err != nil {
 		return err
 	}
@@ -2267,8 +2257,8 @@ func (p *C2SSetGameRule) Write(buf *ns.PacketBuffer) error {
 type C2SSpectatorAction struct {
 	// HasTarget indicates whether an entity is being spectated.
 	HasTarget ns.Boolean
-	// TargetEntityId is the spectated entity id (valid only when HasTarget).
-	TargetEntityId ns.VarInt
+	// TargetEntityID is the spectated entity id (valid only when HasTarget).
+	TargetEntityID ns.VarInt
 }
 
 // the entity id is encoded as an optional VarInt: 0 means "no target", and a
@@ -2279,10 +2269,10 @@ func (p *C2SSpectatorAction) Read(buf *ns.PacketBuffer) error {
 		return err
 	}
 	if v == 0 {
-		p.HasTarget, p.TargetEntityId = false, 0
+		p.HasTarget, p.TargetEntityID = false, 0
 		return nil
 	}
-	p.HasTarget, p.TargetEntityId = true, v-1
+	p.HasTarget, p.TargetEntityID = true, v-1
 	return nil
 }
 
@@ -2290,5 +2280,13 @@ func (p *C2SSpectatorAction) Write(buf *ns.PacketBuffer) error {
 	if !p.HasTarget {
 		return buf.WriteVarInt(0)
 	}
-	return buf.WriteVarInt(p.TargetEntityId + 1)
+	return buf.WriteVarInt(p.TargetEntityID + 1)
+}
+
+// writeAcknowledged writes the 20-bit last-seen-messages acknowledgement set.
+func writeAcknowledged(buf *ns.PacketBuffer, ack *ns.FixedBitSet) error {
+	if ack == nil || len(ack.Bytes()) != 3 {
+		return errors.New("acknowledged must be a 20-bit set")
+	}
+	return buf.WriteFixedByteArray(ack.Bytes())
 }

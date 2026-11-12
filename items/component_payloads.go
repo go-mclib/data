@@ -2,9 +2,11 @@ package items
 
 import (
 	"fmt"
+	"reflect"
 	"slices"
 
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	"github.com/go-mclib/data/registries"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 // SwingAnimation is shared by attack_animation and interact_animation.
@@ -76,7 +78,7 @@ func cloneSignText(value *SignText) *SignText {
 	return clone
 }
 
-func cloneDecoration(value *ItemStack) *ItemStack {
+func cloneDecoration(value *Stack) *Stack {
 	clone := cloneValue(value)
 	if clone != nil {
 		clone.Components = value.Components.Clone()
@@ -84,7 +86,7 @@ func cloneDecoration(value *ItemStack) *ItemStack {
 	return clone
 }
 
-func equalDecoration(a, b *ItemStack) bool {
+func equalDecoration(a, b *Stack) bool {
 	if a == nil || b == nil {
 		return a == b
 	}
@@ -143,35 +145,44 @@ func (codec pointerComponentCodec[T]) Encode(c *Components) ([]byte, error) {
 	}
 	return writer.Bytes(), nil
 }
-func equalValue[T comparable](a, b *T) bool { return *a == *b }
+
+// equalValue reports whether two optional values are both absent or equal.
+func equalValue[T comparable](a, b *T) bool {
+	if a == nil || b == nil {
+		return a == b
+	}
+	return *a == *b
+}
+
+func deepEqual[T any](a, b *T) bool { return reflect.DeepEqual(a, b) }
 
 func init() {
-	RegisterCodec(ComponentAttackAnimation, pointerComponentCodec[SwingAnimation]{
+	registerCodec(ComponentAttackAnimation, pointerComponentCodec[SwingAnimation]{
 		get:  func(c *Components) *SwingAnimation { return c.AttackAnimation },
 		set:  func(c *Components, v *SwingAnimation) { c.AttackAnimation = v },
 		read: readSwingAnimation, write: writeSwingAnimation, equal: equalValue[SwingAnimation],
 	})
-	RegisterCodec(ComponentInteractAnimation, pointerComponentCodec[SwingAnimation]{
+	registerCodec(ComponentInteractAnimation, pointerComponentCodec[SwingAnimation]{
 		get:  func(c *Components) *SwingAnimation { return c.InteractAnimation },
 		set:  func(c *Components, v *SwingAnimation) { c.InteractAnimation = v },
 		read: readSwingAnimation, write: writeSwingAnimation, equal: equalValue[SwingAnimation],
 	})
-	RegisterCodec(ComponentCompostable, pointerComponentCodec[Compostable]{
+	registerCodec(ComponentCompostable, pointerComponentCodec[Compostable]{
 		get:  func(c *Components) *Compostable { return c.Compostable },
 		set:  func(c *Components, v *Compostable) { c.Compostable = v },
 		read: readCompostable, write: writeCompostable, equal: equalValue[Compostable],
 	})
-	RegisterCodec(ComponentCookingFuel, pointerComponentCodec[CookingFuel]{
+	registerCodec(ComponentCookingFuel, pointerComponentCodec[CookingFuel]{
 		get:  func(c *Components) *CookingFuel { return c.CookingFuel },
 		set:  func(c *Components, v *CookingFuel) { c.CookingFuel = v },
 		read: readCookingFuel, write: writeCookingFuel, equal: equalValue[CookingFuel],
 	})
-	RegisterCodec(ComponentBrewingFuel, pointerComponentCodec[BrewingFuel]{
+	registerCodec(ComponentBrewingFuel, pointerComponentCodec[BrewingFuel]{
 		get:  func(c *Components) *BrewingFuel { return c.BrewingFuel },
 		set:  func(c *Components, v *BrewingFuel) { c.BrewingFuel = v },
 		read: readBrewingFuel, write: writeBrewingFuel, equal: equalValue[BrewingFuel],
 	})
-	RegisterCodec(ComponentMobVisibility, pointerComponentCodec[MobVisibility]{
+	registerCodec(ComponentMobVisibility, pointerComponentCodec[MobVisibility]{
 		get:  func(c *Components) *MobVisibility { return c.MobVisibility },
 		set:  func(c *Components, v *MobVisibility) { c.MobVisibility = v },
 		read: readMobVisibility, write: writeMobVisibility,
@@ -179,27 +190,27 @@ func init() {
 			return a.Visibility == b.Visibility && slices.Equal(a.TargetingEntityTypes, b.TargetingEntityTypes)
 		},
 	})
-	RegisterCodec(ComponentSignTextFront, pointerComponentCodec[SignText]{
+	registerCodec(ComponentSignTextFront, pointerComponentCodec[SignText]{
 		get:  func(c *Components) *SignText { return c.SignTextFront },
 		set:  func(c *Components, v *SignText) { c.SignTextFront = v },
 		read: readSignText, write: writeSignText, equal: equalSignText,
 	})
-	RegisterCodec(ComponentSignTextBack, pointerComponentCodec[SignText]{
+	registerCodec(ComponentSignTextBack, pointerComponentCodec[SignText]{
 		get:  func(c *Components) *SignText { return c.SignTextBack },
 		set:  func(c *Components, v *SignText) { c.SignTextBack = v },
 		read: readSignText, write: writeSignText, equal: equalSignText,
 	})
-	RegisterCodec(ComponentCushionColor, pointerComponentCodec[int32]{
+	registerCodec(ComponentCushionColor, pointerComponentCodec[int32]{
 		get:  func(c *Components) *int32 { return c.CushionColor },
 		set:  func(c *Components, v *int32) { c.CushionColor = v },
 		read: readDyeColor, write: writeDyeColor, equal: equalValue[int32],
 	})
-	RegisterCodec(ComponentBlockTransformer, &holderStringCodec{
+	registerCodec(ComponentBlockTransformer, &holderStringCodec{
 		id: ComponentBlockTransformer, registry: "minecraft:block_transformer", plain: true,
 		get: func(c *Components) string { return c.BlockTransformer },
 		set: func(c *Components, v string) { c.BlockTransformer = v },
 	})
-	RegisterCodec(ComponentProvidesPotteryPattern, &holderStringCodec{
+	registerCodec(ComponentProvidesPotteryPattern, &holderStringCodec{
 		id: ComponentProvidesPotteryPattern, registry: "minecraft:decorated_pot_pattern", plain: true,
 		get: func(c *Components) string { return c.ProvidesPotteryPattern },
 		set: func(c *Components, v string) { c.ProvidesPotteryPattern = v },
@@ -301,7 +312,7 @@ func writeBrewingFuel(writer *ns.PacketBuffer, value *BrewingFuel) error {
 	return writeResolvableFloat(writer, value.SpeedMultiplier)
 }
 func readMobVisibility(reader *ns.PacketBuffer) (*MobVisibility, error) {
-	types, err := readEntityTypeHolderSet(reader)
+	types, err := readHolderSet(reader, "entity type", registries.EntityType.ByID)
 	if err != nil {
 		return nil, err
 	}
@@ -309,7 +320,7 @@ func readMobVisibility(reader *ns.PacketBuffer) (*MobVisibility, error) {
 	return &MobVisibility{TargetingEntityTypes: types, Visibility: float32(visibility)}, err
 }
 func writeMobVisibility(writer *ns.PacketBuffer, value *MobVisibility) error {
-	if err := writeEntityTypeHolderSet(writer, value.TargetingEntityTypes); err != nil {
+	if err := writeHolderSet(writer, "entity type", value.TargetingEntityTypes, registries.EntityType.Get); err != nil {
 		return err
 	}
 	return writer.WriteFloat32(ns.Float32(value.Visibility))
@@ -329,6 +340,52 @@ func writeDyeColor(writer *ns.PacketBuffer, value *int32) error {
 		return fmt.Errorf("invalid dye color %d", *value)
 	}
 	return writer.WriteVarInt(ns.VarInt(*value))
+}
+func readInt32Pointer(reader *ns.PacketBuffer) (*int32, error) {
+	value, err := reader.ReadInt32()
+	if err != nil {
+		return nil, err
+	}
+	return int32Pointer(int32(value)), nil
+}
+func writeInt32Pointer(writer *ns.PacketBuffer, value *int32) error {
+	return writer.WriteInt32(ns.Int32(*value))
+}
+func readVarIntPointer(reader *ns.PacketBuffer) (*int32, error) {
+	value, err := reader.ReadVarInt()
+	if err != nil {
+		return nil, err
+	}
+	return int32Pointer(int32(value)), nil
+}
+func writeVarIntPointer(writer *ns.PacketBuffer, value *int32) error {
+	return writer.WriteVarInt(ns.VarInt(*value))
+}
+func readUseEffects(reader *ns.PacketBuffer) (*UseEffects, error) {
+	canSprint, err := reader.ReadBool()
+	if err != nil {
+		return nil, err
+	}
+	vibrations, err := reader.ReadBool()
+	if err != nil {
+		return nil, err
+	}
+	speed, err := reader.ReadFloat32()
+	if err != nil {
+		return nil, err
+	}
+	return &UseEffects{CanSprint: bool(canSprint), InteractVibrations: bool(vibrations), SpeedMultiplier: float64(speed)}, nil
+}
+
+// equalUseEffects compares at wire precision: the speed multiplier is a float32 on the wire.
+func equalUseEffects(a, b *UseEffects) bool {
+	return a.CanSprint == b.CanSprint && a.InteractVibrations == b.InteractVibrations &&
+		float32(a.SpeedMultiplier) == float32(b.SpeedMultiplier)
+}
+func writeUseEffects(writer *ns.PacketBuffer, value *UseEffects) error {
+	writer.WriteBool(ns.Boolean(value.CanSprint))
+	writer.WriteBool(ns.Boolean(value.InteractVibrations))
+	return writer.WriteFloat32(ns.Float32(value.SpeedMultiplier))
 }
 func readSignText(reader *ns.PacketBuffer) (*SignText, error) {
 	value := &SignText{}
@@ -356,7 +413,7 @@ func readSignText(reader *ns.PacketBuffer) (*SignText, error) {
 }
 func readSignMessages(reader *ns.PacketBuffer, messages *[4]ItemNameComponent) error {
 	for i := range messages {
-		tag, err := readNetworkTag(reader)
+		tag, err := reader.ReadNBT()
 		if err != nil {
 			return err
 		}

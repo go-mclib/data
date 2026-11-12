@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/go-mclib/data/packets"
-	jp "github.com/go-mclib/protocol/java_protocol"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	jp "github.com/go-mclib/protocol/javaproto"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 func TestBossEventActionsRoundTrip(t *testing.T) {
@@ -29,7 +29,7 @@ func TestBossEventActionsRoundTrip(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				if got.Title.PlainText() != "Boss" || got.Title.Color != "red" || got.Health != 0.75 || got.Color != 2 || got.Division != 3 || got.Flags != 7 {
+				if got.Title.String() != "Boss" || got.Title.Color != "red" || got.Health != 0.75 || got.Color != 2 || got.Division != 3 || got.Flags != 7 {
 					t.Fatalf("add data = %+v", got)
 				}
 			},
@@ -49,7 +49,7 @@ func TestBossEventActionsRoundTrip(t *testing.T) {
 			data: &packets.BossEventActionUpdateTitleData{Title: ns.TextComponent{Text: "New"}},
 			check: func(t *testing.T, packet *packets.S2CBossEvent) {
 				got, err := packet.DataActionUpdateTitle()
-				if err != nil || got.Title.PlainText() != "New" {
+				if err != nil || got.Title.String() != "New" {
 					t.Fatalf("title = %+v, %v", got, err)
 				}
 			},
@@ -82,7 +82,7 @@ func TestBossEventActionsRoundTrip(t *testing.T) {
 			if err := test.data.Write(data); err != nil {
 				t.Fatal(err)
 			}
-			original := &packets.S2CBossEvent{Uuid: uuid, Action: test.action, Data: data.Bytes()}
+			original := &packets.S2CBossEvent{UUID: uuid, Action: test.action, Data: data.Bytes()}
 			wire, err := jp.ToWire(original)
 			if err != nil {
 				t.Fatal(err)
@@ -91,7 +91,7 @@ func TestBossEventActionsRoundTrip(t *testing.T) {
 			if err := decoded.Read(ns.NewReaderFrom(bytes.NewReader(wire.Data))); err != nil {
 				t.Fatal(err)
 			}
-			if decoded.Uuid != uuid || decoded.Action != test.action || !reflect.DeepEqual(decoded.Data, original.Data) {
+			if decoded.UUID != uuid || decoded.Action != test.action || !reflect.DeepEqual(decoded.Data, original.Data) {
 				t.Fatalf("decoded packet = %+v", decoded)
 			}
 			test.check(t, &decoded)
@@ -107,7 +107,7 @@ func TestBossEventAddVanillaWireLayout(t *testing.T) {
 	}).Write(data); err != nil {
 		t.Fatal(err)
 	}
-	wire, err := jp.ToWire(&packets.S2CBossEvent{Uuid: uuid, Action: packets.BossEventActionAdd, Data: data.Bytes()})
+	wire, err := jp.ToWire(&packets.S2CBossEvent{UUID: uuid, Action: packets.BossEventActionAdd, Data: data.Bytes()})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -126,7 +126,7 @@ func TestBossEventAddVanillaWireLayout(t *testing.T) {
 }
 
 func TestBossEventRemoveHasNoPayload(t *testing.T) {
-	original := &packets.S2CBossEvent{Uuid: ns.UUID{1}, Action: packets.BossEventActionRemove}
+	original := &packets.S2CBossEvent{UUID: ns.UUID{1}, Action: packets.BossEventActionRemove}
 	wire, err := jp.ToWire(original)
 	if err != nil {
 		t.Fatal(err)

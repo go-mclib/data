@@ -2,9 +2,9 @@
 
 package blocks
 
-// BlockHardness returns the destroy time (hardness) for a block by registry name.
+// Hardness returns the destroy time (hardness) for a block by registry name.
 // Returns -1 for unbreakable blocks, 0 for instant break, -2 if not found.
-func BlockHardness(name string) float32 {
+func Hardness(name string) float32 {
 	v, ok := blockHardness[name]
 	if !ok {
 		return -2
@@ -12,8 +12,8 @@ func BlockHardness(name string) float32 {
 	return v
 }
 
-// BlockRequiresCorrectTool returns whether the block needs the correct tool to mine at full speed.
-func BlockRequiresCorrectTool(name string) bool {
+// RequiresCorrectTool returns whether the block needs the correct tool to mine at full speed.
+func RequiresCorrectTool(name string) bool {
 	return blockRequiresCorrectTool[name]
 }
 

@@ -4,7 +4,7 @@ package recipes
 
 // Ingredient lists the acceptable matchers for one slot: item names
 // ("minecraft:wheat") or tag references ("#minecraft:planks"), any of which
-// fit. Resolve tags with items.ItemTag. An empty Ingredient matches only an
+// fit. Resolve tags with items.Tag. An empty Ingredient matches only an
 // empty slot.
 type Ingredient []string
 

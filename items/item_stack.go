@@ -5,30 +5,29 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
-// ItemStack represents a fully decoded item stack with typed components.
-// It acts as middleware over net_structures.Slot, encoding components
+// Stack represents a fully decoded item stack with typed components.
+// It acts as middleware over wire.Slot, encoding components
 // as a DataComponentPatch (adds/removes) relative to the item's defaults.
-type ItemStack struct {
+type Stack struct {
 	ID         int32
 	Count      int32
 	Components *Components
 }
 
 // EmptyStack returns an empty item stack.
-func EmptyStack() *ItemStack {
-	return &ItemStack{}
+func EmptyStack() *Stack {
+	return &Stack{}
 }
 
 // NewStack creates a new item stack with the given item ID and count.
 // Components are initialized to the item's defaults, all marked as present.
-func NewStack(itemID int32, count int32) *ItemStack {
+func NewStack(itemID int32, count int32) *Stack {
 	components := DefaultComponents(itemID).Clone()
 	markAllPresent(components)
-	return &ItemStack{
+	return &Stack{
 		ID:         itemID,
 		Count:      count,
 		Components: components,
@@ -77,34 +76,22 @@ func componentDataEqual(id ns.VarInt, a, b []byte) bool {
 	switch int32(id) {
 	case ComponentBlockEntityData, ComponentBucketEntityData, ComponentContainerLoot,
 		ComponentCustomData, ComponentDebugStickState, ComponentEntityData, ComponentLock, ComponentMapDecorations:
-		left, _, leftErr := nbt.NewReaderFrom(bytes.NewReader(a)).ReadTag(true)
-		right, _, rightErr := nbt.NewReaderFrom(bytes.NewReader(b)).ReadTag(true)
+		left, leftErr := ns.NewReader(a).ReadNBT()
+		right, rightErr := ns.NewReader(b).ReadNBT()
 		return leftErr == nil && rightErr == nil && reflect.DeepEqual(left, right)
 	}
 	return false
 }
 
-// SetDefaultComponents overwrites the stack's components with the item's
-// defaults and marks all of them as present.
-func (s *ItemStack) SetDefaultComponents() {
-	defaults := DefaultComponents(s.ID)
-	if defaults != nil {
-		s.Components = defaults.Clone()
-	} else {
-		s.Components = &Components{}
-	}
-	markAllPresent(s.Components)
-}
-
 // IsEmpty returns true if the stack is empty.
-func (s *ItemStack) IsEmpty() bool {
+func (s *Stack) IsEmpty() bool {
 	return s == nil || s.Count <= 0
 }
 
-// FromSlot creates an ItemStack from a raw net_structures.Slot.
+// FromSlot creates a Stack from a raw wire.Slot.
 // It applies the slot's component patch on top of the item's defaults.
 // All default and patched components are marked as present.
-func FromSlot(slot ns.Slot) (*ItemStack, error) {
+func FromSlot(slot ns.Slot) (*Stack, error) {
 	if slot.IsEmpty() {
 		return EmptyStack(), nil
 	}
@@ -121,23 +108,23 @@ func FromSlot(slot ns.Slot) (*ItemStack, error) {
 		components.SetPresent(int32(raw.ID))
 	}
 
-	// apply removals (set to zero values, keep present so they encode as removes)
+	// apply removals (set to zero values, keep tracked so they encode as removes)
 	for _, id := range slot.Components.Remove {
 		clearComponent(components, int32(id))
 		components.SetPresent(int32(id))
 	}
 
-	return &ItemStack{
+	return &Stack{
 		ID:         int32(slot.ItemID),
 		Count:      int32(slot.Count),
 		Components: components,
 	}, nil
 }
 
-// ToSlot converts the ItemStack back to a raw net_structures.Slot.
+// ToSlot converts the Stack back to a raw wire.Slot.
 // Only present components that differ from the item's defaults are encoded,
 // mirroring Java's DataComponentPatch serialization.
-func (s *ItemStack) ToSlot() (ns.Slot, error) {
+func (s *Stack) ToSlot() (ns.Slot, error) {
 	if s.IsEmpty() {
 		return ns.EmptySlot(), nil
 	}
@@ -145,8 +132,8 @@ func (s *ItemStack) ToSlot() (ns.Slot, error) {
 	slot := ns.NewSlot(ns.VarInt(s.ID), ns.VarInt(s.Count))
 	defaults := DefaultComponents(s.ID)
 
-	for id := int32(0); id <= MaxComponentID; id++ {
-		if !s.Components.HasComponent(id) {
+	for id := range int32(MaxComponentID + 1) {
+		if !s.Components.hasComponent(id) {
 			continue
 		}
 		differs, hv := componentDiffers(s.Components, defaults, id)
@@ -167,9 +154,9 @@ func (s *ItemStack) ToSlot() (ns.Slot, error) {
 	return slot, nil
 }
 
-// markAllPresent marks all registered component IDs as present.
+// markAllPresent marks all registered component IDs for diffing.
 func markAllPresent(c *Components) {
-	for id := int32(0); id <= MaxComponentID; id++ {
+	for id := range int32(MaxComponentID + 1) {
 		if componentCodecs[id] != nil {
 			c.SetPresent(id)
 		}
@@ -182,6 +169,10 @@ func Decoder() ns.SlotDecoder {
 	return decodeComponentWire
 }
 
+// maxDelimitedComponentLength bounds a length-prefixed component payload; it
+// is vanilla's packet size limit (2 MiB).
+const maxDelimitedComponentLength = 2097152
+
 // DecoderDelimited returns a SlotDecoder that handles length-prefixed
 // component data, as used by OPTIONAL_UNTRUSTED_STREAM_CODEC (e.g. creative mode slots).
 func DecoderDelimited() ns.SlotDecoder {
@@ -190,6 +181,9 @@ func DecoderDelimited() ns.SlotDecoder {
 		length, err := buf.ReadVarInt()
 		if err != nil {
 			return nil, fmt.Errorf("failed to read component length: %w", err)
+		}
+		if length < 0 || length > maxDelimitedComponentLength {
+			return nil, fmt.Errorf("component length %d out of range", length)
 		}
 
 		if length == 0 {
@@ -210,8 +204,8 @@ func DecoderDelimited() ns.SlotDecoder {
 }
 
 // ReadSlot is a convenience function that reads a Slot from the buffer
-// and converts it to an ItemStack.
-func ReadSlot(buf *ns.PacketBuffer) (*ItemStack, error) {
+// and converts it to a Stack.
+func ReadSlot(buf *ns.PacketBuffer) (*Stack, error) {
 	slot, err := buf.ReadSlot(Decoder())
 	if err != nil {
 		return nil, err
@@ -219,33 +213,21 @@ func ReadSlot(buf *ns.PacketBuffer) (*ItemStack, error) {
 	return FromSlot(slot)
 }
 
-// WriteSlot writes the ItemStack to the buffer as a Slot.
-func (s *ItemStack) WriteSlot(buf *ns.PacketBuffer) error {
-	slot, err := s.ToSlot()
-	if err != nil {
-		return err
-	}
-	return buf.WriteSlot(slot)
-}
-
 // UseRemainderSlot returns the component-defined remainder template.
 func UseRemainderSlot(slot ns.Slot) (ns.Slot, bool) {
-	for _, removed := range slot.Components.Remove {
-		if int32(removed) == ComponentUseRemainder {
-			return ns.Slot{}, false
-		}
+	data, added, removed := patchedComponent(slot, ComponentUseRemainder)
+	if removed {
+		return ns.Slot{}, false
 	}
-	for _, component := range slot.Components.Add {
-		if int32(component.ID) == ComponentUseRemainder {
-			remainder, err := ReadItemStackTemplate(ns.NewReader(component.Data))
-			return remainder, err == nil && !remainder.IsEmpty()
-		}
+	if added {
+		remainder, err := ReadItemStackTemplate(ns.NewReader(data))
+		return remainder, err == nil && !remainder.IsEmpty()
 	}
 	defaults := DefaultComponents(int32(slot.ItemID))
 	if defaults == nil || defaults.UseRemainder == nil {
 		return ns.Slot{}, false
 	}
-	id := ItemID(defaults.UseRemainder.ID)
+	id := ID(defaults.UseRemainder.ID)
 	if id < 0 {
 		return ns.Slot{}, false
 	}
@@ -334,11 +316,6 @@ func WriteItemStackTemplate(buf *ns.PacketBuffer, slot ns.Slot) error {
 // WriteRawSlotDelimited writes a raw ns.Slot with length-prefixed component data.
 // Used for packets with OPTIONAL_UNTRUSTED_STREAM_CODEC like creative mode.
 func WriteRawSlotDelimited(buf *ns.PacketBuffer, slot ns.Slot) error {
-	return writeSlotDelimited(buf, slot)
-}
-
-// writeSlotDelimited writes a slot with length-prefixed component data.
-func writeSlotDelimited(buf *ns.PacketBuffer, slot ns.Slot) error {
 	// write count
 	if err := buf.WriteVarInt(slot.Count); err != nil {
 		return err

@@ -38,10 +38,10 @@ blocks.OakPlanks      // 15
 blocks.DiamondBlock   // 126
 
 // string to ID
-id := blocks.BlockID("minecraft:oak_planks")  // 15
+id := blocks.ID("minecraft:oak_planks")  // 15
 
 // ID to string
-name := blocks.BlockName(15)  // "minecraft:oak_planks"
+name := blocks.Name(15)  // "minecraft:oak_planks"
 
 // calculate state ID from block + properties
 stateID := blocks.StateID(blocks.OakDoor, map[string]string{
@@ -57,6 +57,11 @@ blockID, props := blocks.StateProperties(stateID)
 
 // get default state for a block
 defaultID := blocks.DefaultStateID(blocks.OakDoor)
+
+// per-state game data dumped from the game by mcdump
+blocks.LightEmission(stateID)   // BlockState.getLightEmission
+blocks.LightDampening(stateID)  // BlockState.getLightDampening
+blocks.Friction(stateID)        // Block.getFriction
 ```
 
 ### `items`
@@ -72,10 +77,10 @@ items.Apple           // 918
 items.IronPickaxe     // 860
 
 // string to ID
-id := items.ItemID("minecraft:diamond_sword")  // 876
+id := items.ID("minecraft:diamond_sword")  // 876
 
 // ID to string
-name := items.ItemName(876)  // "minecraft:diamond_sword"
+name := items.Name(876)  // "minecraft:diamond_sword"
 
 // get default components
 comps := items.DefaultComponents(items.Apple)
@@ -84,7 +89,7 @@ if comps.Food != nil {
 }
 ```
 
-#### ItemStack and the Component Patch Model
+#### Stack and the Component Patch Model
 
 In the Minecraft protocol, an item on the wire is not sent as a full component list.
 Instead, the Java client uses a `DataComponentPatch` system: each item type has a
@@ -92,7 +97,7 @@ Instead, the Java client uses a `DataComponentPatch` system: each item type has 
 of component **adds** (overrides) and **removes** (deletions) relative to that prototype.
 Components that match the prototype are never sent.
 
-`ItemStack` mirrors this model. Each `Components` struct carries an internal bitset that
+`items.Stack` mirrors this model. Each `Components` struct carries an internal bitset that
 tracks which component IDs are explicitly *present*. `ToSlot()` only encodes present
 components that differ from the item's defaults:
 
@@ -109,32 +114,23 @@ stack := items.NewStack(items.DiamondSword, 1)
 stack.Components.Damage = 100
 // ToSlot() encodes only Damage (the one field that differs from defaults)
 
-// opt in to full defaults at any time
-stack := items.NewStackWithComponents(items.DiamondSword, 1, &items.Components{
-    Unbreakable: true,
-})
-stack.SetDefaultComponents() // load all defaults, mark all present
-
 // read from wire — full state reconstruction
 stack, err := items.ReadSlot(buf)
 // FromSlot applies the incoming patch on top of defaults;
 // all components are marked as present for faithful re-encoding
-
-// write back to wire
-err := stack.WriteSlot(buf)
 
 // convert from/to raw Slot
 stack, err := items.FromSlot(rawSlot)
 rawSlot, err := stack.ToSlot()
 ```
 
-For advanced use, the presence bitset can be manipulated directly using the
-component ID constants:
+Optional components are pointers (`nil` = absent). `NewStack` and `FromSlot`
+track every component for patch encoding; only hand-built `Components` need
+`SetPresent`, and `ClearPresent` excludes a component from the patch:
 
 ```go
-stack.Components.SetPresent(items.ComponentDamage)   // mark as present
-stack.Components.ClearPresent(items.ComponentDamage)  // mark as absent
-stack.Components.HasComponent(items.ComponentDamage)   // query
+stack.Components.SetPresent(items.ComponentDamage)   // include in the patch
+stack.Components.ClearPresent(items.ComponentDamage) // neither add nor remove it
 ```
 
 Component type constants (104 types) are generated from the registry:
@@ -159,10 +155,10 @@ entities.Zombie       // 156
 entities.Creeper      // 32
 
 // string to ID
-id := entities.EntityTypeID("minecraft:zombie")  // 156
+id := entities.TypeID("minecraft:zombie")  // 156
 
 // ID to string
-name := entities.EntityTypeName(156)  // "minecraft:zombie"
+name := entities.TypeName(156)  // "minecraft:zombie"
 ```
 
 #### Entity Metadata
@@ -187,6 +183,12 @@ metadata.Set(entities.EntityIndexPose, entities.SerializerPOSE, poseData)
 err := entities.WriteMetadata(buf, metadata)
 ```
 
+Single entries can be built with typed constructors (`ByteEntry`, `IntEntry`, `VarIntEntry`, `FloatEntry`, `BoolEntry`, `StringEntry`, `ComponentEntry`, `OptionalComponentEntry`, `RotationsEntry`, `SlotEntry`):
+
+```go
+metadata = append(metadata, entities.BoolEntry(entities.EntityIndexSilent, true), entities.FloatEntry(9, 20))
+```
+
 Serializer types (39 types) define how values are encoded on the wire:
 
 ```go
@@ -199,7 +201,7 @@ entities.SerializerROTATIONS // 9 - 3x float32 (x,y,z)
 entities.SerializerBLOCK_POS // 10 - packed position
 ```
 
-Per-entity metadata structs and field indices are generated:
+Per-entity field indices are generated:
 
 ```go
 // Entity base class (all entities inherit these)
@@ -256,18 +258,11 @@ state_id = base_id + offset
 
 Properties are iterated right-to-left, where the rightmost property changes fastest. This matches Minecraft's internal state registration order.
 
-## Caching
+## Lookups
 
-`StateID` results are cached globally (default 4096 entries) for repeated lookups with the same inputs:
-
-```go
-// configure cache size
-blocks.SetCacheSize(8192)  // increase cache
-blocks.SetCacheSize(0)     // disable caching
-blocks.ClearCache()        // clear cached entries
-```
-
-`StateProperties` uses O(log n) binary search and doesn't require caching.
+`StateID` computes the ID directly from the generated property tables (no
+cache); `StateProperties` and `StateBlockID` use O(log n) binary search over
+the state ranges.
 
 ## Performance
 
@@ -275,21 +270,26 @@ Benchmarks on Apple M2 (`go test -bench=. -benchmem ./...`):
 
 | Function | Time | Allocations |
 | -------- | ---- | ----------- |
-| `StateID` (cached) | ~83 ns/op | 0 |
-| `StateID` (uncached) | ~84 ns/op | 0 |
+| `StateID` | ~84 ns/op | 0 |
 | `StateProperties` | ~138 ns/op | 2 |
 
 ## Data Sources
 
-Generated from Minecraft server reports (not committed). To regenerate:
+Generated from Minecraft server reports and the mcdump game dump (neither
+committed). To regenerate:
 
 ```bash
-# generate server reports (see vanilla_server_reports/)
-java -DbundlerMainClass=net.minecraft.data.Main -jar server.jar --reports
+# generate server reports + version.json (see vanilla_server_reports/)
+(cd vanilla_server_reports && ./generate.sh)
+# dump game data (shapes, hardness, light, friction, effect colors, crafting remainders)
+./mcdump/dump.sh
 
 # regenerate Go code
 go generate ./... && go fmt ./...
 ```
+
+`ProtocolVersion`, `MinecraftVersion` and `DataVersion` (root package
+`version_gen.go`) come from the server jar's `version.json`.
 
 Source JSON files:
 

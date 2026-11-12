@@ -49,6 +49,8 @@ type ComponentMetadata struct {
 	WireType string `json:"wireType"`
 	// Passthrough means the component is decoded but not interpreted into a struct
 	Passthrough bool `json:"passthrough,omitempty"`
+	// AllowZero distinguishes a present zero value from an absent component.
+	AllowZero bool `json:"allowZero,omitempty"`
 	// WireFormat defines the detailed wire structure for complex components
 	WireFormat []WireField `json:"wireFormat,omitempty"`
 }

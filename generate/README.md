@@ -13,7 +13,7 @@ Two producers, both reading the actual game:
 # 1. vanilla server datagen -> blocks/items/registries/packets/commands + tags
 (cd vanilla_server_reports && ./generate.sh 26.3)
 
-# 2. mcdump -> collision shapes, entity hitboxes, hardness, mob categories
+# 2. mcdump -> collision shapes, entity hitboxes, hardness, mob categories, light, friction, effect colors, crafting remainders
 ./mcdump/dump.sh 26.3
 ```
 
@@ -30,12 +30,14 @@ From the vanilla server datagen (`../vanilla_server_reports/`):
 - `items/`: Each item and its components;
 - `packets.json`: All network packets and their protocol IDs;
 - `registries.json`: Base-game registries and their protocol IDs;
+- `version.json`: the server jar's version info (protocol, game and data version → `version_gen.go`);
 
 From [mcdump](../mcdump) (`mcdump/`, dumped straight from the game registries):
 
-- `blocks.json`: per-state collision shapes, hardness, requires-correct-tool;
+- `blocks.json`: per-state collision shapes, light emission/dampening, hardness, requires-correct-tool, friction;
 - `entities.json`: hitbox width/height, eye height, mob category, tracking range;
 - `registries.json`: built-in registry id maps;
+- `potions.json`, `effects.json`, `items.json`: potion effects, mob effect colors, crafting remainders;
 
 From decompiled assets ([go-mclib/mcsrc](https://github.com/go-mclib/mcsrc), checked out as `../mcsrc` relative to the data module root):
 

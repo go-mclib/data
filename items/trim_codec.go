@@ -2,11 +2,10 @@ package items
 
 import (
 	"fmt"
-	"reflect"
-	"slices"
+
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 
 	"github.com/go-mclib/data/registries"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
 )
 
 type trimCodec struct{}
@@ -36,7 +35,7 @@ func (trimCodec) Apply(c *Components, data []byte) error {
 func (trimCodec) Clear(c *Components) { c.Trim = nil }
 
 func (trimCodec) Differs(c, defaults *Components) (bool, bool) {
-	return !reflect.DeepEqual(c.Trim, defaults.Trim), c.Trim != nil
+	return !equalValue(c.Trim, defaults.Trim), c.Trim != nil
 }
 
 func (trimCodec) Encode(c *Components) ([]byte, error) {
@@ -61,18 +60,17 @@ func readTrimHolder(buf *ns.PacketBuffer, registry string) (string, error) {
 	if marker == 0 {
 		return "", fmt.Errorf("direct %s holder is not supported", registry)
 	}
-	entries := registries.SynchronizedEntries[registry]
-	id := int(marker) - 1
-	if id < 0 || id >= len(entries) {
+	name := registries.SynchronizedEntries[registry].HolderName(int32(marker))
+	if name == "" {
 		return "", fmt.Errorf("invalid %s holder %d", registry, marker)
 	}
-	return entries[id], nil
+	return name, nil
 }
 
 func writeTrimHolder(buf *ns.PacketBuffer, registry, name string) error {
-	id := slices.Index(registries.SynchronizedEntries[registry], name)
-	if id < 0 {
+	holderID := registries.SynchronizedEntries[registry].HolderID(name)
+	if holderID < 0 {
 		return fmt.Errorf("unknown %s entry %q", registry, name)
 	}
-	return buf.WriteVarInt(ns.VarInt(id + 1))
+	return buf.WriteVarInt(ns.VarInt(holderID))
 }

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 type deathProtectionCodec struct{}
@@ -26,7 +26,7 @@ func (deathProtectionCodec) Apply(c *Components, data []byte) error {
 	if count < 0 {
 		return fmt.Errorf("negative death effect count %d", count)
 	}
-	effects := make([]ConsumeEffect, 0, count)
+	effects := makeCapped[ConsumeEffect](count)
 	for range int(count) {
 		effect, err := readConsumeEffect(buf)
 		if err != nil {

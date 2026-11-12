@@ -2,7 +2,7 @@ package items
 
 // Component codec registry - provides a unified interface for encoding/decoding item components.
 //
-// Each component type implements ComponentCodec, which handles:
+// Each component type implements componentCodec, which handles:
 // - Wire format decoding (network bytes → raw bytes for storage)
 // - Applying raw bytes to the Components struct
 // - Clearing a component from the struct
@@ -11,18 +11,21 @@ package items
 
 import (
 	"bytes"
+	"cmp"
 	"fmt"
+	"maps"
 	"slices"
+	"strconv"
 	"strings"
 
 	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 
 	"github.com/go-mclib/data/registries"
 )
 
-// ComponentCodec defines the interface for encoding/decoding a component type.
-type ComponentCodec interface {
+// componentCodec defines the interface for encoding/decoding a component type.
+type componentCodec interface {
 	// DecodeWire reads the component from wire format and returns raw bytes for storage.
 	DecodeWire(buf *ns.PacketBuffer) ([]byte, error)
 
@@ -40,17 +43,33 @@ type ComponentCodec interface {
 	Encode(c *Components) ([]byte, error)
 }
 
-// componentCodecs maps component IDs to their codecs.
-var componentCodecs = make(map[int32]ComponentCodec)
+// componentCodecs maps component IDs to their codecs. Only package init
+// functions write it, so decoding never races with registration.
+var componentCodecs = make(map[int32]componentCodec)
 
 const maxStringLen = 32767
 
-// RegisterCodec registers a codec for a component ID.
-func RegisterCodec(id int32, codec ComponentCodec) {
-	if passthrough, ok := codec.(*passthroughCodec); ok {
-		passthrough.id = id
+// maxPrealloc bounds slice preallocation from wire-declared element counts.
+const maxPrealloc = 256
+
+// makeCapped returns an empty slice for count wire-declared elements. The count
+// is untrusted, so at most maxPrealloc elements are preallocated.
+func makeCapped[T any](count ns.VarInt) []T {
+	return make([]T, 0, min(int(count), maxPrealloc))
+}
+
+// registerCodec registers the codec for a component ID; each ID has exactly one codec.
+func registerCodec(id int32, codec componentCodec) {
+	if _, duplicate := componentCodecs[id]; duplicate {
+		panic(fmt.Sprintf("items: duplicate codec for component %d", id))
 	}
 	componentCodecs[id] = codec
+}
+
+// registerPassthrough registers a codec that validates the wire format with
+// decode and keeps the payload uninterpreted.
+func registerPassthrough(id int32, decode func(buf, w *ns.PacketBuffer) error) {
+	registerCodec(id, &passthroughCodec{id: id, decode: decode})
 }
 
 // decodeComponentWire decodes a component using the registry.
@@ -252,10 +271,13 @@ func (codec *emptyMarkerCodec) Encode(c *Components) ([]byte, error) {
 	return nil, nil // no data
 }
 
-// customNameCodec handles CustomName (NBT text component).
-type customNameCodec struct{}
+// textComponentCodec handles an NBT text component (custom_name, item_name).
+type textComponentCodec struct {
+	get func(*Components) *ItemNameComponent
+	set func(*Components, *ItemNameComponent)
+}
 
-func (codec *customNameCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
+func (codec textComponentCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 	w := ns.NewWriter()
 	if err := copyNBT(buf, w); err != nil {
 		return nil, err
@@ -263,94 +285,33 @@ func (codec *customNameCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 	return w.Bytes(), nil
 }
 
-func (codec *customNameCodec) Apply(c *Components, data []byte) error {
-	buf := ns.NewReader(data)
-	name, err := decodeItemName(buf)
+func (codec textComponentCodec) Apply(c *Components, data []byte) error {
+	name, err := decodeItemName(ns.NewReader(data))
 	if err != nil {
 		return err
 	}
-	name.Raw = append([]byte(nil), data...)
-	c.CustomName = name
+	name.Raw = slices.Clone(data)
+	codec.set(c, name)
 	return nil
 }
 
-func (codec *customNameCodec) Clear(c *Components) {
-	c.CustomName = nil
+func (codec textComponentCodec) Clear(c *Components) { codec.set(c, nil) }
+
+func (codec textComponentCodec) Differs(c, defaults *Components) (bool, bool) {
+	value := codec.get(c)
+	return !itemNameComponentsEqual(value, codec.get(defaults)), value != nil
 }
 
-func (codec *customNameCodec) Differs(c, defaults *Components) (bool, bool) {
-	cHas := c.CustomName != nil
-	dHas := defaults.CustomName != nil
-	if cHas != dHas {
-		return true, cHas
-	}
-	if cHas && dHas {
-		return c.CustomName.Text != defaults.CustomName.Text || c.CustomName.Translate != defaults.CustomName.Translate || !bytes.Equal(c.CustomName.Raw, defaults.CustomName.Raw), true
-	}
-	return false, false
-}
-
-func (codec *customNameCodec) Encode(c *Components) ([]byte, error) {
-	if c.CustomName == nil {
+func (codec textComponentCodec) Encode(c *Components) ([]byte, error) {
+	value := codec.get(c)
+	if value == nil {
 		return nil, nil
 	}
-	if c.CustomName.Raw != nil {
-		return append([]byte(nil), c.CustomName.Raw...), nil
+	if value.Raw != nil {
+		return slices.Clone(value.Raw), nil
 	}
 	w := ns.NewWriter()
-	if err := encodeItemName(w, c.CustomName); err != nil {
-		return nil, err
-	}
-	return w.Bytes(), nil
-}
-
-// itemNameCodec handles ItemName (NBT text component).
-type itemNameCodec struct{}
-
-func (codec *itemNameCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
-	w := ns.NewWriter()
-	if err := copyNBT(buf, w); err != nil {
-		return nil, err
-	}
-	return w.Bytes(), nil
-}
-
-func (codec *itemNameCodec) Apply(c *Components, data []byte) error {
-	buf := ns.NewReader(data)
-	name, err := decodeItemName(buf)
-	if err != nil {
-		return err
-	}
-	name.Raw = append([]byte(nil), data...)
-	c.ItemName = name
-	return nil
-}
-
-func (codec *itemNameCodec) Clear(c *Components) {
-	c.ItemName = nil
-}
-
-func (codec *itemNameCodec) Differs(c, defaults *Components) (bool, bool) {
-	cHas := c.ItemName != nil
-	dHas := defaults.ItemName != nil
-	if cHas != dHas {
-		return true, cHas
-	}
-	if cHas && dHas {
-		return c.ItemName.Text != defaults.ItemName.Text || c.ItemName.Translate != defaults.ItemName.Translate || !bytes.Equal(c.ItemName.Raw, defaults.ItemName.Raw), true
-	}
-	return false, false
-}
-
-func (codec *itemNameCodec) Encode(c *Components) ([]byte, error) {
-	if c.ItemName == nil {
-		return nil, nil
-	}
-	if c.ItemName.Raw != nil {
-		return append([]byte(nil), c.ItemName.Raw...), nil
-	}
-	w := ns.NewWriter()
-	if err := encodeItemName(w, c.ItemName); err != nil {
+	if err := encodeItemName(w, value); err != nil {
 		return nil, err
 	}
 	return w.Bytes(), nil
@@ -360,11 +321,8 @@ func (codec *itemNameCodec) Encode(c *Components) ([]byte, error) {
 type attributeModifiersCodec struct{}
 
 var attributeModifierOperations = []string{"add_value", "add_multiplied_base", "add_multiplied_total"}
-var attributeModifierOperationIDs = map[string]int32{"add_value": 0, "add_multiplied_base": 1, "add_multiplied_total": 2}
 var equipmentSlotGroups = []string{"any", "mainhand", "offhand", "hand", "feet", "legs", "chest", "head", "armor", "body", "saddle"}
-var equipmentSlotGroupIDs = map[string]int32{"any": 0, "mainhand": 1, "offhand": 2, "hand": 3, "feet": 4, "legs": 5, "chest": 6, "head": 7, "armor": 8, "body": 9, "saddle": 10}
 var attributeModifierDisplayTypes = []string{"default", "hidden", "override"}
-var attributeModifierDisplayTypeIDs = map[string]int32{"default": 0, "hidden": 1, "override": 2}
 
 func (codec *attributeModifiersCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 	w := ns.NewWriter()
@@ -393,7 +351,7 @@ func (codec *attributeModifiersCodec) Apply(c *Components, data []byte) error {
 	if count < 0 {
 		return fmt.Errorf("negative attribute modifier count %d", count)
 	}
-	modifiers := make([]AttributeModifier, 0, min(int(count), 65536))
+	modifiers := makeCapped[AttributeModifier](count)
 	for range int(count) {
 		mod, err := decodeAttributeModifier(buf)
 		if err != nil {
@@ -436,7 +394,6 @@ func (codec *attributeModifiersCodec) Encode(c *Components) ([]byte, error) {
 type rarityCodec struct{}
 
 var rarityNames = []string{"common", "uncommon", "rare", "epic"}
-var rarityIDs = map[string]int32{"common": 0, "uncommon": 1, "rare": 2, "epic": 3}
 
 func (codec *rarityCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 	w := ns.NewWriter()
@@ -454,9 +411,8 @@ func (codec *rarityCodec) Apply(c *Components, data []byte) error {
 	if err != nil {
 		return err
 	}
-	if int(v) < len(rarityNames) {
-		c.Rarity = rarityNames[v]
-	}
+	// vanilla maps out-of-range rarity IDs to common (ByIdMap.OutOfBoundsStrategy.ZERO)
+	c.Rarity = enumName(rarityNames, v)
 	return nil
 }
 
@@ -470,16 +426,30 @@ func (codec *rarityCodec) Differs(c, defaults *Components) (bool, bool) {
 
 func (codec *rarityCodec) Encode(c *Components) ([]byte, error) {
 	w := ns.NewWriter()
-	w.WriteVarInt(ns.VarInt(rarityIDs[c.Rarity]))
+	w.WriteVarInt(ns.VarInt(max(slices.Index(rarityNames, c.Rarity), 0)))
 	return w.Bytes(), nil
 }
 
 // loreCodec handles Lore component (list of NBT text components).
 type loreCodec struct{}
 
+// maxLoreLines is vanilla's ItemLore.MAX_LINES.
+const maxLoreLines = 256
+
+func readLoreCount(buf *ns.PacketBuffer) (ns.VarInt, error) {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return 0, err
+	}
+	if count < 0 || count > maxLoreLines {
+		return 0, fmt.Errorf("lore line count %d outside 0..%d", count, maxLoreLines)
+	}
+	return count, nil
+}
+
 func (codec *loreCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 	w := ns.NewWriter()
-	count, err := buf.ReadVarInt()
+	count, err := readLoreCount(buf)
 	if err != nil {
 		return nil, err
 	}
@@ -494,7 +464,7 @@ func (codec *loreCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 
 func (codec *loreCodec) Apply(c *Components, data []byte) error {
 	buf := ns.NewReader(data)
-	count, err := buf.ReadVarInt()
+	count, err := readLoreCount(buf)
 	if err != nil {
 		return err
 	}
@@ -507,7 +477,7 @@ func (codec *loreCodec) Apply(c *Components, data []byte) error {
 		lore = append(lore, line.String())
 	}
 	c.Lore = lore
-	c.loreRaw = append([]byte(nil), data...)
+	c.loreRaw = slices.Clone(data)
 	return nil
 }
 
@@ -533,7 +503,7 @@ func (codec *loreCodec) Differs(c, defaults *Components) (bool, bool) {
 
 func (codec *loreCodec) Encode(c *Components) ([]byte, error) {
 	if c.loreRaw != nil {
-		return append([]byte(nil), c.loreRaw...), nil
+		return slices.Clone(c.loreRaw), nil
 	}
 	w := ns.NewWriter()
 	w.WriteVarInt(ns.VarInt(len(c.Lore)))
@@ -551,9 +521,20 @@ type enchantmentsCodec struct {
 	set func(c *Components, v map[string]int32)
 }
 
+func readEnchantmentCount(buf *ns.PacketBuffer) (ns.VarInt, error) {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return 0, err
+	}
+	if count < 0 {
+		return 0, fmt.Errorf("negative enchantment count %d", count)
+	}
+	return count, nil
+}
+
 func (codec *enchantmentsCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 	w := ns.NewWriter()
-	count, err := buf.ReadVarInt()
+	count, err := readEnchantmentCount(buf)
 	if err != nil {
 		return nil, err
 	}
@@ -571,28 +552,40 @@ func (codec *enchantmentsCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error)
 	return w.Bytes(), nil
 }
 
-func (codec *enchantmentsCodec) Apply(c *Components, data []byte) error {
-	buf := ns.NewReader(data)
-	count, err := buf.ReadVarInt()
+// readEnchantmentEntries reads the enchantments wire format: a VarInt count
+// followed by (enchantment ID, level) VarInt pairs.
+func readEnchantmentEntries(buf *ns.PacketBuffer) ([]StackEnchantment, error) {
+	count, err := readEnchantmentCount(buf)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	enchants := make(map[string]int32, count)
+	entries := makeCapped[StackEnchantment](count)
 	for range int(count) {
-		enchID, err := buf.ReadVarInt()
+		id, err := buf.ReadVarInt()
 		if err != nil {
-			return err
+			return nil, err
 		}
 		level, err := buf.ReadVarInt()
 		if err != nil {
-			return err
+			return nil, err
 		}
-		name := fmt.Sprintf("id:%d", enchID)
-		entries := registries.SynchronizedEntries["minecraft:enchantment"]
-		if int(enchID) >= 0 && int(enchID) < len(entries) {
-			name = entries[enchID]
+		entries = append(entries, StackEnchantment{ID: int32(id), Level: int32(level)})
+	}
+	return entries, nil
+}
+
+func (codec *enchantmentsCodec) Apply(c *Components, data []byte) error {
+	entries, err := readEnchantmentEntries(ns.NewReader(data))
+	if err != nil {
+		return err
+	}
+	enchants := make(map[string]int32, len(entries))
+	for _, entry := range entries {
+		name := registries.SynchronizedEntries["minecraft:enchantment"].ByID(entry.ID)
+		if name == "" {
+			name = "id:" + strconv.Itoa(int(entry.ID))
 		}
-		enchants[name] = int32(level)
+		enchants[name] = entry.Level
 	}
 	codec.set(c, enchants)
 	return nil
@@ -611,16 +604,7 @@ func (codec *enchantmentsCodec) Differs(c, defaults *Components) (bool, bool) {
 		return true, cHas
 	}
 	if cHas && dHas {
-		// compare maps
-		if len(cv) != len(dv) {
-			return true, true
-		}
-		for k, v := range cv {
-			if dv[k] != v {
-				return true, true
-			}
-		}
-		return false, true
+		return !maps.Equal(cv, dv), true
 	}
 	return false, false
 }
@@ -631,12 +615,17 @@ func (codec *enchantmentsCodec) Encode(c *Components) ([]byte, error) {
 	w.WriteVarInt(ns.VarInt(len(m)))
 	for name, level := range m {
 		var enchID int32
-		if _, err := fmt.Sscanf(name, "id:%d", &enchID); err != nil {
-			index := slices.Index(registries.SynchronizedEntries["minecraft:enchantment"], name)
-			if index < 0 {
+		if raw, ok := strings.CutPrefix(name, "id:"); ok {
+			id, err := strconv.ParseInt(raw, 10, 32)
+			if err != nil {
+				return nil, fmt.Errorf("invalid enchantment id %q: %w", name, err)
+			}
+			enchID = int32(id)
+		} else {
+			enchID = registries.SynchronizedEntries["minecraft:enchantment"].Get(name)
+			if enchID < 0 {
 				return nil, fmt.Errorf("unknown enchantment %s", name)
 			}
-			enchID = int32(index)
 		}
 		w.WriteVarInt(ns.VarInt(enchID))
 		w.WriteVarInt(ns.VarInt(level))
@@ -650,7 +639,7 @@ type toolCodec struct{}
 func (codec *toolCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 	w := ns.NewWriter()
 	// rules
-	count, err := buf.ReadVarInt()
+	count, err := readToolRuleCount(buf)
 	if err != nil {
 		return nil, err
 	}
@@ -677,13 +666,11 @@ func (codec *toolCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
 
 func (codec *toolCodec) Apply(c *Components, data []byte) error {
 	buf := ns.NewReader(data)
-	count, err := buf.ReadVarInt()
+	count, err := readToolRuleCount(buf)
 	if err != nil {
 		return err
 	}
-	tool := &Tool{
-		Rules: make([]ToolRule, 0, count),
-	}
+	tool := &Tool{Rules: makeCapped[ToolRule](count)}
 	for range int(count) {
 		rule, err := decodeToolRule(buf)
 		if err != nil {
@@ -746,34 +733,25 @@ func (codec *toolCodec) Encode(c *Components) ([]byte, error) {
 	return w.Bytes(), nil
 }
 
+func readToolRuleCount(buf *ns.PacketBuffer) (ns.VarInt, error) {
+	count, err := buf.ReadVarInt()
+	if err != nil {
+		return 0, err
+	}
+	if count < 0 {
+		return 0, fmt.Errorf("negative tool rule count %d", count)
+	}
+	return count, nil
+}
+
 // decodeToolRule reads a tool rule from the buffer.
 func decodeToolRule(buf *ns.PacketBuffer) (ToolRule, error) {
 	var rule ToolRule
-	// blocks (holder set)
-	typeID, err := buf.ReadVarInt()
+	blocks, err := readHolderSet(buf, "block", registries.Block.ByID)
 	if err != nil {
 		return rule, err
 	}
-	if typeID == 0 {
-		tag, err := buf.ReadString(maxStringLen)
-		if err != nil {
-			return rule, err
-		}
-		rule.Blocks = []string{"#" + string(tag)}
-	} else {
-		rule.Blocks = make([]string, 0, int(typeID)-1)
-		for range int(typeID) - 1 {
-			blockID, err := buf.ReadVarInt()
-			if err != nil {
-				return rule, err
-			}
-			name := registries.Block.ByID(int32(blockID))
-			if name == "" {
-				return rule, fmt.Errorf("unknown block holder ID %d", blockID)
-			}
-			rule.Blocks = append(rule.Blocks, name)
-		}
-	}
+	rule.Blocks = blocks
 	// optional speed
 	hasSpeed, err := buf.ReadBool()
 	if err != nil {
@@ -805,21 +783,11 @@ func decodeToolRule(buf *ns.PacketBuffer) (ToolRule, error) {
 
 // encodeToolRule writes a tool rule to the buffer.
 func encodeToolRule(w *ns.PacketBuffer, rule ToolRule) error {
-	if len(rule.Blocks) == 1 && strings.HasPrefix(rule.Blocks[0], "#") {
-		w.WriteVarInt(0)
-		w.WriteString(ns.String(strings.TrimPrefix(rule.Blocks[0], "#")))
-	} else {
-		if len(rule.Blocks) == 0 {
-			return fmt.Errorf("tool rule block holder set is empty")
-		}
-		w.WriteVarInt(ns.VarInt(len(rule.Blocks) + 1))
-		for _, name := range rule.Blocks {
-			blockID := registries.Block.Get(name)
-			if blockID < 0 {
-				return fmt.Errorf("unknown tool rule block %q", name)
-			}
-			w.WriteVarInt(ns.VarInt(blockID))
-		}
+	if len(rule.Blocks) == 0 {
+		return fmt.Errorf("tool rule block holder set is empty")
+	}
+	if err := writeHolderSet(w, "tool rule block", rule.Blocks, registries.Block.Get); err != nil {
+		return err
 	}
 	w.WriteBool(ns.Boolean(rule.HasSpeed))
 	if rule.HasSpeed {
@@ -842,60 +810,33 @@ func toolRulesEqual(left, right []ToolRule) bool {
 	})
 }
 
-type attackRangeCodec struct{}
-
-func (attackRangeCodec) DecodeWire(buf *ns.PacketBuffer) ([]byte, error) {
-	w := ns.NewWriter()
-	for range 6 {
-		if err := w.CopyFloat32(buf); err != nil {
-			return nil, err
-		}
-	}
-	return w.Bytes(), nil
-}
-
-func (attackRangeCodec) Apply(c *Components, data []byte) error {
-	buf := ns.NewReader(data)
-	values := make([]float64, 6)
+func readAttackRange(buf *ns.PacketBuffer) (*AttackRange, error) {
+	var values [6]float64
 	for i := range values {
 		value, err := buf.ReadFloat32()
 		if err != nil {
-			return err
+			return nil, err
 		}
 		values[i] = float64(value)
 	}
-	c.AttackRange = &AttackRange{
+	return &AttackRange{
 		MinReach: values[0], MaxReach: values[1],
 		MinCreativeReach: values[2], MaxCreativeReach: values[3],
 		HitboxMargin: values[4], MobFactor: values[5],
+	}, nil
+}
+
+func writeAttackRange(w *ns.PacketBuffer, value *AttackRange) error {
+	for _, field := range [...]float64{
+		value.MinReach, value.MaxReach,
+		value.MinCreativeReach, value.MaxCreativeReach,
+		value.HitboxMargin, value.MobFactor,
+	} {
+		if err := w.WriteFloat32(ns.Float32(field)); err != nil {
+			return err
+		}
 	}
 	return nil
-}
-
-func (attackRangeCodec) Clear(c *Components) {
-	c.AttackRange = nil
-}
-
-func (attackRangeCodec) Differs(c, defaults *Components) (bool, bool) {
-	if c.AttackRange == nil || defaults.AttackRange == nil {
-		return c.AttackRange != defaults.AttackRange, c.AttackRange != nil
-	}
-	return *c.AttackRange != *defaults.AttackRange, true
-}
-
-func (attackRangeCodec) Encode(c *Components) ([]byte, error) {
-	if c.AttackRange == nil {
-		return nil, nil
-	}
-	w := ns.NewWriter()
-	for _, value := range [...]float64{
-		c.AttackRange.MinReach, c.AttackRange.MaxReach,
-		c.AttackRange.MinCreativeReach, c.AttackRange.MaxCreativeReach,
-		c.AttackRange.HitboxMargin, c.AttackRange.MobFactor,
-	} {
-		w.WriteFloat32(ns.Float32(value))
-	}
-	return w.Bytes(), nil
 }
 
 // passthroughCodec stores raw bytes without interpreting them.
@@ -917,7 +858,7 @@ func (codec *passthroughCodec) Apply(c *Components, data []byte) error {
 	if c.rawPassthrough == nil {
 		c.rawPassthrough = make(map[int32][]byte)
 	}
-	c.rawPassthrough[codec.id] = append([]byte(nil), data...)
+	c.rawPassthrough[codec.id] = slices.Clone(data)
 	delete(c.removedPassthrough, codec.id)
 	return nil
 }
@@ -950,25 +891,21 @@ func (codec *passthroughCodec) Encode(c *Components) ([]byte, error) {
 	if !ok {
 		return nil, fmt.Errorf("passthrough component %d is absent", codec.id)
 	}
-	return append([]byte(nil), data...), nil
+	return slices.Clone(data), nil
 }
 
 // copyNBT copies an NBT tag from reader to writer.
 func copyNBT(buf *ns.PacketBuffer, w *ns.PacketBuffer) error {
-	reader := nbt.NewReaderFrom(buf.Reader())
-	tag, _, err := reader.ReadTag(true) // network format
+	tag, err := buf.ReadNBT()
 	if err != nil {
 		return err
 	}
-
-	writer := nbt.NewWriterTo(w.Writer())
-	return writer.WriteTag(tag, "", true) // network format
+	return w.WriteNBT(tag)
 }
 
 // decodeItemName reads an NBT text component and returns an ItemNameComponent.
 func decodeItemName(buf *ns.PacketBuffer) (*ItemNameComponent, error) {
-	reader := nbt.NewReaderFrom(buf.Reader())
-	tag, _, err := reader.ReadTag(true) // network format
+	tag, err := buf.ReadNBT()
 	if err != nil {
 		return nil, err
 	}
@@ -993,14 +930,13 @@ func decodeItemName(buf *ns.PacketBuffer) (*ItemNameComponent, error) {
 
 // encodeItemName writes an ItemNameComponent as NBT text component.
 func encodeItemName(w *ns.PacketBuffer, name *ItemNameComponent) error {
-	writer := nbt.NewWriterTo(w.Writer())
 	var tag nbt.Tag
 	if name.Translate != "" {
 		tag = nbt.Compound{"translate": nbt.String(name.Translate)}
 	} else {
 		tag = nbt.String(name.Text)
 	}
-	return writer.WriteTag(tag, "", true) // network format
+	return w.WriteNBT(tag)
 }
 
 // decodeAttributeModifier reads an attribute modifier entry.
@@ -1054,7 +990,7 @@ func decodeAttributeModifier(buf *ns.PacketBuffer) (AttributeModifier, error) {
 		if err != nil {
 			return mod, err
 		}
-		value.Raw = append([]byte(nil), raw.Bytes()...)
+		value.Raw = slices.Clone(raw.Bytes())
 		mod.Display.Value = value
 	}
 
@@ -1071,25 +1007,21 @@ func encodeAttributeModifier(w *ns.PacketBuffer, mod AttributeModifier) error {
 	w.WriteString(ns.String(mod.ID))
 	w.WriteFloat64(ns.Float64(mod.Amount))
 
-	operation, ok := attributeModifierOperationIDs[mod.Operation]
-	if !ok {
+	operation := slices.Index(attributeModifierOperations, mod.Operation)
+	if operation < 0 {
 		return fmt.Errorf("unknown attribute modifier operation %q", mod.Operation)
 	}
 	w.WriteVarInt(ns.VarInt(operation))
 
-	slotName := mod.Slot
-	if slotName == "" {
-		slotName = "any"
-	}
-	slot, ok := equipmentSlotGroupIDs[slotName]
-	if !ok {
+	slot := slices.Index(equipmentSlotGroups, normalizedEquipmentSlotGroup(mod.Slot))
+	if slot < 0 {
 		return fmt.Errorf("unknown equipment slot group %q", mod.Slot)
 	}
 	w.WriteVarInt(ns.VarInt(slot))
 
 	displayName := normalizedAttributeModifierDisplayType(mod.Display.Type)
-	displayType, ok := attributeModifierDisplayTypeIDs[displayName]
-	if !ok {
+	displayType := slices.Index(attributeModifierDisplayTypes, displayName)
+	if displayType < 0 {
 		return fmt.Errorf("unknown attribute modifier display type %q", mod.Display.Type)
 	}
 	w.WriteVarInt(ns.VarInt(displayType))
@@ -1119,18 +1051,10 @@ func itemNameComponentsEqual(a, b *ItemNameComponent) bool {
 	return a.Text == b.Text && a.Translate == b.Translate && bytes.Equal(a.Raw, b.Raw)
 }
 
-func normalizedEquipmentSlotGroup(slot string) string {
-	if slot == "" {
-		return "any"
-	}
-	return slot
-}
+func normalizedEquipmentSlotGroup(slot string) string { return cmp.Or(slot, "any") }
 
 func normalizedAttributeModifierDisplayType(displayType string) string {
-	if displayType == "" {
-		return "default"
-	}
-	return displayType
+	return cmp.Or(displayType, "default")
 }
 
 func enumName(names []string, id ns.VarInt) string {

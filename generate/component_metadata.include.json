@@ -1,5 +1,5 @@
 {
-  "_comment": "Wire format metadata for item components. Used by go generate to auto-generate codec registrations.",
+  "_comment": "Wire format metadata for item components. goField names the Components field used by generated default literals and codecs; wireType manual means items registers the codec by hand. Undescribed registry components with a / in their name are generated as VarInt entity-variant passthroughs.",
   "components": {
     "minecraft:attack_animation": {
       "goField": "AttackAnimation",
@@ -67,6 +67,12 @@
       "goType": "*int32",
       "wireType": "manual"
     },
+    "minecraft:painting/variant": {
+      "goField": "PaintingVariant",
+      "goType": "string",
+      "wireType": "manual",
+      "_comment": "listed so entity-variant auto-derivation skips it; items registers its codec by hand"
+    },
     "minecraft:max_stack_size": {
       "goField": "MaxStackSize",
       "goType": "int32",
@@ -108,6 +114,8 @@
       "wireType": "varint"
     },
     "minecraft:damage_type": {
+      "goField": "DamageType",
+      "goType": "string",
       "wireType": "varint",
       "passthrough": true
     },
@@ -132,6 +140,8 @@
       "wireType": "manual"
     },
     "minecraft:provides_banner_patterns": {
+      "goField": "ProvidesBannerPatterns",
+      "goType": "string",
       "wireType": "holderSet",
       "passthrough": true
     },
@@ -259,23 +269,13 @@
     "minecraft:fireworks": {
       "goField": "Fireworks",
       "goType": "*Fireworks",
-      "wireType": "struct",
-      "wireFormat": [
-        {
-          "name": "flightDuration",
-          "type": "varint",
-          "goField": "FlightDuration"
-        },
-        {
-          "name": "explosions",
-          "type": "fireworkExplosionList"
-        }
-      ],
-      "_comment": "explosions not yet decoded into struct"
+      "wireType": "manual"
     },
     "minecraft:map_id": {
+      "goField": "MapID",
+      "goType": "*int32",
       "wireType": "varint",
-      "passthrough": true
+      "allowZero": true
     },
     "minecraft:enchantment_glint_override": {
       "wireType": "bool",
@@ -298,20 +298,25 @@
       "passthrough": true
     },
     "minecraft:dye": {
-      "wireType": "varint",
-      "passthrough": true
+      "goField": "Dye",
+      "goType": "*int32",
+      "wireType": "manual"
     },
     "minecraft:dyed_color": {
-      "wireType": "int32",
-      "passthrough": true
+      "goField": "DyedColor",
+      "goType": "*int32",
+      "wireType": "manual"
     },
     "minecraft:base_color": {
-      "wireType": "varint",
-      "passthrough": true
+      "goField": "BaseColor",
+      "goType": "*int32",
+      "wireType": "manual"
     },
     "minecraft:map_post_processing": {
+      "goField": "MapPostProcessing",
+      "goType": "*int32",
       "wireType": "varint",
-      "passthrough": true
+      "allowZero": true
     },
     "minecraft:custom_data": {
       "wireType": "nbt",
@@ -322,6 +327,8 @@
       "passthrough": true
     },
     "minecraft:entity_data": {
+      "goField": "EntityData",
+      "goType": "*TypedEntityData",
       "wireType": "manual",
       "passthrough": true
     },
@@ -346,10 +353,14 @@
       "passthrough": true
     },
     "minecraft:damage_resistant": {
+      "goField": "DamageResistant",
+      "goType": "*DamageResistant",
       "wireType": "holderSet",
       "passthrough": true
     },
     "minecraft:repairable": {
+      "goField": "Repairable",
+      "goType": "*Repairable",
       "wireType": "holderSet",
       "passthrough": true
     },
@@ -366,18 +377,26 @@
       "passthrough": true
     },
     "minecraft:use_remainder": {
+      "goField": "UseRemainder",
+      "goType": "*UseRemainder",
       "wireType": "manual",
       "passthrough": true
     },
     "minecraft:lore": {
+      "goField": "Lore",
+      "goType": "[]string",
       "wireType": "loreList",
       "passthrough": true
     },
     "minecraft:enchantments": {
+      "goField": "Enchantments",
+      "goType": "map[string]int32",
       "wireType": "enchantmentMap",
       "passthrough": true
     },
     "minecraft:stored_enchantments": {
+      "goField": "StoredEnchantments",
+      "goType": "map[string]int32",
       "wireType": "enchantmentMap",
       "passthrough": true
     },
@@ -394,30 +413,44 @@
       "passthrough": true
     },
     "minecraft:consumable": {
+      "goField": "Consumable",
+      "goType": "*Consumable",
       "wireType": "consumable",
       "passthrough": true
     },
     "minecraft:use_effects": {
+      "goField": "UseEffects",
+      "goType": "*UseEffects",
       "wireType": "useEffects",
       "passthrough": true
     },
     "minecraft:tool": {
+      "goField": "Tool",
+      "goType": "*Tool",
       "wireType": "tool",
       "passthrough": true
     },
     "minecraft:attack_range": {
+      "goField": "AttackRange",
+      "goType": "*AttackRange",
       "wireType": "attackRange",
       "passthrough": true
     },
     "minecraft:equippable": {
+      "goField": "Equippable",
+      "goType": "*Equippable",
       "wireType": "equippable",
       "passthrough": true
     },
     "minecraft:death_protection": {
+      "goField": "DeathProtection",
+      "goType": "*DeathProtection",
       "wireType": "deathProtection",
       "passthrough": true
     },
     "minecraft:blocks_attacks": {
+      "goField": "BlocksAttacks",
+      "goType": "*BlocksAttacks",
       "wireType": "blocksAttacks",
       "passthrough": true
     },
@@ -438,6 +471,8 @@
       "passthrough": true
     },
     "minecraft:writable_book_content": {
+      "goField": "rawPassthrough",
+      "goType": "map[int32][]byte",
       "wireType": "writableBook",
       "passthrough": true
     },
@@ -446,6 +481,8 @@
       "passthrough": true
     },
     "minecraft:trim": {
+      "goField": "Trim",
+      "goType": "*ArmorTrim",
       "wireType": "trim",
       "passthrough": true
     },
@@ -458,6 +495,8 @@
       "passthrough": true
     },
     "minecraft:firework_explosion": {
+      "goField": "FireworkExplosion",
+      "goType": "*FireworkExplosion",
       "wireType": "fireworkExplosion",
       "passthrough": true
     },
@@ -466,10 +505,14 @@
       "passthrough": true
     },
     "minecraft:banner_patterns": {
+      "goField": "BannerPatterns",
+      "goType": "*[]BannerPatternLayer",
       "wireType": "bannerPatterns",
       "passthrough": true
     },
     "minecraft:pot_decorations": {
+      "goField": "PotDecorations",
+      "goType": "*PotDecorations",
       "wireType": "potDecorations",
       "passthrough": true
     },

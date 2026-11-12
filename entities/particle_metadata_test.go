@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-mclib/data/items"
 	"github.com/go-mclib/data/registries"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 func TestParticleMetadataPreservesFollowingUseFlags(t *testing.T) {
@@ -30,7 +30,7 @@ func TestParticleMetadataPreservesFollowingUseFlags(t *testing.T) {
 	particle("shriek")
 	particles.WriteVarInt(200)
 	particle("item")
-	if err := items.WriteItemStackTemplate(particles, ns.NewSlot(ns.VarInt(items.ItemID("minecraft:diamond")), 2)); err != nil {
+	if err := items.WriteItemStackTemplate(particles, ns.NewSlot(ns.VarInt(items.ID("minecraft:diamond")), 2)); err != nil {
 		t.Fatal(err)
 	}
 	particle("trail")

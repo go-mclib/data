@@ -6,18 +6,8 @@ import (
 	"github.com/go-mclib/data/items"
 	"github.com/go-mclib/data/registries"
 	"github.com/go-mclib/nbt"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
-
-// Rotations represents 3D rotation angles (x, y, z in degrees).
-type Rotations struct {
-	X, Y, Z float32
-}
-
-// Position represents a block position (packed 64-bit format).
-type Position struct {
-	X, Y, Z int32
-}
 
 // Metadata represents raw entity metadata entries.
 // Use this for passthrough or when you don't need typed access.
@@ -124,7 +114,7 @@ var wireCopiers = map[string]wireCopier{
 	"particle":            CopyParticle,
 	"particle_list":       copyParticleList,
 	"id_or_inline":        copyPaintingVariant,
-	"resolvable_profile":  copyResolvableProfile,
+	"resolvable_profile":  items.CopyResolvableProfile,
 	"empty":               func(buf, w *ns.PacketBuffer) error { return nil },
 }
 
@@ -160,7 +150,7 @@ func copyStringValue(buf, w *ns.PacketBuffer) error {
 }
 
 func copyNBTValue(buf, w *ns.PacketBuffer) error {
-	return nbt.Copy(w.Writer(), buf.Reader(), true)
+	return nbt.Copy(w.Writer(), buf.Reader(), nbt.FormatNetwork)
 }
 
 func copyPositionValue(buf, w *ns.PacketBuffer) error {
@@ -330,34 +320,6 @@ func copyPaintingVariant(buf, w *ns.PacketBuffer) error {
 	// optional title and author (NBT)
 	for range 2 {
 		if err := copyOptionalValue(copyNBTValue)(buf, w); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func copyResolvableProfile(buf, w *ns.PacketBuffer) error {
-	// optional name, optional uuid
-	if err := copyOptionalValue(copyStringValue)(buf, w); err != nil {
-		return err
-	}
-	if err := copyOptionalValue(func(buf, w *ns.PacketBuffer) error { return w.CopyUUID(buf) })(buf, w); err != nil {
-		return err
-	}
-	// properties: name, value, optional signature
-	propCount, err := buf.ReadVarInt()
-	if err != nil {
-		return err
-	}
-	w.WriteVarInt(propCount)
-	for range int(propCount) {
-		if err := copyStringValue(buf, w); err != nil {
-			return err
-		}
-		if err := copyStringValue(buf, w); err != nil {
-			return err
-		}
-		if err := copyOptionalValue(copyStringValue)(buf, w); err != nil {
 			return err
 		}
 	}

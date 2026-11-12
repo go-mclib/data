@@ -102,38 +102,13 @@ func generateTagData(tagsDir, outPath string) {
 
 	for _, reg := range registryDirs {
 		raw := make(map[string][]string) // tag name → raw values (entries + #refs)
-
-		// recursively walk the tag directory for JSON files
-		err := filepath.WalkDir(reg.path, func(path string, d os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if d.IsDir() || !strings.HasSuffix(d.Name(), ".json") {
-				return nil
-			}
-
-			data, err := os.ReadFile(path)
-			if err != nil {
-				return fmt.Errorf("failed to read %s: %w", path, err)
-			}
-			var tag tagFileJSON
-			if err := json.Unmarshal(data, &tag); err != nil {
-				return fmt.Errorf("failed to parse %s: %w", path, err)
-			}
-
-			// tag name from relative path within the registry root
-			rel, _ := filepath.Rel(reg.path, path)
-			tagName := "minecraft:" + strings.TrimSuffix(rel, ".json")
-
+		for _, file := range datapackEntries(reg.path) {
+			tag := loadJSON[tagFileJSON](file.Path)
 			values := make([]string, len(tag.Values))
 			for i, v := range tag.Values {
 				values[i] = v.ID
 			}
-			raw[tagName] = values
-			return nil
-		})
-		if err != nil {
-			panic(fmt.Sprintf("failed to read tags for %s: %v", reg.regID, err))
+			raw[file.ID] = values
 		}
 
 		// resolve #tag references recursively
@@ -155,27 +130,26 @@ func generateTagData(tagsDir, outPath string) {
 
 			nameSet := make(map[string]bool)
 			var entries []string
+			add := func(entry string) {
+				if !nameSet[entry] {
+					nameSet[entry] = true
+					entries = append(entries, entry)
+				}
+			}
 			for _, v := range values {
-				if strings.HasPrefix(v, "#") {
-					ref := v[1:]
+				if ref, ok := strings.CutPrefix(v, "#"); ok {
 					for _, entry := range resolve(ref, seen) {
-						if !nameSet[entry] {
-							nameSet[entry] = true
-							entries = append(entries, entry)
-						}
+						add(entry)
 					}
 				} else {
-					if !nameSet[v] {
-						nameSet[v] = true
-						entries = append(entries, v)
-					}
+					add(v)
 				}
 			}
 			resolved[name] = entries
 			return entries
 		}
 
-		for name := range raw {
+		for _, name := range sortedKeys(raw) {
 			resolve(name, make(map[string]bool))
 		}
 
@@ -195,13 +169,13 @@ func generateTagData(tagsDir, outPath string) {
 		if len(tags) == 0 {
 			continue
 		}
-		sb.WriteString(fmt.Sprintf("\t%q: {\n", regID))
+		fmt.Fprintf(&sb, "\t%q: {\n", regID)
 		for _, tagName := range sortedKeys(tags) {
 			entries := tags[tagName]
 			// include empty tags — the client may reference them by name
-			sb.WriteString(fmt.Sprintf("\t\t%q: {\n", tagName))
+			fmt.Fprintf(&sb, "\t\t%q: {\n", tagName)
 			for _, entry := range entries {
-				sb.WriteString(fmt.Sprintf("\t\t\t%q,\n", entry))
+				fmt.Fprintf(&sb, "\t\t\t%q,\n", entry)
 			}
 			sb.WriteString("\t\t},\n")
 		}

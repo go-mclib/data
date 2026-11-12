@@ -4,12 +4,12 @@ import (
 	"testing"
 
 	"github.com/go-mclib/data/packets"
-	ns "github.com/go-mclib/protocol/java_protocol/net_structures"
+	ns "github.com/go-mclib/protocol/javaproto/wire"
 )
 
 func TestUpdateAttributesRoundTrip(t *testing.T) {
 	roundTrip(t, &packets.S2CUpdateAttributes{
-		EntityId: 42,
+		EntityID: 42,
 		Attributes: []packets.AttributeSnapshot{{
 			Type: 17,
 			Base: 30,
@@ -22,7 +22,7 @@ func TestUpdateAttributesRoundTrip(t *testing.T) {
 	}, &packets.S2CUpdateAttributes{})
 
 	writer := ns.NewWriter()
-	if err := (&packets.S2CUpdateAttributes{EntityId: 42}).Write(writer); err != nil {
+	if err := (&packets.S2CUpdateAttributes{EntityID: 42}).Write(writer); err != nil {
 		t.Fatalf("Write: %v", err)
 	}
 	if got := writer.Bytes(); len(got) != 2 || got[0] != 42 || got[1] != 0 {
